@@ -29,6 +29,15 @@ public static class WishEndpoints
             .WithName("CreateWish")
             .WithOpenApi();
 
+        // Teacher endpoints (read-only)
+        var teacherGroup = app.MapGroup("/api/wishes")
+            .WithTags("Wishes")
+            .RequireAuthorization("TeacherOrAdmin");
+
+        teacherGroup.MapGet("/list", GetAdminWishes)
+            .WithName("GetWishesList")
+            .WithOpenApi();
+
         // Admin endpoints
         var adminGroup = app.MapGroup("/api/admin/wishes")
             .WithTags("Admin Wishes")

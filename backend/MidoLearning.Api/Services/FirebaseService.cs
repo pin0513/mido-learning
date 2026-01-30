@@ -157,6 +157,12 @@ public class FirebaseService : IFirebaseService
         _logger.LogInformation("Updated role for user {Uid} to {Role}", uid, role);
     }
 
+    public async Task DeleteUserAsync(string uid)
+    {
+        await FirebaseAuth.DefaultInstance.DeleteUserAsync(uid);
+        _logger.LogInformation("Deleted user {Uid}", uid);
+    }
+
     public async Task<(List<T> Items, int Total)> GetDocumentsAsync<T>(string collection, int page, int limit, string? search, string[]? orderBy) where T : class
     {
         var query = _firestoreDb.Collection(collection).Limit(limit).Offset((page - 1) * limit);

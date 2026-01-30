@@ -7,10 +7,11 @@ import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
 
 const sidebarItems = [
-  { label: 'Admin Dashboard', href: '/admin' },
-  { label: 'Users', href: '/admin/users' },
-  { label: 'Courses', href: '/admin/courses' },
-  { label: 'Analytics', href: '/admin/analytics' },
+  { label: '管理控制台', href: '/admin' },
+  { label: '用戶管理', href: '/admin/users' },
+  { label: '願望池', href: '/admin/wishes' },
+  { label: '課程管理', href: '/admin/courses' },
+  { label: '數據分析', href: '/admin/analytics' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

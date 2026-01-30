@@ -7,9 +7,10 @@ import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
 
 const sidebarItems = [
-  { label: 'Dashboard', href: '/dashboard' },
+  { label: '學習中心', href: '/dashboard' },
   { label: '我的元件', href: '/teacher/components' },
-  { label: '建立元件', href: '/teacher/components/new' },
+  { label: '上傳教材', href: '/teacher/components/upload' },
+  { label: '願望池', href: '/teacher/wishes' },
 ];
 
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {

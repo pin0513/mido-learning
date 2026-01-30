@@ -11,9 +11,9 @@ interface RoleSelectProps {
 }
 
 const ROLE_LABELS: Record<Role, string> = {
-  student: 'Student',
-  teacher: 'Teacher',
-  admin: 'Admin',
+  student: '學生',
+  teacher: '老師',
+  admin: '管理員',
 };
 
 const ROLE_COLORS: Record<Role, string> = {

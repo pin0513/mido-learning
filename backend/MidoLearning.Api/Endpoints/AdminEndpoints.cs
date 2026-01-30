@@ -8,8 +8,11 @@ public static class AdminEndpoints
 {
     private static readonly HashSet<string> ValidRoles = new(StringComparer.OrdinalIgnoreCase)
     {
-        "member", "teacher", "admin"
+        "student", "teacher", "admin"
     };
+
+    // Protected admin email that cannot be deleted
+    private const string ProtectedAdminEmail = "pin0513@gmail.com";
 
     public static void MapAdminEndpoints(this IEndpointRouteBuilder app)
     {
@@ -35,6 +38,10 @@ public static class AdminEndpoints
 
         group.MapPatch("/users/{uid}/role", UpdateUserRole)
             .WithName("UpdateUserRole")
+            .WithOpenApi();
+
+        group.MapDelete("/users/{uid}", DeleteUser)
+            .WithName("DeleteUser")
             .WithOpenApi();
     }
 
@@ -143,6 +150,32 @@ public static class AdminEndpoints
         {
             logger.LogError(ex, "Failed to update user role for {Uid}", uid);
             return Results.BadRequest(ApiResponse.Fail($"Failed to update user role: {ex.Message}"));
+        }
+    }
+
+    private static async Task<IResult> DeleteUser(
+        string uid,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            // Get user to check if it's protected
+            var user = await firebaseService.GetUserAsync(uid);
+            if (user.Email?.Equals(ProtectedAdminEmail, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return Results.BadRequest(ApiResponse.Fail("無法刪除系統管理員帳號"));
+            }
+
+            await firebaseService.DeleteUserAsync(uid);
+
+            logger.LogInformation("User {Uid} deleted", uid);
+            return Results.Ok(ApiResponse.Ok("用戶已成功刪除"));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to delete user {Uid}", uid);
+            return Results.BadRequest(ApiResponse.Fail($"刪除用戶失敗: {ex.Message}"));
         }
     }
 }

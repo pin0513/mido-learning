@@ -6,17 +6,14 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
           <div className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} Mido Learning. All rights reserved.
+            &copy; {new Date().getFullYear()} Mido Learning. 版權所有。
           </div>
           <nav className="flex space-x-6">
-            <Link href="/about" className="text-sm text-gray-500 hover:text-gray-900">
-              About
-            </Link>
             <Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-900">
-              Privacy
+              隱私權政策
             </Link>
             <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-900">
-              Terms
+              服務條款
             </Link>
           </nav>
         </div>

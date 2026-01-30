@@ -1,83 +1,161 @@
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { WishChatBot } from '@/components/wish';
+import { useAuth } from '@/components/auth/AuthProvider';
+import { ComponentList, CategoryFilter } from '@/components/learning';
+import { Pagination } from '@/components/ui/Pagination';
+import { Category, LearningComponent, ComponentListResponse } from '@/types/component';
+import { getComponents } from '@/lib/api/components';
+
+const ITEMS_PER_PAGE = 8;
 
 export default function HomePage() {
+  const { user, loading: authLoading } = useAuth();
+  const [components, setComponents] = useState<LearningComponent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState<Category | 'all'>('all');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchComponents = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = {
+        page,
+        limit: ITEMS_PER_PAGE,
+        ...(category !== 'all' && { category }),
+      };
+      const response: ComponentListResponse = await getComponents(params);
+      setComponents(response.components);
+      setTotalPages(Math.ceil(response.total / response.limit));
+    } catch {
+      setComponents([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, category]);
+
+  useEffect(() => {
+    fetchComponents();
+  }, [fetchComponents]);
+
+  const handleCategoryChange = (newCategory: Category | 'all') => {
+    setCategory(newCategory);
+    setPage(1);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="bg-white">
-      <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+      {/* Hero Section */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-            Welcome to{' '}
+            歡迎來到{' '}
             <span className="text-blue-600">Mido Learning</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">
-            Your personalized learning platform. Start your journey today and unlock your potential
-            with our comprehensive courses and interactive learning experience.
+            您的專屬學習平台。立即開始您的學習之旅，透過豐富的課程和互動式學習體驗，解鎖您的潛能。
           </p>
-          <div className="mt-10 flex justify-center gap-4">
-            <Link href="/register">
-              <Button size="lg">Get Started</Button>
-            </Link>
-            <Link href="/about">
-              <Button variant="outline" size="lg">
-                Learn More
-              </Button>
-            </Link>
-          </div>
+          {!authLoading && (
+            <div className="mt-8 flex justify-center gap-4">
+              {user ? (
+                <>
+                  <Link href="/dashboard">
+                    <Button size="lg">進入學習中心</Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/register">
+                    <Button size="lg">免費註冊</Button>
+                  </Link>
+                  <Link href="/login">
+                    <Button variant="outline" size="lg">
+                      登入
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
-      <section className="bg-gray-50 py-24">
+      {/* Learning Components Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">學習教材</h2>
+              <p className="mt-1 text-gray-600">探索我們的精選課程</p>
+            </div>
+            <CategoryFilter selected={category} onChange={handleCategoryChange} />
+          </div>
+
+          <ComponentList
+            components={components}
+            loading={loading}
+            emptyMessage="目前沒有學習教材"
+            cardHrefPrefix="/components"
+          />
+
+          {!loading && components.length > 0 && totalPages > 1 && (
+            <div className="mt-8">
+              <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-3xl font-bold text-gray-900">
-            Why Choose Mido Learning?
+            為什麼選擇 Mido Learning？
           </h2>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
-            <div className="rounded-lg bg-white p-8 shadow-sm">
+            <div className="rounded-lg bg-gray-50 p-8 shadow-sm">
               <div className="mb-4 text-3xl">📚</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                Comprehensive Courses
+                豐富課程
               </h3>
               <p className="text-gray-600">
-                Access a wide range of courses designed to help you achieve your learning goals.
+                提供多元化的課程，幫助您達成學習目標。
               </p>
             </div>
-            <div className="rounded-lg bg-white p-8 shadow-sm">
+            <div className="rounded-lg bg-gray-50 p-8 shadow-sm">
               <div className="mb-4 text-3xl">🎯</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                Personalized Learning
+                個人化學習
               </h3>
               <p className="text-gray-600">
-                Get a customized learning path tailored to your skills and interests.
+                根據您的技能和興趣，量身打造學習路徑。
               </p>
             </div>
-            <div className="rounded-lg bg-white p-8 shadow-sm">
+            <div className="rounded-lg bg-gray-50 p-8 shadow-sm">
               <div className="mb-4 text-3xl">🏆</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                Track Progress
+                追蹤進度
               </h3>
               <p className="text-gray-600">
-                Monitor your progress and celebrate your achievements along the way.
+                追蹤您的學習進度，慶祝每一個成就。
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Wish ChatBot Section */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-8 text-center text-3xl font-bold text-gray-900">
-            Share Your Learning Wish
-          </h2>
-          <p className="mx-auto mb-12 max-w-2xl text-center text-lg text-gray-600">
-            Tell us what you want to learn, and we will work hard to create the perfect course for
-            you!
-          </p>
-          <WishChatBot />
-        </div>
-      </section>
     </div>
   );
 }

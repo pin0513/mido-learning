@@ -11,10 +11,10 @@ interface UserFiltersProps {
 }
 
 const ROLE_OPTIONS: { value: Role | 'all'; label: string }[] = [
-  { value: 'all', label: 'All Roles' },
-  { value: 'student', label: 'Student' },
-  { value: 'teacher', label: 'Teacher' },
-  { value: 'admin', label: 'Admin' },
+  { value: 'all', label: '全部角色' },
+  { value: 'student', label: '學生' },
+  { value: 'teacher', label: '老師' },
+  { value: 'admin', label: '管理員' },
 ];
 
 export function UserFilters({
@@ -28,7 +28,7 @@ export function UserFilters({
       <div className="flex-1 sm:max-w-xs">
         <Input
           type="search"
-          placeholder="Search by email..."
+          placeholder="搜尋電子郵件..."
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
           className="w-full"
