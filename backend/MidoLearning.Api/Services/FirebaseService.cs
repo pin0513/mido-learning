@@ -39,7 +39,7 @@ public class FirebaseService : IFirebaseService
         var firestoreBuilder = new FirestoreDbBuilder
         {
             ProjectId = projectId,
-            GoogleCredential = credential
+            GoogleCredential = credential ?? GoogleCredential.GetApplicationDefault()
         };
 
         _firestoreDb = firestoreBuilder.Build();
