@@ -8,11 +8,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IFirebaseService, FirebaseService>();
+builder.Services.AddSingleton<IStorageService, StorageService>();
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy =>
         policy.RequireRole("admin"));
+
+    options.AddPolicy("TeacherOrAdmin", policy =>
+        policy.RequireRole("teacher", "admin"));
 });
 
 builder.Services.AddCors(options =>
@@ -49,5 +53,11 @@ app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Timestamp = Dat
 app.MapAuthEndpoints();
 app.MapUserEndpoints();
 app.MapAdminEndpoints();
+app.MapWishEndpoints();
+app.MapComponentEndpoints();
+app.MapMaterialEndpoints();
 
 app.Run();
+
+// Make Program accessible to test projects
+public partial class Program { }

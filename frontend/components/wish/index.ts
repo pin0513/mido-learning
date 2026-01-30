@@ -1,0 +1,1 @@
+export { WishChatBot } from './WishChatBot';

@@ -9,6 +9,7 @@ import { Sidebar } from '@/components/layout/Sidebar';
 const sidebarItems = [
   { label: 'Dashboard', href: '/dashboard' },
   { label: 'Profile', href: '/profile' },
+  { label: '學習元件', href: '/components' },
   { label: 'Courses', href: '/courses' },
   { label: 'Progress', href: '/progress' },
 ];

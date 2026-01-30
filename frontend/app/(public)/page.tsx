@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { WishChatBot } from '@/components/wish';
 
 export default function HomePage() {
   return (
@@ -61,6 +62,20 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Wish ChatBot Section */}
+      <section className="bg-white py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="mb-8 text-center text-3xl font-bold text-gray-900">
+            Share Your Learning Wish
+          </h2>
+          <p className="mx-auto mb-12 max-w-2xl text-center text-lg text-gray-600">
+            Tell us what you want to learn, and we will work hard to create the perfect course for
+            you!
+          </p>
+          <WishChatBot />
         </div>
       </section>
     </div>

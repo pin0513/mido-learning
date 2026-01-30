@@ -6,6 +6,11 @@ namespace MidoLearning.Api.Endpoints;
 
 public static class AdminEndpoints
 {
+    private static readonly HashSet<string> ValidRoles = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "member", "teacher", "admin"
+    };
+
     public static void MapAdminEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/admin")
@@ -22,6 +27,14 @@ public static class AdminEndpoints
 
         group.MapGet("/stats", GetStats)
             .WithName("GetAdminStats")
+            .WithOpenApi();
+
+        group.MapGet("/users", GetUsers)
+            .WithName("GetAdminUsers")
+            .WithOpenApi();
+
+        group.MapPatch("/users/{uid}/role", UpdateUserRole)
+            .WithName("UpdateUserRole")
             .WithOpenApi();
     }
 
@@ -78,5 +91,58 @@ public static class AdminEndpoints
         });
 
         return Results.Ok(response);
+    }
+
+    private static async Task<IResult> GetUsers(
+        IFirebaseService firebaseService,
+        ILogger<Program> logger,
+        int page = 1,
+        int limit = 20,
+        string? role = null,
+        string? search = null)
+    {
+        try
+        {
+            var result = await firebaseService.ListUsersAsync(page, limit, role, search);
+
+            var response = ApiResponse<UserListResponse>.Ok(new UserListResponse(
+                result.Users,
+                result.Total,
+                page,
+                limit
+            ));
+
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to list users");
+            return Results.BadRequest(ApiResponse.Fail($"Failed to list users: {ex.Message}"));
+        }
+    }
+
+    private static async Task<IResult> UpdateUserRole(
+        string uid,
+        UpdateRoleRequest request,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        if (!ValidRoles.Contains(request.Role))
+        {
+            return Results.BadRequest(ApiResponse.Fail($"Invalid role: {request.Role}. Valid roles are: {string.Join(", ", ValidRoles)}"));
+        }
+
+        try
+        {
+            await firebaseService.UpdateUserRoleAsync(uid, request.Role);
+
+            logger.LogInformation("User {Uid} role updated to {Role}", uid, request.Role);
+            return Results.Ok(ApiResponse.Ok($"使用者角色已更新為 {request.Role}"));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to update user role for {Uid}", uid);
+            return Results.BadRequest(ApiResponse.Fail($"Failed to update user role: {ex.Message}"));
+        }
     }
 }
