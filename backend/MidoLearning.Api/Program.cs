@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using MidoLearning.Api.Endpoints;
 using MidoLearning.Api.Middleware;
 using MidoLearning.Api.Services;
@@ -9,6 +10,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IFirebaseService, FirebaseService>();
 builder.Services.AddSingleton<IStorageService, StorageService>();
+
+builder.Services.AddAuthentication("Firebase")
+    .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, FirebaseAuthHandler>("Firebase", null);
 
 builder.Services.AddAuthorization(options =>
 {
@@ -43,7 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
-app.UseFirebaseAuth();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/health", () => Results.Ok(new { Status = "Healthy", Timestamp = DateTime.UtcNow }))
