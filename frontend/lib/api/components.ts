@@ -21,6 +21,13 @@ async function getAuthHeaders(): Promise<HeadersInit> {
   return headers;
 }
 
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+  errors?: string[];
+}
+
 export async function getComponents(
   params: ComponentQueryParams = {}
 ): Promise<ComponentListResponse> {
@@ -49,7 +56,8 @@ export async function getComponents(
     throw new Error(`Failed to fetch components: ${response.statusText}`);
   }
 
-  return response.json();
+  const apiResponse: ApiResponse<ComponentListResponse> = await response.json();
+  return apiResponse.data;
 }
 
 export async function getComponentById(id: string): Promise<LearningComponent> {
@@ -114,5 +122,6 @@ export async function getMyComponents(
     throw new Error(`Failed to fetch my components: ${response.statusText}`);
   }
 
-  return response.json();
+  const apiResponse: ApiResponse<ComponentListResponse> = await response.json();
+  return apiResponse.data;
 }

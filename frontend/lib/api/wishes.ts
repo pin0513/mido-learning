@@ -138,7 +138,7 @@ export async function searchComponents(
   }
 
   const result = await response.json();
-  return result.data || result;
+  return result.data?.components || [];
 }
 
 export async function getWishStats(): Promise<WishStats> {

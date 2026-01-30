@@ -9,11 +9,11 @@ import { ComponentDetail } from '@/components/learning';
 import { Button } from '@/components/ui/Button';
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ componentId: string }>;
 }
 
 export default function ComponentDetailPage({ params }: PageProps) {
-  const { id } = use(params);
+  const { componentId: id } = use(params);
   const { user } = useAuth();
   const [component, setComponent] = useState<LearningComponent | null>(null);
   const [loading, setLoading] = useState(true);

@@ -30,8 +30,8 @@ export default function TeacherComponentsPage() {
       };
 
       const response: ComponentListResponse = await getMyComponents(params);
-      setComponents(response.data);
-      setTotalPages(response.totalPages);
+      setComponents(response.components);
+      setTotalPages(Math.ceil(response.total / response.limit));
     } catch (err) {
       setError(err instanceof Error ? err.message : '載入失敗');
     } finally {

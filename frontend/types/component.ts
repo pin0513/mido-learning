@@ -31,11 +31,10 @@ export interface CreateComponentRequest {
 }
 
 export interface ComponentListResponse {
-  data: LearningComponent[];
+  components: LearningComponent[];
   total: number;
   page: number;
   limit: number;
-  totalPages: number;
 }
 
 export interface ComponentQueryParams {
