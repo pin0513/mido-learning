@@ -1,214 +1,385 @@
-# Mido Learning 功能地圖
+# Mido Learning 功能規格
 
-## 概述
-
-Mido Learning 是一個現代化的線上學習平台，提供個人化學習體驗。
+> **Spec-Driven Development**: 每個 Feature 可獨立開發與驗證。使用 Feature ID 指定實作目標。
 
 ---
 
-## 使用者角色
+## 專案資訊
 
-| 角色 | 說明 | 權限等級 |
-|------|------|----------|
-| **訪客** | 未登入使用者 | 可瀏覽公開頁面 |
-| **會員** | 已註冊並登入的使用者 | 可存取課程、追蹤進度 |
-| **管理員** | 平台管理者 | 完整管理權限 |
-
----
-
-## 功能模組
-
-### 1. 認證模組 (Authentication)
-
-```
-├── 登入
-│   ├── Email/密碼登入
-│   └── Google OAuth 登入
-├── 註冊
-│   ├── Email/密碼註冊
-│   └── Google OAuth 註冊
-├── 登出
-└── Token 管理
-    ├── Token 驗證
-    └── Token 刷新
-```
-
-#### API 端點
-
-| 方法 | 路徑 | 說明 | 權限 |
-|------|------|------|------|
-| GET | `/api/auth/me` | 取得目前使用者資訊 | 會員 |
-| POST | `/api/auth/verify` | 驗證 Token | 公開 |
+| 項目 | 值 |
+|------|-----|
+| 專案名稱 | Mido Learning |
+| 版本 | v0.1.0 |
+| 前端 URL | https://mido-learning-frontend-24mwb46hra-de.a.run.app |
+| 後端 URL | https://mido-learning-api-24mwb46hra-de.a.run.app |
+| 本地前端 | http://localhost:3000 |
+| 本地後端 | http://localhost:5000 |
 
 ---
 
-### 2. 使用者模組 (Users)
+## 角色定義
 
-```
-├── 個人資料
-│   ├── 檢視個人資料
-│   └── 編輯個人資料
-├── 帳號設定
-│   ├── 變更密碼
-│   └── 安全設定
-└── 學習記錄
-    ├── 已報名課程
-    ├── 學習進度
-    └── 成就徽章
-```
-
-#### API 端點
-
-| 方法 | 路徑 | 說明 | 權限 |
-|------|------|------|------|
-| GET | `/api/users/profile` | 取得個人資料 | 會員 |
-| GET | `/api/users/{uid}` | 取得指定使用者 | 本人/管理員 |
+| 角色 ID | 名稱 | Firebase Custom Claim |
+|---------|------|----------------------|
+| `guest` | 訪客 | (無 token) |
+| `member` | 會員 | `{ }` |
+| `admin` | 管理員 | `{ admin: true }` |
 
 ---
 
-### 3. 課程模組 (Courses) [規劃中]
+## Feature 清單
 
-```
-├── 課程列表
-│   ├── 全部課程
-│   ├── 分類瀏覽
-│   └── 搜尋課程
-├── 課程詳情
-│   ├── 課程介紹
-│   ├── 章節列表
-│   └── 講師資訊
-├── 課程報名
-│   └── 報名/取消報名
-└── 課程學習
-    ├── 觀看課程
-    ├── 完成章節
-    └── 課程評價
-```
-
----
-
-### 4. 管理模組 (Admin)
-
-```
-├── 儀表板
-│   ├── 統計數據
-│   └── 最近活動
-├── 使用者管理
-│   ├── 使用者列表
-│   ├── 角色設定
-│   └── 停權管理
-├── 課程管理 [規劃中]
-│   ├── 新增課程
-│   ├── 編輯課程
-│   └── 刪除課程
-└── 系統設定 [規劃中]
-```
-
-#### API 端點
-
-| 方法 | 路徑 | 說明 | 權限 |
-|------|------|------|------|
-| POST | `/api/admin/set-admin/{uid}` | 設定管理員角色 | 管理員 |
-| DELETE | `/api/admin/remove-admin/{uid}` | 移除管理員角色 | 管理員 |
-| GET | `/api/admin/stats` | 取得統計數據 | 管理員 |
+| Feature ID | 名稱 | 狀態 | 依賴 |
+|------------|------|------|------|
+| AUTH-001 | Email 註冊 | ✅ DONE | - |
+| AUTH-002 | Email 登入 | ✅ DONE | - |
+| AUTH-003 | Google OAuth 登入 | ✅ DONE | - |
+| AUTH-004 | 登出 | ✅ DONE | AUTH-001 |
+| AUTH-005 | Token 驗證 API | ✅ DONE | AUTH-001 |
+| USER-001 | 取得個人資料 | ✅ DONE | AUTH-001 |
+| USER-002 | 更新個人資料 | 📋 TODO | USER-001 |
+| ADMIN-001 | 管理員儀表板 | ✅ DONE | AUTH-001 |
+| ADMIN-002 | 設定/移除管理員角色 | ✅ DONE | ADMIN-001 |
+| ADMIN-003 | 使用者列表 | 📋 TODO | ADMIN-001 |
+| COURSE-001 | 課程列表頁 | 📋 TODO | AUTH-001 |
+| COURSE-002 | 課程詳情頁 | 📋 TODO | COURSE-001 |
+| COURSE-003 | 課程 CRUD API | 📋 TODO | ADMIN-001 |
+| COURSE-004 | 課程報名 | 📋 TODO | COURSE-002 |
+| LEARN-001 | 課程學習頁 | 📋 TODO | COURSE-004 |
+| LEARN-002 | 學習進度追蹤 | 📋 TODO | LEARN-001 |
 
 ---
 
-## 頁面結構
-
-### 前端路由
-
-```
-/                           # 首頁 (公開)
-/about                      # 關於頁面 (公開)
-/login                      # 登入頁面 (公開)
-/register                   # 註冊頁面 (公開)
-/dashboard                  # 會員儀表板 (需登入)
-/profile                    # 個人資料 (需登入)
-/courses                    # 課程列表 (需登入) [規劃中]
-/courses/{id}               # 課程詳情 (需登入) [規劃中]
-/admin                      # 管理後台 (管理員)
-/admin/users                # 使用者管理 (管理員) [規劃中]
-/admin/courses              # 課程管理 (管理員) [規劃中]
-```
+## Feature 規格
 
 ---
 
-## 資料模型
+### AUTH-001: Email 註冊
 
-### Firestore Collections
+**狀態**: ✅ DONE | **路由**: `/register` | **元件**: `RegisterForm.tsx`
 
-```
-users/
-├── {userId}
-│   ├── email: string
-│   ├── displayName: string
-│   ├── photoUrl: string
-│   ├── role: "member" | "admin"
-│   ├── createdAt: timestamp
-│   └── lastLoginAt: timestamp
+**驗收條件**:
+- [x] 顯示 Email 輸入欄位
+- [x] 顯示密碼輸入欄位 (最少 6 字元)
+- [x] 顯示確認密碼輸入欄位
+- [x] 密碼不符時顯示錯誤訊息
+- [x] 註冊成功後導向 `/dashboard`
+- [x] 註冊失敗時顯示 Firebase 錯誤訊息
 
-courses/ [規劃中]
-├── {courseId}
-│   ├── title: string
-│   ├── description: string
-│   ├── instructor: string
-│   ├── thumbnail: string
-│   ├── price: number
-│   ├── status: "draft" | "published"
-│   ├── createdAt: timestamp
-│   └── lessons/
-│       └── {lessonId}
-│           ├── title: string
-│           ├── content: string
-│           ├── videoUrl: string
-│           ├── duration: number
-│           └── order: number
-
-enrollments/ [規劃中]
-├── {enrollmentId}
-│   ├── userId: string
-│   ├── courseId: string
-│   ├── enrolledAt: timestamp
-│   └── status: "active" | "completed" | "cancelled"
-
-progress/ [規劃中]
-├── {progressId}
-│   ├── userId: string
-│   ├── courseId: string
-│   ├── lessonId: string
-│   ├── completed: boolean
-│   └── completedAt: timestamp
-```
+**實作檔案**:
+- `frontend/app/(auth)/register/page.tsx`
+- `frontend/components/auth/RegisterForm.tsx`
+- `frontend/lib/auth.ts` → `signUp()`
 
 ---
 
-## 技術實作狀態
+### AUTH-002: Email 登入
 
-### 已完成 ✅
+**狀態**: ✅ DONE | **路由**: `/login` | **元件**: `LoginForm.tsx`
 
-- [x] 專案結構建立
-- [x] Next.js 前端專案
-- [x] .NET 8 Minimal API 後端
-- [x] Firebase 整合 (Auth, Firestore, Storage)
-- [x] 認證系統 (Email/密碼, Google OAuth)
-- [x] 路由保護 (公開/會員/管理員)
-- [x] 基本 UI 元件
-- [x] CI/CD 設定 (GitHub Actions + Cloud Run)
-- [x] Firestore/Storage 安全規則
+**驗收條件**:
+- [x] 顯示 Email 輸入欄位
+- [x] 顯示密碼輸入欄位
+- [x] 登入成功後導向 `/dashboard`
+- [x] 登入失敗時顯示錯誤訊息
+- [x] 提供「註冊」連結
 
-### 進行中 🚧
+**實作檔案**:
+- `frontend/app/(auth)/login/page.tsx`
+- `frontend/components/auth/LoginForm.tsx`
+- `frontend/lib/auth.ts` → `signIn()`
 
-- [ ] 課程模組實作
-- [ ] 學習進度追蹤
-- [ ] 使用者管理介面
+---
 
-### 規劃中 📋
+### AUTH-003: Google OAuth 登入
 
-- [ ] 課程影片播放
-- [ ] 成就系統
-- [ ] 通知系統
-- [ ] 行動版 App
+**狀態**: ✅ DONE | **元件**: `GoogleLoginButton.tsx`
+
+**驗收條件**:
+- [x] 顯示「Continue with Google」按鈕
+- [x] 點擊後彈出 Google 登入視窗
+- [x] 登入成功後導向 `/dashboard`
+- [x] 新用戶自動建立帳號
+
+**實作檔案**:
+- `frontend/components/auth/GoogleLoginButton.tsx`
+- `frontend/lib/auth.ts` → `signInWithGoogle()`
+
+---
+
+### AUTH-004: 登出
+
+**狀態**: ✅ DONE | **元件**: `Header.tsx`
+
+**驗收條件**:
+- [x] Header 顯示使用者 Email
+- [x] 顯示「Sign Out」按鈕
+- [x] 點擊後清除登入狀態
+- [x] 登出後導向首頁
+
+**實作檔案**:
+- `frontend/components/layout/Header.tsx`
+- `frontend/components/auth/AuthProvider.tsx` → `signOut()`
+
+---
+
+### AUTH-005: Token 驗證 API
+
+**狀態**: ✅ DONE
+
+**API**:
+```
+POST /api/auth/verify
+Authorization: Bearer <token>
+
+Response 200: { success: true, data: { uid, email, emailVerified, isAdmin } }
+Response 400: { success: false, message: "..." }
+```
+
+**實作檔案**:
+- `backend/MidoLearning.Api/Endpoints/AuthEndpoints.cs`
+- `backend/MidoLearning.Api/Middleware/FirebaseAuthMiddleware.cs`
+
+---
+
+### USER-001: 取得個人資料
+
+**狀態**: ✅ DONE | **路由**: `/profile`
+
+**API**:
+```
+GET /api/users/profile
+Authorization: Bearer <token>
+
+Response 200: { success: true, data: { id, email, displayName, photoUrl } }
+```
+
+**驗收條件**:
+- [x] 顯示使用者 Email
+- [x] 顯示使用者 UID
+- [x] 顯示帳號建立時間
+- [x] 顯示最後登入時間
+- [x] 顯示「Edit Profile」按鈕 (功能待實作)
+
+**實作檔案**:
+- `frontend/app/(member)/profile/page.tsx`
+- `backend/MidoLearning.Api/Endpoints/UserEndpoints.cs`
+
+---
+
+### USER-002: 更新個人資料
+
+**狀態**: 📋 TODO | **路由**: `/profile`
+
+**API**:
+```
+PATCH /api/users/profile
+Authorization: Bearer <token>
+Body: { displayName, photoUrl }
+
+Response 200: { success: true, message: "Profile updated" }
+```
+
+**驗收條件**:
+- [ ] 點擊「Edit Profile」進入編輯模式
+- [ ] 可編輯顯示名稱
+- [ ] 可上傳頭像到 Firebase Storage
+- [ ] 儲存成功顯示提示訊息
+
+---
+
+### ADMIN-001: 管理員儀表板
+
+**狀態**: ✅ DONE | **路由**: `/admin` | **權限**: admin
+
+**驗收條件**:
+- [x] 非管理員無法存取，自動導向 `/dashboard`
+- [x] 顯示統計卡片 (使用者數、課程數、報名數、完成率)
+- [x] 顯示最近活動區塊
+
+**實作檔案**:
+- `frontend/app/(admin)/layout.tsx`
+- `frontend/app/(admin)/admin/page.tsx`
+
+---
+
+### ADMIN-002: 設定/移除管理員角色
+
+**狀態**: ✅ DONE | **權限**: admin
+
+**API**:
+```
+POST /api/admin/set-admin/{uid}
+DELETE /api/admin/remove-admin/{uid}
+Authorization: Bearer <token>
+
+Response 200: { success: true, message: "..." }
+```
+
+**實作檔案**:
+- `backend/MidoLearning.Api/Endpoints/AdminEndpoints.cs`
+
+---
+
+### ADMIN-003: 使用者列表
+
+**狀態**: 📋 TODO | **路由**: `/admin/users` | **權限**: admin
+
+**API**:
+```
+GET /api/admin/users?page=1&limit=20
+Authorization: Bearer <token>
+
+Response 200: {
+  success: true,
+  data: {
+    users: [{ uid, email, displayName, role, createdAt, lastLoginAt }],
+    total, page, limit
+  }
+}
+```
+
+**驗收條件**:
+- [ ] 顯示使用者表格 (Email, 角色, 建立時間, 最後登入)
+- [ ] 支援分頁
+- [ ] 可搜尋使用者
+- [ ] 可切換使用者角色
+
+---
+
+### COURSE-001: 課程列表頁
+
+**狀態**: 📋 TODO | **路由**: `/courses`
+
+**API**:
+```
+GET /api/courses?page=1&limit=12&category=<category>
+Authorization: Bearer <token>
+
+Response 200: {
+  success: true,
+  data: {
+    courses: [{ id, title, description, instructor, thumbnail, price, lessonCount, enrollmentCount }],
+    total, page, limit
+  }
+}
+```
+
+**驗收條件**:
+- [ ] 顯示課程卡片列表 (縮圖、標題、講師、價格)
+- [ ] 支援分頁或無限滾動
+- [ ] 可依分類篩選
+- [ ] 點擊卡片進入課程詳情
+
+---
+
+### COURSE-002: 課程詳情頁
+
+**狀態**: 📋 TODO | **路由**: `/courses/[id]`
+
+**API**:
+```
+GET /api/courses/{id}
+Authorization: Bearer <token>
+
+Response 200: {
+  success: true,
+  data: { id, title, description, instructor, thumbnail, price, status, createdAt, lessons: [...], isEnrolled }
+}
+```
+
+**驗收條件**:
+- [ ] 顯示課程標題、描述、講師資訊
+- [ ] 顯示課程大綱 (章節列表)
+- [ ] 顯示「報名」或「開始學習」按鈕
+- [ ] 已報名顯示學習進度
+
+---
+
+### COURSE-003: 課程 CRUD API
+
+**狀態**: 📋 TODO | **權限**: admin
+
+**API**:
+```
+POST   /api/admin/courses         → 建立課程
+GET    /api/admin/courses/{id}    → 取得課程 (含草稿)
+PUT    /api/admin/courses/{id}    → 更新課程
+DELETE /api/admin/courses/{id}    → 刪除課程
+```
+
+**驗收條件**:
+- [ ] 可建立新課程 (標題、描述、講師、價格、狀態)
+- [ ] 可編輯課程資訊
+- [ ] 可刪除課程
+- [ ] 可管理課程章節
+
+---
+
+### COURSE-004: 課程報名
+
+**狀態**: 📋 TODO
+
+**API**:
+```
+POST   /api/courses/{id}/enroll   → 報名課程
+DELETE /api/courses/{id}/enroll   → 取消報名
+```
+
+**驗收條件**:
+- [ ] 點擊「報名」按鈕成功報名
+- [ ] 報名後顯示「開始學習」按鈕
+- [ ] 可取消報名
+
+---
+
+### LEARN-001: 課程學習頁
+
+**狀態**: 📋 TODO | **路由**: `/courses/[id]/learn`
+
+**驗收條件**:
+- [ ] 左側顯示章節列表
+- [ ] 主區域顯示影片播放器或課程內容
+- [ ] 顯示目前進度
+- [ ] 可標記章節為已完成
+
+---
+
+### LEARN-002: 學習進度追蹤
+
+**狀態**: 📋 TODO
+
+**API**:
+```
+POST /api/courses/{courseId}/lessons/{lessonId}/complete → 標記完成
+GET  /api/courses/{courseId}/progress                    → 取得進度
+```
+
+**驗收條件**:
+- [ ] 完成章節後自動更新進度
+- [ ] Dashboard 顯示學習統計
+- [ ] 課程完成率計算正確
+
+---
+
+## 資料模型 (Firestore)
+
+```typescript
+// users/{userId}
+{ email, displayName?, photoUrl?, role: "member"|"admin", createdAt, lastLoginAt? }
+
+// courses/{courseId}
+{ title, description, instructor, thumbnail, price, status: "draft"|"published", category, createdAt, updatedAt }
+
+// courses/{courseId}/lessons/{lessonId}
+{ title, content, videoUrl?, duration, order }
+
+// enrollments/{viserId}_{courseId}
+{ userId, courseId, enrolledAt, status: "active"|"completed"|"cancelled" }
+
+// progress/{userId}_{courseId}_{lessonId}
+{ userId, courseId, lessonId, completed, completedAt? }
+```
 
 ---
 
@@ -216,4 +387,5 @@ progress/ [規劃中]
 
 | 版本 | 日期 | 說明 |
 |------|------|------|
-| v0.1.0 | 2026-01-30 | 初始版本 - 專案骨架與認證系統 |
+| v0.1.0 | 2026-01-30 | 專案骨架與認證系統 |
+| v0.1.1 | 2026-01-31 | Spec-Driven Development 格式，已完成功能打勾 |
