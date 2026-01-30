@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_FIREBASE_API_KEY=${NEXT_PUBLIC_FIREBASE_API_KEY}
+      - NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}
+      - NEXT_PUBLIC_FIREBASE_PROJECT_ID=mido-learning
+      - NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}
+      - NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}
+      - NEXT_PUBLIC_FIREBASE_APP_ID=${NEXT_PUBLIC_FIREBASE_APP_ID}
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend/MidoLearning.Api
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Firebase__ProjectId=mido-learning
+    volumes:
+      - ./credentials:/app/credentials:ro
+
+  firebase-emulator:
+    image: andreysenov/firebase-tools
+    ports:
+      - "9099:9099"   # Auth
+      - "8080:8080"   # Firestore
+      - "9199:9199"   # Storage
+      - "4000:4000"   # Emulator UI
+    volumes:
+      - ./firebase.json:/home/node/firebase.json
+      - ./firestore.rules:/home/node/firestore.rules
+      - ./storage.rules:/home/node/storage.rules
+    command: firebase emulators:start --project mido-learning
