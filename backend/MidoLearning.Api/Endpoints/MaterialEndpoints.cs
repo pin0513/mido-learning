@@ -1,5 +1,7 @@
 using System.IO.Compression;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using MidoLearning.Api.Models;
 using MidoLearning.Api.Services;
 
@@ -11,6 +13,8 @@ public static class MaterialEndpoints
     private const string ComponentsCollection = "components";
     private const long MaxFileSize = 50 * 1024 * 1024; // 50MB
     private static readonly TimeSpan SignedUrlExpiration = TimeSpan.FromHours(1);
+    private static readonly TimeSpan ContentTokenExpiration = TimeSpan.FromHours(2);
+    private const string TokenSecret = "MidoLearning-Content-Access-Secret-2026"; // In production, use configuration
 
     public static void MapMaterialEndpoints(this IEndpointRouteBuilder app)
     {
@@ -308,6 +312,9 @@ public static class MaterialEndpoints
                 return Results.NotFound(ApiResponse.Fail("Material not found"));
             }
 
+            // Generate access token for iframe content loading
+            var accessToken = GenerateContentAccessToken(materialId);
+
             // Use content API endpoint as base URL for proper access control
             // In Cloud Run, TLS terminates at load balancer, so check X-Forwarded-Proto header
             var scheme = request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? request.Scheme;
@@ -316,7 +323,8 @@ public static class MaterialEndpoints
                 scheme = "https"; // Force HTTPS for non-localhost environments
             }
             var host = request.Host.ToString();
-            var baseUrl = $"{scheme}://{host}/api/materials/{materialId}/content/";
+            // Include access token in baseUrl for iframe access
+            var baseUrl = $"{scheme}://{host}/api/materials/{materialId}/content/?token={accessToken}&path=";
 
             var response = ApiResponse<MaterialManifestResponse>.Ok(new MaterialManifestResponse
             {
@@ -337,6 +345,49 @@ public static class MaterialEndpoints
                 detail: "Failed to retrieve manifest",
                 statusCode: StatusCodes.Status500InternalServerError);
         }
+    }
+
+    /// <summary>
+    /// Generate a time-limited access token for material content
+    /// </summary>
+    private static string GenerateContentAccessToken(string materialId)
+    {
+        var expiry = DateTimeOffset.UtcNow.Add(ContentTokenExpiration).ToUnixTimeSeconds();
+        var data = $"{materialId}:{expiry}";
+
+        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(TokenSecret));
+        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
+        var signature = Convert.ToBase64String(hash).Replace("+", "-").Replace("/", "_").TrimEnd('=');
+
+        return $"{expiry}.{signature}";
+    }
+
+    /// <summary>
+    /// Validate a content access token
+    /// </summary>
+    private static bool ValidateContentAccessToken(string materialId, string? token)
+    {
+        if (string.IsNullOrEmpty(token))
+            return false;
+
+        var parts = token.Split('.');
+        if (parts.Length != 2)
+            return false;
+
+        if (!long.TryParse(parts[0], out var expiry))
+            return false;
+
+        // Check expiry
+        if (DateTimeOffset.UtcNow.ToUnixTimeSeconds() > expiry)
+            return false;
+
+        // Verify signature
+        var data = $"{materialId}:{expiry}";
+        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(TokenSecret));
+        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
+        var expectedSignature = Convert.ToBase64String(hash).Replace("+", "-").Replace("/", "_").TrimEnd('=');
+
+        return parts[1] == expectedSignature;
     }
 
     private static async Task<IResult> GetFile(
@@ -393,10 +444,12 @@ public static class MaterialEndpoints
     /// Get material content with visibility-based access control.
     /// Allows anonymous access for published materials, requires login for login-required materials,
     /// and restricts private materials to owner/admin only.
+    /// Also accepts a valid access token (from manifest) to bypass visibility checks for iframe loading.
     /// </summary>
     private static async Task<IResult> GetContent(
         string materialId,
         string? path,
+        string? token,
         HttpContext context,
         IFirebaseService firebaseService,
         IStorageService storageService,
@@ -424,42 +477,47 @@ public static class MaterialEndpoints
                 return Results.BadRequest(ApiResponse.Fail("Invalid path"));
             }
 
-            // Get component to check visibility
-            var component = await firebaseService.GetDocumentAsync<LearningComponent>(
-                ComponentsCollection, material.ComponentId);
+            // Check if valid access token is provided (for iframe loading)
+            var hasValidToken = ValidateContentAccessToken(materialId, token);
 
-            if (component is null)
+            if (!hasValidToken)
             {
-                return Results.NotFound(ApiResponse.Fail("Component not found"));
-            }
+                // No valid token, check visibility-based access
+                var component = await firebaseService.GetDocumentAsync<LearningComponent>(
+                    ComponentsCollection, material.ComponentId);
 
-            // Check visibility-based access
-            var visibility = component.Visibility ?? "published"; // Default to published for legacy data
-            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = context.User.IsInRole("admin");
+                if (component is null)
+                {
+                    return Results.NotFound(ApiResponse.Fail("Component not found"));
+                }
 
-            switch (visibility)
-            {
-                case "private":
-                    // Only owner or admin can access
-                    if (!isAdmin && component.CreatedBy?.Uid != uid)
-                    {
-                        return Results.Forbid();
-                    }
-                    break;
+                var visibility = component.Visibility ?? "published"; // Default to published for legacy data
+                var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var isAdmin = context.User.IsInRole("admin");
 
-                case "login":
-                    // Requires authenticated user
-                    if (string.IsNullOrEmpty(uid))
-                    {
-                        return Results.Unauthorized();
-                    }
-                    break;
+                switch (visibility)
+                {
+                    case "private":
+                        // Only owner or admin can access
+                        if (!isAdmin && component.CreatedBy?.Uid != uid)
+                        {
+                            return Results.Forbid();
+                        }
+                        break;
 
-                case "published":
-                default:
-                    // Allow anonymous access
-                    break;
+                    case "login":
+                        // Requires authenticated user
+                        if (string.IsNullOrEmpty(uid))
+                        {
+                            return Results.Unauthorized();
+                        }
+                        break;
+
+                    case "published":
+                    default:
+                        // Allow anonymous access
+                        break;
+                }
             }
 
             // Build the full storage path and download file content
