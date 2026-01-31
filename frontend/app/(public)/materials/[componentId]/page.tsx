@@ -3,7 +3,9 @@
 import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { LearningComponent, getCategoryConfig } from '@/types/component';
+import { Material, MaterialManifest } from '@/types/material';
 import { getComponentById } from '@/lib/api/components';
+import { getMaterials, getDownloadUrl, getMaterialManifest } from '@/lib/api/materials';
 import { StarRating, RatingDisplay } from '@/components/ui/StarRating';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { getComponentRatings, getMyRating, rateComponent } from '@/lib/api/ratings';
@@ -18,6 +20,8 @@ export default function GuestMaterialPage({
   const { user } = useAuth();
 
   const [component, setComponent] = useState<LearningComponent | null>(null);
+  const [materials, setMaterials] = useState<Material[]>([]);
+  const [latestManifest, setLatestManifest] = useState<MaterialManifest | null>(null);
   const [ratings, setRatings] = useState<RatingListResponse | null>(null);
   const [myRating, setMyRating] = useState<UserRatingResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -29,6 +33,26 @@ export default function GuestMaterialPage({
       try {
         const data = await getComponentById(componentId);
         setComponent(data);
+
+        // Load materials
+        try {
+          const materialsData = await getMaterials(componentId);
+          setMaterials(materialsData);
+
+          // If we have materials, get the manifest for the latest version
+          if (materialsData.length > 0) {
+            const sortedMaterials = [...materialsData].sort((a, b) => b.version - a.version);
+            const latestMaterial = sortedMaterials[0];
+            try {
+              const manifest = await getMaterialManifest(latestMaterial.id);
+              setLatestManifest(manifest);
+            } catch {
+              // Manifest fetch failed
+            }
+          }
+        } catch {
+          // Materials fetch failed, but component loaded
+        }
 
         // Load ratings if user is logged in
         if (user) {
@@ -238,38 +262,90 @@ export default function GuestMaterialPage({
           </div>
         )}
 
-        {/* Material Viewer Placeholder */}
+        {/* Material Viewer */}
         <div className="rounded-lg bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-xl font-semibold text-gray-900">學習教材</h2>
-          <div className={`aspect-video w-full rounded-lg ${config.bgClass} flex items-center justify-center`}>
-            <div className="text-center">
-              <svg
-                className={`mx-auto h-16 w-16 ${config.textClass} opacity-50`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+          {materials.length > 0 && latestManifest ? (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="rounded bg-blue-100 px-2 py-1 text-sm font-medium text-blue-700">
+                  v{latestManifest.version} (最新版本)
+                </span>
+                <button
+                  onClick={() => window.open(getDownloadUrl(latestManifest.materialId), '_blank')}
+                  className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800"
+                >
+                  <svg className="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  下載教材
+                </button>
+              </div>
+              <div className="aspect-video w-full overflow-hidden rounded-lg border border-gray-200">
+                <iframe
+                  src={`${latestManifest.baseUrl}${latestManifest.entryPoint}`}
+                  className="h-full w-full"
+                  title={component.title}
+                  sandbox="allow-scripts allow-same-origin"
                 />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <p className={`mt-4 ${config.textClass}`}>
-                教材內容區域
-              </p>
-              <p className="mt-1 text-sm text-gray-500">
-                上傳教材後將在此顯示
-              </p>
+              </div>
+
+              {/* Other versions */}
+              {materials.length > 1 && (
+                <div className="mt-4 border-t pt-4">
+                  <h3 className="mb-2 text-sm font-medium text-gray-700">歷史版本</h3>
+                  <div className="space-y-2">
+                    {[...materials]
+                      .sort((a, b) => b.version - a.version)
+                      .slice(1)
+                      .map((material) => (
+                        <div
+                          key={material.id}
+                          className="flex items-center justify-between rounded-lg border border-gray-200 p-3"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
+                              v{material.version}
+                            </span>
+                            <span className="text-sm text-gray-600">{material.filename}</span>
+                          </div>
+                          <button
+                            onClick={() => window.open(getDownloadUrl(material.id), '_blank')}
+                            className="text-sm text-blue-600 hover:text-blue-800"
+                          >
+                            下載
+                          </button>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          ) : (
+            <div className={`aspect-video w-full rounded-lg ${config.bgClass} flex items-center justify-center`}>
+              <div className="text-center">
+                <svg
+                  className={`mx-auto h-16 w-16 ${config.textClass} opacity-50`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                  />
+                </svg>
+                <p className={`mt-4 ${config.textClass}`}>
+                  尚無教材
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  此課程尚未上傳教材
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </main>
 
