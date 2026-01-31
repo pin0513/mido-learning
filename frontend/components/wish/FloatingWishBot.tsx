@@ -234,7 +234,7 @@ export function FloatingWishBot() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={getPlaceholder()}
                 disabled={isSubmitting || step === 'greeting'}
-                className="flex-1 rounded-full border border-gray-200 px-4 py-2 text-sm focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400 disabled:bg-gray-100"
+                className="flex-1 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-400 disabled:bg-gray-100"
               />
               {step === 'email' ? (
                 <div className="flex gap-1">
