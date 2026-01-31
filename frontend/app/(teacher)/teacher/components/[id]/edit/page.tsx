@@ -69,13 +69,11 @@ export default function EditComponentPage({
         setThumbnailUrl(data.thumbnailUrl || '');
         const questionsData = data.questions || [];
         setQuestions(
-          questionsData.length > 0
-            ? questionsData.map((q) => ({
-                id: q.id || crypto.randomUUID(),
-                question: q.question || '',
-                answer: q.answer || '',
-              }))
-            : [{ id: crypto.randomUUID(), question: '', answer: '' }]
+          questionsData.map((q) => ({
+            id: q.id || crypto.randomUUID(),
+            question: q.question || '',
+            answer: q.answer || '',
+          }))
         );
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load component');
@@ -92,7 +90,6 @@ export default function EditComponentPage({
   };
 
   const removeQuestion = (qId: string) => {
-    if (questions.length <= 1) return;
     setQuestions((prev) => prev.filter((q) => q.id !== qId));
   };
 
@@ -111,17 +108,6 @@ export default function EditComponentPage({
 
     if (!subject.trim()) {
       newErrors.subject = '請輸入主題';
-    }
-
-    if (!description.trim()) {
-      newErrors.description = '請輸入說明';
-    }
-
-    const validQuestions = questions.filter(
-      (q) => q.question.trim() && q.answer.trim()
-    );
-    if (validQuestions.length === 0) {
-      newErrors.questions = '請至少新增一個問與答';
     }
 
     setErrors(newErrors);
@@ -381,7 +367,7 @@ export default function EditComponentPage({
             {/* Description */}
             <div>
               <label htmlFor="description" className="mb-1 block text-sm font-medium text-gray-700">
-                說明 <span className="text-red-500">*</span>
+                說明
               </label>
               <textarea
                 id="description"
@@ -389,13 +375,8 @@ export default function EditComponentPage({
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="輸入教材說明"
                 rows={4}
-                className={`block w-full rounded-md border px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 ${
-                  errors.description
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                }`}
+                className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
               />
-              {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
             </div>
 
             {/* Tags */}
@@ -430,7 +411,7 @@ export default function EditComponentPage({
             <div>
               <div className="mb-3 flex items-center justify-between">
                 <label className="text-sm font-medium text-gray-700">
-                  問與答 <span className="text-red-500">*</span>
+                  問與答 <span className="text-xs text-gray-400">（選填）</span>
                 </label>
                 <Button type="button" variant="outline" size="sm" onClick={addQuestion}>
                   <svg className="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -439,16 +420,19 @@ export default function EditComponentPage({
                   新增問答
                 </Button>
               </div>
-              {errors.questions && <p className="mb-2 text-sm text-red-600">{errors.questions}</p>}
               <div className="space-y-4">
-                {questions.map((q, index) => (
-                  <div
-                    key={q.id}
-                    className={`rounded-lg border p-4 ${config.borderClass} ${config.bgClass}`}
-                  >
-                    <div className="mb-3 flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700">問答 #{index + 1}</span>
-                      {questions.length > 1 && (
+                {questions.length === 0 ? (
+                  <p className="py-4 text-center text-sm text-gray-500">
+                    尚未新增問與答
+                  </p>
+                ) : (
+                  questions.map((q, index) => (
+                    <div
+                      key={q.id}
+                      className={`rounded-lg border p-4 ${config.borderClass} ${config.bgClass}`}
+                    >
+                      <div className="mb-3 flex items-center justify-between">
+                        <span className="text-sm font-medium text-gray-700">問答 #{index + 1}</span>
                         <button
                           type="button"
                           onClick={() => removeQuestion(q.id)}
@@ -463,8 +447,7 @@ export default function EditComponentPage({
                             />
                           </svg>
                         </button>
-                      )}
-                    </div>
+                      </div>
                     <div className="space-y-3">
                       <div>
                         <label className="mb-1 block text-sm text-gray-600">問題</label>
@@ -486,7 +469,8 @@ export default function EditComponentPage({
                       </div>
                     </div>
                   </div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
 

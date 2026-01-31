@@ -77,7 +77,7 @@ export default function TeacherComponentsPage() {
                 上傳教材
               </Button>
             </Link>
-            <Link href="/teacher/components/new">
+            <Link href="/teacher/components/upload">
               <Button>
                 <svg className="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -133,7 +133,7 @@ export default function TeacherComponentsPage() {
       {/* Empty state with CTA */}
       {!loading && components.length === 0 && !error && (
         <div className="mt-4 text-center">
-          <Link href="/teacher/components/new">
+          <Link href="/teacher/components/upload">
             <Button size="lg">
               <svg className="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
