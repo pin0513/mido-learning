@@ -50,6 +50,12 @@ public static class MaterialEndpoints
         materialGroup.MapGet("/file", GetFile)
             .WithName("GetFile")
             .WithOpenApi();
+
+        // Content proxy endpoint (allows anonymous access, validates based on material/component visibility)
+        materialGroup.MapGet("/content/{*path}", GetContent)
+            .WithName("GetMaterialContent")
+            .AllowAnonymous()
+            .WithOpenApi();
     }
 
     private static async Task<IResult> UploadMaterial(
@@ -287,8 +293,8 @@ public static class MaterialEndpoints
 
     private static async Task<IResult> GetManifest(
         string materialId,
+        HttpRequest request,
         IFirebaseService firebaseService,
-        IStorageService storageService,
         ILogger<Program> logger)
     {
         try
@@ -301,7 +307,10 @@ public static class MaterialEndpoints
                 return Results.NotFound(ApiResponse.Fail("Material not found"));
             }
 
-            var baseUrl = await storageService.GetPublicBaseUrlAsync(material.StoragePath ?? string.Empty);
+            // Use content API endpoint as base URL for proper access control
+            var scheme = request.Scheme;
+            var host = request.Host.ToString();
+            var baseUrl = $"{scheme}://{host}/api/materials/{materialId}/content/";
 
             var response = ApiResponse<MaterialManifestResponse>.Ok(new MaterialManifestResponse
             {
@@ -370,6 +379,92 @@ public static class MaterialEndpoints
             logger.LogError(ex, "Failed to get file {Path} for material {MaterialId}", path, materialId);
             return Results.Problem(
                 detail: "Failed to retrieve file",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    /// <summary>
+    /// Get material content with visibility-based access control.
+    /// Allows anonymous access for published materials, requires login for login-required materials,
+    /// and restricts private materials to owner/admin only.
+    /// </summary>
+    private static async Task<IResult> GetContent(
+        string materialId,
+        string? path,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        IStorageService storageService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            // Default to index.html if no path specified
+            var filePath = string.IsNullOrEmpty(path) ? "index.html" : path;
+
+            // Prevent path traversal attacks
+            if (filePath.Contains("..") || filePath.StartsWith("/") || filePath.Contains("\\"))
+            {
+                return Results.BadRequest(ApiResponse.Fail("Invalid path"));
+            }
+
+            // Get material
+            var material = await firebaseService.GetDocumentAsync<CourseMaterial>(
+                MaterialsCollection, materialId);
+
+            if (material is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Material not found"));
+            }
+
+            // Get component to check visibility
+            var component = await firebaseService.GetDocumentAsync<LearningComponent>(
+                ComponentsCollection, material.ComponentId);
+
+            if (component is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Component not found"));
+            }
+
+            // Check visibility-based access
+            var visibility = component.Visibility ?? "published"; // Default to published for legacy data
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.IsInRole("admin");
+
+            switch (visibility)
+            {
+                case "private":
+                    // Only owner or admin can access
+                    if (!isAdmin && component.CreatedBy?.Uid != uid)
+                    {
+                        return Results.Forbid();
+                    }
+                    break;
+
+                case "login":
+                    // Requires authenticated user
+                    if (string.IsNullOrEmpty(uid))
+                    {
+                        return Results.Unauthorized();
+                    }
+                    break;
+
+                case "published":
+                default:
+                    // Allow anonymous access
+                    break;
+            }
+
+            // Build the full storage path
+            var storagePath = $"{material.StoragePath}/{filePath}";
+            var signedUrl = await storageService.GetSignedUrlAsync(storagePath, SignedUrlExpiration);
+
+            return Results.Redirect(signedUrl);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to get content {Path} for material {MaterialId}", path, materialId);
+            return Results.Problem(
+                detail: "Failed to retrieve content",
                 statusCode: StatusCodes.Status500InternalServerError);
         }
     }
