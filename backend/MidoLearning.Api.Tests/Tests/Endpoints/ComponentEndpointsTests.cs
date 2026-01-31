@@ -325,6 +325,58 @@ public class ComponentEndpointsTests : IClassFixture<WebApplicationFactory<Progr
         result.Data!.Components.Should().HaveCount(1);
     }
 
+    [Fact]
+    public async Task GetMyComponents_AdminSeesAllComponents()
+    {
+        // Arrange - Admin should see all components, not just their own
+        var components = new List<LearningComponent>
+        {
+            CreateTestComponentWithVisibility("comp-1", "private", "other-user-1"),
+            CreateTestComponentWithVisibility("comp-2", "published", "other-user-2"),
+            CreateTestComponentWithVisibility("comp-3", "private", "admin-123") // Admin's own
+        };
+        SetupMockGetComponentsAsync(components);
+        var client = CreateAuthenticatedClient("admin-123", "admin");
+
+        // Act
+        var response = await client.GetAsync("/api/components/my");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<ComponentListResponse>>();
+        result.Should().NotBeNull();
+        result!.Success.Should().BeTrue();
+        // Admin should see ALL components
+        result.Data!.Components.Should().HaveCount(3);
+    }
+
+    [Fact]
+    public async Task GetMyComponents_TeacherSeesOnlyOwnComponents()
+    {
+        // Arrange - Teacher should only see their own components
+        var components = new List<LearningComponent>
+        {
+            CreateTestComponentWithVisibility("comp-1", "private", "other-user"),
+            CreateTestComponentWithVisibility("comp-2", "published", "teacher-123"), // Teacher's own
+            CreateTestComponentWithVisibility("comp-3", "private", "teacher-123") // Teacher's own
+        };
+        SetupMockGetComponentsAsync(components);
+        var client = CreateAuthenticatedClient("teacher-123", "teacher");
+
+        // Act
+        var response = await client.GetAsync("/api/components/my");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<ComponentListResponse>>();
+        result.Should().NotBeNull();
+        result!.Success.Should().BeTrue();
+        // Teacher should only see their own 2 components
+        result.Data!.Components.Should().HaveCount(2);
+    }
+
     #endregion
 
     #region POST /api/components (Create)

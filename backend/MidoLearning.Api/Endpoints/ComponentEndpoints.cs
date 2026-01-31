@@ -271,6 +271,7 @@ public static class ComponentEndpoints
 
     /// <summary>
     /// Get current user's components (teacher/admin)
+    /// Admin sees all components, teacher sees only their own
     /// </summary>
     private static async Task<IResult> GetMyComponents(
         HttpContext context,
@@ -291,6 +292,8 @@ public static class ComponentEndpoints
                 return Results.Unauthorized();
             }
 
+            var isAdmin = context.User.IsInRole("admin");
+
             (page, limit) = NormalizePaginationParams(page, limit);
 
             var (components, total) = await firebaseService.GetDocumentsAsync<LearningComponent>(
@@ -300,8 +303,10 @@ public static class ComponentEndpoints
                 null,
                 null);
 
-            // Filter by creator
-            var myComponents = components.Where(c => c.CreatedBy?.Uid == uid);
+            // Admin sees all components, teacher sees only their own
+            var myComponents = isAdmin
+                ? components.AsEnumerable()
+                : components.Where(c => c.CreatedBy?.Uid == uid);
 
             // Apply category filter
             if (!string.IsNullOrEmpty(category))
