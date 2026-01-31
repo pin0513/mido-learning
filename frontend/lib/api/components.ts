@@ -128,7 +128,7 @@ export async function getComponentById(id: string): Promise<LearningComponent> {
  */
 export async function createComponent(
   data: CreateComponentRequest
-): Promise<LearningComponent> {
+): Promise<{ id: string }> {
   const headers = await getAuthHeaders();
   const response = await fetch(`${API_URL}/api/components`, {
     method: 'POST',
@@ -143,10 +143,13 @@ export async function createComponent(
     if (response.status === 403) {
       throw new Error('Forbidden: Teacher or admin role required');
     }
-    throw new Error(`Failed to create component: ${response.statusText}`);
+    const errorResponse = await response.json().catch(() => null);
+    const errorMessage = errorResponse?.message || response.statusText;
+    throw new Error(`Failed to create component: ${errorMessage}`);
   }
 
-  return response.json();
+  const apiResponse: ApiResponse<{ id: string }> = await response.json();
+  return apiResponse.data;
 }
 
 /**
