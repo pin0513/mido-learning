@@ -288,7 +288,7 @@ export default function GuestMaterialPage({
                   src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
                   className="h-full w-full"
                   title={component.title}
-                  sandbox="allow-scripts allow-same-origin"
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
                 />
               </div>
 

@@ -124,6 +124,16 @@ export const CATEGORY_CONFIG: Record<string, {
     badgeClass: 'bg-amber-100 text-red-800',
     buttonClass: 'bg-red-600 hover:bg-red-700',
   },
+  game: {
+    label: '小遊戲',
+    primary: '#EA580C',
+    light: '#FFF7ED',
+    textClass: 'text-orange-800',
+    bgClass: 'bg-orange-50',
+    borderClass: 'border-orange-200',
+    badgeClass: 'bg-orange-100 text-orange-800',
+    buttonClass: 'bg-orange-600 hover:bg-orange-700',
+  },
   Programming: {
     label: '程式設計',
     primary: '#7C3AED',

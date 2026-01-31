@@ -59,8 +59,8 @@ export function MaterialIframe({ src, title }: MaterialIframeProps) {
         src={src}
         title={title}
         className="h-full w-full border-0"
-        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-        allow="fullscreen"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
+        allow="fullscreen; autoplay; gamepad"
         onLoad={handleLoad}
         onError={handleError}
       />

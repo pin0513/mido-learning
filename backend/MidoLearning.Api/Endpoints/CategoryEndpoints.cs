@@ -13,7 +13,7 @@ public static class CategoryEndpoints
     // Default categories (will be merged with used categories from DB)
     private static readonly string[] DefaultCategories =
     {
-        "adult", "kid", "Programming", "Language", "Science", "Art"
+        "adult", "kid", "game", "Programming", "Language", "Science", "Art"
     };
 
     public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
