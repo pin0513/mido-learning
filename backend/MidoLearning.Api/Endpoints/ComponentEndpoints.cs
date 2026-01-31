@@ -29,6 +29,11 @@ public static class ComponentEndpoints
             .WithName("CreateComponent")
             .RequireAuthorization("TeacherOrAdmin")
             .WithOpenApi();
+
+        group.MapGet("/my", GetMyComponents)
+            .WithName("GetMyComponents")
+            .RequireAuthorization("TeacherOrAdmin")
+            .WithOpenApi();
     }
 
     private static async Task<IResult> GetComponents(
@@ -112,6 +117,60 @@ public static class ComponentEndpoints
             logger.LogError(ex, "Failed to get component {ComponentId}", id);
             return Results.Problem(
                 detail: "Failed to retrieve component",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    private static async Task<IResult> GetMyComponents(
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger,
+        int page = 1,
+        int limit = DefaultPageSize,
+        string? category = null)
+    {
+        try
+        {
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(uid))
+            {
+                return Results.Unauthorized();
+            }
+
+            (page, limit) = NormalizePaginationParams(page, limit);
+
+            var (components, total) = await firebaseService.GetDocumentsAsync<LearningComponent>(
+                ComponentsCollection,
+                page,
+                limit,
+                null,
+                null);
+
+            // Filter by creator
+            var myComponents = components.Where(c => c.CreatedBy?.Uid == uid);
+
+            // Apply category filter if provided
+            if (!string.IsNullOrEmpty(category))
+            {
+                myComponents = myComponents.Where(c =>
+                    c.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
+            }
+
+            var response = ApiResponse<ComponentListResponse>.Ok(new ComponentListResponse
+            {
+                Components = myComponents,
+                Total = myComponents.Count(),
+                Page = page,
+                Limit = limit
+            });
+
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to get my components");
+            return Results.Problem(
+                detail: "Failed to retrieve components",
                 statusCode: StatusCodes.Status500InternalServerError);
         }
     }

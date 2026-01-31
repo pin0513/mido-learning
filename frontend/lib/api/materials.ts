@@ -32,8 +32,8 @@ export async function getMaterials(componentId: string): Promise<Material[]> {
     throw new Error(`Failed to fetch materials: ${response.statusText}`);
   }
 
-  const data: MaterialListResponse = await response.json();
-  return data.materials;
+  const apiResponse: { success: boolean; data: MaterialListResponse } = await response.json();
+  return apiResponse.data.materials;
 }
 
 export async function uploadMaterial(
@@ -90,6 +90,13 @@ export async function uploadMaterial(
   });
 }
 
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+  errors?: string[];
+}
+
 export async function getMaterialManifest(materialId: string): Promise<MaterialManifest> {
   const headers = await getAuthHeaders();
   const response = await fetch(`${API_URL}/api/materials/${materialId}/manifest`, {
@@ -103,7 +110,8 @@ export async function getMaterialManifest(materialId: string): Promise<MaterialM
     throw new Error(`Failed to fetch manifest: ${response.statusText}`);
   }
 
-  return response.json();
+  const apiResponse: ApiResponse<MaterialManifest> = await response.json();
+  return apiResponse.data;
 }
 
 export function getDownloadUrl(materialId: string): string {

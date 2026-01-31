@@ -30,7 +30,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "http://localhost:3000",
-                "https://mido-learning.web.app"
+                "https://mido-learning.web.app",
+                "https://mido-learning-frontend-24mwb46hra-de.a.run.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()

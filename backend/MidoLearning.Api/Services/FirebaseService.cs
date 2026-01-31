@@ -169,7 +169,22 @@ public class FirebaseService : IFirebaseService
 
         var snapshot = await query.GetSnapshotAsync();
         var items = snapshot.Documents
-            .Select(doc => doc.ConvertTo<T>())
+            .Select(doc =>
+            {
+                var item = doc.ConvertTo<T>();
+                // Try to set the Id property if it exists using reflection
+                var idProperty = typeof(T).GetProperty("Id");
+                if (idProperty != null && idProperty.CanWrite)
+                {
+                    // For records with init-only setters, we need a different approach
+                    // Create a new instance with the Id set
+                    if (item is LearningComponent component)
+                    {
+                        return (T)(object)(component with { Id = doc.Id });
+                    }
+                }
+                return item;
+            })
             .ToList();
 
         // Get total count (this is inefficient for large collections, but Firestore doesn't have a native count)
@@ -197,9 +212,9 @@ public class FirebaseService : IFirebaseService
 
     public async Task<List<CourseMaterial>> GetMaterialsByComponentIdAsync(string componentId)
     {
+        // Simple query without ordering to avoid index requirement
         var query = _firestoreDb.Collection("materials")
-            .WhereEqualTo("ComponentId", componentId)
-            .OrderByDescending("Version");
+            .WhereEqualTo("ComponentId", componentId);
 
         var snapshot = await query.GetSnapshotAsync();
         var materials = snapshot.Documents
@@ -208,6 +223,7 @@ public class FirebaseService : IFirebaseService
                 var material = doc.ConvertTo<CourseMaterial>();
                 return material with { Id = doc.Id };
             })
+            .OrderByDescending(m => m.Version) // Order in memory instead
             .ToList();
 
         _logger.LogInformation("Retrieved {Count} materials for component {ComponentId}", materials.Count, componentId);

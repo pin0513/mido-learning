@@ -16,6 +16,12 @@ public static class AdminEndpoints
 
     public static void MapAdminEndpoints(this IEndpointRouteBuilder app)
     {
+        // Special setup endpoint (no auth required, but only works for protected admin email)
+        app.MapPost("/api/setup/init-admin", InitializeAdmin)
+            .WithTags("Setup")
+            .WithName("InitializeAdmin")
+            .WithOpenApi();
+
         var group = app.MapGroup("/api/admin")
             .WithTags("Admin")
             .RequireAuthorization("AdminOnly");
@@ -43,6 +49,40 @@ public static class AdminEndpoints
         group.MapDelete("/users/{uid}", DeleteUser)
             .WithName("DeleteUser")
             .WithOpenApi();
+    }
+
+    private static async Task<IResult> InitializeAdmin(
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            // Find the protected admin user by email
+            var users = await firebaseService.ListUsersAsync(1, 100, null, ProtectedAdminEmail);
+            var adminUser = users.Users.FirstOrDefault(u =>
+                u.Email?.Equals(ProtectedAdminEmail, StringComparison.OrdinalIgnoreCase) == true);
+
+            if (adminUser is null)
+            {
+                return Results.NotFound(ApiResponse.Fail($"找不到用戶: {ProtectedAdminEmail}"));
+            }
+
+            // Set admin and teacher claims
+            await firebaseService.SetCustomClaimsAsync(adminUser.Uid, new Dictionary<string, object>
+            {
+                { "admin", true },
+                { "teacher", true },
+                { "role", "admin" }
+            });
+
+            logger.LogInformation("Admin initialized for {Email} (uid: {Uid})", ProtectedAdminEmail, adminUser.Uid);
+            return Results.Ok(ApiResponse.Ok($"系統管理員已初始化: {ProtectedAdminEmail}"));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to initialize admin");
+            return Results.BadRequest(ApiResponse.Fail($"初始化失敗: {ex.Message}"));
+        }
     }
 
     private static async Task<IResult> SetAdminRole(

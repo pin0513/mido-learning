@@ -28,7 +28,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
 
       if (user) {
         try {
-          const token = await user.getIdTokenResult();
+          const token = await user.getIdTokenResult(true);
           const isTeacher = token.claims.teacher === true;
           const isAdmin = token.claims.admin === true;
 

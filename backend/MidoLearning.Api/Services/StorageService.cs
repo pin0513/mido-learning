@@ -129,8 +129,9 @@ public class StorageService : IStorageService
 
     public Task<string> GetPublicBaseUrlAsync(string folderPath)
     {
-        // Return the public URL pattern for the folder
-        var baseUrl = $"https://storage.googleapis.com/{_bucketName}/{folderPath}";
+        // Return the public URL pattern for the folder (with trailing slash)
+        var normalizedPath = folderPath.TrimEnd('/');
+        var baseUrl = $"https://storage.googleapis.com/{_bucketName}/{normalizedPath}/";
         return Task.FromResult(baseUrl);
     }
 

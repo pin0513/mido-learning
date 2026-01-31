@@ -9,19 +9,29 @@ namespace MidoLearning.Api.Middleware;
 public class FirebaseAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     private readonly IFirebaseService _firebaseService;
+    private readonly IConfiguration _configuration;
 
     public FirebaseAuthHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
-        IFirebaseService firebaseService)
+        IFirebaseService firebaseService,
+        IConfiguration configuration)
         : base(options, logger, encoder)
     {
         _firebaseService = firebaseService;
+        _configuration = configuration;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
+        // Check for API Key authentication (for testing purposes)
+        var apiKeyResult = TryAuthenticateWithApiKey();
+        if (apiKeyResult is not null)
+        {
+            return apiKeyResult;
+        }
+
         var authHeader = Request.Headers.Authorization.FirstOrDefault();
 
         if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
@@ -69,5 +79,41 @@ public class FirebaseAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
             Logger.LogWarning(ex, "Failed to verify Firebase token");
             return AuthenticateResult.Fail("Invalid token");
         }
+    }
+
+    private AuthenticateResult? TryAuthenticateWithApiKey()
+    {
+        var apiKey = Request.Headers["X-API-Key"].FirstOrDefault();
+        if (string.IsNullOrEmpty(apiKey))
+        {
+            return null;
+        }
+
+        var configuredKey = _configuration["ApiKey:TestKey"];
+        if (string.IsNullOrEmpty(configuredKey) || apiKey != configuredKey)
+        {
+            Logger.LogWarning("Invalid API key attempted");
+            return null;
+        }
+
+        var adminUid = _configuration["ApiKey:AdminUid"] ?? "test-admin";
+        var adminEmail = _configuration["ApiKey:AdminEmail"] ?? "admin@test.com";
+
+        Logger.LogInformation("API Key authentication successful for {Email}", adminEmail);
+
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, adminUid),
+            new(ClaimTypes.Email, adminEmail),
+            new(ClaimTypes.Name, "Test Admin"),
+            new(ClaimTypes.Role, "admin"),
+            new("firebase_uid", adminUid)
+        };
+
+        var identity = new ClaimsIdentity(claims, Scheme.Name);
+        var principal = new ClaimsPrincipal(identity);
+        var ticket = new AuthenticationTicket(principal, Scheme.Name);
+
+        return AuthenticateResult.Success(ticket);
     }
 }

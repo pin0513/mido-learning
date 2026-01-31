@@ -10,8 +10,6 @@ const sidebarItems = [
   { label: '管理控制台', href: '/admin' },
   { label: '用戶管理', href: '/admin/users' },
   { label: '願望池', href: '/admin/wishes' },
-  { label: '課程管理', href: '/admin/courses' },
-  { label: '數據分析', href: '/admin/analytics' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -29,7 +27,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       if (user) {
         try {
-          const token = await user.getIdTokenResult();
+          const token = await user.getIdTokenResult(true);
           if (token.claims.admin === true) {
             setIsAdmin(true);
           } else {

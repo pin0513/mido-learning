@@ -71,7 +71,8 @@ export async function getComponentById(id: string): Promise<LearningComponent> {
     throw new Error(`Failed to fetch component: ${response.statusText}`);
   }
 
-  return response.json();
+  const apiResponse: ApiResponse<LearningComponent> = await response.json();
+  return apiResponse.data;
 }
 
 export async function createComponent(

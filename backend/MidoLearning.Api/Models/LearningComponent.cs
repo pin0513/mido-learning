@@ -34,6 +34,9 @@ public record LearningComponent
     public int MaterialCount { get; init; }
 
     [FirestoreProperty]
+    public CreatedByInfo? CreatedBy { get; init; }
+
+    [FirestoreProperty]
     public DateTime CreatedAt { get; init; }
 }
 

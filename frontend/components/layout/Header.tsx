@@ -29,7 +29,8 @@ export function Header() {
   useEffect(() => {
     if (user) {
       setRoleLoading(true);
-      user.getIdTokenResult().then((token) => {
+      // Force refresh token to get latest custom claims
+      user.getIdTokenResult(true).then((token) => {
         if (token.claims.admin) {
           setUserRole('admin');
         } else if (token.claims.teacher) {
