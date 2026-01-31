@@ -71,7 +71,7 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
 
     const data: CreateComponentRequest = {
       title: title.trim(),
-      subject: subject.trim(),
+      theme: subject.trim(),
       description: description.trim(),
       category,
       tags,

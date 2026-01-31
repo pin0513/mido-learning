@@ -166,7 +166,7 @@ export default function NewComponentPage() {
 
       const componentData: CreateComponentRequest = {
         title: title.trim(),
-        subject: subject.trim(),
+        theme: subject.trim(),
         description: description.trim() || undefined,
         category,
         tags,

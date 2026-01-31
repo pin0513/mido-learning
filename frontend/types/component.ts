@@ -28,7 +28,7 @@ export interface LearningComponent {
 
 export interface CreateComponentRequest {
   title: string;
-  subject: string;
+  theme: string;
   description?: string;
   category: Category;
   tags: string[];
