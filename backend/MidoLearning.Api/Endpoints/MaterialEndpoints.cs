@@ -104,6 +104,7 @@ public static class MaterialEndpoints
             var (isValid, manifest, validationError) = await ValidateZipFileAsync(file);
             if (!isValid)
             {
+                logger.LogWarning("ZIP validation failed for component {ComponentId}: {Error}", componentId, validationError);
                 return Results.BadRequest(ApiResponse.Fail(validationError!));
             }
 
@@ -509,7 +510,8 @@ public static class MaterialEndpoints
 
             if (!hasIndexHtml)
             {
-                return (false, null, "ZIP file must contain an index.html file at the root level");
+                var fileList = string.Join(", ", files.Take(10));
+                return (false, null, $"ZIP file must contain an index.html file at the root level. Found files: [{fileList}]");
             }
 
             var manifest = new MaterialManifest
