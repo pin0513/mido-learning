@@ -285,7 +285,7 @@ export default function GuestMaterialPage({
               </div>
               <div className="aspect-video w-full overflow-hidden rounded-lg border border-gray-200">
                 <iframe
-                  src={`${latestManifest.baseUrl}${latestManifest.entryPoint}`}
+                  src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
                   className="h-full w-full"
                   title={component.title}
                   sandbox="allow-scripts allow-same-origin"

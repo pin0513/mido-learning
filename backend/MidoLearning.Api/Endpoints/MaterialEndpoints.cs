@@ -29,8 +29,10 @@ public static class MaterialEndpoints
             .DisableAntiforgery()
             .WithOpenApi();
 
+        // Materials list allows anonymous - it checks visibility internally
         componentGroup.MapGet("/", GetMaterials)
             .WithName("GetMaterials")
+            .AllowAnonymous()
             .WithOpenApi();
 
         // Material-specific endpoints
@@ -184,11 +186,47 @@ public static class MaterialEndpoints
 
     private static async Task<IResult> GetMaterials(
         string componentId,
+        HttpContext context,
         IFirebaseService firebaseService,
         ILogger<Program> logger)
     {
         try
         {
+            // Check component visibility for anonymous access
+            var component = await firebaseService.GetDocumentAsync<LearningComponent>(
+                ComponentsCollection, componentId);
+
+            if (component is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Component not found"));
+            }
+
+            var visibility = component.Visibility ?? "published";
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.IsInRole("admin");
+
+            switch (visibility)
+            {
+                case "private":
+                    if (!isAdmin && component.CreatedBy?.Uid != uid)
+                    {
+                        return Results.Forbid();
+                    }
+                    break;
+
+                case "login":
+                    if (string.IsNullOrEmpty(uid))
+                    {
+                        return Results.Unauthorized();
+                    }
+                    break;
+
+                case "published":
+                default:
+                    // Allow anonymous access
+                    break;
+            }
+
             var materials = await firebaseService.GetMaterialsByComponentIdAsync(componentId);
 
             var response = ApiResponse<MaterialListResponse>.Ok(new MaterialListResponse
