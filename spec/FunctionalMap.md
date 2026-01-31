@@ -9,7 +9,7 @@
 | 項目 | 值 |
 |------|-----|
 | 專案名稱 | 米豆學習網 (Mido Learning) |
-| 版本 | v0.6.0 |
+| 版本 | v0.6.1 |
 | 前端 URL | https://mido-learning-frontend-24mwb46hra-de.a.run.app |
 | 後端 URL | https://mido-learning-api-24mwb46hra-de.a.run.app |
 | 本地前端 | http://localhost:3000 |
@@ -32,10 +32,18 @@
 
 ## 學習元件分類
 
+**分類為動態管理**，可透過 API 新增/編輯/刪除。預設分類如下：
+
 | 分類 ID | 名稱 | 主題風格 | 色系 | 目標受眾 |
 |---------|------|---------|------|---------|
 | `adult` | 大人學 | 高山冰河 | 冷色調 (藍、白、銀) | 成人學習者 |
 | `kid` | 小人學 | 地底火山 | 暖色調 (紅、橙、黃) | 兒童學習者 |
+| `Programming` | 程式設計 | 科技感 | 紫色調 | 開發者 |
+| `Language` | 語言學習 | 自然感 | 綠色調 | 語言學習者 |
+| `Science` | 自然科學 | 探索感 | 青色調 | 科學愛好者 |
+| `Art` | 藝術創作 | 創意感 | 粉紅色調 | 藝術創作者 |
+
+**API**: `/api/categories` (GET/POST/PUT/DELETE)
 
 ---
 
@@ -580,7 +588,7 @@ Response 201: {
 **Zip 檔案結構規範**:
 ```
 learning-component.zip
-├── index.html          # 投影片主檔 (必須)
+├── *.html              # 投影片主檔 (必須，根目錄至少一個 HTML)
 ├── script.md           # 講稿 (選填)
 ├── assets/             # 資源目錄
 │   ├── images/         # 圖片檔
@@ -591,6 +599,11 @@ learning-component.zip
 └── README.md           # 教材說明 (選填)
 ```
 
+**入口點自動偵測**:
+- 優先使用 `index.html` 作為入口點
+- 若無 `index.html`，自動使用根目錄第一個 HTML 檔案 (如 `presentation.html`, `train.html`)
+- 自動忽略 `__MACOSX` 等系統資料夾
+
 **重要**: 解壓時必須保留原始目錄結構，確保 HTML 內的相對路徑 (如 `./assets/images/slide01.png`) 可正確存取。
 
 **驗收條件**:
@@ -598,7 +611,7 @@ learning-component.zip
 - [x] 檔案大小限制 (50MB)
 - [x] 顯示上傳進度
 - [x] 上傳成功顯示版本號
-- [x] 驗證 Zip 內含 index.html
+- [x] 驗證 Zip 內含根目錄 HTML 檔案 (自動偵測入口點)
 
 **實作檔案**:
 - `backend/MidoLearning.Api/Endpoints/MaterialEndpoints.cs`
@@ -632,7 +645,7 @@ Response 200: { success: true, message: "教材已刪除" }
 **驗收條件**:
 - [x] 顯示所有版本列表
 - [x] 可下載特定版本
-- [x] 可刪除特定版本
+- [x] 可刪除任意版本 (含 v1)
 - [x] 版本號自動遞增
 
 **實作檔案**:
@@ -689,16 +702,21 @@ Response: Redirect to signed URL for zip download
 GET /api/materials/{materialId}/manifest
 Response: { materialId, componentId, version, entryPoint, files, baseUrl }
 
-GET /api/materials/{materialId}/file?path=<relative-path>
-Response: Redirect to signed URL
+GET /api/materials/{materialId}/content/{*path}
+Response: Proxy content from Firebase Storage (visibility-based access control)
 ```
+
+**內容代理存取控制**:
+- `published` 元件：允許匿名存取
+- `login` 元件：需要已驗證使用者
+- `private` 元件：僅擁有者或管理員
 
 **驗收條件**:
 - [x] 可下載完整 Zip (signed URL redirect)
 - [x] 投影片 HTML 可線上檢視 (RWD 支援)
 - [x] HTML 內的相對路徑圖片可正確載入
 - [x] 講稿 Markdown 可預覽 (側邊欄)
-- [x] 使用 Firebase Storage signed URL
+- [x] 使用內容代理 API (基於元件可見度存取控制)
 
 **實作檔案**:
 - `backend/MidoLearning.Api/Endpoints/MaterialEndpoints.cs`
@@ -1162,3 +1180,4 @@ Response 403: { success: false, message: "Permission denied" }
 | v0.5.0 | 2026-01-31 | WISH-003 願望池管理完成 (TDD, 14 tests)：狀態流轉、從願望建立元件、連結現有元件、管理介面 |
 | v0.5.1 | 2026-01-31 | WISH-004 願望統計儀表板完成 (TDD, 7 tests)：總數統計、7日趨勢、平均處理時間、完成率 |
 | v0.6.0 | 2026-01-31 | INFRA-001/002 RWD 完成、COMP-003/004 優化：欄位簡化（僅標題/主題必填）、建立+上傳整合、Header/Sidebar/Footer RWD 修正 |
+| v0.6.1 | 2026-01-31 | 教材系統優化：內容代理 API (取代 signed URL)、自動偵測 HTML 入口點、v1 版本可刪除、分類動態管理 |

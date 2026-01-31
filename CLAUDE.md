@@ -132,10 +132,26 @@ npx playwright test e2e/materials.spec.ts
 
 ### Material Upload Flow
 1. Teacher creates component via `/teacher/components/upload`
-2. Backend validates ZIP (must contain `index.html`)
+2. Backend validates ZIP (must contain an HTML file at root level)
+   - Prefers `index.html` as entry point
+   - Falls back to first root HTML file (e.g., `presentation.html`)
+   - Skips macOS `__MACOSX` metadata files
 3. ZIP is extracted to Firebase Storage: `materials/{componentId}/v{version}/`
-4. Material manifest is stored in Firestore
-5. Frontend displays material via iframe using signed URLs
+4. Material manifest (with detected entry point) is stored in Firestore
+5. Frontend displays material via iframe using content proxy API
+
+### Material Access Control
+Materials are stored privately in Firebase Storage. Access is controlled via the content proxy API:
+- **API Endpoint**: `/api/materials/{materialId}/content/{path}`
+- **Access rules based on component visibility**:
+  - `published`: Anonymous access allowed
+  - `login`: Requires authenticated user
+  - `private`: Owner or admin only
+
+### Categories
+- Categories are **dynamic** and can be created/managed via API
+- API: `/api/categories` for listing, `/api/categories/{id}` for CRUD
+- Frontend displays with color-coded styling from `CATEGORY_CONFIG`
 
 ### API Response Format
 All API responses follow this wrapper format:
