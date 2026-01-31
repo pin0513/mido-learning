@@ -48,9 +48,13 @@ public class StorageService : IStorageService
                 _bucketName,
                 path,
                 contentType,
-                stream);
+                stream,
+                new UploadObjectOptions
+                {
+                    PredefinedAcl = PredefinedObjectAcl.PublicRead
+                });
 
-            _logger.LogInformation("File uploaded: {Path}", path);
+            _logger.LogInformation("File uploaded with public access: {Path}", path);
             return path;
         }
         catch (Exception ex)
