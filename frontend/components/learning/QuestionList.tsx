@@ -1,22 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { Question, Category, CATEGORY_CONFIG } from '@/types/component';
+import { Question, Category, getCategoryConfig } from '@/types/component';
 
 interface QuestionListProps {
   questions: Question[];
-  category?: Category;
+  category?: Category | string;
 }
 
 interface QuestionItemProps {
   question: Question;
-  category: Category;
+  category: Category | string;
   isOpen: boolean;
   onToggle: () => void;
 }
 
 function QuestionItem({ question, category, isOpen, onToggle }: QuestionItemProps) {
-  const config = CATEGORY_CONFIG[category];
+  const config = getCategoryConfig(category);
 
   return (
     <div className={`border rounded-lg overflow-hidden ${config.borderClass}`}>

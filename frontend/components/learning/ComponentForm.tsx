@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { Category, CreateComponentRequest, CATEGORY_CONFIG } from '@/types/component';
+import { Category, CreateComponentRequest, CATEGORY_CONFIG, getCategoryConfig } from '@/types/component';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { LearningComponent, CATEGORY_CONFIG } from '@/types/component';
+import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Material } from '@/types/material';
 import { getMaterials } from '@/lib/api/materials';
 import { TagDisplay } from './TagDisplay';
@@ -23,7 +23,7 @@ export function ComponentDetail({
   editHref,
   showMaterialManagement = false,
 }: ComponentDetailProps) {
-  const config = CATEGORY_CONFIG[component.category];
+  const config = getCategoryConfig(component.category);
   const [materials, setMaterials] = useState<Material[]>([]);
   const [isMaterialsLoading, setIsMaterialsLoading] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);

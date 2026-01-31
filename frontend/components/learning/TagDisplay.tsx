@@ -1,13 +1,13 @@
-import { Category, CATEGORY_CONFIG } from '@/types/component';
+import { Category, getCategoryConfig } from '@/types/component';
 
 interface TagDisplayProps {
   tags: string[];
-  category?: Category;
+  category?: Category | string;
   maxDisplay?: number;
 }
 
 export function TagDisplay({ tags, category = 'adult', maxDisplay }: TagDisplayProps) {
-  const config = CATEGORY_CONFIG[category];
+  const config = getCategoryConfig(category);
   const displayTags = maxDisplay ? tags.slice(0, maxDisplay) : tags;
   const remainingCount = maxDisplay && tags.length > maxDisplay ? tags.length - maxDisplay : 0;
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Wish } from '@/types/wish';
-import { LearningComponent, CATEGORY_CONFIG } from '@/types/component';
+import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { searchComponents } from '@/lib/api/wishes';
@@ -162,7 +162,7 @@ export function LinkComponentModal({
                   </div>
                 ) : components.length > 0 ? (
                   components.map((component) => {
-                    const categoryConfig = CATEGORY_CONFIG[component.category];
+                    const categoryConfig = getCategoryConfig(component.category);
                     const isSelected = selectedComponent?.id === component.id;
 
                     return (

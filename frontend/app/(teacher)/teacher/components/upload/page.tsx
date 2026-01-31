@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Category, CreateComponentRequest, CATEGORY_CONFIG } from '@/types/component';
+import { Category, CreateComponentRequest, CATEGORY_CONFIG, getCategoryConfig } from '@/types/component';
 import { createComponent } from '@/lib/api/components';
 import { uploadMaterial } from '@/lib/api/materials';
 import { Input } from '@/components/ui/Input';
@@ -230,7 +230,7 @@ export default function UploadComponentPage() {
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          返回我的元件
+          返回我的學習
         </Button>
       </Link>
 

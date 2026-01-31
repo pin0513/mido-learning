@@ -35,7 +35,7 @@ export interface CreateComponentFromWishRequest {
   title: string;
   subject: string;
   description: string;
-  category: 'adult' | 'kid';
+  category: string;
   tags: string[];
   questions: Array<{
     question: string;

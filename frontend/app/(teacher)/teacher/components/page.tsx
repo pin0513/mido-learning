@@ -58,7 +58,7 @@ export default function TeacherComponentsPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">我的元件</h1>
+          <h1 className="text-2xl font-bold text-gray-900">我的學習</h1>
           <p className="mt-1 text-gray-600">管理您建立的學習元件</p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

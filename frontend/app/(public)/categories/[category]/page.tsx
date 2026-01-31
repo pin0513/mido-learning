@@ -54,8 +54,8 @@ export default function CategoryComponentsPage({
           sortBy: sortOption.sortBy,
           sortOrder: sortOption.sortOrder,
         });
-        setComponents(data.components);
-        setTotal(data.total);
+        setComponents(data.components || []);
+        setTotal(data.total || 0);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load components');
       } finally {

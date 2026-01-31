@@ -196,7 +196,7 @@ export default function EditComponentPage({
         <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-center">
           <p className="text-red-700">{error || '找不到元件'}</p>
           <Link href="/teacher/components" className="mt-4 inline-block text-blue-600 hover:underline">
-            返回我的元件
+            返回我的學習
           </Link>
         </div>
       </div>
@@ -218,7 +218,7 @@ export default function EditComponentPage({
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          返回我的元件
+          返回我的學習
         </Button>
       </Link>
 

@@ -40,7 +40,7 @@ export default function NewComponentPage() {
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          返回我的元件
+          返回我的學習
         </Button>
       </Link>
 

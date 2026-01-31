@@ -32,8 +32,8 @@ export default function HomePage() {
         ...(category !== 'all' && { category }),
       };
       const response: ComponentListResponse = await getPublicComponents(params);
-      setComponents(response.components);
-      setTotalPages(Math.ceil(response.total / response.limit));
+      setComponents(response.components || []);
+      setTotalPages(Math.ceil((response.total || 0) / (response.limit || ITEMS_PER_PAGE)));
     } catch {
       setComponents([]);
     } finally {

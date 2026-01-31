@@ -93,7 +93,9 @@ public static class ComponentEndpoints
                 null);
 
             // Filter to only published components
-            var filteredComponents = components.Where(c => c.Visibility == "published");
+            // For backward compatibility, treat null/empty visibility as "published"
+            var filteredComponents = components.Where(c =>
+                c.Visibility == "published" || string.IsNullOrEmpty(c.Visibility));
 
             // Apply category filter
             if (!string.IsNullOrEmpty(category))
@@ -163,7 +165,9 @@ public static class ComponentEndpoints
                 null);
 
             // Filter based on visibility and ownership
+            // For backward compatibility, treat null/empty visibility as accessible to logged-in users
             var filteredComponents = components.Where(c =>
+                string.IsNullOrEmpty(c.Visibility) ||
                 c.Visibility == "published" ||
                 c.Visibility == "login" ||
                 (c.Visibility == "private" && c.CreatedBy?.Uid == uid) ||
@@ -237,11 +241,13 @@ public static class ComponentEndpoints
             var isAdmin = context.User.HasClaim("admin", "true");
             var isOwner = componentWithId.CreatedBy?.Uid == uid;
 
+            // For backward compatibility, treat null/empty as accessible
             var canAccess = componentWithId.Visibility switch
             {
                 "published" => true,
                 "login" => isAuthenticated,
                 "private" => isOwner || isAdmin,
+                null or "" => true, // Backward compatibility: allow access to legacy components
                 _ => false
             };
 

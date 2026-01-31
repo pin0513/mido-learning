@@ -8,7 +8,7 @@ import { Sidebar } from '@/components/layout/Sidebar';
 
 const sidebarItems = [
   { label: '學習中心', href: '/dashboard' },
-  { label: '我的元件', href: '/teacher/components' },
+  { label: '我的學習', href: '/teacher/components' },
   { label: '上傳教材', href: '/teacher/components/upload' },
   { label: '願望池', href: '/teacher/wishes' },
 ];

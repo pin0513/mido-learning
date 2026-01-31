@@ -97,7 +97,9 @@ public static class CategoryEndpoints
             else if (isAuthenticated)
             {
                 // Logged-in users see published + login + their own private
+                // For backward compatibility, treat null/empty visibility as accessible
                 filteredComponents = filteredComponents.Where(c =>
+                    string.IsNullOrEmpty(c.Visibility) ||
                     c.Visibility == "published" ||
                     c.Visibility == "login" ||
                     (c.Visibility == "private" && c.CreatedBy?.Uid == uid));
@@ -105,7 +107,9 @@ public static class CategoryEndpoints
             else
             {
                 // Anonymous users see only published
-                filteredComponents = filteredComponents.Where(c => c.Visibility == "published");
+                // For backward compatibility, treat null/empty visibility as published
+                filteredComponents = filteredComponents.Where(c =>
+                    c.Visibility == "published" || string.IsNullOrEmpty(c.Visibility));
             }
 
             // Apply tags filter
