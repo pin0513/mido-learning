@@ -58,7 +58,7 @@ export interface UpdateComponentRequest {
   title?: string;
   theme?: string;
   description?: string;
-  category?: Category;
+  category?: string; // Allow custom categories
   tags?: string[];
   questions?: Omit<Question, 'id'>[];
   thumbnailUrl?: string;

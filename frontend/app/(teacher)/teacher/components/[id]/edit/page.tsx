@@ -5,10 +5,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   LearningComponent,
-  Category,
   Visibility,
   UpdateComponentRequest,
-  CATEGORY_CONFIG,
+  getCategoryConfig,
 } from '@/types/component';
 import { Material } from '@/types/material';
 import {
@@ -18,6 +17,7 @@ import {
   deleteComponent,
 } from '@/lib/api/components';
 import { getMaterials, uploadMaterial } from '@/lib/api/materials';
+import { getSuggestions } from '@/lib/api/categories';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
@@ -31,6 +31,7 @@ interface QuestionInput {
 }
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+const CUSTOM_CATEGORY = '__custom__';
 
 export default function EditComponentPage({
   params,
@@ -55,7 +56,9 @@ export default function EditComponentPage({
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState<Category>('adult');
+  const [category, setCategory] = useState('');
+  const [customCategory, setCustomCategory] = useState('');
+  const [categorySuggestions, setCategorySuggestions] = useState<string[]>([]);
   const [visibility, setVisibility] = useState<Visibility>('private');
   const [tagsInput, setTagsInput] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
@@ -72,6 +75,23 @@ export default function EditComponentPage({
     }
   }, [id]);
 
+  // Load category suggestions
+  useEffect(() => {
+    getSuggestions()
+      .then((data) => {
+        setCategorySuggestions(data.categories);
+      })
+      .catch(console.error);
+  }, []);
+
+  // Get the actual category value
+  const getActualCategory = () => {
+    if (category === CUSTOM_CATEGORY) {
+      return customCategory.trim();
+    }
+    return category;
+  };
+
   useEffect(() => {
     const loadComponent = async () => {
       try {
@@ -82,7 +102,9 @@ export default function EditComponentPage({
         setTitle(data.title || '');
         setSubject(data.subject || data.theme || '');
         setDescription(data.description || '');
-        setCategory((data.category as Category) || 'adult');
+        // Set category - will be adjusted when suggestions load
+        const componentCategory = data.category || 'adult';
+        setCategory(componentCategory);
         setVisibility(data.visibility || 'private');
         setTagsInput((data.tags || []).join(', '));
         setThumbnailUrl(data.thumbnailUrl || '');
@@ -154,11 +176,12 @@ export default function EditComponentPage({
         .filter((q) => q.question.trim() && q.answer.trim())
         .map((q) => ({ question: q.question.trim(), answer: q.answer.trim() }));
 
+      const actualCategory = getActualCategory();
       const data: UpdateComponentRequest = {
         title: title.trim(),
         theme: subject.trim(),
         description: description.trim(),
-        category,
+        category: actualCategory,
         tags,
         questions: validQuestions,
         thumbnailUrl: thumbnailUrl.trim() || undefined,
@@ -248,7 +271,7 @@ export default function EditComponentPage({
     }
   };
 
-  const config = CATEGORY_CONFIG[category];
+  const config = getCategoryConfig(getActualCategory());
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -380,43 +403,44 @@ export default function EditComponentPage({
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 分類 <span className="text-red-500">*</span>
               </label>
-              <div className="flex gap-4">
-                {(['adult', 'kid'] as const).map((cat) => {
-                  const catConfig = CATEGORY_CONFIG[cat];
-                  return (
-                    <label
-                      key={cat}
-                      className={`flex cursor-pointer items-center gap-2 rounded-lg border-2 px-4 py-3 transition-colors ${
-                        category === cat
-                          ? `${catConfig.borderClass} ${catConfig.bgClass}`
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="category"
-                        value={cat}
-                        checked={category === cat}
-                        onChange={() => setCategory(cat)}
-                        className="sr-only"
-                      />
-                      <span
-                        className={`h-4 w-4 rounded-full border-2 ${
-                          category === cat
-                            ? cat === 'adult'
-                              ? 'border-blue-600 bg-blue-600'
-                              : 'border-red-600 bg-red-600'
-                            : 'border-gray-300'
-                        }`}
-                      >
-                        {category === cat && (
-                          <span className="block h-full w-full rounded-full border-2 border-white" />
-                        )}
-                      </span>
-                      <span className="font-medium">{catConfig.label}</span>
-                    </label>
-                  );
-                })}
+              <div className="flex gap-3">
+                <select
+                  value={categorySuggestions.includes(category) ? category : (category && category !== CUSTOM_CATEGORY ? CUSTOM_CATEGORY : category)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setCategory(value);
+                    if (value !== CUSTOM_CATEGORY) {
+                      setCustomCategory('');
+                    } else if (category && !categorySuggestions.includes(category)) {
+                      // If current category is custom, preserve it
+                      setCustomCategory(category);
+                    }
+                  }}
+                  className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {categorySuggestions.map((cat) => {
+                    const catConfig = getCategoryConfig(cat);
+                    return (
+                      <option key={cat} value={cat}>
+                        {catConfig.label || cat}
+                      </option>
+                    );
+                  })}
+                  <option value={CUSTOM_CATEGORY}>✏️ 自訂分類...</option>
+                </select>
+                {(category === CUSTOM_CATEGORY || (category && !categorySuggestions.includes(category))) && (
+                  <Input
+                    value={customCategory || (categorySuggestions.includes(category) ? '' : category)}
+                    onChange={(e) => {
+                      setCustomCategory(e.target.value);
+                      if (category !== CUSTOM_CATEGORY) {
+                        setCategory(CUSTOM_CATEGORY);
+                      }
+                    }}
+                    placeholder="輸入新分類名稱"
+                    className="flex-1"
+                  />
+                )}
               </div>
             </div>
 
