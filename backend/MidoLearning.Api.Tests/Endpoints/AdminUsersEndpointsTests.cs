@@ -199,10 +199,10 @@ public class AdminUsersEndpointsTests
     }
 
     [Theory]
-    [InlineData("member")]
+    [InlineData("student")]
     [InlineData("teacher")]
     [InlineData("admin")]
-    [InlineData("Member")]  // Test case insensitivity
+    [InlineData("Student")]  // Test case insensitivity
     [InlineData("TEACHER")]
     [InlineData("Admin")]
     public async Task UpdateUserRole_ValidRoles_ReturnsSuccess(string role)

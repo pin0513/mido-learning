@@ -168,16 +168,161 @@ public class ComponentEndpointsTests : IClassFixture<WebApplicationFactory<Progr
     }
 
     [Fact]
-    public async Task GetComponent_Unauthenticated_Returns401()
+    public async Task GetComponent_Unauthenticated_CanAccessPublished()
     {
-        // Arrange
+        // Arrange - Public component should be accessible without auth
+        var component = CreateTestComponentDetail("comp-123");
+        var componentWithVisibility = component with { Visibility = "published" };
+        SetupMockGetComponentByIdAsync("comp-123", componentWithVisibility);
         var client = _factory.CreateClient();
 
         // Act
         var response = await client.GetAsync("/api/components/comp-123");
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task GetComponent_Unauthenticated_CannotAccessPrivate()
+    {
+        // Arrange - Private component should not be accessible without auth
+        var component = CreateTestComponentDetail("comp-123");
+        var componentWithVisibility = component with { Visibility = "private" };
+        SetupMockGetComponentByIdAsync("comp-123", componentWithVisibility);
+        var client = _factory.CreateClient();
+
+        // Act
+        var response = await client.GetAsync("/api/components/comp-123");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    #endregion
+
+    #region GET /api/components/public (Public List)
+
+    [Fact]
+    public async Task GetPublicComponents_ReturnsPublishedComponents()
+    {
+        // Arrange
+        var components = new List<LearningComponent>
+        {
+            CreateTestComponentWithVisibility("comp-1", "published"),
+            CreateTestComponentWithVisibility("comp-2", "private"),
+            CreateTestComponentWithVisibility("comp-3", "published")
+        };
+        SetupMockGetComponentsAsync(components);
+        var client = _factory.CreateClient(); // No auth required
+
+        // Act
+        var response = await client.GetAsync("/api/components/public");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<ComponentListResponse>>();
+        result.Should().NotBeNull();
+        result!.Success.Should().BeTrue();
+        result.Data!.Components.Should().HaveCount(2);
+        result.Data.Components.Should().OnlyContain(c => c.Visibility == "published");
+    }
+
+    [Fact]
+    public async Task GetPublicComponents_ReturnsLegacyComponentsWithNullVisibility()
+    {
+        // Arrange - Legacy components have null visibility
+        var components = new List<LearningComponent>
+        {
+            CreateTestComponentWithVisibility("comp-1", null), // Legacy
+            CreateTestComponentWithVisibility("comp-2", "private"),
+            CreateTestComponentWithVisibility("comp-3", null) // Legacy
+        };
+        SetupMockGetComponentsAsync(components);
+        var client = _factory.CreateClient();
+
+        // Act
+        var response = await client.GetAsync("/api/components/public");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<ComponentListResponse>>();
+        result.Should().NotBeNull();
+        result!.Success.Should().BeTrue();
+        result.Data!.Components.Should().HaveCount(2);
+    }
+
+    [Fact]
+    public async Task GetPublicComponents_DoesNotRequireAuthentication()
+    {
+        // Arrange
+        var components = new List<LearningComponent>
+        {
+            CreateTestComponentWithVisibility("comp-1", "published")
+        };
+        SetupMockGetComponentsAsync(components);
+        var client = _factory.CreateClient(); // No auth
+
+        // Act
+        var response = await client.GetAsync("/api/components/public");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    #endregion
+
+    #region Visibility Tests
+
+    [Fact]
+    public async Task GetComponents_ShowsLoginVisibilityToAuthenticatedUsers()
+    {
+        // Arrange
+        var components = new List<LearningComponent>
+        {
+            CreateTestComponentWithVisibility("comp-1", "published"),
+            CreateTestComponentWithVisibility("comp-2", "login"),
+            CreateTestComponentWithVisibility("comp-3", "private", "other-user")
+        };
+        SetupMockGetComponentsAsync(components);
+        var client = CreateAuthenticatedClient("user-123", "member");
+
+        // Act
+        var response = await client.GetAsync("/api/components");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<ComponentListResponse>>();
+        result.Should().NotBeNull();
+        result!.Success.Should().BeTrue();
+        // Should see published and login, but not private from other user
+        result.Data!.Components.Should().HaveCount(2);
+    }
+
+    [Fact]
+    public async Task GetComponents_ShowsPrivateToOwner()
+    {
+        // Arrange
+        var components = new List<LearningComponent>
+        {
+            CreateTestComponentWithVisibility("comp-1", "private", "user-123") // Owner's private
+        };
+        SetupMockGetComponentsAsync(components);
+        var client = CreateAuthenticatedClient("user-123", "member");
+
+        // Act
+        var response = await client.GetAsync("/api/components");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<ComponentListResponse>>();
+        result.Should().NotBeNull();
+        result!.Success.Should().BeTrue();
+        result.Data!.Components.Should().HaveCount(1);
     }
 
     #endregion
@@ -348,6 +493,24 @@ public class ComponentEndpointsTests : IClassFixture<WebApplicationFactory<Progr
             Tags = new[] { "tag1", "tag2" },
             Thumbnail = "https://example.com/thumbnail.jpg",
             MaterialCount = 5,
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    private LearningComponent CreateTestComponentWithVisibility(string id, string? visibility, string? createdByUid = null)
+    {
+        return new LearningComponent
+        {
+            Id = id,
+            Title = $"Component {id}",
+            Theme = "Test Theme",
+            Description = "Test Description",
+            Category = "adult",
+            Tags = new[] { "tag1", "tag2" },
+            Thumbnail = "https://example.com/thumbnail.jpg",
+            MaterialCount = 5,
+            Visibility = visibility,
+            CreatedBy = createdByUid != null ? new CreatedByInfo { Uid = createdByUid, DisplayName = "Test User" } : null,
             CreatedAt = DateTime.UtcNow
         };
     }

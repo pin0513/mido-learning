@@ -16,14 +16,15 @@ public static class ComponentEndpoints
 
     public static void MapComponentEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/api/components")
-            .WithTags("Components");
-
-        // Public endpoint - no auth required
-        group.MapGet("/public", GetPublicComponents)
+        // Public endpoint - no auth required (outside group to avoid any auth inheritance)
+        app.MapGet("/api/components/public", GetPublicComponents)
             .WithName("GetPublicComponents")
+            .WithTags("Components")
             .AllowAnonymous()
             .WithOpenApi();
+
+        var group = app.MapGroup("/api/components")
+            .WithTags("Components");
 
         // Authenticated endpoints
         group.MapGet("/", GetComponents)
@@ -93,9 +94,9 @@ public static class ComponentEndpoints
                 null);
 
             // Filter to only published components
-            // For backward compatibility, treat null/empty visibility as "published"
+            // For backward compatibility, treat null/empty visibility as "published" (legacy documents)
             var filteredComponents = components.Where(c =>
-                c.Visibility == "published" || string.IsNullOrEmpty(c.Visibility));
+                c.Visibility == "published" || c.Visibility is null || c.Visibility == "");
 
             // Apply category filter
             if (!string.IsNullOrEmpty(category))
@@ -167,7 +168,8 @@ public static class ComponentEndpoints
             // Filter based on visibility and ownership
             // For backward compatibility, treat null/empty visibility as accessible to logged-in users
             var filteredComponents = components.Where(c =>
-                string.IsNullOrEmpty(c.Visibility) ||
+                c.Visibility is null ||
+                c.Visibility == "" ||
                 c.Visibility == "published" ||
                 c.Visibility == "login" ||
                 (c.Visibility == "private" && c.CreatedBy?.Uid == uid) ||
@@ -241,13 +243,12 @@ public static class ComponentEndpoints
             var isAdmin = context.User.HasClaim("admin", "true");
             var isOwner = componentWithId.CreatedBy?.Uid == uid;
 
-            // For backward compatibility, treat null/empty as accessible
+            // For backward compatibility, treat null/empty as "published" (legacy documents)
             var canAccess = componentWithId.Visibility switch
             {
-                "published" => true,
+                null or "" or "published" => true, // Backward compatibility: legacy documents are public
                 "login" => isAuthenticated,
                 "private" => isOwner || isAdmin,
-                null or "" => true, // Backward compatibility: allow access to legacy components
                 _ => false
             };
 

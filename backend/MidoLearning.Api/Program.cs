@@ -21,6 +21,9 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("TeacherOrAdmin", policy =>
         policy.RequireRole("teacher", "admin"));
+
+    // Default policy allows anonymous - individual endpoints opt-in to require auth
+    options.FallbackPolicy = null;
 });
 
 builder.Services.AddCors(options =>

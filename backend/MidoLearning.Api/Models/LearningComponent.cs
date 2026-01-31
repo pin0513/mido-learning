@@ -35,9 +35,10 @@ public record LearningComponent
 
     /// <summary>
     /// Visibility level: "published" (public), "login" (requires login), "private" (owner only)
+    /// For backward compatibility, null means "published" (legacy documents)
     /// </summary>
     [FirestoreProperty]
-    public string Visibility { get; init; } = "private";
+    public string? Visibility { get; init; }
 
     /// <summary>
     /// Average rating score (1-5)
@@ -90,9 +91,10 @@ public record LearningComponentDetail
 
     /// <summary>
     /// Visibility level: "published" (public), "login" (requires login), "private" (owner only)
+    /// For backward compatibility, null means "published" (legacy documents)
     /// </summary>
     [FirestoreProperty]
-    public string Visibility { get; init; } = "private";
+    public string? Visibility { get; init; }
 
     /// <summary>
     /// Average rating score (1-5)
