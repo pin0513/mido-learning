@@ -390,6 +390,22 @@ public static class MaterialEndpoints
         return parts[1] == expectedSignature;
     }
 
+    /// <summary>
+    /// Validate Referer header - allows relative resources loaded from same material
+    /// </summary>
+    private static bool ValidateReferer(HttpContext context, string materialId)
+    {
+        var referer = context.Request.Headers.Referer.FirstOrDefault();
+        if (string.IsNullOrEmpty(referer))
+            return false;
+
+        // Check if referer contains this material's content URL (with valid token)
+        // This allows relative resources (images, css, js) to load
+        return referer.Contains($"/api/materials/{materialId}/content/") ||
+               referer.Contains($"/materials/{materialId}") ||
+               referer.Contains($"/components/") && referer.Contains("/materials/");
+    }
+
     private static async Task<IResult> GetFile(
         string materialId,
         string? path,
@@ -478,9 +494,11 @@ public static class MaterialEndpoints
             }
 
             // Check if valid access token is provided (for iframe loading)
+            // Also check Referer header for relative resources loaded by the HTML
             var hasValidToken = ValidateContentAccessToken(materialId, token);
+            var hasValidReferer = ValidateReferer(context, materialId);
 
-            if (!hasValidToken)
+            if (!hasValidToken && !hasValidReferer)
             {
                 // No valid token, check visibility-based access
                 var component = await firebaseService.GetDocumentAsync<LearningComponent>(
