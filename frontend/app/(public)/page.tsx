@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { ComponentList, CategoryFilter } from '@/components/learning';
@@ -63,37 +64,66 @@ export default function HomePage() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-            歡迎來到{' '}
-            <span className="text-blue-600">Mido Learning</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">
-            您的專屬學習平台。立即開始您的學習之旅，透過豐富的課程和互動式學習體驗，解鎖您的潛能。
-          </p>
-          {!authLoading && (
-            <div className="mt-8 flex justify-center gap-4">
-              {user ? (
-                <>
-                  <Link href="/components">
-                    <Button size="lg">瀏覽教材</Button>
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link href="/register">
-                    <Button size="lg">免費註冊</Button>
-                  </Link>
-                  <Link href="/login">
-                    <Button variant="outline" size="lg">
-                      登入
-                    </Button>
-                  </Link>
-                </>
+      <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 to-blue-50 py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center gap-8 lg:flex-row lg:justify-between">
+            {/* Text Content */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="mb-4 flex items-center justify-center gap-3 lg:justify-start">
+                <Image
+                  src="/images/logo.png"
+                  alt="Mido Learning Logo"
+                  width={64}
+                  height={64}
+                  className="rounded-lg"
+                />
+                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                  <span className="text-blue-600">Mido Learning</span>
+                </h1>
+              </div>
+              <p className="mx-auto mt-4 max-w-xl text-xl text-gray-500 lg:mx-0">
+                AI 教案與投影片示範網站
+              </p>
+              <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600 lg:mx-0">
+                這裡沒有宏大的夢想，只有一位好奇爸爸用 AI 工具探索世界的小小實驗。
+                希望有一天，能做出讓孩子看得懂、用得上、學得會的知識內容。
+              </p>
+              {!authLoading && (
+                <div className="mt-8 flex justify-center gap-4 lg:justify-start">
+                  {user ? (
+                    <>
+                      <Link href="/components">
+                        <Button size="lg">瀏覽教材</Button>
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link href="/register">
+                        <Button size="lg">免費註冊</Button>
+                      </Link>
+                      <Link href="/login">
+                        <Button variant="outline" size="lg">
+                          登入
+                        </Button>
+                      </Link>
+                    </>
+                  )}
+                </div>
               )}
             </div>
-          )}
+
+            {/* Hero Image */}
+            <div className="flex-shrink-0">
+              <Image
+                src="/images/hero-bg.png"
+                alt="父子一起學習"
+                width={500}
+                height={300}
+                className="rounded-lg shadow-lg"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -141,34 +171,34 @@ export default function HomePage() {
       <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-3xl font-bold text-gray-900">
-            為什麼選擇 Mido Learning？
+            這個網站在做什麼？
           </h2>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
             <div className="rounded-lg bg-gray-50 p-8 shadow-sm">
-              <div className="mb-4 text-3xl">📚</div>
+              <div className="mb-4 text-3xl">🤖</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                豐富課程
+                AI 生成教案
               </h3>
               <p className="text-gray-600">
-                提供多元化的課程，幫助您達成學習目標。
+                嘗試用 AI 工具製作教學內容，探索 AI 輔助教育的可能性。
               </p>
             </div>
             <div className="rounded-lg bg-gray-50 p-8 shadow-sm">
-              <div className="mb-4 text-3xl">🎯</div>
+              <div className="mb-4 text-3xl">👶</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                個人化學習
+                親子友善
               </h3>
               <p className="text-gray-600">
-                根據您的技能和興趣，量身打造學習路徑。
+                希望做出孩子也能理解的知識內容，用簡單的方式解釋複雜的概念。
               </p>
             </div>
             <div className="rounded-lg bg-gray-50 p-8 shadow-sm">
-              <div className="mb-4 text-3xl">🏆</div>
+              <div className="mb-4 text-3xl">🧪</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                追蹤進度
+                實驗精神
               </h3>
               <p className="text-gray-600">
-                追蹤您的學習進度，慶祝每一個成就。
+                這是一個實驗場域，記錄著一位爸爸學習 AI 的旅程。
               </p>
             </div>
           </div>
