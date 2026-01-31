@@ -186,8 +186,7 @@ public record CreateComponentRequest
     [Required(ErrorMessage = "Theme is required")]
     public string Theme { get; init; } = string.Empty;
 
-    [Required(ErrorMessage = "Description is required")]
-    public string Description { get; init; } = string.Empty;
+    public string? Description { get; init; }
 
     [Required(ErrorMessage = "Category is required")]
     public string Category { get; init; } = string.Empty;

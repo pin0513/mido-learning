@@ -436,7 +436,7 @@ public static class ComponentEndpoints
             {
                 Title = request.Title,
                 Theme = request.Theme,
-                Description = request.Description,
+                Description = request.Description ?? string.Empty,
                 Category = request.Category,
                 Tags = request.Tags,
                 Questions = request.Questions,
