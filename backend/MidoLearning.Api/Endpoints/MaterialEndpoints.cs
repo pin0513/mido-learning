@@ -491,7 +491,7 @@ public static class MaterialEndpoints
             using var archive = new ZipArchive(stream, ZipArchiveMode.Read);
 
             var files = new List<string>();
-            var hasIndexHtml = false;
+            var rootHtmlFiles = new List<string>();
 
             foreach (var entry in archive.Entries)
             {
@@ -500,23 +500,43 @@ public static class MaterialEndpoints
                     continue; // Skip directories
                 }
 
+                // Skip macOS metadata files
+                if (entry.FullName.StartsWith("__MACOSX/", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
                 files.Add(entry.FullName);
 
-                if (entry.FullName.Equals("index.html", StringComparison.OrdinalIgnoreCase))
+                // Check for HTML files in root directory (no path separator)
+                if (!entry.FullName.Contains('/') &&
+                    (entry.FullName.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
+                     entry.FullName.EndsWith(".htm", StringComparison.OrdinalIgnoreCase)))
                 {
-                    hasIndexHtml = true;
+                    rootHtmlFiles.Add(entry.FullName);
                 }
             }
 
-            if (!hasIndexHtml)
+            // Determine entry point: prefer index.html, otherwise use first root HTML file
+            string? entryPoint = null;
+            if (rootHtmlFiles.Any(f => f.Equals("index.html", StringComparison.OrdinalIgnoreCase)))
+            {
+                entryPoint = "index.html";
+            }
+            else if (rootHtmlFiles.Count > 0)
+            {
+                entryPoint = rootHtmlFiles[0];
+            }
+
+            if (entryPoint is null)
             {
                 var fileList = string.Join(", ", files.Take(10));
-                return (false, null, $"ZIP file must contain an index.html file at the root level. Found files: [{fileList}]");
+                return (false, null, $"ZIP file must contain an HTML file at the root level. Found files: [{fileList}]");
             }
 
             var manifest = new MaterialManifest
             {
-                EntryPoint = "index.html",
+                EntryPoint = entryPoint,
                 Files = files.ToArray()
             };
 
