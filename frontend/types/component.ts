@@ -29,7 +29,7 @@ export interface LearningComponent {
 export interface CreateComponentRequest {
   title: string;
   subject: string;
-  description: string;
+  description?: string;
   category: Category;
   tags: string[];
   questions: Omit<Question, 'id'>[];
