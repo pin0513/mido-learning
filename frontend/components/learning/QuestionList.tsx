@@ -71,11 +71,7 @@ export function QuestionList({ questions, category = 'adult' }: QuestionListProp
   };
 
   if (questions.length === 0) {
-    return (
-      <div className="rounded-lg border-2 border-dashed border-gray-300 py-8 text-center">
-        <p className="text-gray-500">尚無問與答</p>
-      </div>
-    );
+    return null;
   }
 
   return (

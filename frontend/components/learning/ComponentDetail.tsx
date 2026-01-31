@@ -172,14 +172,16 @@ export function ComponentDetail({
       </section>
 
       {/* Description */}
-      <section>
-        <h2 className="mb-3 text-lg font-semibold text-gray-900">說明</h2>
-        <div className="rounded-lg border border-gray-200 bg-white p-6">
-          <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-            {component.description || '無說明'}
-          </p>
-        </div>
-      </section>
+      {component.description && (
+        <section>
+          <h2 className="mb-3 text-lg font-semibold text-gray-900">說明</h2>
+          <div className="rounded-lg border border-gray-200 bg-white p-6">
+            <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+              {component.description}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* Tags */}
       {component.tags.length > 0 && (

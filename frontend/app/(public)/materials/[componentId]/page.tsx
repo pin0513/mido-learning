@@ -188,7 +188,9 @@ export default function GuestMaterialPage({
             <div className="flex-1">
               <h1 className="text-2xl font-bold text-gray-900">{component.title}</h1>
               <p className="mt-1 text-gray-600">{component.subject || component.theme}</p>
-              <p className="mt-3 text-gray-700">{component.description}</p>
+              {component.description && (
+                <p className="mt-3 text-gray-700">{component.description}</p>
+              )}
 
               {/* Tags */}
               {component.tags.length > 0 && (

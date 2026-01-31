@@ -23,9 +23,7 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
   const [category, setCategory] = useState<Category>('adult');
   const [tagsInput, setTagsInput] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
-  const [questions, setQuestions] = useState<QuestionInput[]>([
-    { id: crypto.randomUUID(), question: '', answer: '' },
-  ]);
+  const [questions, setQuestions] = useState<QuestionInput[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const addQuestion = () => {
@@ -33,7 +31,6 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
   };
 
   const removeQuestion = (id: string) => {
-    if (questions.length <= 1) return;
     setQuestions((prev) => prev.filter((q) => q.id !== id));
   };
 
@@ -52,17 +49,6 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
 
     if (!subject.trim()) {
       newErrors.subject = '請輸入主題';
-    }
-
-    if (!description.trim()) {
-      newErrors.description = '請輸入說明';
-    }
-
-    const validQuestions = questions.filter(
-      (q) => q.question.trim() && q.answer.trim()
-    );
-    if (validQuestions.length === 0) {
-      newErrors.questions = '請至少新增一個問與答';
     }
 
     setErrors(newErrors);
@@ -176,7 +162,7 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
       {/* Description */}
       <div>
         <label htmlFor="description" className="mb-1 block text-sm font-medium text-gray-700">
-          說明 <span className="text-red-500">*</span>
+          說明
         </label>
         <textarea
           id="description"
@@ -225,7 +211,7 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
       <div>
         <div className="mb-3 flex items-center justify-between">
           <label className="text-sm font-medium text-gray-700">
-            問與答 <span className="text-red-500">*</span>
+            問與答 <span className="text-xs text-gray-400">（選填）</span>
           </label>
           <Button type="button" variant="outline" size="sm" onClick={addQuestion}>
             <svg className="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -234,7 +220,6 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
             新增問答
           </Button>
         </div>
-        {errors.questions && <p className="mb-2 text-sm text-red-600">{errors.questions}</p>}
         <div className="space-y-4">
           {questions.map((q, index) => (
             <div
@@ -243,22 +228,20 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
             >
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-sm font-medium text-gray-700">問答 #{index + 1}</span>
-                {questions.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeQuestion(q.id)}
-                    className="text-gray-400 hover:text-red-500"
-                  >
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => removeQuestion(q.id)}
+                  className="text-gray-400 hover:text-red-500"
+                >
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
               </div>
               <div className="space-y-3">
                 <div>
