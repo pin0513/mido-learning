@@ -308,7 +308,12 @@ public static class MaterialEndpoints
             }
 
             // Use content API endpoint as base URL for proper access control
-            var scheme = request.Scheme;
+            // In Cloud Run, TLS terminates at load balancer, so check X-Forwarded-Proto header
+            var scheme = request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? request.Scheme;
+            if (scheme == "http" && !request.Host.Host.Contains("localhost"))
+            {
+                scheme = "https"; // Force HTTPS for non-localhost environments
+            }
             var host = request.Host.ToString();
             var baseUrl = $"{scheme}://{host}/api/materials/{materialId}/content/";
 
