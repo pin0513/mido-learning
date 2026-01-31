@@ -1,6 +1,6 @@
 export interface Material {
   id: string;
-  componentId: string;
+  componentId?: string;
   version: number;
   filename: string;
   size: number;
@@ -19,7 +19,7 @@ export interface MaterialManifest {
   componentId: string;
   version: number;
   entryPoint: string;
-  files: MaterialFile[];
+  files: string[];
   baseUrl: string;
   scriptPath?: string;
 }
