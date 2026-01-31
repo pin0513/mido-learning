@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -10,22 +10,27 @@ import {
   UpdateComponentRequest,
   CATEGORY_CONFIG,
 } from '@/types/component';
+import { Material } from '@/types/material';
 import {
   getComponentById,
   updateComponent,
   updateComponentVisibility,
   deleteComponent,
 } from '@/lib/api/components';
+import { getMaterials, uploadMaterial } from '@/lib/api/materials';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { VisibilitySelect } from '@/components/ui/VisibilitySelect';
+import { MaterialList } from '@/components/materials/MaterialList';
 
 interface QuestionInput {
   id: string;
   question: string;
   answer: string;
 }
+
+const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
 export default function EditComponentPage({
   params,
@@ -34,11 +39,15 @@ export default function EditComponentPage({
 }) {
   const { id } = use(params);
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [component, setComponent] = useState<LearningComponent | null>(null);
+  const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
@@ -52,6 +61,16 @@ export default function EditComponentPage({
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [questions, setQuestions] = useState<QuestionInput[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const loadMaterials = useCallback(async () => {
+    try {
+      const materialsData = await getMaterials(id);
+      setMaterials(materialsData);
+    } catch {
+      // Materials fetch may fail if none exist
+      setMaterials([]);
+    }
+  }, [id]);
 
   useEffect(() => {
     const loadComponent = async () => {
@@ -75,6 +94,9 @@ export default function EditComponentPage({
             answer: q.answer || '',
           }))
         );
+
+        // Load materials
+        await loadMaterials();
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load component');
       } finally {
@@ -83,7 +105,7 @@ export default function EditComponentPage({
     };
 
     loadComponent();
-  }, [id]);
+  }, [id, loadMaterials]);
 
   const addQuestion = () => {
     setQuestions((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
@@ -191,6 +213,40 @@ export default function EditComponentPage({
       </div>
     );
   }
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file
+    if (!file.name.endsWith('.zip')) {
+      setError('請上傳 ZIP 檔案');
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      setError('檔案大小超過限制 (最大 50MB)');
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadProgress(0);
+    setError(null);
+
+    try {
+      await uploadMaterial(id, file, (progress) => {
+        setUploadProgress(progress);
+      });
+      await loadMaterials();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '上傳失敗');
+    } finally {
+      setIsUploading(false);
+      setUploadProgress(0);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
 
   const config = CATEGORY_CONFIG[category];
 
@@ -511,6 +567,67 @@ export default function EditComponentPage({
               </Button>
             </div>
           </form>
+        </CardContent>
+      </Card>
+
+      {/* Materials Section */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">教材管理</h2>
+            <div className="flex items-center gap-2">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".zip"
+                onChange={handleFileUpload}
+                className="hidden"
+                disabled={isUploading}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isUploading}
+              >
+                {isUploading ? (
+                  <>
+                    <svg className="mr-1 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    上傳中 {uploadProgress}%
+                  </>
+                ) : (
+                  <>
+                    <svg className="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    上傳新版本
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <MaterialList
+            materials={materials}
+            componentId={id}
+            canDelete={true}
+            onDelete={loadMaterials}
+          />
         </CardContent>
       </Card>
     </div>

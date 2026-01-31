@@ -109,3 +109,43 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 ## Cloud Run URLs
 - Frontend: https://mido-learning-frontend-24mwb46hra-de.a.run.app
 - Backend: https://mido-learning-api-24mwb46hra-de.a.run.app
+
+## Development Guidelines
+
+### Pre-Deployment E2E Testing (MANDATORY)
+
+**Before any `git push`, you MUST run Playwright E2E tests to verify the material upload flow works correctly.**
+
+Test Scenarios (all must pass):
+1. **Upload Material**: Create component, upload ZIP file, verify upload success
+2. **View Material**: Navigate to material detail page, verify iframe loads correctly
+3. **Upload V2**: Upload a second version, verify version number increments
+4. **Delete Material**: Delete a material version, verify deletion success
+
+```bash
+# Run E2E tests before push
+cd frontend
+npx playwright test e2e/materials.spec.ts
+
+# If tests fail, fix the issue before pushing
+```
+
+### Material Upload Flow
+1. Teacher creates component via `/teacher/components/upload`
+2. Backend validates ZIP (must contain `index.html`)
+3. ZIP is extracted to Firebase Storage: `materials/{componentId}/v{version}/`
+4. Material manifest is stored in Firestore
+5. Frontend displays material via iframe using signed URLs
+
+### API Response Format
+All API responses follow this wrapper format:
+```json
+{
+  "success": true|false,
+  "data": { ... },
+  "message": "optional message",
+  "errors": ["optional", "error", "list"]
+}
+```
+
+Frontend must extract `apiResponse.data` when parsing responses.
