@@ -58,8 +58,8 @@ export default function TeacherComponentsPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">我的學習</h1>
-          <p className="mt-1 text-gray-600">管理您建立的學習元件</p>
+          <h1 className="text-2xl font-bold text-gray-900">我的教材</h1>
+          <p className="mt-1 text-gray-600">管理您建立的教材</p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <CategoryFilter selected={category} onChange={handleCategoryChange} />
@@ -87,7 +87,7 @@ export default function TeacherComponentsPage() {
                     d="M12 4v16m8-8H4"
                   />
                 </svg>
-                建立元件
+                建立教材
               </Button>
             </Link>
           </div>
@@ -126,7 +126,7 @@ export default function TeacherComponentsPage() {
       <ComponentList
         components={components}
         loading={loading}
-        emptyMessage="您尚未建立任何學習元件"
+        emptyMessage="您尚未建立任何教材"
         cardHrefPrefix="/components"
       />
 
@@ -143,7 +143,7 @@ export default function TeacherComponentsPage() {
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              建立您的第一個元件
+              建立您的第一個教材
             </Button>
           </Link>
         </div>

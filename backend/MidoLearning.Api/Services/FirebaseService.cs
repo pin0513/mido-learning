@@ -287,7 +287,7 @@ public class FirebaseService : IFirebaseService
                     LinkedComponentId = wish.LinkedComponentId,
                     ProcessedBy = wish.ProcessedBy,
                     CreatedAt = wish.CreatedAt.ToDateTime(),
-                    UpdatedAt = wish.UpdatedAt.ToDateTime()
+                    UpdatedAt = wish.UpdatedAt?.ToDateTime()
                 };
             })
             .ToList();
@@ -350,7 +350,7 @@ public class FirebaseService : IFirebaseService
                 {
                     Status = wish.Status,
                     CreatedAt = wish.CreatedAt.ToDateTime(),
-                    UpdatedAt = wish.UpdatedAt.ToDateTime()
+                    UpdatedAt = wish.UpdatedAt?.ToDateTime()
                 };
             })
             .ToList();
@@ -379,11 +379,11 @@ public class FirebaseService : IFirebaseService
 
         // Average processing time (from pending to completed)
         var completedWishes = wishes
-            .Where(w => w.Status == "completed" && w.UpdatedAt > w.CreatedAt)
+            .Where(w => w.Status == "completed" && w.UpdatedAt.HasValue && w.UpdatedAt.Value > w.CreatedAt)
             .ToList();
 
         var avgProcessingTimeHours = completedWishes.Count > 0
-            ? completedWishes.Average(w => (w.UpdatedAt - w.CreatedAt).TotalHours)
+            ? completedWishes.Average(w => (w.UpdatedAt!.Value - w.CreatedAt).TotalHours)
             : 0;
 
         // Completion rate (completed / total excluding deleted)

@@ -109,7 +109,7 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="輸入學習元件標題"
+          placeholder="輸入教材標題"
           error={errors.title}
         />
       </div>
@@ -182,9 +182,9 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="輸入學習元件說明"
+          placeholder="輸入教材說明"
           rows={4}
-          className={`block w-full rounded-md border px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 ${
+          className={`block w-full rounded-md border px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 ${
             errors.description
               ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
               : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
@@ -276,7 +276,7 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
                     onChange={(e) => updateQuestion(q.id, 'answer', e.target.value)}
                     placeholder="輸入答案"
                     rows={3}
-                    className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                    className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
                   />
                 </div>
               </div>
@@ -312,7 +312,7 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
               建立中...
             </>
           ) : (
-            '建立元件'
+            '建立教材'
           )}
         </Button>
       </div>

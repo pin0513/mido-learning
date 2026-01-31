@@ -59,20 +59,23 @@ export default function EditComponentPage({
         const data = await getComponentById(id);
         setComponent(data);
 
-        // Populate form fields
-        setTitle(data.title);
+        // Populate form fields with null-safe access
+        setTitle(data.title || '');
         setSubject(data.subject || data.theme || '');
-        setDescription(data.description);
-        setCategory(data.category as Category);
+        setDescription(data.description || '');
+        setCategory((data.category as Category) || 'adult');
         setVisibility(data.visibility || 'private');
-        setTagsInput(data.tags.join(', '));
+        setTagsInput((data.tags || []).join(', '));
         setThumbnailUrl(data.thumbnailUrl || '');
+        const questionsData = data.questions || [];
         setQuestions(
-          data.questions.map((q) => ({
-            id: q.id || crypto.randomUUID(),
-            question: q.question,
-            answer: q.answer,
-          }))
+          questionsData.length > 0
+            ? questionsData.map((q) => ({
+                id: q.id || crypto.randomUUID(),
+                question: q.question || '',
+                answer: q.answer || '',
+              }))
+            : [{ id: crypto.randomUUID(), question: '', answer: '' }]
         );
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load component');
@@ -194,9 +197,9 @@ export default function EditComponentPage({
     return (
       <div className="mx-auto max-w-3xl">
         <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-center">
-          <p className="text-red-700">{error || '找不到元件'}</p>
+          <p className="text-red-700">{error || '找不到教材'}</p>
           <Link href="/teacher/components" className="mt-4 inline-block text-blue-600 hover:underline">
-            返回我的學習
+            返回我的教材
           </Link>
         </div>
       </div>
@@ -218,22 +221,22 @@ export default function EditComponentPage({
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          返回我的學習
+          返回我的教材
         </Button>
       </Link>
 
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">編輯元件</h1>
-          <p className="mt-1 text-gray-600">修改學習元件資訊</p>
+          <h1 className="text-2xl font-bold text-gray-900">編輯教材</h1>
+          <p className="mt-1 text-gray-600">修改教材資訊</p>
         </div>
         <Button
           variant="danger"
           size="sm"
           onClick={() => setShowDeleteConfirm(true)}
         >
-          刪除元件
+          刪除教材
         </Button>
       </div>
 
@@ -290,7 +293,7 @@ export default function EditComponentPage({
       {/* Form */}
       <Card>
         <CardHeader>
-          <h2 className="text-lg font-semibold text-gray-900">元件資訊</h2>
+          <h2 className="text-lg font-semibold text-gray-900">教材資訊</h2>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -303,7 +306,7 @@ export default function EditComponentPage({
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="輸入學習元件標題"
+                placeholder="輸入教材標題"
                 error={errors.title}
               />
             </div>
@@ -384,9 +387,9 @@ export default function EditComponentPage({
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="輸入學習元件說明"
+                placeholder="輸入教材說明"
                 rows={4}
-                className={`block w-full rounded-md border px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 ${
+                className={`block w-full rounded-md border px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 ${
                   errors.description
                     ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                     : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
@@ -478,7 +481,7 @@ export default function EditComponentPage({
                           onChange={(e) => updateQuestion(q.id, 'answer', e.target.value)}
                           placeholder="輸入答案"
                           rows={3}
-                          className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                          className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
                         />
                       </div>
                     </div>

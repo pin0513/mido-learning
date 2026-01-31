@@ -7,9 +7,8 @@ import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
 
 const sidebarItems = [
-  { label: '學習中心', href: '/dashboard' },
+  { label: '教材清單', href: '/components' },
   { label: '個人資料', href: '/profile' },
-  { label: '學習元件', href: '/components' },
 ];
 
 export default function MemberLayout({ children }: { children: React.ReactNode }) {

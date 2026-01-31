@@ -230,14 +230,14 @@ export default function UploadComponentPage() {
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          返回我的學習
+          返回我的教材
         </Button>
       </Link>
 
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">上傳教材</h1>
-        <p className="mt-1 text-gray-600">上傳 ZIP 檔案並填寫學習元件資訊</p>
+        <p className="mt-1 text-gray-600">上傳 ZIP 檔案並填寫教材資訊</p>
       </div>
 
       {/* Step indicator */}
@@ -359,7 +359,7 @@ export default function UploadComponentPage() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">元件資訊</h2>
+              <h2 className="text-lg font-semibold text-gray-900">教材資訊</h2>
               <div className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-1.5">
                 <svg className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -396,7 +396,7 @@ export default function UploadComponentPage() {
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="輸入學習元件標題"
+                  placeholder="輸入教材標題"
                   error={formErrors.title}
                 />
               </div>
@@ -469,9 +469,9 @@ export default function UploadComponentPage() {
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="輸入學習元件說明"
+                  placeholder="輸入教材說明"
                   rows={4}
-                  className={`block w-full rounded-md border px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 ${
+                  className={`block w-full rounded-md border px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 ${
                     formErrors.description
                       ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                       : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
@@ -567,7 +567,7 @@ export default function UploadComponentPage() {
                             onChange={(e) => updateQuestion(q.id, 'answer', e.target.value)}
                             placeholder="輸入答案"
                             rows={3}
-                            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                            className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
                           />
                         </div>
                       </div>
@@ -629,7 +629,7 @@ export default function UploadComponentPage() {
                   <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
                 </div>
                 <p className="mb-2 text-lg font-medium text-gray-900">
-                  {uploadProgress > 0 ? '上傳教材中...' : '建立元件中...'}
+                  {uploadProgress > 0 ? '上傳教材中...' : '建立教材中...'}
                 </p>
                 {uploadProgress > 0 && (
                   <div className="mx-auto mt-4 h-2 w-64 overflow-hidden rounded-full bg-gray-200">

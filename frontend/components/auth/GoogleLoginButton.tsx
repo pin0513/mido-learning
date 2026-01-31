@@ -16,7 +16,7 @@ export function GoogleLoginButton() {
 
     try {
       await signInWithGoogle();
-      router.push('/dashboard');
+      router.push('/components');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to sign in with Google');
     } finally {

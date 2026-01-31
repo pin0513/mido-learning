@@ -32,7 +32,7 @@ export function RegisterForm() {
 
     try {
       await signUp(email, password);
-      router.push('/dashboard');
+      router.push('/components');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to register');
     } finally {

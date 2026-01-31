@@ -163,7 +163,7 @@ export default function AdminWishesPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">願望池管理</h1>
           <p className="mt-1 text-gray-600">
-            管理使用者提交的學習願望，建立或連結學習元件
+            管理使用者提交的學習願望，建立或連結教材
           </p>
         </div>
         <Link

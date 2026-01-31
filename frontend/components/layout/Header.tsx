@@ -61,8 +61,8 @@ export function Header() {
           </Link>
           {user && (
             <>
-              <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
-                學習中心
+              <Link href="/components" className="text-gray-600 hover:text-gray-900">
+                教材清單
               </Link>
               {(userRole === 'admin' || userRole === 'teacher') && (
                 <Link href="/teacher/components" className="text-gray-600 hover:text-gray-900">

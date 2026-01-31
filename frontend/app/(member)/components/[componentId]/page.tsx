@@ -151,8 +151,8 @@ export default function ComponentDetailPage({ params }: PageProps) {
               d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <h2 className="mt-4 text-lg font-semibold text-gray-700">找不到元件</h2>
-          <p className="mt-2 text-gray-500">此學習元件不存在或已被移除</p>
+          <h2 className="mt-4 text-lg font-semibold text-gray-700">找不到教材</h2>
+          <p className="mt-2 text-gray-500">此教材不存在或已被移除</p>
         </div>
       </div>
     );

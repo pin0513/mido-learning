@@ -40,14 +40,14 @@ export default function NewComponentPage() {
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          返回我的學習
+          返回我的教材
         </Button>
       </Link>
 
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">建立新元件</h1>
-        <p className="mt-1 text-gray-600">填寫以下資訊建立新的學習元件</p>
+        <h1 className="text-2xl font-bold text-gray-900">建立新教材</h1>
+        <p className="mt-1 text-gray-600">填寫以下資訊建立新的教材</p>
       </div>
 
       {/* Error */}
@@ -75,7 +75,7 @@ export default function NewComponentPage() {
       {/* Form */}
       <Card>
         <CardHeader>
-          <h2 className="text-lg font-semibold text-gray-900">元件資訊</h2>
+          <h2 className="text-lg font-semibold text-gray-900">教材資訊</h2>
         </CardHeader>
         <CardContent>
           <ComponentForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />

@@ -83,7 +83,7 @@ export default function MaterialViewerPage({ params }: PageProps) {
           onClick={() => router.push(`/components/${componentId}`)}
           className="mt-6 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
-          返回元件頁面
+          返回教材頁面
         </button>
       </div>
     );
@@ -111,7 +111,7 @@ export default function MaterialViewerPage({ params }: PageProps) {
           onClick={() => router.push(`/components/${componentId}`)}
           className="mt-6 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
-          返回元件頁面
+          返回教材頁面
         </button>
       </div>
     );

@@ -76,8 +76,8 @@ export default function HomePage() {
             <div className="mt-8 flex justify-center gap-4">
               {user ? (
                 <>
-                  <Link href="/dashboard">
-                    <Button size="lg">進入學習中心</Button>
+                  <Link href="/components">
+                    <Button size="lg">瀏覽教材</Button>
                   </Link>
                 </>
               ) : (

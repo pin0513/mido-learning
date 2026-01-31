@@ -7,8 +7,7 @@ import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
 
 const sidebarItems = [
-  { label: '學習中心', href: '/dashboard' },
-  { label: '我的學習', href: '/teacher/components' },
+  { label: '我的教材', href: '/teacher/components' },
   { label: '上傳教材', href: '/teacher/components/upload' },
   { label: '願望池', href: '/teacher/wishes' },
 ];
@@ -35,10 +34,10 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
           if (isTeacher || isAdmin) {
             setHasTeacherRole(true);
           } else {
-            router.push('/dashboard');
+            router.push('/components');
           }
         } catch {
-          router.push('/dashboard');
+          router.push('/components');
         }
       }
       setCheckingRole(false);

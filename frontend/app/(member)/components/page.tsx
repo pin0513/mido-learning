@@ -56,7 +56,7 @@ export default function ComponentsPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">學習元件</h1>
+          <h1 className="text-2xl font-bold text-gray-900">教材清單</h1>
           <p className="mt-1 text-gray-600">探索各種學習資源</p>
         </div>
         <CategoryFilter selected={category} onChange={handleCategoryChange} />
@@ -91,7 +91,7 @@ export default function ComponentsPage() {
       )}
 
       {/* Component List */}
-      <ComponentList components={components} loading={loading} emptyMessage="目前沒有學習元件" />
+      <ComponentList components={components} loading={loading} emptyMessage="目前沒有教材" />
 
       {/* Pagination */}
       {!loading && components.length > 0 && (

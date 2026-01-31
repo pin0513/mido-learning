@@ -34,7 +34,7 @@ public record Wish
     public Timestamp CreatedAt { get; init; }
 
     [FirestoreProperty("updatedAt")]
-    public Timestamp UpdatedAt { get; init; }
+    public Timestamp? UpdatedAt { get; init; }
 }
 
 public record CreateWishRequest

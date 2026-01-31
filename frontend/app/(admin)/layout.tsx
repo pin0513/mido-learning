@@ -31,10 +31,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           if (token.claims.admin === true) {
             setIsAdmin(true);
           } else {
-            router.push('/dashboard');
+            router.push('/components');
           }
         } catch {
-          router.push('/dashboard');
+          router.push('/components');
         }
       }
       setCheckingAdmin(false);

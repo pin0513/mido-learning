@@ -13,7 +13,7 @@ interface ComponentListProps {
 export function ComponentList({
   components,
   loading = false,
-  emptyMessage = '目前沒有學習元件',
+  emptyMessage = '目前沒有教材',
   cardHrefPrefix,
 }: ComponentListProps) {
   if (loading) {
