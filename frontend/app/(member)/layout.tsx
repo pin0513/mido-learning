@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
+import { Footer } from '@/components/layout/Footer';
 
 const sidebarItems = [
   { label: '教材清單', href: '/components' },
@@ -38,8 +39,9 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
       <Header />
       <div className="flex flex-1">
         <Sidebar items={sidebarItems} />
-        <main className="flex-1 bg-gray-50 p-6">{children}</main>
+        <main className="flex-1 bg-gray-50 p-4 md:p-6">{children}</main>
       </div>
+      <Footer />
     </div>
   );
 }
