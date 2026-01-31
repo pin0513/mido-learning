@@ -92,4 +92,5 @@ public record MaterialManifestResponse
     public string EntryPoint { get; init; } = string.Empty;
     public IEnumerable<string> Files { get; init; } = Array.Empty<string>();
     public string BaseUrl { get; init; } = string.Empty;
+    public string? AccessToken { get; init; }
 }

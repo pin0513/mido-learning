@@ -1,17 +1,20 @@
 'use client';
 
-import { useState, useCallback, useRef, FormEvent } from 'react';
+import { useState, useCallback, useRef, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Category, CreateComponentRequest, CATEGORY_CONFIG, getCategoryConfig } from '@/types/component';
+import { CreateComponentRequest, getCategoryConfig } from '@/types/component';
 import { createComponent } from '@/lib/api/components';
 import { uploadMaterial } from '@/lib/api/materials';
+import { getSuggestions } from '@/lib/api/categories';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { TagInput } from '@/components/ui/TagInput';
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 const ACCEPTED_FILE_TYPE = '.zip';
+const CUSTOM_CATEGORY = '__custom__';
 
 interface QuestionInput {
   id: string;
@@ -32,11 +35,29 @@ export default function NewComponentPage() {
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState<Category>('adult');
-  const [tagsInput, setTagsInput] = useState('');
+  const [category, setCategory] = useState('');
+  const [customCategory, setCustomCategory] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [questions, setQuestions] = useState<QuestionInput[]>([]);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  // Suggestions from API
+  const [categorySuggestions, setCategorySuggestions] = useState<string[]>([]);
+  const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
+
+  useEffect(() => {
+    getSuggestions()
+      .then((data) => {
+        setCategorySuggestions(data.categories);
+        setTagSuggestions(data.tags);
+        // Set default category
+        if (data.categories.length > 0) {
+          setCategory(data.categories[0]);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   // Submit state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -130,6 +151,14 @@ export default function NewComponentPage() {
     setQuestions((prev) => prev.map((q) => (q.id === id ? { ...q, [field]: value } : q)));
   };
 
+  // Get the actual category value
+  const getActualCategory = () => {
+    if (category === CUSTOM_CATEGORY) {
+      return customCategory.trim();
+    }
+    return category;
+  };
+
   // Form validation - only title and subject required
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -139,6 +168,10 @@ export default function NewComponentPage() {
     }
     if (!subject.trim()) {
       newErrors.subject = '請輸入主題';
+    }
+    const actualCategory = getActualCategory();
+    if (!actualCategory) {
+      newErrors.category = '請選擇或輸入分類';
     }
 
     setFormErrors(newErrors);
@@ -154,12 +187,6 @@ export default function NewComponentPage() {
     setSubmitError(null);
 
     try {
-      // Step 1: Create component
-      const tags = tagsInput
-        .split(',')
-        .map((t) => t.trim())
-        .filter((t) => t.length > 0);
-
       const validQuestions = questions
         .filter((q) => q.question.trim() && q.answer.trim())
         .map((q) => ({ question: q.question.trim(), answer: q.answer.trim() }));
@@ -168,7 +195,7 @@ export default function NewComponentPage() {
         title: title.trim(),
         theme: subject.trim(),
         description: description.trim() || undefined,
-        category,
+        category: getActualCategory(),
         tags,
         questions: validQuestions,
         thumbnailUrl: thumbnailUrl.trim() || undefined,
@@ -191,7 +218,7 @@ export default function NewComponentPage() {
     }
   };
 
-  const config = getCategoryConfig(category);
+  const config = getCategoryConfig(getActualCategory() || 'adult');
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -379,44 +406,36 @@ export default function NewComponentPage() {
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 分類 <span className="text-red-500">*</span>
               </label>
-              <div className="flex flex-wrap gap-4">
-                {(['adult', 'kid'] as const).map((cat) => {
-                  const catConfig = CATEGORY_CONFIG[cat];
-                  return (
-                    <label
-                      key={cat}
-                      className={`flex cursor-pointer items-center gap-2 rounded-lg border-2 px-4 py-3 transition-colors ${
-                        category === cat
-                          ? `${catConfig.borderClass} ${catConfig.bgClass}`
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="category"
-                        value={cat}
-                        checked={category === cat}
-                        onChange={() => setCategory(cat)}
-                        className="sr-only"
-                      />
-                      <span
-                        className={`h-4 w-4 rounded-full border-2 ${
-                          category === cat
-                            ? cat === 'adult'
-                              ? 'border-blue-600 bg-blue-600'
-                              : 'border-red-600 bg-red-600'
-                            : 'border-gray-300'
-                        }`}
-                      >
-                        {category === cat && (
-                          <span className="block h-full w-full rounded-full border-2 border-white" />
-                        )}
-                      </span>
-                      <span className="font-medium">{catConfig.label}</span>
-                    </label>
-                  );
-                })}
+              <div className="flex gap-3">
+                <select
+                  value={category}
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                    if (e.target.value !== CUSTOM_CATEGORY) {
+                      setCustomCategory('');
+                    }
+                  }}
+                  className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {categorySuggestions.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                  <option value={CUSTOM_CATEGORY}>✏️ 自訂分類...</option>
+                </select>
+                {category === CUSTOM_CATEGORY && (
+                  <Input
+                    value={customCategory}
+                    onChange={(e) => setCustomCategory(e.target.value)}
+                    placeholder="輸入新分類名稱"
+                    className="flex-1"
+                  />
+                )}
               </div>
+              {formErrors.category && (
+                <p className="mt-1 text-sm text-red-600">{formErrors.category}</p>
+              )}
             </div>
 
             {/* Description */}
@@ -436,16 +455,14 @@ export default function NewComponentPage() {
 
             {/* Tags */}
             <div>
-              <label htmlFor="tags" className="mb-1 block text-sm font-medium text-gray-700">
-                標籤
-              </label>
-              <Input
-                id="tags"
-                value={tagsInput}
-                onChange={(e) => setTagsInput(e.target.value)}
-                placeholder="以逗號分隔，例如: Python, 基礎, 程式設計"
+              <TagInput
+                label="標籤"
+                value={tags}
+                onChange={setTags}
+                suggestions={tagSuggestions}
+                placeholder="選擇或輸入標籤"
+                allowCustom={true}
               />
-              <p className="mt-1 text-xs text-gray-500">多個標籤請以逗號分隔</p>
             </div>
 
             {/* Thumbnail URL */}

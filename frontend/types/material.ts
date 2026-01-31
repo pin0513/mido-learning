@@ -21,6 +21,7 @@ export interface MaterialManifest {
   entryPoint: string;
   files: string[];
   baseUrl: string;
+  accessToken?: string;
   scriptPath?: string;
 }
 

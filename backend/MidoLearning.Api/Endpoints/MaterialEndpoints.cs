@@ -323,8 +323,10 @@ public static class MaterialEndpoints
                 scheme = "https"; // Force HTTPS for non-localhost environments
             }
             var host = request.Host.ToString();
-            // Include access token in baseUrl for iframe access
-            var baseUrl = $"{scheme}://{host}/api/materials/{materialId}/content/?token={accessToken}&path=";
+            // Base URL ends with / so entryPoint can be appended directly
+            // Token will be added as query param by frontend
+            var baseUrl = $"{scheme}://{host}/api/materials/{materialId}/content/";
+            var tokenParam = $"?token={accessToken}";
 
             var response = ApiResponse<MaterialManifestResponse>.Ok(new MaterialManifestResponse
             {
@@ -333,7 +335,8 @@ public static class MaterialEndpoints
                 Version = material.Version,
                 EntryPoint = material.Manifest?.EntryPoint ?? "index.html",
                 Files = material.Manifest?.Files ?? Array.Empty<string>(),
-                BaseUrl = baseUrl
+                BaseUrl = baseUrl,
+                AccessToken = accessToken
             });
 
             return Results.Ok(response);

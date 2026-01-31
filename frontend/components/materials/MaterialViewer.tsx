@@ -26,8 +26,10 @@ export function MaterialViewer({
   const [isScriptOpen, setIsScriptOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const iframeSrc = `${manifest.baseUrl}${manifest.entryPoint}`;
-  const scriptUrl = manifest.scriptPath ? `${manifest.baseUrl}${manifest.scriptPath}` : null;
+  // Build iframe URL with access token for authentication
+  const tokenParam = manifest.accessToken ? `?token=${manifest.accessToken}` : '';
+  const iframeSrc = `${manifest.baseUrl}${manifest.entryPoint}${tokenParam}`;
+  const scriptUrl = manifest.scriptPath ? `${manifest.baseUrl}${manifest.scriptPath}${tokenParam}` : null;
   const hasScript = Boolean(scriptUrl);
 
   const handleBack = useCallback(() => {
