@@ -459,11 +459,18 @@ public static class MaterialEndpoints
                     break;
             }
 
-            // Build the full storage path
+            // Build the full storage path and download file content
             var storagePath = $"{material.StoragePath}/{filePath}";
-            var signedUrl = await storageService.GetSignedUrlAsync(storagePath, SignedUrlExpiration);
 
-            return Results.Redirect(signedUrl);
+            try
+            {
+                var (content, contentType) = await storageService.DownloadFileAsync(storagePath);
+                return Results.File(content, contentType);
+            }
+            catch (Google.GoogleApiException ex) when (ex.HttpStatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return Results.NotFound(ApiResponse.Fail("File not found"));
+            }
         }
         catch (Exception ex)
         {

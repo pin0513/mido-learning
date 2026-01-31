@@ -168,4 +168,23 @@ public class StorageService : IStorageService
             return false;
         }
     }
+
+    public async Task<(Stream Content, string ContentType)> DownloadFileAsync(string path)
+    {
+        try
+        {
+            var obj = await _storageClient.GetObjectAsync(_bucketName, path);
+            var memoryStream = new MemoryStream();
+            await _storageClient.DownloadObjectAsync(_bucketName, path, memoryStream);
+            memoryStream.Position = 0;
+
+            var contentType = obj.ContentType ?? "application/octet-stream";
+            return (memoryStream, contentType);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to download file: {Path}", path);
+            throw;
+        }
+    }
 }

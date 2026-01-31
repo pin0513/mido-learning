@@ -63,4 +63,11 @@ public interface IStorageService
     /// <param name="path">The path of the file</param>
     /// <returns>True if the file exists</returns>
     Task<bool> FileExistsAsync(string path);
+
+    /// <summary>
+    /// Downloads a file from Firebase Storage
+    /// </summary>
+    /// <param name="path">The path of the file</param>
+    /// <returns>The file content as a stream and content type</returns>
+    Task<(Stream Content, string ContentType)> DownloadFileAsync(string path);
 }
