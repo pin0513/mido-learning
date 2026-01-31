@@ -9,7 +9,7 @@
 | 項目 | 值 |
 |------|-----|
 | 專案名稱 | 米豆學習網 (Mido Learning) |
-| 版本 | v0.5.1 |
+| 版本 | v0.6.0 |
 | 前端 URL | https://mido-learning-frontend-24mwb46hra-de.a.run.app |
 | 後端 URL | https://mido-learning-api-24mwb46hra-de.a.run.app |
 | 本地前端 | http://localhost:3000 |
@@ -45,8 +45,8 @@
 
 | Feature ID | 名稱 | 狀態 | 依賴 |
 |------------|------|------|------|
-| INFRA-001 | RWD 響應式設計 | 📋 TODO | - |
-| INFRA-002 | 投影片檢視器 (RWD) | 📋 TODO | MAT-004 |
+| INFRA-001 | RWD 響應式設計 | ✅ DONE | - |
+| INFRA-002 | 投影片檢視器 (RWD) | ✅ DONE | MAT-004 |
 
 ### 認證系統 (已完成)
 
@@ -75,14 +75,14 @@
 | ADMIN-003 | 使用者列表與角色管理 | ✅ DONE | ADMIN-001 |
 | ADMIN-004 | 系統設定管理 | 📋 TODO | ADMIN-001 |
 
-### 學習元件系統 (部分完成)
+### 學習元件系統 (大部分完成)
 
 | Feature ID | 名稱 | 狀態 | 依賴 |
 |------------|------|------|------|
 | COMP-001 | 學習元件列表頁 | ✅ DONE | AUTH-001 |
 | COMP-002 | 學習元件詳情頁 | ✅ DONE | COMP-001 |
 | COMP-003 | 建立學習元件 (Teacher) | ✅ DONE | AUTH-001 |
-| COMP-004 | 編輯學習元件 (Teacher) | 📋 TODO | COMP-003 |
+| COMP-004 | 編輯學習元件 (Teacher) | ✅ DONE | COMP-003 |
 | COMP-005 | 刪除學習元件 (Teacher/Admin) | 📋 TODO | COMP-003 |
 | COMP-006 | 學習元件標籤系統 | 📋 TODO | COMP-001 |
 
@@ -121,7 +121,7 @@
 
 ### INFRA-001: RWD 響應式設計
 
-**狀態**: 📋 TODO
+**狀態**: ✅ DONE
 
 **斷點定義**:
 ```css
@@ -134,30 +134,41 @@ xl: 1280px  /* 桌機 */
 ```
 
 **驗收條件**:
-- [ ] 所有頁面支援 320px ~ 1920px 寬度
-- [ ] 導覽列在手機版改為漢堡選單
-- [ ] 卡片列表在手機版為單欄，桌機版為多欄
-- [ ] 表單在手機版為垂直排列
-- [ ] 投影片檢視器支援手機全螢幕
+- [x] 所有頁面支援 320px ~ 1920px 寬度
+- [x] 導覽列在手機版改為漢堡選單
+- [x] 卡片列表在手機版為單欄，桌機版為多欄
+- [x] 表單在手機版為垂直排列
+- [x] 投影片檢視器支援手機全螢幕
+
+**實作檔案**:
+- `frontend/components/layout/Header.tsx` - 手機版漢堡選單
+- `frontend/components/layout/Sidebar.tsx` - 可收合側邊欄
+- `frontend/components/layout/Footer.tsx` - RWD Footer
 
 ---
 
 ### INFRA-002: 投影片檢視器 (RWD)
 
-**狀態**: 📋 TODO | **路由**: `/materials/[id]/view`
+**狀態**: ✅ DONE | **路由**: `/components/[componentId]/materials/[materialId]`
 
 **驗收條件**:
-- [ ] 載入教材 index.html
-- [ ] 支援全螢幕檢視
-- [ ] 手機/平板觸控滑動換頁
-- [ ] 桌機鍵盤 (左右鍵) 換頁
-- [ ] 顯示講稿 (可開關側邊欄)
-- [ ] 正確載入 HTML 內的相對路徑資源
+- [x] 載入教材 index.html
+- [x] 支援全螢幕檢視
+- [x] 手機/平板觸控滑動換頁
+- [x] 桌機鍵盤 (左右鍵) 換頁
+- [x] 顯示講稿 (可開關側邊欄)
+- [x] 正確載入 HTML 內的相對路徑資源
 
 **技術方案**:
 - 使用 iframe 載入 index.html
 - 透過 Firebase Storage signed URL 存取
 - 投影片內的圖片使用相對路徑自動解析
+
+**實作檔案**:
+- `frontend/app/(member)/components/[componentId]/materials/[materialId]/page.tsx`
+- `frontend/components/materials/MaterialViewer.tsx`
+- `frontend/components/materials/MaterialIframe.tsx`
+- `frontend/components/materials/ScriptSidebar.tsx`
 
 ---
 
@@ -446,55 +457,69 @@ Response 200: {
 
 ### COMP-003: 建立學習元件 (Teacher)
 
-**狀態**: ✅ DONE | **路由**: `/teacher/components/new` | **權限**: teacher, admin
+**狀態**: ✅ DONE | **路由**: `/teacher/components/upload` | **權限**: teacher, admin
 
 **API**:
 ```
 POST /api/components
 Authorization: Bearer <token>
 Body: {
-  title, theme, description, category,
-  tags: ["tag1", "tag2"],
-  questions: [{ question, answer }]
+  title,              // 必填
+  theme,              // 必填
+  description?,       // 選填
+  category,           // 必填
+  tags: [],           // 選填
+  questions: [],      // 選填
+  thumbnailUrl?       // 選填
 }
 
 Response 201: { success: true, data: { id } }
 ```
 
 **驗收條件**:
-- [x] 可輸入主題名稱
+- [x] 可輸入標題 (必填)
+- [x] 可輸入主題 (必填)
 - [x] 可選擇分類 (大人學/小人學)
-- [x] 可輸入主題說明
-- [x] 可新增多組問與答
-- [x] 可新增標籤
+- [x] 可輸入說明 (選填)
+- [x] 可新增多組問與答 (選填)
+- [x] 可新增標籤 (選填)
+- [x] 可上傳教材 Zip 檔 (選填)
 - [x] 儲存後跳轉至詳情頁
 
 **實作檔案**:
-- `frontend/app/(teacher)/teacher/components/new/page.tsx`
+- `frontend/app/(teacher)/teacher/components/upload/page.tsx` (建立+上傳整合頁)
 - `frontend/app/(teacher)/layout.tsx`
 - `frontend/components/learning/ComponentForm.tsx`
+- `frontend/lib/api/components.ts`
 - `backend/MidoLearning.Api/Models/LearningComponent.cs`
+- `backend/MidoLearning.Api/Endpoints/ComponentEndpoints.cs`
 
 ---
 
 ### COMP-004: 編輯學習元件 (Teacher)
 
-**狀態**: 📋 TODO | **路由**: `/teacher/components/[id]/edit` | **權限**: teacher (自己的), admin
+**狀態**: ✅ DONE | **路由**: `/teacher/components/[id]/edit` | **權限**: teacher (自己的), admin
 
 **API**:
 ```
 PUT /api/components/{id}
 Authorization: Bearer <token>
-Body: { title, theme, description, category, tags, questions }
+Body: { title?, theme?, description?, category?, tags?, questions? }
 
-Response 200: { success: true, message: "Component updated" }
+Response 200: { success: true, data: { ...component } }
 ```
 
 **驗收條件**:
-- [ ] 可編輯所有欄位
-- [ ] 老師只能編輯自己建立的元件
-- [ ] 管理員可編輯所有元件
-- [ ] 儲存成功顯示提示
+- [x] 可編輯所有欄位
+- [x] 老師只能編輯自己建立的元件
+- [x] 管理員可編輯所有元件
+- [x] 儲存成功顯示提示
+- [x] 可上傳新版教材
+
+**實作檔案**:
+- `frontend/app/(teacher)/teacher/components/[id]/edit/page.tsx`
+- `frontend/lib/api/components.ts` (updateComponent)
+- `backend/MidoLearning.Api/Endpoints/ComponentEndpoints.cs`
 
 ---
 
@@ -1136,3 +1161,4 @@ Response 403: { success: false, message: "Permission denied" }
 | v0.4.0 | 2026-01-31 | MAT-001~005 教材上傳系統完成 (TDD, 25 tests)：Zip 上傳、版本管理、解壓儲存、下載預覽、RWD iframe 檢視器 |
 | v0.5.0 | 2026-01-31 | WISH-003 願望池管理完成 (TDD, 14 tests)：狀態流轉、從願望建立元件、連結現有元件、管理介面 |
 | v0.5.1 | 2026-01-31 | WISH-004 願望統計儀表板完成 (TDD, 7 tests)：總數統計、7日趨勢、平均處理時間、完成率 |
+| v0.6.0 | 2026-01-31 | INFRA-001/002 RWD 完成、COMP-003/004 優化：欄位簡化（僅標題/主題必填）、建立+上傳整合、Header/Sidebar/Footer RWD 修正 |

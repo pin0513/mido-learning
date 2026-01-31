@@ -42,9 +42,10 @@ gh run list --limit 4               # Check deployment status
 
 ### Frontend Route Groups
 The frontend uses Next.js App Router with route groups for access control:
-- `app/(public)/*` - Public pages (home, about) - no auth required
+- `app/(public)/*` - Public pages (home, about, materials) - no auth required
 - `app/(auth)/*` - Auth pages (login, register) - redirect if logged in
-- `app/(member)/*` - Member pages (dashboard, profile) - requires authentication
+- `app/(member)/*` - Member pages (dashboard, profile, components) - requires authentication
+- `app/(teacher)/*` - Teacher pages (component management, upload) - requires teacher/admin role
 - `app/(admin)/*` - Admin pages - requires admin role via Firebase custom claims
 
 ### Backend Structure
@@ -52,14 +53,23 @@ The frontend uses Next.js App Router with route groups for access control:
 backend/MidoLearning.Api/
 ├── Program.cs           # App entry, middleware setup, endpoint mapping
 ├── Endpoints/           # Minimal API endpoint definitions
-│   ├── AuthEndpoints.cs     # /api/auth/*
-│   ├── UserEndpoints.cs     # /api/users/*
-│   └── AdminEndpoints.cs    # /api/admin/* (requires "AdminOnly" policy)
+│   ├── AuthEndpoints.cs       # /api/auth/*
+│   ├── UserEndpoints.cs       # /api/users/*
+│   ├── AdminEndpoints.cs      # /api/admin/* (requires "AdminOnly" policy)
+│   ├── ComponentEndpoints.cs  # /api/components/* (CRUD for learning components)
+│   ├── MaterialEndpoints.cs   # /api/materials/* (upload, download, manifest)
+│   ├── WishEndpoints.cs       # /api/wishes/* (ChatBot wishes)
+│   ├── CategoryEndpoints.cs   # /api/categories/*
+│   └── RatingEndpoints.cs     # /api/ratings/*
 ├── Middleware/
 │   └── FirebaseAuthMiddleware.cs  # Validates Firebase ID tokens, sets ClaimsPrincipal
 ├── Services/
-│   └── FirebaseService.cs   # Firebase Admin SDK wrapper
+│   ├── FirebaseService.cs     # Firebase Admin SDK wrapper
+│   └── StorageService.cs      # Firebase Storage operations
 └── Models/
+    ├── LearningComponent.cs   # Component DTOs
+    ├── CourseMaterial.cs      # Material DTOs
+    └── Wish.cs                # Wish DTOs
 ```
 
 ### Authentication Flow
