@@ -404,22 +404,24 @@ public static class MaterialEndpoints
     {
         try
         {
-            // Default to index.html if no path specified
-            var filePath = string.IsNullOrEmpty(path) ? "index.html" : path;
-
-            // Prevent path traversal attacks
-            if (filePath.Contains("..") || filePath.StartsWith("/") || filePath.Contains("\\"))
-            {
-                return Results.BadRequest(ApiResponse.Fail("Invalid path"));
-            }
-
-            // Get material
+            // Get material first to determine entry point if path is empty
             var material = await firebaseService.GetDocumentAsync<CourseMaterial>(
                 MaterialsCollection, materialId);
 
             if (material is null)
             {
                 return Results.NotFound(ApiResponse.Fail("Material not found"));
+            }
+
+            // Default to manifest's entry point if no path specified
+            var filePath = string.IsNullOrEmpty(path)
+                ? (material.Manifest?.EntryPoint ?? "index.html")
+                : path;
+
+            // Prevent path traversal attacks
+            if (filePath.Contains("..") || filePath.StartsWith("/") || filePath.Contains("\\"))
+            {
+                return Results.BadRequest(ApiResponse.Fail("Invalid path"));
             }
 
             // Get component to check visibility
@@ -517,15 +519,28 @@ public static class MaterialEndpoints
                 }
             }
 
-            // Determine entry point: prefer index.html, otherwise use first root HTML file
+            // Determine entry point: prefer index.html/index.htm, otherwise use first root HTML file
             string? entryPoint = null;
-            if (rootHtmlFiles.Any(f => f.Equals("index.html", StringComparison.OrdinalIgnoreCase)))
+
+            // Try to find index.html (case-insensitive, but preserve actual filename)
+            var indexHtml = rootHtmlFiles.FirstOrDefault(f => f.Equals("index.html", StringComparison.OrdinalIgnoreCase));
+            if (indexHtml is not null)
             {
-                entryPoint = "index.html";
+                entryPoint = indexHtml;
             }
-            else if (rootHtmlFiles.Count > 0)
+            else
             {
-                entryPoint = rootHtmlFiles[0];
+                // Try to find index.htm (case-insensitive, but preserve actual filename)
+                var indexHtm = rootHtmlFiles.FirstOrDefault(f => f.Equals("index.htm", StringComparison.OrdinalIgnoreCase));
+                if (indexHtm is not null)
+                {
+                    entryPoint = indexHtm;
+                }
+                else if (rootHtmlFiles.Count > 0)
+                {
+                    // Use first available HTML file
+                    entryPoint = rootHtmlFiles[0];
+                }
             }
 
             if (entryPoint is null)
