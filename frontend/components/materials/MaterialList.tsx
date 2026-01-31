@@ -183,7 +183,7 @@ export function MaterialList({
                 <span className="ml-1 hidden sm:inline">下載</span>
               </Button>
 
-              {canDelete && material.version !== 1 && (
+              {canDelete && (
                 <Button
                   variant="ghost"
                   size="sm"
