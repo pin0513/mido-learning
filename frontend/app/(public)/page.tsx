@@ -8,7 +8,7 @@ import { useAuth } from '@/components/auth/AuthProvider';
 import { ComponentList, CategoryFilter } from '@/components/learning';
 import { Pagination } from '@/components/ui/Pagination';
 import { SortSelect, SortOption, defaultSortOptions } from '@/components/ui/SortSelect';
-import { Category, LearningComponent, ComponentListResponse } from '@/types/component';
+import { LearningComponent, ComponentListResponse } from '@/types/component';
 import { getPublicComponents } from '@/lib/api/components';
 
 const ITEMS_PER_PAGE = 8;
@@ -17,7 +17,7 @@ export default function HomePage() {
   const { user, loading: authLoading } = useAuth();
   const [components, setComponents] = useState<LearningComponent[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState<Category | 'all'>('all');
+  const [category, setCategory] = useState<string>('all');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState<SortOption>(defaultSortOptions[0]);
@@ -46,7 +46,7 @@ export default function HomePage() {
     fetchComponents();
   }, [fetchComponents]);
 
-  const handleCategoryChange = (newCategory: Category | 'all') => {
+  const handleCategoryChange = (newCategory: string) => {
     setCategory(newCategory);
     setPage(1);
   };

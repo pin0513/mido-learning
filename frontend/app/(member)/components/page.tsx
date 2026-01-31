@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Category, LearningComponent, ComponentListResponse } from '@/types/component';
+import { LearningComponent, ComponentListResponse } from '@/types/component';
 import { getComponents } from '@/lib/api/components';
 import { CategoryFilter, ComponentList } from '@/components/learning';
 import { Pagination } from '@/components/ui/Pagination';
@@ -12,7 +12,7 @@ export default function ComponentsPage() {
   const [components, setComponents] = useState<LearningComponent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState<Category | 'all'>('all');
+  const [category, setCategory] = useState<string>('all');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -41,7 +41,7 @@ export default function ComponentsPage() {
     fetchComponents();
   }, [fetchComponents]);
 
-  const handleCategoryChange = (newCategory: Category | 'all') => {
+  const handleCategoryChange = (newCategory: string) => {
     setCategory(newCategory);
     setPage(1);
   };

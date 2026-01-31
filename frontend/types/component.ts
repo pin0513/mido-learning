@@ -46,7 +46,7 @@ export interface ComponentListResponse {
 export interface ComponentQueryParams {
   page?: number;
   limit?: number;
-  category?: Category;
+  category?: string;
   tags?: string;
   visibility?: Visibility;
   sortBy?: 'createdAt' | 'ratingAverage' | 'ratingCount' | 'title';
