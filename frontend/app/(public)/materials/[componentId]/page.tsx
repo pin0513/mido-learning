@@ -1,0 +1,282 @@
+'use client';
+
+import { useState, useEffect, use } from 'react';
+import Link from 'next/link';
+import { LearningComponent, getCategoryConfig } from '@/types/component';
+import { getComponentById } from '@/lib/api/components';
+import { StarRating, RatingDisplay } from '@/components/ui/StarRating';
+import { useAuth } from '@/components/auth/AuthProvider';
+import { getComponentRatings, getMyRating, rateComponent } from '@/lib/api/ratings';
+import { RatingListResponse, UserRatingResponse } from '@/types/rating';
+
+export default function GuestMaterialPage({
+  params,
+}: {
+  params: Promise<{ componentId: string }>;
+}) {
+  const { componentId } = use(params);
+  const { user } = useAuth();
+
+  const [component, setComponent] = useState<LearningComponent | null>(null);
+  const [ratings, setRatings] = useState<RatingListResponse | null>(null);
+  const [myRating, setMyRating] = useState<UserRatingResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isRating, setIsRating] = useState(false);
+
+  useEffect(() => {
+    const loadComponent = async () => {
+      try {
+        const data = await getComponentById(componentId);
+        setComponent(data);
+
+        // Load ratings if user is logged in
+        if (user) {
+          try {
+            const [ratingsData, myRatingData] = await Promise.all([
+              getComponentRatings(componentId),
+              getMyRating(componentId),
+            ]);
+            setRatings(ratingsData);
+            setMyRating(myRatingData);
+          } catch {
+            // Ratings fetch failed, but component loaded
+          }
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load material');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadComponent();
+  }, [componentId, user]);
+
+  const handleRate = async (score: number) => {
+    if (!user || isRating) return;
+
+    setIsRating(true);
+    try {
+      await rateComponent(componentId, score);
+      // Reload ratings
+      const [ratingsData, myRatingData] = await Promise.all([
+        getComponentRatings(componentId),
+        getMyRating(componentId),
+      ]);
+      setRatings(ratingsData);
+      setMyRating(myRatingData);
+    } catch (err) {
+      console.error('Failed to rate:', err);
+    } finally {
+      setIsRating(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (error || !component) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
+        <div className="max-w-md rounded-lg border border-red-200 bg-white p-8 text-center shadow-lg">
+          <svg
+            className="mx-auto h-16 w-16 text-red-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            />
+          </svg>
+          <h1 className="mt-4 text-xl font-bold text-gray-900">無法載入教材</h1>
+          <p className="mt-2 text-gray-600">{error || '找不到教材'}</p>
+          <Link
+            href="/"
+            className="mt-6 inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          >
+            <svg
+              className="mr-2 h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            返回首頁
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const config = getCategoryConfig(component.category);
+
+  return (
+    <div className="min-h-screen bg-gray-100">
+      {/* Minimal Header - No login/auth elements */}
+      <header className="bg-white shadow-sm">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+          <Link
+            href="/"
+            className="inline-flex items-center text-gray-600 hover:text-blue-600"
+          >
+            <svg
+              className="mr-2 h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            返回首頁
+          </Link>
+          <span className={`rounded-full px-3 py-1 text-sm font-medium ${config.badgeClass}`}>
+            {config.label}
+          </span>
+        </div>
+      </header>
+
+      {/* Content */}
+      <main className="mx-auto max-w-7xl px-4 py-8">
+        {/* Component Info Card */}
+        <div className="mb-6 rounded-lg bg-white p-6 shadow-sm">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div className="flex-1">
+              <h1 className="text-2xl font-bold text-gray-900">{component.title}</h1>
+              <p className="mt-1 text-gray-600">{component.subject || component.theme}</p>
+              <p className="mt-3 text-gray-700">{component.description}</p>
+
+              {/* Tags */}
+              {component.tags.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {component.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className={`rounded-full px-2 py-1 text-xs ${config.badgeClass}`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Rating Section */}
+            <div className="w-full md:w-64 md:flex-shrink-0">
+              <div className="rounded-lg border border-gray-200 p-4">
+                <h3 className="mb-3 text-sm font-medium text-gray-700">評分</h3>
+                <RatingDisplay
+                  average={ratings?.average || component.ratingAverage || 0}
+                  total={ratings?.total || component.ratingCount || 0}
+                  distribution={ratings?.distribution}
+                />
+
+                {user ? (
+                  <div className="mt-4 border-t pt-4">
+                    <p className="mb-2 text-sm text-gray-600">
+                      {myRating?.hasRated ? '您的評分：' : '為此教材評分：'}
+                    </p>
+                    <StarRating
+                      rating={myRating?.score || 0}
+                      interactive
+                      size="lg"
+                      onRate={handleRate}
+                      disabled={isRating}
+                      showCount={false}
+                    />
+                  </div>
+                ) : (
+                  <p className="mt-4 border-t pt-4 text-sm text-gray-500">
+                    <Link href="/login" className="text-blue-600 hover:underline">
+                      登入
+                    </Link>
+                    {' '}後可以評分
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Questions Section */}
+        {component.questions && component.questions.length > 0 && (
+          <div className="mb-6 rounded-lg bg-white p-6 shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold text-gray-900">問與答</h2>
+            <div className="space-y-4">
+              {component.questions.map((qa, idx) => (
+                <details
+                  key={idx}
+                  className={`rounded-lg border p-4 ${config.borderClass}`}
+                >
+                  <summary className="cursor-pointer font-medium text-gray-900">
+                    {qa.question}
+                  </summary>
+                  <p className="mt-3 text-gray-700">{qa.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Material Viewer Placeholder */}
+        <div className="rounded-lg bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-gray-900">學習教材</h2>
+          <div className={`aspect-video w-full rounded-lg ${config.bgClass} flex items-center justify-center`}>
+            <div className="text-center">
+              <svg
+                className={`mx-auto h-16 w-16 ${config.textClass} opacity-50`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <p className={`mt-4 ${config.textClass}`}>
+                教材內容區域
+              </p>
+              <p className="mt-1 text-sm text-gray-500">
+                上傳教材後將在此顯示
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Minimal Footer */}
+      <footer className="mt-8 border-t bg-white py-6 text-center text-sm text-gray-500">
+        <p>Mido Learning - 您的專屬學習平台</p>
+      </footer>
+    </div>
+  );
+}

@@ -11,18 +11,29 @@ public static class ComponentEndpoints
     private const int DefaultPageSize = 12;
     private const int MaxPageSize = 100;
 
+    // Valid visibility values
+    private static readonly string[] ValidVisibilities = { "published", "login", "private" };
+
     public static void MapComponentEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/components")
-            .WithTags("Components")
-            .RequireAuthorization();
+            .WithTags("Components");
 
+        // Public endpoint - no auth required
+        group.MapGet("/public", GetPublicComponents)
+            .WithName("GetPublicComponents")
+            .AllowAnonymous()
+            .WithOpenApi();
+
+        // Authenticated endpoints
         group.MapGet("/", GetComponents)
             .WithName("GetComponents")
+            .RequireAuthorization()
             .WithOpenApi();
 
         group.MapGet("/{id}", GetComponentById)
             .WithName("GetComponentById")
+            .AllowAnonymous()
             .WithOpenApi();
 
         group.MapPost("/", CreateComponent)
@@ -30,19 +41,45 @@ public static class ComponentEndpoints
             .RequireAuthorization("TeacherOrAdmin")
             .WithOpenApi();
 
+        group.MapPut("/{id}", UpdateComponent)
+            .WithName("UpdateComponent")
+            .RequireAuthorization("TeacherOrAdmin")
+            .WithOpenApi();
+
+        group.MapPut("/{id}/visibility", UpdateComponentVisibility)
+            .WithName("UpdateComponentVisibility")
+            .RequireAuthorization("TeacherOrAdmin")
+            .WithOpenApi();
+
+        group.MapDelete("/{id}", DeleteComponent)
+            .WithName("DeleteComponent")
+            .RequireAuthorization("TeacherOrAdmin")
+            .WithOpenApi();
+
         group.MapGet("/my", GetMyComponents)
             .WithName("GetMyComponents")
             .RequireAuthorization("TeacherOrAdmin")
             .WithOpenApi();
+
+        // Admin only endpoint
+        group.MapGet("/all", GetAllComponents)
+            .WithName("GetAllComponents")
+            .RequireAuthorization("AdminOnly")
+            .WithOpenApi();
     }
 
-    private static async Task<IResult> GetComponents(
+    /// <summary>
+    /// Get public (published) components - no auth required
+    /// </summary>
+    private static async Task<IResult> GetPublicComponents(
         IFirebaseService firebaseService,
         ILogger<Program> logger,
         int page = 1,
         int limit = DefaultPageSize,
         string? category = null,
-        string? tags = null)
+        string? tags = null,
+        string sortBy = "createdAt",
+        string sortOrder = "desc")
     {
         try
         {
@@ -52,18 +89,20 @@ public static class ComponentEndpoints
                 ComponentsCollection,
                 page,
                 limit,
-                category,
+                null,
                 null);
 
-            // Apply category filter if provided (in case Firestore query doesn't support it)
-            var filteredComponents = components.AsEnumerable();
+            // Filter to only published components
+            var filteredComponents = components.Where(c => c.Visibility == "published");
+
+            // Apply category filter
             if (!string.IsNullOrEmpty(category))
             {
                 filteredComponents = filteredComponents.Where(c =>
                     c.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
             }
 
-            // Apply tags filter if provided
+            // Apply tags filter
             if (!string.IsNullOrEmpty(tags))
             {
                 var tagList = tags.Split(',').Select(t => t.Trim().ToLowerInvariant()).ToArray();
@@ -71,10 +110,89 @@ public static class ComponentEndpoints
                     c.Tags.Any(t => tagList.Contains(t.ToLowerInvariant())));
             }
 
+            // Apply sorting
+            filteredComponents = ApplySorting(filteredComponents, sortBy, sortOrder);
+
+            var componentList = filteredComponents.ToList();
+
             var response = ApiResponse<ComponentListResponse>.Ok(new ComponentListResponse
             {
-                Components = filteredComponents,
-                Total = total,
+                Components = componentList,
+                Total = componentList.Count,
+                Page = page,
+                Limit = limit
+            });
+
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to get public components");
+            return Results.Problem(
+                detail: "Failed to retrieve components",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    /// <summary>
+    /// Get components for logged-in users (published + login visibility)
+    /// </summary>
+    private static async Task<IResult> GetComponents(
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger,
+        int page = 1,
+        int limit = DefaultPageSize,
+        string? category = null,
+        string? tags = null,
+        string sortBy = "createdAt",
+        string sortOrder = "desc")
+    {
+        try
+        {
+            (page, limit) = NormalizePaginationParams(page, limit);
+
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.HasClaim("admin", "true");
+
+            var (components, total) = await firebaseService.GetDocumentsAsync<LearningComponent>(
+                ComponentsCollection,
+                page,
+                limit,
+                null,
+                null);
+
+            // Filter based on visibility and ownership
+            var filteredComponents = components.Where(c =>
+                c.Visibility == "published" ||
+                c.Visibility == "login" ||
+                (c.Visibility == "private" && c.CreatedBy?.Uid == uid) ||
+                isAdmin);
+
+            // Apply category filter
+            if (!string.IsNullOrEmpty(category))
+            {
+                filteredComponents = filteredComponents.Where(c =>
+                    c.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Apply tags filter
+            if (!string.IsNullOrEmpty(tags))
+            {
+                var tagList = tags.Split(',').Select(t => t.Trim().ToLowerInvariant()).ToArray();
+                filteredComponents = filteredComponents.Where(c =>
+                    c.Tags.Any(t => tagList.Contains(t.ToLowerInvariant())));
+            }
+
+            // Apply sorting
+            filteredComponents = ApplySorting(filteredComponents, sortBy, sortOrder);
+
+            var componentList = filteredComponents.ToList();
+
+            var response = ApiResponse<ComponentListResponse>.Ok(new ComponentListResponse
+            {
+                Components = componentList,
+                Total = componentList.Count,
                 Page = page,
                 Limit = limit
             });
@@ -90,8 +208,12 @@ public static class ComponentEndpoints
         }
     }
 
+    /// <summary>
+    /// Get component by ID - checks visibility permissions
+    /// </summary>
     private static async Task<IResult> GetComponentById(
         string id,
+        HttpContext context,
         IFirebaseService firebaseService,
         ILogger<Program> logger)
     {
@@ -109,6 +231,25 @@ public static class ComponentEndpoints
             // Set the ID from the document ID
             var componentWithId = component with { Id = id };
 
+            // Check visibility permissions
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAuthenticated = !string.IsNullOrEmpty(uid);
+            var isAdmin = context.User.HasClaim("admin", "true");
+            var isOwner = componentWithId.CreatedBy?.Uid == uid;
+
+            var canAccess = componentWithId.Visibility switch
+            {
+                "published" => true,
+                "login" => isAuthenticated,
+                "private" => isOwner || isAdmin,
+                _ => false
+            };
+
+            if (!canAccess)
+            {
+                return Results.Forbid();
+            }
+
             var response = ApiResponse<LearningComponentDetail>.Ok(componentWithId);
             return Results.Ok(response);
         }
@@ -121,13 +262,19 @@ public static class ComponentEndpoints
         }
     }
 
+    /// <summary>
+    /// Get current user's components (teacher/admin)
+    /// </summary>
     private static async Task<IResult> GetMyComponents(
         HttpContext context,
         IFirebaseService firebaseService,
         ILogger<Program> logger,
         int page = 1,
         int limit = DefaultPageSize,
-        string? category = null)
+        string? category = null,
+        string? visibility = null,
+        string sortBy = "createdAt",
+        string sortOrder = "desc")
     {
         try
         {
@@ -149,17 +296,28 @@ public static class ComponentEndpoints
             // Filter by creator
             var myComponents = components.Where(c => c.CreatedBy?.Uid == uid);
 
-            // Apply category filter if provided
+            // Apply category filter
             if (!string.IsNullOrEmpty(category))
             {
                 myComponents = myComponents.Where(c =>
                     c.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
             }
 
+            // Apply visibility filter
+            if (!string.IsNullOrEmpty(visibility) && ValidVisibilities.Contains(visibility))
+            {
+                myComponents = myComponents.Where(c => c.Visibility == visibility);
+            }
+
+            // Apply sorting
+            myComponents = ApplySorting(myComponents, sortBy, sortOrder);
+
+            var componentList = myComponents.ToList();
+
             var response = ApiResponse<ComponentListResponse>.Ok(new ComponentListResponse
             {
-                Components = myComponents,
-                Total = myComponents.Count(),
+                Components = componentList,
+                Total = componentList.Count,
                 Page = page,
                 Limit = limit
             });
@@ -175,13 +333,82 @@ public static class ComponentEndpoints
         }
     }
 
+    /// <summary>
+    /// Get all components (admin only)
+    /// </summary>
+    private static async Task<IResult> GetAllComponents(
+        IFirebaseService firebaseService,
+        ILogger<Program> logger,
+        int page = 1,
+        int limit = DefaultPageSize,
+        string? category = null,
+        string? visibility = null,
+        string? createdBy = null,
+        string sortBy = "createdAt",
+        string sortOrder = "desc")
+    {
+        try
+        {
+            (page, limit) = NormalizePaginationParams(page, limit);
+
+            var (components, total) = await firebaseService.GetDocumentsAsync<LearningComponent>(
+                ComponentsCollection,
+                page,
+                limit,
+                null,
+                null);
+
+            var filteredComponents = components.AsEnumerable();
+
+            // Apply category filter
+            if (!string.IsNullOrEmpty(category))
+            {
+                filteredComponents = filteredComponents.Where(c =>
+                    c.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Apply visibility filter
+            if (!string.IsNullOrEmpty(visibility) && ValidVisibilities.Contains(visibility))
+            {
+                filteredComponents = filteredComponents.Where(c => c.Visibility == visibility);
+            }
+
+            // Apply createdBy filter
+            if (!string.IsNullOrEmpty(createdBy))
+            {
+                filteredComponents = filteredComponents.Where(c => c.CreatedBy?.Uid == createdBy);
+            }
+
+            // Apply sorting
+            filteredComponents = ApplySorting(filteredComponents, sortBy, sortOrder);
+
+            var componentList = filteredComponents.ToList();
+
+            var response = ApiResponse<ComponentListResponse>.Ok(new ComponentListResponse
+            {
+                Components = componentList,
+                Total = componentList.Count,
+                Page = page,
+                Limit = limit
+            });
+
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to get all components");
+            return Results.Problem(
+                detail: "Failed to retrieve components",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
     private static async Task<IResult> CreateComponent(
         CreateComponentRequest request,
         HttpContext context,
         IFirebaseService firebaseService,
         ILogger<Program> logger)
     {
-        // Validate request
         var validationErrors = ValidateRequest(request);
         if (validationErrors.Count > 0)
         {
@@ -202,6 +429,9 @@ public static class ComponentEndpoints
                 Tags = request.Tags,
                 Questions = request.Questions,
                 Materials = Array.Empty<Material>(),
+                Visibility = "private", // Default to private
+                RatingAverage = 0,
+                RatingCount = 0,
                 CreatedBy = new CreatedByInfo
                 {
                     Uid = uid,
@@ -230,6 +460,208 @@ public static class ComponentEndpoints
                 detail: "Failed to create component",
                 statusCode: StatusCodes.Status500InternalServerError);
         }
+    }
+
+    /// <summary>
+    /// Update component - owner or admin only
+    /// </summary>
+    private static async Task<IResult> UpdateComponent(
+        string id,
+        UpdateComponentRequest request,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.HasClaim("admin", "true");
+
+            // Get existing component
+            var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+                ComponentsCollection,
+                id);
+
+            if (existing is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Component not found"));
+            }
+
+            // Check ownership
+            var isOwner = existing.CreatedBy?.Uid == uid;
+            if (!isOwner && !isAdmin)
+            {
+                return Results.Forbid();
+            }
+
+            // Build update object with only provided fields
+            var updated = existing with
+            {
+                Title = request.Title ?? existing.Title,
+                Theme = request.Theme ?? existing.Theme,
+                Description = request.Description ?? existing.Description,
+                Category = request.Category ?? existing.Category,
+                Tags = request.Tags ?? existing.Tags,
+                Questions = request.Questions ?? existing.Questions,
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            await firebaseService.UpdateDocumentAsync(ComponentsCollection, id, updated);
+
+            logger.LogInformation(
+                "Component {ComponentId} updated by user {UserId}",
+                id,
+                uid);
+
+            var response = ApiResponse<LearningComponentDetail>.Ok(updated with { Id = id });
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to update component {ComponentId}", id);
+            return Results.Problem(
+                detail: "Failed to update component",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    /// <summary>
+    /// Update component visibility - owner or admin only
+    /// </summary>
+    private static async Task<IResult> UpdateComponentVisibility(
+        string id,
+        UpdateVisibilityRequest request,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        // Validate visibility value
+        if (!ValidVisibilities.Contains(request.Visibility))
+        {
+            return Results.BadRequest(ApiResponse.Fail(
+                "Invalid visibility value. Must be 'published', 'login', or 'private'"));
+        }
+
+        try
+        {
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.HasClaim("admin", "true");
+
+            // Get existing component
+            var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+                ComponentsCollection,
+                id);
+
+            if (existing is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Component not found"));
+            }
+
+            // Check ownership
+            var isOwner = existing.CreatedBy?.Uid == uid;
+            if (!isOwner && !isAdmin)
+            {
+                return Results.Forbid();
+            }
+
+            // Update visibility
+            var updated = existing with
+            {
+                Visibility = request.Visibility,
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            await firebaseService.UpdateDocumentAsync(ComponentsCollection, id, updated);
+
+            logger.LogInformation(
+                "Component {ComponentId} visibility changed to {Visibility} by user {UserId}",
+                id,
+                request.Visibility,
+                uid);
+
+            var response = ApiResponse<LearningComponentDetail>.Ok(updated with { Id = id });
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to update component visibility {ComponentId}", id);
+            return Results.Problem(
+                detail: "Failed to update component visibility",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    /// <summary>
+    /// Delete component - owner or admin only
+    /// </summary>
+    private static async Task<IResult> DeleteComponent(
+        string id,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.HasClaim("admin", "true");
+
+            // Get existing component
+            var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+                ComponentsCollection,
+                id);
+
+            if (existing is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Component not found"));
+            }
+
+            // Check ownership
+            var isOwner = existing.CreatedBy?.Uid == uid;
+            if (!isOwner && !isAdmin)
+            {
+                return Results.Forbid();
+            }
+
+            await firebaseService.DeleteDocumentAsync(ComponentsCollection, id);
+
+            logger.LogInformation(
+                "Component {ComponentId} deleted by user {UserId}",
+                id,
+                uid);
+
+            return Results.NoContent();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to delete component {ComponentId}", id);
+            return Results.Problem(
+                detail: "Failed to delete component",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    private static IEnumerable<LearningComponent> ApplySorting(
+        IEnumerable<LearningComponent> components,
+        string sortBy,
+        string sortOrder)
+    {
+        var isDescending = sortOrder.Equals("desc", StringComparison.OrdinalIgnoreCase);
+
+        return sortBy.ToLowerInvariant() switch
+        {
+            "ratingaverage" or "rating" => isDescending
+                ? components.OrderByDescending(c => c.RatingAverage)
+                : components.OrderBy(c => c.RatingAverage),
+            "ratingcount" => isDescending
+                ? components.OrderByDescending(c => c.RatingCount)
+                : components.OrderBy(c => c.RatingCount),
+            "title" => isDescending
+                ? components.OrderByDescending(c => c.Title)
+                : components.OrderBy(c => c.Title),
+            _ => isDescending // Default to createdAt
+                ? components.OrderByDescending(c => c.CreatedAt)
+                : components.OrderBy(c => c.CreatedAt)
+        };
     }
 
     private static List<string> ValidateRequest(CreateComponentRequest request)

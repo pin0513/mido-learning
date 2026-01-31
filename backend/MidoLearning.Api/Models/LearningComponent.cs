@@ -33,6 +33,24 @@ public record LearningComponent
     [FirestoreProperty]
     public int MaterialCount { get; init; }
 
+    /// <summary>
+    /// Visibility level: "published" (public), "login" (requires login), "private" (owner only)
+    /// </summary>
+    [FirestoreProperty]
+    public string Visibility { get; init; } = "private";
+
+    /// <summary>
+    /// Average rating score (1-5)
+    /// </summary>
+    [FirestoreProperty]
+    public double RatingAverage { get; init; } = 0;
+
+    /// <summary>
+    /// Number of ratings received
+    /// </summary>
+    [FirestoreProperty]
+    public int RatingCount { get; init; } = 0;
+
     [FirestoreProperty]
     public CreatedByInfo? CreatedBy { get; init; }
 
@@ -69,6 +87,24 @@ public record LearningComponentDetail
 
     [FirestoreProperty]
     public Material[] Materials { get; init; } = Array.Empty<Material>();
+
+    /// <summary>
+    /// Visibility level: "published" (public), "login" (requires login), "private" (owner only)
+    /// </summary>
+    [FirestoreProperty]
+    public string Visibility { get; init; } = "private";
+
+    /// <summary>
+    /// Average rating score (1-5)
+    /// </summary>
+    [FirestoreProperty]
+    public double RatingAverage { get; init; } = 0;
+
+    /// <summary>
+    /// Number of ratings received
+    /// </summary>
+    [FirestoreProperty]
+    public int RatingCount { get; init; } = 0;
 
     [FirestoreProperty]
     public CreatedByInfo? CreatedBy { get; init; }
@@ -165,4 +201,35 @@ public record CreateComponentRequest
 public record CreateComponentResponse
 {
     public string Id { get; init; } = string.Empty;
+}
+
+/// <summary>
+/// Request DTO for updating a learning component
+/// </summary>
+public record UpdateComponentRequest
+{
+    [StringLength(200, MinimumLength = 1, ErrorMessage = "Title must be between 1 and 200 characters")]
+    public string? Title { get; init; }
+
+    public string? Theme { get; init; }
+
+    public string? Description { get; init; }
+
+    public string? Category { get; init; }
+
+    public string[]? Tags { get; init; }
+
+    public QuestionAnswer[]? Questions { get; init; }
+
+    public string? Thumbnail { get; init; }
+}
+
+/// <summary>
+/// Request DTO for updating component visibility
+/// </summary>
+public record UpdateVisibilityRequest
+{
+    [Required(ErrorMessage = "Visibility is required")]
+    [RegularExpression("^(published|login|private)$", ErrorMessage = "Visibility must be 'published', 'login', or 'private'")]
+    public string Visibility { get; init; } = string.Empty;
 }

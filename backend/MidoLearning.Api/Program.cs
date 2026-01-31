@@ -61,6 +61,8 @@ app.MapAdminEndpoints();
 app.MapWishEndpoints();
 app.MapComponentEndpoints();
 app.MapMaterialEndpoints();
+app.MapRatingEndpoints();
+app.MapCategoryEndpoints();
 
 app.Run();
 

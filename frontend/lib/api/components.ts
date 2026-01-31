@@ -6,6 +6,8 @@ import {
   ComponentListResponse,
   ComponentQueryParams,
   CreateComponentRequest,
+  UpdateComponentRequest,
+  UpdateVisibilityRequest,
 } from '@/types/component';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -28,9 +30,7 @@ interface ApiResponse<T> {
   errors?: string[];
 }
 
-export async function getComponents(
-  params: ComponentQueryParams = {}
-): Promise<ComponentListResponse> {
+function buildQueryString(params: ComponentQueryParams): string {
   const searchParams = new URLSearchParams();
 
   if (params.page) {
@@ -45,8 +45,50 @@ export async function getComponents(
   if (params.tags) {
     searchParams.set('tags', params.tags);
   }
+  if (params.visibility) {
+    searchParams.set('visibility', params.visibility);
+  }
+  if (params.sortBy) {
+    searchParams.set('sortBy', params.sortBy);
+  }
+  if (params.sortOrder) {
+    searchParams.set('sortOrder', params.sortOrder);
+  }
+  if (params.createdBy) {
+    searchParams.set('createdBy', params.createdBy);
+  }
 
-  const queryString = searchParams.toString();
+  return searchParams.toString();
+}
+
+/**
+ * Get public components (no auth required)
+ */
+export async function getPublicComponents(
+  params: ComponentQueryParams = {}
+): Promise<ComponentListResponse> {
+  const queryString = buildQueryString(params);
+  const url = `${API_URL}/api/components/public${queryString ? `?${queryString}` : ''}`;
+
+  const response = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch public components: ${response.statusText}`);
+  }
+
+  const apiResponse: ApiResponse<ComponentListResponse> = await response.json();
+  return apiResponse.data;
+}
+
+/**
+ * Get components for logged-in users
+ */
+export async function getComponents(
+  params: ComponentQueryParams = {}
+): Promise<ComponentListResponse> {
+  const queryString = buildQueryString(params);
   const url = `${API_URL}/api/components${queryString ? `?${queryString}` : ''}`;
 
   const headers = await getAuthHeaders();
@@ -60,6 +102,9 @@ export async function getComponents(
   return apiResponse.data;
 }
 
+/**
+ * Get component by ID
+ */
 export async function getComponentById(id: string): Promise<LearningComponent> {
   const headers = await getAuthHeaders();
   const response = await fetch(`${API_URL}/api/components/${id}`, { headers });
@@ -68,6 +113,9 @@ export async function getComponentById(id: string): Promise<LearningComponent> {
     if (response.status === 404) {
       throw new Error('Component not found');
     }
+    if (response.status === 403) {
+      throw new Error('Access denied');
+    }
     throw new Error(`Failed to fetch component: ${response.statusText}`);
   }
 
@@ -75,6 +123,9 @@ export async function getComponentById(id: string): Promise<LearningComponent> {
   return apiResponse.data;
 }
 
+/**
+ * Create a new component
+ */
 export async function createComponent(
   data: CreateComponentRequest
 ): Promise<LearningComponent> {
@@ -98,22 +149,99 @@ export async function createComponent(
   return response.json();
 }
 
+/**
+ * Update a component
+ */
+export async function updateComponent(
+  id: string,
+  data: UpdateComponentRequest
+): Promise<LearningComponent> {
+  const headers = await getAuthHeaders();
+  const response = await fetch(`${API_URL}/api/components/${id}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('Unauthorized: Please login');
+    }
+    if (response.status === 403) {
+      throw new Error('Forbidden: You do not have permission to update this component');
+    }
+    if (response.status === 404) {
+      throw new Error('Component not found');
+    }
+    throw new Error(`Failed to update component: ${response.statusText}`);
+  }
+
+  const apiResponse: ApiResponse<LearningComponent> = await response.json();
+  return apiResponse.data;
+}
+
+/**
+ * Update component visibility
+ */
+export async function updateComponentVisibility(
+  id: string,
+  data: UpdateVisibilityRequest
+): Promise<LearningComponent> {
+  const headers = await getAuthHeaders();
+  const response = await fetch(`${API_URL}/api/components/${id}/visibility`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('Unauthorized: Please login');
+    }
+    if (response.status === 403) {
+      throw new Error('Forbidden: You do not have permission to update this component');
+    }
+    if (response.status === 404) {
+      throw new Error('Component not found');
+    }
+    throw new Error(`Failed to update visibility: ${response.statusText}`);
+  }
+
+  const apiResponse: ApiResponse<LearningComponent> = await response.json();
+  return apiResponse.data;
+}
+
+/**
+ * Delete a component
+ */
+export async function deleteComponent(id: string): Promise<void> {
+  const headers = await getAuthHeaders();
+  const response = await fetch(`${API_URL}/api/components/${id}`, {
+    method: 'DELETE',
+    headers,
+  });
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('Unauthorized: Please login');
+    }
+    if (response.status === 403) {
+      throw new Error('Forbidden: You do not have permission to delete this component');
+    }
+    if (response.status === 404) {
+      throw new Error('Component not found');
+    }
+    throw new Error(`Failed to delete component: ${response.statusText}`);
+  }
+}
+
+/**
+ * Get current user's components
+ */
 export async function getMyComponents(
   params: ComponentQueryParams = {}
 ): Promise<ComponentListResponse> {
-  const searchParams = new URLSearchParams();
-
-  if (params.page) {
-    searchParams.set('page', params.page.toString());
-  }
-  if (params.limit) {
-    searchParams.set('limit', params.limit.toString());
-  }
-  if (params.category) {
-    searchParams.set('category', params.category);
-  }
-
-  const queryString = searchParams.toString();
+  const queryString = buildQueryString(params);
   const url = `${API_URL}/api/components/my${queryString ? `?${queryString}` : ''}`;
 
   const headers = await getAuthHeaders();
@@ -121,6 +249,32 @@ export async function getMyComponents(
 
   if (!response.ok) {
     throw new Error(`Failed to fetch my components: ${response.statusText}`);
+  }
+
+  const apiResponse: ApiResponse<ComponentListResponse> = await response.json();
+  return apiResponse.data;
+}
+
+/**
+ * Get all components (admin only)
+ */
+export async function getAllComponents(
+  params: ComponentQueryParams = {}
+): Promise<ComponentListResponse> {
+  const queryString = buildQueryString(params);
+  const url = `${API_URL}/api/components/all${queryString ? `?${queryString}` : ''}`;
+
+  const headers = await getAuthHeaders();
+  const response = await fetch(url, { headers });
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('Unauthorized: Please login');
+    }
+    if (response.status === 403) {
+      throw new Error('Forbidden: Admin role required');
+    }
+    throw new Error(`Failed to fetch all components: ${response.statusText}`);
   }
 
   const apiResponse: ApiResponse<ComponentListResponse> = await response.json();

@@ -1,15 +1,38 @@
+'use client';
+
 import Link from 'next/link';
-import { LearningComponent, CATEGORY_CONFIG } from '@/types/component';
+import { LearningComponent, getCategoryConfig, Visibility } from '@/types/component';
 import { TagDisplay } from './TagDisplay';
+import { StarRating } from '@/components/ui/StarRating';
+import { VisibilityBadge } from '@/components/ui/VisibilitySelect';
 
 interface ComponentCardProps {
   component: LearningComponent;
   href?: string;
+  showVisibility?: boolean;
+  currentUserId?: string;
+  isAdmin?: boolean;
 }
 
-export function ComponentCard({ component, href }: ComponentCardProps) {
-  const config = CATEGORY_CONFIG[component.category];
+export function ComponentCard({
+  component,
+  href,
+  showVisibility = false,
+  currentUserId,
+  isAdmin = false,
+}: ComponentCardProps) {
+  const config = getCategoryConfig(component.category);
   const linkHref = href || `/components/${component.id}`;
+
+  // Determine if we should show visibility badge
+  const creatorUid = typeof component.createdBy === 'object'
+    ? component.createdBy?.uid
+    : component.createdBy;
+  const isOwner = currentUserId && creatorUid === currentUserId;
+  const shouldShowVisibility = showVisibility && (isOwner || isAdmin);
+
+  // Default visibility for backward compatibility
+  const visibility: Visibility = component.visibility || 'private';
 
   return (
     <Link href={linkHref} className="block group">
@@ -41,12 +64,19 @@ export function ComponentCard({ component, href }: ComponentCardProps) {
               </svg>
             </div>
           )}
-          {/* Category badge */}
-          <span
-            className={`absolute right-2 top-2 rounded-full px-2.5 py-0.5 text-xs font-medium ${config.badgeClass}`}
-          >
-            {config.label}
-          </span>
+          {/* Top badges */}
+          <div className="absolute right-2 top-2 flex flex-col gap-1 items-end">
+            {/* Category badge */}
+            <span
+              className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${config.badgeClass}`}
+            >
+              {config.label}
+            </span>
+            {/* Visibility badge */}
+            {shouldShowVisibility && (
+              <VisibilityBadge visibility={visibility} />
+            )}
+          </div>
         </div>
 
         {/* Content */}
@@ -54,7 +84,17 @@ export function ComponentCard({ component, href }: ComponentCardProps) {
           <h3 className="mb-1 text-lg font-semibold text-gray-900 line-clamp-1 group-hover:text-gray-700">
             {component.title}
           </h3>
-          <p className="mb-3 text-sm text-gray-500 line-clamp-1">{component.subject}</p>
+          <p className="mb-2 text-sm text-gray-500 line-clamp-1">{component.subject}</p>
+
+          {/* Rating */}
+          <div className="mb-2">
+            <StarRating
+              rating={component.ratingAverage || 0}
+              count={component.ratingCount || 0}
+              size="sm"
+            />
+          </div>
+
           <TagDisplay tags={component.tags} category={component.category} maxDisplay={3} />
         </div>
       </article>

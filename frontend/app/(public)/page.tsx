@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { ComponentList, CategoryFilter } from '@/components/learning';
 import { Pagination } from '@/components/ui/Pagination';
+import { SortSelect, SortOption, defaultSortOptions } from '@/components/ui/SortSelect';
 import { Category, LearningComponent, ComponentListResponse } from '@/types/component';
-import { getComponents } from '@/lib/api/components';
+import { getPublicComponents } from '@/lib/api/components';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -18,6 +19,7 @@ export default function HomePage() {
   const [category, setCategory] = useState<Category | 'all'>('all');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [sortOption, setSortOption] = useState<SortOption>(defaultSortOptions[0]);
 
   const fetchComponents = useCallback(async () => {
     setLoading(true);
@@ -25,9 +27,11 @@ export default function HomePage() {
       const params = {
         page,
         limit: ITEMS_PER_PAGE,
+        sortBy: sortOption.sortBy,
+        sortOrder: sortOption.sortOrder,
         ...(category !== 'all' && { category }),
       };
-      const response: ComponentListResponse = await getComponents(params);
+      const response: ComponentListResponse = await getPublicComponents(params);
       setComponents(response.components);
       setTotalPages(Math.ceil(response.total / response.limit));
     } catch {
@@ -35,7 +39,7 @@ export default function HomePage() {
     } finally {
       setLoading(false);
     }
-  }, [page, category]);
+  }, [page, category, sortOption]);
 
   useEffect(() => {
     fetchComponents();
@@ -49,6 +53,11 @@ export default function HomePage() {
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSortChange = (newSort: SortOption) => {
+    setSortOption(newSort);
+    setPage(1);
   };
 
   return (
@@ -93,17 +102,20 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">學習教材</h2>
+              <h2 className="text-2xl font-bold text-gray-900">公開學習教材</h2>
               <p className="mt-1 text-gray-600">探索我們的精選課程</p>
             </div>
-            <CategoryFilter selected={category} onChange={handleCategoryChange} />
+            <div className="flex items-center gap-4">
+              <CategoryFilter selected={category} onChange={handleCategoryChange} />
+              <SortSelect value={sortOption} onChange={handleSortChange} />
+            </div>
           </div>
 
           <ComponentList
             components={components}
             loading={loading}
-            emptyMessage="目前沒有學習教材"
-            cardHrefPrefix="/components"
+            emptyMessage="目前沒有公開的學習教材"
+            cardHrefPrefix="/materials"
           />
 
           {!loading && components.length > 0 && totalPages > 1 && (
@@ -115,6 +127,13 @@ export default function HomePage() {
               />
             </div>
           )}
+
+          {/* Link to Categories */}
+          <div className="mt-8 text-center">
+            <Link href="/categories" className="text-blue-600 hover:text-blue-800 hover:underline">
+              瀏覽所有類別 →
+            </Link>
+          </div>
         </div>
       </section>
 

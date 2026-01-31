@@ -1,4 +1,6 @@
-export type Category = 'adult' | 'kid';
+export type Category = 'adult' | 'kid' | 'Programming' | 'Language' | 'Science' | 'Art';
+
+export type Visibility = 'published' | 'login' | 'private';
 
 export interface Question {
   id: string;
@@ -9,15 +11,19 @@ export interface Question {
 export interface LearningComponent {
   id: string;
   title: string;
-  subject: string;
+  theme?: string;
+  subject?: string;
   description: string;
-  category: Category;
+  category: Category | string;
   tags: string[];
   questions: Question[];
   thumbnailUrl?: string;
-  createdBy: string;
+  visibility: Visibility;
+  ratingAverage: number;
+  ratingCount: number;
+  createdBy?: string | { uid: string; displayName: string };
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface CreateComponentRequest {
@@ -42,9 +48,62 @@ export interface ComponentQueryParams {
   limit?: number;
   category?: Category;
   tags?: string;
+  visibility?: Visibility;
+  sortBy?: 'createdAt' | 'ratingAverage' | 'ratingCount' | 'title';
+  sortOrder?: 'asc' | 'desc';
+  createdBy?: string;
 }
 
-export const CATEGORY_CONFIG = {
+export interface UpdateComponentRequest {
+  title?: string;
+  theme?: string;
+  description?: string;
+  category?: Category;
+  tags?: string[];
+  questions?: Omit<Question, 'id'>[];
+  thumbnailUrl?: string;
+}
+
+export interface UpdateVisibilityRequest {
+  visibility: Visibility;
+}
+
+export const VISIBILITY_CONFIG: Record<Visibility, {
+  label: string;
+  description: string;
+  icon: string;
+  badgeClass: string;
+}> = {
+  published: {
+    label: '公開',
+    description: '所有人都可以看到',
+    icon: '🌍',
+    badgeClass: 'bg-green-100 text-green-800',
+  },
+  login: {
+    label: '登入可見',
+    description: '登入用戶才可以看到',
+    icon: '🔑',
+    badgeClass: 'bg-blue-100 text-blue-800',
+  },
+  private: {
+    label: '私有',
+    description: '只有自己可以看到',
+    icon: '🔒',
+    badgeClass: 'bg-gray-100 text-gray-800',
+  },
+};
+
+export const CATEGORY_CONFIG: Record<string, {
+  label: string;
+  primary: string;
+  light: string;
+  textClass: string;
+  bgClass: string;
+  borderClass: string;
+  badgeClass: string;
+  buttonClass: string;
+}> = {
   adult: {
     label: '大人學',
     primary: '#1E40AF',
@@ -65,4 +124,60 @@ export const CATEGORY_CONFIG = {
     badgeClass: 'bg-amber-100 text-red-800',
     buttonClass: 'bg-red-600 hover:bg-red-700',
   },
-} as const;
+  Programming: {
+    label: '程式設計',
+    primary: '#7C3AED',
+    light: '#EDE9FE',
+    textClass: 'text-purple-800',
+    bgClass: 'bg-purple-50',
+    borderClass: 'border-purple-200',
+    badgeClass: 'bg-purple-100 text-purple-800',
+    buttonClass: 'bg-purple-600 hover:bg-purple-700',
+  },
+  Language: {
+    label: '語言學習',
+    primary: '#059669',
+    light: '#D1FAE5',
+    textClass: 'text-green-800',
+    bgClass: 'bg-green-50',
+    borderClass: 'border-green-200',
+    badgeClass: 'bg-green-100 text-green-800',
+    buttonClass: 'bg-green-600 hover:bg-green-700',
+  },
+  Science: {
+    label: '自然科學',
+    primary: '#0891B2',
+    light: '#CFFAFE',
+    textClass: 'text-cyan-800',
+    bgClass: 'bg-cyan-50',
+    borderClass: 'border-cyan-200',
+    badgeClass: 'bg-cyan-100 text-cyan-800',
+    buttonClass: 'bg-cyan-600 hover:bg-cyan-700',
+  },
+  Art: {
+    label: '藝術創作',
+    primary: '#DB2777',
+    light: '#FCE7F3',
+    textClass: 'text-pink-800',
+    bgClass: 'bg-pink-50',
+    borderClass: 'border-pink-200',
+    badgeClass: 'bg-pink-100 text-pink-800',
+    buttonClass: 'bg-pink-600 hover:bg-pink-700',
+  },
+};
+
+// Default config for unknown categories
+export const DEFAULT_CATEGORY_CONFIG = {
+  label: '其他',
+  primary: '#6B7280',
+  light: '#F3F4F6',
+  textClass: 'text-gray-800',
+  bgClass: 'bg-gray-50',
+  borderClass: 'border-gray-200',
+  badgeClass: 'bg-gray-100 text-gray-800',
+  buttonClass: 'bg-gray-600 hover:bg-gray-700',
+};
+
+export function getCategoryConfig(category: string) {
+  return CATEGORY_CONFIG[category] || DEFAULT_CATEGORY_CONFIG;
+}
