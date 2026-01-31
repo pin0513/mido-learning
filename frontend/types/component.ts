@@ -30,7 +30,7 @@ export interface CreateComponentRequest {
   title: string;
   theme: string;
   description?: string;
-  category: Category;
+  category: Category | string; // Allow dynamic categories
   tags: string[];
   questions: Omit<Question, 'id'>[];
   thumbnailUrl?: string;

@@ -404,4 +404,36 @@ public class FirebaseService : IFirebaseService
             Math.Round(avgProcessingTimeHours, 1),
             Math.Round(completionRate, 3));
     }
+
+    public async Task<(List<string> Categories, List<string> Tags)> GetUsedCategoriesAndTagsAsync()
+    {
+        var snapshot = await _firestoreDb.Collection("components").GetSnapshotAsync();
+
+        var categories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var tags = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var doc in snapshot.Documents)
+        {
+            var component = doc.ConvertTo<LearningComponent>();
+
+            if (!string.IsNullOrEmpty(component.Category))
+            {
+                categories.Add(component.Category);
+            }
+
+            if (component.Tags is not null)
+            {
+                foreach (var tag in component.Tags.Where(t => !string.IsNullOrWhiteSpace(t)))
+                {
+                    tags.Add(tag);
+                }
+            }
+        }
+
+        _logger.LogInformation(
+            "Retrieved {CategoryCount} categories and {TagCount} tags from components",
+            categories.Count, tags.Count);
+
+        return (categories.OrderBy(c => c).ToList(), tags.OrderBy(t => t).ToList());
+    }
 }

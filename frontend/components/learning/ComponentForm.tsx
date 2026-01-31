@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
-import { Category, CreateComponentRequest, CATEGORY_CONFIG, getCategoryConfig } from '@/types/component';
+import { useState, useEffect, FormEvent } from 'react';
+import { CreateComponentRequest, CATEGORY_CONFIG } from '@/types/component';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import { TagInput } from '@/components/ui/TagInput';
+import { getSuggestions } from '@/lib/api/categories';
 
 interface QuestionInput {
   id: string;
@@ -20,11 +22,24 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState<Category>('adult');
-  const [tagsInput, setTagsInput] = useState('');
+  const [category, setCategory] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [questions, setQuestions] = useState<QuestionInput[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Suggestions from API
+  const [categorySuggestions, setCategorySuggestions] = useState<string[]>([]);
+  const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
+
+  useEffect(() => {
+    getSuggestions()
+      .then((data) => {
+        setCategorySuggestions(data.categories);
+        setTagSuggestions(data.tags);
+      })
+      .catch(console.error);
+  }, []);
 
   const addQuestion = () => {
     setQuestions((prev) => [...prev, { id: crypto.randomUUID(), question: '', answer: '' }]);
@@ -51,6 +66,10 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
       newErrors.subject = '請輸入主題';
     }
 
+    if (category.length === 0) {
+      newErrors.category = '請選擇或輸入分類';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -60,11 +79,6 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
 
     if (!validate()) return;
 
-    const tags = tagsInput
-      .split(',')
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0);
-
     const validQuestions = questions
       .filter((q) => q.question.trim() && q.answer.trim())
       .map((q) => ({ question: q.question.trim(), answer: q.answer.trim() }));
@@ -73,7 +87,7 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
       title: title.trim(),
       theme: subject.trim(),
       description: description.trim(),
-      category,
+      category: category[0] || 'adult', // Use first selected category
       tags,
       questions: validQuestions,
       thumbnailUrl: thumbnailUrl.trim() || undefined,
@@ -82,7 +96,9 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
     await onSubmit(data);
   };
 
-  const config = CATEGORY_CONFIG[category];
+  // Get config for display (use first category or default)
+  const selectedCategory = category[0] as keyof typeof CATEGORY_CONFIG;
+  const config = CATEGORY_CONFIG[selectedCategory] || CATEGORY_CONFIG['adult'];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -116,47 +132,16 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
 
       {/* Category */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700">
-          分類 <span className="text-red-500">*</span>
-        </label>
-        <div className="flex gap-4">
-          {(['adult', 'kid'] as const).map((cat) => {
-            const catConfig = CATEGORY_CONFIG[cat];
-            return (
-              <label
-                key={cat}
-                className={`flex cursor-pointer items-center gap-2 rounded-lg border-2 px-4 py-3 transition-colors ${
-                  category === cat
-                    ? `${catConfig.borderClass} ${catConfig.bgClass}`
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="category"
-                  value={cat}
-                  checked={category === cat}
-                  onChange={() => setCategory(cat)}
-                  className="sr-only"
-                />
-                <span
-                  className={`h-4 w-4 rounded-full border-2 ${
-                    category === cat
-                      ? cat === 'adult'
-                        ? 'border-blue-600 bg-blue-600'
-                        : 'border-red-600 bg-red-600'
-                      : 'border-gray-300'
-                  }`}
-                >
-                  {category === cat && (
-                    <span className="block h-full w-full rounded-full border-2 border-white" />
-                  )}
-                </span>
-                <span className="font-medium">{catConfig.label}</span>
-              </label>
-            );
-          })}
-        </div>
+        <TagInput
+          label="分類"
+          value={category}
+          onChange={setCategory}
+          suggestions={categorySuggestions}
+          placeholder="選擇或輸入分類"
+          maxTags={1}
+          allowCustom={true}
+        />
+        {errors.category && <p className="mt-1 text-sm text-red-600">{errors.category}</p>}
       </div>
 
       {/* Description */}
@@ -181,16 +166,14 @@ export function ComponentForm({ onSubmit, isSubmitting = false }: ComponentFormP
 
       {/* Tags */}
       <div>
-        <label htmlFor="tags" className="mb-1 block text-sm font-medium text-gray-700">
-          標籤
-        </label>
-        <Input
-          id="tags"
-          value={tagsInput}
-          onChange={(e) => setTagsInput(e.target.value)}
-          placeholder="以逗號分隔，例如: Python, 基礎, 程式設計"
+        <TagInput
+          label="標籤"
+          value={tags}
+          onChange={setTags}
+          suggestions={tagSuggestions}
+          placeholder="選擇或輸入標籤"
+          allowCustom={true}
         />
-        <p className="mt-1 text-xs text-gray-500">多個標籤請以逗號分隔</p>
       </div>
 
       {/* Thumbnail URL */}

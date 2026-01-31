@@ -10,15 +10,10 @@ public static class CategoryEndpoints
     private const int DefaultPageSize = 12;
     private const int MaxPageSize = 100;
 
-    // Available categories
-    private static readonly CategoryInfo[] Categories =
+    // Default categories (will be merged with used categories from DB)
+    private static readonly string[] DefaultCategories =
     {
-        new("adult", "Adult Learning", "Advanced courses for adult learners"),
-        new("kid", "Kids Learning", "Fun and engaging courses for children"),
-        new("Programming", "Programming", "Learn to code with various programming languages"),
-        new("Language", "Language", "Master new languages from around the world"),
-        new("Science", "Science", "Explore the wonders of natural sciences"),
-        new("Art", "Art", "Express yourself through creative arts")
+        "adult", "kid", "Programming", "Language", "Science", "Art"
     };
 
     public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
@@ -31,6 +26,11 @@ public static class CategoryEndpoints
             .AllowAnonymous()
             .WithOpenApi();
 
+        group.MapGet("/suggestions", GetSuggestions)
+            .WithName("GetCategorySuggestions")
+            .AllowAnonymous()
+            .WithOpenApi();
+
         group.MapGet("/{category}/components", GetCategoryComponents)
             .WithName("GetCategoryComponents")
             .AllowAnonymous()
@@ -38,13 +38,50 @@ public static class CategoryEndpoints
     }
 
     /// <summary>
-    /// Get all available categories
+    /// Get all available categories (default + used)
     /// </summary>
-    private static IResult GetCategories()
+    private static async Task<IResult> GetCategories(IFirebaseService firebaseService)
     {
+        var (usedCategories, _) = await firebaseService.GetUsedCategoriesAndTagsAsync();
+
+        // Merge default and used categories
+        var allCategories = new HashSet<string>(DefaultCategories, StringComparer.OrdinalIgnoreCase);
+        foreach (var cat in usedCategories)
+        {
+            allCategories.Add(cat);
+        }
+
+        var categories = allCategories
+            .OrderBy(c => c)
+            .Select(c => new CategoryInfo(c, c, $"Category: {c}"))
+            .ToArray();
+
         var response = ApiResponse<CategoryListResponse>.Ok(new CategoryListResponse
         {
-            Categories = Categories
+            Categories = categories
+        });
+
+        return Results.Ok(response);
+    }
+
+    /// <summary>
+    /// Get category and tag suggestions (for autocomplete)
+    /// </summary>
+    private static async Task<IResult> GetSuggestions(IFirebaseService firebaseService)
+    {
+        var (usedCategories, usedTags) = await firebaseService.GetUsedCategoriesAndTagsAsync();
+
+        // Merge default and used categories
+        var allCategories = new HashSet<string>(DefaultCategories, StringComparer.OrdinalIgnoreCase);
+        foreach (var cat in usedCategories)
+        {
+            allCategories.Add(cat);
+        }
+
+        var response = ApiResponse<SuggestionsResponse>.Ok(new SuggestionsResponse
+        {
+            Categories = allCategories.OrderBy(c => c).ToList(),
+            Tags = usedTags
         });
 
         return Results.Ok(response);
@@ -66,12 +103,7 @@ public static class CategoryEndpoints
     {
         try
         {
-            // Validate category
-            if (!Categories.Any(c => c.Id.Equals(category, StringComparison.OrdinalIgnoreCase)))
-            {
-                return Results.NotFound(ApiResponse.Fail($"Category '{category}' not found"));
-            }
-
+            // Categories are now dynamic, no validation needed
             (page, limit) = NormalizePaginationParams(page, limit);
 
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -188,4 +220,13 @@ public record CategoryInfo(string Id, string Name, string Description);
 public record CategoryListResponse
 {
     public IEnumerable<CategoryInfo> Categories { get; init; } = Array.Empty<CategoryInfo>();
+}
+
+/// <summary>
+/// Response DTO for suggestions (categories and tags)
+/// </summary>
+public record SuggestionsResponse
+{
+    public IEnumerable<string> Categories { get; init; } = Array.Empty<string>();
+    public IEnumerable<string> Tags { get; init; } = Array.Empty<string>();
 }

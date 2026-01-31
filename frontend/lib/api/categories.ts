@@ -49,6 +49,27 @@ export async function getCategories(): Promise<CategoryListResponse> {
   return apiResponse.data;
 }
 
+export interface SuggestionsResponse {
+  categories: string[];
+  tags: string[];
+}
+
+/**
+ * Get category and tag suggestions (for autocomplete)
+ */
+export async function getSuggestions(): Promise<SuggestionsResponse> {
+  const response = await fetch(`${API_URL}/api/categories/suggestions`, {
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch suggestions: ${response.statusText}`);
+  }
+
+  const apiResponse: ApiResponse<SuggestionsResponse> = await response.json();
+  return apiResponse.data;
+}
+
 /**
  * Get components for a specific category
  */

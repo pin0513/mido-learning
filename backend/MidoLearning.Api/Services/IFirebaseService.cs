@@ -22,4 +22,5 @@ public interface IFirebaseService
     Task<WishListResult> GetWishesAsync(int page, int limit, string? status, string? search);
     Task UpdateWishStatusAsync(string wishId, string status, string? linkedComponentId, string processedBy);
     Task<WishStatsResult> GetWishStatsAsync();
+    Task<(List<string> Categories, List<string> Tags)> GetUsedCategoriesAndTagsAsync();
 }
