@@ -132,8 +132,8 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">公開學習教材</h2>
-              <p className="mt-1 text-gray-600">探索我們的精選課程</p>
+              <h2 className="text-2xl font-bold text-gray-900">公開學習資源</h2>
+              <p className="mt-1 text-gray-600">探索精選的學習內容</p>
             </div>
             <div className="flex items-center gap-4">
               <CategoryFilter selected={category} onChange={handleCategoryChange} />
