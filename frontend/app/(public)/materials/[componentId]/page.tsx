@@ -10,6 +10,7 @@ import { StarRating, RatingDisplay } from '@/components/ui/StarRating';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { getComponentRatings, getMyRating, rateComponent } from '@/lib/api/ratings';
 import { RatingListResponse, UserRatingResponse } from '@/types/rating';
+import { recordMaterialView } from '@/lib/api/analytics';
 
 export default function GuestMaterialPage({
   params,
@@ -27,6 +28,11 @@ export default function GuestMaterialPage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRating, setIsRating] = useState(false);
+
+  // Record material view on mount
+  useEffect(() => {
+    recordMaterialView(componentId);
+  }, [componentId]);
 
   useEffect(() => {
     const loadComponent = async () => {

@@ -436,4 +436,85 @@ public class FirebaseService : IFirebaseService
 
         return (categories.OrderBy(c => c).ToList(), tags.OrderBy(t => t).ToList());
     }
+
+    public async Task IncrementCounterAsync(string collection, string documentId, string field)
+    {
+        var docRef = _firestoreDb.Collection(collection).Document(documentId);
+        var snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists)
+        {
+            await docRef.UpdateAsync(field, FieldValue.Increment(1));
+        }
+        else
+        {
+            await docRef.SetAsync(new Dictionary<string, object>
+            {
+                { field, 1 },
+                { "createdAt", Timestamp.GetCurrentTimestamp() }
+            });
+        }
+    }
+
+    public async Task<AnalyticsStatsResponse> GetAnalyticsStatsAsync()
+    {
+        var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+
+        // Get total page views
+        var totalDoc = await _firestoreDb.Collection("analytics").Document("total_pageviews").GetSnapshotAsync();
+        var totalPageViews = totalDoc.Exists && totalDoc.TryGetValue<long>("count", out var total) ? total : 0;
+
+        // Get today's page views
+        var todayDoc = await _firestoreDb.Collection("analytics").Document($"pageviews_{today}").GetSnapshotAsync();
+        var todayPageViews = todayDoc.Exists && todayDoc.TryGetValue<long>("count", out var todayCount) ? todayCount : 0;
+
+        // Get total material views
+        var materialsSnapshot = await _firestoreDb.Collection("analytics_materials").GetSnapshotAsync();
+        var totalMaterialViews = materialsSnapshot.Documents
+            .Where(d => !d.Id.Contains("_")) // Exclude daily records
+            .Sum(d => d.TryGetValue<long>("viewCount", out var v) ? v : 0);
+
+        // Get last 7 days
+        var last7Days = new List<DailyStats>();
+        for (int i = 6; i >= 0; i--)
+        {
+            var date = DateTime.UtcNow.AddDays(-i).ToString("yyyy-MM-dd");
+            var dayDoc = await _firestoreDb.Collection("analytics").Document($"pageviews_{date}").GetSnapshotAsync();
+            var count = dayDoc.Exists && dayDoc.TryGetValue<long>("count", out var c) ? c : 0;
+            last7Days.Add(new DailyStats(date, count));
+        }
+
+        return new AnalyticsStatsResponse(totalPageViews, todayPageViews, totalMaterialViews, last7Days);
+    }
+
+    public async Task<List<MaterialStatsItem>> GetMaterialStatsAsync(int limit)
+    {
+        var materialsSnapshot = await _firestoreDb.Collection("analytics_materials").GetSnapshotAsync();
+
+        // Get component IDs and view counts (exclude daily records)
+        var materialViews = materialsSnapshot.Documents
+            .Where(d => !d.Id.Contains("_"))
+            .Select(d => new
+            {
+                ComponentId = d.Id,
+                ViewCount = d.TryGetValue<long>("viewCount", out var v) ? v : 0
+            })
+            .OrderByDescending(m => m.ViewCount)
+            .Take(limit)
+            .ToList();
+
+        // Get component titles
+        var result = new List<MaterialStatsItem>();
+        foreach (var item in materialViews)
+        {
+            var component = await GetDocumentAsync<LearningComponent>("components", item.ComponentId);
+            result.Add(new MaterialStatsItem(
+                item.ComponentId,
+                component?.Title,
+                item.ViewCount
+            ));
+        }
+
+        return result;
+    }
 }

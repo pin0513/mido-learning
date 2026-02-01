@@ -10,6 +10,7 @@ import { Pagination } from '@/components/ui/Pagination';
 import { SortSelect, SortOption, defaultSortOptions } from '@/components/ui/SortSelect';
 import { LearningComponent, ComponentListResponse } from '@/types/component';
 import { getPublicComponents } from '@/lib/api/components';
+import { recordPageView } from '@/lib/api/analytics';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -21,6 +22,11 @@ export default function HomePage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState<SortOption>(defaultSortOptions[0]);
+
+  // Record page view on mount
+  useEffect(() => {
+    recordPageView();
+  }, []);
 
   const fetchComponents = useCallback(async () => {
     setLoading(true);

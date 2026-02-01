@@ -23,4 +23,24 @@ public interface IFirebaseService
     Task UpdateWishStatusAsync(string wishId, string status, string? linkedComponentId, string processedBy);
     Task<WishStatsResult> GetWishStatsAsync();
     Task<(List<string> Categories, List<string> Tags)> GetUsedCategoriesAndTagsAsync();
+
+    // Analytics methods
+    Task IncrementCounterAsync(string collection, string documentId, string field);
+    Task<AnalyticsStatsResponse> GetAnalyticsStatsAsync();
+    Task<List<MaterialStatsItem>> GetMaterialStatsAsync(int limit);
 }
+
+public record AnalyticsStatsResponse(
+    long TotalPageViews,
+    long TodayPageViews,
+    long TotalMaterialViews,
+    List<DailyStats> Last7Days
+);
+
+public record DailyStats(string Date, long Count);
+
+public record MaterialStatsItem(
+    string ComponentId,
+    string? Title,
+    long ViewCount
+);
