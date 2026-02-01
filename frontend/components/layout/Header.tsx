@@ -85,9 +85,14 @@ export function Header() {
                 </Link>
               )}
               {userRole === 'admin' && (
-                <Link href="/admin/users" className="text-gray-600 hover:text-gray-900">
-                  用戶管理
-                </Link>
+                <>
+                  <Link href="/admin" className="text-gray-600 hover:text-gray-900">
+                    統計數據
+                  </Link>
+                  <Link href="/admin/users" className="text-gray-600 hover:text-gray-900">
+                    用戶管理
+                  </Link>
+                </>
               )}
             </>
           )}
@@ -184,13 +189,22 @@ export function Header() {
                   </Link>
                 )}
                 {userRole === 'admin' && (
-                  <Link
-                    href="/admin/users"
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    用戶管理
-                  </Link>
+                  <>
+                    <Link
+                      href="/admin"
+                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      統計數據
+                    </Link>
+                    <Link
+                      href="/admin/users"
+                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      用戶管理
+                    </Link>
+                  </>
                 )}
               </>
             )}
