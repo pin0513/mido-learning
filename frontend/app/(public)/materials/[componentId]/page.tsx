@@ -32,7 +32,6 @@ export default function GuestMaterialPage({
   // RWD states
   const [zoomEnabled, setZoomEnabled] = useState(false); // 縮放功能開關，預設關閉
   const [zoomLevel, setZoomLevel] = useState(1.0);
-  const [autoScale, setAutoScale] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -115,7 +114,6 @@ export default function GuestMaterialPage({
     if (zoomEnabled) {
       // 關閉縮放時重置為 100%
       setZoomLevel(1.0);
-      setAutoScale(false);
     }
     setZoomEnabled(!zoomEnabled);
   };
@@ -123,52 +121,39 @@ export default function GuestMaterialPage({
   const handleZoomIn = () => {
     if (!zoomEnabled) return;
     setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
-    setAutoScale(false);
   };
 
   const handleZoomOut = () => {
     if (!zoomEnabled) return;
     setZoomLevel((prev) => Math.max(prev - 0.25, 0.5));
-    setAutoScale(false);
   };
 
   const handleZoomReset = () => {
     if (!zoomEnabled) return;
     setZoomLevel(1.0);
-    setAutoScale(false);
   };
 
   const handleFullscreen = () => {
-    // 改為使用 window.open 在新視窗開啟，更通用的「全螢幕」體驗
     if (!latestManifest) return;
 
     const url = `${latestManifest.baseUrl}${latestManifest.entryPoint}${
       latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''
     }`;
 
-    // 在新視窗開啟，使用者可自行按 F11 全螢幕
-    window.open(url, '_blank', 'noopener,noreferrer');
+    // 偵測是否為手機裝置
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // 手機版：直接在同分頁開啟（避免跳出 popup 阻擋）
+      window.location.href = url;
+    } else {
+      // 桌面版：在新視窗開啟
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   };
 
-  // Auto-scale on mobile (only when zoom is enabled)
-  useEffect(() => {
-    if (!zoomEnabled) return;
-
-    const handleResize = () => {
-      if (window.innerWidth < 768 && !autoScale && containerRef.current) {
-        // Assume slide width is 1920px, calculate scale ratio
-        const scaleRatio = containerRef.current.offsetWidth / 1920;
-        if (scaleRatio < 1) {
-          setZoomLevel(scaleRatio);
-          setAutoScale(true);
-        }
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [autoScale, zoomEnabled]);
+  // 移除自動縮放功能，改為完全手動控制
+  // 自動縮放會與手動縮放衝突，導致無法放大的問題
 
   if (loading) {
     return (
