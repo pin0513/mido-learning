@@ -28,6 +28,9 @@ public interface IFirebaseService
     Task IncrementCounterAsync(string collection, string documentId, string field);
     Task<AnalyticsStatsResponse> GetAnalyticsStatsAsync();
     Task<List<MaterialStatsItem>> GetMaterialStatsAsync(int limit);
+    Task RecordVisitAsync(string pageType, string? componentId, string ipAddress);
+    Task<VisitorStatsResponse> GetVisitorStatsAsync();
+    Task<List<VisitRecord>> GetRecentVisitsAsync(int limit);
 }
 
 public record AnalyticsStatsResponse(
@@ -43,4 +46,21 @@ public record MaterialStatsItem(
     string ComponentId,
     string? Title,
     long ViewCount
+);
+
+public record VisitorStatsResponse(
+    int UniqueVisitors,
+    int TodayUniqueVisitors,
+    List<IpVisitCount> TopIps
+);
+
+public record IpVisitCount(string IpAddress, int Count);
+
+public record VisitRecord(
+    string Id,
+    string PageType,
+    string? ComponentId,
+    string? ComponentTitle,
+    string IpAddress,
+    DateTime VisitedAt
 );

@@ -517,4 +517,88 @@ public class FirebaseService : IFirebaseService
 
         return result;
     }
+
+    public async Task RecordVisitAsync(string pageType, string? componentId, string ipAddress)
+    {
+        var visitData = new Dictionary<string, object>
+        {
+            { "pageType", pageType },
+            { "ipAddress", ipAddress },
+            { "visitedAt", Timestamp.GetCurrentTimestamp() }
+        };
+
+        if (!string.IsNullOrEmpty(componentId))
+        {
+            visitData["componentId"] = componentId;
+        }
+
+        await _firestoreDb.Collection("analytics_visits").AddAsync(visitData);
+    }
+
+    public async Task<VisitorStatsResponse> GetVisitorStatsAsync()
+    {
+        var snapshot = await _firestoreDb.Collection("analytics_visits").GetSnapshotAsync();
+
+        var visits = snapshot.Documents
+            .Select(d => new
+            {
+                IpAddress = d.TryGetValue<string>("ipAddress", out var ip) ? ip : "unknown",
+                VisitedAt = d.TryGetValue<Timestamp>("visitedAt", out var ts) ? ts.ToDateTime() : DateTime.MinValue
+            })
+            .ToList();
+
+        var uniqueVisitors = visits.Select(v => v.IpAddress).Distinct().Count();
+
+        var today = DateTime.UtcNow.Date;
+        var todayUniqueVisitors = visits
+            .Where(v => v.VisitedAt.Date == today)
+            .Select(v => v.IpAddress)
+            .Distinct()
+            .Count();
+
+        var topIps = visits
+            .GroupBy(v => v.IpAddress)
+            .Select(g => new IpVisitCount(g.Key, g.Count()))
+            .OrderByDescending(x => x.Count)
+            .Take(10)
+            .ToList();
+
+        return new VisitorStatsResponse(uniqueVisitors, todayUniqueVisitors, topIps);
+    }
+
+    public async Task<List<VisitRecord>> GetRecentVisitsAsync(int limit)
+    {
+        var query = _firestoreDb.Collection("analytics_visits")
+            .OrderByDescending("visitedAt")
+            .Limit(limit);
+
+        var snapshot = await query.GetSnapshotAsync();
+
+        var visits = new List<VisitRecord>();
+        foreach (var doc in snapshot.Documents)
+        {
+            var pageType = doc.TryGetValue<string>("pageType", out var pt) ? pt : "unknown";
+            var componentId = doc.TryGetValue<string>("componentId", out var cid) ? cid : null;
+            var ipAddress = doc.TryGetValue<string>("ipAddress", out var ip) ? ip : "unknown";
+            var visitedAt = doc.TryGetValue<Timestamp>("visitedAt", out var ts) ? ts.ToDateTime() : DateTime.MinValue;
+
+            string? componentTitle = null;
+            if (!string.IsNullOrEmpty(componentId))
+            {
+                var component = await GetDocumentAsync<LearningComponent>("components", componentId);
+                componentTitle = component?.Title;
+            }
+
+            visits.Add(new VisitRecord(
+                doc.Id,
+                pageType,
+                componentId,
+                componentTitle,
+                ipAddress,
+                visitedAt
+            ));
+        }
+
+        return visits;
+    }
 }

@@ -28,6 +28,26 @@ export interface MaterialStats {
   viewCount: number;
 }
 
+export interface IpVisitCount {
+  ipAddress: string;
+  count: number;
+}
+
+export interface VisitorStats {
+  uniqueVisitors: number;
+  todayUniqueVisitors: number;
+  topIps: IpVisitCount[];
+}
+
+export interface VisitRecord {
+  id: string;
+  pageType: string;
+  componentId: string | null;
+  componentTitle: string | null;
+  ipAddress: string;
+  visitedAt: string;
+}
+
 /**
  * Record a page view (anonymous)
  */
@@ -93,5 +113,45 @@ export async function getMaterialStats(limit = 20): Promise<MaterialStats[]> {
   }
 
   const apiResponse: ApiResponse<MaterialStats[]> = await response.json();
+  return apiResponse.data;
+}
+
+/**
+ * Get visitor stats (admin only)
+ */
+export async function getVisitorStats(): Promise<VisitorStats> {
+  const token = await getIdToken();
+  const response = await fetch(`${API_URL}/api/analytics/visitors`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch visitor stats');
+  }
+
+  const apiResponse: ApiResponse<VisitorStats> = await response.json();
+  return apiResponse.data;
+}
+
+/**
+ * Get recent visits (admin only)
+ */
+export async function getRecentVisits(limit = 50): Promise<VisitRecord[]> {
+  const token = await getIdToken();
+  const response = await fetch(`${API_URL}/api/analytics/recent?limit=${limit}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch recent visits');
+  }
+
+  const apiResponse: ApiResponse<VisitRecord[]> = await response.json();
   return apiResponse.data;
 }

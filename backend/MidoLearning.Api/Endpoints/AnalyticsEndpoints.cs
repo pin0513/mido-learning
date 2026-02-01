@@ -34,6 +34,38 @@ public static class AnalyticsEndpoints
             .WithName("GetMaterialStats")
             .RequireAuthorization("AdminOnly")
             .WithOpenApi();
+
+        // Get visitor stats - admin only
+        group.MapGet("/visitors", GetVisitorStats)
+            .WithName("GetVisitorStats")
+            .RequireAuthorization("AdminOnly")
+            .WithOpenApi();
+
+        // Get recent visits - admin only
+        group.MapGet("/recent", GetRecentVisits)
+            .WithName("GetRecentVisits")
+            .RequireAuthorization("AdminOnly")
+            .WithOpenApi();
+    }
+
+    private static string GetClientIp(HttpContext context)
+    {
+        // Check X-Forwarded-For header (for proxies like Cloud Run)
+        var forwardedFor = context.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+        if (!string.IsNullOrEmpty(forwardedFor))
+        {
+            return forwardedFor.Split(',')[0].Trim();
+        }
+
+        // Check X-Real-IP
+        var realIp = context.Request.Headers["X-Real-IP"].FirstOrDefault();
+        if (!string.IsNullOrEmpty(realIp))
+        {
+            return realIp;
+        }
+
+        // Fall back to RemoteIpAddress
+        return context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
     }
 
     private static async Task<IResult> RecordPageView(
@@ -45,11 +77,15 @@ public static class AnalyticsEndpoints
         {
             var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
             var docId = $"pageviews_{today}";
+            var clientIp = GetClientIp(httpContext);
 
             await firebaseService.IncrementCounterAsync("analytics", docId, "count");
 
             // Also increment total
             await firebaseService.IncrementCounterAsync("analytics", "total_pageviews", "count");
+
+            // Record visit with IP
+            await firebaseService.RecordVisitAsync("homepage", null, clientIp);
 
             return Results.Ok(ApiResponse.Ok("recorded"));
         }
@@ -64,11 +100,13 @@ public static class AnalyticsEndpoints
     private static async Task<IResult> RecordMaterialView(
         string componentId,
         IFirebaseService firebaseService,
+        HttpContext httpContext,
         ILogger<Program> logger)
     {
         try
         {
             var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            var clientIp = GetClientIp(httpContext);
 
             // Increment component view count
             await firebaseService.IncrementCounterAsync(
@@ -81,6 +119,9 @@ public static class AnalyticsEndpoints
                 "analytics_materials",
                 $"{componentId}_{today}",
                 "count");
+
+            // Record visit with IP
+            await firebaseService.RecordVisitAsync("material", componentId, clientIp);
 
             return Results.Ok(ApiResponse.Ok("recorded"));
         }
@@ -121,6 +162,39 @@ public static class AnalyticsEndpoints
         {
             logger.LogError(ex, "Failed to get material stats");
             return Results.BadRequest(ApiResponse.Fail($"Failed to get material stats: {ex.Message}"));
+        }
+    }
+
+    private static async Task<IResult> GetVisitorStats(
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            var stats = await firebaseService.GetVisitorStatsAsync();
+            return Results.Ok(ApiResponse<VisitorStatsResponse>.Ok(stats));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to get visitor stats");
+            return Results.BadRequest(ApiResponse.Fail($"Failed to get visitor stats: {ex.Message}"));
+        }
+    }
+
+    private static async Task<IResult> GetRecentVisits(
+        IFirebaseService firebaseService,
+        ILogger<Program> logger,
+        int limit = 50)
+    {
+        try
+        {
+            var visits = await firebaseService.GetRecentVisitsAsync(limit);
+            return Results.Ok(ApiResponse<List<VisitRecord>>.Ok(visits));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to get recent visits");
+            return Results.BadRequest(ApiResponse.Fail($"Failed to get recent visits: {ex.Message}"));
         }
     }
 }
