@@ -30,9 +30,11 @@ export default function GuestMaterialPage({
   const [isRating, setIsRating] = useState(false);
 
   // RWD states
+  const [zoomEnabled, setZoomEnabled] = useState(false); // 縮放功能開關，預設關閉
   const [zoomLevel, setZoomLevel] = useState(1.0);
   const [autoScale, setAutoScale] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // Record material view on mount
   useEffect(() => {
@@ -109,48 +111,49 @@ export default function GuestMaterialPage({
   };
 
   // RWD handlers
+  const handleToggleZoom = () => {
+    if (zoomEnabled) {
+      // 關閉縮放時重置為 100%
+      setZoomLevel(1.0);
+      setAutoScale(false);
+    }
+    setZoomEnabled(!zoomEnabled);
+  };
+
   const handleZoomIn = () => {
+    if (!zoomEnabled) return;
     setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
     setAutoScale(false);
   };
 
   const handleZoomOut = () => {
+    if (!zoomEnabled) return;
     setZoomLevel((prev) => Math.max(prev - 0.25, 0.5));
     setAutoScale(false);
   };
 
   const handleZoomReset = () => {
+    if (!zoomEnabled) return;
     setZoomLevel(1.0);
     setAutoScale(false);
   };
 
   const handleFullscreen = () => {
-    if (!containerRef.current) return;
+    // 改為使用 window.open 在新視窗開啟，更通用的「全螢幕」體驗
+    if (!latestManifest) return;
 
-    if (!document.fullscreenElement) {
-      // TypeScript-safe fullscreen request with Safari fallback
-      const elem = containerRef.current as HTMLElement & {
-        webkitRequestFullscreen?: () => Promise<void>;
-      };
+    const url = `${latestManifest.baseUrl}${latestManifest.entryPoint}${
+      latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''
+    }`;
 
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen().catch(() => {
-          alert('瀏覽器不支援全螢幕功能');
-        });
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen().catch(() => {
-          alert('瀏覽器不支援全螢幕功能');
-        });
-      } else {
-        alert('瀏覽器不支援全螢幕功能');
-      }
-    } else {
-      document.exitFullscreen();
-    }
+    // 在新視窗開啟，使用者可自行按 F11 全螢幕
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  // Auto-scale on mobile
+  // Auto-scale on mobile (only when zoom is enabled)
   useEffect(() => {
+    if (!zoomEnabled) return;
+
     const handleResize = () => {
       if (window.innerWidth < 768 && !autoScale && containerRef.current) {
         // Assume slide width is 1920px, calculate scale ratio
@@ -165,7 +168,7 @@ export default function GuestMaterialPage({
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [autoScale]);
+  }, [autoScale, zoomEnabled]);
 
   if (loading) {
     return (
@@ -346,44 +349,64 @@ export default function GuestMaterialPage({
 
                 {/* Control buttons */}
                 <div className="flex flex-wrap items-center gap-2">
+                  {/* Zoom toggle switch */}
+                  <button
+                    onClick={handleToggleZoom}
+                    className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm transition-colors ${
+                      zoomEnabled
+                        ? 'border-blue-500 bg-blue-50 text-blue-700 hover:bg-blue-100'
+                        : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+                    }`}
+                    title={zoomEnabled ? '停用縮放（適用於遊戲）' : '啟用縮放'}
+                    aria-label={zoomEnabled ? '停用縮放' : '啟用縮放'}
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                    </svg>
+                    <span className="hidden sm:inline">{zoomEnabled ? '縮放：開' : '縮放：關'}</span>
+                  </button>
+
                   {/* Zoom controls */}
-                  <div className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-2 py-1">
-                    <button
-                      onClick={handleZoomOut}
-                      disabled={zoomLevel <= 0.5}
-                      className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
-                      title="縮小"
-                      aria-label="縮小"
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                      </svg>
-                    </button>
-                    <span className="min-w-[3rem] text-center text-sm text-gray-600">
-                      {Math.round(zoomLevel * 100)}%
-                    </span>
-                    <button
-                      onClick={handleZoomIn}
-                      disabled={zoomLevel >= 2.0}
-                      className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
-                      title="放大"
-                      aria-label="放大"
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                      </svg>
-                    </button>
-                    <button
-                      onClick={handleZoomReset}
-                      className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100"
-                      title="重置"
-                      aria-label="重置縮放"
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                      </svg>
-                    </button>
-                  </div>
+                  {zoomEnabled && (
+                    <div className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-2 py-1">
+                      <button
+                        onClick={handleZoomOut}
+                        disabled={!zoomEnabled || zoomLevel <= 0.5}
+                        className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                        title="縮小"
+                        aria-label="縮小"
+                      >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                        </svg>
+                      </button>
+                      <span className="min-w-[3rem] text-center text-sm text-gray-600">
+                        {Math.round(zoomLevel * 100)}%
+                      </span>
+                      <button
+                        onClick={handleZoomIn}
+                        disabled={!zoomEnabled || zoomLevel >= 2.0}
+                        className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                        title="放大"
+                        aria-label="放大"
+                      >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={handleZoomReset}
+                        disabled={!zoomEnabled}
+                        className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                        title="重置"
+                        aria-label="重置縮放"
+                      >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
 
                   {/* Download button */}
                   <button
@@ -397,17 +420,17 @@ export default function GuestMaterialPage({
                     <span className="hidden sm:inline">下載</span>
                   </button>
 
-                  {/* Fullscreen button */}
+                  {/* New window button (replaces fullscreen) */}
                   <button
                     onClick={handleFullscreen}
                     className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
-                    title="全螢幕"
-                    aria-label="全螢幕模式"
+                    title="在新視窗開啟"
+                    aria-label="在新視窗開啟"
                   >
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
-                    <span className="hidden sm:inline">全螢幕</span>
+                    <span className="hidden sm:inline">新視窗</span>
                   </button>
                 </div>
               </div>
@@ -416,21 +439,36 @@ export default function GuestMaterialPage({
                 ref={containerRef}
                 className="aspect-video w-full overflow-hidden rounded-lg border border-gray-200"
               >
-                <div
-                  style={{
-                    transform: `scale(${zoomLevel})`,
-                    transformOrigin: 'top left',
-                    width: `${100 / zoomLevel}%`,
-                    height: `${100 / zoomLevel}%`,
-                  }}
-                >
+                {zoomEnabled ? (
+                  <div
+                    style={{
+                      transform: `scale(${zoomLevel})`,
+                      transformOrigin: 'top left',
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  >
+                    <iframe
+                      ref={iframeRef}
+                      src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
+                      className="h-full w-full"
+                      style={{
+                        width: `${100 / zoomLevel}%`,
+                        height: `${100 / zoomLevel}%`,
+                      }}
+                      title={component.title}
+                      sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
+                    />
+                  </div>
+                ) : (
                   <iframe
+                    ref={iframeRef}
                     src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
                     className="h-full w-full"
                     title={component.title}
                     sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
                   />
-                </div>
+                )}
               </div>
 
               {/* Other versions */}
