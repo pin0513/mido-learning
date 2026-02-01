@@ -31,6 +31,7 @@ export default function GuestMaterialPage({
 
   // RWD states
   const [zoomEnabled, setZoomEnabled] = useState(false); // 縮放功能開關，預設關閉
+  const [zoomMode, setZoomMode] = useState<'manual' | 'auto'>('manual'); // 縮放模式：手動或自動
   const [zoomLevel, setZoomLevel] = useState(1.0);
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -114,22 +115,33 @@ export default function GuestMaterialPage({
     if (zoomEnabled) {
       // 關閉縮放時重置為 100%
       setZoomLevel(1.0);
+      setZoomMode('manual');
     }
     setZoomEnabled(!zoomEnabled);
   };
 
+  const handleToggleZoomMode = () => {
+    const newMode = zoomMode === 'manual' ? 'auto' : 'manual';
+    setZoomMode(newMode);
+
+    if (newMode === 'manual') {
+      // 切換到手動模式時重置為 100%
+      setZoomLevel(1.0);
+    }
+  };
+
   const handleZoomIn = () => {
-    if (!zoomEnabled) return;
+    if (!zoomEnabled || zoomMode === 'auto') return;
     setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
   };
 
   const handleZoomOut = () => {
-    if (!zoomEnabled) return;
+    if (!zoomEnabled || zoomMode === 'auto') return;
     setZoomLevel((prev) => Math.max(prev - 0.25, 0.5));
   };
 
   const handleZoomReset = () => {
-    if (!zoomEnabled) return;
+    if (!zoomEnabled || zoomMode === 'auto') return;
     setZoomLevel(1.0);
   };
 
@@ -152,8 +164,30 @@ export default function GuestMaterialPage({
     }
   };
 
-  // 移除自動縮放功能，改為完全手動控制
-  // 自動縮放會與手動縮放衝突，導致無法放大的問題
+  // Auto-scale (only when zoom is enabled and mode is auto)
+  useEffect(() => {
+    if (!zoomEnabled || zoomMode !== 'auto') return;
+
+    const calculateAutoScale = () => {
+      if (!containerRef.current) return;
+
+      // 計算最佳縮放比例
+      const containerWidth = containerRef.current.offsetWidth;
+      const assumedSlideWidth = 1920; // 假設投影片寬度
+      const scaleRatio = containerWidth / assumedSlideWidth;
+
+      // 自動模式下，根據螢幕大小自動調整
+      if (scaleRatio < 1) {
+        setZoomLevel(Math.max(scaleRatio, 0.5)); // 最小 50%
+      } else {
+        setZoomLevel(1.0); // 螢幕夠大時保持 100%
+      }
+    };
+
+    calculateAutoScale();
+    window.addEventListener('resize', calculateAutoScale);
+    return () => window.removeEventListener('resize', calculateAutoScale);
+  }, [zoomEnabled, zoomMode]);
 
   if (loading) {
     return (
@@ -351,12 +385,37 @@ export default function GuestMaterialPage({
                     <span className="hidden sm:inline">{zoomEnabled ? '縮放：開' : '縮放：關'}</span>
                   </button>
 
-                  {/* Zoom controls */}
+                  {/* Zoom mode toggle (only when zoom is enabled) */}
                   {zoomEnabled && (
+                    <button
+                      onClick={handleToggleZoomMode}
+                      className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm transition-colors ${
+                        zoomMode === 'auto'
+                          ? 'border-green-500 bg-green-50 text-green-700 hover:bg-green-100'
+                          : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+                      }`}
+                      title={zoomMode === 'auto' ? '切換為手動縮放' : '切換為自動縮放'}
+                      aria-label={zoomMode === 'auto' ? '手動模式' : '自動模式'}
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        {zoomMode === 'auto' ? (
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        ) : (
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        )}
+                      </svg>
+                      <span className="hidden sm:inline">
+                        {zoomMode === 'auto' ? '自動' : '手動'}
+                      </span>
+                    </button>
+                  )}
+
+                  {/* Zoom controls (only for manual mode) */}
+                  {zoomEnabled && zoomMode === 'manual' && (
                     <div className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-2 py-1">
                       <button
                         onClick={handleZoomOut}
-                        disabled={!zoomEnabled || zoomLevel <= 0.5}
+                        disabled={zoomLevel <= 0.5}
                         className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
                         title="縮小"
                         aria-label="縮小"
@@ -370,7 +429,7 @@ export default function GuestMaterialPage({
                       </span>
                       <button
                         onClick={handleZoomIn}
-                        disabled={!zoomEnabled || zoomLevel >= 2.0}
+                        disabled={zoomLevel >= 2.0}
                         className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
                         title="放大"
                         aria-label="放大"
@@ -381,8 +440,7 @@ export default function GuestMaterialPage({
                       </button>
                       <button
                         onClick={handleZoomReset}
-                        disabled={!zoomEnabled}
-                        className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100"
                         title="重置"
                         aria-label="重置縮放"
                       >
@@ -390,6 +448,15 @@ export default function GuestMaterialPage({
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
                       </button>
+                    </div>
+                  )}
+
+                  {/* Auto mode percentage display */}
+                  {zoomEnabled && zoomMode === 'auto' && (
+                    <div className="rounded-lg border border-green-300 bg-green-50 px-3 py-1.5">
+                      <span className="text-sm font-medium text-green-700">
+                        {Math.round(zoomLevel * 100)}%
+                      </span>
                     </div>
                   )}
 
