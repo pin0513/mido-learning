@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useRef } from 'react';
 import Link from 'next/link';
 import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Material, MaterialManifest } from '@/types/material';
@@ -28,6 +28,11 @@ export default function GuestMaterialPage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRating, setIsRating] = useState(false);
+
+  // RWD states
+  const [zoomLevel, setZoomLevel] = useState(1.0);
+  const [autoScale, setAutoScale] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Record material view on mount
   useEffect(() => {
@@ -102,6 +107,65 @@ export default function GuestMaterialPage({
       setIsRating(false);
     }
   };
+
+  // RWD handlers
+  const handleZoomIn = () => {
+    setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
+    setAutoScale(false);
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel((prev) => Math.max(prev - 0.25, 0.5));
+    setAutoScale(false);
+  };
+
+  const handleZoomReset = () => {
+    setZoomLevel(1.0);
+    setAutoScale(false);
+  };
+
+  const handleFullscreen = () => {
+    if (!containerRef.current) return;
+
+    if (!document.fullscreenElement) {
+      // TypeScript-safe fullscreen request with Safari fallback
+      const elem = containerRef.current as HTMLElement & {
+        webkitRequestFullscreen?: () => Promise<void>;
+      };
+
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen().catch(() => {
+          alert('瀏覽器不支援全螢幕功能');
+        });
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen().catch(() => {
+          alert('瀏覽器不支援全螢幕功能');
+        });
+      } else {
+        alert('瀏覽器不支援全螢幕功能');
+      }
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
+  // Auto-scale on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768 && !autoScale && containerRef.current) {
+        // Assume slide width is 1920px, calculate scale ratio
+        const scaleRatio = containerRef.current.offsetWidth / 1920;
+        if (scaleRatio < 1) {
+          setZoomLevel(scaleRatio);
+          setAutoScale(true);
+        }
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [autoScale]);
 
   if (loading) {
     return (
@@ -275,27 +339,98 @@ export default function GuestMaterialPage({
           <h2 className="mb-4 text-xl font-semibold text-gray-900">學習教材</h2>
           {materials.length > 0 && latestManifest ? (
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <span className="rounded bg-blue-100 px-2 py-1 text-sm font-medium text-blue-700">
                   v{latestManifest.version} (最新版本)
                 </span>
-                <button
-                  onClick={() => window.open(getDownloadUrl(latestManifest.materialId), '_blank')}
-                  className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800"
-                >
-                  <svg className="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  下載教材
-                </button>
+
+                {/* Control buttons */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* Zoom controls */}
+                  <div className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-2 py-1">
+                    <button
+                      onClick={handleZoomOut}
+                      disabled={zoomLevel <= 0.5}
+                      className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                      title="縮小"
+                      aria-label="縮小"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                      </svg>
+                    </button>
+                    <span className="min-w-[3rem] text-center text-sm text-gray-600">
+                      {Math.round(zoomLevel * 100)}%
+                    </span>
+                    <button
+                      onClick={handleZoomIn}
+                      disabled={zoomLevel >= 2.0}
+                      className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                      title="放大"
+                      aria-label="放大"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={handleZoomReset}
+                      className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100"
+                      title="重置"
+                      aria-label="重置縮放"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Download button */}
+                  <button
+                    onClick={() => window.open(getDownloadUrl(latestManifest.materialId), '_blank')}
+                    className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50"
+                    title="下載教材"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span className="hidden sm:inline">下載</span>
+                  </button>
+
+                  {/* Fullscreen button */}
+                  <button
+                    onClick={handleFullscreen}
+                    className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+                    title="全螢幕"
+                    aria-label="全螢幕模式"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    </svg>
+                    <span className="hidden sm:inline">全螢幕</span>
+                  </button>
+                </div>
               </div>
-              <div className="aspect-video w-full overflow-hidden rounded-lg border border-gray-200">
-                <iframe
-                  src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
-                  className="h-full w-full"
-                  title={component.title}
-                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
-                />
+
+              <div
+                ref={containerRef}
+                className="aspect-video w-full overflow-hidden rounded-lg border border-gray-200"
+              >
+                <div
+                  style={{
+                    transform: `scale(${zoomLevel})`,
+                    transformOrigin: 'top left',
+                    width: `${100 / zoomLevel}%`,
+                    height: `${100 / zoomLevel}%`,
+                  }}
+                >
+                  <iframe
+                    src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
+                    className="h-full w-full"
+                    title={component.title}
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
+                  />
+                </div>
               </div>
 
               {/* Other versions */}
