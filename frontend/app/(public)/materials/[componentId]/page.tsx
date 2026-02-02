@@ -31,7 +31,7 @@ export default function GuestMaterialPage({
 
   // RWD states
   const [zoomEnabled, setZoomEnabled] = useState(true); // 縮放功能開關，預設開啟
-  const [zoomMode, setZoomMode] = useState<'manual' | 'auto'>('manual'); // 縮放模式：手動或自動
+  const [zoomMode, setZoomMode] = useState<'manual' | 'auto'>('auto'); // 縮放模式：手動或自動，預設自動
   const [zoomLevel, setZoomLevel] = useState(1.0);
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -505,24 +505,31 @@ export default function GuestMaterialPage({
 
               <div
                 ref={containerRef}
-                className="aspect-video w-full overflow-hidden rounded-lg border border-gray-200"
+                className="w-full overflow-hidden rounded-lg border border-gray-200"
+                style={{
+                  // 容器高度根據縮放比例動態調整
+                  height: zoomEnabled ? `${1080 * zoomLevel}px` : 'auto',
+                  aspectRatio: zoomEnabled ? undefined : '16/9',
+                }}
               >
                 {zoomEnabled ? (
                   <div
+                    className="flex justify-center"
                     style={{
-                      transform: `scale(${zoomLevel})`,
-                      transformOrigin: 'top left',
                       width: '100%',
                       height: '100%',
+                      overflow: 'hidden',
                     }}
                   >
                     <iframe
                       ref={iframeRef}
                       src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
-                      className="h-full w-full"
                       style={{
-                        width: `${100 / zoomLevel}%`,
-                        height: `${100 / zoomLevel}%`,
+                        width: '1920px',
+                        height: '1080px',
+                        transform: `scale(${zoomLevel})`,
+                        transformOrigin: 'top center',
+                        border: 'none',
                       }}
                       title={component.title}
                       sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
