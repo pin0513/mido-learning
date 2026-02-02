@@ -104,22 +104,28 @@ export default function FullscreenMaterialPage({
         overflow: 'hidden',
       }}
     >
-      {/* 控制按鈕列 */}
+      {/* Footer 控制列 */}
       <div
         style={{
           position: 'fixed',
-          top: '0.5rem',
-          left: '0.5rem',
+          bottom: 0,
+          left: 0,
+          right: 0,
           zIndex: 1000,
           display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           gap: '0.5rem',
+          padding: '0.5rem',
+          background: 'rgba(0, 0, 0, 0.8)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.2)',
         }}
       >
         {/* 返回按鈕 */}
         <button
           onClick={() => window.history.back()}
           style={{
-            background: 'rgba(0, 0, 0, 0.7)',
+            background: 'rgba(255, 255, 255, 0.1)',
             color: 'white',
             border: '1px solid rgba(255, 255, 255, 0.3)',
             borderRadius: '0.5rem',
@@ -135,7 +141,7 @@ export default function FullscreenMaterialPage({
         <button
           onClick={() => setAutoScale(!autoScale)}
           style={{
-            background: autoScale ? 'rgba(59, 130, 246, 0.8)' : 'rgba(0, 0, 0, 0.7)',
+            background: autoScale ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.1)',
             color: 'white',
             border: '1px solid rgba(255, 255, 255, 0.3)',
             borderRadius: '0.5rem',
@@ -144,15 +150,16 @@ export default function FullscreenMaterialPage({
             fontSize: '0.875rem',
           }}
         >
-          {autoScale ? '縮放: 開' : '縮放: 關'}
+          {autoScale ? `縮放: ${Math.round(scale * 100)}%` : '縮放: 關'}
         </button>
       </div>
 
-      {/* 縮放容器 */}
+      {/* 縮放容器 - 留出 footer 空間 */}
       <div
         style={{
           width: `${REFERENCE_WIDTH}px`,
-          height: '100vh',
+          height: 'calc(100vh - 3rem)',
+          marginBottom: '3rem',
           transform: `scale(${scale})`,
           transformOrigin: 'center center',
           display: 'flex',
@@ -173,24 +180,6 @@ export default function FullscreenMaterialPage({
         />
       </div>
 
-      {/* 縮放指示 */}
-      {scale < 1 && (
-        <div
-          style={{
-            position: 'fixed',
-            bottom: '0.5rem',
-            right: '0.5rem',
-            zIndex: 1000,
-            background: 'rgba(0, 0, 0, 0.5)',
-            color: 'white',
-            borderRadius: '0.25rem',
-            padding: '0.25rem 0.5rem',
-            fontSize: '0.75rem',
-          }}
-        >
-          {Math.round(scale * 100)}%
-        </div>
-      )}
     </div>
   );
 }
