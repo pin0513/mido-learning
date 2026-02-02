@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, use, useCallback } from 'react';
+import { useState, useEffect, use, useCallback, useRef } from 'react';
 import { MaterialManifest } from '@/types/material';
 import { getMaterials, getMaterialManifest } from '@/lib/api/materials';
 
@@ -17,11 +17,20 @@ export default function FullscreenMaterialPage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [scale, setScale] = useState(1);
+  const [showGamepad, setShowGamepad] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // 縮放步進
   const SCALE_STEP = 0.1;
   const MIN_SCALE = 0.3;
   const MAX_SCALE = 2;
+
+  // 偵測是否為手機
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+  }, []);
 
   const zoomIn = () => {
     setScale((prev) => Math.min(MAX_SCALE, prev + SCALE_STEP));
@@ -45,6 +54,47 @@ export default function FullscreenMaterialPage({
       setScale(1);
     }
   }, []);
+
+  // 發送鍵盤事件到 iframe
+  const sendKeyToIframe = useCallback((key: string, type: 'keydown' | 'keyup') => {
+    if (iframeRef.current?.contentWindow) {
+      const keyCode = {
+        ArrowUp: 38,
+        ArrowDown: 40,
+        ArrowLeft: 37,
+        ArrowRight: 39,
+        Enter: 13,
+        Space: 32,
+      }[key] || 0;
+
+      try {
+        iframeRef.current.contentWindow.postMessage(
+          { type: 'gamepad-key', key, keyCode, eventType: type },
+          '*'
+        );
+        // 同時嘗試直接觸發 iframe 的 focus 和鍵盤事件
+        iframeRef.current.focus();
+      } catch {
+        // 跨域限制，忽略錯誤
+      }
+    }
+  }, []);
+
+  // 虛擬按鈕按下
+  const handleGamepadPress = useCallback(
+    (key: string) => {
+      sendKeyToIframe(key, 'keydown');
+    },
+    [sendKeyToIframe]
+  );
+
+  // 虛擬按鈕放開
+  const handleGamepadRelease = useCallback(
+    (key: string) => {
+      sendKeyToIframe(key, 'keyup');
+    },
+    [sendKeyToIframe]
+  );
 
   useEffect(() => {
     const loadMaterial = async () => {
@@ -94,6 +144,24 @@ export default function FullscreenMaterialPage({
     manifest.accessToken ? `?token=${manifest.accessToken}` : ''
   }`;
 
+  // 虛擬按鈕樣式
+  const gamepadButtonStyle = {
+    width: '48px',
+    height: '48px',
+    background: 'rgba(255, 255, 255, 0.15)',
+    color: 'white',
+    border: '2px solid rgba(255, 255, 255, 0.4)',
+    borderRadius: '0.5rem',
+    fontSize: '1.25rem',
+    fontWeight: 'bold' as const,
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    touchAction: 'manipulation' as const,
+    userSelect: 'none' as const,
+  };
+
   return (
     <div
       style={{
@@ -109,6 +177,122 @@ export default function FullscreenMaterialPage({
         overflow: 'hidden',
       }}
     >
+      {/* 虛擬方向鍵 - 只在手機且開啟時顯示 */}
+      {isMobile && showGamepad && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '4rem',
+            left: '1rem',
+            zIndex: 1001,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 48px)',
+            gridTemplateRows: 'repeat(3, 48px)',
+            gap: '4px',
+          }}
+        >
+          {/* 上 */}
+          <div style={{ gridColumn: 2, gridRow: 1 }}>
+            <button
+              style={gamepadButtonStyle}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                handleGamepadPress('ArrowUp');
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                handleGamepadRelease('ArrowUp');
+              }}
+              onMouseDown={() => handleGamepadPress('ArrowUp')}
+              onMouseUp={() => handleGamepadRelease('ArrowUp')}
+              onMouseLeave={() => handleGamepadRelease('ArrowUp')}
+            >
+              ▲
+            </button>
+          </div>
+          {/* 左 */}
+          <div style={{ gridColumn: 1, gridRow: 2 }}>
+            <button
+              style={gamepadButtonStyle}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                handleGamepadPress('ArrowLeft');
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                handleGamepadRelease('ArrowLeft');
+              }}
+              onMouseDown={() => handleGamepadPress('ArrowLeft')}
+              onMouseUp={() => handleGamepadRelease('ArrowLeft')}
+              onMouseLeave={() => handleGamepadRelease('ArrowLeft')}
+            >
+              ◀
+            </button>
+          </div>
+          {/* 中心（可選：確認鍵） */}
+          <div style={{ gridColumn: 2, gridRow: 2 }}>
+            <button
+              style={{
+                ...gamepadButtonStyle,
+                background: 'rgba(59, 130, 246, 0.3)',
+                borderColor: 'rgba(59, 130, 246, 0.6)',
+              }}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                handleGamepadPress('Enter');
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                handleGamepadRelease('Enter');
+              }}
+              onMouseDown={() => handleGamepadPress('Enter')}
+              onMouseUp={() => handleGamepadRelease('Enter')}
+              onMouseLeave={() => handleGamepadRelease('Enter')}
+            >
+              ●
+            </button>
+          </div>
+          {/* 右 */}
+          <div style={{ gridColumn: 3, gridRow: 2 }}>
+            <button
+              style={gamepadButtonStyle}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                handleGamepadPress('ArrowRight');
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                handleGamepadRelease('ArrowRight');
+              }}
+              onMouseDown={() => handleGamepadPress('ArrowRight')}
+              onMouseUp={() => handleGamepadRelease('ArrowRight')}
+              onMouseLeave={() => handleGamepadRelease('ArrowRight')}
+            >
+              ▶
+            </button>
+          </div>
+          {/* 下 */}
+          <div style={{ gridColumn: 2, gridRow: 3 }}>
+            <button
+              style={gamepadButtonStyle}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                handleGamepadPress('ArrowDown');
+              }}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                handleGamepadRelease('ArrowDown');
+              }}
+              onMouseDown={() => handleGamepadPress('ArrowDown')}
+              onMouseUp={() => handleGamepadRelease('ArrowDown')}
+              onMouseLeave={() => handleGamepadRelease('ArrowDown')}
+            >
+              ▼
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Footer 控制列 */}
       <div
         style={{
@@ -227,6 +411,30 @@ export default function FullscreenMaterialPage({
         >
           100%
         </button>
+
+        {/* 手機版顯示方向鍵開關 */}
+        {isMobile && (
+          <>
+            {/* 分隔線 */}
+            <div style={{ width: '1px', height: '1.5rem', background: 'rgba(255,255,255,0.3)', margin: '0 0.25rem' }} />
+
+            {/* 方向鍵開關 */}
+            <button
+              onClick={() => setShowGamepad(!showGamepad)}
+              style={{
+                background: showGamepad ? 'rgba(34, 197, 94, 0.8)' : 'rgba(255, 255, 255, 0.1)',
+                color: 'white',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                borderRadius: '0.5rem',
+                padding: '0.5rem 0.75rem',
+                cursor: 'pointer',
+                fontSize: '0.75rem',
+              }}
+            >
+              🎮
+            </button>
+          </>
+        )}
       </div>
 
       {/* 縮放容器 - 留出 footer 空間 */}
@@ -243,6 +451,7 @@ export default function FullscreenMaterialPage({
         }}
       >
         <iframe
+          ref={iframeRef}
           src={contentUrl}
           title="教材內容"
           style={{
@@ -254,7 +463,6 @@ export default function FullscreenMaterialPage({
           allow="fullscreen; autoplay"
         />
       </div>
-
     </div>
   );
 }
