@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect, use, useRef, useCallback } from 'react';
+import { useState, useEffect, use, useRef } from 'react';
 import Link from 'next/link';
-import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Material, MaterialManifest } from '@/types/material';
 import { getComponentById } from '@/lib/api/components';
@@ -12,54 +11,6 @@ import { useAuth } from '@/components/auth/AuthProvider';
 import { getComponentRatings, getMyRating, rateComponent } from '@/lib/api/ratings';
 import { RatingListResponse, UserRatingResponse } from '@/types/rating';
 import { recordMaterialView } from '@/lib/api/analytics';
-
-// 縮放控制按鈕組件
-interface ZoomControlsProps {
-  onZoomIn: () => void;
-  onZoomOut: () => void;
-  onReset: () => void;
-  scale: number;
-}
-
-function ZoomControls({ onZoomIn, onZoomOut, onReset, scale }: ZoomControlsProps) {
-  return (
-    <div className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white p-1 shadow-sm">
-      <button
-        onClick={onZoomOut}
-        className="rounded p-1.5 text-gray-600 hover:bg-gray-100 disabled:opacity-50"
-        title="縮小"
-        disabled={scale <= 0.5}
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-        </svg>
-      </button>
-      <span className="min-w-[3rem] text-center text-xs text-gray-600">
-        {Math.round(scale * 100)}%
-      </span>
-      <button
-        onClick={onZoomIn}
-        className="rounded p-1.5 text-gray-600 hover:bg-gray-100 disabled:opacity-50"
-        title="放大"
-        disabled={scale >= 4}
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-        </svg>
-      </button>
-      <div className="mx-1 h-4 w-px bg-gray-300" />
-      <button
-        onClick={onReset}
-        className="rounded p-1.5 text-gray-600 hover:bg-gray-100"
-        title="重置"
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-        </svg>
-      </button>
-    </div>
-  );
-}
 
 export default function GuestMaterialPage({
   params,
@@ -77,20 +28,27 @@ export default function GuestMaterialPage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRating, setIsRating] = useState(false);
-
-  // 顯示模式根據分類自動決定：
-  // - 'game' 分類使用遊戲模式（讓 iframe 填滿容器，遊戲自己處理 RWD）
-  // - 其他分類使用投影片模式（支援縮放、平移、雙擊縮放）
-  // 注意：這裡不使用 state，而是直接從 component.category 計算
-  const [currentScale, setCurrentScale] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const transformRef = useRef<ReactZoomPanPinchRef>(null);
 
-  // 處理縮放變化
-  const handleTransformChange = useCallback((ref: ReactZoomPanPinchRef) => {
-    setCurrentScale(ref.state.scale);
-  }, []);
+  // 全螢幕處理
+  const handleFullscreen = () => {
+    if (!latestManifest) return;
+
+    const url = `${latestManifest.baseUrl}${latestManifest.entryPoint}${
+      latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''
+    }`;
+
+    // 偵測是否為手機裝置
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // 手機版：直接導向原始 URL（避免 popup 阻擋）
+      window.location.href = url;
+    } else {
+      // 桌面版：在新視窗開啟
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   // Record material view on mount
   useEffect(() => {
@@ -165,37 +123,6 @@ export default function GuestMaterialPage({
       setIsRating(false);
     }
   };
-
-  const handleFullscreen = () => {
-    let url: string;
-
-    if (latestManifest) {
-      // 優先使用 manifest 中的完整 URL
-      url = `${latestManifest.baseUrl}${latestManifest.entryPoint}${
-        latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''
-      }`;
-    } else if (materials.length > 0) {
-      // 備用方案：manifest 載入失敗時，使用下載 URL
-      const sortedMaterials = [...materials].sort((a, b) => b.version - a.version);
-      const latestMaterial = sortedMaterials[0];
-      url = getDownloadUrl(latestMaterial.id);
-    } else {
-      // 沒有任何資料可用
-      return;
-    }
-
-    // 偵測是否為手機裝置
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      // 手機版：直接在同分頁開啟（避免跳出 popup 阻擋）
-      window.location.href = url;
-    } else {
-      // 桌面版：在新視窗開啟
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-  };
-
 
   if (loading) {
     return (
@@ -369,139 +296,44 @@ export default function GuestMaterialPage({
           <h2 className="mb-4 text-xl font-semibold text-gray-900">學習教材</h2>
           {materials.length > 0 && latestManifest ? (
             <div className="space-y-4">
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <span className="rounded bg-blue-100 px-2 py-1 text-sm font-medium text-blue-700">
-                    v{latestManifest.version} (最新版本)
-                  </span>
-
-                  {/* 主要操作按鈕（始終可見） */}
-                  <div className="flex items-center gap-2">
-                    {/* Download button */}
-                    <button
-                      onClick={() => window.open(getDownloadUrl(latestManifest.materialId), '_blank')}
-                      className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50"
-                      title="下載教材"
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      <span className="hidden sm:inline">下載</span>
-                    </button>
-
-                    {/* New window button */}
-                    <button
-                      onClick={handleFullscreen}
-                      className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
-                      title="在新視窗開啟"
-                      aria-label="在新視窗開啟"
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                      <span className="hidden sm:inline">新視窗</span>
-                    </button>
-                  </div>
+              <div className="flex items-center justify-between">
+                <span className="rounded bg-blue-100 px-2 py-1 text-sm font-medium text-blue-700">
+                  v{latestManifest.version} (最新版本)
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => window.open(getDownloadUrl(latestManifest.materialId), '_blank')}
+                    className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50"
+                    title="下載教材"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <span className="hidden sm:inline">下載</span>
+                  </button>
+                  <button
+                    onClick={handleFullscreen}
+                    className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+                    title="全螢幕"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    </svg>
+                    <span className="hidden sm:inline">全螢幕</span>
+                  </button>
                 </div>
-
               </div>
-
               <div
                 ref={containerRef}
-                className="w-full overflow-hidden rounded-lg border border-gray-200"
-                style={{
-                  // 兩種模式都使用固定高度
-                  height: '70vh',
-                  minHeight: '400px',
-                }}
+                className="aspect-video w-full overflow-hidden rounded-lg border border-gray-200"
               >
-                {/* 根據分類決定顯示模式：game 分類使用遊戲模式，其他使用投影片模式 */}
-                {component.category !== 'game' ? (
-                  /* 投影片模式：使用 react-zoom-pan-pinch 支援縮放、平移、雙擊縮放 */
-                  <TransformWrapper
-                    ref={transformRef}
-                    initialScale={1}
-                    minScale={0.3}
-                    maxScale={4}
-                    centerOnInit
-                    wheel={{ step: 0.1 }}
-                    pinch={{ step: 5 }}
-                    doubleClick={{ mode: 'toggle', step: 0.7 }}
-                    onTransformed={handleTransformChange}
-                    limitToBounds={false}
-                    panning={{ velocityDisabled: true }}
-                  >
-                    {({ zoomIn, zoomOut, resetTransform }) => (
-                      <>
-                        {/* 縮放控制工具列 */}
-                        <div className="absolute left-1/2 top-2 z-10 -translate-x-1/2">
-                          <ZoomControls
-                            onZoomIn={() => zoomIn()}
-                            onZoomOut={() => zoomOut()}
-                            onReset={() => resetTransform()}
-                            scale={currentScale}
-                          />
-                        </div>
-
-                        {/* 可縮放的內容區域 */}
-                        <TransformComponent
-                          wrapperStyle={{
-                            width: '100%',
-                            height: '100%',
-                          }}
-                          contentStyle={{
-                            width: '100%',
-                            height: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <iframe
-                            ref={iframeRef}
-                            src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
-                            style={{
-                              width: '1920px',
-                              height: '1080px',
-                              border: 'none',
-                              pointerEvents: 'auto',
-                            }}
-                            title={component.title}
-                            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
-                          />
-                        </TransformComponent>
-
-                        {/* 手勢提示（手機版） */}
-                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 md:hidden">
-                          <span className="rounded-full bg-black/50 px-3 py-1 text-xs text-white">
-                            雙指縮放 · 單指平移 · 雙擊重置
-                          </span>
-                        </div>
-                      </>
-                    )}
-                  </TransformWrapper>
-                ) : (
-                  /* 遊戲模式：填滿容器，讓遊戲自己處理 RWD 和觸控 */
-                  <div
-                    className="h-full w-full"
-                    style={{
-                      touchAction: 'manipulation',
-                      WebkitOverflowScrolling: 'touch',
-                    }}
-                  >
-                    <iframe
-                      ref={iframeRef}
-                      src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
-                      className="h-full w-full"
-                      style={{
-                        border: 'none',
-                      }}
-                      title={component.title}
-                      sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
-                      allow="fullscreen; autoplay"
-                    />
-                  </div>
-                )}
+                <iframe
+                  src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
+                  className="h-full w-full"
+                  title={component.title}
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
+                  allow="fullscreen"
+                />
               </div>
 
               {/* Other versions */}
