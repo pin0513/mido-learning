@@ -2,6 +2,7 @@
 
 import { useState, useEffect, use, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Material, MaterialManifest } from '@/types/material';
 import { getComponentById } from '@/lib/api/components';
@@ -19,6 +20,7 @@ export default function GuestMaterialPage({
 }) {
   const { componentId } = use(params);
   const { user } = useAuth();
+  const router = useRouter();
 
   const [component, setComponent] = useState<LearningComponent | null>(null);
   const [materials, setMaterials] = useState<Material[]>([]);
@@ -32,18 +34,7 @@ export default function GuestMaterialPage({
 
   // 全螢幕處理 - 導向全螢幕包裝頁面
   const handleFullscreen = () => {
-    const fullscreenUrl = `/materials/${componentId}/fullscreen`;
-
-    // 偵測是否為手機裝置
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      // 手機版：直接導向全螢幕頁面
-      window.location.href = fullscreenUrl;
-    } else {
-      // 桌面版：在新視窗開啟全螢幕頁面
-      window.open(fullscreenUrl, '_blank', 'noopener,noreferrer');
-    }
+    router.push(`/materials/${componentId}/fullscreen`);
   };
 
   // Record material view on mount
