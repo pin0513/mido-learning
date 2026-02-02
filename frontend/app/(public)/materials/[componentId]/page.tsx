@@ -30,7 +30,7 @@ export default function GuestMaterialPage({
   const [isRating, setIsRating] = useState(false);
 
   // RWD states
-  const [zoomEnabled, setZoomEnabled] = useState(false); // 縮放功能開關，預設關閉
+  const [zoomEnabled, setZoomEnabled] = useState(true); // 縮放功能開關，預設開啟
   const [zoomMode, setZoomMode] = useState<'manual' | 'auto'>('manual'); // 縮放模式：手動或自動
   const [zoomLevel, setZoomLevel] = useState(1.0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -137,7 +137,7 @@ export default function GuestMaterialPage({
 
   const handleZoomOut = () => {
     if (!zoomEnabled || zoomMode === 'auto') return;
-    setZoomLevel((prev) => Math.max(prev - 0.25, 0.5));
+    setZoomLevel((prev) => Math.max(prev - 0.25, 0.25));
   };
 
   const handleZoomReset = () => {
@@ -146,11 +146,22 @@ export default function GuestMaterialPage({
   };
 
   const handleFullscreen = () => {
-    if (!latestManifest) return;
+    let url: string;
 
-    const url = `${latestManifest.baseUrl}${latestManifest.entryPoint}${
-      latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''
-    }`;
+    if (latestManifest) {
+      // 優先使用 manifest 中的完整 URL
+      url = `${latestManifest.baseUrl}${latestManifest.entryPoint}${
+        latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''
+      }`;
+    } else if (materials.length > 0) {
+      // 備用方案：manifest 載入失敗時，使用下載 URL
+      const sortedMaterials = [...materials].sort((a, b) => b.version - a.version);
+      const latestMaterial = sortedMaterials[0];
+      url = getDownloadUrl(latestMaterial.id);
+    } else {
+      // 沒有任何資料可用
+      return;
+    }
 
     // 偵測是否為手機裝置
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -178,7 +189,7 @@ export default function GuestMaterialPage({
 
       // 自動模式下，根據螢幕大小自動調整
       if (scaleRatio < 1) {
-        setZoomLevel(Math.max(scaleRatio, 0.5)); // 最小 50%
+        setZoomLevel(Math.max(scaleRatio, 0.25)); // 最小 25%
       } else {
         setZoomLevel(1.0); // 螢幕夠大時保持 100%
       }
@@ -361,13 +372,43 @@ export default function GuestMaterialPage({
           <h2 className="mb-4 text-xl font-semibold text-gray-900">學習教材</h2>
           {materials.length > 0 && latestManifest ? (
             <div className="space-y-4">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <span className="rounded bg-blue-100 px-2 py-1 text-sm font-medium text-blue-700">
-                  v{latestManifest.version} (最新版本)
-                </span>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="rounded bg-blue-100 px-2 py-1 text-sm font-medium text-blue-700">
+                    v{latestManifest.version} (最新版本)
+                  </span>
 
-                {/* Control buttons */}
-                <div className="flex flex-wrap items-center gap-2">
+                  {/* 主要操作按鈕（始終可見） */}
+                  <div className="flex items-center gap-2">
+                    {/* Download button */}
+                    <button
+                      onClick={() => window.open(getDownloadUrl(latestManifest.materialId), '_blank')}
+                      className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50"
+                      title="下載教材"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      <span className="hidden sm:inline">下載</span>
+                    </button>
+
+                    {/* New window button */}
+                    <button
+                      onClick={handleFullscreen}
+                      className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+                      title="在新視窗開啟"
+                      aria-label="在新視窗開啟"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                      <span className="hidden sm:inline">新視窗</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* 縮放控制按鈕（獨立一行，確保手機版可見） */}
+                <div className="flex flex-wrap items-center gap-2 overflow-x-auto pb-1">
                   {/* Zoom toggle switch */}
                   <button
                     onClick={handleToggleZoom}
@@ -415,7 +456,7 @@ export default function GuestMaterialPage({
                     <div className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-2 py-1">
                       <button
                         onClick={handleZoomOut}
-                        disabled={zoomLevel <= 0.5}
+                        disabled={zoomLevel <= 0.25}
                         className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
                         title="縮小"
                         aria-label="縮小"
@@ -459,31 +500,6 @@ export default function GuestMaterialPage({
                       </span>
                     </div>
                   )}
-
-                  {/* Download button */}
-                  <button
-                    onClick={() => window.open(getDownloadUrl(latestManifest.materialId), '_blank')}
-                    className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50"
-                    title="下載教材"
-                  >
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    <span className="hidden sm:inline">下載</span>
-                  </button>
-
-                  {/* New window button (replaces fullscreen) */}
-                  <button
-                    onClick={handleFullscreen}
-                    className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
-                    title="在新視窗開啟"
-                    aria-label="在新視窗開啟"
-                  >
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                    <span className="hidden sm:inline">新視窗</span>
-                  </button>
                 </div>
               </div>
 
