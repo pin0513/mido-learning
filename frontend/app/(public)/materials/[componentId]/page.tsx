@@ -30,23 +30,19 @@ export default function GuestMaterialPage({
   const [isRating, setIsRating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 全螢幕處理
+  // 全螢幕處理 - 導向全螢幕包裝頁面
   const handleFullscreen = () => {
-    if (!latestManifest) return;
-
-    const url = `${latestManifest.baseUrl}${latestManifest.entryPoint}${
-      latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''
-    }`;
+    const fullscreenUrl = `/materials/${componentId}/fullscreen`;
 
     // 偵測是否為手機裝置
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile) {
-      // 手機版：直接導向原始 URL（避免 popup 阻擋）
-      window.location.href = url;
+      // 手機版：直接導向全螢幕頁面
+      window.location.href = fullscreenUrl;
     } else {
-      // 桌面版：在新視窗開啟
-      window.open(url, '_blank', 'noopener,noreferrer');
+      // 桌面版：在新視窗開啟全螢幕頁面
+      window.open(fullscreenUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
