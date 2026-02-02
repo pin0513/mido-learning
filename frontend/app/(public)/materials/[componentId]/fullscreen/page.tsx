@@ -16,15 +16,27 @@ export default function FullscreenMaterialPage({
   const [manifest, setManifest] = useState<MaterialManifest | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [autoScale, setAutoScale] = useState(false); // 預設關閉自動縮放
   const [scale, setScale] = useState(1);
 
-  // 計算縮放比例
-  const calculateScale = useCallback(() => {
-    if (!autoScale) {
-      setScale(1);
-      return;
-    }
+  // 縮放步進
+  const SCALE_STEP = 0.1;
+  const MIN_SCALE = 0.3;
+  const MAX_SCALE = 2;
+
+  const zoomIn = () => {
+    setScale((prev) => Math.min(MAX_SCALE, prev + SCALE_STEP));
+  };
+
+  const zoomOut = () => {
+    setScale((prev) => Math.max(MIN_SCALE, prev - SCALE_STEP));
+  };
+
+  const resetZoom = () => {
+    setScale(1);
+  };
+
+  // 自動適應螢幕寬度
+  const fitToScreen = useCallback(() => {
     const screenWidth = window.innerWidth;
     if (screenWidth < REFERENCE_WIDTH) {
       const newScale = (screenWidth - 16) / REFERENCE_WIDTH;
@@ -32,14 +44,7 @@ export default function FullscreenMaterialPage({
     } else {
       setScale(1);
     }
-  }, [autoScale]);
-
-  // 監聽視窗大小變化
-  useEffect(() => {
-    calculateScale();
-    window.addEventListener('resize', calculateScale);
-    return () => window.removeEventListener('resize', calculateScale);
-  }, [calculateScale]);
+  }, []);
 
   useEffect(() => {
     const loadMaterial = async () => {
@@ -115,7 +120,7 @@ export default function FullscreenMaterialPage({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: '0.5rem',
+          gap: '0.25rem',
           padding: '0.5rem',
           background: 'rgba(0, 0, 0, 0.8)',
           borderTop: '1px solid rgba(255, 255, 255, 0.2)',
@@ -129,28 +134,98 @@ export default function FullscreenMaterialPage({
             color: 'white',
             border: '1px solid rgba(255, 255, 255, 0.3)',
             borderRadius: '0.5rem',
-            padding: '0.5rem 1rem',
+            padding: '0.5rem 0.75rem',
             cursor: 'pointer',
             fontSize: '0.875rem',
           }}
         >
-          ← 返回
+          ←
         </button>
 
-        {/* 縮放切換按鈕 */}
+        {/* 分隔線 */}
+        <div style={{ width: '1px', height: '1.5rem', background: 'rgba(255,255,255,0.3)', margin: '0 0.25rem' }} />
+
+        {/* 縮小按鈕 */}
         <button
-          onClick={() => setAutoScale(!autoScale)}
+          onClick={zoomOut}
+          disabled={scale <= MIN_SCALE}
           style={{
-            background: autoScale ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.1)',
+            background: 'rgba(255, 255, 255, 0.1)',
+            color: scale <= MIN_SCALE ? 'rgba(255,255,255,0.3)' : 'white',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            borderRadius: '0.5rem',
+            padding: '0.5rem 0.75rem',
+            cursor: scale <= MIN_SCALE ? 'not-allowed' : 'pointer',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+          }}
+        >
+          −
+        </button>
+
+        {/* 縮放比例顯示 */}
+        <span
+          style={{
+            color: 'white',
+            fontSize: '0.875rem',
+            minWidth: '3.5rem',
+            textAlign: 'center',
+          }}
+        >
+          {Math.round(scale * 100)}%
+        </span>
+
+        {/* 放大按鈕 */}
+        <button
+          onClick={zoomIn}
+          disabled={scale >= MAX_SCALE}
+          style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+            color: scale >= MAX_SCALE ? 'rgba(255,255,255,0.3)' : 'white',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            borderRadius: '0.5rem',
+            padding: '0.5rem 0.75rem',
+            cursor: scale >= MAX_SCALE ? 'not-allowed' : 'pointer',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+          }}
+        >
+          +
+        </button>
+
+        {/* 分隔線 */}
+        <div style={{ width: '1px', height: '1.5rem', background: 'rgba(255,255,255,0.3)', margin: '0 0.25rem' }} />
+
+        {/* 適應螢幕按鈕 */}
+        <button
+          onClick={fitToScreen}
+          style={{
+            background: 'rgba(255, 255, 255, 0.1)',
             color: 'white',
             border: '1px solid rgba(255, 255, 255, 0.3)',
             borderRadius: '0.5rem',
-            padding: '0.5rem 1rem',
+            padding: '0.5rem 0.75rem',
             cursor: 'pointer',
-            fontSize: '0.875rem',
+            fontSize: '0.75rem',
           }}
         >
-          {autoScale ? `縮放: ${Math.round(scale * 100)}%` : '縮放: 關'}
+          適應
+        </button>
+
+        {/* 重置按鈕 */}
+        <button
+          onClick={resetZoom}
+          style={{
+            background: scale === 1 ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.1)',
+            color: 'white',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            borderRadius: '0.5rem',
+            padding: '0.5rem 0.75rem',
+            cursor: 'pointer',
+            fontSize: '0.75rem',
+          }}
+        >
+          100%
         </button>
       </div>
 
