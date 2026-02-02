@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, use, useRef } from 'react';
+import { useState, useEffect, use, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Material, MaterialManifest } from '@/types/material';
 import { getComponentById } from '@/lib/api/components';
@@ -11,6 +12,54 @@ import { useAuth } from '@/components/auth/AuthProvider';
 import { getComponentRatings, getMyRating, rateComponent } from '@/lib/api/ratings';
 import { RatingListResponse, UserRatingResponse } from '@/types/rating';
 import { recordMaterialView } from '@/lib/api/analytics';
+
+// 縮放控制按鈕組件
+interface ZoomControlsProps {
+  onZoomIn: () => void;
+  onZoomOut: () => void;
+  onReset: () => void;
+  scale: number;
+}
+
+function ZoomControls({ onZoomIn, onZoomOut, onReset, scale }: ZoomControlsProps) {
+  return (
+    <div className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white p-1 shadow-sm">
+      <button
+        onClick={onZoomOut}
+        className="rounded p-1.5 text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+        title="縮小"
+        disabled={scale <= 0.5}
+      >
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+        </svg>
+      </button>
+      <span className="min-w-[3rem] text-center text-xs text-gray-600">
+        {Math.round(scale * 100)}%
+      </span>
+      <button
+        onClick={onZoomIn}
+        className="rounded p-1.5 text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+        title="放大"
+        disabled={scale >= 4}
+      >
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+        </svg>
+      </button>
+      <div className="mx-1 h-4 w-px bg-gray-300" />
+      <button
+        onClick={onReset}
+        className="rounded p-1.5 text-gray-600 hover:bg-gray-100"
+        title="重置"
+      >
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+      </button>
+    </div>
+  );
+}
 
 export default function GuestMaterialPage({
   params,
@@ -29,12 +78,19 @@ export default function GuestMaterialPage({
   const [error, setError] = useState<string | null>(null);
   const [isRating, setIsRating] = useState(false);
 
-  // RWD states
-  const [zoomEnabled, setZoomEnabled] = useState(true); // 縮放功能開關，預設開啟
-  const [zoomMode, setZoomMode] = useState<'manual' | 'auto'>('auto'); // 縮放模式：手動或自動，預設自動
-  const [zoomLevel, setZoomLevel] = useState(1.0);
+  // 顯示模式根據分類自動決定：
+  // - 'game' 分類使用遊戲模式（讓 iframe 填滿容器，遊戲自己處理 RWD）
+  // - 其他分類使用投影片模式（支援縮放、平移、雙擊縮放）
+  // 注意：這裡不使用 state，而是直接從 component.category 計算
+  const [currentScale, setCurrentScale] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const transformRef = useRef<ReactZoomPanPinchRef>(null);
+
+  // 處理縮放變化
+  const handleTransformChange = useCallback((ref: ReactZoomPanPinchRef) => {
+    setCurrentScale(ref.state.scale);
+  }, []);
 
   // Record material view on mount
   useEffect(() => {
@@ -110,41 +166,6 @@ export default function GuestMaterialPage({
     }
   };
 
-  // RWD handlers
-  const handleToggleZoom = () => {
-    if (zoomEnabled) {
-      // 關閉縮放時重置為 100%
-      setZoomLevel(1.0);
-      setZoomMode('manual');
-    }
-    setZoomEnabled(!zoomEnabled);
-  };
-
-  const handleToggleZoomMode = () => {
-    const newMode = zoomMode === 'manual' ? 'auto' : 'manual';
-    setZoomMode(newMode);
-
-    if (newMode === 'manual') {
-      // 切換到手動模式時重置為 100%
-      setZoomLevel(1.0);
-    }
-  };
-
-  const handleZoomIn = () => {
-    if (!zoomEnabled || zoomMode === 'auto') return;
-    setZoomLevel((prev) => Math.min(prev + 0.25, 2.0));
-  };
-
-  const handleZoomOut = () => {
-    if (!zoomEnabled || zoomMode === 'auto') return;
-    setZoomLevel((prev) => Math.max(prev - 0.25, 0.25));
-  };
-
-  const handleZoomReset = () => {
-    if (!zoomEnabled || zoomMode === 'auto') return;
-    setZoomLevel(1.0);
-  };
-
   const handleFullscreen = () => {
     let url: string;
 
@@ -175,30 +196,6 @@ export default function GuestMaterialPage({
     }
   };
 
-  // Auto-scale (only when zoom is enabled and mode is auto)
-  useEffect(() => {
-    if (!zoomEnabled || zoomMode !== 'auto') return;
-
-    const calculateAutoScale = () => {
-      if (!containerRef.current) return;
-
-      // 計算最佳縮放比例
-      const containerWidth = containerRef.current.offsetWidth;
-      const assumedSlideWidth = 1920; // 假設投影片寬度
-      const scaleRatio = containerWidth / assumedSlideWidth;
-
-      // 自動模式下，根據螢幕大小自動調整
-      if (scaleRatio < 1) {
-        setZoomLevel(Math.max(scaleRatio, 0.25)); // 最小 25%
-      } else {
-        setZoomLevel(1.0); // 螢幕夠大時保持 100%
-      }
-    };
-
-    calculateAutoScale();
-    window.addEventListener('resize', calculateAutoScale);
-    return () => window.removeEventListener('resize', calculateAutoScale);
-  }, [zoomEnabled, zoomMode]);
 
   if (loading) {
     return (
@@ -407,142 +404,103 @@ export default function GuestMaterialPage({
                   </div>
                 </div>
 
-                {/* 縮放控制按鈕（獨立一行，確保手機版可見） */}
-                <div className="flex flex-wrap items-center gap-2 overflow-x-auto pb-1">
-                  {/* Zoom toggle switch */}
-                  <button
-                    onClick={handleToggleZoom}
-                    className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm transition-colors ${
-                      zoomEnabled
-                        ? 'border-blue-500 bg-blue-50 text-blue-700 hover:bg-blue-100'
-                        : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
-                    title={zoomEnabled ? '停用縮放（適用於遊戲）' : '啟用縮放'}
-                    aria-label={zoomEnabled ? '停用縮放' : '啟用縮放'}
-                  >
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                    </svg>
-                    <span className="hidden sm:inline">{zoomEnabled ? '縮放：開' : '縮放：關'}</span>
-                  </button>
-
-                  {/* Zoom mode toggle (only when zoom is enabled) */}
-                  {zoomEnabled && (
-                    <button
-                      onClick={handleToggleZoomMode}
-                      className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm transition-colors ${
-                        zoomMode === 'auto'
-                          ? 'border-green-500 bg-green-50 text-green-700 hover:bg-green-100'
-                          : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
-                      }`}
-                      title={zoomMode === 'auto' ? '切換為手動縮放' : '切換為自動縮放'}
-                      aria-label={zoomMode === 'auto' ? '手動模式' : '自動模式'}
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        {zoomMode === 'auto' ? (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        ) : (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                        )}
-                      </svg>
-                      <span className="hidden sm:inline">
-                        {zoomMode === 'auto' ? '自動' : '手動'}
-                      </span>
-                    </button>
-                  )}
-
-                  {/* Zoom controls (only for manual mode) */}
-                  {zoomEnabled && zoomMode === 'manual' && (
-                    <div className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-2 py-1">
-                      <button
-                        onClick={handleZoomOut}
-                        disabled={zoomLevel <= 0.25}
-                        className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
-                        title="縮小"
-                        aria-label="縮小"
-                      >
-                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                        </svg>
-                      </button>
-                      <span className="min-w-[3rem] text-center text-sm text-gray-600">
-                        {Math.round(zoomLevel * 100)}%
-                      </span>
-                      <button
-                        onClick={handleZoomIn}
-                        disabled={zoomLevel >= 2.0}
-                        className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
-                        title="放大"
-                        aria-label="放大"
-                      >
-                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
-                      </button>
-                      <button
-                        onClick={handleZoomReset}
-                        className="rounded px-2 py-1 text-gray-700 hover:bg-gray-100"
-                        title="重置"
-                        aria-label="重置縮放"
-                      >
-                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Auto mode percentage display */}
-                  {zoomEnabled && zoomMode === 'auto' && (
-                    <div className="rounded-lg border border-green-300 bg-green-50 px-3 py-1.5">
-                      <span className="text-sm font-medium text-green-700">
-                        {Math.round(zoomLevel * 100)}%
-                      </span>
-                    </div>
-                  )}
-                </div>
               </div>
 
               <div
                 ref={containerRef}
                 className="w-full overflow-hidden rounded-lg border border-gray-200"
                 style={{
-                  // 容器高度根據縮放比例動態調整
-                  height: zoomEnabled ? `${1080 * zoomLevel}px` : 'auto',
-                  aspectRatio: zoomEnabled ? undefined : '16/9',
+                  // 兩種模式都使用固定高度
+                  height: '70vh',
+                  minHeight: '400px',
                 }}
               >
-                {zoomEnabled ? (
+                {/* 根據分類決定顯示模式：game 分類使用遊戲模式，其他使用投影片模式 */}
+                {component.category !== 'game' ? (
+                  /* 投影片模式：使用 react-zoom-pan-pinch 支援縮放、平移、雙擊縮放 */
+                  <TransformWrapper
+                    ref={transformRef}
+                    initialScale={1}
+                    minScale={0.3}
+                    maxScale={4}
+                    centerOnInit
+                    wheel={{ step: 0.1 }}
+                    pinch={{ step: 5 }}
+                    doubleClick={{ mode: 'toggle', step: 0.7 }}
+                    onTransformed={handleTransformChange}
+                    limitToBounds={false}
+                    panning={{ velocityDisabled: true }}
+                  >
+                    {({ zoomIn, zoomOut, resetTransform }) => (
+                      <>
+                        {/* 縮放控制工具列 */}
+                        <div className="absolute left-1/2 top-2 z-10 -translate-x-1/2">
+                          <ZoomControls
+                            onZoomIn={() => zoomIn()}
+                            onZoomOut={() => zoomOut()}
+                            onReset={() => resetTransform()}
+                            scale={currentScale}
+                          />
+                        </div>
+
+                        {/* 可縮放的內容區域 */}
+                        <TransformComponent
+                          wrapperStyle={{
+                            width: '100%',
+                            height: '100%',
+                          }}
+                          contentStyle={{
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <iframe
+                            ref={iframeRef}
+                            src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
+                            style={{
+                              width: '1920px',
+                              height: '1080px',
+                              border: 'none',
+                              pointerEvents: 'auto',
+                            }}
+                            title={component.title}
+                            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
+                          />
+                        </TransformComponent>
+
+                        {/* 手勢提示（手機版） */}
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 md:hidden">
+                          <span className="rounded-full bg-black/50 px-3 py-1 text-xs text-white">
+                            雙指縮放 · 單指平移 · 雙擊重置
+                          </span>
+                        </div>
+                      </>
+                    )}
+                  </TransformWrapper>
+                ) : (
+                  /* 遊戲模式：填滿容器，讓遊戲自己處理 RWD 和觸控 */
                   <div
-                    className="flex justify-center"
+                    className="h-full w-full"
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      overflow: 'hidden',
+                      touchAction: 'manipulation',
+                      WebkitOverflowScrolling: 'touch',
                     }}
                   >
                     <iframe
                       ref={iframeRef}
                       src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
+                      className="h-full w-full"
                       style={{
-                        width: '1920px',
-                        height: '1080px',
-                        transform: `scale(${zoomLevel})`,
-                        transformOrigin: 'top center',
                         border: 'none',
                       }}
                       title={component.title}
                       sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
+                      allow="fullscreen; autoplay"
                     />
                   </div>
-                ) : (
-                  <iframe
-                    ref={iframeRef}
-                    src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
-                    className="h-full w-full"
-                    title={component.title}
-                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock"
-                  />
                 )}
               </div>
 
