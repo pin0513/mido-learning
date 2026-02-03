@@ -57,6 +57,9 @@ function buildQueryString(params: ComponentQueryParams): string {
   if (params.createdBy) {
     searchParams.set('createdBy', params.createdBy);
   }
+  if (params.search) {
+    searchParams.set('search', params.search);
+  }
 
   return searchParams.toString();
 }

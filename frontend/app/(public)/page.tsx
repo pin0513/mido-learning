@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
@@ -13,6 +13,7 @@ import { getPublicComponents } from '@/lib/api/components';
 import { recordPageView } from '@/lib/api/analytics';
 
 const ITEMS_PER_PAGE = 8;
+const SEARCH_DEBOUNCE_MS = 300;
 
 export default function HomePage() {
   const { user, loading: authLoading } = useAuth();
@@ -22,11 +23,23 @@ export default function HomePage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState<SortOption>(defaultSortOptions[0]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Record page view on mount
   useEffect(() => {
     recordPageView();
   }, []);
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setPage(1);
+    }, SEARCH_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const fetchComponents = useCallback(async () => {
     setLoading(true);
@@ -37,6 +50,7 @@ export default function HomePage() {
         sortBy: sortOption.sortBy,
         sortOrder: sortOption.sortOrder,
         ...(category !== 'all' && { category }),
+        ...(debouncedSearch && { search: debouncedSearch }),
       };
       const response: ComponentListResponse = await getPublicComponents(params);
       setComponents(response.components || []);
@@ -46,7 +60,7 @@ export default function HomePage() {
     } finally {
       setLoading(false);
     }
-  }, [page, category, sortOption]);
+  }, [page, category, sortOption, debouncedSearch]);
 
   useEffect(() => {
     fetchComponents();
@@ -141,7 +155,41 @@ export default function HomePage() {
               <h2 className="text-2xl font-bold text-gray-900">公開學習資源</h2>
               <p className="mt-1 text-gray-600">探索精選的學習內容</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
+              {/* Search Input */}
+              <div className="relative">
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="搜尋教材..."
+                  className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-48"
+                />
+                <svg
+                  className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
+              </div>
               <CategoryFilter selected={category} onChange={handleCategoryChange} />
               <SortSelect value={sortOption} onChange={handleSortChange} />
             </div>

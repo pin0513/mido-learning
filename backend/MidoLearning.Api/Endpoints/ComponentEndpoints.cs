@@ -79,6 +79,7 @@ public static class ComponentEndpoints
         int limit = DefaultPageSize,
         string? category = null,
         string? tags = null,
+        string? search = null,
         string sortBy = "createdAt",
         string sortOrder = "desc")
     {
@@ -86,10 +87,12 @@ public static class ComponentEndpoints
         {
             (page, limit) = NormalizePaginationParams(page, limit);
 
-            var (components, total) = await firebaseService.GetDocumentsAsync<LearningComponent>(
+            // Fetch all components first, then filter and paginate in memory
+            // This ensures filters work correctly before pagination
+            var (components, _) = await firebaseService.GetDocumentsAsync<LearningComponent>(
                 ComponentsCollection,
-                page,
-                limit,
+                1,
+                1000, // Fetch all (reasonable upper limit)
                 null,
                 null);
 
@@ -97,6 +100,18 @@ public static class ComponentEndpoints
             // For backward compatibility, treat null/empty visibility as "published" (legacy documents)
             var filteredComponents = components.Where(c =>
                 c.Visibility == "published" || c.Visibility is null || c.Visibility == "");
+
+            // Apply search filter
+            if (!string.IsNullOrEmpty(search))
+            {
+                var searchTerm = search.Trim().ToLowerInvariant();
+                filteredComponents = filteredComponents.Where(c =>
+                    (c.Title?.ToLowerInvariant().Contains(searchTerm) ?? false) ||
+                    (c.Description?.ToLowerInvariant().Contains(searchTerm) ?? false) ||
+                    (c.Theme?.ToLowerInvariant().Contains(searchTerm) ?? false) ||
+                    (c.Category?.ToLowerInvariant().Contains(searchTerm) ?? false) ||
+                    c.Tags.Any(t => t.ToLowerInvariant().Contains(searchTerm)));
+            }
 
             // Apply category filter
             if (!string.IsNullOrEmpty(category))
@@ -116,12 +131,20 @@ public static class ComponentEndpoints
             // Apply sorting
             filteredComponents = ApplySorting(filteredComponents, sortBy, sortOrder);
 
-            var componentList = filteredComponents.ToList();
+            // Get total count before pagination
+            var allFiltered = filteredComponents.ToList();
+            var totalCount = allFiltered.Count;
+
+            // Apply pagination
+            var componentList = allFiltered
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
 
             var response = ApiResponse<ComponentListResponse>.Ok(new ComponentListResponse
             {
                 Components = componentList,
-                Total = componentList.Count,
+                Total = totalCount,
                 Page = page,
                 Limit = limit
             });

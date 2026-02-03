@@ -21,8 +21,7 @@ public class FirebaseService : IFirebaseService
         GoogleCredential? credential = null;
         if (!string.IsNullOrEmpty(credentialPath))
         {
-            using var stream = File.OpenRead(credentialPath);
-            credential = GoogleCredential.FromStream(stream);
+            credential = CredentialFactory.FromFile<ServiceAccountCredential>(credentialPath).ToGoogleCredential();
         }
 
         if (FirebaseApp.DefaultInstance is null)

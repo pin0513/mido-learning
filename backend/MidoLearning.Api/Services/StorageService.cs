@@ -27,7 +27,7 @@ public class StorageService : IStorageService
 
         if (!string.IsNullOrEmpty(credentialPath) && File.Exists(credentialPath))
         {
-            _credential = GoogleCredential.FromFile(credentialPath);
+            _credential = CredentialFactory.FromFile<ServiceAccountCredential>(credentialPath).ToGoogleCredential();
             _storageClient = StorageClient.Create(_credential);
         }
         else

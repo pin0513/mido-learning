@@ -48,6 +48,7 @@ export interface ComponentQueryParams {
   limit?: number;
   category?: string;
   tags?: string;
+  search?: string;
   visibility?: Visibility;
   sortBy?: 'createdAt' | 'ratingAverage' | 'ratingCount' | 'title';
   sortOrder?: 'asc' | 'desc';
