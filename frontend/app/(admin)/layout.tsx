@@ -11,6 +11,7 @@ const sidebarItems = [
   { label: '管理控制台', href: '/admin' },
   { label: '用戶管理', href: '/admin/users' },
   { label: '願望池', href: '/admin/wishes' },
+  { label: 'GCP 費用', href: '/admin/costs' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
