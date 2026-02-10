@@ -61,4 +61,4 @@ jobs:
             --cpu 1 \
             --min-instances 0 \
             --max-instances 10 \
-            --set-env-vars "Firebase__ProjectId=${{ env.PROJECT_ID }},Firebase__StorageBucket=mido-learning-materials"
+            --set-env-vars "Firebase__ProjectId=${{ env.PROJECT_ID }},Firebase__StorageBucket=mido-learning-materials,GCP__BillingDataset=billing_export,GCP__BillingTable=gcp_billing_export_v1_016FA0_AAADEB_92D696"
