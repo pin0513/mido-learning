@@ -12,11 +12,13 @@ export interface Wish {
 }
 
 export interface WishListResponse {
-  data: Wish[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
+  success: boolean;
+  data: {
+    wishes: Wish[];
+    total: number;
+    page: number;
+    limit: number;
+  };
 }
 
 export interface WishQueryParams {

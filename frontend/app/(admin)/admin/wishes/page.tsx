@@ -65,9 +65,9 @@ export default function AdminWishesPage() {
         search: search.trim() || undefined,
       });
 
-      setWishes(response.data);
-      setTotal(response.total);
-      setTotalPages(response.totalPages);
+      setWishes(response.data.wishes);
+      setTotal(response.data.total);
+      setTotalPages(Math.ceil(response.data.total / PAGE_LIMIT));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
