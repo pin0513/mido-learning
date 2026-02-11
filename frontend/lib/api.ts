@@ -171,3 +171,41 @@ export async function getCourseById(id: string): Promise<Course> {
 
   return result.data;
 }
+
+// Game Session types
+export interface GameSession {
+  id: string;
+  courseId: string;
+  courseTitle?: string;
+  gameType: string;
+  level: number;
+  score: number;
+  wpm?: number;
+  accuracy: number;
+  stars: number;
+  timeSpent: number;
+  createdAt: string;
+}
+
+// Game Session API
+export async function getRecentGameSessions(limit = 10): Promise<GameSession[]> {
+  const token = await getAuthToken();
+  if (!token) throw new Error('Not authenticated');
+
+  const response = await fetch(`${API_URL}/api/games/sessions/recent?limit=${limit}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch game sessions');
+  }
+
+  const result: ApiResponse<GameSession[]> = await response.json();
+  if (!result.success || !result.data) {
+    throw new Error(result.message || 'Failed to fetch game sessions');
+  }
+
+  return result.data;
+}
