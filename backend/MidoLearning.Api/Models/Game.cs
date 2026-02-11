@@ -51,13 +51,13 @@ public record CompleteGameResponse
     public required int CoinsEarned { get; init; }
     public bool LevelUp { get; init; }
     public int? NewLevel { get; init; }
-    public List<Achievement>? Achievements { get; init; }
+    public List<AchievementSummary>? Achievements { get; init; }
 }
 
-public record Achievement
+public record AchievementSummary
 {
     public required string Id { get; init; }
-    public required string Name { get; init; }
+    public required string Title { get; init; }
     public required string Icon { get; init; }
 }
 
