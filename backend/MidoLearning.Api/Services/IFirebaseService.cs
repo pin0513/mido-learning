@@ -24,6 +24,10 @@ public interface IFirebaseService
     Task<WishStatsResult> GetWishStatsAsync();
     Task<(List<string> Categories, List<string> Tags)> GetUsedCategoriesAndTagsAsync();
 
+    // Course methods
+    Task<List<CourseDto>> GetCoursesAsync(string? type, string? category, string? status);
+    Task<CourseDto?> GetCourseByIdAsync(string courseId);
+
     // Analytics methods
     Task IncrementCounterAsync(string collection, string documentId, string field);
     Task<AnalyticsStatsResponse> GetAnalyticsStatsAsync();

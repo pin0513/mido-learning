@@ -600,4 +600,127 @@ public class FirebaseService : IFirebaseService
 
         return visits;
     }
+
+    public async Task<List<CourseDto>> GetCoursesAsync(string? type, string? category, string? status)
+    {
+        Query query = _firestoreDb.Collection("courses");
+
+        if (!string.IsNullOrEmpty(type))
+        {
+            query = query.WhereEqualTo("type", type);
+        }
+
+        if (!string.IsNullOrEmpty(category))
+        {
+            query = query.WhereEqualTo("category", category);
+        }
+
+        if (!string.IsNullOrEmpty(status))
+        {
+            query = query.WhereEqualTo("status", status);
+        }
+
+        var snapshot = await query.GetSnapshotAsync();
+        var courses = new List<CourseDto>();
+
+        foreach (var document in snapshot.Documents)
+        {
+            var data = document.ToDictionary();
+            courses.Add(new CourseDto
+            {
+                Id = document.Id,
+                Title = data.GetValueOrDefault("title")?.ToString() ?? "",
+                Description = data.GetValueOrDefault("description")?.ToString() ?? "",
+                Instructor = data.GetValueOrDefault("instructor")?.ToString() ?? "",
+                Thumbnail = data.GetValueOrDefault("thumbnail")?.ToString() ?? "",
+                Price = Convert.ToInt32(data.GetValueOrDefault("price") ?? 0),
+                Status = data.GetValueOrDefault("status")?.ToString() ?? "draft",
+                Category = data.GetValueOrDefault("category")?.ToString() ?? "",
+                Type = data.GetValueOrDefault("type")?.ToString() ?? "video",
+                GameConfig = ParseGameConfig(data.GetValueOrDefault("gameConfig")),
+                CreatedAt = data.ContainsKey("createdAt")
+                    ? ((Timestamp)data["createdAt"]).ToDateTime()
+                    : DateTime.UtcNow,
+                UpdatedAt = data.ContainsKey("updatedAt")
+                    ? ((Timestamp)data["updatedAt"]).ToDateTime()
+                    : DateTime.UtcNow
+            });
+        }
+
+        return courses;
+    }
+
+    public async Task<CourseDto?> GetCourseByIdAsync(string courseId)
+    {
+        var docRef = _firestoreDb.Collection("courses").Document(courseId);
+        var snapshot = await docRef.GetSnapshotAsync();
+
+        if (!snapshot.Exists)
+        {
+            return null;
+        }
+
+        var data = snapshot.ToDictionary();
+        return new CourseDto
+        {
+            Id = snapshot.Id,
+            Title = data.GetValueOrDefault("title")?.ToString() ?? "",
+            Description = data.GetValueOrDefault("description")?.ToString() ?? "",
+            Instructor = data.GetValueOrDefault("instructor")?.ToString() ?? "",
+            Thumbnail = data.GetValueOrDefault("thumbnail")?.ToString() ?? "",
+            Price = Convert.ToInt32(data.GetValueOrDefault("price") ?? 0),
+            Status = data.GetValueOrDefault("status")?.ToString() ?? "draft",
+            Category = data.GetValueOrDefault("category")?.ToString() ?? "",
+            Type = data.GetValueOrDefault("type")?.ToString() ?? "video",
+            GameConfig = ParseGameConfig(data.GetValueOrDefault("gameConfig")),
+            CreatedAt = data.ContainsKey("createdAt")
+                ? ((Timestamp)data["createdAt"]).ToDateTime()
+                : DateTime.UtcNow,
+            UpdatedAt = data.ContainsKey("updatedAt")
+                ? ((Timestamp)data["updatedAt"]).ToDateTime()
+                : DateTime.UtcNow
+        };
+    }
+
+    private static GameConfigDto? ParseGameConfig(object? gameConfigObj)
+    {
+        if (gameConfigObj == null) return null;
+
+        var gameConfigDict = gameConfigObj as Dictionary<string, object>;
+        if (gameConfigDict == null) return null;
+
+        return new GameConfigDto
+        {
+            GameType = gameConfigDict.GetValueOrDefault("gameType")?.ToString() ?? "typing",
+            Level = Convert.ToInt32(gameConfigDict.GetValueOrDefault("level") ?? 1),
+            TimeLimit = Convert.ToInt32(gameConfigDict.GetValueOrDefault("timeLimit") ?? 60),
+            TargetWPM = gameConfigDict.ContainsKey("targetWPM")
+                ? Convert.ToInt32(gameConfigDict["targetWPM"])
+                : null,
+            Questions = ParseQuestions(gameConfigDict.GetValueOrDefault("questions"))
+        };
+    }
+
+    private static List<GameQuestionDto> ParseQuestions(object? questionsObj)
+    {
+        if (questionsObj == null) return new List<GameQuestionDto>();
+
+        var questionsList = questionsObj as System.Collections.IEnumerable;
+        if (questionsList == null) return new List<GameQuestionDto>();
+
+        var questions = new List<GameQuestionDto>();
+        foreach (var item in questionsList)
+        {
+            if (item is Dictionary<string, object> questionDict)
+            {
+                questions.Add(new GameQuestionDto
+                {
+                    Text = questionDict.GetValueOrDefault("text")?.ToString() ?? "",
+                    Difficulty = questionDict.GetValueOrDefault("difficulty")?.ToString()
+                });
+            }
+        }
+
+        return questions;
+    }
 }

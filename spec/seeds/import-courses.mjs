@@ -19,18 +19,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // 初始化 Firebase Admin
-const serviceAccountPath = process.env.GOOGLE_APPLICATION_CREDENTIALS ||
-  join(__dirname, '../../credentials/firebase-admin-key.json');
-
 try {
-  const serviceAccount = JSON.parse(await readFile(serviceAccountPath, 'utf8'));
-
-  initializeApp({
-    credential: cert(serviceAccount),
-    projectId: serviceAccount.project_id
-  });
-
-  console.log('✅ Firebase Admin initialized');
+  // 嘗試使用明確的憑證檔案
+  if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    const serviceAccount = JSON.parse(await readFile(process.env.GOOGLE_APPLICATION_CREDENTIALS, 'utf8'));
+    initializeApp({
+      credential: cert(serviceAccount),
+      projectId: serviceAccount.project_id
+    });
+    console.log('✅ Firebase Admin initialized with explicit credentials');
+  } else {
+    // 使用 Application Default Credentials (gcloud auth)
+    initializeApp({
+      projectId: 'mido-learning'
+    });
+    console.log('✅ Firebase Admin initialized with Application Default Credentials');
+  }
 } catch (error) {
   console.error('❌ Failed to initialize Firebase Admin:', error.message);
   process.exit(1);

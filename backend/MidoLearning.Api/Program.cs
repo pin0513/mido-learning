@@ -71,6 +71,7 @@ app.MapRatingEndpoints();
 app.MapCategoryEndpoints();
 app.MapAnalyticsEndpoints();
 app.MapCostEndpoints();
+app.MapCourseEndpoints();
 app.MapGameEndpoints();
 
 app.Run();

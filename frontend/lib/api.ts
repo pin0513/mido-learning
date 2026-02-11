@@ -101,3 +101,73 @@ export async function completeGame(
 
   return result.data;
 }
+
+// Course types
+export interface GameQuestion {
+  text: string;
+  difficulty?: string;
+}
+
+export interface GameConfig {
+  gameType: string;
+  level: number;
+  timeLimit: number;
+  targetWPM?: number;
+  questions: GameQuestion[];
+}
+
+export interface Course {
+  id: string;
+  title: string;
+  description: string;
+  instructor: string;
+  thumbnail: string;
+  price: number;
+  status: string;
+  category: string;
+  type: string;
+  gameConfig?: GameConfig;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Course API
+export async function getCourses(params?: {
+  type?: string;
+  category?: string;
+  status?: string;
+}): Promise<Course[]> {
+  const queryParams = new URLSearchParams();
+  if (params?.type) queryParams.append('type', params.type);
+  if (params?.category) queryParams.append('category', params.category);
+  if (params?.status) queryParams.append('status', params.status);
+
+  const url = `${API_URL}/api/courses${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch courses');
+  }
+
+  const result: ApiResponse<Course[]> = await response.json();
+  if (!result.success || !result.data) {
+    throw new Error(result.message || 'Failed to fetch courses');
+  }
+
+  return result.data;
+}
+
+export async function getCourseById(id: string): Promise<Course> {
+  const response = await fetch(`${API_URL}/api/courses/${id}`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch course');
+  }
+
+  const result: ApiResponse<Course> = await response.json();
+  if (!result.success || !result.data) {
+    throw new Error(result.message || 'Failed to fetch course');
+  }
+
+  return result.data;
+}
