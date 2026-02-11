@@ -52,6 +52,11 @@ npm-debug.log*
 # Testing
 coverage/
 .nyc_output/
+playwright-report/
+test-results/
+*.png
+*.jpg
+*.jpeg
 
 # Misc
 *.tgz
