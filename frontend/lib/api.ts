@@ -136,11 +136,23 @@ export async function getCourses(params?: {
   type?: string;
   category?: string;
   status?: string;
+  search?: string;
+  minLevel?: number;
+  maxLevel?: number;
+  priceFilter?: 'free' | 'paid' | 'all';
+  sortBy?: 'price_asc' | 'price_desc' | 'level_asc' | 'level_desc' | 'newest' | 'oldest';
 }): Promise<Course[]> {
   const queryParams = new URLSearchParams();
   if (params?.type) queryParams.append('type', params.type);
   if (params?.category) queryParams.append('category', params.category);
   if (params?.status) queryParams.append('status', params.status);
+  if (params?.search) queryParams.append('search', params.search);
+  if (params?.minLevel) queryParams.append('minLevel', params.minLevel.toString());
+  if (params?.maxLevel) queryParams.append('maxLevel', params.maxLevel.toString());
+  if (params?.priceFilter && params.priceFilter !== 'all') {
+    queryParams.append('priceFilter', params.priceFilter);
+  }
+  if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
 
   const url = `${API_URL}/api/courses${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
   const response = await fetch(url);
