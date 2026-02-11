@@ -8,7 +8,13 @@ public static class AdminEndpoints
 {
     private static readonly HashSet<string> ValidRoles = new(StringComparer.OrdinalIgnoreCase)
     {
-        "student", "teacher", "admin"
+        "member",       // 一般會員
+        "teacher",      // 教師
+        "game_admin",   // 遊戲管理員
+        "super_admin",  // 超級管理員
+        // Legacy roles for backward compatibility
+        "student",
+        "admin"
     };
 
     // Protected admin email that cannot be deleted

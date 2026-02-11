@@ -146,10 +146,18 @@ public class FirebaseService : IFirebaseService
             { "role", role }
         };
 
-        // If the role is admin, also set the admin claim
-        if (role.Equals("admin", StringComparison.OrdinalIgnoreCase))
+        // Set legacy claims for backward compatibility
+        if (role.Equals("super_admin", StringComparison.OrdinalIgnoreCase) ||
+            role.Equals("admin", StringComparison.OrdinalIgnoreCase))
         {
             claims["admin"] = true;
+        }
+
+        if (role.Equals("teacher", StringComparison.OrdinalIgnoreCase) ||
+            role.Equals("game_admin", StringComparison.OrdinalIgnoreCase) ||
+            role.Equals("super_admin", StringComparison.OrdinalIgnoreCase))
+        {
+            claims["teacher"] = true;
         }
 
         await SetCustomClaimsAsync(uid, claims);

@@ -18,11 +18,28 @@ builder.Services.AddAuthentication("Firebase")
 
 builder.Services.AddAuthorization(options =>
 {
+    // Super Admin - highest level, can access everything
+    options.AddPolicy("SuperAdminOnly", policy =>
+        policy.RequireRole("super_admin"));
+
+    // Game Admin - can manage game courses and achievements
+    options.AddPolicy("GameAdminOnly", policy =>
+        policy.RequireRole("super_admin", "game_admin"));
+
+    // Teacher - can manage materials
+    options.AddPolicy("TeacherOnly", policy =>
+        policy.RequireRole("super_admin", "game_admin", "teacher"));
+
+    // Authenticated - any logged-in user
+    options.AddPolicy("AuthenticatedOnly", policy =>
+        policy.RequireAuthenticatedUser());
+
+    // Legacy policies for backward compatibility
     options.AddPolicy("AdminOnly", policy =>
-        policy.RequireRole("admin"));
+        policy.RequireRole("super_admin", "admin"));
 
     options.AddPolicy("TeacherOrAdmin", policy =>
-        policy.RequireRole("teacher", "admin"));
+        policy.RequireRole("super_admin", "game_admin", "teacher", "admin"));
 
     // Default policy allows anonymous - individual endpoints opt-in to require auth
     options.FallbackPolicy = null;
