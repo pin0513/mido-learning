@@ -1,0 +1,185 @@
+[
+  {
+    "id": "typing-lv1-basics",
+    "title": "英打練習 Lv.1 - 基礎訓練",
+    "description": "適合初學者的英打練習，學習正確的指法與基本單字。目標 WPM: 30",
+    "instructor": "Mido Learning",
+    "thumbnail": "/images/games/typing-lv1.png",
+    "price": 0,
+    "status": "published",
+    "category": "typing",
+    "type": "game",
+    "gameConfig": {
+      "gameType": "typing",
+      "level": 1,
+      "timeLimit": 90,
+      "targetWPM": 30,
+      "questions": [
+        {
+          "text": "The quick brown fox jumps over the lazy dog.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "Practice makes perfect in typing skills.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "Hello world, this is my first typing lesson.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "Learning to type is fun and useful.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "Keep your fingers on the home row keys.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "Type with all ten fingers for best results.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "Good posture helps improve typing speed.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "Start slow and focus on accuracy first.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "Speed will come naturally with practice.",
+          "difficulty": "easy"
+        },
+        {
+          "text": "The cat sat on the mat and ate the rat.",
+          "difficulty": "easy"
+        }
+      ]
+    },
+    "createdAt": "2026-02-12T00:00:00Z",
+    "updatedAt": "2026-02-12T00:00:00Z"
+  },
+  {
+    "id": "typing-lv2-intermediate",
+    "title": "英打練習 Lv.2 - 進階訓練",
+    "description": "提升英打速度與準確度，練習常用句型與符號。目標 WPM: 50",
+    "instructor": "Mido Learning",
+    "thumbnail": "/images/games/typing-lv2.png",
+    "price": 0,
+    "status": "published",
+    "category": "typing",
+    "type": "game",
+    "gameConfig": {
+      "gameType": "typing",
+      "level": 2,
+      "timeLimit": 75,
+      "targetWPM": 50,
+      "questions": [
+        {
+          "text": "Programming is the art of telling another human what one wants the computer to do.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "JavaScript is a versatile language used for both frontend and backend development.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "The best way to predict the future is to invent it - Alan Kay.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "Clean code is simple and direct. Clean code reads like well-written prose.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "First, solve the problem. Then, write the code - John Johnson.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "Experience is the name everyone gives to their mistakes - Oscar Wilde.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "Any fool can write code that a computer can understand.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "The most important property of a program is whether it accomplishes the intention of its user.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "Simplicity is the soul of efficiency - Austin Freeman.",
+          "difficulty": "medium"
+        },
+        {
+          "text": "Testing leads to failure, and failure leads to understanding - Burt Rutan.",
+          "difficulty": "medium"
+        }
+      ]
+    },
+    "createdAt": "2026-02-12T00:00:00Z",
+    "updatedAt": "2026-02-12T00:00:00Z"
+  },
+  {
+    "id": "typing-lv3-advanced",
+    "title": "英打練習 Lv.3 - 專業級訓練",
+    "description": "挑戰專業級英打速度，練習技術文章與程式碼片段。目標 WPM: 70",
+    "instructor": "Mido Learning",
+    "thumbnail": "/images/games/typing-lv3.png",
+    "price": 0,
+    "status": "published",
+    "category": "typing",
+    "type": "game",
+    "gameConfig": {
+      "gameType": "typing",
+      "level": 3,
+      "timeLimit": 60,
+      "targetWPM": 70,
+      "questions": [
+        {
+          "text": "function calculateWPM(correctChars, seconds) { return Math.round((correctChars / 5) / (seconds / 60)); }",
+          "difficulty": "hard"
+        },
+        {
+          "text": "The async/await syntax in JavaScript provides a more elegant way to work with promises than traditional callback chains.",
+          "difficulty": "hard"
+        },
+        {
+          "text": "TypeScript adds static typing to JavaScript, catching errors at compile-time rather than runtime for safer code.",
+          "difficulty": "hard"
+        },
+        {
+          "text": "React's virtual DOM efficiently updates only the parts of the page that have changed, improving performance.",
+          "difficulty": "hard"
+        },
+        {
+          "text": "const result = await fetch('/api/data').then(res => res.json()).catch(err => console.error(err));",
+          "difficulty": "hard"
+        },
+        {
+          "text": "Machine learning algorithms can identify patterns in large datasets that would be impossible for humans to detect manually.",
+          "difficulty": "hard"
+        },
+        {
+          "text": "Microservices architecture breaks down applications into smaller, independently deployable services for better scalability.",
+          "difficulty": "hard"
+        },
+        {
+          "text": "Git version control enables teams to collaborate on code efficiently by tracking changes and managing merge conflicts.",
+          "difficulty": "hard"
+        },
+        {
+          "text": "Docker containers package applications with all dependencies, ensuring consistent behavior across development and production.",
+          "difficulty": "hard"
+        },
+        {
+          "text": "Continuous Integration and Deployment (CI/CD) pipelines automate testing and deployment, reducing manual errors.",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    "createdAt": "2026-02-12T00:00:00Z",
+    "updatedAt": "2026-02-12T00:00:00Z"
+  }
+]

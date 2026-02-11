@@ -121,6 +121,14 @@
 | API-002 | 教材上傳 API | 📋 TODO | MAT-001, API-001 |
 | API-003 | API 文件 (Swagger) | 📋 TODO | API-001 |
 
+### 遊戲化課程系統 (部分完成)
+
+| Feature ID | 名稱 | 狀態 | 依賴 |
+|------------|------|------|------|
+| GAME-001 | 英打練習遊戲頁面 | ✅ DONE | AUTH-001 |
+| GAME-002 | 遊戲結算與獎勵 | ✅ DONE | GAME-001 |
+| GAME-003 | 遊戲進度追蹤與排行榜 | ✅ DONE | GAME-002 |
+
 ---
 
 ## Feature 規格
@@ -1079,6 +1087,152 @@ Response 403: { success: false, message: "Permission denied" }
 
 ---
 
+### GAME-001: 英打練習遊戲頁面
+
+**狀態**: 🚧 WIP | **路由**: `/courses/[id]/play` | **類型**: 遊戲化課程
+
+**API**:
+```
+GET /api/courses/{id}                    → 取得遊戲課程資訊 (含題庫)
+POST /api/games/start                    → 開始遊戲 (建立 session)
+POST /api/games/complete                 → 結算遊戲 (計算分數、更新進度)
+```
+
+**驗收條件**:
+- [ ] 確認課程類型為 `game` 且 `gameType` 為 `typing`
+- [ ] 顯示遊戲標題、等級、目標 WPM
+- [ ] 顯示倒數計時器（可暫停/繼續）
+- [ ] 顯示題目文字
+- [ ] 輸入框即時驗證（正確顯示綠色，錯誤顯示紅色）
+- [ ] 即時顯示統計（WPM、正確率、連擊數）
+- [ ] 時間到或完成題目後顯示結算畫面
+- [ ] 結算畫面顯示：分數、星級、WPM、正確率
+- [ ] 提供「再玩一次」和「返回」按鈕
+
+**遊戲規則**:
+- **WPM 計算**: `(正確字元數 / 5) / (秒數 / 60)`
+- **正確率**: `正確字元數 / 總字元數 * 100%`
+- **連擊系統**: 連續正確字元 +1，錯誤歸零
+- **星級評分**:
+  - ⭐⭐⭐ (3星): WPM ≥ 目標 WPM 且正確率 ≥ 95%
+  - ⭐⭐ (2星): WPM ≥ 目標 WPM × 0.8 且正確率 ≥ 85%
+  - ⭐ (1星): 完成遊戲
+
+**實作檔案**:
+- `frontend/app/(member)/courses/[id]/play/page.tsx`
+- `frontend/components/game/GameHeader.tsx`
+- `frontend/components/game/QuestionDisplay.tsx`
+- `frontend/components/game/TypingInput.tsx`
+- `frontend/components/game/StatsPanel.tsx`
+- `frontend/components/game/ResultModal.tsx`
+- `frontend/hooks/game/useTypingGame.ts`
+- `frontend/hooks/game/useGameTimer.ts`
+
+---
+
+### GAME-002: 遊戲結算與獎勵
+
+**狀態**: 📋 TODO
+
+**API**:
+```
+POST /api/games/complete
+Body: {
+  courseId, sessionId, score, wpm, accuracy, stars, timeSpent, correctChars, totalChars
+}
+
+Response 200: {
+  success: true,
+  data: {
+    experienceGained, coinsEarned, levelUp, newLevel,
+    achievements: [{ id, name, icon }]
+  }
+}
+```
+
+**驗收條件**:
+- [ ] 遊戲結束後呼叫結算 API
+- [ ] 顯示獲得的經驗值（+XP 動畫）
+- [ ] 顯示獲得的金幣（+Coin 動畫）
+- [ ] 升級時顯示特效與新等級
+- [ ] 解鎖成就時顯示提示
+- [ ] 更新使用者的總遊戲次數、最佳成績
+
+**經驗值計算**:
+```
+baseExp = 10
+expGained = baseExp × stars × (accuracy / 100)
+```
+
+**金幣計算**:
+```
+baseCoins = 5
+coinsEarned = baseCoins × stars
+```
+
+**實作檔案**:
+- `backend/MidoLearning.Api/Endpoints/GameEndpoints.cs` → `CompleteGame()`
+- `frontend/components/game/ResultModal.tsx` (更新以顯示獎勵)
+- `frontend/components/game/LevelUpEffect.tsx`
+
+---
+
+### GAME-003: 遊戲進度追蹤與排行榜
+
+**狀態**: 📋 TODO
+
+**API**:
+```
+GET /api/games/progress?gameType=typing      → 取得個人遊戲進度
+GET /api/games/leaderboard?gameType=typing&limit=10  → 取得排行榜
+```
+
+**Progress Response**:
+```json
+{
+  "success": true,
+  "data": {
+    "gameType": "typing",
+    "totalPlays": 25,
+    "bestScore": 450,
+    "bestWPM": 65,
+    "bestAccuracy": 98.5,
+    "totalStars": 45,
+    "completedLevels": [1, 2, 3],
+    "recentSessions": [
+      { "level": 3, "score": 420, "wpm": 62, "accuracy": 96, "stars": 3, "playedAt": "..." }
+    ]
+  }
+}
+```
+
+**Leaderboard Response**:
+```json
+{
+  "success": true,
+  "data": {
+    "leaderboard": [
+      { "rank": 1, "userId": "...", "displayName": "User A", "bestScore": 500, "bestWPM": 70 },
+      { "rank": 2, "userId": "...", "displayName": "User B", "bestScore": 480, "bestWPM": 68 }
+    ]
+  }
+}
+```
+
+**驗收條件**:
+- [ ] Dashboard 顯示遊戲統計卡片（總遊戲次數、最佳成績、最高 WPM）
+- [ ] 遊戲頁面顯示個人最佳紀錄
+- [ ] 排行榜頁面顯示全站前 10 名
+- [ ] 排行榜可依 WPM 或分數排序
+- [ ] 顯示自己的排名
+
+**實作檔案**:
+- `backend/MidoLearning.Api/Endpoints/GameEndpoints.cs` → `GetProgress()`, `GetLeaderboard()`
+- `frontend/app/(member)/dashboard/page.tsx` (更新以顯示遊戲統計)
+- `frontend/app/(member)/leaderboard/page.tsx` (新增排行榜頁面)
+
+---
+
 ## 資料模型 (Firestore)
 
 ```typescript
@@ -1088,6 +1242,9 @@ Response 403: { success: false, message: "Permission denied" }
   displayName?: string,
   photoUrl?: string,
   role: "student" | "teacher" | "admin",
+  level?: number,              // 玩家等級 (預設 1)
+  experience?: number,         // 經驗值 (預設 0)
+  coins?: number,              // 金幣 (預設 0)
   createdAt: Timestamp,
   lastLoginAt?: Timestamp
 }
@@ -1102,6 +1259,30 @@ Response 403: { success: false, message: "Permission denied" }
   questions: [{ question: string, answer: string }],
   thumbnail?: string,
   createdBy: string,  // userId
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+
+// courses/{courseId}
+{
+  title: string,
+  description: string,
+  instructor: string,
+  thumbnail: string,
+  price: number,
+  status: "draft" | "published",
+  category: string,
+  type: "video" | "article" | "game",  // 課程類型
+  gameConfig?: {                        // 遊戲設定 (僅當 type = "game")
+    gameType: "typing" | "math" | "memory",
+    level: number,
+    timeLimit: number,                  // 秒
+    targetWPM?: number,                 // 目標 WPM (僅英打遊戲)
+    questions: Array<{                  // 題庫
+      text: string,
+      difficulty?: "easy" | "medium" | "hard"
+    }>
+  },
   createdAt: Timestamp,
   updatedAt: Timestamp
 }
@@ -1145,6 +1326,35 @@ Response 403: { success: false, message: "Permission denied" }
   category: "adult" | "kid",
   usageCount: number
 }
+
+// gameSessions/{sessionId}
+{
+  userId: string,
+  courseId: string,
+  gameType: "typing" | "math" | "memory",
+  level: number,
+  score: number,
+  wpm?: number,                              // Words Per Minute (僅英打遊戲)
+  accuracy: number,                          // 正確率 (%)
+  stars: 1 | 2 | 3,                          // 星級評分
+  timeSpent: number,                         // 實際花費秒數
+  correctChars?: number,                     // 正確字元數 (僅英打遊戲)
+  totalChars?: number,                       // 總字元數 (僅英打遊戲)
+  createdAt: Timestamp
+}
+
+// gameProgress/{userId}_{gameType}
+{
+  userId: string,
+  gameType: "typing" | "math" | "memory",
+  totalPlays: number,                        // 總遊戲次數
+  bestScore: number,                         // 最高分數
+  bestWPM?: number,                          // 最高 WPM (僅英打遊戲)
+  bestAccuracy: number,                      // 最高正確率
+  totalStars: number,                        // 累積星數
+  completedLevels: number[],                 // 已完成關卡
+  updatedAt: Timestamp
+}
 ```
 
 ---
@@ -1181,3 +1391,4 @@ Response 403: { success: false, message: "Permission denied" }
 | v0.5.1 | 2026-01-31 | WISH-004 願望統計儀表板完成 (TDD, 7 tests)：總數統計、7日趨勢、平均處理時間、完成率 |
 | v0.6.0 | 2026-01-31 | INFRA-001/002 RWD 完成、COMP-003/004 優化：欄位簡化（僅標題/主題必填）、建立+上傳整合、Header/Sidebar/Footer RWD 修正 |
 | v0.6.1 | 2026-01-31 | 教材系統優化：內容代理 API (取代 signed URL)、自動偵測 HTML 入口點、v1 版本可刪除、分類動態管理 |
+| v0.6.2 | 2026-02-12 | 遊戲化課程系統完成：英打練習遊戲介面 (GAME-001)、遊戲結算與獎勵 (GAME-002)、進度追蹤與排行榜 (GAME-003) |

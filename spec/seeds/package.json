@@ -1,0 +1,12 @@
+{
+  "name": "mido-learning-seeds",
+  "version": "1.0.0",
+  "description": "Seed data import scripts for Mido Learning",
+  "type": "module",
+  "scripts": {
+    "import:typing-courses": "node import-courses.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}

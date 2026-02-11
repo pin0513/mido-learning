@@ -11,6 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IFirebaseService, FirebaseService>();
 builder.Services.AddSingleton<IStorageService, StorageService>();
 builder.Services.AddSingleton<IGcpCostService, GcpCostService>();
+builder.Services.AddSingleton<IGameService, GameService>();
 
 builder.Services.AddAuthentication("Firebase")
     .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, FirebaseAuthHandler>("Firebase", null);
@@ -70,6 +71,7 @@ app.MapRatingEndpoints();
 app.MapCategoryEndpoints();
 app.MapAnalyticsEndpoints();
 app.MapCostEndpoints();
+app.MapGameEndpoints();
 
 app.Run();
 
