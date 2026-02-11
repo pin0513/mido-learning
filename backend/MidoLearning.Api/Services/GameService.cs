@@ -234,4 +234,52 @@ public class GameService : IGameService
             Achievements = null
         };
     }
+
+    public async Task<List<GameSessionDto>> GetRecentGameSessionsAsync(string userId, int limit = 10)
+    {
+        var query = _firestore.Collection("gameSessions")
+            .WhereEqualTo("userId", userId)
+            .OrderByDescending("createdAt")
+            .Limit(limit);
+
+        var snapshot = await query.GetSnapshotAsync();
+        var sessions = new List<GameSessionDto>();
+
+        foreach (var doc in snapshot.Documents)
+        {
+            var data = doc.ToDictionary();
+
+            // Get course details
+            string? courseTitle = null;
+            if (data.ContainsKey("courseId"))
+            {
+                var courseId = data["courseId"].ToString();
+                var courseDoc = await _firestore.Collection("courses").Document(courseId!).GetSnapshotAsync();
+                if (courseDoc.Exists)
+                {
+                    var courseData = courseDoc.ToDictionary();
+                    courseTitle = courseData.GetValueOrDefault("title")?.ToString();
+                }
+            }
+
+            sessions.Add(new GameSessionDto
+            {
+                Id = doc.Id,
+                CourseId = data["courseId"].ToString()!,
+                CourseTitle = courseTitle,
+                GameType = data["gameType"].ToString()!,
+                Level = Convert.ToInt32(data["level"]),
+                Score = Convert.ToInt32(data["score"]),
+                Wpm = data.ContainsKey("wpm") ? Convert.ToDouble(data["wpm"]) : null,
+                Accuracy = Convert.ToDouble(data["accuracy"]),
+                Stars = Convert.ToInt32(data["stars"]),
+                TimeSpent = Convert.ToInt32(data["timeSpent"]),
+                CreatedAt = data.ContainsKey("createdAt")
+                    ? ((Google.Cloud.Firestore.Timestamp)data["createdAt"]).ToDateTime()
+                    : DateTime.UtcNow
+            });
+        }
+
+        return sessions;
+    }
 }

@@ -27,6 +27,10 @@ public static class GameEndpoints
         group.MapGet("/leaderboard", GetLeaderboard)
             .WithName("GetLeaderboard")
             .WithOpenApi();
+
+        group.MapGet("/sessions/recent", GetRecentSessions)
+            .WithName("GetRecentGameSessions")
+            .WithOpenApi();
     }
 
     private static async Task<IResult> StartGame(
@@ -179,6 +183,30 @@ public static class GameEndpoints
         catch (Exception ex)
         {
             return Results.BadRequest(ApiResponse.Fail($"Failed to get leaderboard: {ex.Message}"));
+        }
+    }
+
+    private static async Task<IResult> GetRecentSessions(
+        ClaimsPrincipal user,
+        IGameService gameService,
+        int limit = 10)
+    {
+        var uid = user.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(uid))
+        {
+            return Results.Unauthorized();
+        }
+
+        try
+        {
+            var sessions = await gameService.GetRecentGameSessionsAsync(uid, limit);
+            var response = ApiResponse<List<GameSessionDto>>.Ok(sessions);
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return Results.BadRequest(ApiResponse.Fail($"Failed to get recent sessions: {ex.Message}"));
         }
     }
 }

@@ -89,3 +89,18 @@ public record LeaderboardResponse
     public required List<LeaderboardEntry> Leaderboard { get; init; }
     public int? YourRank { get; init; }
 }
+
+public record GameSessionDto
+{
+    public required string Id { get; init; }
+    public required string CourseId { get; init; }
+    public string? CourseTitle { get; init; }
+    public required string GameType { get; init; }
+    public required int Level { get; init; }
+    public required int Score { get; init; }
+    public double? Wpm { get; init; }
+    public required double Accuracy { get; init; }
+    public required int Stars { get; init; }
+    public required int TimeSpent { get; init; }
+    public DateTime CreatedAt { get; init; }
+}

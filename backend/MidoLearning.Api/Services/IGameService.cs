@@ -11,4 +11,5 @@ public interface IGameService
     Task UpdateGameProgressAsync(string userId, GameSession session);
     Task<List<LeaderboardEntry>> GetLeaderboardAsync(string gameType, int limit = 10);
     Task<CompleteGameResponse> CalculateRewardsAsync(string userId, GameSession session);
+    Task<List<GameSessionDto>> GetRecentGameSessionsAsync(string userId, int limit = 10);
 }
