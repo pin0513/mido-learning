@@ -601,7 +601,15 @@ public class FirebaseService : IFirebaseService
         return visits;
     }
 
-    public async Task<List<CourseDto>> GetCoursesAsync(string? type, string? category, string? status)
+    public async Task<List<CourseDto>> GetCoursesAsync(
+        string? type,
+        string? category,
+        string? status,
+        string? search = null,
+        int? minLevel = null,
+        int? maxLevel = null,
+        string? priceFilter = null,
+        string? sortBy = null)
     {
         Query query = _firestoreDb.Collection("courses");
 
@@ -647,7 +655,63 @@ public class FirebaseService : IFirebaseService
             });
         }
 
-        return courses;
+        // Apply in-memory filters
+        var filteredCourses = courses.AsEnumerable();
+
+        // Search filter (title or description)
+        if (!string.IsNullOrEmpty(search))
+        {
+            var searchLower = search.ToLower();
+            filteredCourses = filteredCourses.Where(c =>
+                c.Title.ToLower().Contains(searchLower) ||
+                c.Description.ToLower().Contains(searchLower));
+        }
+
+        // Level filter
+        if (minLevel.HasValue || maxLevel.HasValue)
+        {
+            filteredCourses = filteredCourses.Where(c =>
+            {
+                if (c.GameConfig == null) return false;
+                var level = c.GameConfig.Level;
+                if (minLevel.HasValue && level < minLevel.Value) return false;
+                if (maxLevel.HasValue && level > maxLevel.Value) return false;
+                return true;
+            });
+        }
+
+        // Price filter
+        if (!string.IsNullOrEmpty(priceFilter))
+        {
+            filteredCourses = priceFilter.ToLower() switch
+            {
+                "free" => filteredCourses.Where(c => c.Price == 0),
+                "paid" => filteredCourses.Where(c => c.Price > 0),
+                _ => filteredCourses
+            };
+        }
+
+        // Apply sorting
+        if (!string.IsNullOrEmpty(sortBy))
+        {
+            filteredCourses = sortBy.ToLower() switch
+            {
+                "price_asc" => filteredCourses.OrderBy(c => c.Price),
+                "price_desc" => filteredCourses.OrderByDescending(c => c.Price),
+                "level_asc" => filteredCourses.OrderBy(c => c.GameConfig?.Level ?? 0),
+                "level_desc" => filteredCourses.OrderByDescending(c => c.GameConfig?.Level ?? 0),
+                "newest" => filteredCourses.OrderByDescending(c => c.CreatedAt),
+                "oldest" => filteredCourses.OrderBy(c => c.CreatedAt),
+                _ => filteredCourses.OrderByDescending(c => c.CreatedAt)
+            };
+        }
+        else
+        {
+            // Default: newest first
+            filteredCourses = filteredCourses.OrderByDescending(c => c.CreatedAt);
+        }
+
+        return filteredCourses.ToList();
     }
 
     public async Task<CourseDto?> GetCourseByIdAsync(string courseId)

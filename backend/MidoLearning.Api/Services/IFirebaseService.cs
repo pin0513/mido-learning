@@ -25,7 +25,15 @@ public interface IFirebaseService
     Task<(List<string> Categories, List<string> Tags)> GetUsedCategoriesAndTagsAsync();
 
     // Course methods
-    Task<List<CourseDto>> GetCoursesAsync(string? type, string? category, string? status);
+    Task<List<CourseDto>> GetCoursesAsync(
+        string? type,
+        string? category,
+        string? status,
+        string? search = null,
+        int? minLevel = null,
+        int? maxLevel = null,
+        string? priceFilter = null,
+        string? sortBy = null);
     Task<CourseDto?> GetCourseByIdAsync(string courseId);
 
     // Analytics methods

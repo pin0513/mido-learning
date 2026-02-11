@@ -25,11 +25,17 @@ public static class CourseEndpoints
         IFirebaseService firebaseService,
         string? type = null,
         string? category = null,
-        string? status = "published")
+        string? status = "published",
+        string? search = null,
+        int? minLevel = null,
+        int? maxLevel = null,
+        string? priceFilter = null,
+        string? sortBy = null)
     {
         try
         {
-            var courses = await firebaseService.GetCoursesAsync(type, category, status);
+            var courses = await firebaseService.GetCoursesAsync(
+                type, category, status, search, minLevel, maxLevel, priceFilter, sortBy);
             return Results.Ok(ApiResponse<List<CourseDto>>.Ok(courses));
         }
         catch (Exception ex)
