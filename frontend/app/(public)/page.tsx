@@ -109,11 +109,17 @@ export default function HomePage() {
                 希望有一天，能做出讓孩子看得懂、用得上、學得會的知識內容。
               </p>
               {!authLoading && (
-                <div className="mt-8 flex justify-center gap-4 lg:justify-start">
+                <div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start">
                   {user ? (
                     <>
                       <Link href="/components">
                         <Button size="lg">瀏覽教材</Button>
+                      </Link>
+                      <Link href="/games">
+                        <Button variant="outline" size="lg">🎮 技能村</Button>
+                      </Link>
+                      <Link href="/dashboard/achievements">
+                        <Button variant="outline" size="lg">🏆 成就系統</Button>
                       </Link>
                     </>
                   ) : (
@@ -238,21 +244,21 @@ export default function HomePage() {
               </p>
             </div>
             <div className="rounded-lg bg-gray-50 p-8 shadow-sm">
-              <div className="mb-4 text-3xl">👶</div>
+              <div className="mb-4 text-3xl">🎮</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                親子友善
+                技能村遊戲
               </h3>
               <p className="text-gray-600">
-                希望做出孩子也能理解的知識內容，用簡單的方式解釋複雜的概念。
+                透過遊戲化學習，讓知識變得更有趣。完成挑戰，提升技能！
               </p>
             </div>
             <div className="rounded-lg bg-gray-50 p-8 shadow-sm">
-              <div className="mb-4 text-3xl">🧪</div>
+              <div className="mb-4 text-3xl">🏆</div>
               <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                實驗精神
+                成就系統
               </h3>
               <p className="text-gray-600">
-                這是一個實驗場域，記錄著一位爸爸學習 AI 的旅程。
+                累積學習成果，解鎖專屬成就。記錄你的學習歷程！
               </p>
             </div>
           </div>
