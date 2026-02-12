@@ -50,17 +50,35 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy
-            .WithOrigins(
-                "http://localhost:3000",
-                "http://localhost:3001",
-                "https://mido-learning.web.app",
-                "https://mido-learning-frontend-24mwb46hra-de.a.run.app",
-                "https://learn.paulfun.net"
-            )
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
+        // In development, allow all localhost origins
+        if (builder.Environment.IsDevelopment())
+        {
+            policy
+                .SetIsOriginAllowed(origin =>
+                {
+                    if (string.IsNullOrWhiteSpace(origin)) return false;
+
+                    // Allow all localhost and 127.0.0.1 origins
+                    var uri = new Uri(origin);
+                    return uri.Host == "localhost" || uri.Host == "127.0.0.1";
+                })
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        }
+        else
+        {
+            // In production, only allow specific origins
+            policy
+                .WithOrigins(
+                    "https://mido-learning.web.app",
+                    "https://mido-learning-frontend-24mwb46hra-de.a.run.app",
+                    "https://learn.paulfun.net"
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        }
     });
 });
 
