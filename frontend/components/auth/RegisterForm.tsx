@@ -19,12 +19,12 @@ export function RegisterForm() {
     setError(null);
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('密碼不一致');
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError('密碼至少需要 6 個字元');
       return;
     }
 
@@ -34,7 +34,7 @@ export function RegisterForm() {
       await signUp(email, password);
       router.push('/components');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to register');
+      setError(err instanceof Error ? err.message : '註冊失敗');
     } finally {
       setLoading(false);
     }
@@ -49,27 +49,27 @@ export function RegisterForm() {
       )}
       <Input
         type="email"
-        placeholder="Email"
+        placeholder="電子郵件"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
       />
       <Input
         type="password"
-        placeholder="Password"
+        placeholder="密碼"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
       />
       <Input
         type="password"
-        placeholder="Confirm Password"
+        placeholder="確認密碼"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         required
       />
       <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? 'Registering...' : 'Register'}
+        {loading ? '註冊中...' : '註冊'}
       </Button>
     </form>
   );

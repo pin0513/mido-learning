@@ -17,9 +17,9 @@ export default function RegisterPage() {
             返回首頁
           </Link>
         </div>
-        <h1 className="text-center text-2xl font-bold text-gray-900">Create Account</h1>
+        <h1 className="text-center text-2xl font-bold text-gray-900">註冊帳號</h1>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Join Mido Learning and start your journey today.
+          加入 Mido Learning，立即開始你的學習之旅。
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -30,16 +30,16 @@ export default function RegisterPage() {
             <div className="w-full border-t border-gray-300" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-white px-2 text-gray-500">Or continue with</span>
+            <span className="bg-white px-2 text-gray-500">或使用以下方式註冊</span>
           </div>
         </div>
 
         <GoogleLoginButton />
 
         <p className="text-center text-sm text-gray-600">
-          Already have an account?{' '}
+          已經有帳號了？{' '}
           <Link href="/login" className="font-medium text-blue-600 hover:underline">
-            Sign in
+            立即登入
           </Link>
         </p>
       </CardContent>

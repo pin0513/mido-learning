@@ -17,9 +17,9 @@ export default function LoginPage() {
             返回首頁
           </Link>
         </div>
-        <h1 className="text-center text-2xl font-bold text-gray-900">Sign In</h1>
+        <h1 className="text-center text-2xl font-bold text-gray-900">登入</h1>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Welcome back! Please sign in to continue.
+          歡迎回來！請登入以繼續使用。
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -30,16 +30,16 @@ export default function LoginPage() {
             <div className="w-full border-t border-gray-300" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-white px-2 text-gray-500">Or continue with</span>
+            <span className="bg-white px-2 text-gray-500">或使用以下方式登入</span>
           </div>
         </div>
 
         <GoogleLoginButton />
 
         <p className="text-center text-sm text-gray-600">
-          Don&apos;t have an account?{' '}
+          還沒有帳號？{' '}
           <Link href="/register" className="font-medium text-blue-600 hover:underline">
-            Sign up
+            立即註冊
           </Link>
         </p>
       </CardContent>

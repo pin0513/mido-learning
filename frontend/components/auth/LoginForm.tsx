@@ -22,7 +22,7 @@ export function LoginForm() {
       await signIn(email, password);
       router.push('/components');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign in');
+      setError(err instanceof Error ? err.message : '登入失敗');
     } finally {
       setLoading(false);
     }
@@ -37,20 +37,20 @@ export function LoginForm() {
       )}
       <Input
         type="email"
-        placeholder="Email"
+        placeholder="電子郵件"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
       />
       <Input
         type="password"
-        placeholder="Password"
+        placeholder="密碼"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
       />
       <Button type="submit" className="w-full" disabled={loading}>
-        {loading ? 'Signing in...' : 'Sign In'}
+        {loading ? '登入中...' : '登入'}
       </Button>
     </form>
   );
