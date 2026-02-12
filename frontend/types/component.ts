@@ -175,6 +175,26 @@ export const CATEGORY_CONFIG: Record<string, {
     badgeClass: 'bg-pink-100 text-pink-800',
     buttonClass: 'bg-pink-600 hover:bg-pink-700',
   },
+  '商業思維': {
+    label: '商業思維',
+    primary: '#7C3AED',
+    light: '#EDE9FE',
+    textClass: 'text-purple-800',
+    bgClass: 'bg-purple-50',
+    borderClass: 'border-purple-200',
+    badgeClass: 'bg-purple-100 text-purple-800',
+    buttonClass: 'bg-purple-600 hover:bg-purple-700',
+  },
+  '運動': {
+    label: '運動',
+    primary: '#059669',
+    light: '#D1FAE5',
+    textClass: 'text-green-800',
+    bgClass: 'bg-green-50',
+    borderClass: 'border-green-200',
+    badgeClass: 'bg-green-100 text-green-800',
+    buttonClass: 'bg-green-600 hover:bg-green-700',
+  },
 };
 
 // Default config for unknown categories

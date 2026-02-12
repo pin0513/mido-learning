@@ -110,27 +110,22 @@ export default function HomePage() {
               </p>
               {!authLoading && (
                 <div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start">
-                  {user ? (
-                    <>
-                      <Link href="/components">
-                        <Button size="lg">瀏覽教材</Button>
-                      </Link>
-                      <Link href="/games">
-                        <Button variant="outline" size="lg">🎮 技能村</Button>
-                      </Link>
-                      <Link href="/dashboard/achievements">
-                        <Button variant="outline" size="lg">🏆 成就系統</Button>
-                      </Link>
-                    </>
-                  ) : (
+                  <Link href="/components">
+                    <Button size="lg">瀏覽教材</Button>
+                  </Link>
+                  <Link href="/games">
+                    <Button variant="outline" size="lg">🎮 技能村</Button>
+                  </Link>
+                  <Link href="/dashboard/achievements">
+                    <Button variant="outline" size="lg">🏆 成就系統</Button>
+                  </Link>
+                  {!user && (
                     <>
                       <Link href="/register">
-                        <Button size="lg">免費註冊</Button>
+                        <Button variant="outline" size="lg">免費註冊</Button>
                       </Link>
                       <Link href="/login">
-                        <Button variant="outline" size="lg">
-                          登入
-                        </Button>
+                        <Button variant="outline" size="lg">登入</Button>
                       </Link>
                     </>
                   )}
