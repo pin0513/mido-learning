@@ -180,7 +180,7 @@ export default function GamesPage() {
                 className={`px-4 py-2 rounded-lg font-medium transition ${
                   gameTypeFilter === 'all'
                     ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                 }`}
               >
                 全部遊戲
@@ -190,7 +190,7 @@ export default function GamesPage() {
                 className={`px-4 py-2 rounded-lg font-medium transition ${
                   gameTypeFilter === 'typing'
                     ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                 }`}
               >
                 ⌨️ 英打練習
@@ -200,7 +200,7 @@ export default function GamesPage() {
                 className={`px-4 py-2 rounded-lg font-medium transition ${
                   gameTypeFilter === 'math'
                     ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                 }`}
               >
                 🔢 數學運算
@@ -210,7 +210,7 @@ export default function GamesPage() {
                 className={`px-4 py-2 rounded-lg font-medium transition ${
                   gameTypeFilter === 'memory'
                     ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                 }`}
               >
                 🧠 記憶力
