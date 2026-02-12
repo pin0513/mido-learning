@@ -1,6 +1,45 @@
 # 測試資料腳本使用說明
 
-## 插入測試資料
+## 🚀 快速開始（推薦）
+
+使用 `seed-all.sh` 一鍵插入所有測試資料（教材 + 成就）：
+
+```bash
+cd backend/scripts
+ADMIN_TOKEN='你的token' ./seed-all.sh
+```
+
+---
+
+## 📦 分別插入測試資料
+
+### 選項 1: 插入教材資料
+
+```bash
+ADMIN_TOKEN='你的token' ./seed-components.sh
+```
+
+將創建 8 個公開教材：
+- 注音符號練習
+- 英文字母練習
+- 加法大冒險
+- 九九乘法表
+- 程式設計第一課
+- 水的三態變化
+- 日常英語對話
+- 台灣歷史小故事
+
+### 選項 2: 插入成就資料
+
+```bash
+ADMIN_TOKEN='你的token' ./seed-test-data.sh
+```
+
+將創建 6 個測試成就（詳見下方）。
+
+---
+
+## 🔑 取得 Admin Token
 
 ### 步驟 1: 取得 Admin Token
 
@@ -30,14 +69,24 @@
 ```bash
 cd backend/scripts
 
-# 設定 token 並運行腳本
-ADMIN_TOKEN='你的_token_這裡' ./seed-test-data.sh
+# 一鍵插入所有測試資料（推薦）
+ADMIN_TOKEN='你的token' ./seed-all.sh
+
+# 或分別插入
+ADMIN_TOKEN='你的token' ./seed-components.sh  # 教材
+ADMIN_TOKEN='你的token' ./seed-test-data.sh   # 成就
 ```
 
 ### 步驟 3: 驗證資料
 
 訪問以下頁面確認測試資料已插入：
 
+**教材相關：**
+- **首頁（公開教材）**: http://localhost:3001
+- **教材列表**: http://localhost:3001/components
+- **管理介面**: http://localhost:3001/admin/components
+
+**成就相關：**
 - **Game Admin 成就管理**: http://localhost:3001/game-admin/achievements
 - **會員成就頁面**: http://localhost:3001/dashboard/achievements
 
