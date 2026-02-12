@@ -18,7 +18,7 @@ fi
 echo "📚 插入教材資料..."
 
 # 教材 1: 打字練習 - 注音符號
-curl -X POST "$API_URL/api/admin/components" \
+curl -X POST "$API_URL/api/components" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
@@ -34,7 +34,7 @@ curl -X POST "$API_URL/api/admin/components" \
 echo ""
 
 # 教材 2: 英文打字
-curl -X POST "$API_URL/api/admin/components" \
+curl -X POST "$API_URL/api/components" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
@@ -50,7 +50,7 @@ curl -X POST "$API_URL/api/admin/components" \
 echo ""
 
 # 教材 3: 數學遊戲
-curl -X POST "$API_URL/api/admin/components" \
+curl -X POST "$API_URL/api/components" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
@@ -66,7 +66,7 @@ curl -X POST "$API_URL/api/admin/components" \
 echo ""
 
 # 教材 4: 乘法練習
-curl -X POST "$API_URL/api/admin/components" \
+curl -X POST "$API_URL/api/components" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
@@ -82,7 +82,7 @@ curl -X POST "$API_URL/api/admin/components" \
 echo ""
 
 # 教材 5: 程式設計入門
-curl -X POST "$API_URL/api/admin/components" \
+curl -X POST "$API_URL/api/components" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
@@ -98,7 +98,7 @@ curl -X POST "$API_URL/api/admin/components" \
 echo ""
 
 # 教材 6: 科學實驗
-curl -X POST "$API_URL/api/admin/components" \
+curl -X POST "$API_URL/api/components" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
@@ -114,7 +114,7 @@ curl -X POST "$API_URL/api/admin/components" \
 echo ""
 
 # 教材 7: 英語會話
-curl -X POST "$API_URL/api/admin/components" \
+curl -X POST "$API_URL/api/components" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
@@ -130,7 +130,7 @@ curl -X POST "$API_URL/api/admin/components" \
 echo ""
 
 # 教材 8: 歷史故事
-curl -X POST "$API_URL/api/admin/components" \
+curl -X POST "$API_URL/api/components" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{
