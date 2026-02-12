@@ -3,8 +3,12 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getCourses, Course } from '@/lib/api';
+import { useAuth } from '@/components/auth/AuthProvider';
+import { useTrial } from '@/hooks/useTrial';
 
 export default function GamesPage() {
+  const { user } = useAuth();
+  const { remainingCount, hasRemaining } = useTrial();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -86,7 +90,7 @@ export default function GamesPage() {
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             🎮 遊戲學習中心
           </h1>
@@ -94,6 +98,60 @@ export default function GamesPage() {
             透過遊戲提升技能，邊玩邊學習！
           </p>
         </div>
+
+        {/* Trial Mode Banner */}
+        {!user && (
+          <div className={`max-w-3xl mx-auto mb-8 rounded-lg p-6 ${
+            hasRemaining
+              ? 'bg-blue-50 border-2 border-blue-200'
+              : 'bg-red-50 border-2 border-red-200'
+          }`}>
+            {hasRemaining ? (
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <span className="text-2xl">🎮</span>
+                  <h3 className="text-lg font-bold text-blue-900">試玩模式</h3>
+                </div>
+                <p className="text-blue-700 mb-3">
+                  您還有 <span className="text-2xl font-bold text-blue-600">{remainingCount}</span> 次免費試玩機會
+                </p>
+                <p className="text-sm text-blue-600 mb-4">
+                  試玩次數將在 1 小時後重置
+                </p>
+                <Link href="/register">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition">
+                    免費註冊，無限暢玩 + 累積成就 🏆
+                  </button>
+                </Link>
+              </div>
+            ) : (
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <span className="text-2xl">⏰</span>
+                  <h3 className="text-lg font-bold text-red-900">試玩次數已用完</h3>
+                </div>
+                <p className="text-red-700 mb-4">
+                  您的試玩機會已經用完囉！
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <Link href="/register">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition">
+                      立即註冊，繼續遊玩 🚀
+                    </button>
+                  </Link>
+                  <Link href="/login">
+                    <button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition">
+                      已有帳號？登入
+                    </button>
+                  </Link>
+                </div>
+                <p className="text-sm text-red-600 mt-3">
+                  試玩次數將在 1 小時後重置
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Search and Filters */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
