@@ -98,7 +98,7 @@ export function WishCard({
             <>
               <Button
                 size="sm"
-                variant="primary"
+                variant="default"
                 onClick={() => onStartProcessing?.(wish)}
                 disabled={isLoading}
               >
@@ -121,7 +121,7 @@ export function WishCard({
             <>
               <Button
                 size="sm"
-                variant="primary"
+                variant="default"
                 onClick={() => onCreateComponent?.(wish)}
                 disabled={isLoading}
               >

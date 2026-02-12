@@ -182,7 +182,7 @@ export default function AdminComponentsPage() {
                 取消
               </Button>
               <Button
-                variant="danger"
+                variant="destructive"
                 onClick={() => handleDelete(showDeleteConfirm)}
                 disabled={isDeleting}
               >

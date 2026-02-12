@@ -122,7 +122,7 @@ export function ComponentDetail({
           </h2>
           {showMaterialManagement && (
             <Button
-              variant="primary"
+              variant="default"
               size="sm"
               onClick={() => setIsUploadOpen(!isUploadOpen)}
             >

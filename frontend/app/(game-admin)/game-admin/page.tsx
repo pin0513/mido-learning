@@ -109,7 +109,20 @@ export default function GameAdminDashboard() {
             </a>
 
             <a
-              href="/game-admin/achievements/create"
+              href="/game-admin/achievements"
+              className="flex items-center p-4 border border-gray-300 rounded-lg hover:border-purple-500 hover:shadow-md transition"
+            >
+              <div className="flex-shrink-0">
+                <div className="text-3xl">🏆</div>
+              </div>
+              <div className="ml-4">
+                <h3 className="text-sm font-medium text-gray-900">管理成就</h3>
+                <p className="text-sm text-gray-500">查看與編輯所有成就</p>
+              </div>
+            </a>
+
+            <a
+              href="/game-admin/achievements/new"
               className="flex items-center p-4 border border-gray-300 rounded-lg hover:border-purple-500 hover:shadow-md transition"
             >
               <div className="flex-shrink-0">

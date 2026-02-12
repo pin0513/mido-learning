@@ -297,7 +297,7 @@ export default function EditComponentPage({
           <p className="mt-1 text-gray-600">修改教材資訊</p>
         </div>
         <Button
-          variant="danger"
+          variant="destructive"
           size="sm"
           onClick={() => setShowDeleteConfirm(true)}
         >
@@ -344,7 +344,7 @@ export default function EditComponentPage({
                 取消
               </Button>
               <Button
-                variant="danger"
+                variant="destructive"
                 onClick={handleDelete}
                 disabled={isDeleting}
               >
