@@ -71,7 +71,8 @@ public static class GameEndpoints
     private static async Task<IResult> CompleteGame(
         CompleteGameRequest request,
         ClaimsPrincipal user,
-        IGameService gameService)
+        IGameService gameService,
+        IAchievementService achievementService)
     {
         var uid = user.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -114,7 +115,28 @@ public static class GameEndpoints
             // Calculate rewards
             var rewards = await gameService.CalculateRewardsAsync(uid, completedSession);
 
-            var response = ApiResponse<CompleteGameResponse>.Ok(rewards);
+            // Check and unlock achievements
+            var achievementResult = await achievementService.CheckAndUnlockAchievementsAsync(uid, completedSession);
+
+            // Combine rewards with achievement rewards
+            var totalExp = rewards.ExperienceGained + achievementResult.TotalRewards.Experience;
+            var totalCoins = rewards.CoinsEarned + achievementResult.TotalRewards.Coins;
+
+            var finalRewards = rewards with
+            {
+                ExperienceGained = totalExp,
+                CoinsEarned = totalCoins,
+                Achievements = achievementResult.NewlyUnlocked
+                    .Select(a => new AchievementSummary
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        Icon = a.Icon
+                    })
+                    .ToList()
+            };
+
+            var response = ApiResponse<CompleteGameResponse>.Ok(finalRewards);
             return Results.Ok(response);
         }
         catch (Exception ex)
