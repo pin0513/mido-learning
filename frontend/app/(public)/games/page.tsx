@@ -228,7 +228,7 @@ export default function GamesPage() {
               <select
                 value={minLevel || ''}
                 onChange={handleMinLevelChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-800 font-medium focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">不限</option>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(level => (
@@ -244,7 +244,7 @@ export default function GamesPage() {
               <select
                 value={maxLevel || ''}
                 onChange={handleMaxLevelChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-800 font-medium focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">不限</option>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(level => (
@@ -261,7 +261,7 @@ export default function GamesPage() {
               <select
                 value={priceFilter}
                 onChange={(e) => setPriceFilter(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-800 font-medium focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="all">全部</option>
                 <option value="free">💚 免費</option>
@@ -277,7 +277,7 @@ export default function GamesPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-800 font-medium focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="newest">🆕 最新</option>
                 <option value="oldest">🕰️ 最舊</option>

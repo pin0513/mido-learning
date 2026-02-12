@@ -36,3 +36,15 @@ input:focus::placeholder,
 textarea:focus::placeholder {
   color: #9ca3af; /* gray-400，focus 時稍微變淺 */
 }
+
+/* Select 下拉選單統一樣式（提升可讀性） */
+select {
+  background-color: #ffffff; /* white */
+  color: #1f2937; /* gray-800 */
+  font-weight: 500; /* medium */
+}
+
+select option {
+  color: #1f2937; /* gray-800 */
+  background-color: #ffffff; /* white */
+}
