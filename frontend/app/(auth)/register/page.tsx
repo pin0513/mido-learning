@@ -2,11 +2,21 @@ import Link from 'next/link';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import { GoogleLoginButton } from '@/components/auth/GoogleLoginButton';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { ArrowLeft } from 'lucide-react';
 
 export default function RegisterPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
+        <div className="flex items-center justify-between mb-4">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            返回首頁
+          </Link>
+        </div>
         <h1 className="text-center text-2xl font-bold text-gray-900">Create Account</h1>
         <p className="mt-2 text-center text-sm text-gray-600">
           Join Mido Learning and start your journey today.
