@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using MidoLearning.Api.Endpoints;
 using MidoLearning.Api.Middleware;
 using MidoLearning.Api.Services;
+using MidoLearning.Api.Modules.SkillVillage.Auth.Services;
+using MidoLearning.Api.Modules.SkillVillage.GameEngine.Services;
+using MidoLearning.Api.Modules.SkillVillage.GameEngine.Calculators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +19,54 @@ builder.Services.AddSingleton<IGcpCostService, GcpCostService>();
 builder.Services.AddSingleton<IGameService, GameService>();
 builder.Services.AddSingleton<IAchievementService, AchievementService>();
 
+// Register FirestoreDb for Skill Village (from Firebase config)
+builder.Services.AddSingleton(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var projectId = configuration["Firebase:ProjectId"];
+    var credentialPath = configuration["Firebase:CredentialPath"];
+
+    Google.Apis.Auth.OAuth2.GoogleCredential? credential = null;
+    if (!string.IsNullOrEmpty(credentialPath))
+    {
+        credential = Google.Apis.Auth.OAuth2.CredentialFactory
+            .FromFile<Google.Apis.Auth.OAuth2.ServiceAccountCredential>(credentialPath)
+            .ToGoogleCredential();
+    }
+
+    var firestoreBuilder = new Google.Cloud.Firestore.FirestoreDbBuilder
+    {
+        ProjectId = projectId,
+        GoogleCredential = credential ?? Google.Apis.Auth.OAuth2.GoogleCredential.GetApplicationDefault()
+    };
+
+    return firestoreBuilder.Build();
+});
+
+// Skill Village Services
+builder.Services.AddScoped<SkillVillageAuthService>();
+builder.Services.AddScoped<GameEngineService>();
+builder.Services.AddScoped<RewardCalculator>();
+
 builder.Services.AddAuthentication("Firebase")
-    .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, FirebaseAuthHandler>("Firebase", null);
+    .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, FirebaseAuthHandler>("Firebase", null)
+    .AddJwtBearer("SkillVillage", options =>
+    {
+        var jwtKey = builder.Configuration["Jwt:Key"] ?? "your-super-secret-jwt-key-change-this-in-production-skill-village";
+        var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "MidoLearning";
+
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtIssuer,
+            IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+                System.Text.Encoding.UTF8.GetBytes(jwtKey))
+        };
+    });
 
 builder.Services.AddAuthorization(options =>
 {
@@ -82,6 +133,51 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Rate Limiting (⚠️ TD-003)
+builder.Services.AddRateLimiter(options =>
+{
+    // 登入 API: 每 IP 每分鐘 5 次
+    options.AddFixedWindowLimiter("login", opt =>
+    {
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.PermitLimit = 5;
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 0;
+    });
+
+    // 遊戲完成 API: 每角色每分鐘 10 次
+    options.AddFixedWindowLimiter("gameComplete", opt =>
+    {
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.PermitLimit = 10;
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 0;
+    });
+
+    // 全域限制: 每 IP 每分鐘 30 次
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+    {
+        var ip = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
+        {
+            Window = TimeSpan.FromMinutes(1),
+            PermitLimit = 30,
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+            QueueLimit = 0
+        });
+    });
+
+    options.OnRejected = async (context, cancellationToken) =>
+    {
+        context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+        await context.HttpContext.Response.WriteAsJsonAsync(new
+        {
+            success = false,
+            message = "請求過於頻繁，請稍後再試"
+        }, cancellationToken);
+    };
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -91,6 +187,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+app.UseRateLimiter(); // ⚠️ TD-003: Rate Limiting
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -111,6 +208,10 @@ app.MapCostEndpoints();
 app.MapCourseEndpoints();
 app.MapGameEndpoints();
 app.MapAchievementEndpoints();
+
+// Skill Village Endpoints
+app.MapSkillVillageAuthEndpoints();
+app.MapSkillVillageGameEndpoints();
 
 app.Run();
 

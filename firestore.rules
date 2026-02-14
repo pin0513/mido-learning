@@ -53,5 +53,40 @@ service cloud.firestore {
       allow write: if isAuthenticated() &&
         request.resource.data.userId == request.auth.uid;
     }
+
+    // ========================================
+    // Skill Village Collections (開發模式 - 完全開放)
+    // ⚠️ WARNING: 正式環境必須改為嚴格權限控制！
+    // ========================================
+
+    // 技能村 - 角色
+    match /skill_village_characters/{characterId} {
+      allow read, write: if true;  // 開發模式：完全開放
+    }
+
+    // 技能村 - 技能配置
+    match /skill_village_skills/{skillId} {
+      allow read, write: if true;  // 開發模式：完全開放
+    }
+
+    // 技能村 - 遊戲記錄
+    match /skill_village_game_sessions/{sessionId} {
+      allow read, write: if true;  // 開發模式：完全開放
+    }
+
+    // 技能村 - 獎勵記錄
+    match /skill_village_rewards/{rewardId} {
+      allow read, write: if true;  // 開發模式：完全開放
+    }
+
+    // 技能村 - 訊息
+    match /skill_village_messages/{messageId} {
+      allow read, write: if true;  // 開發模式：完全開放
+    }
+
+    // 技能村 - 兌換記錄
+    match /skill_village_redemptions/{redemptionId} {
+      allow read, write: if true;  // 開發模式：完全開放
+    }
   }
 }
