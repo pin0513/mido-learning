@@ -37,11 +37,22 @@ public class FirebaseAuthMiddleware
                 new("firebase_uid", decodedToken.Uid)
             };
 
+            // Add admin role if admin claim is true
             if (decodedToken.Claims.TryGetValue("admin", out var isAdmin) && (bool)isAdmin)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "admin"));
+                claims.Add(new Claim("admin", "true")); // Keep original claim
             }
-            else
+
+            // Add teacher role if teacher claim is true
+            if (decodedToken.Claims.TryGetValue("teacher", out var isTeacher) && (bool)isTeacher)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "teacher"));
+                claims.Add(new Claim("teacher", "true")); // Keep original claim
+            }
+
+            // Default member role if no special roles
+            if (!claims.Any(c => c.Type == ClaimTypes.Role))
             {
                 claims.Add(new Claim(ClaimTypes.Role, "member"));
             }
