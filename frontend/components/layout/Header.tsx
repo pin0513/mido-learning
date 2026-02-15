@@ -79,6 +79,9 @@ export function Header() {
               <Link href="/components" className="text-gray-600 hover:text-gray-900">
                 教材清單
               </Link>
+              <Link href="/skill-village" className="text-gray-600 hover:text-gray-900">
+                技能村
+              </Link>
               {(userRole === 'admin' || userRole === 'teacher') && (
                 <Link href="/teacher/components" className="text-gray-600 hover:text-gray-900">
                   教材管理
@@ -128,7 +131,7 @@ export function Header() {
                 {ROLE_LABELS.guest}
               </span>
               <Link href="/login">
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   登入
                 </Button>
               </Link>
@@ -178,6 +181,13 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   教材清單
+                </Link>
+                <Link
+                  href="/skill-village"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  技能村
                 </Link>
                 {(userRole === 'admin' || userRole === 'teacher') && (
                   <Link
@@ -233,7 +243,7 @@ export function Header() {
             ) : (
               <div className="flex flex-col gap-2">
                 <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" size="sm" className="w-full">
+                  <Button variant="outline" size="sm" className="w-full">
                     登入
                   </Button>
                 </Link>

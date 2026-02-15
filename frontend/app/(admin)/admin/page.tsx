@@ -69,7 +69,7 @@ export default function AdminPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader>
             <h2 className="font-semibold text-gray-900">總訪問次數</h2>
@@ -122,7 +122,7 @@ export default function AdminPage() {
       </div>
 
       {/* Two Column Layout */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
         {/* Chart - Last 7 Days */}
         <Card>
           <CardHeader>
@@ -210,7 +210,7 @@ export default function AdminPage() {
         </CardHeader>
         <CardContent>
           {materialStats.length > 0 ? (
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid gap-2 sm:gap-3 grid-cols-1 md:grid-cols-2">
               {materialStats.map((material, index) => (
                 <div
                   key={material.componentId}
@@ -262,7 +262,7 @@ export default function AdminPage() {
         <CardContent>
           {recentVisits.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-gray-200">
                     <th className="pb-2 text-left font-medium text-gray-500">時間</th>

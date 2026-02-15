@@ -96,18 +96,17 @@ export default function SimpleRegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4 sm:p-6 md:p-8">
-      <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md">
-        <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
-            🎮 快速註冊
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600">加入技能村，開始學習冒險！</p>
-        </div>
+    <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          🎮 快速註冊
+        </h1>
+        <p className="text-base text-gray-600">加入技能村，開始學習冒險！</p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5">
           {serverError && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm sm:text-base">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
               {serverError}
             </div>
           )}
@@ -171,13 +170,13 @@ export default function SimpleRegisterPage() {
         </form>
 
         <div className="mt-6 text-center space-y-2">
-          <p className="text-sm sm:text-base text-gray-600">
+          <p className="text-sm text-gray-600">
             已經有帳號？{' '}
             <Link href="/login" className="text-indigo-600 hover:text-indigo-700 font-medium underline-offset-2 hover:underline">
               登入
             </Link>
           </p>
-          <p className="text-sm sm:text-base text-gray-600">
+          <p className="text-sm text-gray-600">
             或使用{' '}
             <Link href="/register/full" className="text-indigo-600 hover:text-indigo-700 font-medium underline-offset-2 hover:underline">
               Email 完整註冊
@@ -185,12 +184,11 @@ export default function SimpleRegisterPage() {
           </p>
         </div>
 
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-xs sm:text-sm text-gray-500 text-center leading-relaxed">
-            ⚠️ 簡易註冊無法使用忘記密碼功能<br/>
-            建議使用 Email 註冊以確保帳號安全
-          </p>
-        </div>
+      <div className="mt-6 pt-6 border-t border-gray-200">
+        <p className="text-xs text-gray-500 text-center leading-relaxed">
+          ⚠️ 簡易註冊無法使用忘記密碼功能<br/>
+          建議使用 Email 註冊以確保帳號安全
+        </p>
       </div>
     </div>
   );

@@ -79,7 +79,7 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
         <Card>
           <CardHeader>
             <h2 className="font-semibold text-gray-900">Courses Enrolled</h2>

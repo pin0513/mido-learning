@@ -92,18 +92,17 @@ export default function SkillVillageLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+    <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
             🏰 技能村登入
           </h1>
-          <p className="text-gray-600">歡迎回到你的學習冒險！</p>
+          <p className="text-base text-gray-600">歡迎回到你的學習冒險！</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {serverError && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
               {serverError}
             </div>
           )}
@@ -174,12 +173,12 @@ export default function SkillVillageLoginPage() {
         </div>
 
         <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-xs text-gray-500 text-center">
-            💡 提示：遊戲註冊帳號使用「使用者名稱」登入<br/>
-            完整註冊帳號使用「Email」登入
-          </p>
+          <div className="text-xs text-gray-500 text-center space-y-1">
+            <p className="font-medium">💡 登入提示</p>
+            <p>遊戲註冊帳號使用「使用者名稱」登入</p>
+            <p>完整註冊帳號使用「Email」登入</p>
+          </div>
         </div>
       </div>
-    </div>
   );
 }

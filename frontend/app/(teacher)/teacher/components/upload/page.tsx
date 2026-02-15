@@ -221,7 +221,7 @@ export default function NewComponentPage() {
   const config = getCategoryConfig(getActualCategory() || 'adult');
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <div className="mx-auto max-w-3xl space-y-6 px-4 sm:px-6">
       {/* Back button */}
       <Link href="/teacher/components">
         <Button variant="ghost" size="sm">
@@ -265,7 +265,7 @@ export default function NewComponentPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         {/* File Upload (Optional) */}
         <Card>
           <CardHeader>
@@ -309,7 +309,7 @@ export default function NewComponentPage() {
                 onDragLeave={handleDragLeave}
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
-                className={`relative rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
+                className={`relative rounded-lg border-2 border-dashed p-4 sm:p-6 md:p-8 text-center transition-colors ${
                   isDragging
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-300 hover:border-gray-400'
@@ -549,7 +549,7 @@ export default function NewComponentPage() {
         </Card>
 
         {/* Submit */}
-        <div className="flex justify-end gap-3">
+        <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3">
           <Link href="/teacher/components">
             <Button type="button" variant="outline">
               取消

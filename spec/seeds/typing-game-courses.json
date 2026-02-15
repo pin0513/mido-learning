@@ -1,8 +1,8 @@
 [
   {
     "id": "typing-lv1-basics",
-    "title": "英打練習 Lv.1 - 基礎訓練",
-    "description": "適合初學者的英打練習，學習正確的指法與基本單字。目標 WPM: 30",
+    "title": "英打練習 Lv.1 - 字母位置記憶",
+    "description": "適合初學者的英打練習，專注於記憶鍵盤字母位置。全小寫練習，搭配鍵盤提示。目標 WPM: 20",
     "instructor": "Mido Learning",
     "thumbnail": "/images/games/typing-lv1.png",
     "price": 0,
@@ -12,53 +12,18 @@
     "gameConfig": {
       "gameType": "typing",
       "level": 1,
-      "timeLimit": 90,
-      "targetWPM": 30,
+      "timeLimit": 60,
+      "targetWPM": 20,
+      "experienceMultiplier": 0.1,
       "questions": [
         {
-          "text": "The quick brown fox jumps over the lazy dog.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "Practice makes perfect in typing skills.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "Hello world, this is my first typing lesson.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "Learning to type is fun and useful.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "Keep your fingers on the home row keys.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "Type with all ten fingers for best results.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "Good posture helps improve typing speed.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "Start slow and focus on accuracy first.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "Speed will come naturally with practice.",
-          "difficulty": "easy"
-        },
-        {
-          "text": "The cat sat on the mat and ate the rat.",
+          "text": "the quick brown fox jumps over the lazy dog",
           "difficulty": "easy"
         }
       ]
     },
     "createdAt": "2026-02-12T00:00:00Z",
-    "updatedAt": "2026-02-12T00:00:00Z"
+    "updatedAt": "2026-02-15T00:00:00Z"
   },
   {
     "id": "typing-lv2-intermediate",

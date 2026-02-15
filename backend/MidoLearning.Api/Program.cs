@@ -154,14 +154,17 @@ builder.Services.AddRateLimiter(options =>
         opt.QueueLimit = 0;
     });
 
-    // 全域限制: 每 IP 每分鐘 30 次
+    // 全域限制: 開發環境寬鬆，生產環境嚴格
+    var isDevelopment = builder.Environment.IsDevelopment();
+    var globalRateLimit = isDevelopment ? 1000 : 30;  // 開發: 1000次/分鐘, 生產: 30次/分鐘
+
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
     {
         var ip = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
         return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
         {
             Window = TimeSpan.FromMinutes(1),
-            PermitLimit = 30,
+            PermitLimit = globalRateLimit,
             QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
             QueueLimit = 0
         });

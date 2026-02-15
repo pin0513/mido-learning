@@ -215,8 +215,17 @@ public class GameService : IGameService
     public async Task<CompleteGameResponse> CalculateRewardsAsync(string userId, GameSession session)
     {
         // Calculate experience based on stars and accuracy
-        const int baseExp = 10;
-        int expGained = (int)(baseExp * session.Stars * (session.Accuracy / 100));
+        const int baseExp = 300;  // Increased to 300 to match expected rewards
+
+        // Apply level-specific multiplier for beginner levels
+        // This allows LV1 to give 1/10 XP (30 instead of 300)
+        double levelMultiplier = 1.0;
+        if (session.Level == 1 && session.GameType == "typing")
+        {
+            levelMultiplier = 0.1;
+        }
+
+        int expGained = (int)(baseExp * session.Stars * (session.Accuracy / 100) * levelMultiplier);
 
         // Calculate coins
         const int baseCoins = 5;

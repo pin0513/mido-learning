@@ -14,6 +14,7 @@ import { QuestionDisplay } from '@/components/game/QuestionDisplay';
 import { TypingInput } from '@/components/game/TypingInput';
 import { StatsPanel } from '@/components/game/StatsPanel';
 import { ResultModal } from '@/components/game/ResultModal';
+import { FloatingKeyboardHint } from '@/components/game/FloatingKeyboardHint';
 import { startGame, completeGame, CompleteGameResponse } from '@/lib/api';
 
 interface GameConfig {
@@ -193,7 +194,7 @@ export default function TypingGamePage({
   if (!gameStarted) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 p-4">
-        <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl">
+        <div className="w-full max-w-md rounded-2xl bg-white p-4 sm:p-6 md:p-8 shadow-2xl">
           <h1 className="text-3xl font-bold text-gray-900">
             {course.title}
           </h1>
@@ -237,25 +238,25 @@ export default function TypingGamePage({
           )}
 
           <div className="mt-6 space-y-4">
-            <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
+            <div className="flex items-center justify-between rounded-lg bg-gray-50 p-3 sm:p-4">
               <span className="text-gray-600">Level</span>
               <span className="font-bold text-blue-600">
                 {course.gameConfig.level}
               </span>
             </div>
-            <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
+            <div className="flex items-center justify-between rounded-lg bg-gray-50 p-3 sm:p-4">
               <span className="text-gray-600">Time Limit</span>
               <span className="font-bold text-blue-600">
                 {course.gameConfig.timeLimit}s
               </span>
             </div>
-            <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
+            <div className="flex items-center justify-between rounded-lg bg-gray-50 p-3 sm:p-4">
               <span className="text-gray-600">Target WPM</span>
               <span className="font-bold text-blue-600">
                 {course.gameConfig.targetWPM}
               </span>
             </div>
-            <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
+            <div className="flex items-center justify-between rounded-lg bg-gray-50 p-3 sm:p-4">
               <span className="text-gray-600">Questions</span>
               <span className="font-bold text-blue-600">
                 {course.gameConfig.questions.length}
@@ -299,7 +300,7 @@ export default function TypingGamePage({
             onExit={handleExit}
           />
 
-          <div className="space-y-6 p-6">
+          <div className="space-y-4 sm:space-y-6 p-4 sm:p-6">
             {/* Question Progress */}
             <div className="text-center text-sm text-gray-600">
               Question {game.questionIndex + 1} of{' '}
@@ -329,6 +330,15 @@ export default function TypingGamePage({
               combo={game.stats.combo}
               targetWPM={course.gameConfig.targetWPM}
             />
+
+            {/* Floating Keyboard Hint (LV1 only) */}
+            {course.gameConfig.level === 1 && game.currentQuestion && (
+              <FloatingKeyboardHint
+                nextChar={game.currentQuestion.text[game.currentInput.length] || ''}
+                currentInput={game.currentInput}
+                isVisible={gameStarted && !game.isGameOver && !timer.isPaused}
+              />
+            )}
           </div>
         </div>
       </div>

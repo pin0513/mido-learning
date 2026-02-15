@@ -124,11 +124,11 @@ export default function SkillVillagePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-3 sm:p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         {/* 角色資訊卡片 */}
         <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-3 sm:gap-4 md:gap-6">
             {/* 角色頭像與名稱 */}
             <div className="flex-shrink-0">
               <div className="w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-4xl">
@@ -154,7 +154,7 @@ export default function SkillVillagePage() {
               />
 
               {/* 統計資訊 */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-blue-600">
                     {currentCharacter.totalExp.toLocaleString()}
@@ -201,7 +201,7 @@ export default function SkillVillagePage() {
           <h3 className="text-2xl font-bold text-gray-800 mb-4">🎯 技能訓練場</h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
           {skills.length > 0 ? (
             skills.map((skill) => (
               <SkillCard

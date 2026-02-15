@@ -1,5 +1,12 @@
 'use client';
 
+interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
 interface ResultModalProps {
   isOpen: boolean;
   score: number;
@@ -12,6 +19,7 @@ interface ResultModalProps {
   coinsEarned?: number;
   levelUp?: boolean;
   newLevel?: number;
+  achievements?: Achievement[];
   onPlayAgain: () => void;
   onExit: () => void;
 }
@@ -28,6 +36,7 @@ export function ResultModal({
   coinsEarned,
   levelUp,
   newLevel,
+  achievements,
   onPlayAgain,
   onExit,
 }: ResultModalProps) {
@@ -130,7 +139,35 @@ export function ResultModal({
         {/* Level Up */}
         {levelUp && newLevel && (
           <div className="mb-6 animate-pulse rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 p-4 text-center font-bold text-white shadow-lg">
-            🎉 LEVEL UP! You're now Level {newLevel}! 🎉
+            🎉 LEVEL UP! You&apos;re now Level {newLevel}! 🎉
+          </div>
+        )}
+
+        {/* Unlocked Achievements Section */}
+        {achievements && achievements.length > 0 && (
+          <div className="mb-6 rounded-lg bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-300 p-4">
+            <div className="text-center mb-3">
+              <h3 className="text-lg font-bold text-yellow-900">
+                🏆 成就解鎖！
+              </h3>
+              <p className="text-xs text-yellow-700">恭喜獲得新成就</p>
+            </div>
+            <div className="space-y-2">
+              {achievements.map((achievement) => (
+                <div
+                  key={achievement.id}
+                  className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm"
+                >
+                  <span className="text-2xl flex-shrink-0">{achievement.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-sm text-gray-900">
+                      {achievement.title}
+                    </p>
+                    <p className="text-xs text-gray-600">{achievement.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

@@ -9,6 +9,8 @@ import { Footer } from '@/components/layout/Footer';
 
 const sidebarItems = [
   { label: '教材清單', href: '/components' },
+  { label: '技能村', href: '/skill-village' },
+  { label: '成就系統', href: '/dashboard/achievements' },
   { label: '個人資料', href: '/profile' },
 ];
 
