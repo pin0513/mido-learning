@@ -35,7 +35,7 @@ export function ComponentCard({
   const visibility: Visibility = component.visibility || 'private';
 
   return (
-    <Link href={linkHref} className="block group">
+    <Link href={linkHref} className="block group" prefetch={false}>
       <article
         className={`overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md ${config.borderClass}`}
       >
