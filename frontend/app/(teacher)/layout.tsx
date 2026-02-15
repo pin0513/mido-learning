@@ -11,6 +11,7 @@ const sidebarItems = [
   { label: '我的教材', href: '/teacher/components' },
   { label: '新增教材', href: '/teacher/components/upload' },
   { label: '願望池', href: '/teacher/wishes' },
+  { label: '個人資料', href: '/teacher/profile' },
 ];
 
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {
