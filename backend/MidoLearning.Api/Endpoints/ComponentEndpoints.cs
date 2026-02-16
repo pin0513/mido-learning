@@ -319,10 +319,12 @@ public static class ComponentEndpoints
 
             (page, limit) = NormalizePaginationParams(page, limit);
 
-            var (components, total) = await firebaseService.GetDocumentsAsync<LearningComponent>(
+            // Fetch all components first (similar to GetPublicComponents)
+            // This ensures filtering works correctly before pagination
+            var (components, _) = await firebaseService.GetDocumentsAsync<LearningComponent>(
                 ComponentsCollection,
-                page,
-                limit,
+                1,
+                1000, // Fetch all (reasonable upper limit)
                 null,
                 null);
 
@@ -347,12 +349,20 @@ public static class ComponentEndpoints
             // Apply sorting
             myComponents = ApplySorting(myComponents, sortBy, sortOrder);
 
-            var componentList = myComponents.ToList();
+            // Get total count before pagination
+            var allFiltered = myComponents.ToList();
+            var totalCount = allFiltered.Count;
+
+            // Apply pagination
+            var componentList = allFiltered
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToList();
 
             var response = ApiResponse<ComponentListResponse>.Ok(new ComponentListResponse
             {
                 Components = componentList,
-                Total = componentList.Count,
+                Total = totalCount,
                 Page = page,
                 Limit = limit
             });
