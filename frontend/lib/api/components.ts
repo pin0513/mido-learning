@@ -1,6 +1,8 @@
 'use client';
 
 import { getIdToken } from '@/lib/auth';
+import { queuedFetch } from '@/lib/request-queue';
+import { apiCache } from '@/lib/simple-cache';
 import {
   LearningComponent,
   ComponentListResponse,
@@ -71,9 +73,17 @@ export async function getPublicComponents(
   params: ComponentQueryParams = {}
 ): Promise<ComponentListResponse> {
   const queryString = buildQueryString(params);
+  const cacheKey = `public-components-${queryString}`;
+
+  // 檢查快取
+  const cached = apiCache.get<ComponentListResponse>(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   const url = `${API_URL}/api/components/public${queryString ? `?${queryString}` : ''}`;
 
-  const response = await fetch(url, {
+  const response = await queuedFetch(url, {
     headers: { 'Content-Type': 'application/json' },
   });
 
@@ -82,6 +92,10 @@ export async function getPublicComponents(
   }
 
   const apiResponse: ApiResponse<ComponentListResponse> = await response.json();
+
+  // 快取結果
+  apiCache.set(cacheKey, apiResponse.data);
+
   return apiResponse.data;
 }
 
@@ -92,16 +106,28 @@ export async function getComponents(
   params: ComponentQueryParams = {}
 ): Promise<ComponentListResponse> {
   const queryString = buildQueryString(params);
+  const cacheKey = `components-${queryString}`;
+
+  // 檢查快取
+  const cached = apiCache.get<ComponentListResponse>(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   const url = `${API_URL}/api/components${queryString ? `?${queryString}` : ''}`;
 
   const headers = await getAuthHeaders();
-  const response = await fetch(url, { headers });
+  const response = await queuedFetch(url, { headers });
 
   if (!response.ok) {
     throw new Error(`Failed to fetch components: ${response.statusText}`);
   }
 
   const apiResponse: ApiResponse<ComponentListResponse> = await response.json();
+
+  // 快取結果
+  apiCache.set(cacheKey, apiResponse.data);
+
   return apiResponse.data;
 }
 
@@ -110,7 +136,7 @@ export async function getComponents(
  */
 export async function getComponentById(id: string): Promise<LearningComponent> {
   const headers = await getAuthHeaders();
-  const response = await fetch(`${API_URL}/api/components/${id}`, { headers });
+  const response = await queuedFetch(`${API_URL}/api/components/${id}`, { headers });
 
   if (!response.ok) {
     if (response.status === 404) {
@@ -133,7 +159,7 @@ export async function createComponent(
   data: CreateComponentRequest
 ): Promise<{ id: string }> {
   const headers = await getAuthHeaders();
-  const response = await fetch(`${API_URL}/api/components`, {
+  const response = await queuedFetch(`${API_URL}/api/components`, {
     method: 'POST',
     headers,
     body: JSON.stringify(data),
@@ -194,7 +220,7 @@ export async function updateComponentVisibility(
   data: UpdateVisibilityRequest
 ): Promise<LearningComponent> {
   const headers = await getAuthHeaders();
-  const response = await fetch(`${API_URL}/api/components/${id}/visibility`, {
+  const response = await queuedFetch(`${API_URL}/api/components/${id}/visibility`, {
     method: 'PUT',
     headers,
     body: JSON.stringify(data),
@@ -248,16 +274,28 @@ export async function getMyComponents(
   params: ComponentQueryParams = {}
 ): Promise<ComponentListResponse> {
   const queryString = buildQueryString(params);
+  const cacheKey = `my-components-${queryString}`;
+
+  // 檢查快取
+  const cached = apiCache.get<ComponentListResponse>(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   const url = `${API_URL}/api/components/my${queryString ? `?${queryString}` : ''}`;
 
   const headers = await getAuthHeaders();
-  const response = await fetch(url, { headers });
+  const response = await queuedFetch(url, { headers });
 
   if (!response.ok) {
     throw new Error(`Failed to fetch my components: ${response.statusText}`);
   }
 
   const apiResponse: ApiResponse<ComponentListResponse> = await response.json();
+
+  // 快取結果
+  apiCache.set(cacheKey, apiResponse.data);
+
   return apiResponse.data;
 }
 
@@ -268,10 +306,18 @@ export async function getAllComponents(
   params: ComponentQueryParams = {}
 ): Promise<ComponentListResponse> {
   const queryString = buildQueryString(params);
+  const cacheKey = `all-components-${queryString}`;
+
+  // 檢查快取
+  const cached = apiCache.get<ComponentListResponse>(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   const url = `${API_URL}/api/components/all${queryString ? `?${queryString}` : ''}`;
 
   const headers = await getAuthHeaders();
-  const response = await fetch(url, { headers });
+  const response = await queuedFetch(url, { headers });
 
   if (!response.ok) {
     if (response.status === 401) {
@@ -284,5 +330,9 @@ export async function getAllComponents(
   }
 
   const apiResponse: ApiResponse<ComponentListResponse> = await response.json();
+
+  // 快取結果
+  apiCache.set(cacheKey, apiResponse.data);
+
   return apiResponse.data;
 }

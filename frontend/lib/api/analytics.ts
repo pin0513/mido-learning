@@ -1,6 +1,7 @@
 'use client';
 
 import { getIdToken } from '@/lib/auth';
+import { queuedFetch } from '@/lib/request-queue';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
@@ -53,7 +54,7 @@ export interface VisitRecord {
  */
 export async function recordPageView(): Promise<void> {
   try {
-    await fetch(`${API_URL}/api/analytics/pageview`, {
+    await queuedFetch(`${API_URL}/api/analytics/pageview`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -67,7 +68,7 @@ export async function recordPageView(): Promise<void> {
  */
 export async function recordMaterialView(componentId: string): Promise<void> {
   try {
-    await fetch(`${API_URL}/api/analytics/material/${componentId}`, {
+    await queuedFetch(`${API_URL}/api/analytics/material/${componentId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -81,7 +82,7 @@ export async function recordMaterialView(componentId: string): Promise<void> {
  */
 export async function getAnalyticsStats(): Promise<AnalyticsStats> {
   const token = await getIdToken();
-  const response = await fetch(`${API_URL}/api/analytics/stats`, {
+  const response = await queuedFetch(`${API_URL}/api/analytics/stats`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -101,7 +102,7 @@ export async function getAnalyticsStats(): Promise<AnalyticsStats> {
  */
 export async function getMaterialStats(limit = 20): Promise<MaterialStats[]> {
   const token = await getIdToken();
-  const response = await fetch(`${API_URL}/api/analytics/materials?limit=${limit}`, {
+  const response = await queuedFetch(`${API_URL}/api/analytics/materials?limit=${limit}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -121,7 +122,7 @@ export async function getMaterialStats(limit = 20): Promise<MaterialStats[]> {
  */
 export async function getVisitorStats(): Promise<VisitorStats> {
   const token = await getIdToken();
-  const response = await fetch(`${API_URL}/api/analytics/visitors`, {
+  const response = await queuedFetch(`${API_URL}/api/analytics/visitors`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -141,7 +142,7 @@ export async function getVisitorStats(): Promise<VisitorStats> {
  */
 export async function getRecentVisits(limit = 50): Promise<VisitRecord[]> {
   const token = await getIdToken();
-  const response = await fetch(`${API_URL}/api/analytics/recent?limit=${limit}`, {
+  const response = await queuedFetch(`${API_URL}/api/analytics/recent?limit=${limit}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,

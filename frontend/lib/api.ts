@@ -1,4 +1,5 @@
 import { getAuth } from 'firebase/auth';
+import { queuedFetch } from '@/lib/request-queue';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
@@ -54,7 +55,7 @@ export async function startGame(courseId: string): Promise<StartGameResponse> {
   const token = await getAuthToken();
   if (!token) throw new Error('Not authenticated');
 
-  const response = await fetch(`${API_URL}/api/games/start`, {
+  const response = await queuedFetch(`${API_URL}/api/games/start`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ export async function completeGame(
   const token = await getAuthToken();
   if (!token) throw new Error('Not authenticated');
 
-  const response = await fetch(`${API_URL}/api/games/complete`, {
+  const response = await queuedFetch(`${API_URL}/api/games/complete`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -155,7 +156,7 @@ export async function getCourses(params?: {
   if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
 
   const url = `${API_URL}/api/courses${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
-  const response = await fetch(url);
+  const response = await queuedFetch(url);
 
   if (!response.ok) {
     throw new Error('Failed to fetch courses');
@@ -170,7 +171,7 @@ export async function getCourses(params?: {
 }
 
 export async function getCourseById(id: string): Promise<Course> {
-  const response = await fetch(`${API_URL}/api/courses/${id}`);
+  const response = await queuedFetch(`${API_URL}/api/courses/${id}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch course');
@@ -204,7 +205,7 @@ export async function getRecentGameSessions(limit = 10): Promise<GameSession[]> 
   const token = await getAuthToken();
   if (!token) throw new Error('Not authenticated');
 
-  const response = await fetch(`${API_URL}/api/games/sessions/recent?limit=${limit}`, {
+  const response = await queuedFetch(`${API_URL}/api/games/sessions/recent?limit=${limit}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
