@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>羽球戰術版</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:#1a1a2e;touch-action:none;}
+
+/* ── Portrait 警告 ── */
+#portrait-warning{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:#1a1a2e;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;text-align:center;color:#eee;
+}
+@media(orientation:portrait){#portrait-warning{display:flex;}}
+#portrait-warning .icon{font-size:3.5rem;animation:spin 2s ease-in-out infinite;}
+@keyframes spin{0%,100%{transform:rotate(0deg);}50%{transform:rotate(90deg);}}
+
+/* ── App 外框 ── */
+#app{display:flex;flex-direction:column;height:100vh;width:100vw;}
+
+/* ── Toolbar ── */
+#toolbar{
+  display:flex;align-items:center;gap:6px;flex-wrap:nowrap;
+  padding:5px 8px;background:#16213e;
+  border-bottom:1px solid #0f3460;flex-shrink:0;overflow-x:auto;
+}
+#toolbar::-webkit-scrollbar{height:3px;}
+#toolbar::-webkit-scrollbar-thumb{background:#0f3460;border-radius:2px;}
+
+/* ── 主內容 ── */
+#main{display:flex;flex:1;overflow:hidden;min-height:0;}
+
+/* ── 場地容器 ── */
+#court-container{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:6px;overflow:hidden;position:relative;
+}
+#court-wrapper{position:relative;}
+canvas{display:block;}
+#draw-canvas{position:absolute;top:0;left:0;cursor:crosshair;}
+
+/* ── 側邊欄 ── */
+#side{
+  width:130px;min-width:130px;background:#16213e;
+  border-left:1px solid #0f3460;padding:7px;
+  display:flex;flex-direction:column;gap:6px;overflow-y:auto;flex-shrink:0;
+}
+#side::-webkit-scrollbar{width:3px;}
+#side::-webkit-scrollbar-thumb{background:#0f3460;border-radius:2px;}
+
+/* ── 按鈕基底 ── */
+.btn{
+  padding:5px 8px;border-radius:6px;border:1px solid #0f3460;
+  background:#0f3460;color:#ddd;cursor:pointer;font-size:11px;
+  text-align:center;user-select:none;touch-action:manipulation;
+  white-space:nowrap;transition:background .12s;
+}
+.btn:hover,.btn:active{background:#1a5276;}
+.btn.on{background:#2471a3;border-color:#3498db;color:#fff;}
+.btn.red{background:#7b241c;border-color:#e74c3c;}
+.btn.red:hover,.btn.red:active{background:#c0392b;}
+
+/* ── 模式群 ── */
+.mode-row{display:flex;gap:4px;}
+.mode-row .btn{flex:1;padding:5px 3px;}
+
+/* ── 球員按鈕 ── */
+.player-btn{
+  display:flex;align-items:center;gap:5px;padding:5px 6px;
+  border-radius:6px;border:2px solid transparent;
+  background:transparent;cursor:pointer;
+  user-select:none;touch-action:manipulation;transition:all .12s;
+}
+.player-btn.sel{border-color:var(--c);background:rgba(255,255,255,0.08);}
+.pdot{width:14px;height:14px;border-radius:50%;background:var(--c);flex-shrink:0;}
+.pname{font-size:11px;color:#ccc;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* ── 標籤 ── */
+.lbl{font-size:9px;color:#777;text-transform:uppercase;letter-spacing:.4px;}
+hr.sep{border:none;border-top:1px solid #0f3460;margin:2px 0;}
+
+/* ── Input ── */
+input[type=text]{
+  width:100%;background:#0a0a1a;border:1px solid #0f3460;
+  color:#eee;border-radius:4px;padding:3px 5px;font-size:11px;
+}
+input[type=range]{width:100%;accent-color:#3498db;}
+
+/* ── 快捷鍵列 ── */
+#keyhints{
+  background:#0d0d1f;padding:2px 10px;font-size:9px;color:#555;
+  display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;
+}
+kbd{background:#222;border:1px solid #444;border-radius:2px;padding:0 4px;font-size:9px;color:#999;}
+
+/* ── 場地側邊標籤 ── */
+#side-labels{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  display:flex;pointer-events:none;
+}
+.side-lbl{flex:1;display:flex;align-items:flex-start;justify-content:center;padding-top:3px;font-size:9px;font-weight:bold;opacity:.8;}
+
+/* ── 發球標誌 ── */
+#serve-flag{
+  position:absolute;top:50%;transform:translateY(-50%);
+  font-size:18px;pointer-events:none;filter:drop-shadow(0 0 3px gold);
+  transition:left .2s,right .2s;display:none;
+}
+</style>
+</head>
+<body>
+
+<!-- 豎屏警告 -->
+<div id="portrait-warning">
+  <div class="icon">📱</div>
+  <h2 style="font-size:1.2rem">請將裝置旋轉為橫向</h2>
+  <p style="color:#888;font-size:12px">Rotate to landscape to use the tactical board</p>
+</div>
+
+<div id="app">
+
+  <!-- 工具列 -->
+  <div id="toolbar">
+    <span class="lbl">模式</span>
+    <div class="mode-row" style="gap:3px;">
+      <button class="btn on" id="btn-draw" onclick="setMode('draw')" title="✏️走線 [Q]">✏️走線</button>
+      <button class="btn"    id="btn-place" onclick="setMode('place')" title="👤站位 [W]">👤站位</button>
+      <button class="btn"    id="btn-erase" onclick="setMode('erase')" title="🧹擦除 [E]">🧹擦除</button>
+    </div>
+
+    <div style="width:1px;height:22px;background:#333;flex-shrink:0"></div>
+
+    <span class="lbl">場型</span>
+    <button class="btn on" id="btn-doubles" onclick="setCourtType('doubles')">雙打</button>
+    <button class="btn"    id="btn-singles" onclick="setCourtType('singles')">單打</button>
+
+    <div style="width:1px;height:22px;background:#333;flex-shrink:0"></div>
+
+    <button class="btn" onclick="undo()" title="復原 [Ctrl+Z]">↩復原</button>
+    <button class="btn" onclick="clearPlayer()" title="清除選取球員">🗑清選取</button>
+    <button class="btn red" onclick="resetAll()" title="全部重置 [R]">♻️重置</button>
+
+    <div style="width:1px;height:22px;background:#333;flex-shrink:0"></div>
+
+    <span class="lbl">發球</span>
+    <button class="btn" id="btn-sl" onclick="setServe('left')"  title="左發球 [A]">◀左</button>
+    <button class="btn" id="btn-sr" onclick="setServe('right')" title="右發球 [D]">右▶</button>
+    <button class="btn" id="btn-sn" onclick="setServe('none')"  title="清除發球">✕</button>
+  </div>
+
+  <!-- 主區域 -->
+  <div id="main">
+
+    <!-- 場地 -->
+    <div id="court-container">
+      <div id="court-wrapper">
+        <canvas id="court-canvas"></canvas>
+        <canvas id="draw-canvas"></canvas>
+        <div id="side-labels">
+          <div class="side-lbl" id="lbl-left"  style="color:#3498db">🔵我方</div>
+          <div class="side-lbl" id="lbl-right" style="color:#e74c3c">🔴對方</div>
+        </div>
+        <div id="serve-flag">🏸</div>
+      </div>
+    </div>
+
+    <!-- 側邊欄 -->
+    <div id="side">
+      <div class="lbl">球員</div>
+      <div id="player-list"></div>
+
+      <hr class="sep">
+      <div class="lbl">球員設定</div>
+      <div style="font-size:10px;color:#aaa;">名稱</div>
+      <input type="text" id="pname-input" placeholder="球員名稱"
+             oninput="updateName(this.value)" onchange="updateName(this.value)">
+
+      <label style="font-size:10px;color:#ccc;cursor:pointer;display:flex;align-items:center;gap:4px;">
+        <input type="checkbox" id="pvis-chk" checked onchange="toggleVis(this.checked)">顯示球員
+      </label>
+
+      <hr class="sep">
+      <div class="lbl">場地</div>
+      <div style="font-size:10px;color:#aaa;">我方在</div>
+      <div class="mode-row">
+        <button class="btn on" id="btn-hl" onclick="setHome('left')">左</button>
+        <button class="btn"    id="btn-hr" onclick="setHome('right')">右</button>
+      </div>
+
+      <hr class="sep">
+      <div class="lbl">線條</div>
+      <div style="font-size:10px;color:#aaa;">粗細</div>
+      <input type="range" id="lw" min="1" max="8" value="3" oninput="state.lineWidth=+this.value">
+
+      <div style="font-size:10px;color:#aaa;margin-top:3px;">樣式</div>
+      <div class="mode-row" style="flex-wrap:wrap;gap:3px;">
+        <button class="btn on" id="btn-solid"  onclick="setDash('solid')">實線</button>
+        <button class="btn"    id="btn-dashed" onclick="setDash('dashed')">虛線</button>
+        <button class="btn"    id="btn-arrow"  onclick="setDash('arrow')">箭頭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 快捷鍵提示 -->
+  <div id="keyhints">
+    <span><kbd>Q</kbd>走線</span>
+    <span><kbd>W</kbd>站位</span>
+    <span><kbd>E</kbd>擦除</span>
+    <span><kbd>1-4</kbd>選球員</span>
+    <span><kbd>A</kbd>左發球</span>
+    <span><kbd>D</kbd>右發球</span>
+    <span><kbd>Ctrl+Z</kbd>復原</span>
+    <span><kbd>R</kbd>重置</span>
+    <span><kbd>S</kbd>切單/雙打</span>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// 狀態
+// ═══════════════════════════════════════
+const PLAYERS = [
+  {id:0, name:'球員 1', color:'#E74C3C', visible:true, pos:null, strokes:[]},
+  {id:1, name:'球員 2', color:'#3498DB', visible:true, pos:null, strokes:[]},
+  {id:2, name:'球員 3', color:'#2ECC71', visible:true, pos:null, strokes:[]},
+  {id:3, name:'球員 4', color:'#F39C12', visible:true, pos:null, strokes:[]},
+];
+
+const state = {
+  active: 0,
+  mode: 'draw',         // draw | place | erase
+  courtType: 'doubles', // doubles | singles
+  homeSide: 'left',
+  serveSide: 'none',    // left | right | none
+  lineWidth: 3,
+  lineDash: 'solid',    // solid | dashed | arrow
+  drawing: false,
+  curStroke: [],
+};
+
+// ═══════════════════════════════════════
+// Canvas
+// ═══════════════════════════════════════
+const courtC = document.getElementById('court-canvas');
+const drawC  = document.getElementById('draw-canvas');
+const cc = courtC.getContext('2d');
+const dc = drawC.getContext('2d');
+const wrapper = document.getElementById('court-wrapper');
+const container = document.getElementById('court-container');
+
+// 羽球場國際標準 (公尺)
+const COURT_W = 13.4;  // 長
+const COURT_H = 6.1;   // 寬
+const MARGIN  = 18;    // canvas 邊距(px)
+
+let CW=0, CH=0, SC=1; // canvas 尺寸 & 比例
+
+function resize() {
+  const cr = container.getBoundingClientRect();
+  const availW = cr.width - 12;
+  const availH = cr.height - 12;
+  const aspect = COURT_W / COURT_H;
+
+  let w, h;
+  if (availW / availH > aspect) { h = availH; w = h * aspect; }
+  else                           { w = availW; h = w / aspect; }
+
+  CW = Math.floor(w); CH = Math.floor(h);
+  SC = (CW - MARGIN*2) / COURT_W;
+
+  [courtC, drawC].forEach(c => { c.width = CW; c.height = CH; });
+  wrapper.style.cssText = `width:${CW}px;height:${CH}px;`;
+  redraw();
+}
+
+// 場地座標 → canvas 座標
+const cx = m => MARGIN + m * SC;
+const cy = m => MARGIN + m * SC;
+
+// ═══════════════════════════════════════
+// 繪製場地
+// ═══════════════════════════════════════
+function drawCourt() {
+  const c = cc;
+  c.clearRect(0,0,CW,CH);
+
+  // 白底
+  c.fillStyle = '#ffffff';
+  c.fillRect(0,0,CW,CH);
+
+  // 我方/對方底色
+  const homeLeft = state.homeSide === 'left';
+  const homeColor = 'rgba(52,152,219,0.06)';
+  const awayColor = 'rgba(231,76,60,0.06)';
+  c.fillStyle = homeLeft ? homeColor : awayColor;
+  c.fillRect(cx(0), cy(0), cx(COURT_W/2)-cx(0), cy(COURT_H)-cy(0));
+  c.fillStyle = homeLeft ? awayColor : homeColor;
+  c.fillRect(cx(COURT_W/2), cy(0), cx(COURT_W)-cx(COURT_W/2), cy(COURT_H)-cy(0));
+
+  // 單打區陰影
+  if (state.courtType === 'singles') {
+    c.fillStyle = 'rgba(0,0,0,0.07)';
+    c.fillRect(cx(0), cy(0), cx(COURT_W)-cx(0), cy(0.46)-cy(0));
+    c.fillRect(cx(0), cy(COURT_H-0.46), cx(COURT_W)-cx(0), cy(COURT_H)-cy(COURT_H-0.46));
+  }
+
+  // 場地線
+  c.strokeStyle = '#1a1a8e';
+  c.lineWidth = 2;
+  c.setLineDash([]);
+  c.lineCap = 'square';
+
+  // 外框 (雙打邊界)
+  c.strokeRect(cx(0), cy(0), cx(COURT_W)-cx(0), cy(COURT_H)-cy(0));
+
+  // 長發球線 (雙打, 兩端)
+  line(c, cx(0.76), cy(0), cx(0.76), cy(COURT_H));
+  line(c, cx(COURT_W-0.76), cy(0), cx(COURT_W-0.76), cy(COURT_H));
+
+  // 短發球線 (兩端, 距網 1.98m)
+  const ssl = COURT_W/2 - 1.98;
+  line(c, cx(ssl), cy(0), cx(ssl), cy(COURT_H));
+  line(c, cx(COURT_W-ssl), cy(0), cx(COURT_W-ssl), cy(COURT_H));
+
+  // 單打邊線
+  line(c, cx(0), cy(0.46),       cx(COURT_W), cy(0.46));
+  line(c, cx(0), cy(COURT_H-0.46), cx(COURT_W), cy(COURT_H-0.46));
+
+  // 中線 (從短發球線到球網)
+  line(c, cx(ssl), cy(COURT_H/2), cx(COURT_W/2), cy(COURT_H/2));
+  line(c, cx(COURT_W/2), cy(COURT_H/2), cx(COURT_W-ssl), cy(COURT_H/2));
+
+  // 球網
+  c.strokeStyle = '#555';
+  c.lineWidth = 3;
+  line(c, cx(COURT_W/2), cy(0), cx(COURT_W/2), cy(COURT_H));
+
+  // 球柱
+  c.fillStyle = '#333';
+  dot(c, cx(COURT_W/2), cy(0), 5);
+  dot(c, cx(COURT_W/2), cy(COURT_H), 5);
+
+  drawServe(c);
+}
+
+function line(c,x1,y1,x2,y2){c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();}
+function dot(c,x,y,r){c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();}
+
+function drawServe(c) {
+  const flag = document.getElementById('serve-flag');
+  if (state.serveSide === 'none') { flag.style.display='none'; return; }
+  const isLeft = state.serveSide === 'left';
+  const px = isLeft ? cx(1.5) : cx(COURT_W-1.5);
+  const py = cy(COURT_H/2);
+
+  flag.style.display='block';
+  flag.style.left = (px - 12) + 'px';
+  flag.style.top = (py - 12) + 'px';
+  flag.style.transform = 'none';
+
+  // 額外圓形提示
+  c.fillStyle = 'rgba(241,196,15,0.18)';
+  c.beginPath(); c.arc(px, py, 20, 0, Math.PI*2); c.fill();
+}
+
+// ═══════════════════════════════════════
+// 繪製走線
+// ═══════════════════════════════════════
+function drawStrokes(ctx) {
+  PLAYERS.forEach(p => {
+    if (!p.visible) return;
+    p.strokes.forEach(s => paintStroke(ctx, s.pts, p.color, s.w, s.dash));
+  });
+}
+
+function paintStroke(ctx, pts, color, w, dash) {
+  if (pts.length < 2) return;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = w;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.setLineDash(dash === 'dashed' ? [w*3, w*2] : []);
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, pts[0].y);
+  for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x, pts[i].y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  if (dash === 'arrow' && pts.length >= 2) {
+    const a = pts[pts.length-2], b = pts[pts.length-1];
+    arrow(ctx, a.x, a.y, b.x, b.y, color, w);
+  }
+}
+
+function arrow(ctx, fx, fy, tx, ty, color, w) {
+  const len = Math.max(10, w*4);
+  const ang = Math.atan2(ty-fy, tx-fx);
+  ctx.fillStyle = color;
+  ctx.setLineDash([]);
+  ctx.beginPath();
+  ctx.moveTo(tx, ty);
+  ctx.lineTo(tx - len*Math.cos(ang - Math.PI/6), ty - len*Math.sin(ang - Math.PI/6));
+  ctx.lineTo(tx - len*Math.cos(ang + Math.PI/6), ty - len*Math.sin(ang + Math.PI/6));
+  ctx.closePath();
+  ctx.fill();
+}
+
+// ═══════════════════════════════════════
+// 繪製球員
+// ═══════════════════════════════════════
+const MR = 13; // marker radius
+
+function drawMarkers(ctx) {
+  PLAYERS.forEach(p => {
+    if (!p.visible || !p.pos) return;
+    paintMarker(ctx, p.pos.x, p.pos.y, p.color, p.name, p.id === state.active);
+  });
+}
+
+function paintMarker(ctx, x, y, color, name, active) {
+  ctx.shadowColor = 'rgba(0,0,0,0.4)';
+  ctx.shadowBlur = 5; ctx.shadowOffsetX = 2; ctx.shadowOffsetY = 2;
+  ctx.fillStyle = color;
+  ctx.strokeStyle = active ? '#fff' : 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = active ? 3 : 1.5;
+  ctx.beginPath(); ctx.arc(x, y, MR, 0, Math.PI*2);
+  ctx.fill(); ctx.stroke();
+  ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0;
+  ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+
+  ctx.fillStyle = '#fff';
+  ctx.font = `bold ${Math.round(MR*0.9)}px sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(name.charAt(0).toUpperCase(), x, y);
+}
+
+// ═══════════════════════════════════════
+// 全部重繪
+// ═══════════════════════════════════════
+function redraw() {
+  drawCourt();
+  dc.clearRect(0,0,CW,CH);
+  drawStrokes(dc);
+  if (state.drawing && state.curStroke.length > 1) {
+    paintStroke(dc, state.curStroke, PLAYERS[state.active].color, state.lineWidth, state.lineDash);
+  }
+  drawMarkers(dc);
+}
+
+// ═══════════════════════════════════════
+// 觸控/滑鼠座標
+// ═══════════════════════════════════════
+function pos(e) {
+  const r = drawC.getBoundingClientRect();
+  const sx = drawC.width / r.width, sy = drawC.height / r.height;
+  let cx, cy;
+  if (e.touches?.length)        { cx=e.touches[0].clientX;       cy=e.touches[0].clientY; }
+  else if (e.changedTouches?.length) { cx=e.changedTouches[0].clientX; cy=e.changedTouches[0].clientY; }
+  else                           { cx=e.clientX; cy=e.clientY; }
+  return { x:(cx-r.left)*sx, y:(cy-r.top)*sy };
+}
+
+// ═══════════════════════════════════════
+// 拖曳球員
+// ═══════════════════════════════════════
+let drag = -1, dragOff = {x:0,y:0};
+
+function hitMarker(p) {
+  for (let i=PLAYERS.length-1;i>=0;i--) {
+    const pl=PLAYERS[i];
+    if (!pl.visible||!pl.pos) continue;
+    const dx=p.x-pl.pos.x, dy=p.y-pl.pos.y;
+    if (Math.hypot(dx,dy) <= MR+5) return i;
+  }
+  return -1;
+}
+
+// ═══════════════════════════════════════
+// 事件
+// ═══════════════════════════════════════
+function onDown(e) {
+  e.preventDefault();
+  const p = pos(e);
+
+  if (state.mode === 'place') {
+    const h = hitMarker(p);
+    if (h >= 0) { drag=h; dragOff={x:p.x-PLAYERS[h].pos.x, y:p.y-PLAYERS[h].pos.y}; selectPlayer(h); }
+    else { PLAYERS[state.active].pos = {x:p.x, y:p.y}; redraw(); }
+    return;
+  }
+
+  if (state.mode === 'erase') {
+    const h = hitMarker(p);
+    if (h >= 0) { PLAYERS[h].pos=null; }
+    else { eraseNear(p); }
+    redraw(); return;
+  }
+
+  // draw 模式: 先看能不能拖球員
+  const h = hitMarker(p);
+  if (h >= 0) { drag=h; dragOff={x:p.x-PLAYERS[h].pos.x, y:p.y-PLAYERS[h].pos.y}; selectPlayer(h); return; }
+
+  state.drawing = true;
+  state.curStroke = [{x:p.x, y:p.y}];
+}
+
+function onMove(e) {
+  e.preventDefault();
+  const p = pos(e);
+  if (drag >= 0) {
+    PLAYERS[drag].pos = {x:p.x-dragOff.x, y:p.y-dragOff.y};
+    redraw(); return;
+  }
+  if (state.drawing) {
+    state.curStroke.push({x:p.x, y:p.y});
+    redraw();
+  }
+}
+
+function onUp(e) {
+  e.preventDefault();
+  if (drag >= 0) { drag=-1; redraw(); return; }
+  if (state.drawing) {
+    state.drawing = false;
+    if (state.curStroke.length >= 2) {
+      PLAYERS[state.active].strokes.push({
+        pts:[...state.curStroke], w:state.lineWidth, dash:state.lineDash
+      });
+    }
+    state.curStroke = [];
+    redraw();
+  }
+}
+
+function eraseNear(p) {
+  const D = 14;
+  for (const pl of PLAYERS) {
+    for (let i=pl.strokes.length-1;i>=0;i--) {
+      for (const pt of pl.strokes[i].pts) {
+        if (Math.hypot(pt.x-p.x, pt.y-p.y) < D) { pl.strokes.splice(i,1); return; }
+      }
+    }
+  }
+}
+
+drawC.addEventListener('mousedown', onDown);
+drawC.addEventListener('mousemove', onMove);
+drawC.addEventListener('mouseup',   onUp);
+drawC.addEventListener('mouseleave',onUp);
+drawC.addEventListener('touchstart', onDown, {passive:false});
+drawC.addEventListener('touchmove',  onMove, {passive:false});
+drawC.addEventListener('touchend',   onUp,   {passive:false});
+drawC.addEventListener('touchcancel',onUp,   {passive:false});
+
+// ═══════════════════════════════════════
+// 控制函式
+// ═══════════════════════════════════════
+function setMode(m) {
+  state.mode = m;
+  ['draw','place','erase'].forEach(x => {
+    document.getElementById('btn-'+x).classList.toggle('on', x===m);
+  });
+  drawC.style.cursor = m==='draw'?'crosshair': m==='erase'?'cell':'move';
+}
+
+function setCourtType(t) {
+  state.courtType = t;
+  document.getElementById('btn-doubles').classList.toggle('on', t==='doubles');
+  document.getElementById('btn-singles').classList.toggle('on', t==='singles');
+  redraw();
+}
+
+function setServe(s) {
+  state.serveSide = s;
+  ['sl','sr','sn'].forEach(x => document.getElementById('btn-'+x).classList.remove('on'));
+  if (s==='left')  document.getElementById('btn-sl').classList.add('on');
+  if (s==='right') document.getElementById('btn-sr').classList.add('on');
+  if (s==='none')  document.getElementById('btn-sn').classList.add('on');
+  redraw();
+}
+
+function setHome(side) {
+  state.homeSide = side;
+  document.getElementById('btn-hl').classList.toggle('on', side==='left');
+  document.getElementById('btn-hr').classList.toggle('on', side==='right');
+  const ll = document.getElementById('lbl-left');
+  const lr = document.getElementById('lbl-right');
+  if (side === 'left') {
+    ll.textContent='🔵我方'; ll.style.color='#3498db';
+    lr.textContent='🔴對方'; lr.style.color='#e74c3c';
+  } else {
+    ll.textContent='🔴對方'; ll.style.color='#e74c3c';
+    lr.textContent='🔵我方'; lr.style.color='#3498db';
+  }
+  redraw();
+}
+
+function setDash(d) {
+  state.lineDash = d;
+  ['solid','dashed','arrow'].forEach(x => {
+    document.getElementById('btn-'+x).classList.toggle('on', x===d);
+  });
+}
+
+function undo() {
+  const p = PLAYERS[state.active];
+  if (p.strokes.length > 0) { p.strokes.pop(); redraw(); }
+}
+
+function clearPlayer() {
+  const p = PLAYERS[state.active];
+  p.strokes = []; p.pos = null;
+  redraw();
+}
+
+function resetAll() {
+  if (!confirm('確定要清除所有走線與站位？')) return;
+  PLAYERS.forEach(p => { p.strokes=[]; p.pos=null; });
+  setServe('none');
+}
+
+function updateName(v) {
+  PLAYERS[state.active].name = v || `球員 ${state.active+1}`;
+  renderPlayerList();
+  redraw();
+}
+
+function toggleVis(v) {
+  PLAYERS[state.active].visible = v;
+  redraw();
+}
+
+// ═══════════════════════════════════════
+// 球員 UI
+// ═══════════════════════════════════════
+function renderPlayerList() {
+  const el = document.getElementById('player-list');
+  el.innerHTML = '';
+  PLAYERS.forEach((p,i) => {
+    const b = document.createElement('button');
+    b.className = 'player-btn' + (i===state.active?' sel':'');
+    b.style.setProperty('--c', p.color);
+    b.innerHTML = `<div class="pdot"></div><span class="pname">${p.name}</span>`;
+    b.onclick = () => selectPlayer(i);
+    el.appendChild(b);
+  });
+}
+
+function selectPlayer(i) {
+  state.active = i;
+  renderPlayerList();
+  const p = PLAYERS[i];
+  document.getElementById('pname-input').value = p.name;
+  document.getElementById('pvis-chk').checked = p.visible;
+}
+
+// ═══════════════════════════════════════
+// 鍵盤快捷鍵
+// ═══════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  const k = e.key.toLowerCase();
+  if ((e.ctrlKey||e.metaKey) && k==='z') { e.preventDefault(); undo(); return; }
+  switch(k) {
+    case 'q': setMode('draw'); break;
+    case 'w': setMode('place'); break;
+    case 'e': setMode('erase'); break;
+    case 'a': setServe('left'); break;
+    case 'd': setServe('right'); break;
+    case 'r': if(!e.ctrlKey) resetAll(); break;
+    case 's': setCourtType(state.courtType==='doubles'?'singles':'doubles'); break;
+    case '1': selectPlayer(0); break;
+    case '2': selectPlayer(1); break;
+    case '3': selectPlayer(2); break;
+    case '4': selectPlayer(3); break;
+  }
+});
+
+// ═══════════════════════════════════════
+// 視窗縮放
+// ═══════════════════════════════════════
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(resize, 80);
+});
+
+// ═══════════════════════════════════════
+// 初始化
+// ═══════════════════════════════════════
+renderPlayerList();
+selectPlayer(0);
+setServe('none');
+resize();
+</script>
+</body>
+</html>
