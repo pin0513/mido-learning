@@ -104,9 +104,31 @@ Push 到 `main` 分支會自動觸發部署：
 
 ## 文件
 
-- [功能地圖](./spec/FunctionalMap.md) - 完整功能規劃
+### 📚 核心文件
+- **[CLAUDE.md](./CLAUDE.md)** - AI 開發指南與專案總覽
+- **[PROJECT_INDEX.md](./PROJECT_INDEX.md)** - 完整文件索引（AI 友善）
+- **[功能地圖](./spec/FunctionalMap.md)** - 完整功能規劃
+- **[技術債](./docs/TECH_DEBT.md)** - 已知問題與待辦事項
+
+### 📖 架構文件
+- [系統架構總覽](./docs/arch/architecture-overview.md)
+- [後端架構](./docs/arch/backend-architecture.md)
+- [前端架構](./docs/arch/frontend-architecture.md)
+- [資料庫設計](./docs/arch/database-design.md)
+- [基礎設施](./docs/arch/infrastructure.md)
+- [安全性考量](./docs/arch/security-considerations.md)
+
+### 📋 規格文件
+- [Wish 聊天機器人](./docs/specs/20260131-01-wish-chatbot-frontend.md)
+- [管理員系統](./docs/specs/20260131-03-admin-users.md)
+- [學習元件 CRUD](./docs/specs/20260131-04-learning-component-crud.md)
+- [教材檢視器 RWD](./docs/specs/20260201-01-material-viewer-rwd.md)
+- [技能村莊](./docs/specs/20260211-01-skill-village.md)
+
+### 🔧 設定檔
 - [Firestore 規則](./firestore.rules) - 資料庫安全規則
 - [Storage 規則](./storage.rules) - 檔案存取規則
+- [Firestore 索引](./firestore.indexes.json) - 資料庫索引
 
 ## License
 
