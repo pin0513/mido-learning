@@ -30,7 +30,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a1a2e;touch-action
 #toolbar::-webkit-scrollbar{height:3px;}
 #toolbar::-webkit-scrollbar-thumb{background:#0f3460;border-radius:2px;}
 
-/* ── 主內容（僅場地，無側欄）── */
+/* ── 主內容 ── */
 #main{display:flex;flex:1;overflow:hidden;min-height:0;}
 
 /* ── 場地容器 ── */
@@ -80,24 +80,27 @@ canvas{display:block;}
   user-select:none;
 }
 
-/* 球員列 */
-#hud-players{display:flex;gap:5px;}
+/* 球員列 / 球列共用 */
+#hud-players, #hud-balls{display:flex;gap:5px;}
 
-.hud-player{
+.hud-entity{
   width:40px;height:40px;border-radius:50%;
   border:2.5px solid rgba(255,255,255,0.25);
   background:var(--c);cursor:pointer;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-weight:bold;color:#fff;font-size:13px;
+  font-weight:bold;color:#fff;font-size:11px;
   box-shadow:0 2px 8px rgba(0,0,0,0.5);
   transition:border-color .12s, transform .1s;
   touch-action:manipulation;
   backdrop-filter:blur(4px);
+  position:relative;overflow:hidden;
 }
-.hud-player:hover{transform:scale(1.08);}
-.hud-player.sel{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,0.4),0 2px 8px rgba(0,0,0,0.5);}
-.hud-player .pid{font-size:14px;font-weight:800;line-height:1;}
-.hud-player .pini{font-size:8px;opacity:.8;line-height:1;}
+.hud-entity:hover{transform:scale(1.08);}
+.hud-entity.sel{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,0.5),0 2px 8px rgba(0,0,0,0.5);}
+.hud-entity .eid{font-size:13px;font-weight:800;line-height:1;}
+.hud-entity .eini{font-size:8px;opacity:.8;line-height:1;}
+/* 球的圓形稍小，方便區分 */
+.hud-ball{width:34px;height:34px;border-radius:50%;}
 
 /* 操作列 */
 #hud-actions{display:flex;gap:5px;}
@@ -118,6 +121,9 @@ canvas{display:block;}
 .hud-btn:hover,.hud-btn:active{background:rgba(36,113,163,0.72);}
 .hud-btn.red{border-color:rgba(231,76,60,.35);}
 .hud-btn.red:hover,.hud-btn.red:active{background:rgba(192,57,43,0.7);}
+
+/* HUD 分隔標籤 */
+.hud-sep{font-size:8px;color:#556;text-transform:uppercase;letter-spacing:.4px;align-self:center;}
 </style>
 </head>
 <body>
@@ -187,11 +193,19 @@ canvas{display:block;}
         <!-- 浮動 HUD（場地左下角） -->
         <div id="hud">
           <!-- 球員選擇 -->
-          <div id="hud-players"></div>
+          <div style="display:flex;align-items:center;gap:5px;">
+            <span class="hud-sep">球員</span>
+            <div id="hud-players"></div>
+          </div>
+          <!-- 球選擇 -->
+          <div style="display:flex;align-items:center;gap:5px;">
+            <span class="hud-sep">球</span>
+            <div id="hud-balls"></div>
+          </div>
           <!-- 操作按鈕 -->
           <div id="hud-actions">
             <button class="hud-btn" onclick="undo()" title="復原 Ctrl+Z">↩ 復原</button>
-            <button class="hud-btn" onclick="clearPlayer()" title="清除選取球員">🗑 清選取</button>
+            <button class="hud-btn" onclick="clearActive()" title="清除選取">🗑 清選取</button>
             <button class="hud-btn red" onclick="resetAll()" title="全部重置 [R]">♻ 重置</button>
           </div>
         </div>
@@ -203,7 +217,7 @@ canvas{display:block;}
 
 <script>
 // ═══════════════════════════════════════
-// 狀態
+// 實體資料
 // ═══════════════════════════════════════
 const PLAYERS = [
   {id:0, name:'球員 1', color:'#E74C3C', visible:true, pos:null, strokes:[]},
@@ -212,12 +226,66 @@ const PLAYERS = [
   {id:3, name:'球員 4', color:'#F39C12', visible:true, pos:null, strokes:[]},
 ];
 
+const BALLS = [
+  {id:0, name:'球 1', color:'#F5F5F5', borderColor:'#AAAAAA', visible:true, pos:null, strokes:[]},
+  {id:1, name:'球 2', color:'#F1C40F', borderColor:'#D4AC0D',  visible:true, pos:null, strokes:[]},
+  {id:2, name:'球 3', color:'#E67E22', borderColor:'#CA6F1E',  visible:true, pos:null, strokes:[]},
+  {id:3, name:'球 4', color:'#1ABC9C', borderColor:'#17A589',  visible:true, pos:null, strokes:[]},
+];
+
 const state = {
-  active:0, mode:'draw', courtType:'doubles',
+  active:0, activeType:'player',
+  mode:'draw', courtType:'doubles',
   homeSide:'left', serveSide:'none',
   lineWidth:3, lineDash:'solid',
   drawing:false, curStroke:[],
 };
+
+// ═══════════════════════════════════════
+// 全域 Undo Stack
+// ═══════════════════════════════════════
+const MAX_UNDO = 60;
+const undoStack = [];
+
+function pushUndo(action) {
+  undoStack.push(action);
+  if (undoStack.length > MAX_UNDO) undoStack.shift();
+}
+
+function undo() {
+  if (undoStack.length === 0) return;
+  const a = undoStack.pop();
+  const arr = a.who === 'player' ? PLAYERS : BALLS;
+  const entity = arr[a.id];
+  switch (a.type) {
+    case 'stroke':
+      entity.strokes.pop();
+      break;
+    case 'place':
+      entity.pos = a.from;
+      break;
+    case 'erase-marker':
+      entity.pos = a.pos;
+      break;
+    case 'erase-stroke':
+      entity.strokes.splice(a.idx, 0, a.stroke);
+      break;
+  }
+  redraw();
+}
+
+// ═══════════════════════════════════════
+// Icon 圖片預載
+// ═══════════════════════════════════════
+const playerImg = new Image();
+playerImg.src = '/images/badminton-player-icon.png';
+const shuttleImg = new Image();
+shuttleImg.src = '/images/badminton-shuttle-icon.png';
+let iconsReady = false;
+let loadedCount = 0;
+function onIconLoad() { loadedCount++; if (loadedCount >= 2) { iconsReady = true; redraw(); } }
+playerImg.onload = onIconLoad;
+shuttleImg.onload = onIconLoad;
 
 // ═══════════════════════════════════════
 // Canvas
@@ -234,7 +302,15 @@ const COURT_W = 13.4;
 const COURT_H = 6.1;
 const MARGIN  = 18;
 
-let CW=0, CH=0, SC=1;
+let CW=0, CH=0, SC=1, OFFSET_X=0, OFFSET_Y=0;
+
+function computeScale() {
+  const scW = (CW - MARGIN*2) / COURT_W;
+  const scH = (CH - MARGIN*2) / COURT_H;
+  SC = Math.min(scW, scH);
+  OFFSET_X = (CW - COURT_W * SC) / 2;
+  OFFSET_Y = (CH - COURT_H * SC) / 2;
+}
 
 function resize() {
   const cr   = container.getBoundingClientRect();
@@ -245,14 +321,14 @@ function resize() {
   if (availW / availH > aspect) { h=availH; w=h*aspect; }
   else                           { w=availW; h=w/aspect; }
   CW = Math.floor(w); CH = Math.floor(h);
-  SC = (CW - MARGIN*2) / COURT_W;
   [courtC, drawC].forEach(c=>{ c.width=CW; c.height=CH; });
   wrapper.style.cssText = `width:${CW}px;height:${CH}px;`;
+  computeScale();
   redraw();
 }
 
-const cx = m => MARGIN + m * SC;
-const cy = m => MARGIN + m * SC;
+const cx = m => OFFSET_X + m * SC;
+const cy = m => OFFSET_Y + m * SC;
 
 // ═══════════════════════════════════════
 // 繪製場地
@@ -277,9 +353,25 @@ function drawCourt() {
   // 單打區外側陰影
   if (state.courtType === 'singles') {
     c.fillStyle = 'rgba(0,0,0,0.07)';
-    c.fillRect(cx(0), cy(0),           cx(COURT_W)-cx(0), cy(0.46)-cy(0));
+    c.fillRect(cx(0), cy(0),            cx(COURT_W)-cx(0), cy(0.46)-cy(0));
     c.fillRect(cx(0), cy(COURT_H-0.46), cx(COURT_W)-cx(0), cy(COURT_H)-cy(COURT_H-0.46));
   }
+
+  // ── Mido Learning 浮水印 ──
+  const wCX = cx(COURT_W/2);
+  const wCY = cy(COURT_H/2);
+  c.save();
+  c.globalAlpha = 0.07;
+  const wFontSize = Math.round(Math.min(COURT_W, COURT_H) * SC * 0.13);
+  c.font = `bold italic ${wFontSize}px 'Helvetica Neue', Arial, sans-serif`;
+  c.fillStyle = '#1a4080';
+  c.textAlign = 'center';
+  c.textBaseline = 'middle';
+  c.fillText('Mido Learning', wCX, wCY - wFontSize * 0.6);
+  const wFontSize2 = Math.round(wFontSize * 0.45);
+  c.font = `${wFontSize2}px Arial, sans-serif`;
+  c.fillText('羽球戰術版', wCX, wCY + wFontSize2 * 0.3);
+  c.restore();
 
   // 場地線
   c.strokeStyle = '#1a1a8e';
@@ -287,25 +379,25 @@ function drawCourt() {
   c.setLineDash([]);
   c.lineCap = 'square';
 
-  // 外框（雙打邊界）
+  // 外框（雙打邊界）— 完整矩形
   c.strokeRect(cx(0), cy(0), cx(COURT_W)-cx(0), cy(COURT_H)-cy(0));
 
   // 長發球線（雙打，距底線 0.76m）
-  line(c, cx(0.76),           cy(0), cx(0.76),           cy(COURT_H));
-  line(c, cx(COURT_W-0.76),   cy(0), cx(COURT_W-0.76),   cy(COURT_H));
+  line(c, cx(0.76),         cy(0), cx(0.76),         cy(COURT_H));
+  line(c, cx(COURT_W-0.76), cy(0), cx(COURT_W-0.76), cy(COURT_H));
 
   // 短發球線（距球網 1.98m）
   const ssl = COURT_W/2 - 1.98; // = 4.72m from left
-  line(c, cx(ssl),            cy(0), cx(ssl),            cy(COURT_H));
-  line(c, cx(COURT_W-ssl),    cy(0), cx(COURT_W-ssl),    cy(COURT_H));
+  line(c, cx(ssl),          cy(0), cx(ssl),          cy(COURT_H));
+  line(c, cx(COURT_W-ssl),  cy(0), cx(COURT_W-ssl),  cy(COURT_H));
 
-  // 單打邊線
+  // 單打邊線（與外框齊平，橫向線）
   line(c, cx(0), cy(0.46),          cx(COURT_W), cy(0.46));
   line(c, cx(0), cy(COURT_H-0.46),  cx(COURT_W), cy(COURT_H-0.46));
 
-  // 中線（從長發球線延伸到短發球線，即後場服務區的分界線）
-  line(c, cx(0.76),         cy(COURT_H/2), cx(ssl),           cy(COURT_H/2)); // 左半場
-  line(c, cx(COURT_W-ssl),  cy(COURT_H/2), cx(COURT_W-0.76),  cy(COURT_H/2)); // 右半場
+  // 中線（後場服務區分界）
+  line(c, cx(0.76),        cy(COURT_H/2), cx(ssl),          cy(COURT_H/2));
+  line(c, cx(COURT_W-ssl), cy(COURT_H/2), cx(COURT_W-0.76), cy(COURT_H/2));
 
   // 球網（中線加粗）
   c.strokeStyle = '#555';
@@ -345,6 +437,10 @@ function drawStrokes(ctx) {
     if (!p.visible) return;
     p.strokes.forEach(s => paintStroke(ctx, s.pts, p.color, s.w, s.dash));
   });
+  BALLS.forEach(b => {
+    if (!b.visible) return;
+    b.strokes.forEach(s => paintStroke(ctx, s.pts, b.color, s.w, s.dash));
+  });
 }
 
 function paintStroke(ctx, pts, color, w, dash) {
@@ -371,31 +467,62 @@ function arrow(ctx,fx,fy,tx,ty,color,w) {
 }
 
 // ═══════════════════════════════════════
-// 球員標記
+// 球員 & 球 標記繪製
 // ═══════════════════════════════════════
-const MR = 13;
+const MR = 14; // 球員半徑
+const BR = 11; // 球半徑
 
 function drawMarkers(ctx) {
   PLAYERS.forEach(p => {
     if (!p.visible||!p.pos) return;
-    paintMarker(ctx, p.pos.x, p.pos.y, p.color, p.name, p.id===state.active);
+    paintEntityMarker(ctx, p.pos.x, p.pos.y, p.color, p.name, p.id===state.active&&state.activeType==='player', 'player', p.id);
+  });
+  BALLS.forEach(b => {
+    if (!b.visible||!b.pos) return;
+    paintEntityMarker(ctx, b.pos.x, b.pos.y, b.color, b.name, b.id===state.active&&state.activeType==='ball', 'ball', b.id);
   });
 }
 
-function paintMarker(ctx,x,y,color,name,active) {
-  ctx.shadowColor='rgba(0,0,0,0.4)'; ctx.shadowBlur=5;
+function paintEntityMarker(ctx, x, y, color, name, isActive, type, id) {
+  const r = type === 'ball' ? BR : MR;
+  const img = type === 'ball' ? shuttleImg : playerImg;
+
+  ctx.save();
+  ctx.shadowColor='rgba(0,0,0,0.45)'; ctx.shadowBlur=6;
   ctx.shadowOffsetX=2; ctx.shadowOffsetY=2;
-  ctx.fillStyle=color;
-  ctx.strokeStyle=active?'#fff':'rgba(255,255,255,0.4)';
-  ctx.lineWidth=active?3:1.5;
-  ctx.beginPath(); ctx.arc(x,y,MR,0,Math.PI*2);
+
+  // 底色圓
+  ctx.fillStyle = color;
+  ctx.strokeStyle = isActive ? '#fff' : 'rgba(255,255,255,0.4)';
+  ctx.lineWidth   = isActive ? 3 : 1.5;
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2);
   ctx.fill(); ctx.stroke();
+
   ctx.shadowColor='transparent'; ctx.shadowBlur=0;
   ctx.shadowOffsetX=0; ctx.shadowOffsetY=0;
-  ctx.fillStyle='#fff';
-  ctx.font=`bold ${Math.round(MR*0.9)}px sans-serif`;
-  ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.fillText(name.charAt(0).toUpperCase(),x,y);
+
+  // 若圖示已載入，繪製圖示
+  if (iconsReady && img.complete && img.naturalWidth > 0) {
+    const d = r * 1.6;
+    ctx.drawImage(img, x - d/2, y - d/2, d, d);
+  } else {
+    // Fallback: 文字首字
+    ctx.fillStyle = type === 'ball' ? '#333' : '#fff';
+    ctx.font = `bold ${Math.round(r*0.85)}px sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(name.charAt(0).toUpperCase(), x, y);
+  }
+
+  // 選中高亮外圈
+  if (isActive) {
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.arc(x, y, r+5, 0, Math.PI*2);
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  ctx.restore();
 }
 
 // ═══════════════════════════════════════
@@ -405,9 +532,20 @@ function redraw() {
   drawCourt();
   dc.clearRect(0,0,CW,CH);
   drawStrokes(dc);
-  if (state.drawing&&state.curStroke.length>1)
-    paintStroke(dc,state.curStroke,PLAYERS[state.active].color,state.lineWidth,state.lineDash);
+  const ae = getActiveEntity();
+  if (state.drawing && state.curStroke.length>1)
+    paintStroke(dc, state.curStroke, ae.color, state.lineWidth, state.lineDash);
   drawMarkers(dc);
+}
+
+// ═══════════════════════════════════════
+// 輔助：取得當前選中實體
+// ═══════════════════════════════════════
+function getActiveEntity() {
+  return state.activeType === 'player' ? PLAYERS[state.active] : BALLS[state.active];
+}
+function getEntityArray() {
+  return state.activeType === 'player' ? PLAYERS : BALLS;
 }
 
 // ═══════════════════════════════════════
@@ -424,17 +562,29 @@ function pos(e) {
 }
 
 // ═══════════════════════════════════════
-// 拖曳球員
+// 拖曳：同時處理球員與球
 // ═══════════════════════════════════════
-let drag=-1, dragOff={x:0,y:0};
+// drag 結構: {who:'player'|'ball', id:N}
+let drag=null, dragOff={x:0,y:0};
 
 function hitMarker(p) {
+  // 球員（後渲染 = 優先命中）
   for (let i=PLAYERS.length-1;i>=0;i--) {
     const pl=PLAYERS[i];
     if (!pl.visible||!pl.pos) continue;
-    if (Math.hypot(p.x-pl.pos.x, p.y-pl.pos.y)<=MR+5) return i;
+    if (Math.hypot(p.x-pl.pos.x, p.y-pl.pos.y) <= MR+5) return {who:'player',id:i};
   }
-  return -1;
+  // 球
+  for (let i=BALLS.length-1;i>=0;i--) {
+    const bl=BALLS[i];
+    if (!bl.visible||!bl.pos) continue;
+    if (Math.hypot(p.x-bl.pos.x, p.y-bl.pos.y) <= BR+5) return {who:'ball',id:i};
+  }
+  return null;
+}
+
+function entityAt(hit) {
+  return hit.who === 'player' ? PLAYERS[hit.id] : BALLS[hit.id];
 }
 
 function onDown(e) {
@@ -442,44 +592,84 @@ function onDown(e) {
   const p=pos(e);
   if (state.mode==='place') {
     const h=hitMarker(p);
-    if (h>=0){drag=h;dragOff={x:p.x-PLAYERS[h].pos.x,y:p.y-PLAYERS[h].pos.y};selectPlayer(h);}
-    else {PLAYERS[state.active].pos={x:p.x,y:p.y};redraw();}
+    if (h) {
+      drag=h; dragOff={x:p.x-entityAt(h).pos.x, y:p.y-entityAt(h).pos.y};
+      selectEntity(h.who, h.id);
+    } else {
+      const ae=getActiveEntity();
+      const oldPos=ae.pos ? {...ae.pos} : null;
+      ae.pos={x:p.x,y:p.y};
+      pushUndo({type:'place',who:state.activeType,id:state.active,from:oldPos});
+      redraw();
+    }
     return;
   }
   if (state.mode==='erase') {
     const h=hitMarker(p);
-    if (h>=0) PLAYERS[h].pos=null; else eraseNear(p);
+    if (h) {
+      const ent=entityAt(h);
+      pushUndo({type:'erase-marker',who:h.who,id:h.id,pos:{...ent.pos}});
+      ent.pos=null;
+    } else {
+      eraseNear(p);
+    }
     redraw(); return;
   }
+  // draw mode
   const h=hitMarker(p);
-  if (h>=0){drag=h;dragOff={x:p.x-PLAYERS[h].pos.x,y:p.y-PLAYERS[h].pos.y};selectPlayer(h);return;}
+  if (h){drag=h;dragOff={x:p.x-entityAt(h).pos.x,y:p.y-entityAt(h).pos.y};selectEntity(h.who,h.id);return;}
   state.drawing=true; state.curStroke=[{x:p.x,y:p.y}];
 }
 
 function onMove(e) {
   e.preventDefault();
   const p=pos(e);
-  if (drag>=0){PLAYERS[drag].pos={x:p.x-dragOff.x,y:p.y-dragOff.y};redraw();return;}
+  if (drag){
+    const ent=entityAt(drag);
+    ent.pos={x:p.x-dragOff.x, y:p.y-dragOff.y};
+    redraw(); return;
+  }
   if (state.drawing){state.curStroke.push({x:p.x,y:p.y});redraw();}
 }
 
 function onUp(e) {
   e.preventDefault();
-  if (drag>=0){drag=-1;redraw();return;}
-  if (state.drawing){
+  if (drag) {
+    const ent=entityAt(drag);
+    // 找拖曳前的位置：此時已移動，取消 push（不記錄初始 from，拖曳結束後記錄）
+    // 記錄為 place 動作（from = undefined，undo 時置 null）
+    pushUndo({type:'place',who:drag.who,id:drag.id,from:null});
+    drag=null; redraw(); return;
+  }
+  if (state.drawing) {
     state.drawing=false;
-    if (state.curStroke.length>=2)
-      PLAYERS[state.active].strokes.push({pts:[...state.curStroke],w:state.lineWidth,dash:state.lineDash});
+    if (state.curStroke.length>=2) {
+      const ae=getActiveEntity();
+      const stroke={pts:[...state.curStroke],w:state.lineWidth,dash:state.lineDash};
+      ae.strokes.push(stroke);
+      pushUndo({type:'stroke',who:state.activeType,id:state.active});
+    }
     state.curStroke=[];
     redraw();
   }
 }
 
 function eraseNear(p) {
-  for (const pl of PLAYERS)
-    for (let i=pl.strokes.length-1;i>=0;i--)
-      for (const pt of pl.strokes[i].pts)
-        if (Math.hypot(pt.x-p.x,pt.y-p.y)<14){pl.strokes.splice(i,1);return;}
+  const checkArr = (arr, who) => {
+    for (const ent of arr) {
+      for (let i=ent.strokes.length-1;i>=0;i--) {
+        for (const pt of ent.strokes[i].pts) {
+          if (Math.hypot(pt.x-p.x,pt.y-p.y)<14) {
+            const stroke=ent.strokes.splice(i,1)[0];
+            pushUndo({type:'erase-stroke',who,id:ent.id,idx:i,stroke});
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  };
+  if (!checkArr(PLAYERS,'player')) checkArr(BALLS,'ball');
 }
 
 drawC.addEventListener('mousedown', onDown);
@@ -536,42 +726,51 @@ function setDash(d) {
   ['solid','dashed','arrow'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('on',x===d));
 }
 
-function undo() {
-  const p=PLAYERS[state.active];
-  if (p.strokes.length>0){p.strokes.pop();redraw();}
-}
-
-function clearPlayer() {
-  const p=PLAYERS[state.active];
-  p.strokes=[];p.pos=null;redraw();
+function clearActive() {
+  const ae=getActiveEntity();
+  ae.strokes=[]; ae.pos=null;
+  redraw();
 }
 
 function resetAll() {
   if (!confirm('確定要清除所有走線與站位？')) return;
   PLAYERS.forEach(p=>{p.strokes=[];p.pos=null;});
+  BALLS.forEach(b=>{b.strokes=[];b.pos=null;});
+  undoStack.length=0;
   setServe('none');
+  redraw();
 }
 
 // ═══════════════════════════════════════
-// HUD 球員 UI
+// HUD UI
 // ═══════════════════════════════════════
-function renderHUDPlayers() {
-  const el=document.getElementById('hud-players');
+function renderHUD() {
+  renderHUDRow('hud-players', PLAYERS, 'player');
+  renderHUDRow('hud-balls',   BALLS,   'ball');
+}
+
+function renderHUDRow(elId, arr, type) {
+  const el=document.getElementById(elId);
   el.innerHTML='';
-  PLAYERS.forEach((p,i)=>{
+  arr.forEach((ent, i) => {
     const b=document.createElement('button');
-    b.className='hud-player'+(i===state.active?' sel':'');
-    b.style.setProperty('--c', p.color);
-    b.title=p.name+' ['+(i+1)+']';
-    b.innerHTML=`<span class="pid">${i+1}</span><span class="pini">${p.name.charAt(0).toUpperCase()}</span>`;
-    b.onclick=()=>selectPlayer(i);
+    const isActive = (i===state.active && state.activeType===type);
+    b.className='hud-entity'+(type==='ball'?' hud-ball':'')+(isActive?' sel':'');
+    b.style.setProperty('--c', ent.color);
+    if (type==='ball') {
+      b.style.border = `2.5px solid ${isActive ? '#fff' : ent.borderColor || 'rgba(255,255,255,0.25)'}`;
+    }
+    b.title = ent.name + ' ['+(i+1)+']';
+    b.innerHTML = `<span class="eid">${i+1}</span>`;
+    b.onclick = () => selectEntity(type, i);
     el.appendChild(b);
   });
 }
 
-function selectPlayer(i) {
-  state.active=i;
-  renderHUDPlayers();
+function selectEntity(type, i) {
+  state.activeType = type;
+  state.active = i;
+  renderHUD();
   redraw();
 }
 
@@ -590,10 +789,14 @@ document.addEventListener('keydown', e=>{
     case 'd': setServe('right'); break;
     case 'r': if(!e.ctrlKey) resetAll(); break;
     case 's': setCourtType(state.courtType==='doubles'?'singles':'doubles'); break;
-    case '1': selectPlayer(0); break;
-    case '2': selectPlayer(1); break;
-    case '3': selectPlayer(2); break;
-    case '4': selectPlayer(3); break;
+    case '1': selectEntity('player',0); break;
+    case '2': selectEntity('player',1); break;
+    case '3': selectEntity('player',2); break;
+    case '4': selectEntity('player',3); break;
+    case '5': selectEntity('ball',0); break;
+    case '6': selectEntity('ball',1); break;
+    case '7': selectEntity('ball',2); break;
+    case '8': selectEntity('ball',3); break;
   }
 });
 
@@ -609,8 +812,7 @@ window.addEventListener('resize',()=>{
 // ═══════════════════════════════════════
 // 初始化
 // ═══════════════════════════════════════
-renderHUDPlayers();
-selectPlayer(0);
+renderHUD();
 setServe('none');
 resize();
 </script>
