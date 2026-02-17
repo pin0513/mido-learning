@@ -97,6 +97,8 @@ canvas{display:block;}
 }
 .hud-entity:hover{transform:scale(1.08);}
 .hud-entity.sel{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,0.5),0 2px 8px rgba(0,0,0,0.5);}
+.hud-entity.pending{border-color:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,0.6),0 2px 8px rgba(0,0,0,0.5);animation:pulse-place .8s ease-in-out infinite;}
+@keyframes pulse-place{0%,100%{box-shadow:0 0 0 3px rgba(250,204,21,0.6),0 2px 8px rgba(0,0,0,0.5);}50%{box-shadow:0 0 0 6px rgba(250,204,21,0.3),0 2px 8px rgba(0,0,0,0.5);}}
 .hud-entity .eid{font-size:13px;font-weight:800;line-height:1;}
 .hud-entity .eini{font-size:8px;opacity:.8;line-height:1;}
 /* 球的圓形稍小，方便區分 */
@@ -239,6 +241,7 @@ const state = {
   homeSide:'left', serveSide:'none',
   lineWidth:3, lineDash:'solid',
   drawing:false, curStroke:[],
+  pendingPlace:false,  // 等待點擊放置棋子
 };
 
 // ═══════════════════════════════════════
@@ -445,9 +448,18 @@ function drawStrokes(ctx) {
 
 function paintStroke(ctx, pts, color, w, dash) {
   if (pts.length < 2) return;
-  ctx.strokeStyle = color; ctx.lineWidth = w;
+  const dashPat = dash==='dashed'?[w*3,w*2]:[];
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  ctx.setLineDash(dash==='dashed'?[w*3,w*2]:[]);
+
+  // 深色輪廓讓線在任何底色都清晰可見
+  ctx.strokeStyle = 'rgba(0,0,0,0.55)'; ctx.lineWidth = w + 3;
+  ctx.setLineDash(dashPat);
+  ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
+  for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y);
+  ctx.stroke();
+
+  // 本體顏色
+  ctx.strokeStyle = color; ctx.lineWidth = w;
   ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
   for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y);
   ctx.stroke(); ctx.setLineDash([]);
@@ -618,6 +630,17 @@ function onDown(e) {
   // draw mode
   const h=hitMarker(p);
   if (h){drag=h;dragOff={x:p.x-entityAt(h).pos.x,y:p.y-entityAt(h).pos.y};selectEntity(h.who,h.id);return;}
+  // 一次性放置模式：棋子還沒擺上場，點哪就放哪，放完自動回畫線
+  if (state.pendingPlace) {
+    const ae=getActiveEntity();
+    pushUndo({type:'place',who:state.activeType,id:state.active,from:null});
+    ae.pos={x:p.x,y:p.y};
+    state.pendingPlace=false;
+    updateCursor();
+    renderHUD();
+    redraw();
+    return;
+  }
   state.drawing=true; state.curStroke=[{x:p.x,y:p.y}];
 }
 
@@ -687,7 +710,7 @@ drawC.addEventListener('touchcancel',onUp,  {passive:false});
 function setMode(m) {
   state.mode=m;
   ['draw','place','erase'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('on',x===m));
-  drawC.style.cursor=m==='draw'?'crosshair':m==='erase'?'cell':'move';
+  updateCursor();
 }
 
 function setCourtType(t) {
@@ -755,7 +778,8 @@ function renderHUDRow(elId, arr, type) {
   arr.forEach((ent, i) => {
     const b=document.createElement('button');
     const isActive = (i===state.active && state.activeType===type);
-    b.className='hud-entity'+(type==='ball'?' hud-ball':'')+(isActive?' sel':'');
+    const isPending = isActive && state.pendingPlace;
+    b.className='hud-entity'+(type==='ball'?' hud-ball':'')+(isPending?' pending':isActive?' sel':'');
     b.style.setProperty('--c', ent.color);
     if (type==='ball') {
       b.style.border = `2.5px solid ${isActive ? '#fff' : ent.borderColor || 'rgba(255,255,255,0.25)'}`;
@@ -770,8 +794,24 @@ function renderHUDRow(elId, arr, type) {
 function selectEntity(type, i) {
   state.activeType = type;
   state.active = i;
+  const ent = type === 'player' ? PLAYERS[i] : BALLS[i];
+  // 若棋子尚未放置，自動等待一次性放置
+  state.pendingPlace = !ent.pos;
+  updateCursor();
   renderHUD();
   redraw();
+}
+
+function updateCursor() {
+  if (state.pendingPlace) {
+    drawC.style.cursor = 'copy';  // 暗示「點擊放置」
+  } else if (state.mode==='draw') {
+    drawC.style.cursor = 'crosshair';
+  } else if (state.mode==='erase') {
+    drawC.style.cursor = 'cell';
+  } else {
+    drawC.style.cursor = 'move';
+  }
 }
 
 // ═══════════════════════════════════════
@@ -781,6 +821,7 @@ document.addEventListener('keydown', e=>{
   if (e.target.tagName==='INPUT') return;
   const k=e.key.toLowerCase();
   if ((e.ctrlKey||e.metaKey)&&k==='z'){e.preventDefault();undo();return;}
+  if (e.key==='Escape'&&state.pendingPlace){state.pendingPlace=false;updateCursor();renderHUD();return;}
   switch(k){
     case 'q': setMode('draw');  break;
     case 'w': setMode('place'); break;
