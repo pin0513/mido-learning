@@ -33,7 +33,8 @@ public interface IFirebaseService
         int? minLevel = null,
         int? maxLevel = null,
         string? priceFilter = null,
-        string? sortBy = null);
+        string? sortBy = null,
+        string? gameType = null);
     Task<CourseDto?> GetCourseByIdAsync(string courseId);
 
     // Analytics methods

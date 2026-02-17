@@ -142,6 +142,7 @@ export async function getCourses(params?: {
   maxLevel?: number;
   priceFilter?: 'free' | 'paid' | 'all';
   sortBy?: 'price_asc' | 'price_desc' | 'level_asc' | 'level_desc' | 'newest' | 'oldest';
+  gameType?: 'typing' | 'math' | 'memory';
 }): Promise<Course[]> {
   const queryParams = new URLSearchParams();
   if (params?.type) queryParams.append('type', params.type);
@@ -154,6 +155,7 @@ export async function getCourses(params?: {
     queryParams.append('priceFilter', params.priceFilter);
   }
   if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
+  if (params?.gameType) queryParams.append('gameType', params.gameType);
 
   const url = `${API_URL}/api/courses${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
   const response = await queuedFetch(url);

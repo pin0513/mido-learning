@@ -617,7 +617,8 @@ public class FirebaseService : IFirebaseService
         int? minLevel = null,
         int? maxLevel = null,
         string? priceFilter = null,
-        string? sortBy = null)
+        string? sortBy = null,
+        string? gameType = null)
     {
         Query query = _firestoreDb.Collection("courses");
 
@@ -697,6 +698,14 @@ public class FirebaseService : IFirebaseService
                 "paid" => filteredCourses.Where(c => c.Price > 0),
                 _ => filteredCourses
             };
+        }
+
+        // GameType filter (typing, math, memory)
+        if (!string.IsNullOrEmpty(gameType))
+        {
+            filteredCourses = filteredCourses.Where(c =>
+                c.GameConfig != null &&
+                string.Equals(c.GameConfig.GameType, gameType, StringComparison.OrdinalIgnoreCase));
         }
 
         // Apply sorting
