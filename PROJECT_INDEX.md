@@ -8,6 +8,7 @@
 |----------|---------|------|
 | **CLAUDE.md** | AI guidance & project overview | `./CLAUDE.md` |
 | **README.md** | User-facing introduction | `./README.md` |
+| **SITEMAP.md** | Complete website structure map | `./docs/SITEMAP.md` |
 | **This File** | Documentation index | `./PROJECT_INDEX.md` |
 
 ---
@@ -46,9 +47,11 @@
 
 | Category | Document | Path |
 |----------|----------|------|
+| **Navigation** | **Website Sitemap** | `docs/SITEMAP.md` |
 | Current | Product Manual | `docs/current/product-manual.md` |
 | Tech Debt | Known Issues & TODOs | `docs/TECH_DEBT.md` |
 | Worklog | 2026-01-31 | `docs/worklogs/2026-01-31.md` |
+| Worklog | 2026-02-17 Documentation Update | `docs/worklogs/2026-02-17-documentation-update.md` |
 
 ---
 

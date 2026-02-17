@@ -7,12 +7,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### 🎯 Essential Documents
 - **This File**: Project overview and AI guidance
 - **[README.md](./README.md)**: User-facing project introduction
+- **[SITEMAP](./docs/SITEMAP.md)**: Complete website structure & navigation map
 - **[Product Manual](./docs/current/product-manual.md)**: User documentation
 - **[Tech Debt](./docs/TECH_DEBT.md)**: Known issues and TODOs
 
 ### 📖 Documentation Index
 ```
 docs/
+├── SITEMAP.md               # 🗺️ Complete website structure map
+├── TECH_DEBT.md             # Known issues and TODOs
 ├── arch/                    # Architecture documentation
 │   ├── architecture-overview.md       # System architecture overview
 │   ├── backend-architecture.md        # Backend design & patterns
@@ -30,7 +33,8 @@ docs/
 ├── qa-reports/              # QA test reports
 │   └── 20260201-material-viewer-rwd-FINAL.md
 ├── worklogs/                # Development logs
-│   └── 2026-01-31.md
+│   ├── 2026-01-31.md
+│   └── 2026-02-17-documentation-update.md
 └── current/                 # Current version docs
     └── product-manual.md
 ```

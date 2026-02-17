@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mido Learning - 网站地图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .search-bar {
+            padding: 20px 40px;
+            background: white;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+        }
+
+        .section-icon {
+            font-size: 2rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .section-title {
+            flex: 1;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .section-title p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .section-badge {
+            padding: 5px 15px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .section.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .section.collapsed .page-list {
+            display: none;
+        }
+
+        .page-list {
+            padding: 0 20px;
+        }
+
+        .page-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .page-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateX(5px);
+        }
+
+        .page-path {
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .page-name {
+            flex: 2;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .page-desc {
+            flex: 2;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .page-params {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .param-badge {
+            padding: 3px 10px;
+            background: #ffc107;
+            color: #000;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Permission Level Colors */
+        .level-public { border-left: 5px solid #4CAF50; }
+        .level-auth { border-left: 5px solid #FF9800; }
+        .level-member { border-left: 5px solid #9C27B0; }
+        .level-teacher { border-left: 5px solid #F44336; }
+        .level-admin { border-left: 5px solid #E91E63; }
+        .level-game-admin { border-left: 5px solid #3F51B5; }
+        .level-dynamic { border-left: 5px solid #607D8B; }
+
+        .permission-badge {
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .perm-public { background: #4CAF50; color: white; }
+        .perm-auth { background: #FF9800; color: white; }
+        .perm-member { background: #9C27B0; color: white; }
+        .perm-teacher { background: #F44336; color: white; }
+        .perm-admin { background: #E91E63; color: white; }
+        .perm-game-admin { background: #3F51B5; color: white; }
+        .perm-dynamic { background: #607D8B; color: white; }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            border-radius: 5px;
+        }
+
+        .legend-label {
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .page-path,
+            .page-name,
+            .page-desc {
+                flex: none;
+                width: 100%;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-item {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ Mido Learning 网站地图</h1>
+            <p>完整的网站结构导览 · 最后更新：2026-02-17</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <span class="stat-number">41</span>
+                <span class="stat-label">总页面数</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">7</span>
+                <span class="stat-label">路由组</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">12</span>
+                <span class="stat-label">动态路由</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">4</span>
+                <span class="stat-label">权限级别</span>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="🔍 搜索页面... (输入路径、名称或说明)" id="searchInput">
+        </div>
+
+        <div class="content">
+            <!-- Public Section -->
+            <div class="section" data-section="public">
+                <div class="section-header" onclick="toggleSection('public')">
+                    <div class="section-icon">🌐</div>
+                    <div class="section-title">
+                        <h2>公开区域 (Public)</h2>
+                        <p>无需登录即可访问</p>
+                    </div>
+                    <span class="section-badge">8 页</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="page-list">
+                    <div class="page-item level-public" data-search="/ 首页 网站首页，展示精选内容">
+                        <div class="page-path">/</div>
+                        <div class="page-name">首页</div>
+                        <div class="page-desc">网站首页，展示精选内容</div>
+                        <span class="permission-badge perm-public">公开</span>
+                    </div>
+                    <div class="page-item level-public" data-search="/about-skill-village 关于技能村庄 技能村庄游戏介绍">
+                        <div class="page-path">/about-skill-village</div>
+                        <div class="page-name">关于技能村庄</div>
+                        <div class="page-desc">技能村庄游戏介绍</div>
+                        <span class="permission-badge perm-public">公开</span>
+                    </div>
+                    <div class="page-item level-public" data-search="/categories 分类列表 浏览所有学习分类">
+                        <div class="page-path">/categories</div>
+                        <div class="page-name">分类列表</div>
+                        <div class="page-desc">浏览所有学习分类</div>
+                        <span class="permission-badge perm-public">公开</span>
+                    </div>
+                    <div class="page-item level-public" data-search="/categories/[category] 分类详情 查看特定分类的内容">
+                        <div class="page-path">/categories/[category]</div>
+                        <div class="page-name">分类详情</div>
+                        <div class="page-desc">查看特定分类的内容</div>
+                        <div class="page-params">
+                            <span class="param-badge">category</span>
+                        </div>
+                        <span class="permission-badge perm-public">公开</span>
+                    </div>
+                    <div class="page-item level-public" data-search="/materials/[componentId] 教材详情 查看学习教材详情">
+                        <div class="page-path">/materials/[componentId]</div>
+                        <div class="page-name">教材详情</div>
+                        <div class="page-desc">查看学习教材详情</div>
+                        <div class="page-params">
+                            <span class="param-badge">componentId</span>
+                        </div>
+                        <span class="permission-badge perm-public">公开</span>
+                    </div>
+                    <div class="page-item level-public" data-search="/games 游戏入口 游戏相关内容">
+                        <div class="page-path">/games</div>
+                        <div class="page-name">游戏入口</div>
+                        <div class="page-desc">游戏相关内容</div>
+                        <span class="permission-badge perm-public">公开</span>
+                    </div>
+                    <div class="page-item level-public" data-search="/courses/[id] 课程详情 课程详细信息">
+                        <div class="page-path">/courses/[id]</div>
+                        <div class="page-name">课程详情</div>
+                        <div class="page-desc">课程详细信息</div>
+                        <div class="page-params">
+                            <span class="param-badge">id</span>
+                        </div>
+                        <span class="permission-badge perm-public">公开</span>
+                    </div>
+                    <div class="page-item level-public" data-search="/courses/[id]/play 课程播放 播放/学习课程">
+                        <div class="page-path">/courses/[id]/play</div>
+                        <div class="page-name">课程播放</div>
+                        <div class="page-desc">播放/学习课程</div>
+                        <div class="page-params">
+                            <span class="param-badge">id</span>
+                        </div>
+                        <span class="permission-badge perm-public">公开</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Auth Section -->
+            <div class="section" data-section="auth">
+                <div class="section-header" onclick="toggleSection('auth')">
+                    <div class="section-icon">🔑</div>
+                    <div class="section-title">
+                        <h2>认证区域 (Auth)</h2>
+                        <p>登录/注册页面</p>
+                    </div>
+                    <span class="section-badge">4 页</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="page-list">
+                    <div class="page-item level-auth" data-search="/login 登录页面 用户登录">
+                        <div class="page-path">/login</div>
+                        <div class="page-name">登录页面</div>
+                        <div class="page-desc">用户登录（已登录则重定向）</div>
+                        <span class="permission-badge perm-auth">未登录</span>
+                    </div>
+                    <div class="page-item level-auth" data-search="/register 注册页面 用户注册">
+                        <div class="page-path">/register</div>
+                        <div class="page-name">注册页面</div>
+                        <div class="page-desc">用户注册（已登录则重定向）</div>
+                        <span class="permission-badge perm-auth">未登录</span>
+                    </div>
+                    <div class="page-item level-auth" data-search="/register/simple 简易注册 简化版注册流程">
+                        <div class="page-path">/register/simple</div>
+                        <div class="page-name">简易注册</div>
+                        <div class="page-desc">简化版注册流程</div>
+                        <span class="permission-badge perm-auth">未登录</span>
+                    </div>
+                    <div class="page-item level-auth" data-search="/skill-village-login 技能村庄登录 游戏专用登录页面">
+                        <div class="page-path">/skill-village-login</div>
+                        <div class="page-name">技能村庄登录</div>
+                        <div class="page-desc">游戏专用登录页面</div>
+                        <span class="permission-badge perm-auth">未登录</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member Section -->
+            <div class="section" data-section="member">
+                <div class="section-header" onclick="toggleSection('member')">
+                    <div class="section-icon">👤</div>
+                    <div class="section-title">
+                        <h2>会员区域 (Member)</h2>
+                        <p>需要登录访问</p>
+                    </div>
+                    <span class="section-badge">10 页</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="page-list">
+                    <div class="page-item level-member" data-search="/dashboard 会员仪表板 个人学习总览">
+                        <div class="page-path">/dashboard</div>
+                        <div class="page-name">会员仪表板</div>
+                        <div class="page-desc">个人学习总览</div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/dashboard/achievements 成就列表 查看已获得的成就">
+                        <div class="page-path">/dashboard/achievements</div>
+                        <div class="page-name">成就列表</div>
+                        <div class="page-desc">查看已获得的成就</div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/profile 个人资料 编辑个人信息">
+                        <div class="page-path">/profile</div>
+                        <div class="page-name">个人资料</div>
+                        <div class="page-desc">编辑个人信息</div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/components 我的元件 查看已学习/收藏的元件">
+                        <div class="page-path">/components</div>
+                        <div class="page-name">我的元件</div>
+                        <div class="page-desc">查看已学习/收藏的元件</div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/components/[componentId] 元件详情 查看元件详细内容">
+                        <div class="page-path">/components/[componentId]</div>
+                        <div class="page-name">元件详情</div>
+                        <div class="page-desc">查看元件详细内容</div>
+                        <div class="page-params">
+                            <span class="param-badge">componentId</span>
+                        </div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/components/[componentId]/materials/[materialId] 教材查看 查看元件的教材内容">
+                        <div class="page-path">/components/[componentId]/materials/[materialId]</div>
+                        <div class="page-name">教材查看</div>
+                        <div class="page-desc">查看元件的教材内容</div>
+                        <div class="page-params">
+                            <span class="param-badge">componentId</span>
+                            <span class="param-badge">materialId</span>
+                        </div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/skill-village 技能村庄 技能村庄游戏主页">
+                        <div class="page-path">/skill-village</div>
+                        <div class="page-name">技能村庄</div>
+                        <div class="page-desc">技能村庄游戏主页</div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/skill-village/[skillId] 技能详情 查看特定技能详情">
+                        <div class="page-path">/skill-village/[skillId]</div>
+                        <div class="page-name">技能详情</div>
+                        <div class="page-desc">查看特定技能详情</div>
+                        <div class="page-params">
+                            <span class="param-badge">skillId</span>
+                        </div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/character 角色管理 管理游戏角色">
+                        <div class="page-path">/character</div>
+                        <div class="page-name">角色管理</div>
+                        <div class="page-desc">管理游戏角色</div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                    <div class="page-item level-member" data-search="/characters 角色列表 查看所有角色">
+                        <div class="page-path">/characters</div>
+                        <div class="page-name">角色列表</div>
+                        <div class="page-desc">查看所有角色</div>
+                        <span class="permission-badge perm-member">🔒 会员</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Section -->
+            <div class="section" data-section="teacher">
+                <div class="section-header" onclick="toggleSection('teacher')">
+                    <div class="section-icon">👨‍🏫</div>
+                    <div class="section-title">
+                        <h2>教师区域 (Teacher)</h2>
+                        <p>需要教师权限</p>
+                    </div>
+                    <span class="section-badge">6 页</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="page-list">
+                    <div class="page-item level-teacher" data-search="/teacher/components 元件管理 管理我的教学元件">
+                        <div class="page-path">/teacher/components</div>
+                        <div class="page-name">元件管理</div>
+                        <div class="page-desc">管理我的教学元件</div>
+                        <span class="permission-badge perm-teacher">🔒 教师</span>
+                    </div>
+                    <div class="page-item level-teacher" data-search="/teacher/components/upload 上传元件 上传新的教学元件">
+                        <div class="page-path">/teacher/components/upload</div>
+                        <div class="page-name">上传元件</div>
+                        <div class="page-desc">上传新的教学元件</div>
+                        <span class="permission-badge perm-teacher">🔒 教师</span>
+                    </div>
+                    <div class="page-item level-teacher" data-search="/teacher/components/[id]/edit 编辑元件 编辑现有元件">
+                        <div class="page-path">/teacher/components/[id]/edit</div>
+                        <div class="page-name">编辑元件</div>
+                        <div class="page-desc">编辑现有元件</div>
+                        <div class="page-params">
+                            <span class="param-badge">id</span>
+                        </div>
+                        <span class="permission-badge perm-teacher">🔒 教师</span>
+                    </div>
+                    <div class="page-item level-teacher" data-search="/teacher/profile 教师资料 教师个人资料">
+                        <div class="page-path">/teacher/profile</div>
+                        <div class="page-name">教师资料</div>
+                        <div class="page-desc">教师个人资料</div>
+                        <span class="permission-badge perm-teacher">🔒 教师</span>
+                    </div>
+                    <div class="page-item level-teacher" data-search="/teacher/taxonomy 分类管理 管理教学分类">
+                        <div class="page-path">/teacher/taxonomy</div>
+                        <div class="page-name">分类管理</div>
+                        <div class="page-desc">管理教学分类</div>
+                        <span class="permission-badge perm-teacher">🔒 教师</span>
+                    </div>
+                    <div class="page-item level-teacher" data-search="/teacher/wishes 学生愿望 查看学生的学习愿望">
+                        <div class="page-path">/teacher/wishes</div>
+                        <div class="page-name">学生愿望</div>
+                        <div class="page-desc">查看学生的学习愿望</div>
+                        <span class="permission-badge perm-teacher">🔒 教师</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Section -->
+            <div class="section" data-section="admin">
+                <div class="section-header" onclick="toggleSection('admin')">
+                    <div class="section-icon">👑</div>
+                    <div class="section-title">
+                        <h2>管理员区域 (Admin)</h2>
+                        <p>需要管理员权限</p>
+                    </div>
+                    <span class="section-badge">6 页</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="page-list">
+                    <div class="page-item level-admin" data-search="/admin 管理仪表板 系统管理总览">
+                        <div class="page-path">/admin</div>
+                        <div class="page-name">管理仪表板</div>
+                        <div class="page-desc">系统管理总览</div>
+                        <span class="permission-badge perm-admin">🔒 管理员</span>
+                    </div>
+                    <div class="page-item level-admin" data-search="/admin/users 用户管理 管理所有用户">
+                        <div class="page-path">/admin/users</div>
+                        <div class="page-name">用户管理</div>
+                        <div class="page-desc">管理所有用户</div>
+                        <span class="permission-badge perm-admin">🔒 管理员</span>
+                    </div>
+                    <div class="page-item level-admin" data-search="/admin/components 元件管理 管理所有元件">
+                        <div class="page-path">/admin/components</div>
+                        <div class="page-name">元件管理</div>
+                        <div class="page-desc">管理所有元件</div>
+                        <span class="permission-badge perm-admin">🔒 管理员</span>
+                    </div>
+                    <div class="page-item level-admin" data-search="/admin/costs 成本管理 查看/管理系统成本">
+                        <div class="page-path">/admin/costs</div>
+                        <div class="page-name">成本管理</div>
+                        <div class="page-desc">查看/管理系统成本</div>
+                        <span class="permission-badge perm-admin">🔒 管理员</span>
+                    </div>
+                    <div class="page-item level-admin" data-search="/admin/wishes 愿望管理 管理用户愿望">
+                        <div class="page-path">/admin/wishes</div>
+                        <div class="page-name">愿望管理</div>
+                        <div class="page-desc">管理用户愿望</div>
+                        <span class="permission-badge perm-admin">🔒 管理员</span>
+                    </div>
+                    <div class="page-item level-admin" data-search="/admin/wishes/stats 愿望统计 愿望数据统计分析">
+                        <div class="page-path">/admin/wishes/stats</div>
+                        <div class="page-name">愿望统计</div>
+                        <div class="page-desc">愿望数据统计分析</div>
+                        <span class="permission-badge perm-admin">🔒 管理员</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Admin Section -->
+            <div class="section" data-section="game-admin">
+                <div class="section-header" onclick="toggleSection('game-admin')">
+                    <div class="section-icon">🎮</div>
+                    <div class="section-title">
+                        <h2>游戏管理员 (Game Admin)</h2>
+                        <p>需要管理员权限</p>
+                    </div>
+                    <span class="section-badge">4 页</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="page-list">
+                    <div class="page-item level-game-admin" data-search="/game-admin 游戏仪表板 游戏系统管理总览">
+                        <div class="page-path">/game-admin</div>
+                        <div class="page-name">游戏仪表板</div>
+                        <div class="page-desc">游戏系统管理总览</div>
+                        <span class="permission-badge perm-game-admin">🔒 管理员</span>
+                    </div>
+                    <div class="page-item level-game-admin" data-search="/game-admin/achievements 成就管理 管理所有成就">
+                        <div class="page-path">/game-admin/achievements</div>
+                        <div class="page-name">成就管理</div>
+                        <div class="page-desc">管理所有成就</div>
+                        <span class="permission-badge perm-game-admin">🔒 管理员</span>
+                    </div>
+                    <div class="page-item level-game-admin" data-search="/game-admin/achievements/new 新建成就 创建新成就">
+                        <div class="page-path">/game-admin/achievements/new</div>
+                        <div class="page-name">新建成就</div>
+                        <div class="page-desc">创建新成就</div>
+                        <span class="permission-badge perm-game-admin">🔒 管理员</span>
+                    </div>
+                    <div class="page-item level-game-admin" data-search="/game-admin/achievements/[id]/edit 编辑成就 编辑现有成就">
+                        <div class="page-path">/game-admin/achievements/[id]/edit</div>
+                        <div class="page-name">编辑成就</div>
+                        <div class="page-desc">编辑现有成就</div>
+                        <div class="page-params">
+                            <span class="param-badge">id</span>
+                        </div>
+                        <span class="permission-badge perm-game-admin">🔒 管理员</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fullscreen Section -->
+            <div class="section" data-section="fullscreen">
+                <div class="section-header" onclick="toggleSection('fullscreen')">
+                    <div class="section-icon">🖥️</div>
+                    <div class="section-title">
+                        <h2>全屏查看器 (Fullscreen)</h2>
+                        <p>动态权限控制</p>
+                    </div>
+                    <span class="section-badge">1 页</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="page-list">
+                    <div class="page-item level-dynamic" data-search="/materials/[componentId]/fullscreen 教材全屏查看 iframe全屏显示教材">
+                        <div class="page-path">/materials/[componentId]/fullscreen</div>
+                        <div class="page-name">教材全屏查看</div>
+                        <div class="page-desc">iframe 全屏显示教材（依元件可见性设定）</div>
+                        <div class="page-params">
+                            <span class="param-badge">componentId</span>
+                        </div>
+                        <span class="permission-badge perm-dynamic">动态</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend">
+                <h3 style="width: 100%; margin-bottom: 10px; color: #333;">权限级别说明</h3>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4CAF50;"></div>
+                    <span class="legend-label">公开 - 所有人可访问</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #FF9800;"></div>
+                    <span class="legend-label">未登录 - 仅未登录用户</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #9C27B0;"></div>
+                    <span class="legend-label">会员 - 需要登录</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #F44336;"></div>
+                    <span class="legend-label">教师 - 需要教师权限</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #E91E63;"></div>
+                    <span class="legend-label">管理员 - 需要管理员权限</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3F51B5;"></div>
+                    <span class="legend-label">游戏管理员 - 需要管理员权限</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #607D8B;"></div>
+                    <span class="legend-label">动态 - 依元件设定</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🗺️ Mido Learning 网站地图 · 生成日期：2026-02-17</p>
+            <p>总计 41 个页面 · 7 个路由组 · 12 个动态路由</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle section expand/collapse
+        function toggleSection(sectionName) {
+            const section = document.querySelector(`[data-section="${sectionName}"]`);
+            section.classList.toggle('collapsed');
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const allPages = document.querySelectorAll('.page-item');
+
+            allPages.forEach(page => {
+                const searchText = page.getAttribute('data-search').toLowerCase();
+                if (searchText.includes(searchTerm)) {
+                    page.classList.remove('hidden');
+                } else {
+                    page.classList.add('hidden');
+                }
+            });
+
+            // Expand all sections when searching
+            if (searchTerm) {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('collapsed');
+                });
+            }
+        });
+
+        // Collapse all sections by default (optional)
+        // document.querySelectorAll('.section').forEach(section => {
+        //     section.classList.add('collapsed');
+        // });
+    </script>
+</body>
+</html>
