@@ -70,7 +70,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden space-x-8 md:flex">
+        <nav className="hidden space-x-8 md:flex items-center">
           <Link href="/" className="text-gray-600 hover:text-gray-900">
             首頁
           </Link>
@@ -99,6 +99,14 @@ export function Header() {
               )}
             </>
           )}
+          <a
+            href="/badminton-tactical-board.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-200 transition-colors"
+          >
+            🧪 試驗功能
+          </a>
         </nav>
 
         <div className="flex items-center space-x-4">
@@ -218,6 +226,15 @@ export function Header() {
                 )}
               </>
             )}
+            <a
+              href="/badminton-tactical-board.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-2 text-base font-semibold text-amber-700 hover:bg-amber-200 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              🧪 試驗功能
+            </a>
           </div>
 
           {/* Mobile User Info */}
