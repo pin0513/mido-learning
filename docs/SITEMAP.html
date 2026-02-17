@@ -1,9 +1,17 @@
 <!DOCTYPE html>
+<!--
+  Mido Learning - 網站地圖 (Sitemap)
+  版本: 2.0
+  生成日期: 2026-02-17
+  語言: 繁體中文
+  主題: 深色模式 (Dark Mode)
+  功能: 即時搜尋、可折疊群組、點擊複製路徑、頁面統計儀表板
+-->
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mido Learning - 网站地图</title>
+    <title>Mido Learning - 網站地圖</title>
     <style>
         * {
             margin: 0;
@@ -11,157 +19,301 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #1c2128;
+            --bg-card: #21262d;
+            --bg-hover: #262c36;
+            --border-color: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-orange: #d29922;
+            --accent-red: #f85149;
+            --accent-purple: #bc8cff;
+            --accent-pink: #f778ba;
+            --accent-cyan: #39d353;
+
+            --color-public: #3fb950;
+            --color-auth: #d29922;
+            --color-member: #bc8cff;
+            --color-teacher: #f85149;
+            --color-admin: #f778ba;
+            --color-game-admin: #58a6ff;
+            --color-dynamic: #8b949e;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1c2128 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 24px 32px;
+            text-align: center;
+            position: relative;
             overflow: hidden;
         }
 
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(88, 166, 255, 0.05) 0%, transparent 60%);
+            pointer-events: none;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
 
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .header h1 span {
+            background: linear-gradient(135deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .stats {
+        .header-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .header-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Stats Dashboard */
+        .stats-dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            padding: 30px 40px;
-            background: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            padding: 24px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            transition: all 0.2s ease;
+            cursor: default;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.1);
         }
 
         .stat-number {
             font-size: 2rem;
-            font-weight: bold;
-            color: #667eea;
+            font-weight: 700;
             display: block;
+            line-height: 1;
+            margin-bottom: 4px;
         }
 
         .stat-label {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-top: 5px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
         }
 
-        .search-bar {
-            padding: 20px 40px;
-            background: white;
-            border-bottom: 2px solid #e9ecef;
+        .stat-card.total .stat-number { color: var(--accent-blue); }
+        .stat-card.public .stat-number { color: var(--color-public); }
+        .stat-card.auth .stat-number { color: var(--color-auth); }
+        .stat-card.member .stat-number { color: var(--color-member); }
+        .stat-card.teacher .stat-number { color: var(--color-teacher); }
+        .stat-card.admin .stat-number { color: var(--color-admin); }
+        .stat-card.game-admin .stat-number { color: var(--color-game-admin); }
+        .stat-card.dynamic .stat-number { color: var(--color-dynamic); }
+
+        /* Search Bar */
+        .search-wrapper {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        .search-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+            pointer-events: none;
         }
 
         .search-input {
             width: 100%;
-            padding: 12px 20px;
-            font-size: 1rem;
-            border: 2px solid #e9ecef;
-            border-radius: 25px;
+            padding: 12px 44px;
+            font-size: 0.95rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
         }
 
         .search-input:focus {
-            border-color: #667eea;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
         }
 
-        .content {
-            padding: 40px;
+        .search-clear {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px;
+            border-radius: 4px;
+            display: none;
+            line-height: 1;
         }
 
+        .search-clear:hover {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+
+        .search-results-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Section */
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-secondary);
         }
 
         .section-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 10px;
+            gap: 12px;
+            padding: 16px 20px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: background 0.2s ease;
+            user-select: none;
         }
 
         .section-header:hover {
-            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            background: var(--bg-hover);
         }
 
         .section-icon {
-            font-size: 2rem;
-            min-width: 50px;
+            font-size: 1.4rem;
+            min-width: 36px;
             text-align: center;
         }
 
-        .section-title {
+        .section-info {
             flex: 1;
         }
 
-        .section-title h2 {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 5px;
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .section-title p {
-            color: #6c757d;
-            font-size: 0.9rem;
+        .section-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
         }
 
         .section-badge {
-            padding: 5px 15px;
-            background: #667eea;
-            color: white;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border: 1px solid;
         }
 
-        .toggle-icon {
-            font-size: 1.5rem;
-            transition: transform 0.3s;
+        .badge-public { background: rgba(63, 185, 80, 0.15); color: var(--color-public); border-color: rgba(63, 185, 80, 0.3); }
+        .badge-auth { background: rgba(210, 153, 34, 0.15); color: var(--color-auth); border-color: rgba(210, 153, 34, 0.3); }
+        .badge-member { background: rgba(188, 140, 255, 0.15); color: var(--color-member); border-color: rgba(188, 140, 255, 0.3); }
+        .badge-teacher { background: rgba(248, 81, 73, 0.15); color: var(--color-teacher); border-color: rgba(248, 81, 73, 0.3); }
+        .badge-admin { background: rgba(247, 120, 186, 0.15); color: var(--color-admin); border-color: rgba(247, 120, 186, 0.3); }
+        .badge-game-admin { background: rgba(88, 166, 255, 0.15); color: var(--color-game-admin); border-color: rgba(88, 166, 255, 0.3); }
+        .badge-dynamic { background: rgba(139, 148, 158, 0.15); color: var(--color-dynamic); border-color: rgba(139, 148, 158, 0.3); }
+
+        .toggle-btn {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            transition: transform 0.2s ease;
+            min-width: 20px;
+            text-align: center;
         }
 
-        .section.collapsed .toggle-icon {
+        .section.collapsed .toggle-btn {
             transform: rotate(-90deg);
         }
 
@@ -169,151 +321,299 @@
             display: none;
         }
 
+        /* Page List */
         .page-list {
-            padding: 0 20px;
+            border-top: 1px solid var(--border-color);
         }
 
         .page-item {
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(220px, 2fr) minmax(120px, 1fr) minmax(150px, 2fr) auto auto;
             align-items: center;
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            transition: all 0.3s;
+            gap: 12px;
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+            transition: background 0.15s ease;
+            position: relative;
+        }
+
+        .page-item:last-child {
+            border-bottom: none;
         }
 
         .page-item:hover {
-            border-color: #667eea;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-            transform: translateX(5px);
+            background: var(--bg-hover);
         }
 
+        .page-item.hidden {
+            display: none !important;
+        }
+
+        /* Left accent bar by permission level */
+        .page-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+        }
+
+        .page-item.level-public::before { background: var(--color-public); }
+        .page-item.level-auth::before { background: var(--color-auth); }
+        .page-item.level-member::before { background: var(--color-member); }
+        .page-item.level-teacher::before { background: var(--color-teacher); }
+        .page-item.level-admin::before { background: var(--color-admin); }
+        .page-item.level-game-admin::before { background: var(--color-game-admin); }
+        .page-item.level-dynamic::before { background: var(--color-dynamic); }
+
         .page-path {
-            flex: 1;
-            font-family: 'Courier New', monospace;
-            color: #667eea;
-            font-weight: bold;
-            font-size: 0.95rem;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            word-break: break-all;
+        }
+
+        .page-path .dynamic-param {
+            color: var(--accent-orange);
+            font-weight: 600;
         }
 
         .page-name {
-            flex: 2;
-            color: #333;
+            font-size: 0.9rem;
             font-weight: 500;
+            color: var(--text-primary);
         }
 
         .page-desc {
-            flex: 2;
-            color: #6c757d;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
         }
 
         .page-params {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             flex-wrap: wrap;
         }
 
-        .param-badge {
-            padding: 3px 10px;
-            background: #ffc107;
-            color: #000;
-            border-radius: 5px;
-            font-size: 0.75rem;
-            font-weight: bold;
+        .param-tag {
+            padding: 2px 8px;
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--accent-orange);
+            border: 1px solid rgba(210, 153, 34, 0.3);
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-family: monospace;
+            white-space: nowrap;
         }
 
-        /* Permission Level Colors */
-        .level-public { border-left: 5px solid #4CAF50; }
-        .level-auth { border-left: 5px solid #FF9800; }
-        .level-member { border-left: 5px solid #9C27B0; }
-        .level-teacher { border-left: 5px solid #F44336; }
-        .level-admin { border-left: 5px solid #E91E63; }
-        .level-game-admin { border-left: 5px solid #3F51B5; }
-        .level-dynamic { border-left: 5px solid #607D8B; }
-
-        .permission-badge {
-            padding: 3px 10px;
-            border-radius: 5px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-
-        .perm-public { background: #4CAF50; color: white; }
-        .perm-auth { background: #FF9800; color: white; }
-        .perm-member { background: #9C27B0; color: white; }
-        .perm-teacher { background: #F44336; color: white; }
-        .perm-admin { background: #E91E63; color: white; }
-        .perm-game-admin { background: #3F51B5; color: white; }
-        .perm-dynamic { background: #607D8B; color: white; }
-
-        .legend {
+        .copy-btn {
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            transition: all 0.15s ease;
+            white-space: nowrap;
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
+            align-items: center;
+            gap: 4px;
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-card);
+            border-color: var(--border-color);
+        }
+
+        .copy-btn.copied {
+            color: var(--accent-green);
+            border-color: rgba(63, 185, 80, 0.3);
+        }
+
+        /* Table Header */
+        .table-header {
+            display: grid;
+            grid-template-columns: minmax(220px, 2fr) minmax(120px, 1fr) minmax(150px, 2fr) auto auto;
+            gap: 12px;
+            padding: 8px 20px;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Permission Legend */
+        .legend {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin-top: 40px;
+            margin-top: 24px;
+        }
+
+        .legend h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Empty state */
+        .no-results {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .no-results svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .no-results p {
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .footer p + p {
+            margin-top: 4px;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
             gap: 8px;
         }
 
-        .legend-color {
-            width: 30px;
-            height: 20px;
-            border-radius: 5px;
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
         }
 
-        .legend-label {
-            font-size: 0.9rem;
-            color: #333;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 30px;
-            background: #f8f9fa;
-            color: #6c757d;
-            font-size: 0.9rem;
+        .toast.success {
+            border-color: rgba(63, 185, 80, 0.4);
+            color: var(--color-public);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .stats {
+            .stats-dashboard {
                 grid-template-columns: repeat(2, 1fr);
+                padding: 16px;
             }
 
             .page-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+                grid-template-columns: 1fr auto;
+                grid-template-rows: auto auto auto auto;
             }
 
-            .page-path,
-            .page-name,
+            .page-path {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .copy-btn {
+                grid-column: 2;
+                grid-row: 1;
+            }
+
+            .page-name {
+                grid-column: 1 / -1;
+                grid-row: 2;
+                font-weight: 600;
+            }
+
             .page-desc {
-                flex: none;
-                width: 100%;
+                grid-column: 1 / -1;
+                grid-row: 3;
+            }
+
+            .page-params {
+                grid-column: 1 / -1;
+                grid-row: 4;
+            }
+
+            .table-header {
+                display: none;
+            }
+
+            .main-content {
+                padding: 16px;
             }
         }
 
-        /* Animation */
-        @keyframes fadeIn {
+        /* Animations */
+        @keyframes fadeSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(8px);
             }
             to {
                 opacity: 1;
@@ -321,490 +621,981 @@
             }
         }
 
-        .page-item {
-            animation: fadeIn 0.3s ease-out;
+        .section {
+            animation: fadeSlideIn 0.3s ease-out both;
         }
 
-        .hidden {
-            display: none !important;
+        .section:nth-child(1) { animation-delay: 0.05s; }
+        .section:nth-child(2) { animation-delay: 0.10s; }
+        .section:nth-child(3) { animation-delay: 0.15s; }
+        .section:nth-child(4) { animation-delay: 0.20s; }
+        .section:nth-child(5) { animation-delay: 0.25s; }
+        .section:nth-child(6) { animation-delay: 0.30s; }
+        .section:nth-child(7) { animation-delay: 0.35s; }
+
+        /* Highlight search match */
+        .highlight {
+            background: rgba(210, 153, 34, 0.25);
+            color: var(--accent-orange);
+            border-radius: 2px;
+            padding: 0 1px;
         }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+        /* ── Tree Diagram ── */
+        .tree-section { margin: 24px auto; max-width: 1560px; padding: 0 20px; }
+        .tree-section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
+        .tree-section-header h2 { font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0; }
+        .tree-badge { font-size: 12px; color: var(--text-secondary); background: var(--bg-card); padding: 3px 10px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .tree-scroll { overflow-x: auto; background: #0d1117; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px 20px 16px; }
+        .tree-scroll svg { display: block; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🗺️ Mido Learning 网站地图</h1>
-            <p>完整的网站结构导览 · 最后更新：2026-02-17</p>
-        </div>
 
-        <div class="stats">
-            <div class="stat-card">
-                <span class="stat-number">41</span>
-                <span class="stat-label">总页面数</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">7</span>
-                <span class="stat-label">路由组</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">12</span>
-                <span class="stat-label">动态路由</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">4</span>
-                <span class="stat-label">权限级别</span>
-            </div>
-        </div>
-
-        <div class="search-bar">
-            <input type="text" class="search-input" placeholder="🔍 搜索页面... (输入路径、名称或说明)" id="searchInput">
-        </div>
-
-        <div class="content">
-            <!-- Public Section -->
-            <div class="section" data-section="public">
-                <div class="section-header" onclick="toggleSection('public')">
-                    <div class="section-icon">🌐</div>
-                    <div class="section-title">
-                        <h2>公开区域 (Public)</h2>
-                        <p>无需登录即可访问</p>
-                    </div>
-                    <span class="section-badge">8 页</span>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="page-list">
-                    <div class="page-item level-public" data-search="/ 首页 网站首页，展示精选内容">
-                        <div class="page-path">/</div>
-                        <div class="page-name">首页</div>
-                        <div class="page-desc">网站首页，展示精选内容</div>
-                        <span class="permission-badge perm-public">公开</span>
-                    </div>
-                    <div class="page-item level-public" data-search="/about-skill-village 关于技能村庄 技能村庄游戏介绍">
-                        <div class="page-path">/about-skill-village</div>
-                        <div class="page-name">关于技能村庄</div>
-                        <div class="page-desc">技能村庄游戏介绍</div>
-                        <span class="permission-badge perm-public">公开</span>
-                    </div>
-                    <div class="page-item level-public" data-search="/categories 分类列表 浏览所有学习分类">
-                        <div class="page-path">/categories</div>
-                        <div class="page-name">分类列表</div>
-                        <div class="page-desc">浏览所有学习分类</div>
-                        <span class="permission-badge perm-public">公开</span>
-                    </div>
-                    <div class="page-item level-public" data-search="/categories/[category] 分类详情 查看特定分类的内容">
-                        <div class="page-path">/categories/[category]</div>
-                        <div class="page-name">分类详情</div>
-                        <div class="page-desc">查看特定分类的内容</div>
-                        <div class="page-params">
-                            <span class="param-badge">category</span>
-                        </div>
-                        <span class="permission-badge perm-public">公开</span>
-                    </div>
-                    <div class="page-item level-public" data-search="/materials/[componentId] 教材详情 查看学习教材详情">
-                        <div class="page-path">/materials/[componentId]</div>
-                        <div class="page-name">教材详情</div>
-                        <div class="page-desc">查看学习教材详情</div>
-                        <div class="page-params">
-                            <span class="param-badge">componentId</span>
-                        </div>
-                        <span class="permission-badge perm-public">公开</span>
-                    </div>
-                    <div class="page-item level-public" data-search="/games 游戏入口 游戏相关内容">
-                        <div class="page-path">/games</div>
-                        <div class="page-name">游戏入口</div>
-                        <div class="page-desc">游戏相关内容</div>
-                        <span class="permission-badge perm-public">公开</span>
-                    </div>
-                    <div class="page-item level-public" data-search="/courses/[id] 课程详情 课程详细信息">
-                        <div class="page-path">/courses/[id]</div>
-                        <div class="page-name">课程详情</div>
-                        <div class="page-desc">课程详细信息</div>
-                        <div class="page-params">
-                            <span class="param-badge">id</span>
-                        </div>
-                        <span class="permission-badge perm-public">公开</span>
-                    </div>
-                    <div class="page-item level-public" data-search="/courses/[id]/play 课程播放 播放/学习课程">
-                        <div class="page-path">/courses/[id]/play</div>
-                        <div class="page-name">课程播放</div>
-                        <div class="page-desc">播放/学习课程</div>
-                        <div class="page-params">
-                            <span class="param-badge">id</span>
-                        </div>
-                        <span class="permission-badge perm-public">公开</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Auth Section -->
-            <div class="section" data-section="auth">
-                <div class="section-header" onclick="toggleSection('auth')">
-                    <div class="section-icon">🔑</div>
-                    <div class="section-title">
-                        <h2>认证区域 (Auth)</h2>
-                        <p>登录/注册页面</p>
-                    </div>
-                    <span class="section-badge">4 页</span>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="page-list">
-                    <div class="page-item level-auth" data-search="/login 登录页面 用户登录">
-                        <div class="page-path">/login</div>
-                        <div class="page-name">登录页面</div>
-                        <div class="page-desc">用户登录（已登录则重定向）</div>
-                        <span class="permission-badge perm-auth">未登录</span>
-                    </div>
-                    <div class="page-item level-auth" data-search="/register 注册页面 用户注册">
-                        <div class="page-path">/register</div>
-                        <div class="page-name">注册页面</div>
-                        <div class="page-desc">用户注册（已登录则重定向）</div>
-                        <span class="permission-badge perm-auth">未登录</span>
-                    </div>
-                    <div class="page-item level-auth" data-search="/register/simple 简易注册 简化版注册流程">
-                        <div class="page-path">/register/simple</div>
-                        <div class="page-name">简易注册</div>
-                        <div class="page-desc">简化版注册流程</div>
-                        <span class="permission-badge perm-auth">未登录</span>
-                    </div>
-                    <div class="page-item level-auth" data-search="/skill-village-login 技能村庄登录 游戏专用登录页面">
-                        <div class="page-path">/skill-village-login</div>
-                        <div class="page-name">技能村庄登录</div>
-                        <div class="page-desc">游戏专用登录页面</div>
-                        <span class="permission-badge perm-auth">未登录</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Member Section -->
-            <div class="section" data-section="member">
-                <div class="section-header" onclick="toggleSection('member')">
-                    <div class="section-icon">👤</div>
-                    <div class="section-title">
-                        <h2>会员区域 (Member)</h2>
-                        <p>需要登录访问</p>
-                    </div>
-                    <span class="section-badge">10 页</span>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="page-list">
-                    <div class="page-item level-member" data-search="/dashboard 会员仪表板 个人学习总览">
-                        <div class="page-path">/dashboard</div>
-                        <div class="page-name">会员仪表板</div>
-                        <div class="page-desc">个人学习总览</div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/dashboard/achievements 成就列表 查看已获得的成就">
-                        <div class="page-path">/dashboard/achievements</div>
-                        <div class="page-name">成就列表</div>
-                        <div class="page-desc">查看已获得的成就</div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/profile 个人资料 编辑个人信息">
-                        <div class="page-path">/profile</div>
-                        <div class="page-name">个人资料</div>
-                        <div class="page-desc">编辑个人信息</div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/components 我的元件 查看已学习/收藏的元件">
-                        <div class="page-path">/components</div>
-                        <div class="page-name">我的元件</div>
-                        <div class="page-desc">查看已学习/收藏的元件</div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/components/[componentId] 元件详情 查看元件详细内容">
-                        <div class="page-path">/components/[componentId]</div>
-                        <div class="page-name">元件详情</div>
-                        <div class="page-desc">查看元件详细内容</div>
-                        <div class="page-params">
-                            <span class="param-badge">componentId</span>
-                        </div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/components/[componentId]/materials/[materialId] 教材查看 查看元件的教材内容">
-                        <div class="page-path">/components/[componentId]/materials/[materialId]</div>
-                        <div class="page-name">教材查看</div>
-                        <div class="page-desc">查看元件的教材内容</div>
-                        <div class="page-params">
-                            <span class="param-badge">componentId</span>
-                            <span class="param-badge">materialId</span>
-                        </div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/skill-village 技能村庄 技能村庄游戏主页">
-                        <div class="page-path">/skill-village</div>
-                        <div class="page-name">技能村庄</div>
-                        <div class="page-desc">技能村庄游戏主页</div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/skill-village/[skillId] 技能详情 查看特定技能详情">
-                        <div class="page-path">/skill-village/[skillId]</div>
-                        <div class="page-name">技能详情</div>
-                        <div class="page-desc">查看特定技能详情</div>
-                        <div class="page-params">
-                            <span class="param-badge">skillId</span>
-                        </div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/character 角色管理 管理游戏角色">
-                        <div class="page-path">/character</div>
-                        <div class="page-name">角色管理</div>
-                        <div class="page-desc">管理游戏角色</div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                    <div class="page-item level-member" data-search="/characters 角色列表 查看所有角色">
-                        <div class="page-path">/characters</div>
-                        <div class="page-name">角色列表</div>
-                        <div class="page-desc">查看所有角色</div>
-                        <span class="permission-badge perm-member">🔒 会员</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Teacher Section -->
-            <div class="section" data-section="teacher">
-                <div class="section-header" onclick="toggleSection('teacher')">
-                    <div class="section-icon">👨‍🏫</div>
-                    <div class="section-title">
-                        <h2>教师区域 (Teacher)</h2>
-                        <p>需要教师权限</p>
-                    </div>
-                    <span class="section-badge">6 页</span>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="page-list">
-                    <div class="page-item level-teacher" data-search="/teacher/components 元件管理 管理我的教学元件">
-                        <div class="page-path">/teacher/components</div>
-                        <div class="page-name">元件管理</div>
-                        <div class="page-desc">管理我的教学元件</div>
-                        <span class="permission-badge perm-teacher">🔒 教师</span>
-                    </div>
-                    <div class="page-item level-teacher" data-search="/teacher/components/upload 上传元件 上传新的教学元件">
-                        <div class="page-path">/teacher/components/upload</div>
-                        <div class="page-name">上传元件</div>
-                        <div class="page-desc">上传新的教学元件</div>
-                        <span class="permission-badge perm-teacher">🔒 教师</span>
-                    </div>
-                    <div class="page-item level-teacher" data-search="/teacher/components/[id]/edit 编辑元件 编辑现有元件">
-                        <div class="page-path">/teacher/components/[id]/edit</div>
-                        <div class="page-name">编辑元件</div>
-                        <div class="page-desc">编辑现有元件</div>
-                        <div class="page-params">
-                            <span class="param-badge">id</span>
-                        </div>
-                        <span class="permission-badge perm-teacher">🔒 教师</span>
-                    </div>
-                    <div class="page-item level-teacher" data-search="/teacher/profile 教师资料 教师个人资料">
-                        <div class="page-path">/teacher/profile</div>
-                        <div class="page-name">教师资料</div>
-                        <div class="page-desc">教师个人资料</div>
-                        <span class="permission-badge perm-teacher">🔒 教师</span>
-                    </div>
-                    <div class="page-item level-teacher" data-search="/teacher/taxonomy 分类管理 管理教学分类">
-                        <div class="page-path">/teacher/taxonomy</div>
-                        <div class="page-name">分类管理</div>
-                        <div class="page-desc">管理教学分类</div>
-                        <span class="permission-badge perm-teacher">🔒 教师</span>
-                    </div>
-                    <div class="page-item level-teacher" data-search="/teacher/wishes 学生愿望 查看学生的学习愿望">
-                        <div class="page-path">/teacher/wishes</div>
-                        <div class="page-name">学生愿望</div>
-                        <div class="page-desc">查看学生的学习愿望</div>
-                        <span class="permission-badge perm-teacher">🔒 教师</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Admin Section -->
-            <div class="section" data-section="admin">
-                <div class="section-header" onclick="toggleSection('admin')">
-                    <div class="section-icon">👑</div>
-                    <div class="section-title">
-                        <h2>管理员区域 (Admin)</h2>
-                        <p>需要管理员权限</p>
-                    </div>
-                    <span class="section-badge">6 页</span>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="page-list">
-                    <div class="page-item level-admin" data-search="/admin 管理仪表板 系统管理总览">
-                        <div class="page-path">/admin</div>
-                        <div class="page-name">管理仪表板</div>
-                        <div class="page-desc">系统管理总览</div>
-                        <span class="permission-badge perm-admin">🔒 管理员</span>
-                    </div>
-                    <div class="page-item level-admin" data-search="/admin/users 用户管理 管理所有用户">
-                        <div class="page-path">/admin/users</div>
-                        <div class="page-name">用户管理</div>
-                        <div class="page-desc">管理所有用户</div>
-                        <span class="permission-badge perm-admin">🔒 管理员</span>
-                    </div>
-                    <div class="page-item level-admin" data-search="/admin/components 元件管理 管理所有元件">
-                        <div class="page-path">/admin/components</div>
-                        <div class="page-name">元件管理</div>
-                        <div class="page-desc">管理所有元件</div>
-                        <span class="permission-badge perm-admin">🔒 管理员</span>
-                    </div>
-                    <div class="page-item level-admin" data-search="/admin/costs 成本管理 查看/管理系统成本">
-                        <div class="page-path">/admin/costs</div>
-                        <div class="page-name">成本管理</div>
-                        <div class="page-desc">查看/管理系统成本</div>
-                        <span class="permission-badge perm-admin">🔒 管理员</span>
-                    </div>
-                    <div class="page-item level-admin" data-search="/admin/wishes 愿望管理 管理用户愿望">
-                        <div class="page-path">/admin/wishes</div>
-                        <div class="page-name">愿望管理</div>
-                        <div class="page-desc">管理用户愿望</div>
-                        <span class="permission-badge perm-admin">🔒 管理员</span>
-                    </div>
-                    <div class="page-item level-admin" data-search="/admin/wishes/stats 愿望统计 愿望数据统计分析">
-                        <div class="page-path">/admin/wishes/stats</div>
-                        <div class="page-name">愿望统计</div>
-                        <div class="page-desc">愿望数据统计分析</div>
-                        <span class="permission-badge perm-admin">🔒 管理员</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Game Admin Section -->
-            <div class="section" data-section="game-admin">
-                <div class="section-header" onclick="toggleSection('game-admin')">
-                    <div class="section-icon">🎮</div>
-                    <div class="section-title">
-                        <h2>游戏管理员 (Game Admin)</h2>
-                        <p>需要管理员权限</p>
-                    </div>
-                    <span class="section-badge">4 页</span>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="page-list">
-                    <div class="page-item level-game-admin" data-search="/game-admin 游戏仪表板 游戏系统管理总览">
-                        <div class="page-path">/game-admin</div>
-                        <div class="page-name">游戏仪表板</div>
-                        <div class="page-desc">游戏系统管理总览</div>
-                        <span class="permission-badge perm-game-admin">🔒 管理员</span>
-                    </div>
-                    <div class="page-item level-game-admin" data-search="/game-admin/achievements 成就管理 管理所有成就">
-                        <div class="page-path">/game-admin/achievements</div>
-                        <div class="page-name">成就管理</div>
-                        <div class="page-desc">管理所有成就</div>
-                        <span class="permission-badge perm-game-admin">🔒 管理员</span>
-                    </div>
-                    <div class="page-item level-game-admin" data-search="/game-admin/achievements/new 新建成就 创建新成就">
-                        <div class="page-path">/game-admin/achievements/new</div>
-                        <div class="page-name">新建成就</div>
-                        <div class="page-desc">创建新成就</div>
-                        <span class="permission-badge perm-game-admin">🔒 管理员</span>
-                    </div>
-                    <div class="page-item level-game-admin" data-search="/game-admin/achievements/[id]/edit 编辑成就 编辑现有成就">
-                        <div class="page-path">/game-admin/achievements/[id]/edit</div>
-                        <div class="page-name">编辑成就</div>
-                        <div class="page-desc">编辑现有成就</div>
-                        <div class="page-params">
-                            <span class="param-badge">id</span>
-                        </div>
-                        <span class="permission-badge perm-game-admin">🔒 管理员</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Fullscreen Section -->
-            <div class="section" data-section="fullscreen">
-                <div class="section-header" onclick="toggleSection('fullscreen')">
-                    <div class="section-icon">🖥️</div>
-                    <div class="section-title">
-                        <h2>全屏查看器 (Fullscreen)</h2>
-                        <p>动态权限控制</p>
-                    </div>
-                    <span class="section-badge">1 页</span>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="page-list">
-                    <div class="page-item level-dynamic" data-search="/materials/[componentId]/fullscreen 教材全屏查看 iframe全屏显示教材">
-                        <div class="page-path">/materials/[componentId]/fullscreen</div>
-                        <div class="page-name">教材全屏查看</div>
-                        <div class="page-desc">iframe 全屏显示教材（依元件可见性设定）</div>
-                        <div class="page-params">
-                            <span class="param-badge">componentId</span>
-                        </div>
-                        <span class="permission-badge perm-dynamic">动态</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Legend -->
-            <div class="legend">
-                <h3 style="width: 100%; margin-bottom: 10px; color: #333;">权限级别说明</h3>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #4CAF50;"></div>
-                    <span class="legend-label">公开 - 所有人可访问</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #FF9800;"></div>
-                    <span class="legend-label">未登录 - 仅未登录用户</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #9C27B0;"></div>
-                    <span class="legend-label">会员 - 需要登录</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #F44336;"></div>
-                    <span class="legend-label">教师 - 需要教师权限</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #E91E63;"></div>
-                    <span class="legend-label">管理员 - 需要管理员权限</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #3F51B5;"></div>
-                    <span class="legend-label">游戏管理员 - 需要管理员权限</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #607D8B;"></div>
-                    <span class="legend-label">动态 - 依元件设定</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>🗺️ Mido Learning 网站地图 · 生成日期：2026-02-17</p>
-            <p>总计 41 个页面 · 7 个路由组 · 12 个动态路由</p>
+    <!-- Header -->
+    <div class="header">
+        <h1>Mido Learning <span>網站地圖</span></h1>
+        <div class="header-meta">
+            <span>版本 2.0</span>
+            <span>·</span>
+            <span>生成日期：2026-02-17</span>
+            <span>·</span>
+            <span>繁體中文</span>
         </div>
     </div>
 
+    <!-- Stats Dashboard -->
+    <div class="stats-dashboard">
+        <div class="stat-card total">
+            <span class="stat-number" id="total-count">39</span>
+            <span class="stat-label">總頁面數</span>
+        </div>
+        <div class="stat-card public">
+            <span class="stat-number">8</span>
+            <span class="stat-label">公開頁面</span>
+        </div>
+        <div class="stat-card auth">
+            <span class="stat-number">4</span>
+            <span class="stat-label">認證頁面</span>
+        </div>
+        <div class="stat-card member">
+            <span class="stat-number">10</span>
+            <span class="stat-label">會員頁面</span>
+        </div>
+        <div class="stat-card teacher">
+            <span class="stat-number">6</span>
+            <span class="stat-label">教師頁面</span>
+        </div>
+        <div class="stat-card admin">
+            <span class="stat-number">6</span>
+            <span class="stat-label">管理員頁面</span>
+        </div>
+        <div class="stat-card game-admin">
+            <span class="stat-number">4</span>
+            <span class="stat-label">遊戲管理員</span>
+        </div>
+        <div class="stat-card dynamic">
+            <span class="stat-number">12</span>
+            <span class="stat-label">動態路由</span>
+        </div>
+    </div>
+
+    <!-- Tree Diagram -->
+    <div class="tree-section">
+        <div class="tree-section-header">
+            <span style="font-size:18px">&#127794;</span>
+            <h2>網站地圖樹狀圖</h2>
+            <span class="tree-badge">39 頁面 · 7 路由群組</span>
+        </div>
+        <div class="tree-scroll">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 192" width="1500" height="192">
+              <!-- LAYER 0: Decorative group boxes (drawn first, background) -->
+              <g fill="none" stroke-width="1" stroke-dasharray="4,2">
+                <rect x="198" y="50" width="186" height="112" rx="4" fill="rgba(63,185,80,0.06)" stroke="#3fb950"/>
+                <rect x="394" y="50" width="100" height="112" rx="4" fill="rgba(210,153,34,0.06)" stroke="#d29922"/>
+                <rect x="504" y="50" width="186" height="132" rx="4" fill="rgba(188,140,255,0.06)" stroke="#bc8cff"/>
+                <rect x="700" y="50" width="186" height="92" rx="4" fill="rgba(248,81,73,0.06)" stroke="#f85149"/>
+                <rect x="896" y="50" width="186" height="92" rx="4" fill="rgba(247,120,186,0.06)" stroke="#f778ba"/>
+                <rect x="1092" y="50" width="100" height="112" rx="4" fill="rgba(88,166,255,0.06)" stroke="#58a6ff"/>
+                <rect x="1202" y="50" width="100" height="52" rx="4" fill="rgba(57,211,83,0.06)" stroke="#39d353"/>
+              </g>
+              <!-- LAYER 1: Connection lines (drawn second) -->
+              <g stroke="#444c56" stroke-width="0.8" fill="none">
+                <line x1="771" y1="29" x2="771" y2="38"/>
+                <line x1="291" y1="38" x2="1252" y2="38"/>
+                <line x1="291" y1="38" x2="291" y2="50"/>
+                <line x1="444" y1="38" x2="444" y2="50"/>
+                <line x1="597" y1="38" x2="597" y2="50"/>
+                <line x1="793" y1="38" x2="793" y2="50"/>
+                <line x1="989" y1="38" x2="989" y2="50"/>
+                <line x1="1142" y1="38" x2="1142" y2="50"/>
+                <line x1="1252" y1="38" x2="1252" y2="50"/>
+              </g>
+              <!-- LAYER 2: Page item node boxes -->
+              <!-- (public) P01-P07 -->
+              <g fill="#161b22" stroke="#3fb950" stroke-width="0.4">
+                <rect x="204" y="75" width="84" height="16" rx="2"/>
+                <rect x="204" y="95" width="84" height="16" rx="2"/>
+                <rect x="204" y="115" width="84" height="16" rx="2"/>
+                <rect x="204" y="135" width="84" height="16" rx="2"/>
+                <rect x="294" y="75" width="84" height="16" rx="2"/>
+                <rect x="294" y="95" width="84" height="16" rx="2"/>
+                <rect x="294" y="115" width="84" height="16" rx="2"/>
+              </g>
+              <!-- (auth) P08-P11 -->
+              <g fill="#161b22" stroke="#d29922" stroke-width="0.4">
+                <rect x="402" y="75" width="84" height="16" rx="2"/>
+                <rect x="402" y="95" width="84" height="16" rx="2"/>
+                <rect x="402" y="115" width="84" height="16" rx="2"/>
+                <rect x="402" y="135" width="84" height="16" rx="2"/>
+              </g>
+              <!-- (member) P12-P21 -->
+              <g fill="#161b22" stroke="#bc8cff" stroke-width="0.4">
+                <rect x="510" y="75" width="84" height="16" rx="2"/>
+                <rect x="510" y="95" width="84" height="16" rx="2"/>
+                <rect x="510" y="115" width="84" height="16" rx="2"/>
+                <rect x="510" y="135" width="84" height="16" rx="2"/>
+                <rect x="510" y="155" width="84" height="16" rx="2"/>
+                <rect x="600" y="75" width="84" height="16" rx="2"/>
+                <rect x="600" y="95" width="84" height="16" rx="2"/>
+                <rect x="600" y="115" width="84" height="16" rx="2"/>
+                <rect x="600" y="135" width="84" height="16" rx="2"/>
+                <rect x="600" y="155" width="84" height="16" rx="2"/>
+              </g>
+              <!-- (teacher) P22-P27 -->
+              <g fill="#161b22" stroke="#f85149" stroke-width="0.4">
+                <rect x="706" y="75" width="84" height="16" rx="2"/>
+                <rect x="706" y="95" width="84" height="16" rx="2"/>
+                <rect x="706" y="115" width="84" height="16" rx="2"/>
+                <rect x="796" y="75" width="84" height="16" rx="2"/>
+                <rect x="796" y="95" width="84" height="16" rx="2"/>
+                <rect x="796" y="115" width="84" height="16" rx="2"/>
+              </g>
+              <!-- (admin) P28-P33 -->
+              <g fill="#161b22" stroke="#f778ba" stroke-width="0.4">
+                <rect x="902" y="75" width="84" height="16" rx="2"/>
+                <rect x="902" y="95" width="84" height="16" rx="2"/>
+                <rect x="902" y="115" width="84" height="16" rx="2"/>
+                <rect x="992" y="75" width="84" height="16" rx="2"/>
+                <rect x="992" y="95" width="84" height="16" rx="2"/>
+                <rect x="992" y="115" width="84" height="16" rx="2"/>
+              </g>
+              <!-- (game-admin) P34-P37 -->
+              <g fill="#161b22" stroke="#58a6ff" stroke-width="0.4">
+                <rect x="1100" y="75" width="84" height="16" rx="2"/>
+                <rect x="1100" y="95" width="84" height="16" rx="2"/>
+                <rect x="1100" y="115" width="84" height="16" rx="2"/>
+                <rect x="1100" y="135" width="84" height="16" rx="2"/>
+              </g>
+              <!-- (fullscreen) P38 -->
+              <g fill="#161b22" stroke="#39d353" stroke-width="0.4">
+                <rect x="1210" y="75" width="84" height="16" rx="2"/>
+              </g>
+              <!-- LAYER 3: Root node (drawn after page items) -->
+              <rect x="691" y="5" width="160" height="24" rx="3" fill="#238636" stroke="#3fb950" stroke-width="1"/>
+              <!-- LAYER 4: All text labels (drawn last) -->
+              <!-- Root text -->
+              <text x="771" y="21" text-anchor="middle" font-size="11" font-weight="600" font-family="system-ui,sans-serif" fill="#e6edf3">P00 · 首頁 /</text>
+              <!-- Group labels -->
+              <text x="291" y="65" text-anchor="middle" font-size="9" font-weight="700" font-family="system-ui,sans-serif" fill="#3fb950">(public)</text>
+              <text x="444" y="65" text-anchor="middle" font-size="9" font-weight="700" font-family="system-ui,sans-serif" fill="#d29922">(auth)</text>
+              <text x="597" y="65" text-anchor="middle" font-size="9" font-weight="700" font-family="system-ui,sans-serif" fill="#bc8cff">(member)</text>
+              <text x="793" y="65" text-anchor="middle" font-size="9" font-weight="700" font-family="system-ui,sans-serif" fill="#f85149">(teacher)</text>
+              <text x="989" y="65" text-anchor="middle" font-size="9" font-weight="700" font-family="system-ui,sans-serif" fill="#f778ba">(admin)</text>
+              <text x="1142" y="65" text-anchor="middle" font-size="9" font-weight="700" font-family="system-ui,sans-serif" fill="#58a6ff">(game-admin)</text>
+              <text x="1252" y="65" text-anchor="middle" font-size="9" font-weight="700" font-family="system-ui,sans-serif" fill="#39d353">(fullscreen)</text>
+              <!-- (public) page text -->
+              <text font-size="8" font-family="system-ui,sans-serif">
+                <tspan x="208" y="86" fill="#3fb950" font-weight="700">P01</tspan><tspan dx="2" fill="#8b949e">關於技能村莊</tspan>
+                <tspan x="208" y="106" fill="#3fb950" font-weight="700">P02</tspan><tspan dx="2" fill="#8b949e">分類列表</tspan>
+                <tspan x="208" y="126" fill="#3fb950" font-weight="700">P03</tspan><tspan dx="2" fill="#8b949e">分類詳情</tspan>
+                <tspan x="208" y="146" fill="#3fb950" font-weight="700">P04</tspan><tspan dx="2" fill="#8b949e">教材詳情</tspan>
+                <tspan x="298" y="86" fill="#3fb950" font-weight="700">P05</tspan><tspan dx="2" fill="#8b949e">遊戲入口</tspan>
+                <tspan x="298" y="106" fill="#3fb950" font-weight="700">P06</tspan><tspan dx="2" fill="#8b949e">課程詳情</tspan>
+                <tspan x="298" y="126" fill="#3fb950" font-weight="700">P07</tspan><tspan dx="2" fill="#8b949e">課程播放</tspan>
+              </text>
+              <!-- (auth) page text -->
+              <text font-size="8" font-family="system-ui,sans-serif">
+                <tspan x="406" y="86" fill="#d29922" font-weight="700">P08</tspan><tspan dx="2" fill="#8b949e">登入</tspan>
+                <tspan x="406" y="106" fill="#d29922" font-weight="700">P09</tspan><tspan dx="2" fill="#8b949e">注冊</tspan>
+                <tspan x="406" y="126" fill="#d29922" font-weight="700">P10</tspan><tspan dx="2" fill="#8b949e">簡易注冊</tspan>
+                <tspan x="406" y="146" fill="#d29922" font-weight="700">P11</tspan><tspan dx="2" fill="#8b949e">村莊登入</tspan>
+              </text>
+              <!-- (member) page text -->
+              <text font-size="8" font-family="system-ui,sans-serif">
+                <tspan x="514" y="86" fill="#bc8cff" font-weight="700">P12</tspan><tspan dx="2" fill="#8b949e">會員儀表板</tspan>
+                <tspan x="514" y="106" fill="#bc8cff" font-weight="700">P13</tspan><tspan dx="2" fill="#8b949e">成就列表</tspan>
+                <tspan x="514" y="126" fill="#bc8cff" font-weight="700">P14</tspan><tspan dx="2" fill="#8b949e">個人資料</tspan>
+                <tspan x="514" y="146" fill="#bc8cff" font-weight="700">P15</tspan><tspan dx="2" fill="#8b949e">我的元件</tspan>
+                <tspan x="514" y="166" fill="#bc8cff" font-weight="700">P16</tspan><tspan dx="2" fill="#8b949e">元件詳情</tspan>
+                <tspan x="604" y="86" fill="#bc8cff" font-weight="700">P17</tspan><tspan dx="2" fill="#8b949e">教材查看</tspan>
+                <tspan x="604" y="106" fill="#bc8cff" font-weight="700">P18</tspan><tspan dx="2" fill="#8b949e">技能村莊</tspan>
+                <tspan x="604" y="126" fill="#bc8cff" font-weight="700">P19</tspan><tspan dx="2" fill="#8b949e">技能詳情</tspan>
+                <tspan x="604" y="146" fill="#bc8cff" font-weight="700">P20</tspan><tspan dx="2" fill="#8b949e">角色管理</tspan>
+                <tspan x="604" y="166" fill="#bc8cff" font-weight="700">P21</tspan><tspan dx="2" fill="#8b949e">角色列表</tspan>
+              </text>
+              <!-- (teacher) page text -->
+              <text font-size="8" font-family="system-ui,sans-serif">
+                <tspan x="710" y="86" fill="#f85149" font-weight="700">P22</tspan><tspan dx="2" fill="#8b949e">教師資料</tspan>
+                <tspan x="710" y="106" fill="#f85149" font-weight="700">P23</tspan><tspan dx="2" fill="#8b949e">元件管理</tspan>
+                <tspan x="710" y="126" fill="#f85149" font-weight="700">P24</tspan><tspan dx="2" fill="#8b949e">上傳元件</tspan>
+                <tspan x="800" y="86" fill="#f85149" font-weight="700">P25</tspan><tspan dx="2" fill="#8b949e">編輯元件</tspan>
+                <tspan x="800" y="106" fill="#f85149" font-weight="700">P26</tspan><tspan dx="2" fill="#8b949e">學生願望</tspan>
+                <tspan x="800" y="126" fill="#f85149" font-weight="700">P27</tspan><tspan dx="2" fill="#8b949e">分類管理</tspan>
+              </text>
+              <!-- (admin) page text -->
+              <text font-size="8" font-family="system-ui,sans-serif">
+                <tspan x="906" y="86" fill="#f778ba" font-weight="700">P28</tspan><tspan dx="2" fill="#8b949e">管理儀表板</tspan>
+                <tspan x="906" y="106" fill="#f778ba" font-weight="700">P29</tspan><tspan dx="2" fill="#8b949e">用戶管理</tspan>
+                <tspan x="906" y="126" fill="#f778ba" font-weight="700">P30</tspan><tspan dx="2" fill="#8b949e">元件管理</tspan>
+                <tspan x="996" y="86" fill="#f778ba" font-weight="700">P31</tspan><tspan dx="2" fill="#8b949e">成本管理</tspan>
+                <tspan x="996" y="106" fill="#f778ba" font-weight="700">P32</tspan><tspan dx="2" fill="#8b949e">願望管理</tspan>
+                <tspan x="996" y="126" fill="#f778ba" font-weight="700">P33</tspan><tspan dx="2" fill="#8b949e">願望統計</tspan>
+              </text>
+              <!-- (game-admin) page text -->
+              <text font-size="8" font-family="system-ui,sans-serif">
+                <tspan x="1104" y="86" fill="#58a6ff" font-weight="700">P34</tspan><tspan dx="2" fill="#8b949e">遊戲儀表板</tspan>
+                <tspan x="1104" y="106" fill="#58a6ff" font-weight="700">P35</tspan><tspan dx="2" fill="#8b949e">成就管理</tspan>
+                <tspan x="1104" y="126" fill="#58a6ff" font-weight="700">P36</tspan><tspan dx="2" fill="#8b949e">新建成就</tspan>
+                <tspan x="1104" y="146" fill="#58a6ff" font-weight="700">P37</tspan><tspan dx="2" fill="#8b949e">編輯成就</tspan>
+              </text>
+              <!-- (fullscreen) page text -->
+              <text font-size="8" font-family="system-ui,sans-serif">
+                <tspan x="1214" y="86" fill="#39d353" font-weight="700">P38</tspan><tspan dx="2" fill="#8b949e">教材全螢幕</tspan>
+              </text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-wrapper">
+        <div class="search-inner">
+            <span class="search-icon">&#128269;</span>
+            <input type="text" class="search-input" id="searchInput"
+                   placeholder="搜尋頁面路徑、名稱或說明..."
+                   autocomplete="off" spellcheck="false">
+            <button class="search-clear" id="searchClear" title="清除搜尋">&#10005;</button>
+        </div>
+        <div class="search-results-count" id="resultsCount"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- No Results -->
+        <div class="no-results" id="noResults">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <p>找不到符合的頁面</p>
+        </div>
+
+        <!-- 1. Public Section -->
+        <div class="section" data-section="public" id="section-public">
+            <div class="section-header" onclick="toggleSection('public')">
+                <div class="section-icon">&#127760;</div>
+                <div class="section-info">
+                    <div class="section-title">
+                        公開區域
+                        <span class="section-badge badge-public">(public)</span>
+                    </div>
+                    <div class="section-subtitle">&#9989; 無需登入即可存取 · 8 個頁面</div>
+                </div>
+                <div class="toggle-btn">&#9660;</div>
+            </div>
+            <div class="table-header">
+                <div class="th">路徑</div>
+                <div class="th">頁面名稱</div>
+                <div class="th">說明</div>
+                <div class="th">動態參數</div>
+                <div class="th">操作</div>
+            </div>
+            <div class="page-list" id="list-public">
+                <div class="page-item level-public" data-search="/ 首頁 網站首頁 展示精選內容 public 公開">
+                    <div class="page-path">/</div>
+                    <div class="page-name">首頁</div>
+                    <div class="page-desc">網站首頁，展示精選內容</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-public" data-search="/about-skill-village 關於技能村莊 技能村莊遊戲介紹 public 公開">
+                    <div class="page-path">/about-skill-village</div>
+                    <div class="page-name">關於技能村莊</div>
+                    <div class="page-desc">技能村莊遊戲介紹</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/about-skill-village')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-public" data-search="/categories 分類列表 瀏覽所有學習分類 public 公開">
+                    <div class="page-path">/categories</div>
+                    <div class="page-name">分類列表</div>
+                    <div class="page-desc">瀏覽所有學習分類</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/categories')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-public" data-search="/categories/[category] 分類詳情 查看特定分類的內容 public 公開 動態">
+                    <div class="page-path">/categories/<span class="dynamic-param">[category]</span></div>
+                    <div class="page-name">分類詳情</div>
+                    <div class="page-desc">查看特定分類的內容</div>
+                    <div class="page-params">
+                        <span class="param-tag">category</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/categories/[category]')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-public" data-search="/materials/[componentId] 教材詳情 查看學習教材詳情 public 公開 動態">
+                    <div class="page-path">/materials/<span class="dynamic-param">[componentId]</span></div>
+                    <div class="page-name">教材詳情</div>
+                    <div class="page-desc">查看學習教材詳情</div>
+                    <div class="page-params">
+                        <span class="param-tag">componentId</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/materials/[componentId]')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-public" data-search="/games 遊戲入口 遊戲相關內容 public 公開">
+                    <div class="page-path">/games</div>
+                    <div class="page-name">遊戲入口</div>
+                    <div class="page-desc">遊戲相關內容</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/games')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-public" data-search="/courses/[id] 課程詳情 課程詳細資訊 public 公開 動態">
+                    <div class="page-path">/courses/<span class="dynamic-param">[id]</span></div>
+                    <div class="page-name">課程詳情</div>
+                    <div class="page-desc">課程詳細資訊</div>
+                    <div class="page-params">
+                        <span class="param-tag">id</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/courses/[id]')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-public" data-search="/courses/[id]/play 課程播放 播放學習課程 public 公開 動態">
+                    <div class="page-path">/courses/<span class="dynamic-param">[id]</span>/play</div>
+                    <div class="page-name">課程播放</div>
+                    <div class="page-desc">播放/學習課程</div>
+                    <div class="page-params">
+                        <span class="param-tag">id</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/courses/[id]/play')">&#128203; 複製</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Auth Section -->
+        <div class="section" data-section="auth" id="section-auth">
+            <div class="section-header" onclick="toggleSection('auth')">
+                <div class="section-icon">&#128273;</div>
+                <div class="section-info">
+                    <div class="section-title">
+                        認證區域
+                        <span class="section-badge badge-auth">(auth)</span>
+                    </div>
+                    <div class="section-subtitle">&#128683; 已登入用戶將被重定向 · 4 個頁面</div>
+                </div>
+                <div class="toggle-btn">&#9660;</div>
+            </div>
+            <div class="table-header">
+                <div class="th">路徑</div>
+                <div class="th">頁面名稱</div>
+                <div class="th">特殊行為</div>
+                <div class="th">參數</div>
+                <div class="th">操作</div>
+            </div>
+            <div class="page-list" id="list-auth">
+                <div class="page-item level-auth" data-search="/login 登入頁面 用戶登入 auth 認證 已登入重定向">
+                    <div class="page-path">/login</div>
+                    <div class="page-name">登入頁面</div>
+                    <div class="page-desc">用戶登入（已登入 → /dashboard）</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/login')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-auth" data-search="/register 注冊頁面 用戶注冊 auth 認證 已登入重定向">
+                    <div class="page-path">/register</div>
+                    <div class="page-name">注冊頁面</div>
+                    <div class="page-desc">用戶注冊（已登入 → /dashboard）</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/register')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-auth" data-search="/register/simple 簡易注冊 簡化版注冊流程 auth 認證">
+                    <div class="page-path">/register/simple</div>
+                    <div class="page-name">簡易注冊</div>
+                    <div class="page-desc">簡化版注冊流程（已登入 → /dashboard）</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/register/simple')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-auth" data-search="/skill-village-login 技能村莊登入 遊戲專用登入頁面 auth 認證">
+                    <div class="page-path">/skill-village-login</div>
+                    <div class="page-name">技能村莊登入</div>
+                    <div class="page-desc">遊戲專用登入（已登入 → /skill-village）</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/skill-village-login')">&#128203; 複製</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Member Section -->
+        <div class="section" data-section="member" id="section-member">
+            <div class="section-header" onclick="toggleSection('member')">
+                <div class="section-icon">&#128100;</div>
+                <div class="section-info">
+                    <div class="section-title">
+                        會員區域
+                        <span class="section-badge badge-member">(member)</span>
+                    </div>
+                    <div class="section-subtitle">&#128274; 需要登入存取 · 10 個頁面</div>
+                </div>
+                <div class="toggle-btn">&#9660;</div>
+            </div>
+            <div class="table-header">
+                <div class="th">路徑</div>
+                <div class="th">頁面名稱</div>
+                <div class="th">說明</div>
+                <div class="th">動態參數</div>
+                <div class="th">操作</div>
+            </div>
+            <div class="page-list" id="list-member">
+                <div class="page-item level-member" data-search="/dashboard 會員儀表板 個人學習總覽 member 會員 登入">
+                    <div class="page-path">/dashboard</div>
+                    <div class="page-name">&#128274; 會員儀表板</div>
+                    <div class="page-desc">個人學習總覽</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/dashboard')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/dashboard/achievements 成就列表 查看已獲得的成就 member 會員 登入">
+                    <div class="page-path">/dashboard/achievements</div>
+                    <div class="page-name">&#128274; 成就列表</div>
+                    <div class="page-desc">查看已獲得的成就</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/dashboard/achievements')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/profile 個人資料 編輯個人資訊 member 會員 登入">
+                    <div class="page-path">/profile</div>
+                    <div class="page-name">&#128274; 個人資料</div>
+                    <div class="page-desc">編輯個人資訊</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/profile')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/components 我的元件 查看已學習收藏的元件 member 會員 登入">
+                    <div class="page-path">/components</div>
+                    <div class="page-name">&#128274; 我的元件</div>
+                    <div class="page-desc">查看已學習/收藏的元件</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/components')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/components/[componentId] 元件詳情 查看元件詳細內容 member 會員 登入 動態">
+                    <div class="page-path">/components/<span class="dynamic-param">[componentId]</span></div>
+                    <div class="page-name">&#128274; 元件詳情</div>
+                    <div class="page-desc">查看元件詳細內容</div>
+                    <div class="page-params">
+                        <span class="param-tag">componentId</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/components/[componentId]')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/components/[componentId]/materials/[materialId] 教材查看 查看元件的教材內容 member 會員 登入 動態">
+                    <div class="page-path">/components/<span class="dynamic-param">[componentId]</span>/materials/<span class="dynamic-param">[materialId]</span></div>
+                    <div class="page-name">&#128274; 教材查看</div>
+                    <div class="page-desc">查看元件的教材內容</div>
+                    <div class="page-params">
+                        <span class="param-tag">componentId</span>
+                        <span class="param-tag">materialId</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/components/[componentId]/materials/[materialId]')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/skill-village 技能村莊 技能村莊遊戲主頁 member 會員 登入">
+                    <div class="page-path">/skill-village</div>
+                    <div class="page-name">&#128274; 技能村莊</div>
+                    <div class="page-desc">技能村莊遊戲主頁</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/skill-village')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/skill-village/[skillId] 技能詳情 查看特定技能詳情 member 會員 登入 動態">
+                    <div class="page-path">/skill-village/<span class="dynamic-param">[skillId]</span></div>
+                    <div class="page-name">&#128274; 技能詳情</div>
+                    <div class="page-desc">查看特定技能詳情</div>
+                    <div class="page-params">
+                        <span class="param-tag">skillId</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/skill-village/[skillId]')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/character 角色管理 管理遊戲角色 member 會員 登入">
+                    <div class="page-path">/character</div>
+                    <div class="page-name">&#128274; 角色管理</div>
+                    <div class="page-desc">管理遊戲角色</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/character')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-member" data-search="/characters 角色列表 查看所有角色 member 會員 登入">
+                    <div class="page-path">/characters</div>
+                    <div class="page-name">&#128274; 角色列表</div>
+                    <div class="page-desc">查看所有角色</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/characters')">&#128203; 複製</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Teacher Section -->
+        <div class="section" data-section="teacher" id="section-teacher">
+            <div class="section-header" onclick="toggleSection('teacher')">
+                <div class="section-icon">&#128104;&#8205;&#127979;</div>
+                <div class="section-info">
+                    <div class="section-title">
+                        教師區域
+                        <span class="section-badge badge-teacher">(teacher)</span>
+                    </div>
+                    <div class="section-subtitle">&#128274;&#128104;&#8205;&#127979; 需要登入 + 教師權限 · 6 個頁面</div>
+                </div>
+                <div class="toggle-btn">&#9660;</div>
+            </div>
+            <div class="table-header">
+                <div class="th">路徑</div>
+                <div class="th">頁面名稱</div>
+                <div class="th">說明</div>
+                <div class="th">動態參數</div>
+                <div class="th">操作</div>
+            </div>
+            <div class="page-list" id="list-teacher">
+                <div class="page-item level-teacher" data-search="/teacher/profile 教師資料 教師個人資料 teacher 教師">
+                    <div class="page-path">/teacher/profile</div>
+                    <div class="page-name">&#128104;&#8205;&#127979; 教師資料</div>
+                    <div class="page-desc">教師個人資料</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/teacher/profile')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-teacher" data-search="/teacher/components 元件管理 管理我的教學元件 teacher 教師">
+                    <div class="page-path">/teacher/components</div>
+                    <div class="page-name">&#128104;&#8205;&#127979; 元件管理</div>
+                    <div class="page-desc">管理我的教學元件</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/teacher/components')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-teacher" data-search="/teacher/components/upload 上傳元件 上傳新的教學元件 teacher 教師">
+                    <div class="page-path">/teacher/components/upload</div>
+                    <div class="page-name">&#128104;&#8205;&#127979; 上傳元件</div>
+                    <div class="page-desc">上傳新的教學元件</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/teacher/components/upload')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-teacher" data-search="/teacher/components/[id]/edit 編輯元件 編輯現有元件 teacher 教師 動態">
+                    <div class="page-path">/teacher/components/<span class="dynamic-param">[id]</span>/edit</div>
+                    <div class="page-name">&#128104;&#8205;&#127979; 編輯元件</div>
+                    <div class="page-desc">編輯現有元件</div>
+                    <div class="page-params">
+                        <span class="param-tag">id</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/teacher/components/[id]/edit')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-teacher" data-search="/teacher/wishes 學生願望 查看學生的學習願望 teacher 教師">
+                    <div class="page-path">/teacher/wishes</div>
+                    <div class="page-name">&#128104;&#8205;&#127979; 學生願望</div>
+                    <div class="page-desc">查看學生的學習願望</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/teacher/wishes')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-teacher" data-search="/teacher/taxonomy 分類管理 管理教學分類 teacher 教師">
+                    <div class="page-path">/teacher/taxonomy</div>
+                    <div class="page-name">&#128104;&#8205;&#127979; 分類管理</div>
+                    <div class="page-desc">管理教學分類</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/teacher/taxonomy')">&#128203; 複製</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Admin Section -->
+        <div class="section" data-section="admin" id="section-admin">
+            <div class="section-header" onclick="toggleSection('admin')">
+                <div class="section-icon">&#128081;</div>
+                <div class="section-info">
+                    <div class="section-title">
+                        管理員區域
+                        <span class="section-badge badge-admin">(admin)</span>
+                    </div>
+                    <div class="section-subtitle">&#128274;&#128081; 需要登入 + 管理員權限 · 6 個頁面</div>
+                </div>
+                <div class="toggle-btn">&#9660;</div>
+            </div>
+            <div class="table-header">
+                <div class="th">路徑</div>
+                <div class="th">頁面名稱</div>
+                <div class="th">說明</div>
+                <div class="th">動態參數</div>
+                <div class="th">操作</div>
+            </div>
+            <div class="page-list" id="list-admin">
+                <div class="page-item level-admin" data-search="/admin 管理儀表板 系統管理總覽 admin 管理員">
+                    <div class="page-path">/admin</div>
+                    <div class="page-name">&#128081; 管理儀表板</div>
+                    <div class="page-desc">系統管理總覽</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/admin')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-admin" data-search="/admin/users 用戶管理 管理所有用戶 admin 管理員">
+                    <div class="page-path">/admin/users</div>
+                    <div class="page-name">&#128081; 用戶管理</div>
+                    <div class="page-desc">管理所有用戶</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/admin/users')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-admin" data-search="/admin/components 元件管理 管理所有元件 admin 管理員">
+                    <div class="page-path">/admin/components</div>
+                    <div class="page-name">&#128081; 元件管理</div>
+                    <div class="page-desc">管理所有元件</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/admin/components')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-admin" data-search="/admin/costs 成本管理 查看管理系統成本 admin 管理員">
+                    <div class="page-path">/admin/costs</div>
+                    <div class="page-name">&#128081; 成本管理</div>
+                    <div class="page-desc">查看/管理系統成本</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/admin/costs')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-admin" data-search="/admin/wishes 願望管理 管理用戶願望 admin 管理員">
+                    <div class="page-path">/admin/wishes</div>
+                    <div class="page-name">&#128081; 願望管理</div>
+                    <div class="page-desc">管理用戶願望</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/admin/wishes')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-admin" data-search="/admin/wishes/stats 願望統計 願望資料統計分析 admin 管理員">
+                    <div class="page-path">/admin/wishes/stats</div>
+                    <div class="page-name">&#128081; 願望統計</div>
+                    <div class="page-desc">願望資料統計分析</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/admin/wishes/stats')">&#128203; 複製</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Game Admin Section -->
+        <div class="section" data-section="game-admin" id="section-game-admin">
+            <div class="section-header" onclick="toggleSection('game-admin')">
+                <div class="section-icon">&#127918;</div>
+                <div class="section-info">
+                    <div class="section-title">
+                        遊戲管理員區域
+                        <span class="section-badge badge-game-admin">(game-admin)</span>
+                    </div>
+                    <div class="section-subtitle">&#128274;&#127918; 需要登入 + 管理員權限 · 4 個頁面</div>
+                </div>
+                <div class="toggle-btn">&#9660;</div>
+            </div>
+            <div class="table-header">
+                <div class="th">路徑</div>
+                <div class="th">頁面名稱</div>
+                <div class="th">說明</div>
+                <div class="th">動態參數</div>
+                <div class="th">操作</div>
+            </div>
+            <div class="page-list" id="list-game-admin">
+                <div class="page-item level-game-admin" data-search="/game-admin 遊戲儀表板 遊戲系統管理總覽 game-admin 遊戲管理員">
+                    <div class="page-path">/game-admin</div>
+                    <div class="page-name">&#127918; 遊戲儀表板</div>
+                    <div class="page-desc">遊戲系統管理總覽</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/game-admin')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-game-admin" data-search="/game-admin/achievements 成就管理 管理所有成就 game-admin 遊戲管理員">
+                    <div class="page-path">/game-admin/achievements</div>
+                    <div class="page-name">&#127918; 成就管理</div>
+                    <div class="page-desc">管理所有成就</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/game-admin/achievements')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-game-admin" data-search="/game-admin/achievements/new 新建成就 建立新成就 game-admin 遊戲管理員">
+                    <div class="page-path">/game-admin/achievements/new</div>
+                    <div class="page-name">&#127918; 新建成就</div>
+                    <div class="page-desc">建立新成就</div>
+                    <div class="page-params"></div>
+                    <button class="copy-btn" onclick="copyPath(this, '/game-admin/achievements/new')">&#128203; 複製</button>
+                </div>
+                <div class="page-item level-game-admin" data-search="/game-admin/achievements/[id]/edit 編輯成就 編輯現有成就 game-admin 遊戲管理員 動態">
+                    <div class="page-path">/game-admin/achievements/<span class="dynamic-param">[id]</span>/edit</div>
+                    <div class="page-name">&#127918; 編輯成就</div>
+                    <div class="page-desc">編輯現有成就</div>
+                    <div class="page-params">
+                        <span class="param-tag">id</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/game-admin/achievements/[id]/edit')">&#128203; 複製</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Fullscreen Section -->
+        <div class="section" data-section="fullscreen" id="section-fullscreen">
+            <div class="section-header" onclick="toggleSection('fullscreen')">
+                <div class="section-icon">&#128444;&#65039;</div>
+                <div class="section-info">
+                    <div class="section-title">
+                        全螢幕查看器
+                        <span class="section-badge badge-dynamic">(fullscreen)</span>
+                    </div>
+                    <div class="section-subtitle">&#128260; 動態權限控制（依元件可見性設定）· 1 個頁面</div>
+                </div>
+                <div class="toggle-btn">&#9660;</div>
+            </div>
+            <div class="table-header">
+                <div class="th">路徑</div>
+                <div class="th">頁面名稱</div>
+                <div class="th">說明</div>
+                <div class="th">動態參數</div>
+                <div class="th">操作</div>
+            </div>
+            <div class="page-list" id="list-fullscreen">
+                <div class="page-item level-dynamic" data-search="/materials/[componentId]/fullscreen 教材全螢幕查看 iframe全螢幕顯示教材 fullscreen 動態 動態權限">
+                    <div class="page-path">/materials/<span class="dynamic-param">[componentId]</span>/fullscreen</div>
+                    <div class="page-name">&#128260; 教材全螢幕查看</div>
+                    <div class="page-desc">iframe 全螢幕顯示教材（依元件可見性設定）</div>
+                    <div class="page-params">
+                        <span class="param-tag">componentId</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyPath(this, '/materials/[componentId]/fullscreen')">&#128203; 複製</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Permission Legend -->
+        <div class="legend">
+            <h3>權限層級說明</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--color-public);"></div>
+                    <span class="legend-text">公開 (public) — 所有人可存取</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--color-auth);"></div>
+                    <span class="legend-text">認證 (auth) — 僅未登入用戶</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--color-member);"></div>
+                    <span class="legend-text">會員 (member) — 需要登入</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--color-teacher);"></div>
+                    <span class="legend-text">教師 (teacher) — 需要教師權限</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--color-admin);"></div>
+                    <span class="legend-text">管理員 (admin) — 需要管理員權限</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--color-game-admin);"></div>
+                    <span class="legend-text">遊戲管理員 (game-admin) — 需要管理員權限</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--color-dynamic);"></div>
+                    <span class="legend-text">動態 (fullscreen) — 依元件可見性設定</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--accent-orange);"></div>
+                    <span class="legend-text">橘色文字 — 動態路由參數 [param]</span>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /.main-content -->
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Mido Learning 網站地圖 · 版本 2.0 · 生成日期：2026-02-17</p>
+        <p>總計 39 個頁面 · 7 個路由組 · 12 個動態路由</p>
+    </div>
+
     <script>
-        // Toggle section expand/collapse
-        function toggleSection(sectionName) {
-            const section = document.querySelector(`[data-section="${sectionName}"]`);
-            section.classList.toggle('collapsed');
-        }
+        // =============================================
+        // Wait for DOM ready
+        // =============================================
+        let sections = {};
+        let allPageItems = [];
+        let searchInput, searchClear, resultsCount, noResults, toast;
 
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const allPages = document.querySelectorAll('.page-item');
+        function init() {
+            searchInput = document.getElementById('searchInput');
+            searchClear = document.getElementById('searchClear');
+            resultsCount = document.getElementById('resultsCount');
+            noResults = document.getElementById('noResults');
+            toast = document.getElementById('toast');
 
-            allPages.forEach(page => {
-                const searchText = page.getAttribute('data-search').toLowerCase();
-                if (searchText.includes(searchTerm)) {
-                    page.classList.remove('hidden');
-                } else {
-                    page.classList.add('hidden');
+            allPageItems = Array.from(document.querySelectorAll('.page-item'));
+
+            // Bind search
+            searchInput.addEventListener('input', handleSearch);
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    clearSearch();
                 }
             });
 
-            // Expand all sections when searching
-            if (searchTerm) {
-                document.querySelectorAll('.section').forEach(section => {
-                    section.classList.remove('collapsed');
-                });
-            }
-        });
+            searchClear.addEventListener('click', clearSearch);
 
-        // Collapse all sections by default (optional)
-        // document.querySelectorAll('.section').forEach(section => {
-        //     section.classList.add('collapsed');
-        // });
+            // Keyboard shortcut: / to focus search
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '/' && e.target.tagName !== 'INPUT') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+            });
+
+            console.log('Mido Learning Sitemap v2.0 - Dark Mode');
+            console.log('Total pages: ' + allPageItems.length);
+            console.log('Press "/" to focus search');
+        }
+
+        // =============================================
+        // Toggle Section
+        // =============================================
+        function toggleSection(name) {
+            const section = document.querySelector('[data-section="' + name + '"]');
+            if (section) {
+                section.classList.toggle('collapsed');
+            }
+        }
+
+        // =============================================
+        // Search
+        // =============================================
+        function handleSearch(e) {
+            const term = e.target.value.trim().toLowerCase();
+
+            if (term) {
+                searchClear.style.display = 'block';
+                resultsCount.style.display = 'block';
+            } else {
+                searchClear.style.display = 'none';
+                resultsCount.style.display = 'none';
+                clearSearch();
+                return;
+            }
+
+            let matchCount = 0;
+
+            // Expand all sections when searching
+            document.querySelectorAll('.section').forEach(function(s) {
+                s.classList.remove('collapsed');
+            });
+
+            allPageItems.forEach(function(item) {
+                const searchText = item.getAttribute('data-search').toLowerCase();
+                if (searchText.includes(term)) {
+                    item.classList.remove('hidden');
+                    matchCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Show/hide no results
+            if (matchCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+
+            resultsCount.textContent = '找到 ' + matchCount + ' 個結果（共 ' + allPageItems.length + ' 個頁面）';
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            searchClear.style.display = 'none';
+            resultsCount.style.display = 'none';
+            noResults.style.display = 'none';
+
+            allPageItems.forEach(function(item) {
+                item.classList.remove('hidden');
+            });
+        }
+
+        // =============================================
+        // Copy Path
+        // =============================================
+        function copyPath(btn, path) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(path).then(function() {
+                    showCopyFeedback(btn, path);
+                }).catch(function() {
+                    fallbackCopy(btn, path);
+                });
+            } else {
+                fallbackCopy(btn, path);
+            }
+        }
+
+        function fallbackCopy(btn, path) {
+            const textarea = document.createElement('textarea');
+            textarea.value = path;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showCopyFeedback(btn, path);
+            } catch(e) {
+                showToast('複製失敗，請手動複製', false);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showCopyFeedback(btn, path) {
+            const original = btn.innerHTML;
+            btn.innerHTML = '&#10003; 已複製';
+            btn.classList.add('copied');
+
+            setTimeout(function() {
+                btn.innerHTML = original;
+                btn.classList.remove('copied');
+            }, 2000);
+
+            showToast('已複製：' + path, true);
+        }
+
+        // =============================================
+        // Toast
+        // =============================================
+        let toastTimer = null;
+
+        function showToast(message, success) {
+            if (toastTimer) {
+                clearTimeout(toastTimer);
+            }
+
+            toast.textContent = (success ? '✓ ' : '✗ ') + message;
+            toast.className = 'toast' + (success ? ' success' : '');
+            toast.classList.add('show');
+
+            toastTimer = setTimeout(function() {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // =============================================
+        // Initialize
+        // =============================================
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 </body>
 </html>
