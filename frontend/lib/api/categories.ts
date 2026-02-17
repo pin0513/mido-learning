@@ -1,6 +1,7 @@
 'use client';
 
 import { getIdToken } from '@/lib/auth';
+import { queuedFetch } from '@/lib/request-queue';
 import { ComponentListResponse, ComponentQueryParams } from '@/types/component';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -37,7 +38,7 @@ export interface CategoryListResponse {
  * Get all available categories
  */
 export async function getCategories(): Promise<CategoryListResponse> {
-  const response = await fetch(`${API_URL}/api/categories`, {
+  const response = await queuedFetch(`${API_URL}/api/categories`, {
     headers: { 'Content-Type': 'application/json' },
   });
 
@@ -58,7 +59,7 @@ export interface SuggestionsResponse {
  * Get category and tag suggestions (for autocomplete)
  */
 export async function getSuggestions(): Promise<SuggestionsResponse> {
-  const response = await fetch(`${API_URL}/api/categories/suggestions`, {
+  const response = await queuedFetch(`${API_URL}/api/categories/suggestions`, {
     headers: { 'Content-Type': 'application/json' },
   });
 
@@ -99,7 +100,7 @@ export async function getCategoryComponents(
   const url = `${API_URL}/api/categories/${category}/components${queryString ? `?${queryString}` : ''}`;
 
   const headers = await getAuthHeaders();
-  const response = await fetch(url, { headers });
+  const response = await queuedFetch(url, { headers });
 
   if (!response.ok) {
     if (response.status === 404) {

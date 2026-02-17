@@ -6,10 +6,22 @@ import { getCourses, Course } from '@/lib/api';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useTrial } from '@/hooks/useTrial';
 
+/** 防抖 hook：延遲更新 value，避免每次按鍵就觸發 API */
+function useDebounce<T>(value: T, delay: number): T {
+  const [debounced, setDebounced] = useState<T>(value);
+  useEffect(() => {
+    const id = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(id);
+  }, [value, delay]);
+  return debounced;
+}
+
 export default function GamesPage() {
   const { user } = useAuth();
   const { remainingCount, hasRemaining } = useTrial();
-  const [courses, setCourses] = useState<Course[]>([]);
+
+  // allCourses：從 API 取回的原始資料（只受 search/level/price/sort 影響）
+  const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,6 +33,14 @@ export default function GamesPage() {
   const [priceFilter, setPriceFilter] = useState<'all' | 'free' | 'paid'>('all');
   const [sortBy, setSortBy] = useState<string>('newest');
 
+  // 搜尋防抖：300ms 後才觸發 API
+  const debouncedSearch = useDebounce(searchQuery, 300);
+
+  // gameTypeFilter 是純 client-side 過濾，不觸發 API
+  const courses = gameTypeFilter === 'all'
+    ? allCourses
+    : allCourses.filter(c => c.gameConfig?.gameType === gameTypeFilter);
+
   useEffect(() => {
     async function loadCourses() {
       try {
@@ -28,19 +48,13 @@ export default function GamesPage() {
         const data = await getCourses({
           type: 'game',
           status: 'published',
-          search: searchQuery || undefined,
+          search: debouncedSearch || undefined,
           minLevel,
           maxLevel,
           priceFilter: priceFilter !== 'all' ? priceFilter : undefined,
-          sortBy: sortBy as any,
+          sortBy: sortBy as 'price_asc' | 'price_desc' | 'level_asc' | 'level_desc' | 'newest' | 'oldest',
         });
-
-        // Client-side game type filter
-        const filtered = gameTypeFilter === 'all'
-          ? data
-          : data.filter(c => c.gameConfig?.gameType === gameTypeFilter);
-
-        setCourses(filtered);
+        setAllCourses(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : '載入失敗');
       } finally {
@@ -49,7 +63,8 @@ export default function GamesPage() {
     }
 
     loadCourses();
-  }, [searchQuery, minLevel, maxLevel, priceFilter, sortBy, gameTypeFilter]);
+    // gameTypeFilter 故意排除在外：切換類型只做 client-side 過濾，不重新 fetch
+  }, [debouncedSearch, minLevel, maxLevel, priceFilter, sortBy]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);

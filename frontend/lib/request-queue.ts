@@ -16,15 +16,41 @@ const queue = new PQueue({
   intervalCap: 10,       // 每秒最多 10 個請求
 });
 
+const MAX_RETRIES = 3;
+
 /**
- * 使用 queue 控制的 fetch
+ * 帶 429 指數退避重試的 fetch
+ */
+async function fetchWithBackoff(
+  input: RequestInfo | URL,
+  init?: RequestInit,
+  attempt = 0
+): Promise<Response> {
+  const response = await fetch(input, init);
+
+  if (response.status === 429 && attempt < MAX_RETRIES) {
+    // 優先使用伺服器回傳的 Retry-After，否則指數退避 (1s, 2s, 4s)
+    const retryAfter = response.headers.get('Retry-After');
+    const delay = retryAfter
+      ? parseInt(retryAfter, 10) * 1000
+      : Math.pow(2, attempt) * 1000;
+
+    await new Promise<void>(resolve => setTimeout(resolve, delay));
+    return fetchWithBackoff(input, init, attempt + 1);
+  }
+
+  return response;
+}
+
+/**
+ * 使用 queue 控制的 fetch（含 429 自動重試）
  * 替代原生 fetch，自動排隊等待
  */
 export async function queuedFetch(
   input: RequestInfo | URL,
   init?: RequestInit
 ): Promise<Response> {
-  return queue.add(() => fetch(input, init));
+  return queue.add(() => fetchWithBackoff(input, init));
 }
 
 /**
