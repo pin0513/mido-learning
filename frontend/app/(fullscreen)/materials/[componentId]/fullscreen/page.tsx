@@ -55,6 +55,13 @@ export default function FullscreenMaterialPage({
     }
   }, []);
 
+  // 手機版自動適應 + 監聽視窗大小變化
+  useEffect(() => {
+    fitToScreen();
+    window.addEventListener('resize', fitToScreen);
+    return () => window.removeEventListener('resize', fitToScreen);
+  }, [fitToScreen]);
+
   // 發送鍵盤事件到 iframe
   const sendKeyToIframe = useCallback((key: string, type: 'keydown' | 'keyup') => {
     if (iframeRef.current?.contentWindow) {
@@ -444,7 +451,7 @@ export default function FullscreenMaterialPage({
           height: 'calc(100vh - 3rem)',
           marginBottom: '3rem',
           transform: `scale(${scale})`,
-          transformOrigin: 'center center',
+          transformOrigin: 'top center',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

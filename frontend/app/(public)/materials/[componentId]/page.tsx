@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Material, MaterialManifest } from '@/types/material';
 import { getComponentById } from '@/lib/api/components';
-import { getMaterials, getDownloadUrl, getMaterialManifest } from '@/lib/api/materials';
+import { getMaterials, getDownloadUrl, getMaterialManifest, deleteMaterial } from '@/lib/api/materials';
 import { StarRating, RatingDisplay } from '@/components/ui/StarRating';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { getComponentRatings, getMyRating, rateComponent } from '@/lib/api/ratings';
@@ -30,12 +30,38 @@ export default function GuestMaterialPage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isRating, setIsRating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'pc'>('pc');
   const containerRef = useRef<HTMLDivElement>(null);
 
   // 全螢幕處理 - 導向全螢幕包裝頁面
   const handleFullscreen = () => {
     router.push(`/materials/${componentId}/fullscreen`);
   };
+
+  // 裝置偵測：手機 < 768px, 平板 768-1024px, 電腦 > 1024px
+  useEffect(() => {
+    const detectDevice = () => {
+      const w = window.innerWidth;
+      if (w < 768) {
+        setDeviceType('mobile');
+      } else if (w <= 1024) {
+        setDeviceType('tablet');
+      } else {
+        setDeviceType('pc');
+      }
+    };
+    detectDevice();
+    window.addEventListener('resize', detectDevice);
+    return () => window.removeEventListener('resize', detectDevice);
+  }, []);
+
+  // 手機版自動跳轉到全螢幕模式（最佳體驗）
+  useEffect(() => {
+    if (deviceType === 'mobile') {
+      router.replace(`/materials/${componentId}/fullscreen`);
+    }
+  }, [deviceType, componentId, router]);
 
   // Record material view on mount
   useEffect(() => {
@@ -111,6 +137,41 @@ export default function GuestMaterialPage({
     }
   };
 
+  const handleDelete = async (materialId: string) => {
+    if (!user || isDeleting) return;
+
+    const confirmed = window.confirm('確定要刪除此教材版本嗎？此操作無法復原。');
+    if (!confirmed) return;
+
+    setIsDeleting(true);
+    try {
+      await deleteMaterial(materialId);
+      // Reload materials after deletion
+      const materialsData = await getMaterials(componentId);
+      setMaterials(materialsData);
+
+      // Update manifest if there are remaining materials
+      if (materialsData.length > 0) {
+        const sortedMaterials = [...materialsData].sort((a, b) => b.version - a.version);
+        const latestMaterial = sortedMaterials[0];
+        try {
+          const manifest = await getMaterialManifest(latestMaterial.id);
+          setLatestManifest(manifest);
+        } catch {
+          setLatestManifest(null);
+        }
+      } else {
+        setLatestManifest(null);
+      }
+
+      alert('教材已成功刪除');
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '刪除失敗');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-100">
@@ -163,6 +224,13 @@ export default function GuestMaterialPage({
   }
 
   const config = getCategoryConfig(component.category);
+
+  // Check if current user is the owner
+  const isOwner = user && component.createdBy && (
+    typeof component.createdBy === 'string'
+      ? component.createdBy === user.uid
+      : component.createdBy.uid === user.uid
+  );
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -308,11 +376,28 @@ export default function GuestMaterialPage({
                     </svg>
                     <span className="hidden sm:inline">全螢幕</span>
                   </button>
+                  {isOwner && (
+                    <button
+                      onClick={() => handleDelete(latestManifest.materialId)}
+                      disabled={isDeleting}
+                      className="inline-flex items-center gap-1 rounded-lg border border-red-300 bg-white px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
+                      title="刪除教材"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      <span className="hidden sm:inline">{isDeleting ? '刪除中...' : '刪除'}</span>
+                    </button>
+                  )}
                 </div>
               </div>
               <div
                 ref={containerRef}
-                className="aspect-video w-full overflow-hidden rounded-lg border border-gray-200"
+                className={`w-full overflow-hidden rounded-lg border border-gray-200 ${
+                  deviceType === 'tablet'
+                    ? 'aspect-[4/3]'
+                    : 'aspect-video'
+                }`}
               >
                 <iframe
                   src={`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`}
@@ -342,12 +427,23 @@ export default function GuestMaterialPage({
                             </span>
                             <span className="text-sm text-gray-600">{material.filename}</span>
                           </div>
-                          <button
-                            onClick={() => window.open(getDownloadUrl(material.id), '_blank')}
-                            className="text-sm text-blue-600 hover:text-blue-800"
-                          >
-                            下載
-                          </button>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => window.open(getDownloadUrl(material.id), '_blank')}
+                              className="text-sm text-blue-600 hover:text-blue-800"
+                            >
+                              下載
+                            </button>
+                            {isOwner && (
+                              <button
+                                onClick={() => handleDelete(material.id)}
+                                disabled={isDeleting}
+                                className="text-sm text-red-600 hover:text-red-800 disabled:opacity-50"
+                              >
+                                {isDeleting ? '刪除中...' : '刪除'}
+                              </button>
+                            )}
+                          </div>
                         </div>
                       ))}
                   </div>
