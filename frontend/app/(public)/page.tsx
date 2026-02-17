@@ -122,10 +122,10 @@ export default function HomePage() {
                   {!user && (
                     <>
                       <Link href="/register">
-                        <Button variant="outline" size="lg">免費註冊</Button>
+                        <Button variant="default" size="lg">免費註冊</Button>
                       </Link>
                       <Link href="/login">
-                        <Button variant="outline" size="lg">登入</Button>
+                        <Button variant="secondary" size="lg">登入</Button>
                       </Link>
                     </>
                   )}

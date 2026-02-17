@@ -1,361 +1,265 @@
-# CLAUDE.md
+# Web Design Team - 團隊契約
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## 團隊目標
 
-## 📚 Quick Navigation
-
-### 🎯 Essential Documents
-- **This File**: Project overview and AI guidance
-- **[README.md](./README.md)**: User-facing project introduction
-- **[SITEMAP](./docs/SITEMAP.md)**: Complete website structure & navigation map
-- **[Product Manual](./docs/current/product-manual.md)**: User documentation
-- **[Tech Debt](./docs/TECH_DEBT.md)**: Known issues and TODOs
-
-### 📖 Documentation Index
-```
-docs/
-├── SITEMAP.md               # 🗺️ Complete website structure map
-├── TECH_DEBT.md             # Known issues and TODOs
-├── arch/                    # Architecture documentation
-│   ├── architecture-overview.md       # System architecture overview
-│   ├── backend-architecture.md        # Backend design & patterns
-│   ├── frontend-architecture.md       # Frontend design & patterns
-│   ├── database-design.md             # Firestore schema & indexes
-│   ├── infrastructure.md              # Cloud Run deployment
-│   └── security-considerations.md     # Security & auth design
-├── specs/                   # Feature specifications
-│   ├── 20260131-01-wish-chatbot-frontend.md
-│   ├── 20260131-02-wish-api.md
-│   ├── 20260131-03-admin-users.md
-│   ├── 20260131-04-learning-component-crud.md
-│   ├── 20260201-01-material-viewer-rwd.md
-│   └── 20260211-01-skill-village.md
-├── qa-reports/              # QA test reports
-│   └── 20260201-material-viewer-rwd-FINAL.md
-├── worklogs/                # Development logs
-│   ├── 2026-01-31.md
-│   └── 2026-02-17-documentation-update.md
-└── current/                 # Current version docs
-    └── product-manual.md
-```
-
-### 📋 Specification Files
-```
-spec/
-├── 20260214-requirement.md  # Latest requirements
-├── FunctionalMap.md         # Feature mapping
-└── seeds/                   # Seed data definitions
-```
-
-### 💻 Code Structure
-
-#### Frontend (Next.js 14 App Router)
-```
-frontend/
-├── app/                     # Next.js App Router
-│   ├── (public)/           # Public pages (no auth)
-│   ├── (auth)/             # Login/Register (redirect if logged in)
-│   ├── (member)/           # Member area (auth required)
-│   ├── (teacher)/          # Teacher area (teacher role required)
-│   ├── (admin)/            # Admin area (admin role required)
-│   ├── (game-admin)/       # Game admin (admin role required)
-│   └── (fullscreen)/       # Material viewer (iframe display)
-├── components/              # React components
-│   ├── admin/              # Admin-specific components
-│   ├── auth/               # Auth forms & buttons
-│   ├── game/               # Game-related components
-│   ├── layout/             # Layout components (header, footer)
-│   ├── learning/           # Learning component displays
-│   ├── materials/          # Material upload/view components
-│   ├── skill-village/      # Skill village game components
-│   ├── ui/                 # UI primitives (shadcn/ui)
-│   └── wish/               # Wish chatbot components
-├── lib/                     # Utility libraries
-│   ├── firebase.ts         # Firebase client SDK initialization
-│   ├── api/                # API client functions
-│   └── REQUEST_QUEUE_README.md  # Request queue documentation
-├── hooks/                   # React hooks
-│   └── game/               # Game-specific hooks
-├── stores/                  # State management (Zustand)
-├── types/                   # TypeScript type definitions
-│   └── skill-village/      # Skill village types
-├── utils/                   # Utility functions
-│   └── skill-village/      # Skill village utilities
-├── e2e/                     # Playwright E2E tests
-├── public/                  # Static assets
-│   └── images/             # Image assets
-├── README.md               # Frontend-specific README
-├── SKILL_VILLAGE_README.md # Skill village documentation
-└── SKILL_VILLAGE_PROGRESS.md  # Skill village progress tracking
-```
-
-#### Backend (.NET 8 Minimal API)
-```
-backend/MidoLearning.Api/
-├── Program.cs              # App entry, middleware, endpoints
-├── Endpoints/              # Minimal API endpoint definitions
-│   ├── AuthEndpoints.cs           # /api/auth/*
-│   ├── UserEndpoints.cs           # /api/users/*
-│   ├── AdminEndpoints.cs          # /api/admin/* (admin only)
-│   ├── ComponentEndpoints.cs     # /api/components/* (CRUD)
-│   ├── MaterialEndpoints.cs      # /api/materials/* (upload/download)
-│   ├── WishEndpoints.cs          # /api/wishes/* (chatbot)
-│   ├── CategoryEndpoints.cs      # /api/categories/*
-│   ├── RatingEndpoints.cs        # /api/ratings/*
-│   └── GameEndpoints.cs          # /api/game/* (skill village)
-├── Middleware/
-│   └── FirebaseAuthMiddleware.cs # Token validation
-├── Services/
-│   ├── FirebaseService.cs        # Firebase Admin SDK wrapper
-│   └── StorageService.cs         # Firebase Storage operations
-├── Models/                 # DTOs & domain models
-│   ├── LearningComponent.cs
-│   ├── CourseMaterial.cs
-│   ├── Wish.cs
-│   └── SkillVillage/      # Skill village domain models
-├── Modules/                # Feature modules
-│   └── SkillVillage/      # Skill village module
-└── SKILL_VILLAGE_IMPLEMENTATION_STATUS.md
-```
-
-#### Backend Tests
-```
-backend/MidoLearning.Api.Tests/
-├── Tests/                  # Unit & integration tests
-├── Endpoints/              # Endpoint test helpers
-└── Helpers/                # Test utilities
-```
+設計並交付高品質的企業官網與 Landing Page，具備專業的 RWD 響應式設計與 SEO 優化能力，將設計轉換為可執行的程式碼，交付給 Web-Dev-Team 進行後續開發與部署。
 
 ---
 
-## 🚀 Project Overview
+## 專案範疇
 
-Mido Learning is an online learning platform built with:
-- **Frontend**: Next.js 14 (App Router) + Tailwind CSS + Firebase Client SDK
-- **Backend**: .NET 8 Minimal API + Firebase Admin SDK
-- **Database**: Firebase Firestore
-- **Auth**: Firebase Authentication (Email/Password + Google OAuth)
-- **Deployment**: Google Cloud Run via GitHub Actions
+### 專案類型
+- 企業官網（Corporate Websites）
+- Landing Page（著陸頁）
 
-### Key Features
-- **Learning Components**: Create, browse, rate components
-- **Material Upload**: Upload ZIP files (HTML/CSS/JS) as learning materials
-- **Material Viewer**: Secure iframe-based viewer with RWD support
-- **Wish Chatbot**: AI-powered learning wish collection
-- **Admin Dashboard**: User management, role assignment
-- **Skill Village**: Gamified skill tree learning system (NEW)
+### 設計範疇
+- UI 設計（70%）：視覺設計、品牌一致性、介面美學
+- UX 設計（30%）：使用者體驗、資訊架構、互動流程
+
+### 核心專長
+- **RWD 響應式設計**：桌面版、平板版、行動版的完整適配
+- **SEO 優化**：符合搜尋引擎最佳實踐的設計與技術實作
+
+### 交付模式
+- 按專案接案（Project-based）
+- 持續維護多個網站（Ongoing Maintenance）
+
+### 交付對象
+- **Web-Dev-Team**：開發團隊負責後續整合、部署與維運
 
 ---
 
-## 📝 Commands
+## 工作流程
 
-### Frontend (Next.js)
-```bash
-cd frontend
-npm install          # Install dependencies
-npm run dev          # Start dev server (http://localhost:3000)
-npm run build        # Production build
-npm run lint         # Run ESLint
-npx playwright test  # Run E2E tests
+### 階段 1：接案與需求收集
+**負責角色**：專案協調者、UX 設計師、SEO 專家
+
+1. 專案協調者建立專案、設定排程與里程碑
+2. UX 設計師進行資訊架構規劃、定義使用者旅程
+3. SEO 專家提供初期 SEO 策略建議（關鍵字、目標受眾）
+
+**交付物**：
+- 專案計劃文件
+- 資訊架構圖
+- SEO 策略建議
+
+---
+
+### 階段 2：UI 畫面設計
+**負責角色**：UI 設計師、SEO 專家、設計總監
+
+1. UI 設計師將 User Story 轉化為 UI 畫面結構
+2. UI 設計師製作高保真 Mockup（直接從 Mockup 開始，不做 Wireframe）
+3. SEO 專家審核 Mockup 是否符合 SEO 最佳實踐
+4. 設計總監審核設計品質（美學、品牌一致性、視覺風格）
+
+**交付物**：
+- UI 畫面結構文件
+- 高保真 Mockup（桌面版 + 行動版）
+- SEO 審核報告
+- 設計總監審核意見
+
+**設計原則（必須遵守）**：
+- Layout & Spacing：一致的間距比例、最大內容寬度 1200px、垂直節奏
+- Typography：清晰層次、行長限制 60-80 字元、字重對比
+- Color & Contrast：WCAG AA 最低標準（4.5:1 文字對比、3:1 UI 元件對比）
+- Responsive Design：Mobile-first、觸控目標最小 44x44px、堆疊佈局
+- Components：使用 SVG 圖標（禁止 emoji）、明確 hover 狀態、focus rings
+
+**常見錯誤（必須避免）**：
+- ❌ 文字觸碰螢幕邊緣（必須保留 padding）
+- ❌ 用 emoji 當圖標（使用 SVG）
+- ❌ 扁平黑色背景（增加層次與細節）
+- ❌ 缺少 hover 狀態（所有可互動元素必須有 hover）
+- ❌ 忘記行動版漢堡選單（導航必須適配行動裝置）
+
+---
+
+### 階段 3：客戶確認（2 輪）
+**負責角色**：專案協調者
+
+1. 第 1 輪：展示 Mockup，收集客戶 feedback
+2. 根據 feedback 調整設計
+3. 第 2 輪：確認最終設計版本，取得客戶簽核
+
+**交付物**：
+- 客戶 feedback 紀錄
+- 最終簽核的 Mockup
+
+---
+
+### 階段 4：程式碼實作
+**負責角色**：UI 設計師、SEO 專家、Web UI 品管經理、QA
+
+1. UI 設計師將 Mockup 轉換為可執行的 HTML/React 程式碼（CDN 模式，無 build）
+2. SEO 專家審核程式碼的 SEO 技術實作（meta tags、結構化資料、語意化 HTML）
+3. Web UI 品管經理審核技術品質（Web Design Guidelines、可訪問性、Core Web Vitals）
+4. QA 驗收 RWD 響應式設計（桌面版、平板版、行動版）
+
+**交付物**：
+- 可執行的 HTML/React 程式碼
+- SEO 技術審核報告
+- 技術品質審核報告
+- RWD 驗收報告
+
+**技術要求**：
+- 全部圖片使用 .webp 格式
+- 實作 lazy loading
+- 維持正確的 aspect ratios
+- Core Web Vitals：LCP < 2.5s、FID < 100ms、CLS < 0.1
+
+**SEO 技術檢查清單**：
+- Primary keyword in title tag (< 60 chars)
+- Meta description (150-160 chars)
+- H1 with primary keyword
+- Images compressed with alt text
+- 3-5 internal links
+- Schema markup（JSON-LD 格式）
+- Mobile-friendly（通過 Google Mobile-Friendly Test）
+- Page speed < 3s
+- No broken links
+
+---
+
+### 階段 5：交付給 Web-Dev-Team
+**負責角色**：專案協調者
+
+**遵循規範**：`handoff-protocol.md`
+
+1. 確認交接檢查清單完整（程式碼、設計文件、審核報告、客戶資料）
+2. 舉辦交接會議（30-45 分鐘）
+3. 產生交接文件與會議紀錄
+4. 提供後續支援窗口
+
+**交付物**：
+- 完整的程式碼套件
+- 設計規範文件
+- 所有審核報告
+- 交接會議紀錄
+- 交接文件（使用 `/design-handoff` skill）
+
+---
+
+## 通用行為規範
+
+### 溝通語言
+- **對內溝通**：繁體中文
+- **技術術語**：保持英文（例如：RWD、SEO、Mockup、Core Web Vitals）
+- **文件撰寫**：繁體中文為主，技術名詞使用英文
+
+### 溝通規範
+**遵循規範**：`communication-protocol.md`
+
+**與 Web-Dev-Team 溝通時機**：
+- 里程碑完成時（客戶確認、QA 驗收）
+- 發現問題時（即時通知）
+- 每週五進度更新
+
+**溝通管道**：
+- 非緊急：Email、Slack #web-design-handoff
+- 緊急：Slack DM、電話/會議
+
+**必須使用標準格式**：進度更新、問題通報、交接通知
+
+### 輸出格式
+- **設計稿**：Figma 連結或 PNG/WebP（桌面版 + 行動版）
+- **程式碼**：HTML/React（CDN 模式，單一檔案或模組化結構）
+- **文件**：Markdown 格式，遵循 DopeDocSkill 雙格式系統
+
+### 確認機制
+**每個交付物都必須經過上下手確認**：
+- UI 設計師 → 設計總監 → 客戶
+- UI 設計師（程式碼）→ Web UI 品管經理 → QA
+- SEO 專家的審核必須在每個階段完成後記錄
+
+### 品質標準
+- 所有設計必須符合 **Web Design Guidelines**（Vercel Interface Guidelines）
+- 所有程式碼必須通過 **可訪問性檢查**（WCAG AA）
+- 所有頁面必須通過 **RWD 驗收**（三種裝置）
+- 所有內容必須符合 **SEO 最佳實踐**
+
+---
+
+## 技術約束
+
+### 前端技術棧
+- **HTML5**：語意化標籤
+- **CSS3**：Flexbox、Grid、Media Queries
+- **React**（可選）：CDN 模式，無 build process
+- **圖片格式**：WebP 為主，fallback 至 PNG/JPG
+
+### 響應式斷點（RWD Breakpoints）
+```css
+/* Mobile (預設) */
+@media (min-width: 768px) { /* Tablet */ }
+@media (min-width: 1024px) { /* Desktop */ }
 ```
 
-### Backend (.NET)
-```bash
-cd backend/MidoLearning.Api
-dotnet restore       # Restore packages
-dotnet build         # Build project
-dotnet run           # Start API (http://localhost:5000)
-dotnet test          # Run tests
-```
+### 可訪問性要求
+- 顏色對比：WCAG AA（4.5:1 文字、3:1 UI 元件）
+- 鍵盤導航：所有互動元素可用 Tab 鍵操作
+- Screen Reader：正確的 ARIA labels
+- Focus 狀態：明確的 focus rings
 
-### Deployment
-```bash
-gh workflow run "Deploy Frontend"   # Trigger frontend deployment
-gh workflow run "Deploy Backend"    # Trigger backend deployment
-gh run list --limit 4               # Check deployment status
-```
+### 效能要求
+- **LCP**（Largest Contentful Paint）< 2.5s
+- **FID**（First Input Delay）< 100ms
+- **CLS**（Cumulative Layout Shift）< 0.1
+- Page Speed < 3s
 
 ---
 
-## 🏗️ Architecture
+## 部署模式
 
-### Frontend Route Groups
-The frontend uses Next.js App Router with route groups for access control:
-- `app/(public)/*` - Public pages (home, about, materials) - no auth required
-- `app/(auth)/*` - Auth pages (login, register) - redirect if logged in
-- `app/(member)/*` - Member pages (dashboard, profile, components) - requires authentication
-- `app/(teacher)/*` - Teacher pages (component management, upload) - requires teacher/admin role
-- `app/(admin)/*` - Admin pages - requires admin role via Firebase custom claims
-- `app/(game-admin)/*` - Game admin pages - requires admin role
-- `app/(fullscreen)/*` - Material viewer - public/auth based on component visibility
+**本團隊使用 Subagent 模式**：
 
-### Authentication Flow
-1. Frontend: User signs in via Firebase Auth → receives ID token
-2. Frontend: Sends ID token in `Authorization: Bearer <token>` header
-3. Backend: `FirebaseAuthMiddleware` validates token, extracts claims (uid, email, admin role)
-4. Backend: Endpoints use `[Authorize]` or `RequireAuthorization("AdminOnly")` for access control
-
-### Firebase Integration
-- **Frontend** (`lib/firebase.ts`): Lazy-initialized Firebase client SDK, only runs in browser
-- **Backend**: Uses `GoogleCredential.FromFile()` with path from `appsettings.Development.json`
-- **Local dev**: Requires `credentials/firebase-admin-key.json` (not committed to git)
-
-### API Response Format
-All API responses follow this wrapper format:
-```json
-{
-  "success": true|false,
-  "data": { ... },
-  "message": "optional message",
-  "errors": ["optional", "error", "list"]
-}
-```
-
-Frontend must extract `apiResponse.data` when parsing responses.
+- **專案協調者**（Coordinator）透過 Task tool 依序呼叫其他 agents
+- 工作流程為**順序式交付**（Sequential Handoff）
+- 每個階段完成後，下一階段才開始
+- 適合有明確設計流程與審核節點的專案
 
 ---
 
-## 🔧 Environment Setup
+## 角色總覽
 
-### Frontend (.env.local)
-```
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=mido-learning
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
-
-### Backend (appsettings.Development.json)
-```json
-{
-  "Firebase": {
-    "ProjectId": "mido-learning",
-    "CredentialPath": "../../credentials/firebase-admin-key.json"
-  }
-}
-```
+| 角色 | 職責 | 審核時機 |
+|------|------|----------|
+| **專案協調者** | 排程、追蹤進度、協調交接 | - |
+| **設計總監** | 審核設計品質（美學、品牌） | Mockup 完成後 |
+| **UX 設計師** | 資訊架構、使用者體驗規劃 | 需求階段 |
+| **UI 設計師** | Story → UI 結構 → Mockup → 程式碼 | 所有設計階段 |
+| **SEO 專家** | SEO 建議與審核 | 需求、Mockup、程式碼三階段 |
+| **Web UI 品管經理** | 技術品質把關 | 程式碼完成後 |
+| **QA** | RWD 驗收 | 程式碼完成後 |
 
 ---
 
-## 🌐 Cloud Run URLs
-- Frontend: https://mido-learning-frontend-24mwb46hra-de.a.run.app
-- Backend: https://mido-learning-api-24mwb46hra-de.a.run.app
+## 遵循的規範（Rules）
+
+### 設計交付物標準
+- **`design-deliverables-sop.md`**：設計展示必要要件（Sitemap、頁碼系統、Wireframes、四種交付格式、固定A4尺寸原則）
+
+### 設計與品質標準
+- **`design-standards.md`**：Layout、Typography、Color、RWD、Components
+- **`approval-workflow.md`**：上下手確認機制、審核流程
+
+### 協作與溝通
+- **`handoff-protocol.md`**：交付給 Web-Dev-Team 的完整流程
+- **`communication-protocol.md`**：內部與跨團隊溝通規範
 
 ---
 
-## 🎯 Development Guidelines
+## 參考資源
 
-### Pre-Deployment E2E Testing (MANDATORY)
-
-**Before any `git push`, you MUST run Playwright E2E tests to verify the material upload flow works correctly.**
-
-Test Scenarios (all must pass):
-1. **Upload Material**: Create component, upload ZIP file, verify upload success
-2. **View Material**: Navigate to material detail page, verify iframe loads correctly
-3. **Upload V2**: Upload a second version, verify version number increments
-4. **Delete Material**: Delete a material version, verify deletion success
-
-```bash
-# Run E2E tests before push
-cd frontend
-npx playwright test e2e/materials.spec.ts
-
-# If tests fail, fix the issue before pushing
-```
-
-### Material Upload Flow
-1. Teacher creates component via `/teacher/components/upload`
-2. Backend validates ZIP (must contain an HTML file at root level)
-   - Prefers `index.html` as entry point
-   - Falls back to first root HTML file (e.g., `presentation.html`)
-   - Skips macOS `__MACOSX` metadata files
-3. ZIP is extracted to Firebase Storage: `materials/{componentId}/v{version}/`
-4. Material manifest (with detected entry point) is stored in Firestore
-5. Frontend displays material via iframe using content proxy API
-
-### Material Access Control
-Materials are stored privately in Firebase Storage. Access is controlled via the content proxy API:
-- **API Endpoint**: `/api/materials/{materialId}/content/{path}`
-- **Access rules based on component visibility**:
-  - `published`: Anonymous access allowed
-  - `login`: Requires authenticated user
-  - `private`: Owner or admin only
-
-### Categories
-- Categories are **dynamic** and can be created/managed via API
-- API: `/api/categories` for listing, `/api/categories/{id}` for CRUD
-- Frontend displays with color-coded styling from `CATEGORY_CONFIG`
+- **DopeDocSkill**：雙格式文件系統（Markdown + HTML）
+- **Vercel Web Interface Guidelines**：UI 設計與實作規範
+- **WCAG 2.1**：可訪問性標準
+- **Google Core Web Vitals**：效能指標
+- **Schema.org**：結構化資料標準
 
 ---
 
-## 🎮 Skill Village (Game Module)
-
-### Overview
-Skill Village is a gamified learning system that visualizes skills as a village map. Users progress through skill trees by completing learning components.
-
-### Key Documents
-- **[Frontend README](./frontend/SKILL_VILLAGE_README.md)**: Frontend architecture & implementation
-- **[Progress Tracking](./frontend/SKILL_VILLAGE_PROGRESS.md)**: Development status
-- **[Backend Status](./backend/MidoLearning.Api/SKILL_VILLAGE_IMPLEMENTATION_STATUS.md)**: Backend implementation status
-- **[Specification](./docs/specs/20260211-01-skill-village.md)**: Feature specification
-
-### Architecture
-- **Frontend**: React components + Canvas rendering + Zustand state management
-- **Backend**: Dedicated `GameEndpoints.cs` + `SkillVillage` module
-- **Data**: Firestore collections for skills, user progress, achievements
-
----
-
-## 🐛 Known Issues & Tech Debt
-
-See [TECH_DEBT.md](./docs/TECH_DEBT.md) for:
-- Known bugs
-- Performance issues
-- Refactoring candidates
-- Future improvements
-
----
-
-## 📌 Important Notes for AI
-
-### When Reading Code
-1. **Check route groups** to understand access control
-2. **Frontend uses API wrappers** in `lib/api/` - don't call fetch directly
-3. **Backend uses DTOs** - check `Models/` for request/response shapes
-4. **Material paths** are relative to ZIP root, not storage root
-
-### When Making Changes
-1. **Run E2E tests** before committing
-2. **Update documentation** if changing architecture
-3. **Follow API response format** - always use wrapper
-4. **Respect access control** - verify route groups and endpoint policies
-
-### Common Pitfalls
-- ❌ Forgetting to extract `apiResponse.data` in frontend
-- ❌ Using absolute paths in material HTML (should be relative)
-- ❌ Not validating ZIP structure before upload
-- ❌ Bypassing Firebase auth middleware in backend
-
----
-
-## 📞 Getting Help
-
-### Quick Reference
-- **Architecture docs**: `docs/arch/`
-- **Feature specs**: `docs/specs/`
-- **QA reports**: `docs/qa-reports/`
-- **Frontend README**: `frontend/README.md`
-- **Backend scripts**: `backend/scripts/`
-
-### Debugging
-- **Frontend errors**: Check browser console + Network tab
-- **Backend errors**: Check terminal output + Firestore logs
-- **Auth issues**: Verify Firebase token in Network tab headers
-- **Material viewer**: Check iframe console for CORS/path errors
-
----
-
-**Last Updated**: 2026-02-17
+**版本**：1.1
+**建立日期**：2026-02-13
+**更新日期**：2026-02-13
+**維護者**：Web Design Team
