@@ -53,6 +53,23 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a1a2e;touch-action
 .sep-v{width:1px;min-height:30px;background:rgba(255,255,255,0.12);flex-shrink:0;align-self:center;margin:0 2px;}
 .tlabel{font-size:8px;color:#556;text-transform:uppercase;letter-spacing:.5px;writing-mode:horizontal-tb;white-space:nowrap;align-self:center;margin:0 1px;}
 
+/* 工具列收合 */
+#btn-tb-hide{
+  margin-left:auto;min-width:32px;min-height:32px;flex-shrink:0;
+  border-radius:6px;border:1px solid rgba(255,255,255,0.1);
+  background:rgba(60,60,80,0.4);color:#667;cursor:pointer;font-size:9px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+}
+#btn-tb-hide:hover{background:rgba(80,80,110,0.7);color:#99a;}
+#toolbar-reveal{
+  display:none;position:fixed;top:4px;left:50%;transform:translateX(-50%);
+  z-index:200;background:rgba(15,52,96,0.95);border:1px solid #3498db;
+  color:#7bc;border-radius:12px;padding:4px 14px;font-size:11px;
+  cursor:pointer;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,0.6);
+  user-select:none;
+}
+#toolbar-reveal:hover{background:rgba(30,80,140,0.95);}
+
 /* ── 主內容 ── */
 #main{display:flex;flex:1;overflow:hidden;min-height:0;}
 
@@ -338,7 +355,33 @@ canvas{display:block;}
       <span class="tl">訓練</span>
     </button>
 
+    <div class="sep-v"></div>
+
+    <!-- 操作 -->
+    <button class="tbtn" onclick="undo()" title="復原 Ctrl+Z">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8H10a3 3 0 0 1 0 6H6"/><polyline points="8,5.5 5,8 8,10.5"/></svg>
+      <span class="tl">復原</span>
+    </button>
+    <button class="tbtn" onclick="clearActive()" title="清除選取筆跡">
+      <svg width="14" height="15" viewBox="0 0 14 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,3.5 13,3.5"/><path d="M4,3.5V2h6v1.5"/><rect x="2" y="3.5" width="10" height="9" rx="1"/><line x1="5" y1="6.5" x2="5" y2="10.5"/><line x1="9" y1="6.5" x2="9" y2="10.5"/></svg>
+      <span class="tl">清跡</span>
+    </button>
+    <button class="tbtn danger" onclick="resetAll()" title="全部重置 [R]">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8A5 5 0 1 1 10 3.3"/><polyline points="14,1 14,5 10,5"/></svg>
+      <span class="tl">重置</span>
+    </button>
+
+    <!-- 收合按鈕（工具列最右側） -->
+    <button id="btn-tb-hide" onclick="hideToolbar()" title="收合工具列">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <polyline points="2,8 6,4 10,8"/>
+      </svg>
+      <span style="font-size:8px;color:inherit;">收</span>
+    </button>
   </div><!-- /toolbar -->
+
+  <!-- 工具列隱藏時的顯示按鈕 -->
+  <div id="toolbar-reveal" onclick="showToolbar()">▼ 工具列</div>
 
   <!-- 主區域 -->
   <div id="main">
@@ -413,13 +456,6 @@ canvas{display:block;}
           <div class="hud-row">
             <span class="hud-sep">標記</span>
             <div id="hud-annots" style="display:flex;gap:4px;"></div>
-          </div>
-
-          <!-- 操作按鈕 -->
-          <div class="hud-row" id="hud-actions">
-            <button class="hud-btn" onclick="undo()" title="復原 Ctrl+Z">↩ 復原</button>
-            <button class="hud-btn" onclick="clearActive()" title="清除選取筆跡">🗑 清跡</button>
-            <button class="hud-btn danger" onclick="resetAll()" title="全部重置 [R]">♻ 重置</button>
           </div>
 
         </div><!-- /hud -->
@@ -1097,6 +1133,18 @@ function selectEntity(type, i) {
   redraw();
 }
 
+function hideToolbar() {
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('toolbar-reveal').style.display = 'block';
+  resize(); // 重新計算場地大小
+}
+
+function showToolbar() {
+  document.getElementById('toolbar').style.display = 'flex';
+  document.getElementById('toolbar-reveal').style.display = 'none';
+  resize();
+}
+
 function updateCursor() {
   if (state.pendingPlace) {
     drawC.style.cursor = 'copy';
@@ -1207,97 +1255,143 @@ function drawTrainLights() {
   if (!TRAIN.panelOpen) { tc.style.display = 'none'; return; }
   tc.style.display = 'block';
 
-  // 輕微遮罩保持場地分區感，但不遮住對方半場
-  const _homeLeft = state.homeSide === 'left';
-  const _trainLeft = (TRAIN.side === 'home') ? _homeLeft : !_homeLeft;
-  const _netX = cx(COURT_W / 2);
-  trainC.save();
-  trainC.fillStyle = 'rgba(0,0,20,0.15)';
-  if (_trainLeft) {
-    trainC.fillRect(_netX, 0, CW - _netX, CH);
-  } else {
-    trainC.fillRect(0, 0, _netX, CH);
+  const homeLeft = state.homeSide === 'left';
+  const trainLeft = (TRAIN.side === 'home') ? homeLeft : !homeLeft;
+
+  // ── 3D 透視角點 ─────────────────────────────────────────────────────
+  const cx0   = CW / 2;
+  const nW2   = CW * 0.44;   // 近端（球員底線）半寬
+  const fW2   = CW * 0.20;   // 遠端（對手底線）半寬
+  const nearY = CH * 0.90;   // 近端 Y 像素
+  const farY  = CH * 0.09;   // 遠端 Y 像素
+
+  const NL = { x: cx0 - nW2, y: nearY };
+  const NR = { x: cx0 + nW2, y: nearY };
+  const FL = { x: cx0 - fW2, y: farY  };
+  const FR = { x: cx0 + fW2, y: farY  };
+
+  // 公尺座標 (mx=深度 0..COURT_W, my=橫向 0..COURT_H) → 畫布像素
+  function mapPt(mx, my) {
+    const u = trainLeft ? mx / COURT_W : (COURT_W - mx) / COURT_W;
+    const v = my / COURT_H;
+    const lx = NL.x + u * (FL.x - NL.x);
+    const ly = NL.y + u * (FL.y - NL.y);
+    const rx = NR.x + u * (FR.x - NR.x);
+    const ry = NR.y + u * (FR.y - NR.y);
+    return { x: lx + v * (rx - lx), y: ly + v * (ry - ly) };
   }
-  trainC.restore();
 
-  const pts = getTrainPositions();
+  // 透視縮放半徑
+  function dotR(mx) {
+    const u = trainLeft ? mx / COURT_W : (COURT_W - mx) / COURT_W;
+    return Math.max(9, SC * 0.28) * (1.6 - 1.0 * u);
+  }
+
+  // 畫場地線（公尺座標）
+  function line3D(x1, y1, x2, y2, col, w) {
+    const a = mapPt(x1, y1), b = mapPt(x2, y2);
+    trainC.beginPath();
+    trainC.moveTo(a.x, a.y); trainC.lineTo(b.x, b.y);
+    trainC.strokeStyle = col; trainC.lineWidth = w; trainC.stroke();
+  }
+
+  // ── 1. 深色背景 ──────────────────────────────────────────────────────
+  trainC.fillStyle = 'rgba(0,4,18,0.92)';
+  trainC.fillRect(0, 0, CW, CH);
+
+  // ── 2. 球場表面（雙色綠地） ──────────────────────────────────────────
+  const netL = mapPt(COURT_W / 2, 0);
+  const netR = mapPt(COURT_W / 2, COURT_H);
+
+  // 球員半場（近端，較亮綠）
+  trainC.beginPath();
+  trainC.moveTo(NL.x, NL.y); trainC.lineTo(NR.x, NR.y);
+  trainC.lineTo(netR.x, netR.y); trainC.lineTo(netL.x, netL.y);
+  trainC.closePath();
+  trainC.fillStyle = '#1b6b3e'; trainC.fill();
+
+  // 對手半場（遠端，較暗綠）
+  trainC.beginPath();
+  trainC.moveTo(netL.x, netL.y); trainC.lineTo(netR.x, netR.y);
+  trainC.lineTo(FR.x, FR.y); trainC.lineTo(FL.x, FL.y);
+  trainC.closePath();
+  trainC.fillStyle = '#11472a'; trainC.fill();
+
+  // ── 3. 場地線 ────────────────────────────────────────────────────────
+  const lc = 'rgba(255,255,255,0.50)';
+  const lw = Math.max(1, SC * 0.018);
+  line3D(0, 0, 0, COURT_H, lc, lw);                          // 球員底線
+  line3D(COURT_W, 0, COURT_W, COURT_H, lc, lw);              // 對手底線
+  line3D(0, 0, COURT_W, 0, lc, lw);                          // 左邊線
+  line3D(0, COURT_H, COURT_W, COURT_H, lc, lw);              // 右邊線
+  const sslD = 1.98;
+  const dimL = 'rgba(255,255,255,0.28)';
+  line3D(COURT_W/2 - sslD, 0, COURT_W/2 - sslD, COURT_H, dimL, lw); // 球員短發球線
+  line3D(COURT_W/2 + sslD, 0, COURT_W/2 + sslD, COURT_H, dimL, lw); // 對手短發球線
+  line3D(COURT_W/2 - sslD, COURT_H/2, COURT_W/2 + sslD, COURT_H/2, dimL, lw); // 中線
+
+  // ── 4. 球網（3D 高度感） ─────────────────────────────────────────────
+  const netHpx = (nearY - farY) * 0.075;
+  trainC.beginPath();
+  trainC.moveTo(netL.x, netL.y - netHpx); trainC.lineTo(netR.x, netR.y - netHpx);
+  trainC.strokeStyle = '#e8dfa0'; trainC.lineWidth = Math.max(2, SC * 0.035); trainC.stroke();
+  trainC.beginPath();
+  trainC.moveTo(netL.x, netL.y); trainC.lineTo(netL.x, netL.y - netHpx);
+  trainC.moveTo(netR.x, netR.y); trainC.lineTo(netR.x, netR.y - netHpx);
+  trainC.strokeStyle = '#c8b060'; trainC.lineWidth = Math.max(2, SC * 0.03); trainC.stroke();
+
+  const pts    = getTrainPositions();
   const oppPts = getOppPositions();
-  const r = Math.max(10, SC * 0.22);
 
-  // ── 先畫對方半場目標點（橘色）
+  // ── 5. 對手目標點（橘色，遠端） ──────────────────────────────────────
   oppPts.forEach((p, i) => {
-    const px = cx(p.x);
-    const py = cy(p.y);
+    const { x: px, y: py } = mapPt(p.x, p.y);
+    const r = dotR(p.x);
     const isActive = (i === TRAIN.oppLight && TRAIN.running);
-
     if (isActive) {
-      // Active opponent target - orange pulse glow
-      const glow = r * (1.4 + TRAIN.pulse * 0.7);
+      const glow = r * (1.5 + TRAIN.pulse * 0.8);
       const grad = trainC.createRadialGradient(px, py, r*0.2, px, py, glow);
-      grad.addColorStop(0,   'rgba(255,160,0,0.9)');
-      grad.addColorStop(0.4, 'rgba(220,100,0,0.6)');
-      grad.addColorStop(1,   'rgba(180,60,0,0)');
-      trainC.beginPath(); trainC.arc(px, py, glow, 0, Math.PI * 2);
-      trainC.fillStyle = grad; trainC.fill();
-
-      trainC.beginPath(); trainC.arc(px, py, r, 0, Math.PI * 2);
+      grad.addColorStop(0, 'rgba(255,160,0,0.9)'); grad.addColorStop(0.4, 'rgba(220,100,0,0.6)'); grad.addColorStop(1, 'rgba(180,60,0,0)');
+      trainC.beginPath(); trainC.arc(px, py, glow, 0, Math.PI*2); trainC.fillStyle = grad; trainC.fill();
+      trainC.beginPath(); trainC.arc(px, py, r, 0, Math.PI*2);
       trainC.fillStyle = '#ff9500'; trainC.fill();
-      trainC.strokeStyle = '#fff'; trainC.lineWidth = 2.5; trainC.stroke();
-
-      trainC.fillStyle = '#fff';
-      trainC.font = `bold ${Math.max(9, Math.round(r * 0.85))}px Arial`;
-      trainC.textAlign = 'center'; trainC.textBaseline = 'middle';
-      trainC.fillText('×', px, py);
+      trainC.strokeStyle = '#fff'; trainC.lineWidth = 2; trainC.stroke();
+      trainC.fillStyle = '#fff'; trainC.font = `bold ${Math.round(r*0.9)}px Arial`;
+      trainC.textAlign = 'center'; trainC.textBaseline = 'middle'; trainC.fillText('×', px, py);
     } else {
-      // Inactive opponent dot
-      trainC.beginPath(); trainC.arc(px, py, r * 0.7, 0, Math.PI * 2);
-      trainC.fillStyle = 'rgba(255,120,0,0.12)'; trainC.fill();
-      trainC.strokeStyle = 'rgba(255,150,0,0.4)'; trainC.lineWidth = 1.5; trainC.stroke();
+      trainC.beginPath(); trainC.arc(px, py, r*0.65, 0, Math.PI*2);
+      trainC.fillStyle = 'rgba(255,120,0,0.15)'; trainC.fill();
+      trainC.strokeStyle = 'rgba(255,150,0,0.45)'; trainC.lineWidth = 1.5; trainC.stroke();
     }
   });
 
-  // ── 再畫我方訓練點（綠色）＋ 揮拍方向箭頭
+  // ── 6. 球員訓練點（綠色，近端） ──────────────────────────────────────
   pts.forEach((p, i) => {
-    const px = cx(p.x);
-    const py = cy(p.y);
+    const { x: px, y: py } = mapPt(p.x, p.y);
+    const r      = dotR(p.x);
     const isActive = (i === TRAIN.currentLight);
     const inZone   = TRAIN.zones[p.zone];
-    const arrow    = p.zone === 'front' ? '↓' : '↑'; // 前場下手↓，中後場上手↑
-
+    const arrow    = p.zone === 'front' ? '↓' : '↑';
     if (!inZone) {
-      // Disabled dim dot
-      trainC.beginPath(); trainC.arc(px, py, r * 0.55, 0, Math.PI * 2);
-      trainC.fillStyle = 'rgba(80,80,100,0.35)'; trainC.fill();
-      trainC.strokeStyle = 'rgba(120,120,150,0.4)'; trainC.lineWidth = 1.5;
-      trainC.stroke();
+      trainC.beginPath(); trainC.arc(px, py, r*0.5, 0, Math.PI*2);
+      trainC.fillStyle = 'rgba(80,80,100,0.4)'; trainC.fill();
+      trainC.strokeStyle = 'rgba(120,120,150,0.4)'; trainC.lineWidth = 1.5; trainC.stroke();
     } else if (isActive) {
-      // Active player position - green pulse glow
-      const glow = r * (1.4 + TRAIN.pulse * 0.7);
+      const glow = r * (1.5 + TRAIN.pulse * 0.8);
       const grad = trainC.createRadialGradient(px, py, r*0.2, px, py, glow);
-      grad.addColorStop(0,   'rgba(0,255,100,0.9)');
-      grad.addColorStop(0.4, 'rgba(0,220,80,0.6)');
-      grad.addColorStop(1,   'rgba(0,180,60,0)');
-      trainC.beginPath(); trainC.arc(px, py, glow, 0, Math.PI * 2);
-      trainC.fillStyle = grad; trainC.fill();
-
-      trainC.beginPath(); trainC.arc(px, py, r, 0, Math.PI * 2);
+      grad.addColorStop(0, 'rgba(0,255,100,0.9)'); grad.addColorStop(0.4, 'rgba(0,220,80,0.6)'); grad.addColorStop(1, 'rgba(0,180,60,0)');
+      trainC.beginPath(); trainC.arc(px, py, glow, 0, Math.PI*2); trainC.fillStyle = grad; trainC.fill();
+      trainC.beginPath(); trainC.arc(px, py, r, 0, Math.PI*2);
       trainC.fillStyle = '#00ff66'; trainC.fill();
-      trainC.strokeStyle = '#fff'; trainC.lineWidth = 2.5; trainC.stroke();
-
-      // Swing direction arrow
-      trainC.fillStyle = '#fff';
-      trainC.font = `bold ${Math.max(11, Math.round(r * 0.9))}px Arial`;
-      trainC.textAlign = 'center'; trainC.textBaseline = 'middle';
-      trainC.fillText(arrow, px, py);
+      trainC.strokeStyle = '#fff'; trainC.lineWidth = 2; trainC.stroke();
+      trainC.fillStyle = '#fff'; trainC.font = `bold ${Math.round(r*0.9)}px Arial`;
+      trainC.textAlign = 'center'; trainC.textBaseline = 'middle'; trainC.fillText(arrow, px, py);
     } else {
-      // Normal inactive player dot
-      trainC.beginPath(); trainC.arc(px, py, r * 0.7, 0, Math.PI * 2);
-      trainC.fillStyle = 'rgba(0,180,80,0.2)'; trainC.fill();
-      trainC.strokeStyle = 'rgba(0,220,100,0.5)'; trainC.lineWidth = 1.5; trainC.stroke();
-      trainC.fillStyle = 'rgba(180,255,200,0.7)';
-      trainC.font = `${Math.max(9, Math.round(r * 0.65))}px Arial`;
-      trainC.textAlign = 'center'; trainC.textBaseline = 'middle';
-      trainC.fillText(arrow, px, py);
+      trainC.beginPath(); trainC.arc(px, py, r*0.65, 0, Math.PI*2);
+      trainC.fillStyle = 'rgba(0,180,80,0.25)'; trainC.fill();
+      trainC.strokeStyle = 'rgba(0,220,100,0.55)'; trainC.lineWidth = 1.5; trainC.stroke();
+      trainC.fillStyle = 'rgba(180,255,200,0.7)'; trainC.font = `${Math.round(r*0.65)}px Arial`;
+      trainC.textAlign = 'center'; trainC.textBaseline = 'middle'; trainC.fillText(arrow, px, py);
     }
   });
 }
