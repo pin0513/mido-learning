@@ -20,27 +20,16 @@ services:
 
   backend:
     build:
-      context: ./backend/MidoLearning.Api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/MidoLearning.Api/Dockerfile
     ports:
       - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Firebase__ProjectId=mido-learning
-      - MusicProducer__SidecarUrl=http://music-producer:8001
+      - MusicProducer__ScriptsDir=/app/music-producer
     volumes:
       - ./credentials:/app/credentials:ro
-    depends_on:
-      - music-producer
-
-  music-producer:
-    build:
-      context: ./music-producer
-      dockerfile: Dockerfile
-    ports:
-      - "8001:8001"
-    volumes:
-      - music_output:/app/output
 
   firebase-emulator:
     image: andreysenov/firebase-tools
@@ -55,5 +44,3 @@ services:
       - ./storage.rules:/home/node/storage.rules
     command: firebase emulators:start --project mido-learning
 
-volumes:
-  music_output:

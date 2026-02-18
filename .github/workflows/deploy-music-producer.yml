@@ -1,11 +1,9 @@
 name: Deploy Music Producer
 
+# This workflow is DISABLED (Method A: Python is now embedded in .NET container)
+# Music producer scripts are bundled inside the backend Docker image.
+# To manually redeploy the old standalone service, use workflow_dispatch.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'music-producer/**'
-      - '.github/workflows/deploy-music-producer.yml'
   workflow_dispatch:
 
 env:
