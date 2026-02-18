@@ -294,7 +294,7 @@ function startTraining() {
   pickNextLight();
   if (TRAIN.rafId) cancelAnimationFrame(TRAIN.rafId);
   TRAIN.rafId = requestAnimationFrame(trainPulseLoop);
-  if (TRAIN.mode === 'random' || TRAIN.mode === 'seq') {
+  if (TRAIN.mode === 'random' || TRAIN.mode === 'seq' || TRAIN.mode === 'tactic') {
     TRAIN.timer = setInterval(() => {
       TRAIN.setCount++;
       updateSetCounter();
@@ -354,14 +354,14 @@ function setTrainMode(mode) {
   const manualRow   = document.getElementById('tp-manual-row');
   const tacticHint  = document.getElementById('tp-tactic-hint');
   const hintText    = document.getElementById('tp-hint-text');
-  intervalRow.style.display = (mode === 'manual' || mode === 'tactic') ? 'none' : '';
+  intervalRow.style.display = (mode === 'manual') ? 'none' : '';
   manualRow.style.display   = (mode === 'manual') ? '' : 'none';
   tacticHint.style.display  = 'none';
   const hints = {
     random: '隨機點亮其中一點<br>聽燈執行跑位',
     seq:    '按順序點亮各點<br>循環練習',
     manual: '點擊「下一點」切換<br>依學員速度控制節奏',
-    tactic: '閃燈時提示對方站位<br>選擇最佳回球方向',
+    tactic: '亮燈 + 隨機顯示球種與目標點<br>訓練移位與戰術反應',
   };
   hintText.innerHTML = hints[mode];
   if (TRAIN.running) { stopTraining(); startTraining(); }
@@ -372,7 +372,7 @@ function setTrainIntervalPreset(ms) {
   const map = {1000:'tp-i1', 1500:'tp-i15', 2000:'tp-i2', 3000:'tp-i3', 5000:'tp-i5'};
   Object.values(map).forEach(id => document.getElementById(id).classList.remove('on'));
   if (map[ms]) document.getElementById(map[ms]).classList.add('on');
-  if (TRAIN.running && (TRAIN.mode==='random'||TRAIN.mode==='seq')) {
+  if (TRAIN.running && (TRAIN.mode==='random'||TRAIN.mode==='seq'||TRAIN.mode==='tactic')) {
     stopTraining(); startTraining();
   }
 }
@@ -413,37 +413,24 @@ function manualNext() {
   pickNextLight();
 }
 
-const TACTIC_SCENARIOS = {
-  FL: { desc:'對方後場右側', shots:['殺球','長球','平抽','過渡','放短'] },
-  FR: { desc:'對方後場左側', shots:['殺球','長球','平抽','過渡','放短'] },
-  ML: { desc:'對方中場右側', shots:['平抽','放短','殺球','過渡'] },
-  MR: { desc:'對方中場左側', shots:['平抽','放短','殺球','過渡'] },
-  BL: { desc:'對方前場右側', shots:['放短','平抽','過渡','長球'] },
-  BR: { desc:'對方前場左側', shots:['放短','平抽','過渡','長球'] },
+const SHOT_TYPES = ['挑球', '過渡球', '抽球', '殺球', '切球'];
+const SHOT_TYPE_LABELS = {
+  挑球:  { emoji: '🔼', desc: '高遠球，打到底線' },
+  過渡球: { emoji: '↗️', desc: '平高球，中距離' },
+  抽球:  { emoji: '↔️', desc: '平抽，快速拉線' },
+  殺球:  { emoji: '💥', desc: '扣殺，向下猛擊' },
+  切球:  { emoji: '📐', desc: '切吊，輕放網前' },
 };
+const OPP_POSITIONS = ['對方前左', '對方前右', '對方中左', '對方中右', '對方後左', '對方後右'];
 
 function updateTacticHint() {
-  const pts = getTrainPositions();
-  if (TRAIN.currentLight < 0 || TRAIN.currentLight >= pts.length) return;
-  const pt = pts[TRAIN.currentLight];
-  const keys = Object.keys(TACTIC_SCENARIOS);
-  const key = keys[Math.floor(Math.random() * keys.length)];
-  const scenario = TACTIC_SCENARIOS[key];
-  document.getElementById('tp-tactic-text').textContent = '對手在：' + scenario.desc;
-  const btns = document.getElementById('tp-shot-btns');
-  btns.innerHTML = '';
-  scenario.shots.forEach(s => {
-    const b = document.createElement('button');
-    b.className = 'tp-shot-btn';
-    b.textContent = s;
-    b.onclick = () => selectTacticShot(s, b);
-    btns.appendChild(b);
-  });
+  if (TRAIN.currentLight < 0) return;
+  const shot  = SHOT_TYPES[Math.floor(Math.random() * SHOT_TYPES.length)];
+  const opp   = OPP_POSITIONS[Math.floor(Math.random() * OPP_POSITIONS.length)];
+  const label = SHOT_TYPE_LABELS[shot];
+  document.getElementById('tp-tactic-text').innerHTML =
+    `${label.emoji} <strong>${shot}</strong> → <span style="color:#f39c12;font-weight:bold">${opp}</span>`;
+  document.getElementById('tp-shot-btns').innerHTML =
+    `<span style="font-size:11px;color:#aaa">${label.desc}</span>`;
   document.getElementById('tp-tactic-hint').style.display = '';
-}
-
-function selectTacticShot(shot, btn) {
-  TRAIN.tacticShot = shot;
-  document.querySelectorAll('.tp-shot-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
 }
