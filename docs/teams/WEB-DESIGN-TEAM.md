@@ -247,6 +247,11 @@
 - **`handoff-protocol.md`**：交付給 Web-Dev-Team 的完整流程
 - **`communication-protocol.md`**：內部與跨團隊溝通規範
 
+### 通用規範（Universal）
+- `anti-hallucination.md` - 僅分析已讀取的內容；所有陳述需附來源標籤；禁止捏造任何資訊
+- `developer-memory.md` - Always-On 記憶協議：主動捕捉與浮現開發洞見
+- `checkin-standards.md` - 四道品質門檻（Build/Test/Code Quality/Documentation）；AI 不得自動執行 git 操作
+
 ---
 
 ## 參考資源
@@ -261,14 +266,5 @@
 
 **版本**：1.1
 **建立日期**：2026-02-13
-**更新日期**：2026-02-18
+**更新日期**：2026-02-13
 **維護者**：Web Design Team
-
----
-
-## 已安裝的 Team 合約
-
-| Team | 角色 | 文件 |
-|------|------|------|
-| **Web Design Team** | 設計 UI、RWD、SEO、交付程式碼 | 本文件（CLAUDE.md） |
-| **Web Dev Team** | 接收 UI 程式碼、全端開發、部署 | [docs/teams/WEB-DEV-TEAM.md](docs/teams/WEB-DEV-TEAM.md) |

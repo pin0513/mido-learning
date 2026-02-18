@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>米字步訓練 | Mido Learning</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; background:#000; overflow:hidden; }
+
+    canvas#trainer-canvas {
+      position:fixed; top:0; left:0;
+      width:100%; height:100%;
+      display:block;
+    }
+
+    /* ══ HUD 面板（固定底部）══ */
+    #hud-panel {
+      position:fixed; bottom:0; left:0; right:0; z-index:100;
+      background:rgba(8,15,35,0.93);
+      border-top:1.5px solid rgba(30,200,100,0.35);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    /* 頂列（永遠顯示） */
+    #hud-topbar {
+      display:flex; align-items:center; gap:8px;
+      padding:7px 14px;
+      min-height:46px;
+    }
+
+    .hud-back {
+      color:#4af; font-size:13px; text-decoration:none;
+      padding:5px 11px; border-radius:7px;
+      border:1px solid rgba(60,160,255,0.3);
+      background:rgba(20,50,100,0.5);
+      white-space:nowrap; flex-shrink:0;
+    }
+    .hud-back:hover { background:rgba(40,90,180,0.6); }
+
+    .hud-title {
+      color:#4f9; font-size:13px; font-weight:bold;
+      flex:1; text-align:center; letter-spacing:.5px;
+    }
+
+    /* 側別切換 */
+    .side-grp { display:flex; gap:4px; flex-shrink:0; }
+    .side-btn {
+      padding:5px 11px; border-radius:7px; font-size:12px;
+      border:1.5px solid rgba(255,255,255,0.15);
+      background:rgba(20,40,80,0.7); color:#adf; cursor:pointer;
+      transition:background .12s;
+    }
+    .side-btn.on { background:rgba(0,175,80,0.75); border-color:#0d9; color:#fff; }
+    .side-btn:hover { background:rgba(40,90,160,0.6); }
+
+    /* 收合按鈕 */
+    #hud-toggle {
+      padding:5px 11px; border-radius:7px; font-size:12px;
+      border:1px solid rgba(255,255,255,0.15);
+      background:rgba(20,30,65,0.7); color:#ccc; cursor:pointer;
+      white-space:nowrap; flex-shrink:0;
+      transition:background .12s;
+    }
+    #hud-toggle:hover { background:rgba(50,80,150,0.6); }
+
+    /* 設定區（可收合） */
+    #hud-body {
+      display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+      padding:9px 14px 13px;
+      border-top:1px solid rgba(255,255,255,0.07);
+    }
+
+    .tp-group { display:flex; align-items:center; gap:5px; }
+    .tp-label { font-size:10px; color:#89c; min-width:26px; }
+
+    .tp-btn {
+      padding:4px 11px; border-radius:6px; font-size:11px;
+      border:1.5px solid rgba(255,255,255,0.15);
+      background:rgba(15,52,96,0.7); color:#adf; cursor:pointer;
+      transition:background .12s;
+    }
+    .tp-btn.on { background:rgba(0,175,80,0.75); border-color:#0d9; color:#fff; }
+    .tp-btn:hover { background:rgba(40,90,160,0.6); }
+
+    .tp-sep { width:1px; height:28px; background:rgba(255,255,255,0.12); margin:0 2px; }
+
+    .speed-grp { display:flex; align-items:center; gap:6px; }
+    input[type=range].train-speed { width:90px; accent-color:#1a6; cursor:pointer; }
+
+    #train-start {
+      padding:6px 20px; border-radius:7px; border:none;
+      background:#1a7a30; color:#fff; font-size:12px; font-weight:bold;
+      cursor:pointer; margin-left:auto; flex-shrink:0;
+      transition:filter .12s;
+    }
+    #train-start.running { background:#8b1a1a; }
+    #train-start:hover { filter:brightness(1.2); }
+
+    .tp-hint {
+      font-size:9px; color:#4a5a6a; width:100%;
+      text-align:center; margin-top:1px;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="trainer-canvas"></canvas>
+
+<!-- ════ HUD 面板 ════ -->
+<div id="hud-panel">
+
+  <!-- 頂列（永遠可見） -->
+  <div id="hud-topbar">
+    <a class="hud-back" href="/badminton-tactical-board.html">← 戰術板</a>
+    <div class="hud-title">🏸 米字步訓練</div>
+    <div class="side-grp">
+      <button class="side-btn on" id="btn-left"  onclick="setHomeSide('left')">左側</button>
+      <button class="side-btn"   id="btn-right" onclick="setHomeSide('right')">右側</button>
+    </div>
+    <button id="hud-toggle" onclick="toggleHud()">▾ 設定</button>
+  </div>
+
+  <!-- 設定區（可收合） -->
+  <div id="hud-body" style="display:none;">
+    <div class="tp-group">
+      <span class="tp-label">區域</span>
+      <button class="tp-btn on" id="tp-front" onclick="toggleTrainZone('front')">前2</button>
+      <button class="tp-btn on" id="tp-mid"   onclick="toggleTrainZone('mid')">中2</button>
+      <button class="tp-btn on" id="tp-back"  onclick="toggleTrainZone('back')">後2</button>
+    </div>
+    <div class="tp-sep"></div>
+    <div class="tp-group speed-grp">
+      <span class="tp-label">間隔</span>
+      <input class="train-speed" type="range" id="tp-speed" min="5" max="30" value="10"
+             oninput="setTrainInterval(this.value)">
+      <span id="tp-speed-val" style="font-size:10px;color:#9bf;">2.0s</span>
+    </div>
+    <button id="train-start" onclick="toggleTraining()">▶ 開始訓練</button>
+    <div class="tp-hint">🟢 我方站位 ↑↓上下手 / ↑純上手 &nbsp;｜&nbsp; 🟠 對方落點（最長距離 + 反拍優先）</div>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════
+// 常數
+// ════════════════════════════════════════
+const COURT_W = 13.4;   // 深度 (m)
+const COURT_H = 6.1;    // 寬度 (m)
+
+// ════════════════════════════════════════
+// 狀態
+// ════════════════════════════════════════
+const state = { homeSide: 'left' };
+
+let hudOpen = false;   // 設定區收合狀態
+
+// ════════════════════════════════════════
+// Canvas
+// ════════════════════════════════════════
+const canvas = document.getElementById('trainer-canvas');
+const ctx    = canvas.getContext('2d');
+let CW = 0, CH = 0;
+
+function getHudHeight() {
+  return document.getElementById('hud-panel').offsetHeight || 46;
+}
+
+function resize() {
+  CW = window.innerWidth;
+  CH = window.innerHeight;
+  canvas.width  = CW;
+  canvas.height = CH;
+  drawScene();
+}
+
+// ════════════════════════════════════════
+// HUD 控制
+// ════════════════════════════════════════
+function toggleHud() {
+  hudOpen = !hudOpen;
+  const body = document.getElementById('hud-body');
+  const btn  = document.getElementById('hud-toggle');
+  body.style.display = hudOpen ? 'flex' : 'none';
+  btn.textContent    = hudOpen ? '▴ 收合' : '▾ 設定';
+  // 等 DOM 更新後重算 HUD 高度，再重繪
+  requestAnimationFrame(() => drawScene());
+}
+
+function setHomeSide(side) {
+  state.homeSide = side;
+  document.getElementById('btn-left').classList.toggle('on',  side === 'left');
+  document.getElementById('btn-right').classList.toggle('on', side === 'right');
+  if (TRAIN.running) stopTraining();
+  drawScene();
+}
+
+// ════════════════════════════════════════
+// 訓練系統
+// ════════════════════════════════════════
+const TRAIN = {
+  zones: { front: true, mid: true, back: true },
+  interval: 2000,
+  running: false,
+  currentLight: -1,
+  oppLight: -1,
+  timer: null,
+  pulse: 0,
+  pulseDir: 1,
+  rafId: null,
+};
+
+function getTrainPositions() {
+  const trainLeft = state.homeSide === 'left';
+  const sTop = 0.46;
+  const sBot = COURT_H - 0.46;
+  const net  = COURT_W / 2;
+  const ssl  = 1.98;
+  const lsl  = 0.76;
+  let fX, mX, bX;
+  if (trainLeft) {
+    fX = net - ssl;
+    mX = (lsl + (net - ssl)) / 2;
+    bX = lsl;
+  } else {
+    fX = net + ssl;
+    mX = (COURT_W - lsl + (net + ssl)) / 2;
+    bX = COURT_W - lsl;
+  }
+  return [
+    { id: 'FL', x: fX, y: sTop, zone: 'front', label: '前左' },
+    { id: 'FR', x: fX, y: sBot, zone: 'front', label: '前右' },
+    { id: 'ML', x: mX, y: sTop, zone: 'mid',   label: '中左' },
+    { id: 'MR', x: mX, y: sBot, zone: 'mid',   label: '中右' },
+    { id: 'BL', x: bX, y: sTop, zone: 'back',  label: '後左' },
+    { id: 'BR', x: bX, y: sBot, zone: 'back',  label: '後右' },
+  ];
+}
+
+function getActiveTrainPositions() {
+  return getTrainPositions().filter(p => TRAIN.zones[p.zone]);
+}
+
+function getOppPositions() {
+  const oppLeft = state.homeSide !== 'left';
+  const sTop = 0.46;
+  const sBot = COURT_H - 0.46;
+  const net  = COURT_W / 2;
+  const ssl  = 1.98;
+  const lsl  = 0.76;
+  let fX, mX, bX;
+  if (oppLeft) {
+    fX = net - ssl;
+    mX = (lsl + (net - ssl)) / 2;
+    bX = lsl;
+  } else {
+    fX = net + ssl;
+    mX = (COURT_W - lsl + (net + ssl)) / 2;
+    bX = COURT_W - lsl;
+  }
+  return [
+    { id: 'OFL', x: fX, y: sTop },
+    { id: 'OFR', x: fX, y: sBot },
+    { id: 'OML', x: mX, y: sTop },
+    { id: 'OMR', x: mX, y: sBot },
+    { id: 'OBL', x: bX, y: sTop },
+    { id: 'OBR', x: bX, y: sBot },
+  ];
+}
+
+// 重心破壞原理：我方站位 → 對方最佳落點（0=FL,1=FR,2=ML,3=MR,4=BL,5=BR）
+const TACTICS_MAP = [
+  [5, 4],  // 0=FL → OBR(5), OBL(4)
+  [4, 5],  // 1=FR → OBL(4), OBR(5)
+  [5, 1],  // 2=ML → OBR(5), OFR(1)
+  [4, 0],  // 3=MR → OBL(4), OFL(0)
+  [1, 0],  // 4=BL → OFR(1), OFL(0)
+  [0, 1],  // 5=BR → OFL(0), OFR(1)
+];
+
+function pickNextLight() {
+  const pts = getTrainPositions();
+  let pool = [];
+  for (let i = 0; i < pts.length; i++) {
+    if (TRAIN.zones[pts[i].zone] && i !== TRAIN.currentLight) pool.push(i);
+  }
+  if (pool.length === 0) {
+    for (let i = 0; i < pts.length; i++) {
+      if (TRAIN.zones[pts[i].zone]) pool.push(i);
+    }
+  }
+  if (pool.length === 0) return;
+  TRAIN.currentLight = pool[Math.floor(Math.random() * pool.length)];
+  const tactics = TACTICS_MAP[TRAIN.currentLight];
+  TRAIN.oppLight = Math.random() < 0.8 ? tactics[0] : tactics[1];
+  TRAIN.pulse = 0; TRAIN.pulseDir = 1;
+}
+
+function startTraining() {
+  if (getActiveTrainPositions().length === 0) return;
+  TRAIN.running = true;
+  document.getElementById('train-start').textContent = '⏹ 停止訓練';
+  document.getElementById('train-start').classList.add('running');
+  pickNextLight();
+  if (TRAIN.rafId) cancelAnimationFrame(TRAIN.rafId);
+  TRAIN.rafId = requestAnimationFrame(pulseLoop);
+  TRAIN.timer = setInterval(pickNextLight, TRAIN.interval);
+}
+
+function stopTraining() {
+  TRAIN.running = false;
+  TRAIN.currentLight = -1;
+  TRAIN.oppLight = -1;
+  if (TRAIN.timer) { clearInterval(TRAIN.timer); TRAIN.timer = null; }
+  if (TRAIN.rafId) { cancelAnimationFrame(TRAIN.rafId); TRAIN.rafId = null; }
+  document.getElementById('train-start').textContent = '▶ 開始訓練';
+  document.getElementById('train-start').classList.remove('running');
+  drawScene();
+}
+
+function toggleTraining() {
+  if (TRAIN.running) stopTraining();
+  else startTraining();
+}
+
+function toggleTrainZone(zone) {
+  TRAIN.zones[zone] = !TRAIN.zones[zone];
+  document.getElementById('tp-' + zone).classList.toggle('on', TRAIN.zones[zone]);
+  if (TRAIN.running) { stopTraining(); startTraining(); }
+  else drawScene();
+}
+
+function setTrainInterval(v) {
+  const secs = (Math.round(v) * 0.2).toFixed(1);
+  TRAIN.interval = Math.round(v) * 200;
+  document.getElementById('tp-speed-val').textContent = secs + 's';
+  if (TRAIN.running) { stopTraining(); startTraining(); }
+}
+
+function pulseLoop() {
+  if (!TRAIN.running) return;
+  TRAIN.pulse += TRAIN.pulseDir * 0.05;
+  if (TRAIN.pulse >= 1) { TRAIN.pulse = 1; TRAIN.pulseDir = -1; }
+  if (TRAIN.pulse <= 0) { TRAIN.pulse = 0; TRAIN.pulseDir =  1; }
+  drawScene();
+  TRAIN.rafId = requestAnimationFrame(pulseLoop);
+}
+
+// ════════════════════════════════════════
+// 3D 透視繪製
+// ════════════════════════════════════════
+function drawScene() {
+  ctx.clearRect(0, 0, CW, CH);
+
+  const hudH  = getHudHeight();
+  const drawH = CH - hudH;          // 可用繪圖高度（HUD 以上）
+  const trainLeft = state.homeSide === 'left';
+
+  // ── 透視角點 ──────────────────────────────────────────────────────────
+  const cx0   = CW / 2;
+  const nW2   = CW * 0.44;          // 近端（球員底線）半寬
+  const fW2   = CW * 0.20;          // 遠端（對手底線）半寬
+  const nearY = drawH * 0.90;       // 近端 Y
+  const farY  = drawH * 0.09;       // 遠端 Y
+
+  const NL = { x: cx0 - nW2, y: nearY };
+  const NR = { x: cx0 + nW2, y: nearY };
+  const FL = { x: cx0 - fW2, y: farY  };
+  const FR = { x: cx0 + fW2, y: farY  };
+
+  // 公尺座標 (mx=深度 0..COURT_W, my=橫向 0..COURT_H) → 畫素
+  function mapPt(mx, my) {
+    const u  = trainLeft ? mx / COURT_W : (COURT_W - mx) / COURT_W;
+    const v  = my / COURT_H;
+    const lx = NL.x + u * (FL.x - NL.x);
+    const ly = NL.y + u * (FL.y - NL.y);
+    const rx = NR.x + u * (FR.x - NR.x);
+    const ry = NR.y + u * (FR.y - NR.y);
+    return { x: lx + v * (rx - lx), y: ly + v * (ry - ly) };
+  }
+
+  // 透視半徑（近大遠小）
+  function dotR(mx) {
+    const u    = trainLeft ? mx / COURT_W : (COURT_W - mx) / COURT_W;
+    const base = Math.max(9, Math.min(CW, drawH) * 0.019);
+    return base * (1.6 - 1.0 * u);
+  }
+
+  // 畫場地線（公尺座標系）
+  function line3D(x1, y1, x2, y2, col, w) {
+    const a = mapPt(x1, y1), b = mapPt(x2, y2);
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+    ctx.strokeStyle = col; ctx.lineWidth = w; ctx.stroke();
+  }
+
+  // ── 1. 背景 ───────────────────────────────────────────────────────────
+  ctx.fillStyle = 'rgba(0,4,18,0.97)';
+  ctx.fillRect(0, 0, CW, CH);
+
+  // ── 2. 球場表面（雙色綠地） ───────────────────────────────────────────
+  const netL = mapPt(COURT_W / 2, 0);
+  const netR = mapPt(COURT_W / 2, COURT_H);
+
+  // 我方半場（近端，較亮）
+  ctx.beginPath();
+  ctx.moveTo(NL.x, NL.y); ctx.lineTo(NR.x, NR.y);
+  ctx.lineTo(netR.x, netR.y); ctx.lineTo(netL.x, netL.y);
+  ctx.closePath();
+  ctx.fillStyle = '#1b6b3e'; ctx.fill();
+
+  // 對方半場（遠端，較暗）
+  ctx.beginPath();
+  ctx.moveTo(netL.x, netL.y); ctx.lineTo(netR.x, netR.y);
+  ctx.lineTo(FR.x, FR.y); ctx.lineTo(FL.x, FL.y);
+  ctx.closePath();
+  ctx.fillStyle = '#11472a'; ctx.fill();
+
+  // ── 3. 場地線 ─────────────────────────────────────────────────────────
+  const lc   = 'rgba(255,255,255,0.80)';
+  const dimL = 'rgba(255,255,255,0.55)';
+  const lw   = Math.max(1.5, CW * 0.0015);
+
+  // 外框線
+  line3D(0,       0,       0,       COURT_H, lc, lw);   // 球員底線
+  line3D(COURT_W, 0,       COURT_W, COURT_H, lc, lw);   // 對手底線
+  line3D(0,       0,       COURT_W, 0,       lc, lw);   // 左雙打邊線
+  line3D(0,       COURT_H, COURT_W, COURT_H, lc, lw);   // 右雙打邊線
+
+  // 單打邊線（0.46m）
+  const sl = 0.46;
+  line3D(0, sl,           COURT_W, sl,           dimL, lw);
+  line3D(0, COURT_H - sl, COURT_W, COURT_H - sl, dimL, lw);
+
+  // 雙打長發球線（0.76m）
+  const lsl = 0.76;
+  line3D(lsl,           0, lsl,           COURT_H, dimL, lw);
+  line3D(COURT_W - lsl, 0, COURT_W - lsl, COURT_H, dimL, lw);
+
+  // 短發球線（1.98m from net）& 中線
+  const sslD = 1.98;
+  line3D(COURT_W/2 - sslD, 0,         COURT_W/2 - sslD, COURT_H,   dimL, lw);
+  line3D(COURT_W/2 + sslD, 0,         COURT_W/2 + sslD, COURT_H,   dimL, lw);
+  line3D(COURT_W/2 - sslD, COURT_H/2, COURT_W/2 + sslD, COURT_H/2, dimL, lw);
+
+  // ── 4. 球網（3D 高度感） ──────────────────────────────────────────────
+  const netHpx = (nearY - farY) * 0.075;
+  ctx.beginPath();
+  ctx.moveTo(netL.x, netL.y - netHpx); ctx.lineTo(netR.x, netR.y - netHpx);
+  ctx.strokeStyle = '#e8dfa0'; ctx.lineWidth = Math.max(2, CW * 0.0020); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(netL.x, netL.y); ctx.lineTo(netL.x, netL.y - netHpx);
+  ctx.moveTo(netR.x, netR.y); ctx.lineTo(netR.x, netR.y - netHpx);
+  ctx.strokeStyle = '#c8b060'; ctx.lineWidth = Math.max(2, CW * 0.0018); ctx.stroke();
+
+  const pts    = getTrainPositions();
+  const oppPts = getOppPositions();
+
+  // ── 5. 對手落點（橘色，遠端） ─────────────────────────────────────────
+  oppPts.forEach((p, i) => {
+    const { x: px, y: py } = mapPt(p.x, p.y);
+    const r = dotR(p.x);
+    const isActive = (i === TRAIN.oppLight && TRAIN.running);
+    if (isActive) {
+      const glow = r * (1.5 + TRAIN.pulse * 0.8);
+      const grad = ctx.createRadialGradient(px, py, r * 0.2, px, py, glow);
+      grad.addColorStop(0, 'rgba(255,160,0,0.9)');
+      grad.addColorStop(0.4, 'rgba(220,100,0,0.6)');
+      grad.addColorStop(1, 'rgba(180,60,0,0)');
+      ctx.beginPath(); ctx.arc(px, py, glow, 0, Math.PI * 2);
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#ff9500'; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.font = `bold ${Math.round(r * 0.9)}px Arial`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('×', px, py);
+    } else {
+      ctx.beginPath(); ctx.arc(px, py, r * 0.65, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,120,0,0.15)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,150,0,0.45)'; ctx.lineWidth = 1.5; ctx.stroke();
+    }
+  });
+
+  // ── 6. 我方站位（綠色，近端） ─────────────────────────────────────────
+  pts.forEach((p, i) => {
+    const { x: px, y: py } = mapPt(p.x, p.y);
+    const r        = dotR(p.x);
+    const isActive = (i === TRAIN.currentLight);
+    const inZone   = TRAIN.zones[p.zone];
+
+    // 箭頭規則：FL/FR/ML/MR (i<4) → ↑↓（上下手皆有）; BL/BR (i≥4) → ↑（純上手）
+    const arrow   = (i < 4) ? '↑↓' : '↑';
+    const arrowSz = (i < 4)
+      ? Math.round(r * 0.62)   // ↑↓ 雙字元，稍小
+      : Math.round(r * 0.92);  // ↑ 單字元，正常
+
+    if (!inZone) {
+      // 停用的區域 → 灰暗虛點
+      ctx.beginPath(); ctx.arc(px, py, r * 0.45, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(80,80,100,0.35)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(120,120,150,0.35)'; ctx.lineWidth = 1.5; ctx.stroke();
+    } else if (isActive) {
+      // 亮燈點 → 放光 + 大圓 + 箭頭
+      const glow = r * (1.5 + TRAIN.pulse * 0.8);
+      const grad = ctx.createRadialGradient(px, py, r * 0.2, px, py, glow);
+      grad.addColorStop(0, 'rgba(0,255,100,0.9)');
+      grad.addColorStop(0.4, 'rgba(0,220,80,0.6)');
+      grad.addColorStop(1, 'rgba(0,180,60,0)');
+      ctx.beginPath(); ctx.arc(px, py, glow, 0, Math.PI * 2);
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#00ff66'; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.font = `bold ${arrowSz}px Arial`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(arrow, px, py);
+    } else {
+      // 非亮燈，但啟用 → 小暗圓 + 淡箭頭
+      ctx.beginPath(); ctx.arc(px, py, r * 0.65, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,180,80,0.22)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(0,220,100,0.52)'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.fillStyle = 'rgba(180,255,200,0.65)';
+      ctx.font = `${Math.round(arrowSz * 0.8)}px Arial`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(arrow, px, py);
+    }
+  });
+}
+
+// ════════════════════════════════════════
+// 初始化
+// ════════════════════════════════════════
+window.addEventListener('resize', resize);
+window.addEventListener('orientationchange', () => {
+  setTimeout(resize, 200);
+});
+resize();
+</script>
+</body>
+</html>
