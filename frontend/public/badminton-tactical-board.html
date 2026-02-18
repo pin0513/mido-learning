@@ -3,39 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>羽球戰術板</title>
-<link rel="stylesheet" href="badminton-training.css">
+<title>羽球戰術版</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{width:100%;height:100%;overflow:hidden;background:#f8f8f8;touch-action:none;}
+html,body{width:100%;height:100%;overflow:hidden;background:#1a1a2e;touch-action:none;}
 
 /* ── Portrait 警告 ── */
 #portrait-warning{
   display:none;position:fixed;inset:0;z-index:9999;
-  background:#f8f8f8;flex-direction:column;
-  align-items:center;justify-content:center;gap:16px;text-align:center;color:#333;
+  background:#1a1a2e;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;text-align:center;color:#eee;
 }
 @media(orientation:portrait){#portrait-warning{display:flex;}}
 #portrait-warning .icon{font-size:3.5rem;animation:spin 2s ease-in-out infinite;}
 @keyframes spin{0%,100%{transform:rotate(0deg);}50%{transform:rotate(90deg);}}
 
 /* ── App ── */
-#app{display:flex;flex-direction:column;height:100dvh;width:100vw;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);}
+#app{display:flex;flex-direction:column;height:100vh;width:100vw;}
 
 /* ── Toolbar ── */
 #toolbar{
-  display:flex;align-items:center;gap:4px;flex-wrap:nowrap;
-  padding:5px 8px;background:#f0f0f0;
-  border-bottom:1px solid #ddd;flex-shrink:0;overflow-x:auto;
+  display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+  padding:5px 8px;background:#16213e;
+  border-bottom:1px solid #0f3460;flex-shrink:0;overflow-x:hidden;
 }
-#toolbar::-webkit-scrollbar{height:3px;}
-#toolbar::-webkit-scrollbar-thumb{background:#bbb;border-radius:2px;}
 
 /* ── 工具列圖示按鈕 ── */
 .tbtn{
   min-width:40px;min-height:40px;
-  border-radius:8px;border:1.5px solid rgba(0,0,0,0.12);
-  background:rgba(255,255,255,0.9);color:#333;
+  border-radius:8px;border:1.5px solid rgba(255,255,255,0.1);
+  background:rgba(15,52,96,0.7);color:#ccc;
   cursor:pointer;font-size:10px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
   padding:4px 7px;
@@ -45,13 +42,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#f8f8f8;touch-action
 }
 .tbtn svg{flex-shrink:0;}
 .tbtn .tl{font-size:9px;line-height:1;color:inherit;white-space:nowrap;}
-.tbtn:hover,.tbtn:active{background:rgba(52,152,219,0.2);border-color:#3498db;}
-.tbtn.on{background:rgba(52,152,219,0.25);border-color:#3498db;color:#1565c0;}
+.tbtn:hover,.tbtn:active{background:rgba(36,113,163,0.7);border-color:#3498db;}
+.tbtn.on{background:rgba(36,113,163,0.9);border-color:#3498db;color:#fff;}
 .tbtn.danger{border-color:rgba(231,76,60,.4);}
-.tbtn.danger:hover,.tbtn.danger:active{background:rgba(231,76,60,0.15);}
+.tbtn.danger:hover,.tbtn.danger:active{background:rgba(192,57,43,0.7);}
 
 /* 工具列分組分隔線 */
-.sep-v{width:1px;min-height:30px;background:rgba(0,0,0,0.15);flex-shrink:0;align-self:center;margin:0 2px;}
+.sep-v{width:1px;min-height:30px;background:rgba(255,255,255,0.12);flex-shrink:0;align-self:center;margin:0 2px;}
 .tlabel{font-size:8px;color:#556;text-transform:uppercase;letter-spacing:.5px;writing-mode:horizontal-tb;white-space:nowrap;align-self:center;margin:0 1px;}
 
 /* ── 主內容 ── */
@@ -66,6 +63,43 @@ html,body{width:100%;height:100%;overflow:hidden;background:#f8f8f8;touch-action
 canvas{display:block;}
 #draw-canvas{position:absolute;top:0;left:0;cursor:crosshair;}
 
+/* ══ 訓練面板 ══ */
+#train-panel{
+  display:none;position:absolute;top:8px;right:8px;z-index:30;
+  background:rgba(15,25,50,0.95);border:1.5px solid #1a6;
+  border-radius:10px;padding:10px 12px;min-width:180px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.7);color:#cef;font-size:11px;
+}
+#train-panel.open{display:block;}
+#train-panel h4{margin:0 0 8px;font-size:12px;color:#4f9;text-align:center;letter-spacing:.5px;}
+.tp-row{display:flex;align-items:center;gap:6px;margin-bottom:7px;flex-wrap:wrap;}
+.tp-label{font-size:10px;color:#89c;min-width:30px;}
+.tp-btn{
+  padding:3px 9px;border-radius:6px;border:1.5px solid rgba(255,255,255,0.15);
+  background:rgba(15,52,96,0.7);color:#adf;font-size:11px;cursor:pointer;
+  transition:background .12s;
+}
+.tp-btn.on{background:rgba(0,180,80,0.7);border-color:#0d9;color:#fff;}
+.tp-btn:hover{background:rgba(36,113,163,0.6);}
+.tp-sep{width:100%;height:1px;background:rgba(255,255,255,0.1);margin:4px 0;}
+#train-start{
+  width:100%;padding:6px;border-radius:7px;border:none;
+  background:#1a7a30;color:#fff;font-size:12px;font-weight:bold;cursor:pointer;
+}
+#train-start.running{background:#8b1a1a;}
+#train-start:hover{filter:brightness(1.2);}
+.train-speed{
+  width:90px;accent-color:#1a6;vertical-align:middle;
+}
+.tp-hint{font-size:9px;color:#556;text-align:center;margin-top:4px;}
+
+/* ── 訓練燈覆蓋層 ── */
+#train-overlay{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:25;display:none;
+}
+#train-overlay.active{display:block;}
+
 /* ── 場地側邊標籤 ── */
 #side-labels{
   position:absolute;top:0;left:0;width:100%;height:100%;
@@ -79,29 +113,16 @@ canvas{display:block;}
   filter:drop-shadow(0 0 3px gold);display:none;
 }
 
-/* ═══ 左側面板 ═══ */
-#left-panel{
-  width:130px;min-width:130px;
-  background:#f0f0f0;
-  border-right:1px solid #ddd;
-  display:flex;flex-direction:column;
-  padding:8px 6px;
-  overflow-y:auto;
-  gap:6px;
-  flex-shrink:0;
-}
-#left-panel::-webkit-scrollbar{width:3px;}
-#left-panel::-webkit-scrollbar-thumb{background:#bbb;border-radius:2px;}
-
-/* HUD（現在在左側面板中，非浮動） */
+/* ═══ 浮動 HUD ═══ */
 #hud{
-  display:flex;flex-direction:column;gap:5px;
+  position:absolute;bottom:10px;left:10px;z-index:20;
+  display:flex;flex-direction:column;gap:6px;
   user-select:none;
 }
 
 /* HUD 群組行 */
-.hud-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
-.hud-sep{font-size:8px;color:#888;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;width:100%;margin-top:2px;}
+.hud-row{display:flex;align-items:center;gap:5px;}
+.hud-sep{font-size:8px;color:#557;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;min-width:24px;}
 
 /* ── 球員棋子 ── */
 .hud-player{
@@ -124,10 +145,10 @@ canvas{display:block;}
 /* ── 球棋子 ── */
 .hud-ball{
   width:38px;height:38px;border-radius:50%;
-  border:2.5px solid rgba(0,0,0,0.15);
-  background:rgba(210,210,210,0.9);cursor:pointer;
+  border:2.5px solid rgba(255,255,255,0.2);
+  background:rgba(30,35,55,0.9);cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
   transition:border-color .12s, transform .1s;
   touch-action:manipulation;
 }
@@ -151,18 +172,18 @@ canvas{display:block;}
 /* HUD 操作按鈕 */
 .hud-btn{
   height:34px;border-radius:8px;
-  border:1px solid rgba(0,0,0,0.12);
-  background:rgba(255,255,255,0.9);
-  color:#333;cursor:pointer;font-size:11px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(15,20,40,0.75);
+  color:#ccc;cursor:pointer;font-size:11px;
   padding:0 10px;
   display:flex;align-items:center;gap:3px;
-  box-shadow:0 1px 4px rgba(0,0,0,0.1);
+  box-shadow:0 2px 6px rgba(0,0,0,0.4);
   backdrop-filter:blur(8px);
   touch-action:manipulation;
   transition:background .12s;
   white-space:nowrap;
 }
-.hud-btn:hover,.hud-btn:active{background:rgba(52,152,219,0.2);}
+.hud-btn:hover,.hud-btn:active{background:rgba(36,113,163,0.75);}
 .hud-btn.danger{border-color:rgba(231,76,60,.3);}
 .hud-btn.danger:hover,.hud-btn.danger:active{background:rgba(192,57,43,0.7);}
 
@@ -170,34 +191,6 @@ canvas{display:block;}
   0%,100%{box-shadow:0 0 0 3px rgba(250,204,21,0.6),0 2px 8px rgba(0,0,0,0.5);}
   50%{box-shadow:0 0 0 6px rgba(250,204,21,0.3),0 2px 8px rgba(0,0,0,0.5);}
 }
-
-/* ═══ 訓練面板（左側面板中，覆蓋 badminton-training.css 的絕對定位）═══ */
-#train-panel{
-  position:static!important;
-  display:none;
-  width:auto!important;
-  background:rgba(230,250,235,0.95)!important;
-  border:1px solid rgba(0,180,70,0.3)!important;
-  border-radius:8px!important;
-  padding:8px 6px!important;
-  margin-top:2px;
-}
-#train-panel.open{display:block;}
-
-/* 訓練面板齒輪標題列 */
-.tp-header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:4px;
-}
-.tp-header h4{color:#0f0;font-size:11px;margin:0;}
-.tp-gear-btn{
-  background:rgba(0,200,80,0.15);border:1px solid rgba(0,200,80,0.3);
-  color:#0c0;border-radius:5px;cursor:pointer;
-  font-size:12px;width:22px;height:22px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.tp-gear-btn:hover{background:rgba(0,200,80,0.3);}
 </style>
 </head>
 <body>
@@ -347,89 +340,6 @@ canvas{display:block;}
 
   <!-- 主區域 -->
   <div id="main">
-
-    <!-- ══ 左側面板：工具 + 訓練設定 ══ -->
-    <div id="left-panel">
-
-      <!-- HUD（工具選擇）-->
-      <div id="hud">
-
-        <!-- 球員選擇 -->
-        <div class="hud-row">
-          <span class="hud-sep">球員</span>
-          <div id="hud-players"></div>
-        </div>
-
-        <!-- 球選擇 (1個) -->
-        <div class="hud-row">
-          <span class="hud-sep">球</span>
-          <div id="hud-ball"></div>
-        </div>
-
-        <!-- 標記顏色 -->
-        <div class="hud-row">
-          <span class="hud-sep">標記</span>
-          <div id="hud-annots" style="display:flex;gap:4px;flex-wrap:wrap;"></div>
-        </div>
-
-        <!-- 操作按鈕 -->
-        <div class="hud-row" id="hud-actions">
-          <button class="hud-btn" onclick="undo()" title="復原 Ctrl+Z">↩ 復原</button>
-          <button class="hud-btn" onclick="clearActive()" title="清除選取筆跡">🗑 清跡</button>
-          <button class="hud-btn danger" onclick="resetAll()" title="全部重置 [R]">♻ 重置</button>
-        </div>
-
-      </div><!-- /hud -->
-
-      <!-- ════ 訓練面板 ════ -->
-      <div id="train-panel">
-        <div class="tp-header">
-          <h4>🏃 米字步</h4>
-          <button class="tp-gear-btn" onclick="toggleTrainPanel()" title="關閉設定">✕</button>
-        </div>
-        <div class="tp-row">
-          <span class="tp-label">區域</span>
-          <button class="tp-btn on" id="tp-front" onclick="toggleTrainZone('front')">前2</button>
-          <button class="tp-btn on" id="tp-mid"   onclick="toggleTrainZone('mid')">中2</button>
-          <button class="tp-btn on" id="tp-back"  onclick="toggleTrainZone('back')">後2</button>
-        </div>
-        <div class="tp-sep"></div>
-        <div class="tp-row">
-          <span class="tp-label">模式</span>
-          <button class="tp-btn on" id="tp-mode-random" onclick="setTrainMode('random')">隨機</button>
-          <button class="tp-btn"    id="tp-mode-seq"    onclick="setTrainMode('seq')">循序</button>
-          <button class="tp-btn"    id="tp-mode-manual" onclick="setTrainMode('manual')">手動</button>
-          <button class="tp-btn"    id="tp-mode-tactic" onclick="setTrainMode('tactic')">戰術</button>
-        </div>
-        <div class="tp-row" id="tp-interval-row">
-          <span class="tp-label">間隔</span>
-          <button class="tp-ibtn"    id="tp-i1"  onclick="setTrainIntervalPreset(1000)">1s</button>
-          <button class="tp-ibtn"    id="tp-i15" onclick="setTrainIntervalPreset(1500)">1.5s</button>
-          <button class="tp-ibtn on" id="tp-i2"  onclick="setTrainIntervalPreset(2000)">2s</button>
-          <button class="tp-ibtn"    id="tp-i3"  onclick="setTrainIntervalPreset(3000)">3s</button>
-          <button class="tp-ibtn"    id="tp-i5"  onclick="setTrainIntervalPreset(5000)">5s</button>
-        </div>
-        <div class="tp-row" id="tp-target-row">
-          <span class="tp-label">目標</span>
-          <button class="tp-ibtn"    id="tp-t10"  onclick="setTrainTarget(10)">10趟</button>
-          <button class="tp-ibtn"    id="tp-t20"  onclick="setTrainTarget(20)">20趟</button>
-          <button class="tp-ibtn"    id="tp-t30"  onclick="setTrainTarget(30)">30趟</button>
-          <button class="tp-ibtn on" id="tp-tinf" onclick="setTrainTarget(0)">∞</button>
-        </div>
-        <div id="tp-set-counter"><span id="tp-set-text">趟數：0</span></div>
-        <div id="tp-manual-row" style="display:none;">
-          <button id="tp-next" onclick="manualNext()">▶ 下一點</button>
-        </div>
-        <div id="tp-tactic-hint" style="display:none;">
-          <div id="tp-tactic-text">等待指示...</div>
-          <div id="tp-shot-btns"></div>
-        </div>
-        <button id="train-start" onclick="toggleTraining()">▶ 開始訓練</button>
-        <div class="tp-hint" id="tp-hint-text">隨機點亮其中一點<br>聽燈執行跑位</div>
-      </div><!-- /train-panel -->
-
-    </div><!-- /left-panel -->
-
     <div id="court-container">
       <div id="court-wrapper">
         <canvas id="court-canvas"></canvas>
@@ -446,6 +356,71 @@ canvas{display:block;}
 
         <!-- ════ 訓練燈覆蓋層 (Canvas) ════ -->
         <canvas id="train-overlay"></canvas>
+
+        <!-- ════ 訓練面板 ════ -->
+        <div id="train-panel">
+          <h4>🏃 米字步訓練</h4>
+
+          <!-- 訓練側別 -->
+          <div class="tp-row">
+            <span class="tp-label">側別</span>
+            <button class="tp-btn on" id="tp-home" onclick="setTrainSide('home')">我方</button>
+            <button class="tp-btn"    id="tp-away" onclick="setTrainSide('away')">對方</button>
+          </div>
+
+          <!-- 訓練區域 -->
+          <div class="tp-row">
+            <span class="tp-label">區域</span>
+            <button class="tp-btn on" id="tp-front" onclick="toggleTrainZone('front')">前2</button>
+            <button class="tp-btn on" id="tp-mid"   onclick="toggleTrainZone('mid')">中2</button>
+            <button class="tp-btn on" id="tp-back"  onclick="toggleTrainZone('back')">後2</button>
+          </div>
+
+          <div class="tp-sep"></div>
+
+          <!-- 速度 -->
+          <div class="tp-row">
+            <span class="tp-label">間隔</span>
+            <input class="train-speed" type="range" id="tp-speed" min="5" max="30" value="10"
+                   oninput="setTrainInterval(this.value)">
+            <span id="tp-speed-val" style="font-size:10px;color:#9bf;">2.0s</span>
+          </div>
+
+          <!-- 開始/停止 -->
+          <button id="train-start" onclick="toggleTraining()">▶ 開始訓練</button>
+
+          <div class="tp-hint">🟢 我方站位 ↑上手 ↓下手<br>🟠 對方目標落點</div>
+        </div>
+
+        <!-- ════ 浮動 HUD ════ -->
+        <div id="hud">
+
+          <!-- 球員選擇 -->
+          <div class="hud-row">
+            <span class="hud-sep">球員</span>
+            <div id="hud-players"></div>
+          </div>
+
+          <!-- 球選擇 (1個) -->
+          <div class="hud-row">
+            <span class="hud-sep">球</span>
+            <div id="hud-ball"></div>
+          </div>
+
+          <!-- 標記顏色 -->
+          <div class="hud-row">
+            <span class="hud-sep">標記</span>
+            <div id="hud-annots" style="display:flex;gap:4px;"></div>
+          </div>
+
+          <!-- 操作按鈕 -->
+          <div class="hud-row" id="hud-actions">
+            <button class="hud-btn" onclick="undo()" title="復原 Ctrl+Z">↩ 復原</button>
+            <button class="hud-btn" onclick="clearActive()" title="清除選取筆跡">🗑 清跡</button>
+            <button class="hud-btn danger" onclick="resetAll()" title="全部重置 [R]">♻ 重置</button>
+          </div>
+
+        </div><!-- /hud -->
 
       </div>
     </div>
@@ -604,7 +579,7 @@ function drawCourt() {
   c.fillText('Mido Learning', wCX, wCY - wFs * 0.6);
   const wFs2 = Math.round(wFs * 0.45);
   c.font = `${wFs2}px Arial,sans-serif`;
-  c.fillText('羽球戰術板', wCX, wCY + wFs2 * 0.3);
+  c.fillText('羽球戰術版', wCX, wCY + wFs2 * 0.3);
   c.restore();
 
   // 場地線
@@ -1133,11 +1108,287 @@ function updateCursor() {
 }
 
 // ════════════════════════════════════════
-// (訓練系統已移至 badminton-training.js)
+// 米字步訓練系統
 // ════════════════════════════════════════
-</script>
-<script src="badminton-training.js"></script>
-<script>
+const TRAIN = {
+  panelOpen: false,
+  side: 'home',
+  zones: { front: true, mid: true, back: true },
+  interval: 2000,
+  running: false,
+  currentLight: -1,
+  oppLight: -1,
+  timer: null,
+  pulse: 0,
+  pulseDir: 1,
+  rafId: null,
+};
+
+let trainC = null; // train canvas context
+
+function initTrainCanvas() {
+  const tc = document.getElementById('train-overlay');
+  tc.width  = CW;
+  tc.height = CH;
+  tc.style.cssText = `position:absolute;top:0;left:0;width:${CW}px;height:${CH}px;pointer-events:none;`;
+  trainC = tc.getContext('2d');
+}
+
+function getTrainPositions() {
+  const homeLeft = state.homeSide === 'left';
+  const trainLeft = (TRAIN.side === 'home') ? homeLeft : !homeLeft;
+  const sTop = 0.46;
+  const sBot = COURT_H - 0.46;
+  const net  = COURT_W / 2;
+  const ssl  = 1.98;   // short service line distance from net
+  const lsl  = 0.76;   // long service line from back
+  const midH = (COURT_H - 0.46 * 2) / 2 + 0.46;
+
+  let fX, mX, bX;
+  if (trainLeft) {
+    fX = net - ssl;
+    mX = (lsl + (net - ssl)) / 2;
+    bX = lsl;
+  } else {
+    fX = net + ssl;
+    mX = (COURT_W - lsl + (net + ssl)) / 2;
+    bX = COURT_W - lsl;
+  }
+
+  return [
+    { id: 'FL', x: fX, y: sTop,  zone: 'front', label: '前左' },
+    { id: 'FR', x: fX, y: sBot,  zone: 'front', label: '前右' },
+    { id: 'ML', x: mX, y: sTop,  zone: 'mid',   label: '中左' },
+    { id: 'MR', x: mX, y: sBot,  zone: 'mid',   label: '中右' },
+    { id: 'BL', x: bX, y: sTop,  zone: 'back',  label: '後左' },
+    { id: 'BR', x: bX, y: sBot,  zone: 'back',  label: '後右' },
+  ];
+}
+
+function getActiveTrainPositions() {
+  return getTrainPositions().filter(p => TRAIN.zones[p.zone]);
+}
+
+function getOppPositions() {
+  const homeLeft = state.homeSide === 'left';
+  const trainLeft = (TRAIN.side === 'home') ? homeLeft : !homeLeft;
+  const oppLeft = !trainLeft; // 對方在另一側
+  const sTop = 0.46;
+  const sBot = COURT_H - 0.46;
+  const net  = COURT_W / 2;
+  const ssl  = 1.98;
+  const lsl  = 0.76;
+  let fX, mX, bX;
+  if (oppLeft) {
+    fX = net - ssl;
+    mX = (lsl + (net - ssl)) / 2;
+    bX = lsl;
+  } else {
+    fX = net + ssl;
+    mX = (COURT_W - lsl + (net + ssl)) / 2;
+    bX = COURT_W - lsl;
+  }
+  return [
+    { id: 'OFL', x: fX, y: sTop },
+    { id: 'OFR', x: fX, y: sBot },
+    { id: 'OML', x: mX, y: sTop },
+    { id: 'OMR', x: mX, y: sBot },
+    { id: 'OBL', x: bX, y: sTop },
+    { id: 'OBR', x: bX, y: sBot },
+  ];
+}
+
+function drawTrainLights() {
+  if (!trainC) return;
+  const tc = document.getElementById('train-overlay');
+  trainC.clearRect(0, 0, CW, CH);
+  if (!TRAIN.panelOpen) { tc.style.display = 'none'; return; }
+  tc.style.display = 'block';
+
+  // 輕微遮罩保持場地分區感，但不遮住對方半場
+  const _homeLeft = state.homeSide === 'left';
+  const _trainLeft = (TRAIN.side === 'home') ? _homeLeft : !_homeLeft;
+  const _netX = cx(COURT_W / 2);
+  trainC.save();
+  trainC.fillStyle = 'rgba(0,0,20,0.15)';
+  if (_trainLeft) {
+    trainC.fillRect(_netX, 0, CW - _netX, CH);
+  } else {
+    trainC.fillRect(0, 0, _netX, CH);
+  }
+  trainC.restore();
+
+  const pts = getTrainPositions();
+  const oppPts = getOppPositions();
+  const r = Math.max(10, SC * 0.22);
+
+  // ── 先畫對方半場目標點（橘色）
+  oppPts.forEach((p, i) => {
+    const px = cx(p.x);
+    const py = cy(p.y);
+    const isActive = (i === TRAIN.oppLight && TRAIN.running);
+
+    if (isActive) {
+      // Active opponent target - orange pulse glow
+      const glow = r * (1.4 + TRAIN.pulse * 0.7);
+      const grad = trainC.createRadialGradient(px, py, r*0.2, px, py, glow);
+      grad.addColorStop(0,   'rgba(255,160,0,0.9)');
+      grad.addColorStop(0.4, 'rgba(220,100,0,0.6)');
+      grad.addColorStop(1,   'rgba(180,60,0,0)');
+      trainC.beginPath(); trainC.arc(px, py, glow, 0, Math.PI * 2);
+      trainC.fillStyle = grad; trainC.fill();
+
+      trainC.beginPath(); trainC.arc(px, py, r, 0, Math.PI * 2);
+      trainC.fillStyle = '#ff9500'; trainC.fill();
+      trainC.strokeStyle = '#fff'; trainC.lineWidth = 2.5; trainC.stroke();
+
+      trainC.fillStyle = '#fff';
+      trainC.font = `bold ${Math.max(9, Math.round(r * 0.85))}px Arial`;
+      trainC.textAlign = 'center'; trainC.textBaseline = 'middle';
+      trainC.fillText('×', px, py);
+    } else {
+      // Inactive opponent dot
+      trainC.beginPath(); trainC.arc(px, py, r * 0.7, 0, Math.PI * 2);
+      trainC.fillStyle = 'rgba(255,120,0,0.12)'; trainC.fill();
+      trainC.strokeStyle = 'rgba(255,150,0,0.4)'; trainC.lineWidth = 1.5; trainC.stroke();
+    }
+  });
+
+  // ── 再畫我方訓練點（綠色）＋ 揮拍方向箭頭
+  pts.forEach((p, i) => {
+    const px = cx(p.x);
+    const py = cy(p.y);
+    const isActive = (i === TRAIN.currentLight);
+    const inZone   = TRAIN.zones[p.zone];
+    const arrow    = p.zone === 'front' ? '↓' : '↑'; // 前場下手↓，中後場上手↑
+
+    if (!inZone) {
+      // Disabled dim dot
+      trainC.beginPath(); trainC.arc(px, py, r * 0.55, 0, Math.PI * 2);
+      trainC.fillStyle = 'rgba(80,80,100,0.35)'; trainC.fill();
+      trainC.strokeStyle = 'rgba(120,120,150,0.4)'; trainC.lineWidth = 1.5;
+      trainC.stroke();
+    } else if (isActive) {
+      // Active player position - green pulse glow
+      const glow = r * (1.4 + TRAIN.pulse * 0.7);
+      const grad = trainC.createRadialGradient(px, py, r*0.2, px, py, glow);
+      grad.addColorStop(0,   'rgba(0,255,100,0.9)');
+      grad.addColorStop(0.4, 'rgba(0,220,80,0.6)');
+      grad.addColorStop(1,   'rgba(0,180,60,0)');
+      trainC.beginPath(); trainC.arc(px, py, glow, 0, Math.PI * 2);
+      trainC.fillStyle = grad; trainC.fill();
+
+      trainC.beginPath(); trainC.arc(px, py, r, 0, Math.PI * 2);
+      trainC.fillStyle = '#00ff66'; trainC.fill();
+      trainC.strokeStyle = '#fff'; trainC.lineWidth = 2.5; trainC.stroke();
+
+      // Swing direction arrow
+      trainC.fillStyle = '#fff';
+      trainC.font = `bold ${Math.max(11, Math.round(r * 0.9))}px Arial`;
+      trainC.textAlign = 'center'; trainC.textBaseline = 'middle';
+      trainC.fillText(arrow, px, py);
+    } else {
+      // Normal inactive player dot
+      trainC.beginPath(); trainC.arc(px, py, r * 0.7, 0, Math.PI * 2);
+      trainC.fillStyle = 'rgba(0,180,80,0.2)'; trainC.fill();
+      trainC.strokeStyle = 'rgba(0,220,100,0.5)'; trainC.lineWidth = 1.5; trainC.stroke();
+      trainC.fillStyle = 'rgba(180,255,200,0.7)';
+      trainC.font = `${Math.max(9, Math.round(r * 0.65))}px Arial`;
+      trainC.textAlign = 'center'; trainC.textBaseline = 'middle';
+      trainC.fillText(arrow, px, py);
+    }
+  });
+}
+
+function trainPulseLoop() {
+  if (!TRAIN.running) return;
+  TRAIN.pulse += TRAIN.pulseDir * 0.05;
+  if (TRAIN.pulse >= 1) { TRAIN.pulse = 1; TRAIN.pulseDir = -1; }
+  if (TRAIN.pulse <= 0) { TRAIN.pulse = 0; TRAIN.pulseDir =  1; }
+  drawTrainLights();
+  TRAIN.rafId = requestAnimationFrame(trainPulseLoop);
+}
+
+function pickNextLight() {
+  const pts = getTrainPositions();
+  // 用 index 操作，避免物件參考比對錯誤
+  let pool = [];
+  for (let i = 0; i < pts.length; i++) {
+    if (TRAIN.zones[pts[i].zone] && i !== TRAIN.currentLight) pool.push(i);
+  }
+  if (pool.length === 0) {
+    // 全部 active 都只剩目前這個（只開1個zone且只1個點時）
+    for (let i = 0; i < pts.length; i++) {
+      if (TRAIN.zones[pts[i].zone]) pool.push(i);
+    }
+  }
+  if (pool.length === 0) return;
+  TRAIN.currentLight = pool[Math.floor(Math.random() * pool.length)];
+  // 同時隨機選對方落點（6個位置中任選一個，避免與上次相同）
+  const oppPool = [0,1,2,3,4,5].filter(i => i !== TRAIN.oppLight);
+  TRAIN.oppLight = oppPool[Math.floor(Math.random() * oppPool.length)];
+  TRAIN.pulse = 0; TRAIN.pulseDir = 1;
+}
+
+function startTraining() {
+  if (getActiveTrainPositions().length === 0) return;
+  TRAIN.running = true;
+  document.getElementById('train-start').textContent = '⏹ 停止訓練';
+  document.getElementById('train-start').classList.add('running');
+  pickNextLight();
+  if (TRAIN.rafId) cancelAnimationFrame(TRAIN.rafId);
+  TRAIN.rafId = requestAnimationFrame(trainPulseLoop);
+  TRAIN.timer = setInterval(() => {
+    pickNextLight();
+  }, TRAIN.interval);
+}
+
+function stopTraining() {
+  TRAIN.running = false;
+  TRAIN.currentLight = -1;
+  TRAIN.oppLight = -1;
+  if (TRAIN.timer) { clearInterval(TRAIN.timer); TRAIN.timer = null; }
+  if (TRAIN.rafId)  { cancelAnimationFrame(TRAIN.rafId); TRAIN.rafId = null; }
+  document.getElementById('train-start').textContent = '▶ 開始訓練';
+  document.getElementById('train-start').classList.remove('running');
+  drawTrainLights();
+}
+
+function toggleTraining() {
+  if (TRAIN.running) stopTraining();
+  else startTraining();
+}
+
+function toggleTrainPanel() {
+  TRAIN.panelOpen = !TRAIN.panelOpen;
+  document.getElementById('train-panel').classList.toggle('open', TRAIN.panelOpen);
+  document.getElementById('btn-train').classList.toggle('on', TRAIN.panelOpen);
+  if (!TRAIN.panelOpen) stopTraining();
+  drawTrainLights();
+}
+
+function setTrainSide(side) {
+  TRAIN.side = side;
+  document.getElementById('tp-home').classList.toggle('on', side === 'home');
+  document.getElementById('tp-away').classList.toggle('on', side === 'away');
+  if (TRAIN.running) { stopTraining(); startTraining(); }
+  else drawTrainLights();
+}
+
+function toggleTrainZone(zone) {
+  TRAIN.zones[zone] = !TRAIN.zones[zone];
+  document.getElementById('tp-' + zone).classList.toggle('on', TRAIN.zones[zone]);
+  if (TRAIN.running) { stopTraining(); startTraining(); }
+  else drawTrainLights();
+}
+
+function setTrainInterval(v) {
+  const secs = (Math.round(v) * 0.2).toFixed(1);
+  TRAIN.interval = Math.round(v) * 200;
+  document.getElementById('tp-speed-val').textContent = secs + 's';
+  if (TRAIN.running) { stopTraining(); startTraining(); }
+}
+
 // ════════════════════════════════════════
 // 鍵盤快捷鍵
 // ════════════════════════════════════════
