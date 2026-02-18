@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use, useCallback, useRef } from 'react';
 import { MaterialManifest } from '@/types/material';
-import { getMaterials, getMaterialManifest } from '@/lib/api/materials';
+import { getMaterials, getMaterialsBatch } from '@/lib/api/materials';
 
 // 參考寬度：小於此寬度時可以縮放
 const REFERENCE_WIDTH = 765;
@@ -110,8 +110,8 @@ export default function FullscreenMaterialPage({
         if (materials.length > 0) {
           const sortedMaterials = [...materials].sort((a, b) => b.version - a.version);
           const latestMaterial = sortedMaterials[0];
-          const manifestData = await getMaterialManifest(latestMaterial.id);
-          setManifest(manifestData);
+          const results = await getMaterialsBatch([latestMaterial.id]);
+          setManifest(results[0] ?? null);
         } else {
           setError('找不到教材');
         }

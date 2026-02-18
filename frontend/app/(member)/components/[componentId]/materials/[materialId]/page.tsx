@@ -4,7 +4,7 @@ import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { MaterialManifest, Material } from '@/types/material';
 import { LearningComponent } from '@/types/component';
-import { getMaterialManifest, getMaterials } from '@/lib/api/materials';
+import { getMaterialsBatch, getMaterials } from '@/lib/api/materials';
 import { getComponentById } from '@/lib/api/components';
 import { MaterialViewer } from '@/components/materials';
 
@@ -31,11 +31,12 @@ export default function MaterialViewerPage({ params }: PageProps) {
       setError(null);
 
       try {
-        const [manifestData, materialsData, componentData] = await Promise.all([
-          getMaterialManifest(materialId),
+        const [batchResults, materialsData, componentData] = await Promise.all([
+          getMaterialsBatch([materialId]),
           getMaterials(componentId),
           getComponentById(componentId),
         ]);
+        const manifestData = batchResults[0] ?? null;
 
         setManifest(manifestData);
         setMaterials(materialsData);

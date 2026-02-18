@@ -114,6 +114,48 @@ export async function getMaterialManifest(materialId: string): Promise<MaterialM
   return apiResponse.data;
 }
 
+interface BatchItem {
+  id: string;
+  componentId: string;
+  version: number;
+  entryPoint: string;
+  files: string[];
+  baseUrl: string;
+  accessToken?: string;
+}
+
+interface BatchResponse {
+  materials: BatchItem[];
+}
+
+export async function getMaterialsBatch(ids: string[]): Promise<MaterialManifest[]> {
+  if (ids.length === 0) return [];
+  const headers = await getAuthHeaders();
+  const response = await fetch(`${API_URL}/api/materials/batch`, {
+    method: 'POST',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids }),
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error('Material not found');
+    }
+    throw new Error(`Failed to fetch materials batch: ${response.statusText}`);
+  }
+
+  const apiResponse: ApiResponse<BatchResponse> = await response.json();
+  return apiResponse.data.materials.map((item) => ({
+    materialId: item.id,
+    componentId: item.componentId,
+    version: item.version,
+    entryPoint: item.entryPoint,
+    files: item.files,
+    baseUrl: item.baseUrl,
+    accessToken: item.accessToken,
+  }));
+}
+
 export function getDownloadUrl(materialId: string): string {
   return `${API_URL}/api/materials/${materialId}/download`;
 }

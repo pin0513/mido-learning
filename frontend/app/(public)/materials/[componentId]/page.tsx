@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Material, MaterialManifest } from '@/types/material';
 import { getComponentById } from '@/lib/api/components';
-import { getMaterials, getDownloadUrl, getMaterialManifest, deleteMaterial } from '@/lib/api/materials';
+import { getMaterials, getDownloadUrl, getMaterialsBatch, deleteMaterial } from '@/lib/api/materials';
 import { StarRating, RatingDisplay } from '@/components/ui/StarRating';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { getComponentRatings, getMyRating, rateComponent } from '@/lib/api/ratings';
@@ -84,8 +84,8 @@ export default function GuestMaterialPage({
             const sortedMaterials = [...materialsData].sort((a, b) => b.version - a.version);
             const latestMaterial = sortedMaterials[0];
             try {
-              const manifest = await getMaterialManifest(latestMaterial.id);
-              setLatestManifest(manifest);
+              const results = await getMaterialsBatch([latestMaterial.id]);
+              setLatestManifest(results[0] ?? null);
             } catch {
               // Manifest fetch failed
             }
@@ -155,8 +155,8 @@ export default function GuestMaterialPage({
         const sortedMaterials = [...materialsData].sort((a, b) => b.version - a.version);
         const latestMaterial = sortedMaterials[0];
         try {
-          const manifest = await getMaterialManifest(latestMaterial.id);
-          setLatestManifest(manifest);
+          const results = await getMaterialsBatch([latestMaterial.id]);
+          setLatestManifest(results[0] ?? null);
         } catch {
           setLatestManifest(null);
         }
