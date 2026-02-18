@@ -23,12 +23,35 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a1a2e;touch-action
 
 /* ── Toolbar ── */
 #toolbar{
-  display:flex;align-items:center;gap:5px;flex-wrap:nowrap;
-  padding:4px 8px;background:#16213e;
+  display:flex;align-items:center;gap:4px;flex-wrap:nowrap;
+  padding:5px 8px;background:#16213e;
   border-bottom:1px solid #0f3460;flex-shrink:0;overflow-x:auto;
 }
 #toolbar::-webkit-scrollbar{height:3px;}
 #toolbar::-webkit-scrollbar-thumb{background:#0f3460;border-radius:2px;}
+
+/* ── 工具列圖示按鈕 ── */
+.tbtn{
+  min-width:40px;min-height:40px;
+  border-radius:8px;border:1.5px solid rgba(255,255,255,0.1);
+  background:rgba(15,52,96,0.7);color:#ccc;
+  cursor:pointer;font-size:10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  padding:4px 7px;
+  user-select:none;touch-action:manipulation;
+  transition:background .12s, border-color .12s;
+  flex-shrink:0;
+}
+.tbtn svg{flex-shrink:0;}
+.tbtn .tl{font-size:9px;line-height:1;color:inherit;white-space:nowrap;}
+.tbtn:hover,.tbtn:active{background:rgba(36,113,163,0.7);border-color:#3498db;}
+.tbtn.on{background:rgba(36,113,163,0.9);border-color:#3498db;color:#fff;}
+.tbtn.danger{border-color:rgba(231,76,60,.4);}
+.tbtn.danger:hover,.tbtn.danger:active{background:rgba(192,57,43,0.7);}
+
+/* 工具列分組分隔線 */
+.sep-v{width:1px;min-height:30px;background:rgba(255,255,255,0.12);flex-shrink:0;align-self:center;margin:0 2px;}
+.tlabel{font-size:8px;color:#556;text-transform:uppercase;letter-spacing:.5px;writing-mode:horizontal-tb;white-space:nowrap;align-self:center;margin:0 1px;}
 
 /* ── 主內容 ── */
 #main{display:flex;flex:1;overflow:hidden;min-height:0;}
@@ -42,30 +65,49 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a1a2e;touch-action
 canvas{display:block;}
 #draw-canvas{position:absolute;top:0;left:0;cursor:crosshair;}
 
-/* ── 通用按鈕 ── */
-.btn{
-  padding:4px 8px;border-radius:6px;border:1px solid #0f3460;
-  background:#0f3460;color:#ddd;cursor:pointer;font-size:11px;
-  text-align:center;user-select:none;touch-action:manipulation;
-  white-space:nowrap;transition:background .12s;
+/* ══ 訓練面板 ══ */
+#train-panel{
+  display:none;position:absolute;top:8px;right:8px;z-index:30;
+  background:rgba(15,25,50,0.95);border:1.5px solid #1a6;
+  border-radius:10px;padding:10px 12px;min-width:180px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.7);color:#cef;font-size:11px;
 }
-.btn:hover,.btn:active{background:#1a5276;}
-.btn.on{background:#2471a3;border-color:#3498db;color:#fff;}
-.btn.red{background:#7b241c;border-color:#e74c3c;}
-.btn.red:hover,.btn.red:active{background:#c0392b;}
+#train-panel.open{display:block;}
+#train-panel h4{margin:0 0 8px;font-size:12px;color:#4f9;text-align:center;letter-spacing:.5px;}
+.tp-row{display:flex;align-items:center;gap:6px;margin-bottom:7px;flex-wrap:wrap;}
+.tp-label{font-size:10px;color:#89c;min-width:30px;}
+.tp-btn{
+  padding:3px 9px;border-radius:6px;border:1.5px solid rgba(255,255,255,0.15);
+  background:rgba(15,52,96,0.7);color:#adf;font-size:11px;cursor:pointer;
+  transition:background .12s;
+}
+.tp-btn.on{background:rgba(0,180,80,0.7);border-color:#0d9;color:#fff;}
+.tp-btn:hover{background:rgba(36,113,163,0.6);}
+.tp-sep{width:100%;height:1px;background:rgba(255,255,255,0.1);margin:4px 0;}
+#train-start{
+  width:100%;padding:6px;border-radius:7px;border:none;
+  background:#1a7a30;color:#fff;font-size:12px;font-weight:bold;cursor:pointer;
+}
+#train-start.running{background:#8b1a1a;}
+#train-start:hover{filter:brightness(1.2);}
+.train-speed{
+  width:90px;accent-color:#1a6;vertical-align:middle;
+}
+.tp-hint{font-size:9px;color:#556;text-align:center;margin-top:4px;}
 
-.mode-row{display:flex;gap:3px;}
-.mode-row .btn{flex:1;padding:4px 3px;}
-
-.lbl{font-size:9px;color:#777;text-transform:uppercase;letter-spacing:.4px;}
-.sep-v{width:1px;height:20px;background:#333;flex-shrink:0;}
+/* ── 訓練燈覆蓋層 ── */
+#train-overlay{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:25;display:none;
+}
+#train-overlay.active{display:block;}
 
 /* ── 場地側邊標籤 ── */
 #side-labels{
   position:absolute;top:0;left:0;width:100%;height:100%;
   display:flex;pointer-events:none;
 }
-.side-lbl{flex:1;display:flex;align-items:flex-start;justify-content:center;padding-top:3px;font-size:9px;font-weight:bold;opacity:.8;}
+.side-lbl{flex:1;display:flex;align-items:flex-start;justify-content:center;padding-top:4px;font-size:9px;font-weight:bold;opacity:.8;}
 
 /* ── 發球標誌 ── */
 #serve-flag{
@@ -76,43 +118,66 @@ canvas{display:block;}
 /* ═══ 浮動 HUD ═══ */
 #hud{
   position:absolute;bottom:10px;left:10px;z-index:20;
-  display:flex;flex-direction:column;gap:5px;
+  display:flex;flex-direction:column;gap:6px;
   user-select:none;
 }
 
-/* 球員列 / 球列共用 */
-#hud-players, #hud-balls{display:flex;gap:5px;}
+/* HUD 群組行 */
+.hud-row{display:flex;align-items:center;gap:5px;}
+.hud-sep{font-size:8px;color:#557;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;min-width:24px;}
 
-.hud-entity{
-  width:40px;height:40px;border-radius:50%;
-  border:2.5px solid rgba(255,255,255,0.25);
+/* ── 球員棋子 ── */
+.hud-player{
+  width:42px;height:42px;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.2);
   background:var(--c);cursor:pointer;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-weight:bold;color:#fff;font-size:11px;
+  font-weight:800;color:#fff;
   box-shadow:0 2px 8px rgba(0,0,0,0.5);
   transition:border-color .12s, transform .1s;
   touch-action:manipulation;
-  backdrop-filter:blur(4px);
   position:relative;overflow:hidden;
 }
-.hud-entity:hover{transform:scale(1.08);}
-.hud-entity.sel{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,0.5),0 2px 8px rgba(0,0,0,0.5);}
-.hud-entity.pending{border-color:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,0.6),0 2px 8px rgba(0,0,0,0.5);animation:pulse-place .8s ease-in-out infinite;}
-@keyframes pulse-place{0%,100%{box-shadow:0 0 0 3px rgba(250,204,21,0.6),0 2px 8px rgba(0,0,0,0.5);}50%{box-shadow:0 0 0 6px rgba(250,204,21,0.3),0 2px 8px rgba(0,0,0,0.5);}}
-.hud-entity .eid{font-size:13px;font-weight:800;line-height:1;}
-.hud-entity .eini{font-size:8px;opacity:.8;line-height:1;}
-/* 球的圓形稍小，方便區分 */
-.hud-ball{width:34px;height:34px;border-radius:50%;}
+.hud-player:hover{transform:scale(1.08);}
+.hud-player.sel{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,0.5),0 2px 8px rgba(0,0,0,0.5);}
+.hud-player.pending{border-color:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,0.6),0 2px 8px rgba(0,0,0,0.5);animation:pulse-place .8s ease-in-out infinite;}
+.hud-player .pnum{font-size:15px;font-weight:800;line-height:1;}
+.hud-player .plbl{font-size:7.5px;opacity:.85;line-height:1;}
 
-/* 操作列 */
-#hud-actions{display:flex;gap:5px;}
+/* ── 球棋子 ── */
+.hud-ball{
+  width:38px;height:38px;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.2);
+  background:rgba(30,35,55,0.9);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  transition:border-color .12s, transform .1s;
+  touch-action:manipulation;
+}
+.hud-ball:hover{transform:scale(1.08);}
+.hud-ball.sel{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,0.5);}
+.hud-ball.pending{border-color:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,0.6);animation:pulse-place .8s ease-in-out infinite;}
 
+/* ── 標記顏色 ── */
+.hud-annot{
+  width:30px;height:30px;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.15);
+  background:var(--c);cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,0.4);
+  transition:border-color .12s, transform .1s;
+  touch-action:manipulation;
+  position:relative;
+}
+.hud-annot:hover{transform:scale(1.12);}
+.hud-annot.sel{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,0.5);transform:scale(1.12);}
+
+/* HUD 操作按鈕 */
 .hud-btn{
-  height:32px;border-radius:8px;
-  border:1px solid rgba(255,255,255,0.15);
-  background:rgba(15,20,40,0.72);
-  color:#ddd;cursor:pointer;font-size:11px;
-  padding:0 9px;
+  height:34px;border-radius:8px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(15,20,40,0.75);
+  color:#ccc;cursor:pointer;font-size:11px;
+  padding:0 10px;
   display:flex;align-items:center;gap:3px;
   box-shadow:0 2px 6px rgba(0,0,0,0.4);
   backdrop-filter:blur(8px);
@@ -120,12 +185,14 @@ canvas{display:block;}
   transition:background .12s;
   white-space:nowrap;
 }
-.hud-btn:hover,.hud-btn:active{background:rgba(36,113,163,0.72);}
-.hud-btn.red{border-color:rgba(231,76,60,.35);}
-.hud-btn.red:hover,.hud-btn.red:active{background:rgba(192,57,43,0.7);}
+.hud-btn:hover,.hud-btn:active{background:rgba(36,113,163,0.75);}
+.hud-btn.danger{border-color:rgba(231,76,60,.3);}
+.hud-btn.danger:hover,.hud-btn.danger:active{background:rgba(192,57,43,0.7);}
 
-/* HUD 分隔標籤 */
-.hud-sep{font-size:8px;color:#556;text-transform:uppercase;letter-spacing:.4px;align-self:center;}
+@keyframes pulse-place{
+  0%,100%{box-shadow:0 0 0 3px rgba(250,204,21,0.6),0 2px 8px rgba(0,0,0,0.5);}
+  50%{box-shadow:0 0 0 6px rgba(250,204,21,0.3),0 2px 8px rgba(0,0,0,0.5);}
+}
 </style>
 </head>
 <body>
@@ -139,42 +206,139 @@ canvas{display:block;}
 
 <div id="app">
 
-  <!-- 工具列 -->
+  <!-- ════ 工具列 ════ -->
   <div id="toolbar">
-    <span class="lbl">模式</span>
-    <div class="mode-row">
-      <button class="btn on" id="btn-draw"  onclick="setMode('draw')"  title="走線 [Q]">✏️走線</button>
-      <button class="btn"    id="btn-place" onclick="setMode('place')" title="站位 [W]">👤站位</button>
-      <button class="btn"    id="btn-erase" onclick="setMode('erase')" title="擦除 [E]">🧹擦除</button>
-    </div>
+
+    <!-- 模式 -->
+    <span class="tlabel">模式</span>
+    <button class="tbtn on" id="btn-draw" onclick="setMode('draw')" title="走線 [Q]">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 2.5l2.5 2.5-7.5 7.5-3 .5.5-3z"/><line x1="11" y1="2.5" x2="13.5" y2="5"/>
+      </svg>
+      <span class="tl">走線</span>
+    </button>
+    <button class="tbtn" id="btn-place" onclick="setMode('place')" title="站位 [W]">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="8" cy="4.5" r="2.2"/><path d="M3.5 14c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5"/>
+      </svg>
+      <span class="tl">站位</span>
+    </button>
+    <button class="tbtn" id="btn-erase" onclick="setMode('erase')" title="擦除 [E]">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1.5" y="7" width="13" height="6" rx="1.5"/>
+        <path d="M5 7V5.5a3 3 0 0 1 6 0V7"/>
+        <line x1="8" y1="10" x2="8" y2="11"/>
+      </svg>
+      <span class="tl">擦除</span>
+    </button>
 
     <div class="sep-v"></div>
-    <span class="lbl">場型</span>
-    <button class="btn on" id="btn-doubles" onclick="setCourtType('doubles')">雙打</button>
-    <button class="btn"    id="btn-singles" onclick="setCourtType('singles')">單打</button>
+
+    <!-- 場型 -->
+    <span class="tlabel">場型</span>
+    <button class="tbtn on" id="btn-doubles" onclick="setCourtType('doubles')" title="雙打 [S]">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-linecap="round">
+        <rect x="1" y="1" width="18" height="12" rx="0.5" stroke-width="1.5"/>
+        <line x1="10" y1="1" x2="10" y2="13" stroke-width="1.2"/>
+        <line x1="1" y1="3" x2="19" y2="3" stroke-width="0.8"/>
+        <line x1="1" y1="11" x2="19" y2="11" stroke-width="0.8"/>
+      </svg>
+      <span class="tl">雙打</span>
+    </button>
+    <button class="tbtn" id="btn-singles" onclick="setCourtType('singles')" title="單打 [S]">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-linecap="round">
+        <rect x="1" y="1" width="18" height="12" rx="0.5" stroke-width="1" opacity="0.35"/>
+        <rect x="3.5" y="1" width="13" height="12" rx="0.5" stroke-width="1.5"/>
+        <line x1="10" y1="1" x2="10" y2="13" stroke-width="1.2"/>
+        <line x1="3.5" y1="4.5" x2="16.5" y2="4.5" stroke-width="0.8"/>
+        <line x1="3.5" y1="9.5" x2="16.5" y2="9.5" stroke-width="0.8"/>
+      </svg>
+      <span class="tl">單打</span>
+    </button>
 
     <div class="sep-v"></div>
-    <span class="lbl">線條</span>
-    <div class="mode-row">
-      <button class="btn on" id="btn-solid"  onclick="setDash('solid')">實線</button>
-      <button class="btn"    id="btn-dashed" onclick="setDash('dashed')">虛線</button>
-      <button class="btn"    id="btn-arrow"  onclick="setDash('arrow')">箭頭</button>
-    </div>
+
+    <!-- 線條樣式 -->
+    <span class="tlabel">線條</span>
+    <button class="tbtn on" id="btn-solid" onclick="setDash('solid')" title="實線">
+      <svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="2" y1="5" x2="20" y2="5"/>
+      </svg>
+      <span class="tl">實線</span>
+    </button>
+    <button class="tbtn" id="btn-dashed" onclick="setDash('dashed')" title="虛線">
+      <svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3">
+        <line x1="2" y1="5" x2="20" y2="5"/>
+      </svg>
+      <span class="tl">虛線</span>
+    </button>
     <input type="range" id="lw" min="1" max="8" value="3"
-           style="width:60px;accent-color:#3498db;"
+           style="width:52px;accent-color:#3498db;align-self:center;"
            oninput="state.lineWidth=+this.value" title="線條粗細">
 
     <div class="sep-v"></div>
-    <span class="lbl">發球</span>
-    <button class="btn" id="btn-sl" onclick="setServe('left')"  title="左發球 [A]">◀左</button>
-    <button class="btn" id="btn-sr" onclick="setServe('right')" title="右發球 [D]">右▶</button>
-    <button class="btn" id="btn-sn" onclick="setServe('none')"  title="清除">✕</button>
+
+    <!-- 發球 -->
+    <span class="tlabel">發球</span>
+    <button class="tbtn" id="btn-sl" onclick="setServe('left')" title="左發球 [A]">
+      <svg width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="10,2 3,7 10,12"/>
+        <line x1="13" y1="7" x2="4" y2="7"/>
+      </svg>
+      <span class="tl">左發</span>
+    </button>
+    <button class="tbtn" id="btn-sr" onclick="setServe('right')" title="右發球 [D]">
+      <svg width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6,2 13,7 6,12"/>
+        <line x1="3" y1="7" x2="12" y2="7"/>
+      </svg>
+      <span class="tl">右發</span>
+    </button>
+    <button class="tbtn" id="btn-sn" onclick="setServe('none')" title="清除發球">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/>
+      </svg>
+      <span class="tl">清發</span>
+    </button>
 
     <div class="sep-v"></div>
-    <span class="lbl">我方在</span>
-    <button class="btn on" id="btn-hl" onclick="setHome('left')">左</button>
-    <button class="btn"    id="btn-hr" onclick="setHome('right')">右</button>
-  </div>
+
+    <!-- 我方在 -->
+    <span class="tlabel">我方</span>
+    <button class="tbtn on" id="btn-hl" onclick="setHome('left')" title="我方在左">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-linecap="round">
+        <rect x="1" y="1" width="16" height="12" rx="0.5" stroke-width="1" opacity="0.35"/>
+        <rect x="1" y="1" width="8" height="12" rx="0.5" stroke-width="1.5" fill="rgba(52,152,219,0.25)"/>
+        <line x1="9" y1="1" x2="9" y2="13" stroke-width="1.2"/>
+      </svg>
+      <span class="tl">我左</span>
+    </button>
+    <button class="tbtn" id="btn-hr" onclick="setHome('right')" title="我方在右">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-linecap="round">
+        <rect x="1" y="1" width="16" height="12" rx="0.5" stroke-width="1" opacity="0.35"/>
+        <rect x="9" y="1" width="8" height="12" rx="0.5" stroke-width="1.5" fill="rgba(52,152,219,0.25)"/>
+        <line x1="9" y1="1" x2="9" y2="13" stroke-width="1.2"/>
+      </svg>
+      <span class="tl">我右</span>
+    </button>
+
+    <div class="sep-v"></div>
+
+    <!-- 訓練模式 -->
+    <button class="tbtn" id="btn-train" onclick="toggleTrainPanel()" title="米字步訓練">
+      <svg width="20" height="18" viewBox="0 0 20 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="10" cy="9" r="2.5" fill="rgba(0,200,80,0.3)" stroke="#0c6"/>
+        <circle cx="4"  cy="3"  r="2"  fill="rgba(0,200,80,0.15)"/>
+        <circle cx="16" cy="3"  r="2"  fill="rgba(0,200,80,0.15)"/>
+        <circle cx="4"  cy="15" r="2"  fill="rgba(0,200,80,0.15)"/>
+        <circle cx="16" cy="15" r="2"  fill="rgba(0,200,80,0.15)"/>
+        <circle cx="4"  cy="9"  r="2"  fill="rgba(0,200,80,0.15)"/>
+        <circle cx="16" cy="9"  r="2"  fill="rgba(0,200,80,0.15)"/>
+      </svg>
+      <span class="tl">訓練</span>
+    </button>
+
+  </div><!-- /toolbar -->
 
   <!-- 主區域 -->
   <div id="main">
@@ -192,61 +356,123 @@ canvas{display:block;}
         <!-- 發球旗 -->
         <div id="serve-flag">🏸</div>
 
-        <!-- 浮動 HUD（場地左下角） -->
+        <!-- ════ 訓練燈覆蓋層 (Canvas) ════ -->
+        <canvas id="train-overlay"></canvas>
+
+        <!-- ════ 訓練面板 ════ -->
+        <div id="train-panel">
+          <h4>🏃 米字步訓練</h4>
+
+          <!-- 訓練側別 -->
+          <div class="tp-row">
+            <span class="tp-label">側別</span>
+            <button class="tp-btn on" id="tp-home" onclick="setTrainSide('home')">我方</button>
+            <button class="tp-btn"    id="tp-away" onclick="setTrainSide('away')">對方</button>
+          </div>
+
+          <!-- 訓練區域 -->
+          <div class="tp-row">
+            <span class="tp-label">區域</span>
+            <button class="tp-btn on" id="tp-front" onclick="toggleTrainZone('front')">前2</button>
+            <button class="tp-btn on" id="tp-mid"   onclick="toggleTrainZone('mid')">中2</button>
+            <button class="tp-btn on" id="tp-back"  onclick="toggleTrainZone('back')">後2</button>
+          </div>
+
+          <div class="tp-sep"></div>
+
+          <!-- 速度 -->
+          <div class="tp-row">
+            <span class="tp-label">間隔</span>
+            <input class="train-speed" type="range" id="tp-speed" min="5" max="30" value="10"
+                   oninput="setTrainInterval(this.value)">
+            <span id="tp-speed-val" style="font-size:10px;color:#9bf;">2.0s</span>
+          </div>
+
+          <!-- 開始/停止 -->
+          <button id="train-start" onclick="toggleTraining()">▶ 開始訓練</button>
+
+          <div class="tp-hint">隨機點亮其中一點<br>聽燈執行跑位</div>
+        </div>
+
+        <!-- ════ 浮動 HUD ════ -->
         <div id="hud">
+
           <!-- 球員選擇 -->
-          <div style="display:flex;align-items:center;gap:5px;">
+          <div class="hud-row">
             <span class="hud-sep">球員</span>
             <div id="hud-players"></div>
           </div>
-          <!-- 球選擇 -->
-          <div style="display:flex;align-items:center;gap:5px;">
+
+          <!-- 球選擇 (1個) -->
+          <div class="hud-row">
             <span class="hud-sep">球</span>
-            <div id="hud-balls"></div>
+            <div id="hud-ball"></div>
           </div>
+
+          <!-- 標記顏色 -->
+          <div class="hud-row">
+            <span class="hud-sep">標記</span>
+            <div id="hud-annots" style="display:flex;gap:4px;"></div>
+          </div>
+
           <!-- 操作按鈕 -->
-          <div id="hud-actions">
+          <div class="hud-row" id="hud-actions">
             <button class="hud-btn" onclick="undo()" title="復原 Ctrl+Z">↩ 復原</button>
-            <button class="hud-btn" onclick="clearActive()" title="清除選取">🗑 清選取</button>
-            <button class="hud-btn red" onclick="resetAll()" title="全部重置 [R]">♻ 重置</button>
+            <button class="hud-btn" onclick="clearActive()" title="清除選取筆跡">🗑 清跡</button>
+            <button class="hud-btn danger" onclick="resetAll()" title="全部重置 [R]">♻ 重置</button>
           </div>
-        </div>
+
+        </div><!-- /hud -->
+
       </div>
     </div>
   </div>
 
-</div>
+</div><!-- /app -->
 
 <script>
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 // 實體資料
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 const PLAYERS = [
-  {id:0, name:'球員 1', color:'#E74C3C', visible:true, pos:null, strokes:[]},
-  {id:1, name:'球員 2', color:'#3498DB', visible:true, pos:null, strokes:[]},
-  {id:2, name:'球員 3', color:'#2ECC71', visible:true, pos:null, strokes:[]},
-  {id:3, name:'球員 4', color:'#F39C12', visible:true, pos:null, strokes:[]},
+  {id:0, name:'P1', label:'球員1', color:'#E74C3C', visible:true, pos:null, strokes:[]},
+  {id:1, name:'P2', label:'球員2', color:'#3498DB', visible:true, pos:null, strokes:[]},
+  {id:2, name:'P3', label:'球員3', color:'#2ECC71', visible:true, pos:null, strokes:[]},
+  {id:3, name:'P4', label:'球員4', color:'#F39C12', visible:true, pos:null, strokes:[]},
 ];
 
+// 只有 1 個球
 const BALLS = [
-  {id:0, name:'球 1', color:'#F5F5F5', borderColor:'#AAAAAA', visible:true, pos:null, strokes:[]},
-  {id:1, name:'球 2', color:'#F1C40F', borderColor:'#D4AC0D',  visible:true, pos:null, strokes:[]},
-  {id:2, name:'球 3', color:'#E67E22', borderColor:'#CA6F1E',  visible:true, pos:null, strokes:[]},
-  {id:3, name:'球 4', color:'#1ABC9C', borderColor:'#17A589',  visible:true, pos:null, strokes:[]},
+  {id:0, name:'球', color:'#ffffff', borderColor:'#bbbbbb', visible:true, pos:null, strokes:[]},
+];
+
+// 戰術標記色組（無位置，只畫線）
+const ANNOTS = [
+  {id:0, color:'#E74C3C', label:'紅', strokes:[]},
+  {id:1, color:'#F39C12', label:'橙', strokes:[]},
+  {id:2, color:'#F1C40F', label:'黃', strokes:[]},
+  {id:3, color:'#2ECC71', label:'綠', strokes:[]},
+  {id:4, color:'#5DADE2', label:'淺藍', strokes:[]},
+  {id:5, color:'#9B59B6', label:'紫', strokes:[]},
 ];
 
 const state = {
-  active:0, activeType:'ball',
-  mode:'draw', courtType:'doubles',
-  homeSide:'left', serveSide:'none',
-  lineWidth:3, lineDash:'solid',
-  drawing:false, curStroke:[],
-  pendingPlace:false,  // 等待點擊放置棋子
+  active: 0,
+  activeType: 'player',   // 'player' | 'ball' | 'annot'
+  mode: 'draw',
+  courtType: 'doubles',
+  homeSide: 'left',
+  serveSide: 'none',
+  lineWidth: 3,
+  lineDash: 'solid',
+  drawing: false,
+  curStroke: [],
+  pendingPlace: false,
 };
 
-// ═══════════════════════════════════════
-// 全域 Undo Stack
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+// Undo Stack
+// ════════════════════════════════════════
 const MAX_UNDO = 60;
 const undoStack = [];
 
@@ -258,41 +484,24 @@ function pushUndo(action) {
 function undo() {
   if (undoStack.length === 0) return;
   const a = undoStack.pop();
-  const arr = a.who === 'player' ? PLAYERS : BALLS;
+  let arr;
+  if (a.who === 'player') arr = PLAYERS;
+  else if (a.who === 'ball') arr = BALLS;
+  else arr = ANNOTS;
+
   const entity = arr[a.id];
   switch (a.type) {
-    case 'stroke':
-      entity.strokes.pop();
-      break;
-    case 'place':
-      entity.pos = a.from;
-      break;
-    case 'erase-marker':
-      entity.pos = a.pos;
-      break;
-    case 'erase-stroke':
-      entity.strokes.splice(a.idx, 0, a.stroke);
-      break;
+    case 'stroke':       entity.strokes.pop(); break;
+    case 'place':        entity.pos = a.from; break;
+    case 'erase-marker': entity.pos = a.pos; break;
+    case 'erase-stroke': entity.strokes.splice(a.idx, 0, a.stroke); break;
   }
   redraw();
 }
 
-// ═══════════════════════════════════════
-// Icon 圖片預載
-// ═══════════════════════════════════════
-const playerImg = new Image();
-playerImg.src = '/images/badminton-player-icon.png';
-const shuttleImg = new Image();
-shuttleImg.src = '/images/badminton-shuttle-icon.png';
-let iconsReady = false;
-let loadedCount = 0;
-function onIconLoad() { loadedCount++; if (loadedCount >= 2) { iconsReady = true; redraw(); } }
-playerImg.onload = onIconLoad;
-shuttleImg.onload = onIconLoad;
-
-// ═══════════════════════════════════════
-// Canvas
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+// Canvas Setup
+// ════════════════════════════════════════
 const courtC    = document.getElementById('court-canvas');
 const drawC     = document.getElementById('draw-canvas');
 const cc        = courtC.getContext('2d');
@@ -316,7 +525,7 @@ function computeScale() {
 }
 
 function resize() {
-  const cr   = container.getBoundingClientRect();
+  const cr    = container.getBoundingClientRect();
   const availW = cr.width  - 12;
   const availH = cr.height - 12;
   const aspect = COURT_W / COURT_H;
@@ -324,27 +533,27 @@ function resize() {
   if (availW / availH > aspect) { h=availH; w=h*aspect; }
   else                           { w=availW; h=w/aspect; }
   CW = Math.floor(w); CH = Math.floor(h);
-  [courtC, drawC].forEach(c=>{ c.width=CW; c.height=CH; });
+  [courtC, drawC].forEach(c => { c.width=CW; c.height=CH; });
   wrapper.style.cssText = `width:${CW}px;height:${CH}px;`;
   computeScale();
   redraw();
+  initTrainCanvas();
+  drawTrainLights();
 }
 
 const cx = m => OFFSET_X + m * SC;
 const cy = m => OFFSET_Y + m * SC;
 
-// ═══════════════════════════════════════
-// 繪製場地
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+// 場地繪製
+// ════════════════════════════════════════
 function drawCourt() {
   const c = cc;
   c.clearRect(0,0,CW,CH);
-
-  // 白底
   c.fillStyle = '#ffffff';
   c.fillRect(0,0,CW,CH);
 
-  // 我方/對方底色
+  // 主客場底色
   const homeLeft  = state.homeSide === 'left';
   const homeColor = 'rgba(52,152,219,0.06)';
   const awayColor = 'rgba(231,76,60,0.06)';
@@ -353,58 +562,54 @@ function drawCourt() {
   c.fillStyle = homeLeft ? awayColor : homeColor;
   c.fillRect(cx(COURT_W/2), cy(0), cx(COURT_W)-cx(COURT_W/2), cy(COURT_H)-cy(0));
 
-  // 單打區外側陰影
+  // 單打邊區陰影
   if (state.courtType === 'singles') {
     c.fillStyle = 'rgba(0,0,0,0.07)';
     c.fillRect(cx(0), cy(0),            cx(COURT_W)-cx(0), cy(0.46)-cy(0));
     c.fillRect(cx(0), cy(COURT_H-0.46), cx(COURT_W)-cx(0), cy(COURT_H)-cy(COURT_H-0.46));
   }
 
-  // ── Mido Learning 浮水印 ──
+  // 浮水印
   const wCX = cx(COURT_W/2);
   const wCY = cy(COURT_H/2);
   c.save();
-  c.globalAlpha = 0.07;
-  const wFontSize = Math.round(Math.min(COURT_W, COURT_H) * SC * 0.13);
-  c.font = `bold italic ${wFontSize}px 'Helvetica Neue', Arial, sans-serif`;
+  c.globalAlpha = 0.06;
+  const wFs = Math.round(Math.min(COURT_W, COURT_H) * SC * 0.13);
+  c.font = `bold italic ${wFs}px 'Helvetica Neue',Arial,sans-serif`;
   c.fillStyle = '#1a4080';
-  c.textAlign = 'center';
-  c.textBaseline = 'middle';
-  c.fillText('Mido Learning', wCX, wCY - wFontSize * 0.6);
-  const wFontSize2 = Math.round(wFontSize * 0.45);
-  c.font = `${wFontSize2}px Arial, sans-serif`;
-  c.fillText('羽球戰術版', wCX, wCY + wFontSize2 * 0.3);
+  c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillText('Mido Learning', wCX, wCY - wFs * 0.6);
+  const wFs2 = Math.round(wFs * 0.45);
+  c.font = `${wFs2}px Arial,sans-serif`;
+  c.fillText('羽球戰術版', wCX, wCY + wFs2 * 0.3);
   c.restore();
 
   // 場地線
   c.strokeStyle = '#1a1a8e';
-  c.lineWidth   = 2;
+  c.lineWidth = 2;
   c.setLineDash([]);
   c.lineCap = 'square';
-
-  // 外框（雙打邊界）— 完整矩形
   c.strokeRect(cx(0), cy(0), cx(COURT_W)-cx(0), cy(COURT_H)-cy(0));
 
-  // 長發球線（雙打，距底線 0.76m）
+  // 長發球線 (0.76m)
   line(c, cx(0.76),         cy(0), cx(0.76),         cy(COURT_H));
   line(c, cx(COURT_W-0.76), cy(0), cx(COURT_W-0.76), cy(COURT_H));
 
-  // 短發球線（距球網 1.98m）
-  const ssl = COURT_W/2 - 1.98; // = 4.72m from left
-  line(c, cx(ssl),          cy(0), cx(ssl),          cy(COURT_H));
-  line(c, cx(COURT_W-ssl),  cy(0), cx(COURT_W-ssl),  cy(COURT_H));
+  // 短發球線 (1.98m from net)
+  const ssl = COURT_W/2 - 1.98;
+  line(c, cx(ssl),         cy(0), cx(ssl),         cy(COURT_H));
+  line(c, cx(COURT_W-ssl), cy(0), cx(COURT_W-ssl), cy(COURT_H));
 
-  // 單打邊線（與外框齊平，橫向線）
-  line(c, cx(0), cy(0.46),          cx(COURT_W), cy(0.46));
-  line(c, cx(0), cy(COURT_H-0.46),  cx(COURT_W), cy(COURT_H-0.46));
+  // 單打邊線
+  line(c, cx(0), cy(0.46),         cx(COURT_W), cy(0.46));
+  line(c, cx(0), cy(COURT_H-0.46), cx(COURT_W), cy(COURT_H-0.46));
 
-  // 中線（後場服務區分界）
+  // 中線
   line(c, cx(0.76),        cy(COURT_H/2), cx(ssl),          cy(COURT_H/2));
   line(c, cx(COURT_W-ssl), cy(COURT_H/2), cx(COURT_W-0.76), cy(COURT_H/2));
 
-  // 球網（中線加粗）
-  c.strokeStyle = '#555';
-  c.lineWidth   = 3;
+  // 球網
+  c.strokeStyle = '#555'; c.lineWidth = 3;
   line(c, cx(COURT_W/2), cy(0), cx(COURT_W/2), cy(COURT_H));
 
   // 球柱
@@ -427,14 +632,13 @@ function drawServe(c) {
   flag.style.display = 'block';
   flag.style.left = (px-12)+'px';
   flag.style.top  = (py-12)+'px';
-  flag.style.transform = 'none';
   c.fillStyle = 'rgba(241,196,15,0.18)';
   c.beginPath(); c.arc(px, py, 20, 0, Math.PI*2); c.fill();
 }
 
-// ═══════════════════════════════════════
-// 走線
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+// 走線繪製
+// ════════════════════════════════════════
 function drawStrokes(ctx) {
   PLAYERS.forEach(p => {
     if (!p.visible) return;
@@ -444,92 +648,140 @@ function drawStrokes(ctx) {
     if (!b.visible) return;
     b.strokes.forEach(s => paintStroke(ctx, s.pts, b.color, s.w, s.dash));
   });
+  ANNOTS.forEach(a => {
+    a.strokes.forEach(s => paintStroke(ctx, s.pts, a.color, s.w, s.dash));
+  });
 }
 
 function paintStroke(ctx, pts, color, w, dash) {
   if (pts.length < 2) return;
   const dashPat = dash==='dashed'?[w*3,w*2]:[];
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-
-  // 深色輪廓讓線在任何底色都清晰可見
-  ctx.strokeStyle = 'rgba(0,0,0,0.55)'; ctx.lineWidth = w + 3;
+  ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = w + 3;
   ctx.setLineDash(dashPat);
   ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
   for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y);
   ctx.stroke();
-
-  // 本體顏色
   ctx.strokeStyle = color; ctx.lineWidth = w;
   ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
   for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y);
   ctx.stroke(); ctx.setLineDash([]);
-  if (dash==='arrow'&&pts.length>=2) {
-    const a=pts[pts.length-2], b=pts[pts.length-1];
-    arrow(ctx,a.x,a.y,b.x,b.y,color,w);
-  }
 }
 
-function arrow(ctx,fx,fy,tx,ty,color,w) {
-  const len=Math.max(10,w*4), ang=Math.atan2(ty-fy,tx-fx);
-  ctx.fillStyle=color; ctx.setLineDash([]);
-  ctx.beginPath(); ctx.moveTo(tx,ty);
-  ctx.lineTo(tx-len*Math.cos(ang-Math.PI/6), ty-len*Math.sin(ang-Math.PI/6));
-  ctx.lineTo(tx-len*Math.cos(ang+Math.PI/6), ty-len*Math.sin(ang+Math.PI/6));
-  ctx.closePath(); ctx.fill();
-}
-
-// ═══════════════════════════════════════
-// 球員 & 球 標記繪製
-// ═══════════════════════════════════════
-const MR = 14; // 球員半徑
-const BR = 11; // 球半徑
+// ════════════════════════════════════════
+// 標記繪製（球員 & 球）
+// ════════════════════════════════════════
+const MR = 15; // 球員半徑
+const BR = 12; // 球半徑
 
 function drawMarkers(ctx) {
   PLAYERS.forEach(p => {
-    if (!p.visible||!p.pos) return;
-    paintEntityMarker(ctx, p.pos.x, p.pos.y, p.color, p.name, p.id===state.active&&state.activeType==='player', 'player', p.id);
+    if (!p.visible || !p.pos) return;
+    const isActive = (p.id===state.active && state.activeType==='player');
+    drawPlayerMarker(ctx, p.pos.x, p.pos.y, p.color, p.name, p.id, isActive);
   });
   BALLS.forEach(b => {
-    if (!b.visible||!b.pos) return;
-    paintEntityMarker(ctx, b.pos.x, b.pos.y, b.color, b.name, b.id===state.active&&state.activeType==='ball', 'ball', b.id);
+    if (!b.visible || !b.pos) return;
+    const isActive = (b.id===state.active && state.activeType==='ball');
+    drawShuttleMarker(ctx, b.pos.x, b.pos.y, isActive);
   });
 }
 
-function paintEntityMarker(ctx, x, y, color, name, isActive, type, id) {
-  const r = type === 'ball' ? BR : MR;
-  const img = type === 'ball' ? shuttleImg : playerImg;
-
+function drawPlayerMarker(ctx, x, y, color, name, id, isActive) {
   ctx.save();
-  ctx.shadowColor='rgba(0,0,0,0.45)'; ctx.shadowBlur=6;
+  ctx.shadowColor='rgba(0,0,0,0.5)'; ctx.shadowBlur=7;
   ctx.shadowOffsetX=2; ctx.shadowOffsetY=2;
 
   // 底色圓
   ctx.fillStyle = color;
+  ctx.beginPath(); ctx.arc(x, y, MR, 0, Math.PI*2);
+  ctx.fill();
+
+  // 邊框
   ctx.strokeStyle = isActive ? '#fff' : 'rgba(255,255,255,0.4)';
-  ctx.lineWidth   = isActive ? 3 : 1.5;
-  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2);
-  ctx.fill(); ctx.stroke();
+  ctx.lineWidth = isActive ? 2.5 : 1.5;
+  ctx.stroke();
 
   ctx.shadowColor='transparent'; ctx.shadowBlur=0;
   ctx.shadowOffsetX=0; ctx.shadowOffsetY=0;
 
-  // 若圖示已載入，繪製圖示
-  if (iconsReady && img.complete && img.naturalWidth > 0) {
-    const d = r * 1.6;
-    ctx.drawImage(img, x - d/2, y - d/2, d, d);
-  } else {
-    // Fallback: 文字首字
-    ctx.fillStyle = type === 'ball' ? '#333' : '#fff';
-    ctx.font = `bold ${Math.round(r*0.85)}px sans-serif`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(name.charAt(0).toUpperCase(), x, y);
+  // 球員號碼（大，白色）
+  ctx.fillStyle = '#fff';
+  ctx.font = `bold ${Math.round(MR*0.95)}px sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(name, x, y);
+
+  // 選中虛線外圈
+  if (isActive) {
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+    ctx.lineWidth = 1.5; ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.arc(x, y, MR+5, 0, Math.PI*2);
+    ctx.stroke(); ctx.setLineDash([]);
   }
 
-  // 選中高亮外圈
+  ctx.restore();
+}
+
+// ── 羽球 icon（程式繪製）──
+function drawShuttleMarker(ctx, x, y, isActive) {
+  const r = BR;
+  ctx.save();
+  ctx.shadowColor='rgba(0,0,0,0.5)'; ctx.shadowBlur=7;
+  ctx.shadowOffsetX=2; ctx.shadowOffsetY=2;
+
+  // 底色圓（深色背景）
+  ctx.fillStyle = 'rgba(30,36,55,0.92)';
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2);
+  ctx.fill();
+  ctx.strokeStyle = isActive ? '#fff' : 'rgba(255,255,255,0.35)';
+  ctx.lineWidth = isActive ? 2.5 : 1.5;
+  ctx.stroke();
+
+  ctx.shadowColor='transparent'; ctx.shadowBlur=0;
+  ctx.shadowOffsetX=0; ctx.shadowOffsetY=0;
+
+  // ── 羽球圖示 ──
+  const bx = x, by = y;
+  const featherR = r * 0.75;    // 羽毛散開半徑
+  const corkR    = r * 0.32;    // 軟木頭半徑
+  const corkCY   = by + r * 0.28; // 軟木頭位置（下方偏移）
+  const quillBase = by + r * 0.1; // 羽毛根部
+
+  // 繪製羽毛線（扇形散開）
+  const numF = 9;
+  for (let i = 0; i < numF; i++) {
+    const t    = i / (numF - 1);  // 0..1
+    const ang  = (-Math.PI * 0.72) + t * (Math.PI * 1.44); // 扇形角度
+    const tipX = bx + Math.cos(ang) * featherR;
+    const tipY = (by - featherR * 0.55) + Math.sin(ang) * featherR * 0.35;
+
+    ctx.beginPath();
+    ctx.moveTo(bx, quillBase);
+    ctx.lineTo(tipX, tipY);
+    ctx.strokeStyle = 'rgba(255,255,255,0.72)';
+    ctx.lineWidth = 0.9;
+    ctx.stroke();
+  }
+
+  // 羽毛頂端弧（橢圓形）
+  ctx.beginPath();
+  ctx.ellipse(bx, by - featherR * 0.3, featherR * 0.82, featherR * 0.28, 0, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+  ctx.lineWidth = 0.85;
+  ctx.stroke();
+
+  // 軟木頭（圓形，米黃色）
+  ctx.beginPath(); ctx.arc(bx, corkCY, corkR, 0, Math.PI*2);
+  const grad = ctx.createRadialGradient(bx-corkR*0.3, corkCY-corkR*0.3, 0, bx, corkCY, corkR);
+  grad.addColorStop(0, '#f5e6b0');
+  grad.addColorStop(1, '#c8a85a');
+  ctx.fillStyle = grad; ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,0.3)'; ctx.lineWidth = 0.8; ctx.stroke();
+
+  // 選中外圈
   if (isActive) {
-    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
-    ctx.lineWidth = 1.5;
-    ctx.setLineDash([4,3]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+    ctx.lineWidth = 1.5; ctx.setLineDash([4,3]);
     ctx.beginPath(); ctx.arc(x, y, r+5, 0, Math.PI*2);
     ctx.stroke(); ctx.setLineDash([]);
   }
@@ -537,32 +789,36 @@ function paintEntityMarker(ctx, x, y, color, name, isActive, type, id) {
   ctx.restore();
 }
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 // 全部重繪
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 function redraw() {
   drawCourt();
   dc.clearRect(0,0,CW,CH);
   drawStrokes(dc);
-  const ae = getActiveEntity();
-  if (state.drawing && state.curStroke.length>1)
-    paintStroke(dc, state.curStroke, ae.color, state.lineWidth, state.lineDash);
+  // 正在畫的線
+  if (state.drawing && state.curStroke.length > 1) {
+    const color = getDrawColor();
+    paintStroke(dc, state.curStroke, color, state.lineWidth, state.lineDash);
+  }
   drawMarkers(dc);
 }
 
-// ═══════════════════════════════════════
-// 輔助：取得當前選中實體
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+// 輔助
+// ════════════════════════════════════════
 function getActiveEntity() {
-  return state.activeType === 'player' ? PLAYERS[state.active] : BALLS[state.active];
+  if (state.activeType === 'player') return PLAYERS[state.active];
+  if (state.activeType === 'ball')   return BALLS[state.active];
+  return ANNOTS[state.active]; // annot
 }
-function getEntityArray() {
-  return state.activeType === 'player' ? PLAYERS : BALLS;
+function getDrawColor() {
+  return getActiveEntity().color;
 }
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 // 事件座標
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 function pos(e) {
   const r=drawC.getBoundingClientRect();
   const sx=drawC.width/r.width, sy=drawC.height/r.height;
@@ -573,20 +829,17 @@ function pos(e) {
   return {x:(ex-r.left)*sx, y:(ey-r.top)*sy};
 }
 
-// ═══════════════════════════════════════
-// 拖曳：同時處理球員與球
-// ═══════════════════════════════════════
-// drag 結構: {who:'player'|'ball', id:N}
+// ════════════════════════════════════════
+// 拖曳
+// ════════════════════════════════════════
 let drag=null, dragOff={x:0,y:0};
 
 function hitMarker(p) {
-  // 球員（後渲染 = 優先命中）
   for (let i=PLAYERS.length-1;i>=0;i--) {
     const pl=PLAYERS[i];
     if (!pl.visible||!pl.pos) continue;
     if (Math.hypot(p.x-pl.pos.x, p.y-pl.pos.y) <= MR+5) return {who:'player',id:i};
   }
-  // 球
   for (let i=BALLS.length-1;i>=0;i--) {
     const bl=BALLS[i];
     if (!bl.visible||!bl.pos) continue;
@@ -594,85 +847,83 @@ function hitMarker(p) {
   }
   return null;
 }
-
 function entityAt(hit) {
   return hit.who === 'player' ? PLAYERS[hit.id] : BALLS[hit.id];
 }
 
 function onDown(e) {
   e.preventDefault();
-  const p=pos(e);
+  const p = pos(e);
   if (state.mode==='place') {
-    const h=hitMarker(p);
+    const h = hitMarker(p);
     if (h) {
       drag=h; dragOff={x:p.x-entityAt(h).pos.x, y:p.y-entityAt(h).pos.y};
       selectEntity(h.who, h.id);
     } else {
-      const ae=getActiveEntity();
-      const oldPos=ae.pos ? {...ae.pos} : null;
-      ae.pos={x:p.x,y:p.y};
-      pushUndo({type:'place',who:state.activeType,id:state.active,from:oldPos});
+      const ae = getActiveEntity();
+      if (state.activeType === 'annot') return; // 標記模式無棋子
+      const oldPos = ae.pos ? {...ae.pos} : null;
+      ae.pos = {x:p.x, y:p.y};
+      pushUndo({type:'place', who:state.activeType, id:state.active, from:oldPos});
       redraw();
     }
     return;
   }
   if (state.mode==='erase') {
-    const h=hitMarker(p);
+    const h = hitMarker(p);
     if (h) {
-      const ent=entityAt(h);
-      pushUndo({type:'erase-marker',who:h.who,id:h.id,pos:{...ent.pos}});
-      ent.pos=null;
+      const ent = entityAt(h);
+      pushUndo({type:'erase-marker', who:h.who, id:h.id, pos:{...ent.pos}});
+      ent.pos = null;
     } else {
       eraseNear(p);
     }
     redraw(); return;
   }
   // draw mode
-  const h=hitMarker(p);
-  if (h){drag=h;dragOff={x:p.x-entityAt(h).pos.x,y:p.y-entityAt(h).pos.y};selectEntity(h.who,h.id);return;}
-  // 一次性放置模式：棋子還沒擺上場，點哪就放哪，放完自動回畫線
-  if (state.pendingPlace) {
-    const ae=getActiveEntity();
-    pushUndo({type:'place',who:state.activeType,id:state.active,from:null});
-    ae.pos={x:p.x,y:p.y};
-    state.pendingPlace=false;
-    updateCursor();
-    renderHUD();
-    redraw();
+  const h = hitMarker(p);
+  if (h) {
+    drag=h; dragOff={x:p.x-entityAt(h).pos.x, y:p.y-entityAt(h).pos.y};
+    selectEntity(h.who, h.id); return;
+  }
+  // 一次性放置
+  if (state.pendingPlace && state.activeType !== 'annot') {
+    const ae = getActiveEntity();
+    pushUndo({type:'place', who:state.activeType, id:state.active, from:null});
+    ae.pos = {x:p.x, y:p.y};
+    state.pendingPlace = false;
+    updateCursor(); renderHUD(); redraw();
     return;
   }
-  state.drawing=true; state.curStroke=[{x:p.x,y:p.y}];
+  state.drawing = true;
+  state.curStroke = [{x:p.x, y:p.y}];
 }
 
 function onMove(e) {
   e.preventDefault();
-  const p=pos(e);
-  if (drag){
-    const ent=entityAt(drag);
-    ent.pos={x:p.x-dragOff.x, y:p.y-dragOff.y};
+  const p = pos(e);
+  if (drag) {
+    entityAt(drag).pos = {x:p.x-dragOff.x, y:p.y-dragOff.y};
     redraw(); return;
   }
-  if (state.drawing){state.curStroke.push({x:p.x,y:p.y});redraw();}
+  if (state.drawing) { state.curStroke.push({x:p.x,y:p.y}); redraw(); }
 }
 
 function onUp(e) {
   e.preventDefault();
   if (drag) {
-    const ent=entityAt(drag);
-    // 找拖曳前的位置：此時已移動，取消 push（不記錄初始 from，拖曳結束後記錄）
-    // 記錄為 place 動作（from = undefined，undo 時置 null）
-    pushUndo({type:'place',who:drag.who,id:drag.id,from:null});
+    pushUndo({type:'place', who:drag.who, id:drag.id, from:null});
     drag=null; redraw(); return;
   }
   if (state.drawing) {
-    state.drawing=false;
-    if (state.curStroke.length>=2) {
-      const ae=getActiveEntity();
-      const stroke={pts:[...state.curStroke],w:state.lineWidth,dash:state.lineDash};
+    state.drawing = false;
+    if (state.curStroke.length >= 2) {
+      const ae = getActiveEntity();
+      const stroke = {pts:[...state.curStroke], w:state.lineWidth, dash:state.lineDash};
       ae.strokes.push(stroke);
-      pushUndo({type:'stroke',who:state.activeType,id:state.active});
+      pushUndo({type:'stroke', who:state.activeType, id:state.active});
     }
-    state.curStroke=[];
+    state.curStroke = [];
     redraw();
   }
 }
@@ -692,7 +943,9 @@ function eraseNear(p) {
     }
     return false;
   };
-  if (!checkArr(PLAYERS,'player')) checkArr(BALLS,'ball');
+  if (!checkArr(PLAYERS,'player'))
+    if (!checkArr(BALLS,'ball'))
+      checkArr(ANNOTS,'annot');
 }
 
 drawC.addEventListener('mousedown', onDown);
@@ -704,25 +957,25 @@ drawC.addEventListener('touchmove',  onMove,{passive:false});
 drawC.addEventListener('touchend',   onUp,  {passive:false});
 drawC.addEventListener('touchcancel',onUp,  {passive:false});
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 // 控制函式
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 function setMode(m) {
-  state.mode=m;
-  ['draw','place','erase'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('on',x===m));
+  state.mode = m;
+  ['draw','place','erase'].forEach(x => document.getElementById('btn-'+x).classList.toggle('on', x===m));
   updateCursor();
 }
 
 function setCourtType(t) {
-  state.courtType=t;
-  document.getElementById('btn-doubles').classList.toggle('on',t==='doubles');
-  document.getElementById('btn-singles').classList.toggle('on',t==='singles');
+  state.courtType = t;
+  document.getElementById('btn-doubles').classList.toggle('on', t==='doubles');
+  document.getElementById('btn-singles').classList.toggle('on', t==='singles');
   redraw();
 }
 
 function setServe(s) {
-  state.serveSide=s;
-  ['sl','sr','sn'].forEach(x=>document.getElementById('btn-'+x).classList.remove('on'));
+  state.serveSide = s;
+  ['sl','sr','sn'].forEach(x => document.getElementById('btn-'+x).classList.remove('on'));
   if (s==='left')  document.getElementById('btn-sl').classList.add('on');
   if (s==='right') document.getElementById('btn-sr').classList.add('on');
   if (s==='none')  document.getElementById('btn-sn').classList.add('on');
@@ -730,73 +983,115 @@ function setServe(s) {
 }
 
 function setHome(side) {
-  state.homeSide=side;
-  document.getElementById('btn-hl').classList.toggle('on',side==='left');
-  document.getElementById('btn-hr').classList.toggle('on',side==='right');
-  const ll=document.getElementById('lbl-left'), lr=document.getElementById('lbl-right');
-  if (side==='left'){
-    ll.textContent='🔵我方';ll.style.color='#3498db';
-    lr.textContent='🔴對方';lr.style.color='#e74c3c';
+  state.homeSide = side;
+  document.getElementById('btn-hl').classList.toggle('on', side==='left');
+  document.getElementById('btn-hr').classList.toggle('on', side==='right');
+  const ll = document.getElementById('lbl-left');
+  const lr = document.getElementById('lbl-right');
+  if (side==='left') {
+    ll.textContent='🔵我方'; ll.style.color='#3498db';
+    lr.textContent='🔴對方'; lr.style.color='#e74c3c';
   } else {
-    ll.textContent='🔴對方';ll.style.color='#e74c3c';
-    lr.textContent='🔵我方';lr.style.color='#3498db';
+    ll.textContent='🔴對方'; ll.style.color='#e74c3c';
+    lr.textContent='🔵我方'; lr.style.color='#3498db';
   }
   redraw();
 }
 
 function setDash(d) {
-  state.lineDash=d;
-  ['solid','dashed','arrow'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('on',x===d));
+  state.lineDash = d;
+  ['solid','dashed','arrow'].forEach(x => document.getElementById('btn-'+x).classList.toggle('on', x===d));
 }
 
 function clearActive() {
-  const ae=getActiveEntity();
-  ae.strokes=[]; ae.pos=null;
+  const ae = getActiveEntity();
+  ae.strokes = [];
+  if (state.activeType !== 'annot') ae.pos = null;
   redraw();
 }
 
 function resetAll() {
   if (!confirm('確定要清除所有走線與站位？')) return;
-  PLAYERS.forEach(p=>{p.strokes=[];p.pos=null;});
-  BALLS.forEach(b=>{b.strokes=[];b.pos=null;});
-  undoStack.length=0;
+  PLAYERS.forEach(p => { p.strokes=[]; p.pos=null; });
+  BALLS.forEach(b   => { b.strokes=[]; b.pos=null; });
+  ANNOTS.forEach(a  => { a.strokes=[]; });
+  undoStack.length = 0;
   setServe('none');
   redraw();
 }
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 // HUD UI
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 function renderHUD() {
-  renderHUDRow('hud-players', PLAYERS, 'player');
-  renderHUDRow('hud-balls',   BALLS,   'ball');
-}
-
-function renderHUDRow(elId, arr, type) {
-  const el=document.getElementById(elId);
-  el.innerHTML='';
-  arr.forEach((ent, i) => {
-    const b=document.createElement('button');
-    const isActive = (i===state.active && state.activeType===type);
+  // 球員
+  const pe = document.getElementById('hud-players');
+  pe.innerHTML = '';
+  pe.style.display = 'flex'; pe.style.gap = '5px';
+  PLAYERS.forEach((p, i) => {
+    const isActive  = (i===state.active && state.activeType==='player');
     const isPending = isActive && state.pendingPlace;
-    b.className='hud-entity'+(type==='ball'?' hud-ball':'')+(isPending?' pending':isActive?' sel':'');
-    b.style.setProperty('--c', ent.color);
-    if (type==='ball') {
-      b.style.border = `2.5px solid ${isActive ? '#fff' : ent.borderColor || 'rgba(255,255,255,0.25)'}`;
-    }
-    b.title = ent.name + ' ['+(i+1)+']';
-    b.innerHTML = `<span class="eid">${i+1}</span>`;
-    b.onclick = () => selectEntity(type, i);
-    el.appendChild(b);
+    const b = document.createElement('button');
+    b.className = 'hud-player' + (isPending?' pending':isActive?' sel':'');
+    b.style.setProperty('--c', p.color);
+    b.title = `${p.label} [${i+1}]`;
+    b.innerHTML = `<span class="pnum">${p.name}</span><span class="plbl">${p.label}</span>`;
+    b.onclick = () => selectEntity('player', i);
+    pe.appendChild(b);
+  });
+
+  // 球（只有 1 個）
+  const be = document.getElementById('hud-ball');
+  be.innerHTML = '';
+  be.style.display = 'flex';
+  const ball = BALLS[0];
+  const ballActive  = (state.activeType==='ball' && state.active===0);
+  const ballPending = ballActive && state.pendingPlace;
+  const bb = document.createElement('button');
+  bb.className = 'hud-ball' + (ballPending?' pending':ballActive?' sel':'');
+  bb.title = '羽球 [5]';
+  // 畫迷你羽球圖示
+  bb.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24">
+    <g transform="translate(12,12)">
+      <!-- feathers -->
+      <line x1="0" y1="2"  x2="-7" y2="-8" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+      <line x1="0" y1="2"  x2="-5" y2="-9" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+      <line x1="0" y1="2"  x2="-2" y2="-9.5" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+      <line x1="0" y1="2"  x2="1"  y2="-9.5" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+      <line x1="0" y1="2"  x2="4"  y2="-9"   stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+      <line x1="0" y1="2"  x2="6.5" y2="-8"  stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+      <!-- feather arc -->
+      <ellipse cx="0" cy="-8" rx="6" ry="2" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="0.9"/>
+      <!-- cork -->
+      <circle cx="0" cy="5" r="3.2" fill="#dab86a" stroke="rgba(0,0,0,0.3)" stroke-width="0.8"/>
+    </g>
+  </svg>`;
+  bb.onclick = () => selectEntity('ball', 0);
+  be.appendChild(bb);
+
+  // 標記顏色
+  const ae = document.getElementById('hud-annots');
+  ae.innerHTML = '';
+  ANNOTS.forEach((a, i) => {
+    const isActive = (i===state.active && state.activeType==='annot');
+    const btn = document.createElement('button');
+    btn.className = 'hud-annot' + (isActive?' sel':'');
+    btn.style.setProperty('--c', a.color);
+    btn.title = a.label + ' 標記';
+    btn.onclick = () => selectEntity('annot', i);
+    ae.appendChild(btn);
   });
 }
 
 function selectEntity(type, i) {
   state.activeType = type;
   state.active = i;
-  const ent = type === 'player' ? PLAYERS[i] : BALLS[i];
-  // 若棋子尚未放置，自動等待一次性放置
-  state.pendingPlace = !ent.pos;
+  if (type !== 'annot') {
+    const ent = type === 'player' ? PLAYERS[i] : BALLS[i];
+    state.pendingPlace = !ent.pos;
+  } else {
+    state.pendingPlace = false;
+  }
   updateCursor();
   renderHUD();
   redraw();
@@ -804,7 +1099,7 @@ function selectEntity(type, i) {
 
 function updateCursor() {
   if (state.pendingPlace) {
-    drawC.style.cursor = 'copy';  // 暗示「點擊放置」
+    drawC.style.cursor = 'copy';
   } else if (state.mode==='draw') {
     drawC.style.cursor = 'crosshair';
   } else if (state.mode==='erase') {
@@ -814,12 +1109,211 @@ function updateCursor() {
   }
 }
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+// 米字步訓練系統
+// ════════════════════════════════════════
+const TRAIN = {
+  panelOpen: false,
+  side: 'home',
+  zones: { front: true, mid: true, back: true },
+  interval: 2000,
+  running: false,
+  currentLight: -1,
+  timer: null,
+  pulse: 0,
+  pulseDir: 1,
+  rafId: null,
+};
+
+let trainC = null; // train canvas context
+
+function initTrainCanvas() {
+  const tc = document.getElementById('train-overlay');
+  tc.width  = CW;
+  tc.height = CH;
+  tc.style.cssText = `position:absolute;top:0;left:0;width:${CW}px;height:${CH}px;pointer-events:none;`;
+  trainC = tc.getContext('2d');
+}
+
+function getTrainPositions() {
+  const homeLeft = state.homeSide === 'left';
+  const trainLeft = (TRAIN.side === 'home') ? homeLeft : !homeLeft;
+  const sTop = 0.46;
+  const sBot = COURT_H - 0.46;
+  const net  = COURT_W / 2;
+  const ssl  = 1.98;   // short service line distance from net
+  const lsl  = 0.76;   // long service line from back
+  const midH = (COURT_H - 0.46 * 2) / 2 + 0.46;
+
+  let fX, mX, bX;
+  if (trainLeft) {
+    fX = net - ssl;
+    mX = (lsl + (net - ssl)) / 2;
+    bX = lsl;
+  } else {
+    fX = net + ssl;
+    mX = (COURT_W - lsl + (net + ssl)) / 2;
+    bX = COURT_W - lsl;
+  }
+
+  return [
+    { id: 'FL', x: fX, y: sTop,  zone: 'front', label: '前左' },
+    { id: 'FR', x: fX, y: sBot,  zone: 'front', label: '前右' },
+    { id: 'ML', x: mX, y: sTop,  zone: 'mid',   label: '中左' },
+    { id: 'MR', x: mX, y: sBot,  zone: 'mid',   label: '中右' },
+    { id: 'BL', x: bX, y: sTop,  zone: 'back',  label: '後左' },
+    { id: 'BR', x: bX, y: sBot,  zone: 'back',  label: '後右' },
+  ];
+}
+
+function getActiveTrainPositions() {
+  return getTrainPositions().filter(p => TRAIN.zones[p.zone]);
+}
+
+function drawTrainLights() {
+  if (!trainC) return;
+  const tc = document.getElementById('train-overlay');
+  tc.width = CW; tc.height = CH;
+  trainC.clearRect(0, 0, CW, CH);
+  if (!TRAIN.panelOpen) { tc.style.display = 'none'; return; }
+  tc.style.display = 'block';
+
+  const pts = getTrainPositions();
+  const r = Math.max(10, SC * 0.22);
+
+  pts.forEach((p, i) => {
+    const px = cx(p.x);
+    const py = cy(p.y);
+    const isActive = (i === TRAIN.currentLight);
+    const inZone   = TRAIN.zones[p.zone];
+
+    if (!inZone) {
+      // dim dot
+      trainC.beginPath(); trainC.arc(px, py, r * 0.55, 0, Math.PI * 2);
+      trainC.fillStyle = 'rgba(80,80,100,0.35)'; trainC.fill();
+      trainC.strokeStyle = 'rgba(120,120,150,0.4)'; trainC.lineWidth = 1.5;
+      trainC.stroke();
+    } else if (isActive) {
+      // Pulse glow
+      const glow = r * (1.4 + TRAIN.pulse * 0.7);
+      const grad = trainC.createRadialGradient(px, py, r*0.2, px, py, glow);
+      grad.addColorStop(0,   'rgba(0,255,100,0.9)');
+      grad.addColorStop(0.4, 'rgba(0,220,80,0.6)');
+      grad.addColorStop(1,   'rgba(0,180,60,0)');
+      trainC.beginPath(); trainC.arc(px, py, glow, 0, Math.PI * 2);
+      trainC.fillStyle = grad; trainC.fill();
+
+      // Inner dot
+      trainC.beginPath(); trainC.arc(px, py, r, 0, Math.PI * 2);
+      trainC.fillStyle = '#00ff66'; trainC.fill();
+      trainC.strokeStyle = '#fff'; trainC.lineWidth = 2.5; trainC.stroke();
+
+      // Label
+      trainC.fillStyle = '#fff';
+      trainC.font = `bold ${Math.max(9, Math.round(r * 0.85))}px Arial`;
+      trainC.textAlign = 'center'; trainC.textBaseline = 'middle';
+      trainC.fillText(p.label, px, py);
+    } else {
+      // Normal inactive dot
+      trainC.beginPath(); trainC.arc(px, py, r * 0.7, 0, Math.PI * 2);
+      trainC.fillStyle = 'rgba(0,180,80,0.2)'; trainC.fill();
+      trainC.strokeStyle = 'rgba(0,220,100,0.5)'; trainC.lineWidth = 1.5; trainC.stroke();
+      trainC.fillStyle = 'rgba(180,255,200,0.7)';
+      trainC.font = `${Math.max(8, Math.round(r * 0.65))}px Arial`;
+      trainC.textAlign = 'center'; trainC.textBaseline = 'middle';
+      trainC.fillText(p.label, px, py);
+    }
+  });
+}
+
+function trainPulseLoop() {
+  if (!TRAIN.running) return;
+  TRAIN.pulse += TRAIN.pulseDir * 0.05;
+  if (TRAIN.pulse >= 1) { TRAIN.pulse = 1; TRAIN.pulseDir = -1; }
+  if (TRAIN.pulse <= 0) { TRAIN.pulse = 0; TRAIN.pulseDir =  1; }
+  drawTrainLights();
+  TRAIN.rafId = requestAnimationFrame(trainPulseLoop);
+}
+
+function pickNextLight() {
+  const active = getActiveTrainPositions();
+  if (active.length === 0) return;
+  const pts = getTrainPositions();
+  // avoid same position twice in a row
+  let pool = active.filter((_, idx) => {
+    const realIdx = pts.indexOf(active[idx]);
+    return realIdx !== TRAIN.currentLight;
+  });
+  if (pool.length === 0) pool = active;
+  const chosen = pool[Math.floor(Math.random() * pool.length)];
+  TRAIN.currentLight = pts.indexOf(chosen);
+  TRAIN.pulse = 0; TRAIN.pulseDir = 1;
+}
+
+function startTraining() {
+  if (getActiveTrainPositions().length === 0) return;
+  TRAIN.running = true;
+  document.getElementById('train-start').textContent = '⏹ 停止訓練';
+  document.getElementById('train-start').classList.add('running');
+  pickNextLight();
+  if (TRAIN.rafId) cancelAnimationFrame(TRAIN.rafId);
+  TRAIN.rafId = requestAnimationFrame(trainPulseLoop);
+  TRAIN.timer = setInterval(() => {
+    pickNextLight();
+  }, TRAIN.interval);
+}
+
+function stopTraining() {
+  TRAIN.running = false;
+  TRAIN.currentLight = -1;
+  if (TRAIN.timer) { clearInterval(TRAIN.timer); TRAIN.timer = null; }
+  if (TRAIN.rafId)  { cancelAnimationFrame(TRAIN.rafId); TRAIN.rafId = null; }
+  document.getElementById('train-start').textContent = '▶ 開始訓練';
+  document.getElementById('train-start').classList.remove('running');
+  drawTrainLights();
+}
+
+function toggleTraining() {
+  if (TRAIN.running) stopTraining();
+  else startTraining();
+}
+
+function toggleTrainPanel() {
+  TRAIN.panelOpen = !TRAIN.panelOpen;
+  document.getElementById('train-panel').classList.toggle('open', TRAIN.panelOpen);
+  document.getElementById('btn-train').classList.toggle('on', TRAIN.panelOpen);
+  if (!TRAIN.panelOpen) stopTraining();
+  drawTrainLights();
+}
+
+function setTrainSide(side) {
+  TRAIN.side = side;
+  document.getElementById('tp-home').classList.toggle('on', side === 'home');
+  document.getElementById('tp-away').classList.toggle('on', side === 'away');
+  if (TRAIN.running) { stopTraining(); startTraining(); }
+  else drawTrainLights();
+}
+
+function toggleTrainZone(zone) {
+  TRAIN.zones[zone] = !TRAIN.zones[zone];
+  document.getElementById('tp-' + zone).classList.toggle('on', TRAIN.zones[zone]);
+  if (TRAIN.running) { stopTraining(); startTraining(); }
+  else drawTrainLights();
+}
+
+function setTrainInterval(v) {
+  const secs = (Math.round(v) * 0.2).toFixed(1);
+  TRAIN.interval = Math.round(v) * 200;
+  document.getElementById('tp-speed-val').textContent = secs + 's';
+  if (TRAIN.running) { stopTraining(); startTraining(); }
+}
+
+// ════════════════════════════════════════
 // 鍵盤快捷鍵
-// ═══════════════════════════════════════
-document.addEventListener('keydown', e=>{
+// ════════════════════════════════════════
+document.addEventListener('keydown', e => {
   if (e.target.tagName==='INPUT') return;
-  const k=e.key.toLowerCase();
+  const k = e.key.toLowerCase();
   if ((e.ctrlKey||e.metaKey)&&k==='z'){e.preventDefault();undo();return;}
   if (e.key==='Escape'&&state.pendingPlace){state.pendingPlace=false;updateCursor();renderHUD();return;}
   switch(k){
@@ -834,25 +1328,25 @@ document.addEventListener('keydown', e=>{
     case '2': selectEntity('player',1); break;
     case '3': selectEntity('player',2); break;
     case '4': selectEntity('player',3); break;
-    case '5': selectEntity('ball',0); break;
-    case '6': selectEntity('ball',1); break;
-    case '7': selectEntity('ball',2); break;
-    case '8': selectEntity('ball',3); break;
+    case '5': selectEntity('ball',0);   break;
+    case '6': selectEntity('annot',0);  break;
+    case '7': selectEntity('annot',1);  break;
+    case '8': selectEntity('annot',2);  break;
   }
 });
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 // Resize
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 let resizeTimer;
-window.addEventListener('resize',()=>{
+window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer=setTimeout(resize,80);
+  resizeTimer = setTimeout(resize, 80);
 });
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 // 初始化
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 renderHUD();
 setServe('none');
 resize();
