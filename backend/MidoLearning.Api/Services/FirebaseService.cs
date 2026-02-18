@@ -240,7 +240,14 @@ public class FirebaseService : IFirebaseService
     public async Task<List<CourseMaterial>> GetMaterialsByIdsAsync(IEnumerable<string> materialIds)
     {
         var ids = materialIds.Distinct().Take(20).ToList();
-        var tasks = ids.Select(id => GetDocumentAsync<CourseMaterial>("materials", id));
+        var tasks = ids.Select(async id =>
+        {
+            var docRef = _firestoreDb.Collection("materials").Document(id);
+            var snapshot = await docRef.GetSnapshotAsync();
+            if (!snapshot.Exists) return null;
+            var material = snapshot.ConvertTo<CourseMaterial>();
+            return material with { Id = snapshot.Id };
+        });
         var results = await Task.WhenAll(tasks);
         return results.Where(m => m is not null).Cast<CourseMaterial>().ToList();
     }
