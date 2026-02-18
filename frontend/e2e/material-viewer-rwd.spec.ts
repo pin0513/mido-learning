@@ -240,7 +240,7 @@ test.describe('Material Viewer RWD - Mobile', () => {
     const btnText = downloadBtn.locator('text=下載');
     const isHidden = await btnText.evaluate((el) => {
       const style = window.getComputedStyle(el);
-      return style.display === 'none' || !el.offsetParent;
+      return style.display === 'none' || !(el as HTMLElement).offsetParent;
     });
 
     expect(isHidden).toBe(true);

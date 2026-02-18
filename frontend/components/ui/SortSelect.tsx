@@ -71,7 +71,7 @@ export function SortSelect({
 }: SortSelectProps) {
   return (
     <Listbox value={value} onChange={onChange} disabled={disabled}>
-      <div className="relative w-40">
+      <div className="relative w-44">
         <Listbox.Button
           className={`
             relative w-full cursor-pointer rounded-lg bg-white py-2 pl-3 pr-10 text-left
@@ -97,7 +97,7 @@ export function SortSelect({
           leaveTo="opacity-0"
         >
           <Listbox.Options
-            className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white
+            className="absolute z-10 mt-1 max-h-60 min-w-full w-max overflow-auto rounded-lg bg-white
                        py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
                        focus:outline-none sm:text-sm"
           >
@@ -116,7 +116,7 @@ export function SortSelect({
                     <span className="flex items-center gap-2">
                       <option.icon className="h-4 w-4 text-gray-500" />
                       <span
-                        className={`block truncate ${isSelected ? 'font-semibold' : 'font-normal'}`}
+                        className={`block whitespace-nowrap ${isSelected ? 'font-semibold' : 'font-normal'}`}
                       >
                         {option.label}
                       </span>

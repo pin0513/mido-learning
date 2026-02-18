@@ -3,7 +3,7 @@ import Link from 'next/link';
 const experiments = [
   {
     id: 'badminton',
-    title: '羽球戰術版',
+    title: '羽球戰術板',
     description: '在虛擬場地上佈置球員位置、設計戰術路線，視覺化分析羽球比賽策略。',
     icon: '🏸',
     href: '/badminton-tactical-board.html',
