@@ -8,6 +8,7 @@ using MidoLearning.Api.Modules.SkillVillage.Auth.Services;
 using MidoLearning.Api.Modules.SkillVillage.GameEngine.Services;
 using MidoLearning.Api.Modules.SkillVillage.GameEngine.Calculators;
 using MidoLearning.Api.Services.Music;
+using MidoLearning.Api.Services.FamilyScoreboard;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,9 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddScoped<SkillVillageAuthService>();
 builder.Services.AddScoped<GameEngineService>();
 builder.Services.AddScoped<RewardCalculator>();
+
+// Family Scoreboard Services
+builder.Services.AddScoped<IFamilyScoreboardService, FirebaseScoreboardService>();
 
 // Music Producer Services (Method A: Python subprocess in same container)
 builder.Services.AddSingleton<IPythonSidecarClient, PythonProcessRunner>();
@@ -98,6 +102,10 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("TeacherOrAdmin", policy =>
         policy.RequireRole("super_admin", "game_admin", "teacher", "admin"));
+
+    // Family Admin - can manage family scoreboard (add transactions, process redemptions)
+    options.AddPolicy("FamilyAdmin", policy =>
+        policy.RequireAuthenticatedUser());
 
     // Default policy allows anonymous - individual endpoints opt-in to require auth
     options.FallbackPolicy = null;
@@ -217,6 +225,9 @@ app.MapCostEndpoints();
 app.MapCourseEndpoints();
 app.MapGameEndpoints();
 app.MapAchievementEndpoints();
+
+// Family Scoreboard Endpoints
+app.MapFamilyScoreboardEndpoints();
 
 // Music Producer Endpoints
 app.MapMusicEndpoints();
