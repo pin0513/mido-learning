@@ -79,16 +79,29 @@ canvas{display:block;}
   filter:drop-shadow(0 0 3px gold);display:none;
 }
 
-/* ═══ 浮動 HUD ═══ */
+/* ═══ 左側面板 ═══ */
+#left-panel{
+  width:130px;min-width:130px;
+  background:#16213e;
+  border-right:1px solid #0f3460;
+  display:flex;flex-direction:column;
+  padding:8px 6px;
+  overflow-y:auto;
+  gap:6px;
+  flex-shrink:0;
+}
+#left-panel::-webkit-scrollbar{width:3px;}
+#left-panel::-webkit-scrollbar-thumb{background:#0f3460;border-radius:2px;}
+
+/* HUD（現在在左側面板中，非浮動） */
 #hud{
-  position:absolute;bottom:10px;left:10px;z-index:20;
-  display:flex;flex-direction:column;gap:6px;
+  display:flex;flex-direction:column;gap:5px;
   user-select:none;
 }
 
 /* HUD 群組行 */
-.hud-row{display:flex;align-items:center;gap:5px;}
-.hud-sep{font-size:8px;color:#557;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;min-width:24px;}
+.hud-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.hud-sep{font-size:8px;color:#779;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;width:100%;margin-top:2px;}
 
 /* ── 球員棋子 ── */
 .hud-player{
@@ -157,6 +170,34 @@ canvas{display:block;}
   0%,100%{box-shadow:0 0 0 3px rgba(250,204,21,0.6),0 2px 8px rgba(0,0,0,0.5);}
   50%{box-shadow:0 0 0 6px rgba(250,204,21,0.3),0 2px 8px rgba(0,0,0,0.5);}
 }
+
+/* ═══ 訓練面板（左側面板中，覆蓋 badminton-training.css 的絕對定位）═══ */
+#train-panel{
+  position:static!important;
+  display:none;
+  width:auto!important;
+  background:rgba(0,30,10,0.85)!important;
+  border:1px solid rgba(0,200,80,0.3)!important;
+  border-radius:8px!important;
+  padding:8px 6px!important;
+  margin-top:2px;
+}
+#train-panel.open{display:block;}
+
+/* 訓練面板齒輪標題列 */
+.tp-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:4px;
+}
+.tp-header h4{color:#0f0;font-size:11px;margin:0;}
+.tp-gear-btn{
+  background:rgba(0,200,80,0.15);border:1px solid rgba(0,200,80,0.3);
+  color:#0c0;border-radius:5px;cursor:pointer;
+  font-size:12px;width:22px;height:22px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.tp-gear-btn:hover{background:rgba(0,200,80,0.3);}
 </style>
 </head>
 <body>
@@ -306,6 +347,89 @@ canvas{display:block;}
 
   <!-- 主區域 -->
   <div id="main">
+
+    <!-- ══ 左側面板：工具 + 訓練設定 ══ -->
+    <div id="left-panel">
+
+      <!-- HUD（工具選擇）-->
+      <div id="hud">
+
+        <!-- 球員選擇 -->
+        <div class="hud-row">
+          <span class="hud-sep">球員</span>
+          <div id="hud-players"></div>
+        </div>
+
+        <!-- 球選擇 (1個) -->
+        <div class="hud-row">
+          <span class="hud-sep">球</span>
+          <div id="hud-ball"></div>
+        </div>
+
+        <!-- 標記顏色 -->
+        <div class="hud-row">
+          <span class="hud-sep">標記</span>
+          <div id="hud-annots" style="display:flex;gap:4px;flex-wrap:wrap;"></div>
+        </div>
+
+        <!-- 操作按鈕 -->
+        <div class="hud-row" id="hud-actions">
+          <button class="hud-btn" onclick="undo()" title="復原 Ctrl+Z">↩ 復原</button>
+          <button class="hud-btn" onclick="clearActive()" title="清除選取筆跡">🗑 清跡</button>
+          <button class="hud-btn danger" onclick="resetAll()" title="全部重置 [R]">♻ 重置</button>
+        </div>
+
+      </div><!-- /hud -->
+
+      <!-- ════ 訓練面板 ════ -->
+      <div id="train-panel">
+        <div class="tp-header">
+          <h4>🏃 米字步</h4>
+          <button class="tp-gear-btn" onclick="toggleTrainPanel()" title="關閉設定">✕</button>
+        </div>
+        <div class="tp-row">
+          <span class="tp-label">區域</span>
+          <button class="tp-btn on" id="tp-front" onclick="toggleTrainZone('front')">前2</button>
+          <button class="tp-btn on" id="tp-mid"   onclick="toggleTrainZone('mid')">中2</button>
+          <button class="tp-btn on" id="tp-back"  onclick="toggleTrainZone('back')">後2</button>
+        </div>
+        <div class="tp-sep"></div>
+        <div class="tp-row">
+          <span class="tp-label">模式</span>
+          <button class="tp-btn on" id="tp-mode-random" onclick="setTrainMode('random')">隨機</button>
+          <button class="tp-btn"    id="tp-mode-seq"    onclick="setTrainMode('seq')">循序</button>
+          <button class="tp-btn"    id="tp-mode-manual" onclick="setTrainMode('manual')">手動</button>
+          <button class="tp-btn"    id="tp-mode-tactic" onclick="setTrainMode('tactic')">戰術</button>
+        </div>
+        <div class="tp-row" id="tp-interval-row">
+          <span class="tp-label">間隔</span>
+          <button class="tp-ibtn"    id="tp-i1"  onclick="setTrainIntervalPreset(1000)">1s</button>
+          <button class="tp-ibtn"    id="tp-i15" onclick="setTrainIntervalPreset(1500)">1.5s</button>
+          <button class="tp-ibtn on" id="tp-i2"  onclick="setTrainIntervalPreset(2000)">2s</button>
+          <button class="tp-ibtn"    id="tp-i3"  onclick="setTrainIntervalPreset(3000)">3s</button>
+          <button class="tp-ibtn"    id="tp-i5"  onclick="setTrainIntervalPreset(5000)">5s</button>
+        </div>
+        <div class="tp-row" id="tp-target-row">
+          <span class="tp-label">目標</span>
+          <button class="tp-ibtn"    id="tp-t10"  onclick="setTrainTarget(10)">10趟</button>
+          <button class="tp-ibtn"    id="tp-t20"  onclick="setTrainTarget(20)">20趟</button>
+          <button class="tp-ibtn"    id="tp-t30"  onclick="setTrainTarget(30)">30趟</button>
+          <button class="tp-ibtn on" id="tp-tinf" onclick="setTrainTarget(0)">∞</button>
+        </div>
+        <div id="tp-set-counter"><span id="tp-set-text">趟數：0</span></div>
+        <div id="tp-manual-row" style="display:none;">
+          <button id="tp-next" onclick="manualNext()">▶ 下一點</button>
+        </div>
+        <div id="tp-tactic-hint" style="display:none;">
+          <div id="tp-tactic-text">等待指示...</div>
+          <div id="tp-shot-btns"></div>
+        </div>
+        <button id="train-start" onclick="toggleTraining()">▶ 開始訓練</button>
+        <div class="tp-hint" id="tp-hint-text">隨機點亮其中一點<br>聽燈執行跑位</div>
+      </div><!-- /train-panel -->
+
+    </div><!-- /left-panel -->
+
     <div id="court-container">
       <div id="court-wrapper">
         <canvas id="court-canvas"></canvas>
@@ -322,85 +446,6 @@ canvas{display:block;}
 
         <!-- ════ 訓練燈覆蓋層 (Canvas) ════ -->
         <canvas id="train-overlay"></canvas>
-
-        <!-- ════ 訓練面板 ════ -->
-        <div id="train-panel">
-          <h4>🏃 米字步訓練</h4>
-          <div class="tp-row">
-            <span class="tp-label">側別</span>
-            <button class="tp-btn on" id="tp-home" onclick="setTrainSide('home')">我方</button>
-            <button class="tp-btn"    id="tp-away" onclick="setTrainSide('away')">對方</button>
-          </div>
-          <div class="tp-row">
-            <span class="tp-label">區域</span>
-            <button class="tp-btn on" id="tp-front" onclick="toggleTrainZone('front')">前2</button>
-            <button class="tp-btn on" id="tp-mid"   onclick="toggleTrainZone('mid')">中2</button>
-            <button class="tp-btn on" id="tp-back"  onclick="toggleTrainZone('back')">後2</button>
-          </div>
-          <div class="tp-sep"></div>
-          <div class="tp-row">
-            <span class="tp-label">模式</span>
-            <button class="tp-btn on" id="tp-mode-random" onclick="setTrainMode('random')">隨機</button>
-            <button class="tp-btn"    id="tp-mode-seq"    onclick="setTrainMode('seq')">循序</button>
-            <button class="tp-btn"    id="tp-mode-manual" onclick="setTrainMode('manual')">手動</button>
-            <button class="tp-btn"    id="tp-mode-tactic" onclick="setTrainMode('tactic')">戰術</button>
-          </div>
-          <div class="tp-row" id="tp-interval-row">
-            <span class="tp-label">間隔</span>
-            <button class="tp-ibtn"    id="tp-i1"  onclick="setTrainIntervalPreset(1000)">1s</button>
-            <button class="tp-ibtn"    id="tp-i15" onclick="setTrainIntervalPreset(1500)">1.5s</button>
-            <button class="tp-ibtn on" id="tp-i2"  onclick="setTrainIntervalPreset(2000)">2s</button>
-            <button class="tp-ibtn"    id="tp-i3"  onclick="setTrainIntervalPreset(3000)">3s</button>
-            <button class="tp-ibtn"    id="tp-i5"  onclick="setTrainIntervalPreset(5000)">5s</button>
-          </div>
-          <div class="tp-row" id="tp-target-row">
-            <span class="tp-label">目標</span>
-            <button class="tp-ibtn"    id="tp-t10"  onclick="setTrainTarget(10)">10趟</button>
-            <button class="tp-ibtn"    id="tp-t20"  onclick="setTrainTarget(20)">20趟</button>
-            <button class="tp-ibtn"    id="tp-t30"  onclick="setTrainTarget(30)">30趟</button>
-            <button class="tp-ibtn on" id="tp-tinf" onclick="setTrainTarget(0)">∞</button>
-          </div>
-          <div id="tp-set-counter"><span id="tp-set-text">趟數：0</span></div>
-          <div id="tp-manual-row" style="display:none;">
-            <button id="tp-next" onclick="manualNext()">▶ 下一點</button>
-          </div>
-          <div id="tp-tactic-hint" style="display:none;">
-            <div id="tp-tactic-text">等待指示...</div>
-            <div id="tp-shot-btns"></div>
-          </div>
-          <button id="train-start" onclick="toggleTraining()">▶ 開始訓練</button>
-          <div class="tp-hint" id="tp-hint-text">隨機點亮其中一點<br>聽燈執行跑位</div>
-        </div>
-
-        <!-- ════ 浮動 HUD ════ -->
-        <div id="hud">
-
-          <!-- 球員選擇 -->
-          <div class="hud-row">
-            <span class="hud-sep">球員</span>
-            <div id="hud-players"></div>
-          </div>
-
-          <!-- 球選擇 (1個) -->
-          <div class="hud-row">
-            <span class="hud-sep">球</span>
-            <div id="hud-ball"></div>
-          </div>
-
-          <!-- 標記顏色 -->
-          <div class="hud-row">
-            <span class="hud-sep">標記</span>
-            <div id="hud-annots" style="display:flex;gap:4px;"></div>
-          </div>
-
-          <!-- 操作按鈕 -->
-          <div class="hud-row" id="hud-actions">
-            <button class="hud-btn" onclick="undo()" title="復原 Ctrl+Z">↩ 復原</button>
-            <button class="hud-btn" onclick="clearActive()" title="清除選取筆跡">🗑 清跡</button>
-            <button class="hud-btn danger" onclick="resetAll()" title="全部重置 [R]">♻ 重置</button>
-          </div>
-
-        </div><!-- /hud -->
 
       </div>
     </div>
