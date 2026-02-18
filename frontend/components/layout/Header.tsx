@@ -99,14 +99,12 @@ export function Header() {
               )}
             </>
           )}
-          <a
-            href="/badminton-tactical-board.html"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/experiments"
             className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-200 transition-colors"
           >
             🧪 試驗功能
-          </a>
+          </Link>
         </nav>
 
         <div className="flex items-center space-x-4">
@@ -226,15 +224,13 @@ export function Header() {
                 )}
               </>
             )}
-            <a
-              href="/badminton-tactical-board.html"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/experiments"
               className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-2 text-base font-semibold text-amber-700 hover:bg-amber-200 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               🧪 試驗功能
-            </a>
+            </Link>
           </div>
 
           {/* Mobile User Info */}
