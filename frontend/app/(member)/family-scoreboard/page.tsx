@@ -81,9 +81,19 @@ export default function FamilyScoreboardPage() {
 
   // Redeem
   const [selectedRewardId, setSelectedRewardId]   = useState('');
+  const [redeemPlayerId, setRedeemPlayerId]         = useState('');
   const [redeemSubmitting, setRedeemSubmitting] = useState(false);
 
+  // History filter
+  const [historyFilter, setHistoryFilter] = useState<string>('all');
+
   const sheetPlayer = scores.find((p) => p.playerId === sheetPlayerId) ?? null;
+
+  // ── Helpers ─────────────────────────────────────────────────────────────────
+
+  function getPlayerName(playerId: string): string {
+    return scores.find((p) => p.playerId === playerId)?.name ?? playerId;
+  }
 
   // ── Sheet handlers ──────────────────────────────────────────────────────────
 
@@ -157,16 +167,28 @@ export default function FamilyScoreboardPage() {
 
   async function handleCreateRedemption() {
     if (!selectedRewardId) return;
-    const req: CreateRedemptionRequest = { rewardId: selectedRewardId };
+    const req: CreateRedemptionRequest = {
+      rewardId: selectedRewardId,
+      ...(redeemPlayerId ? { playerId: redeemPlayerId } : {}),
+    } as CreateRedemptionRequest;
     setRedeemSubmitting(true);
     await submitRedemption(req);
     setSelectedRewardId('');
+    setRedeemPlayerId('');
     setRedeemSubmitting(false);
   }
 
   // ── Computed ────────────────────────────────────────────────────────────────
 
   const filteredCategories = CATEGORIES.filter((c) => c.type === txType);
+
+  const sortedTransactions = [...transactions].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+  const filteredTransactions =
+    historyFilter === 'all'
+      ? sortedTransactions
+      : sortedTransactions.filter((tx) => tx.playerIds.includes(historyFilter));
 
   // ── Login guard ─────────────────────────────────────────────────────────────
 
@@ -320,30 +342,75 @@ export default function FamilyScoreboardPage() {
         {/* ── Tab: History ── */}
         {activeTab === 'history' && (
           <div className="p-4 space-y-3">
-            <h2 className="text-base font-bold text-gray-700">交易紀錄</h2>
-            {transactions.length === 0 ? (
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-bold text-gray-700">交易紀錄</h2>
+              <span className="text-xs text-gray-400">{filteredTransactions.length} 筆</span>
+            </div>
+
+            {/* Player filter */}
+            {scores.length > 0 && (
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                <button
+                  onClick={() => setHistoryFilter('all')}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors min-h-[32px] ${
+                    historyFilter === 'all'
+                      ? 'bg-amber-500 text-white'
+                      : 'bg-white text-gray-500 border border-gray-200'
+                  }`}
+                >
+                  全部
+                </button>
+                {scores.map((p) => (
+                  <button
+                    key={p.playerId}
+                    onClick={() => setHistoryFilter(p.playerId)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors min-h-[32px] ${
+                      historyFilter === p.playerId
+                        ? 'text-white'
+                        : 'bg-white text-gray-500 border border-gray-200'
+                    }`}
+                    style={historyFilter === p.playerId ? { backgroundColor: p.color } : {}}
+                  >
+                    {p.name}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {filteredTransactions.length === 0 ? (
               <p className="text-center text-gray-300 py-12 text-sm">尚無紀錄</p>
             ) : (
-              transactions.map((tx) => (
-                <div key={tx.id} className="bg-white rounded-xl shadow-sm p-3 flex items-center gap-3">
-                  <span
-                    className={`w-9 h-9 rounded-full flex items-center justify-center font-bold shrink-0 ${
-                      tx.type === 'earn' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-500'
-                    }`}
-                  >
-                    {tx.type === 'earn' ? '+' : '−'}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-gray-800 font-medium truncate">{tx.reason}</p>
-                    <p className="text-xs text-gray-400">
-                      {tx.playerIds.join(', ')} · {new Date(tx.createdAt).toLocaleDateString('zh-TW')}
-                    </p>
+              filteredTransactions.map((tx) => {
+                const playerName = tx.playerIds.map(getPlayerName).join('、');
+                const playerScore = scores.find((p) => p.playerId === tx.playerIds[0]);
+                return (
+                  <div key={tx.id} className="bg-white rounded-xl shadow-sm p-3 flex items-center gap-3">
+                    {/* Player color dot */}
+                    <div
+                      className="w-2 h-10 rounded-full shrink-0"
+                      style={{ backgroundColor: playerScore?.color ?? '#d1d5db' }}
+                    />
+                    <span
+                      className={`w-9 h-9 rounded-full flex items-center justify-center font-bold shrink-0 text-sm ${
+                        tx.type === 'earn' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-500'
+                      }`}
+                    >
+                      {tx.type === 'earn' ? '✨' : '😤'}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-800 font-medium truncate">{tx.reason}</p>
+                      <p className="text-xs text-gray-400">
+                        {playerName} · {new Date(tx.createdAt).toLocaleDateString('zh-TW', {
+                          month: 'numeric', day: 'numeric',
+                        })}
+                      </p>
+                    </div>
+                    <span className={`text-base font-black shrink-0 tabular-nums ${tx.type === 'earn' ? 'text-green-600' : 'text-red-500'}`}>
+                      {tx.type === 'earn' ? '+' : '−'}{tx.amount}
+                    </span>
                   </div>
-                  <span className={`font-bold shrink-0 ${tx.type === 'earn' ? 'text-green-600' : 'text-red-500'}`}>
-                    {tx.type === 'earn' ? '+' : '−'}{tx.amount}
-                  </span>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         )}
@@ -374,6 +441,28 @@ export default function FamilyScoreboardPage() {
                 {/* Redeem form */}
                 <div className="bg-white rounded-xl shadow-sm p-4 space-y-3">
                   <p className="text-sm font-semibold text-gray-600">申請兌換</p>
+
+                  {/* Player selector */}
+                  {scores.length > 1 && (
+                    <div className="flex gap-2">
+                      {scores.map((p) => (
+                        <button
+                          key={p.playerId}
+                          onClick={() => setRedeemPlayerId(p.playerId)}
+                          className={`flex-1 py-2 rounded-xl text-xs font-bold border-2 transition-colors min-h-[44px] ${
+                            redeemPlayerId === p.playerId
+                              ? 'text-white border-transparent'
+                              : 'bg-white text-gray-500 border-gray-100'
+                          }`}
+                          style={redeemPlayerId === p.playerId ? { backgroundColor: p.color, borderColor: p.color } : {}}
+                        >
+                          <span className="block text-base">{p.name.charAt(0)}</span>
+                          <span>{p.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
                   <select
                     value={selectedRewardId}
                     onChange={(e) => setSelectedRewardId(e.target.value)}
@@ -389,39 +478,52 @@ export default function FamilyScoreboardPage() {
                     disabled={redeemSubmitting || !selectedRewardId}
                     className="w-full py-3 bg-purple-500 text-white rounded-xl font-semibold hover:bg-purple-600 disabled:opacity-40 min-h-[44px] transition-colors"
                   >
-                    {redeemSubmitting ? '提交中…' : '申請兌換'}
+                    {redeemSubmitting ? '提交中…' : '🎁 申請兌換'}
                   </button>
                 </div>
 
                 {/* Pending redemptions */}
                 {redemptions.some((r) => r.status === 'pending') && (
                   <div className="space-y-2">
-                    <p className="text-sm font-semibold text-gray-500">待審核申請</p>
-                    {redemptions.filter((r) => r.status === 'pending').map((r) => (
-                      <div
-                        key={r.id}
-                        className="bg-white rounded-xl shadow-sm p-3 flex items-center justify-between gap-2"
-                      >
-                        <div className="min-w-0">
-                          <p className="text-sm font-medium text-gray-800 truncate">{r.rewardName}</p>
-                          <p className="text-xs text-gray-400">{r.playerId} · {r.cost} pt</p>
+                    <p className="text-sm font-semibold text-gray-500">⏳ 待審核申請</p>
+                    {redemptions.filter((r) => r.status === 'pending').map((r) => {
+                      const pScore = scores.find((p) => p.playerId === r.playerId);
+                      return (
+                        <div
+                          key={r.id}
+                          className="bg-white rounded-xl shadow-sm p-3 flex items-center justify-between gap-2"
+                        >
+                          <div className="min-w-0 flex items-center gap-2">
+                            {pScore && (
+                              <div
+                                className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white shrink-0"
+                                style={{ backgroundColor: pScore.color }}
+                              >
+                                {pScore.name.charAt(0)}
+                              </div>
+                            )}
+                            <div className="min-w-0">
+                              <p className="text-sm font-medium text-gray-800 truncate">{r.rewardName}</p>
+                              <p className="text-xs text-gray-400">{getPlayerName(r.playerId)} · {r.cost} pt</p>
+                            </div>
+                          </div>
+                          <div className="flex gap-1.5 shrink-0">
+                            <button
+                              onClick={() => handleRedemption(r.id, { action: 'approve' })}
+                              className="px-3 py-2 bg-green-500 text-white rounded-lg text-xs font-medium hover:bg-green-600 min-h-[44px]"
+                            >
+                              ✓ 核准
+                            </button>
+                            <button
+                              onClick={() => handleRedemption(r.id, { action: 'reject' })}
+                              className="px-3 py-2 bg-red-400 text-white rounded-lg text-xs font-medium hover:bg-red-500 min-h-[44px]"
+                            >
+                              ✕ 拒絕
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex gap-1.5 shrink-0">
-                          <button
-                            onClick={() => handleRedemption(r.id, { action: 'approve' })}
-                            className="px-3 py-2 bg-green-500 text-white rounded-lg text-xs font-medium hover:bg-green-600 min-h-[44px]"
-                          >
-                            核准
-                          </button>
-                          <button
-                            onClick={() => handleRedemption(r.id, { action: 'reject' })}
-                            className="px-3 py-2 bg-red-400 text-white rounded-lg text-xs font-medium hover:bg-red-500 min-h-[44px]"
-                          >
-                            拒絕
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </>
