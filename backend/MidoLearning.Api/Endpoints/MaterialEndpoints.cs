@@ -66,6 +66,13 @@ public static class MaterialEndpoints
             .AllowAnonymous()
             .DisableRateLimiting()
             .WithOpenApi();
+
+        // Batch materials endpoint - accepts multiple material IDs, returns metadata + manifest
+        app.MapPost("/api/materials/batch", GetMaterialsBatch)
+            .WithTags("Materials")
+            .WithName("GetMaterialsBatch")
+            .AllowAnonymous()
+            .WithOpenApi();
     }
 
     private static async Task<IResult> UploadMaterial(
@@ -637,6 +644,106 @@ public static class MaterialEndpoints
             logger.LogError(ex, "Failed to get content {Path} for material {MaterialId}", path, materialId);
             return Results.Problem(
                 detail: "Failed to retrieve content",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    /// <summary>
+    /// Batch query: accepts up to 20 material IDs, returns metadata + manifest for each accessible material.
+    /// Visibility-checked per component (same rules as GetManifest).
+    /// </summary>
+    private static async Task<IResult> GetMaterialsBatch(
+        MaterialBatchRequest body,
+        HttpRequest request,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            if (body.Ids is null || body.Ids.Count == 0)
+                return Results.BadRequest(ApiResponse.Fail("ids is required"));
+
+            if (body.Ids.Count > 20)
+                return Results.BadRequest(ApiResponse.Fail("Maximum 20 material IDs per request"));
+
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.IsInRole("admin");
+
+            // Fetch all materials in parallel
+            var materials = await firebaseService.GetMaterialsByIdsAsync(body.Ids);
+
+            // Group by ComponentId to batch-fetch unique components
+            var componentIds = materials.Select(m => m.ComponentId).Distinct().ToList();
+            var componentTasks = componentIds.Select(cid =>
+                firebaseService.GetDocumentAsync<LearningComponent>(ComponentsCollection, cid)
+                    .ContinueWith(t => (cid, component: t.Result)));
+            var componentResults = await Task.WhenAll(componentTasks);
+            var componentMap = componentResults
+                .Where(r => r.component is not null)
+                .ToDictionary(r => r.cid, r => r.component!);
+
+            // Build scheme/host once
+            var scheme = request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? request.Scheme;
+            if (scheme == "http" && !request.Host.Host.Contains("localhost"))
+                scheme = "https";
+            var host = request.Host.ToString();
+
+            var items = new List<MaterialBatchItem>();
+
+            foreach (var material in materials)
+            {
+                // Skip if component not found
+                if (!componentMap.TryGetValue(material.ComponentId, out var component))
+                    continue;
+
+                // Visibility check
+                var visibility = component.Visibility ?? "published";
+                switch (visibility)
+                {
+                    case "private":
+                        if (!isAdmin && component.CreatedBy?.Uid != uid)
+                            continue; // Skip inaccessible materials silently
+                        break;
+
+                    case "login":
+                        if (string.IsNullOrEmpty(uid))
+                            continue;
+                        break;
+
+                    case "published":
+                    default:
+                        break;
+                }
+
+                var accessToken = GenerateContentAccessToken(material.Id);
+                var baseUrl = $"{scheme}://{host}/api/materials/{material.Id}/content/";
+
+                items.Add(new MaterialBatchItem
+                {
+                    Id = material.Id,
+                    ComponentId = material.ComponentId,
+                    Version = material.Version,
+                    Filename = material.Filename,
+                    Size = material.Size,
+                    UploadedAt = material.UploadedAt,
+                    EntryPoint = material.Manifest?.EntryPoint ?? "index.html",
+                    Files = material.Manifest?.Files ?? Array.Empty<string>(),
+                    BaseUrl = baseUrl,
+                    AccessToken = accessToken
+                });
+            }
+
+            return Results.Ok(ApiResponse<MaterialBatchResponse>.Ok(new MaterialBatchResponse
+            {
+                Materials = items
+            }));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to batch query materials");
+            return Results.Problem(
+                detail: "Failed to retrieve materials",
                 statusCode: StatusCodes.Status500InternalServerError);
         }
     }

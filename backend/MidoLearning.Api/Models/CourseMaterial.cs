@@ -94,3 +94,36 @@ public record MaterialManifestResponse
     public string BaseUrl { get; init; } = string.Empty;
     public string? AccessToken { get; init; }
 }
+
+/// <summary>
+/// Request DTO for batch material query
+/// </summary>
+public record MaterialBatchRequest
+{
+    public List<string> Ids { get; init; } = new();
+}
+
+/// <summary>
+/// Single item in batch material response (metadata + manifest combined)
+/// </summary>
+public record MaterialBatchItem
+{
+    public string Id { get; init; } = string.Empty;
+    public string ComponentId { get; init; } = string.Empty;
+    public int Version { get; init; }
+    public string Filename { get; init; } = string.Empty;
+    public long Size { get; init; }
+    public DateTime UploadedAt { get; init; }
+    public string EntryPoint { get; init; } = string.Empty;
+    public IEnumerable<string> Files { get; init; } = Array.Empty<string>();
+    public string BaseUrl { get; init; } = string.Empty;
+    public string? AccessToken { get; init; }
+}
+
+/// <summary>
+/// Response DTO for batch material query
+/// </summary>
+public record MaterialBatchResponse
+{
+    public IEnumerable<MaterialBatchItem> Materials { get; init; } = Array.Empty<MaterialBatchItem>();
+}

@@ -18,6 +18,7 @@ public interface IFirebaseService
     Task DeleteUserAsync(string uid);
     Task<(List<T> Items, int Total)> GetDocumentsAsync<T>(string collection, int page, int limit, string? search, string[]? orderBy) where T : class;
     Task<List<CourseMaterial>> GetMaterialsByComponentIdAsync(string componentId);
+    Task<List<CourseMaterial>> GetMaterialsByIdsAsync(IEnumerable<string> materialIds);
     Task<int> GetNextMaterialVersionAsync(string componentId);
     Task<WishListResult> GetWishesAsync(int page, int limit, string? status, string? search);
     Task UpdateWishStatusAsync(string wishId, string status, string? linkedComponentId, string processedBy);

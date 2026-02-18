@@ -237,6 +237,14 @@ public class FirebaseService : IFirebaseService
         return materials;
     }
 
+    public async Task<List<CourseMaterial>> GetMaterialsByIdsAsync(IEnumerable<string> materialIds)
+    {
+        var ids = materialIds.Distinct().Take(20).ToList();
+        var tasks = ids.Select(id => GetDocumentAsync<CourseMaterial>("materials", id));
+        var results = await Task.WhenAll(tasks);
+        return results.Where(m => m is not null).Cast<CourseMaterial>().ToList();
+    }
+
     public async Task<int> GetNextMaterialVersionAsync(string componentId)
     {
         var materials = await GetMaterialsByComponentIdAsync(componentId);
