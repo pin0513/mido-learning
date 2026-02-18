@@ -47,10 +47,8 @@ export function useMusicProducer() {
   const pollingRef = useRef<NodeJS.Timeout | null>(null)
 
   const getAuthHeaders = useCallback(async () => {
-    const { getAuth } = await import('firebase/auth')
-    const { initFirebase } = await import('@/lib/firebase')
-    initFirebase()
-    const auth = getAuth()
+    const { getFirebaseAuth } = await import('@/lib/firebase')
+    const auth = getFirebaseAuth()
     const token = await auth.currentUser?.getIdToken()
     return token ? { Authorization: `Bearer ${token}` } : {}
   }, [])
