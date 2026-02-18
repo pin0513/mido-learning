@@ -425,13 +425,6 @@ canvas{display:block;}
         <div id="train-panel">
           <h4>🏃 米字步訓練</h4>
 
-          <!-- 訓練側別 -->
-          <div class="tp-row">
-            <span class="tp-label">側別</span>
-            <button class="tp-btn on" id="tp-home" onclick="setTrainSide('home')">我方</button>
-            <button class="tp-btn"    id="tp-away" onclick="setTrainSide('away')">對方</button>
-          </div>
-
           <!-- 訓練區域 -->
           <div class="tp-row">
             <span class="tp-label">區域</span>
@@ -453,7 +446,7 @@ canvas{display:block;}
           <!-- 開始/停止 -->
           <button id="train-start" onclick="toggleTraining()">▶ 開始訓練</button>
 
-          <div class="tp-hint">🟢 我方站位 ↑上手 ↓下手<br>🟠 對方目標落點</div>
+          <div class="tp-hint">🟢 我方站位 ↑上手 ↓下手<br>🟠 對方落點（最長距離+反拍優先）</div>
         </div>
 
         <!-- ════ 浮動 HUD ════ -->
@@ -668,9 +661,9 @@ function drawCourt() {
   line(c, cx(0), cy(0.46),         cx(COURT_W), cy(0.46));
   line(c, cx(0), cy(COURT_H-0.46), cx(COURT_W), cy(COURT_H-0.46));
 
-  // 中線
-  line(c, cx(0.76),        cy(COURT_H/2), cx(ssl),          cy(COURT_H/2));
-  line(c, cx(COURT_W-ssl), cy(COURT_H/2), cx(COURT_W-0.76), cy(COURT_H/2));
+  // 中線（短發球線 → 網，左半場與右半場各一段）
+  line(c, cx(ssl),          cy(COURT_H/2), cx(COURT_W/2),    cy(COURT_H/2));
+  line(c, cx(COURT_W/2),    cy(COURT_H/2), cx(COURT_W-ssl),  cy(COURT_H/2));
 
   // 球網
   c.strokeStyle = '#555'; c.lineWidth = 3;
@@ -1200,7 +1193,6 @@ function updateCursor() {
 // ════════════════════════════════════════
 const TRAIN = {
   panelOpen: false,
-  side: 'home',
   zones: { front: true, mid: true, back: true },
   interval: 2000,
   running: false,
@@ -1224,7 +1216,7 @@ function initTrainCanvas() {
 
 function getTrainPositions() {
   const homeLeft = state.homeSide === 'left';
-  const trainLeft = (TRAIN.side === 'home') ? homeLeft : !homeLeft;
+  const trainLeft = homeLeft;
   const sTop = 0.46;
   const sBot = COURT_H - 0.46;
   const net  = COURT_W / 2;
@@ -1259,8 +1251,7 @@ function getActiveTrainPositions() {
 
 function getOppPositions() {
   const homeLeft = state.homeSide === 'left';
-  const trainLeft = (TRAIN.side === 'home') ? homeLeft : !homeLeft;
-  const oppLeft = !trainLeft; // 對方在另一側
+  const oppLeft = !homeLeft;
   const sTop = 0.46;
   const sBot = COURT_H - 0.46;
   const net  = COURT_W / 2;
@@ -1294,7 +1285,7 @@ function drawTrainLights() {
   tc.style.display = 'block';
 
   const homeLeft = state.homeSide === 'left';
-  const trainLeft = (TRAIN.side === 'home') ? homeLeft : !homeLeft;
+  const trainLeft = homeLeft;
 
   // ── 3D 透視角點 ─────────────────────────────────────────────────────
   const cx0   = CW / 2;
@@ -1443,6 +1434,16 @@ function trainPulseLoop() {
   TRAIN.rafId = requestAnimationFrame(trainPulseLoop);
 }
 
+// 重心破壞原理：我方站位 → 對方最佳落點（0=FL,1=FR,2=ML,3=MR,4=BL,5=BR）
+const TACTICS_MAP = [
+  [5, 4],  // 0=FL → OBR(5), OBL(4)
+  [4, 5],  // 1=FR → OBL(4), OBR(5)
+  [5, 1],  // 2=ML → OBR(5), OFR(1)
+  [4, 0],  // 3=MR → OBL(4), OFL(0)
+  [1, 0],  // 4=BL → OFR(1), OFL(0)
+  [0, 1],  // 5=BR → OFL(0), OFR(1)
+];
+
 function pickNextLight() {
   const pts = getTrainPositions();
   // 用 index 操作，避免物件參考比對錯誤
@@ -1458,9 +1459,9 @@ function pickNextLight() {
   }
   if (pool.length === 0) return;
   TRAIN.currentLight = pool[Math.floor(Math.random() * pool.length)];
-  // 同時隨機選對方落點（6個位置中任選一個，避免與上次相同）
-  const oppPool = [0,1,2,3,4,5].filter(i => i !== TRAIN.oppLight);
-  TRAIN.oppLight = oppPool[Math.floor(Math.random() * oppPool.length)];
+  // 對方落點：依 TACTICS_MAP 重心破壞原理（80% 最佳，20% 次佳）
+  const tactics = TACTICS_MAP[TRAIN.currentLight];
+  TRAIN.oppLight = Math.random() < 0.8 ? tactics[0] : tactics[1];
   TRAIN.pulse = 0; TRAIN.pulseDir = 1;
 }
 
@@ -1499,14 +1500,6 @@ function toggleTrainPanel() {
   document.getElementById('btn-train').classList.toggle('on', TRAIN.panelOpen);
   if (!TRAIN.panelOpen) stopTraining();
   drawTrainLights();
-}
-
-function setTrainSide(side) {
-  TRAIN.side = side;
-  document.getElementById('tp-home').classList.toggle('on', side === 'home');
-  document.getElementById('tp-away').classList.toggle('on', side === 'away');
-  if (TRAIN.running) { stopTraining(); startTraining(); }
-  else drawTrainLights();
 }
 
 function toggleTrainZone(zone) {
