@@ -60,9 +60,11 @@ public static class MaterialEndpoints
             .WithOpenApi();
 
         // Content proxy endpoint (allows anonymous access, validates based on material/component visibility)
+        // DisableRateLimiting: 靜態教材檔案（HTML/CSS/JS/圖片），瀏覽器一次會發多個請求；自帶 token + Referer 驗證，不需全域限流
         materialGroup.MapGet("/content/{*path}", GetContent)
             .WithName("GetMaterialContent")
             .AllowAnonymous()
+            .DisableRateLimiting()
             .WithOpenApi();
     }
 
