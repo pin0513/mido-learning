@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { getAuth } from 'firebase/auth';
 import { useFamilyScoreboard } from './hooks/useFamilyScoreboard';
 import type { AddTransactionRequest, CreateRedemptionRequest } from '@/types/family-scoreboard';
@@ -39,6 +40,7 @@ const TABS = [
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export default function FamilyScoreboardPage() {
+  const router = useRouter();
   const [uid, setUid] = useState<string | null>(null);
   const familyId = uid ? `family_${uid}` : '';
 
@@ -230,6 +232,13 @@ export default function FamilyScoreboardPage() {
             className="px-3 py-1.5 text-xs bg-gray-100 text-gray-500 rounded-full hover:bg-gray-200 disabled:opacity-50 min-h-[44px]"
           >
             重整
+          </button>
+          <button
+            onClick={() => router.push('/family-scoreboard/admin')}
+            className="px-3 py-1.5 text-xs bg-amber-100 text-amber-700 rounded-full hover:bg-amber-200 min-h-[44px]"
+            aria-label="管理後台"
+          >
+            ⚙️ 管理
           </button>
         </div>
       </header>
