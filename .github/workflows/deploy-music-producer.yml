@@ -1,17 +1,19 @@
-name: Deploy Backend
+name: Deploy Music Producer
 
 on:
   push:
     branches: [main]
     paths:
-      - 'backend/**'
-      - '.github/workflows/deploy-backend.yml'
+      - 'music-producer/**'
+      - '.github/workflows/deploy-music-producer.yml'
   workflow_dispatch:
 
 env:
   PROJECT_ID: mido-learning
   REGION: asia-east1
-  SERVICE_NAME: mido-learning-api
+  SERVICE_NAME: mido-learning-music-producer
+  GCS_BUCKET: mido-learning-music-output
+  SA_EMAIL: music-producer-sa@mido-learning.iam.gserviceaccount.com
 
 jobs:
   build-and-deploy:
@@ -40,7 +42,7 @@ jobs:
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
       - name: Build and Push Docker image
-        working-directory: ./backend/MidoLearning.Api
+        working-directory: ./music-producer
         run: |
           docker build \
             -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/mido-learning/${{ env.SERVICE_NAME }}:${{ github.sha }} \
@@ -56,9 +58,21 @@ jobs:
             --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
-            --port 8080 \
-            --memory 512Mi \
-            --cpu 1 \
+            --port 8001 \
+            --memory 2Gi \
+            --cpu 2 \
             --min-instances 0 \
-            --max-instances 10 \
-            --set-env-vars "Firebase__ProjectId=${{ env.PROJECT_ID }},Firebase__StorageBucket=mido-learning-materials,GCP__BillingDataset=billing_export,GCP__BillingTable=gcp_billing_export_v1_016FA0_AAADEB_92D696,MusicProducer__SidecarUrl=${{ secrets.MUSIC_PRODUCER_URL }}"
+            --max-instances 3 \
+            --timeout 600 \
+            --service-account ${{ env.SA_EMAIL }} \
+            --add-volume name=output,type=cloud-storage,bucket=${{ env.GCS_BUCKET }} \
+            --add-volume-mount volume=output,mount-path=/app/output \
+            --set-env-vars "GCP_PROJECT_ID=${{ env.PROJECT_ID }}"
+
+      - name: Get Service URL
+        run: |
+          URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
+            --region ${{ env.REGION }} \
+            --format 'value(status.url)')
+          echo "Music Producer URL: $URL"
+          echo "MUSIC_PRODUCER_URL=$URL" >> $GITHUB_ENV

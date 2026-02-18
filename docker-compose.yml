@@ -27,8 +27,20 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Firebase__ProjectId=mido-learning
+      - MusicProducer__SidecarUrl=http://music-producer:8001
     volumes:
       - ./credentials:/app/credentials:ro
+    depends_on:
+      - music-producer
+
+  music-producer:
+    build:
+      context: ./music-producer
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    volumes:
+      - music_output:/app/output
 
   firebase-emulator:
     image: andreysenov/firebase-tools
@@ -42,3 +54,6 @@ services:
       - ./firestore.rules:/home/node/firestore.rules
       - ./storage.rules:/home/node/storage.rules
     command: firebase emulators:start --project mido-learning
+
+volumes:
+  music_output:

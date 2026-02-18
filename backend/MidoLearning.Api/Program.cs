@@ -7,6 +7,7 @@ using MidoLearning.Api.Services;
 using MidoLearning.Api.Modules.SkillVillage.Auth.Services;
 using MidoLearning.Api.Modules.SkillVillage.GameEngine.Services;
 using MidoLearning.Api.Modules.SkillVillage.GameEngine.Calculators;
+using MidoLearning.Api.Services.Music;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +48,15 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddScoped<SkillVillageAuthService>();
 builder.Services.AddScoped<GameEngineService>();
 builder.Services.AddScoped<RewardCalculator>();
+
+// Music Producer Services
+builder.Services.AddHttpClient<IPythonSidecarClient, PythonSidecarClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["MusicProducer:SidecarUrl"] ?? "http://localhost:8001");
+    client.Timeout = TimeSpan.FromMinutes(2);
+});
+builder.Services.AddSingleton<MusicTaskStore>();
+builder.Services.AddScoped<IMusicProducerService, MusicProducerService>();
 
 builder.Services.AddAuthentication("Firebase")
     .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, FirebaseAuthHandler>("Firebase", null)
@@ -211,6 +221,9 @@ app.MapCostEndpoints();
 app.MapCourseEndpoints();
 app.MapGameEndpoints();
 app.MapAchievementEndpoints();
+
+// Music Producer Endpoints
+app.MapMusicEndpoints();
 
 // Skill Village Endpoints
 app.MapSkillVillageAuthEndpoints();
