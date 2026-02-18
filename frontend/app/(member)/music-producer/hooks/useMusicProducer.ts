@@ -46,7 +46,7 @@ export function useMusicProducer() {
   const [engines, setEngines] = useState<Array<{ name: string; version: string; description: string }>>([])
   const pollingRef = useRef<NodeJS.Timeout | null>(null)
 
-  const getAuthHeaders = useCallback(async () => {
+  const getAuthHeaders = useCallback(async (): Promise<Record<string, string>> => {
     const { getFirebaseAuth } = await import('@/lib/firebase')
     const auth = getFirebaseAuth()
     const token = await auth.currentUser?.getIdToken()
