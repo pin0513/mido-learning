@@ -1173,10 +1173,22 @@ function getActiveTrainPositions() {
 function drawTrainLights() {
   if (!trainC) return;
   const tc = document.getElementById('train-overlay');
-  tc.width = CW; tc.height = CH;
   trainC.clearRect(0, 0, CW, CH);
   if (!TRAIN.panelOpen) { tc.style.display = 'none'; return; }
   tc.style.display = 'block';
+
+  // 半場聚焦效果：暗色遮罩蓋住非訓練側
+  const _homeLeft = state.homeSide === 'left';
+  const _trainLeft = (TRAIN.side === 'home') ? _homeLeft : !_homeLeft;
+  const _netX = cx(COURT_W / 2);
+  trainC.save();
+  trainC.fillStyle = 'rgba(0,0,20,0.42)';
+  if (_trainLeft) {
+    trainC.fillRect(_netX, 0, CW - _netX, CH);
+  } else {
+    trainC.fillRect(0, 0, _netX, CH);
+  }
+  trainC.restore();
 
   const pts = getTrainPositions();
   const r = Math.max(10, SC * 0.22);
@@ -1236,17 +1248,20 @@ function trainPulseLoop() {
 }
 
 function pickNextLight() {
-  const active = getActiveTrainPositions();
-  if (active.length === 0) return;
   const pts = getTrainPositions();
-  // avoid same position twice in a row
-  let pool = active.filter((_, idx) => {
-    const realIdx = pts.indexOf(active[idx]);
-    return realIdx !== TRAIN.currentLight;
-  });
-  if (pool.length === 0) pool = active;
-  const chosen = pool[Math.floor(Math.random() * pool.length)];
-  TRAIN.currentLight = pts.indexOf(chosen);
+  // 用 index 操作，避免物件參考比對錯誤
+  let pool = [];
+  for (let i = 0; i < pts.length; i++) {
+    if (TRAIN.zones[pts[i].zone] && i !== TRAIN.currentLight) pool.push(i);
+  }
+  if (pool.length === 0) {
+    // 全部 active 都只剩目前這個（只開1個zone且只1個點時）
+    for (let i = 0; i < pts.length; i++) {
+      if (TRAIN.zones[pts[i].zone]) pool.push(i);
+    }
+  }
+  if (pool.length === 0) return;
+  TRAIN.currentLight = pool[Math.floor(Math.random() * pool.length)];
   TRAIN.pulse = 0; TRAIN.pulseDir = 1;
 }
 
