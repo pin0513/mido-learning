@@ -162,7 +162,7 @@ builder.Services.AddRateLimiter(options =>
 
     // 全域限制: 開發環境寬鬆，生產環境嚴格
     var isDevelopment = builder.Environment.IsDevelopment();
-    var globalRateLimit = isDevelopment ? 1000 : 30;  // 開發: 1000次/分鐘, 生產: 30次/分鐘
+    var globalRateLimit = isDevelopment ? 1000 : 100;  // 開發: 1000次/分鐘, 生產: 100次/分鐘
 
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
     {
