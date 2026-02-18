@@ -11,6 +11,7 @@ const TRAIN = {
   setCount: 0,
   setTarget: 0,     // 0 = infinite
   tacticShot: null,
+  tacticHint: null,  // { shot, opp, label }
   running: false,
   currentLight: -1,
   timer: null,
@@ -249,6 +250,37 @@ function drawTrainLights() {
   });
 
   trainC.restore();
+
+  // ── 戰術提示：疊加在 canvas 上方 ────────────────────
+  if (TRAIN.mode === 'tactic' && TRAIN.tacticHint && TRAIN.currentLight >= 0) {
+    const h     = TRAIN.tacticHint;
+    const boxW  = Math.min(CW * 0.80, 400);
+    const boxH  = Math.max(64, CH * 0.145);
+    const boxX  = (CW - boxW) / 2;
+    const boxY  = Math.max(4, CH * 0.012);
+    const fs1   = Math.max(16, Math.round(boxH * 0.40));
+    const fs2   = Math.max(13, Math.round(boxH * 0.31));
+
+    // 背景框
+    trainC.fillStyle = 'rgba(0, 15, 38, 0.92)';
+    trainC.fillRect(boxX, boxY, boxW, boxH);
+    trainC.strokeStyle = 'rgba(0, 230, 140, 0.85)';
+    trainC.lineWidth = 1.8;
+    trainC.strokeRect(boxX, boxY, boxW, boxH);
+
+    trainC.textAlign    = 'center';
+    trainC.textBaseline = 'middle';
+
+    // 球種（大字，亮綠）
+    trainC.fillStyle = '#00ff99';
+    trainC.font      = `bold ${fs1}px Arial, sans-serif`;
+    trainC.fillText(h.shot, CW * 0.5, boxY + boxH * 0.36);
+
+    // 落點（較小字，橘黃）
+    trainC.fillStyle = '#ffb84d';
+    trainC.font      = `bold ${fs2}px Arial, sans-serif`;
+    trainC.fillText(`落點 → ${h.opp}`, CW * 0.5, boxY + boxH * 0.75);
+  }
 }
 
 function trainPulseLoop() {
@@ -308,6 +340,7 @@ function stopTraining() {
   TRAIN.running = false;
   TRAIN.currentLight = -1;
   TRAIN.tacticShot = null;
+  TRAIN.tacticHint = null;
   if (TRAIN.timer) { clearInterval(TRAIN.timer); TRAIN.timer = null; }
   if (TRAIN.rafId)  { cancelAnimationFrame(TRAIN.rafId); TRAIN.rafId = null; }
   document.getElementById('train-start').textContent = '▶ 開始訓練';
@@ -428,6 +461,7 @@ function updateTacticHint() {
   const shot  = SHOT_TYPES[Math.floor(Math.random() * SHOT_TYPES.length)];
   const opp   = OPP_POSITIONS[Math.floor(Math.random() * OPP_POSITIONS.length)];
   const label = SHOT_TYPE_LABELS[shot];
+  TRAIN.tacticHint = { shot, opp, label };
   document.getElementById('tp-tactic-text').innerHTML =
     `${label.emoji} <strong>${shot}</strong> → <span style="color:#f39c12;font-weight:bold">${opp}</span>`;
   document.getElementById('tp-shot-btns').innerHTML =
