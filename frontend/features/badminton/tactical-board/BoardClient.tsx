@@ -793,6 +793,38 @@ export default function BoardClient() {
   }, [setServe, redraw, tick]);
 
   // ════════════════════════════════════════
+  // Quick formation deploy
+  // ════════════════════════════════════════
+  const deployFormation = useCallback((type: 'singles' | 'doubles') => {
+    const homeLeft = homeSideRef.current === 'left';
+    const homeX = homeLeft ? COURT_W / 4 : COURT_W * 3 / 4;
+    const awayX = homeLeft ? COURT_W * 3 / 4 : COURT_W / 4;
+    const midY = COURT_H / 2;
+
+    if (type === 'singles') {
+      playersRef.current[0].pos = { x: cxM(homeX), y: cyM(midY) };
+      playersRef.current[1].pos = { x: cxM(awayX), y: cyM(midY) };
+      playersRef.current[2].pos = null;
+      playersRef.current[3].pos = null;
+    } else {
+      const topY = COURT_H * 0.28;
+      const botY = COURT_H * 0.72;
+      playersRef.current[0].pos = { x: cxM(homeX), y: cyM(topY) };
+      playersRef.current[1].pos = { x: cxM(homeX), y: cyM(botY) };
+      playersRef.current[2].pos = { x: cxM(awayX), y: cyM(topY) };
+      playersRef.current[3].pos = { x: cxM(awayX), y: cyM(botY) };
+    }
+
+    // Place shuttlecock at net center
+    ballsRef.current[0].pos = { x: cxM(COURT_W / 2), y: cyM(midY) };
+
+    // Switch court type to match
+    setCourtType(type);
+    tick();
+    redraw();
+  }, [cxM, cyM, setCourtType, tick, redraw]);
+
+  // ════════════════════════════════════════
   // Resize
   // ════════════════════════════════════════
   const resize = useCallback(() => {
@@ -958,6 +990,13 @@ export default function BoardClient() {
     hud: { position: 'absolute' as const, bottom: 10, left: 10, zIndex: 20, display: hudOpen ? 'flex' : 'none', flexDirection: 'column' as const, gap: 6, userSelect: 'none' as const } as React.CSSProperties,
     hudRow: { display: 'flex', alignItems: 'center', gap: 5 } as React.CSSProperties,
     hudSep: { fontSize: 8, color: '#557', textTransform: 'uppercase' as const, letterSpacing: 0.5, whiteSpace: 'nowrap' as const, minWidth: 24 } as React.CSSProperties,
+    hudFormBtn: (on: boolean): React.CSSProperties => ({
+      padding: '6px 10px', borderRadius: 6,
+      border: `1.5px solid ${on ? '#3498db' : 'rgba(255,255,255,0.15)'}`,
+      background: on ? 'rgba(36,113,163,0.85)' : 'rgba(30,40,60,0.7)',
+      color: on ? '#fff' : '#aab', cursor: 'pointer', fontSize: 11, fontWeight: 600,
+      lineHeight: 1, userSelect: 'none', touchAction: 'manipulation',
+    }),
     hudPlayer: (color: string, sel: boolean, pending: boolean): React.CSSProperties => ({
       width: 42, height: 42, borderRadius: '50%',
       border: `2.5px solid ${pending ? '#facc15' : sel ? '#fff' : 'rgba(255,255,255,0.2)'}`,
@@ -1261,6 +1300,19 @@ export default function BoardClient() {
                           <circle cx="0" cy="5" r="3.2" fill="#dab86a" stroke="rgba(0,0,0,0.3)" strokeWidth="0.8" />
                         </g>
                       </svg>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Formation deploy */}
+                <div style={S.hudRow}>
+                  <span style={S.hudSep}>{'\u4F48\u9663'}</span>
+                  <div style={{ display: 'flex', gap: 5 }}>
+                    <button style={S.hudFormBtn(courtType === 'singles')} onClick={() => deployFormation('singles')}>
+                      {'\u55AE\u6253'}
+                    </button>
+                    <button style={S.hudFormBtn(courtType === 'doubles')} onClick={() => deployFormation('doubles')}>
+                      {'\u96D9\u6253'}
                     </button>
                   </div>
                 </div>
