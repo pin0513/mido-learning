@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { recordMaterialView } from '@/lib/api/analytics';
 
 const StepsTrainer = dynamic(
   () => import('@/features/badminton/steps-trainer/StepsTrainer'),
@@ -15,5 +17,9 @@ const StepsTrainer = dynamic(
 );
 
 export default function ClientLoader() {
+  useEffect(() => {
+    recordMaterialView('badminton-trainer');
+  }, []);
+
   return <StepsTrainer />;
 }
