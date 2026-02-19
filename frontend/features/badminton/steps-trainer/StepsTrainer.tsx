@@ -136,6 +136,7 @@ function StepsTrainer() {
   const [showManualHint, setShowManualHint] = useState(false);
   const [handDirection, setHandDirection] = useState<'上手' | '下手'>('上手');
   const [oppHand, setOppHand] = useState<'right' | 'left'>('right');
+  const [shotHint, setShotHint] = useState<string | null>(null); // 長球/切球/殺球 for BL/BR
 
   // derived
   const interval = speedVal * 200;
@@ -152,6 +153,7 @@ function StepsTrainer() {
     interval,
     handDirection,
     oppHand,
+    shotHint,
   });
   useEffect(() => {
     stateRef.current = {
@@ -165,8 +167,9 @@ function StepsTrainer() {
       interval,
       handDirection,
       oppHand,
+      shotHint,
     };
-  }, [homeSide, zones, running, currentLight, oppLight, mode, roundTarget, interval, handDirection, oppHand]);
+  }, [homeSide, zones, running, currentLight, oppLight, mode, roundTarget, interval, handDirection, oppHand, shotHint]);
 
   // ═══════════════════════════════════════════════════
   // Canvas drawing (faithfully ported from source HTML)
@@ -433,6 +436,41 @@ function StepsTrainer() {
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(labelText, px, cardY + cardH / 2);
+        } else if (i >= 4 && s.shotHint) {
+          // Shot type card for back positions (BL/BR)
+          const shotText = s.shotHint;
+          const cardFontSz = Math.max(12, Math.round(r * 0.55));
+          ctx.font = `bold ${cardFontSz}px Arial`;
+          const tw = ctx.measureText(shotText).width;
+          const cardW = tw + cardFontSz * 0.8;
+          const cardH = cardFontSz * 1.6;
+          const cardX = px - cardW / 2;
+          const cardY = py - r - cardH - 4;
+          const shotColors: Record<string, string> = {
+            '\u9577\u7403': 'rgba(0,160,220,0.85)',
+            '\u5207\u7403': 'rgba(180,0,220,0.85)',
+            '\u6bba\u7403': 'rgba(220,30,30,0.85)',
+          };
+          const cardColor = shotColors[shotText] ?? 'rgba(100,100,100,0.85)';
+          ctx.fillStyle = cardColor;
+          ctx.beginPath();
+          const cr = 5;
+          ctx.moveTo(cardX + cr, cardY);
+          ctx.lineTo(cardX + cardW - cr, cardY);
+          ctx.quadraticCurveTo(cardX + cardW, cardY, cardX + cardW, cardY + cr);
+          ctx.lineTo(cardX + cardW, cardY + cardH - cr);
+          ctx.quadraticCurveTo(cardX + cardW, cardY + cardH, cardX + cardW - cr, cardY + cardH);
+          ctx.lineTo(cardX + cr, cardY + cardH);
+          ctx.quadraticCurveTo(cardX, cardY + cardH, cardX, cardY + cardH - cr);
+          ctx.lineTo(cardX, cardY + cr);
+          ctx.quadraticCurveTo(cardX, cardY, cardX + cr, cardY);
+          ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = '#fff';
+          ctx.font = `bold ${cardFontSz}px Arial`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(shotText, px, cardY + cardH / 2);
         }
       } else {
         // inactive but enabled -> small dim circle + faded arrow
@@ -451,6 +489,26 @@ function StepsTrainer() {
         ctx.fillText(arrow, px, py);
       }
     });
+
+    // ── 7. Trajectory line (flashing dashed) ──
+    if (s.running && s.currentLight >= 0 && s.oppLight >= 0) {
+      const myPos = pts[s.currentLight];
+      const oppPos = oppPts[s.oppLight];
+      if (myPos && oppPos) {
+        const from = mapPt(myPos.x, myPos.y);
+        const to = mapPt(oppPos.x, oppPos.y);
+        ctx.save();
+        ctx.setLineDash([8, 6]);
+        ctx.lineDashOffset = -pulseRef.current * 28;
+        ctx.strokeStyle = `rgba(255,255,100,${0.4 + pulseRef.current * 0.45})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(from.x, from.y);
+        ctx.lineTo(to.x, to.y);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
   }, [hudOpen]);
 
   // ═══════════════════════════════════════════════════
@@ -540,6 +598,26 @@ function StepsTrainer() {
     }
   }, []);
 
+  // Helper: for BL/BR positions, pick shot type and derive opponent position
+  const pickShotAndOpp = useCallback((posIndex: number): number => {
+    if (posIndex >= 4) {
+      // Back positions: randomly pick shot type
+      const shots = ['\u9577\u7403', '\u5207\u7403', '\u6bba\u7403'] as const;
+      const shot = shots[Math.floor(Math.random() * shots.length)];
+      setShotHint(shot);
+      // Shot determines opponent area:
+      // 切球 → front (OFL=0, OFR=1)
+      // 殺球 → mid (OML=2, OMR=3)
+      // 長球 → back (OBL=4, OBR=5)
+      if (shot === '\u5207\u7403') return Math.random() < 0.5 ? 0 : 1;
+      if (shot === '\u6bba\u7403') return Math.random() < 0.5 ? 2 : 3;
+      return Math.random() < 0.5 ? 4 : 5; // 長球
+    }
+    setShotHint(null);
+    const tactics = TACTICS_MAP[posIndex];
+    return Math.random() < 0.8 ? tactics[0] : tactics[1];
+  }, []);
+
   const pickNextSequential = useCallback(() => {
     const pool = getActivePool();
     if (pool.length === 0) return;
@@ -549,15 +627,12 @@ function StepsTrainer() {
 
     setCurrentLight(next);
     decideHand(next);
-    // opponent via tactics
-    const tactics = TACTICS_MAP[next];
-    const opp = Math.random() < 0.8 ? tactics[0] : tactics[1];
-    setOppLight(opp);
+    setOppLight(pickShotAndOpp(next));
     pulseRef.current = 0;
     pulseDirRef.current = 1;
 
     checkRoundComplete(pool.length);
-  }, [getActivePool, checkRoundComplete, decideHand]);
+  }, [getActivePool, checkRoundComplete, decideHand, pickShotAndOpp]);
 
   const pickNextRandom = useCallback(() => {
     const pool = getActivePool();
@@ -569,14 +644,12 @@ function StepsTrainer() {
 
     setCurrentLight(next);
     decideHand(next);
-    const tactics = TACTICS_MAP[next];
-    const opp = Math.random() < 0.8 ? tactics[0] : tactics[1];
-    setOppLight(opp);
+    setOppLight(pickShotAndOpp(next));
     pulseRef.current = 0;
     pulseDirRef.current = 1;
 
     checkRoundComplete(pool.length);
-  }, [getActivePool, checkRoundComplete, decideHand]);
+  }, [getActivePool, checkRoundComplete, decideHand, pickShotAndOpp]);
 
   const pickNextManual = useCallback(() => {
     const pool = getActivePool();
@@ -588,14 +661,12 @@ function StepsTrainer() {
 
     setCurrentLight(next);
     decideHand(next);
-    const tactics = TACTICS_MAP[next];
-    const opp = Math.random() < 0.8 ? tactics[0] : tactics[1];
-    setOppLight(opp);
+    setOppLight(pickShotAndOpp(next));
     pulseRef.current = 0;
     pulseDirRef.current = 1;
 
     checkRoundComplete(pool.length);
-  }, [getActivePool, checkRoundComplete, decideHand]);
+  }, [getActivePool, checkRoundComplete, decideHand, pickShotAndOpp]);
 
   const pickNextTactic = useCallback(() => {
     const pool = getActivePool();
@@ -648,19 +719,33 @@ function StepsTrainer() {
       oppNext = backhandIndices[Math.floor(Math.random() * backhandIndices.length)];
     }
 
+    // For BL/BR positions, override opponent with shot-based logic
+    if (myNext >= 4) {
+      oppNext = pickShotAndOpp(myNext);
+    } else {
+      setShotHint(null);
+    }
+
     setOppLight(oppNext);
     pulseRef.current = 0;
     pulseDirRef.current = 1;
 
-    // Build tactic hint
-    const shotType = SHOT_TYPES[Math.floor(Math.random() * SHOT_TYPES.length)];
+    // Build tactic hint — derive shotType from oppNext for BL/BR
+    let shotType: string;
+    if (myNext >= 4) {
+      if (oppNext <= 1) shotType = '\u5207\u7403';
+      else if (oppNext <= 3) shotType = '\u6bba\u7403';
+      else shotType = '\u9577\u7403';
+    } else {
+      shotType = SHOT_TYPES[Math.floor(Math.random() * SHOT_TYPES.length)];
+    }
     const oppLabel = OPP_POSITION_LABELS[oppNext] ?? '';
     const pts = buildTrainPositions(stateRef.current.homeSide);
     const myLabel = pts[myNext]?.label ?? '';
     setTacticHint({ shot: shotType, opp: oppLabel, label: myLabel });
 
     checkRoundComplete(pool.length);
-  }, [getActivePool, checkRoundComplete, decideHand]);
+  }, [getActivePool, checkRoundComplete, decideHand, pickShotAndOpp]);
 
   // Helper for tactic: pick front or back, alternating
   function pickTacticFrontBack(pool: number[]): number {
@@ -705,6 +790,7 @@ function StepsTrainer() {
     seqIndexRef.current = 0;
     setRoundsDone(0);
     setTacticHint(null);
+    setShotHint(null);
 
     setRunning(true);
     stateRef.current.running = true;
@@ -738,6 +824,7 @@ function StepsTrainer() {
     stateRef.current.oppLight = -1;
     setShowManualHint(false);
     setTacticHint(null);
+    setShotHint(null);
 
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -1162,14 +1249,11 @@ function StepsTrainer() {
       <div style={styles.hudPanel}>
         {/* Top bar (always visible) */}
         <div style={styles.topbar}>
-          <a
-            href="/badminton-board"
-            style={styles.backLink}
-            onClick={(e) => {
-              // Allow default navigation
-            }}
-          >
-            &larr; Back
+          <a href="/" style={styles.backLink}>
+            &larr; 首頁
+          </a>
+          <a href="/badminton-board" style={styles.backLink}>
+            戰術板
           </a>
           <div style={styles.title}>
             米字步訓練器

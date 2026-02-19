@@ -1037,6 +1037,15 @@ export default function BoardClient() {
       <div style={S.root}>
         {/* ════ Toolbar ════ */}
         <div style={S.toolbar}>
+          <button style={S.tbtn(false)} onClick={() => router.push('/')} title="返回首頁">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 8l6-5.5L14 8" /><path d="M4 7.5V13.5h3v-3h2v3h3V7.5" />
+            </svg>
+            <span style={S.tl}>首頁</span>
+          </button>
+
+          <div style={S.sepV} />
+
           <span style={S.tlabel}>{'\u6A21\u5F0F'}</span>
           <button style={S.tbtn(mode === 'draw')} onClick={() => setMode('draw')} title="\u8D70\u7DDA [Q]">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
