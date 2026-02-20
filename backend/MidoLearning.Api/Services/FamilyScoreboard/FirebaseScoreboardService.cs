@@ -28,80 +28,122 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
     private CollectionReference Redemptions(string familyId) =>
         _db.Collection("families").Document(familyId).Collection("redemptions");
 
+    // ── Default player definitions ────────────────────────────────────────────
+
+    /// <summary>
+    /// Default players for the family. IDs are stable so scores accumulate
+    /// correctly even if initialization is called more than once.
+    /// </summary>
+    private static readonly IReadOnlyList<(string Id, Dictionary<string, object> Fields)> DefaultPlayers =
+    [
+        ("playerA", new Dictionary<string, object>
+        {
+            ["playerId"]          = "playerA",
+            ["name"]              = "Ian 祤恩",
+            ["emoji"]             = "🌟",
+            ["color"]             = "#4CAF50",
+            ["birthday"]          = "2016-09-18",
+            ["role"]              = "哥哥",
+            ["achievementPoints"] = 0,
+            ["redeemablePoints"]  = 0,
+            ["totalEarned"]       = 0,
+            ["totalDeducted"]     = 0,
+            ["totalRedeemed"]     = 0,
+        }),
+        ("playerB", new Dictionary<string, object>
+        {
+            ["playerId"]          = "playerB",
+            ["name"]              = "Justin 祤杰",
+            ["emoji"]             = "🚀",
+            ["color"]             = "#2196F3",
+            ["birthday"]          = "2019-08-24",
+            ["role"]              = "弟弟",
+            ["achievementPoints"] = 0,
+            ["redeemablePoints"]  = 0,
+            ["totalEarned"]       = 0,
+            ["totalDeducted"]     = 0,
+            ["totalRedeemed"]     = 0,
+        }),
+    ];
+
     // ── InitializeAsync ───────────────────────────────────────────────────────
 
     /// <summary>
-    /// Idempotent family initialization using BatchWrite.
-    /// Creates default players and rewards if the family doc doesn't exist.
+    /// Idempotent family initialization — safe to call multiple times.
+    /// - Always upserts family meta (preserves scores, updates admin list).
+    /// - Creates each default player only if that player doc doesn't exist yet.
+    /// - Creates default reward only if it doesn't exist yet.
     /// </summary>
     public async Task InitializeAsync(string familyId, string adminUid, CancellationToken ct = default)
     {
         var familyRef = _db.Collection("families").Document(familyId);
-        var snap = await familyRef.GetSnapshotAsync(ct);
-        if (snap.Exists)
-        {
-            _logger.LogInformation("Family {FamilyId} already initialized", familyId);
-            return;
-        }
-
-        var batch = _db.StartBatch();
         var now = Timestamp.GetCurrentTimestamp();
 
-        // Create family meta document
-        batch.Set(familyRef, new Dictionary<string, object>
+        // 1. Upsert family meta (MergeAll preserves existing fields like createdAt)
+        await familyRef.SetAsync(new Dictionary<string, object>
         {
-            ["adminUid"] = adminUid,
-            ["familyId"] = familyId,
-            ["createdAt"] = now,
-        });
+            ["adminUid"]    = adminUid,
+            ["familyId"]    = familyId,
+            // Multiple parents: all emails listed here have admin management access
+            ["adminEmails"] = new List<string> { "pin0513@gmail.com" },
+            ["updatedAt"]   = now,
+        }, SetOptions.MergeAll, ct);
 
-        // Add default players
-        AddDefaultPlayer(batch, familyId, "player_1", "小明", "#4CAF50", now);
-        AddDefaultPlayer(batch, familyId, "player_2", "小美", "#E91E63", now);
+        // 2. Check each player individually — create only if missing
+        var batch = _db.StartBatch();
+        var hasBatchWork = false;
 
-        // Add default reward
+        foreach (var (playerId, fields) in DefaultPlayers)
+        {
+            var playerRef = Scores(familyId).Document(playerId);
+            var playerSnap = await playerRef.GetSnapshotAsync(ct);
+            if (playerSnap.Exists)
+            {
+                _logger.LogInformation(
+                    "Player {PlayerId} already exists in family {FamilyId} — skipping", playerId, familyId);
+                continue;
+            }
+
+            var data = new Dictionary<string, object>(fields)
+            {
+                ["createdAt"] = now,
+                ["updatedAt"] = now,
+            };
+            batch.Set(playerRef, data);
+            hasBatchWork = true;
+            _logger.LogInformation(
+                "Creating player {PlayerId} ({Name}) in family {FamilyId}",
+                playerId, fields["name"], familyId);
+        }
+
+        // 3. Create default reward only if missing
         var rewardRef = Rewards(familyId).Document("reward_1");
-        batch.Set(rewardRef, new Dictionary<string, object>
+        var rewardSnap = await rewardRef.GetSnapshotAsync(ct);
+        if (!rewardSnap.Exists)
         {
-            ["id"] = "reward_1",
-            ["name"] = "看一小時 YouTube",
-            ["cost"] = 50,
-            ["description"] = "可以看一小時 YouTube",
-            ["icon"] = "📺",
-            ["isActive"] = true,
-            ["stock"] = (object)FieldValue.ServerTimestamp,
-        });
-        // Overwrite icon after: just set the whole thing cleanly
-        batch.Set(rewardRef, new Dictionary<string, object>
-        {
-            ["id"] = "reward_1",
-            ["name"] = "看一小時 YouTube",
-            ["cost"] = 50,
-            ["description"] = "可以看一小時 YouTube",
-            ["icon"] = "📺",
-            ["isActive"] = true,
-        });
+            batch.Set(rewardRef, new Dictionary<string, object>
+            {
+                ["id"]          = "reward_1",
+                ["name"]        = "看一小時 YouTube",
+                ["cost"]        = 50,
+                ["description"] = "可以看一小時 YouTube",
+                ["icon"]        = "📺",
+                ["isActive"]    = true,
+            });
+            hasBatchWork = true;
+        }
 
-        await batch.CommitAsync(ct);
-        _logger.LogInformation("Family {FamilyId} initialized by {AdminUid}", familyId, adminUid);
-    }
-
-    private void AddDefaultPlayer(WriteBatch batch, string familyId, string playerId, string name, string color, Timestamp now)
-    {
-        var docRef = Scores(familyId).Document(playerId);
-        batch.Set(docRef, new Dictionary<string, object>
+        if (hasBatchWork)
         {
-            ["playerId"] = playerId,
-            ["name"] = name,
-            ["color"] = color,
-            ["achievementPoints"] = 0,
-            ["redeemablePoints"] = 0,
-            ["totalEarned"] = 0,
-            ["totalDeducted"] = 0,
-            ["totalRedeemed"] = 0,
-            ["createdAt"] = now,
-            ["updatedAt"] = now,
-        });
+            await batch.CommitAsync(ct);
+            _logger.LogInformation(
+                "Family {FamilyId} default data committed by {AdminUid}", familyId, adminUid);
+        }
+        else
+        {
+            _logger.LogInformation(
+                "Family {FamilyId} already fully initialized — no changes needed", familyId);
+        }
     }
 
     // ── GetScoresAsync ────────────────────────────────────────────────────────

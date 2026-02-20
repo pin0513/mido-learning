@@ -21,6 +21,16 @@ const experiments = [
     color: 'from-purple-500 to-indigo-600',
     badge: 'AI 生成',
   },
+  {
+    id: 'family-scoreboard',
+    title: '家長積分系統',
+    description: '紀錄孩子的日常表現，累積積分可兌換獎勵。登入後即可管理米豆與毛豆的積分帳戶。',
+    icon: '🏆',
+    href: '/experiments/family-scoreboard',
+    external: false,
+    color: 'from-yellow-400 to-orange-500',
+    badge: '家庭工具',
+  },
 ];
 
 export default function ExperimentsPage() {

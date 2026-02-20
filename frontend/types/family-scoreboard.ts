@@ -9,6 +9,9 @@ export interface PlayerScoreDto {
   totalEarned: number;
   totalDeducted: number;
   totalRedeemed: number;
+  emoji?: string | null;
+  role?: string | null;
+  birthday?: string | null;
 }
 
 export interface TransactionDto {

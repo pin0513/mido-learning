@@ -77,17 +77,24 @@ class GenerateRequest(BaseModel):
 
 # -- Background Task --
 async def run_generation(task_id: str, req: GenerateRequest):
-    """Background task: runs music generation"""
+    """Background task: runs music generation with incremental progress updates."""
     try:
-        _task_update(task_id, {"status": "processing", "progress": 10})
+        _task_update(task_id, {"status": "processing", "progress": 5})
 
         # Select engine
         engine_name = req.engine if req.engine in ENGINES else "theory_v1"
         director = MusicDirector(engine_name=engine_name)
 
-        _task_update(task_id, {"progress": 20})
+        # Callback called from the worker thread after each pipeline step.
+        # _task_update is thread-safe for both in-memory and Firestore modes.
+        def on_progress(pct: int, log_steps: list) -> None:
+            _task_update(task_id, {
+                "progress": pct,
+                "production_log": log_steps,
+            })
+            logger.info(f"Task {task_id}: {pct}% — {len(log_steps)} step(s) logged")
 
-        # Run generation
+        # Run generation in a thread executor so the event loop stays free.
         result = await asyncio.get_event_loop().run_in_executor(
             None,
             lambda: director.produce(
@@ -97,6 +104,7 @@ async def run_generation(task_id: str, req: GenerateRequest):
                 bars=req.bars,
                 analysis=None,
                 out_dir=str(OUTPUT_DIR / task_id),
+                on_progress=on_progress,
             )
         )
 

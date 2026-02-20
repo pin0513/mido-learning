@@ -18,6 +18,15 @@ public class PlayerScoreDoc
     [FirestoreProperty("color")]
     public string Color { get; set; } = "#4CAF50";
 
+    [FirestoreProperty("emoji")]
+    public string? Emoji { get; set; }
+
+    [FirestoreProperty("role")]
+    public string? Role { get; set; }
+
+    [FirestoreProperty("birthday")]
+    public string? Birthday { get; set; }
+
     [FirestoreProperty("achievementPoints")]
     public int AchievementPoints { get; set; }
 
@@ -42,7 +51,8 @@ public class PlayerScoreDoc
     public PlayerScoreDto ToDto() => new(
         PlayerId, Name, Color,
         AchievementPoints, RedeemablePoints,
-        TotalEarned, TotalDeducted, TotalRedeemed
+        TotalEarned, TotalDeducted, TotalRedeemed,
+        Emoji, Role, Birthday
     );
 }
 

@@ -10,7 +10,10 @@ public record PlayerScoreDto(
     int RedeemablePoints,
     int TotalEarned,
     int TotalDeducted,
-    int TotalRedeemed
+    int TotalRedeemed,
+    string? Emoji = null,
+    string? Role = null,
+    string? Birthday = null
 );
 
 public record TransactionDto(

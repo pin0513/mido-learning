@@ -28,6 +28,11 @@ export function ProductionLog({ steps, status, progress }: ProductionLogProps) {
         />
       </div>
 
+      {/* Progress percentage label */}
+      {status === 'processing' && (
+        <p className="text-xs text-gray-400 mb-3">{progress}% 完成</p>
+      )}
+
       <div className="space-y-2 max-h-60 overflow-y-auto">
         {steps.map((step, i) => (
           <div key={i} className="flex items-start gap-2 text-sm">
@@ -46,7 +51,9 @@ export function ProductionLog({ steps, status, progress }: ProductionLogProps) {
         {status === 'processing' && (
           <div className="flex items-center gap-2 text-blue-500 text-sm pt-1">
             <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin flex-shrink-0" />
-            Generating...
+            {progress >= 70
+              ? 'FluidSynth 渲染中（此步驟最多需 60 秒）...'
+              : '生成中...'}
           </div>
         )}
       </div>

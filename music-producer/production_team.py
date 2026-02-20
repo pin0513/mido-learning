@@ -10,7 +10,7 @@ import logging
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import pretty_midi
 
@@ -87,17 +87,32 @@ class MusicDirector:
         out_dir: Optional[str] = None,
         output_dir: Optional[str] = None,
         soundfont: str = 'soundfonts/GeneralUser.sf2',
+        on_progress: Optional[Callable[[int, List[Dict[str, str]]], None]] = None,
     ) -> Dict[str, Any]:
-        """Run full production pipeline and return result dict."""
+        """Run full production pipeline and return result dict.
+
+        on_progress(progress_pct, log_steps) is called after each step so the
+        caller can push incremental updates to the task store without waiting
+        for the whole pipeline to finish.
+        """
         # Support both out_dir and output_dir parameter names
         final_output_dir = out_dir or output_dir or '/app/output/default'
 
         log = ProductionLog()
         Path(final_output_dir).mkdir(parents=True, exist_ok=True)
 
-        # -- Step 1: Audio Analysis --
+        def _notify(pct: int) -> None:
+            if on_progress:
+                try:
+                    on_progress(pct, log.to_list())
+                except Exception as exc:
+                    logger.warning('on_progress callback error: %s', exc)
+
+        # -- Step 1: Audio Analysis (10 → 25 %) --
+        _notify(10)
         if analysis is None:
             analysis = self._analyse(recording_path, key, bpm, style, log)
+        _notify(25)
 
         # Override with UI params when analysis not confident
         if analysis.source in ('default', 'no_pitch', 'low_confidence'):
@@ -108,23 +123,29 @@ class MusicDirector:
         effective_bpm = analysis.bpm if analysis.source == 'recording' else bpm
         effective_key = analysis.key
 
-        # -- Step 2: Melody composition --
+        # -- Step 2: Melody composition (25 → 45 %) --
         melody_notes = self._compose_melody(analysis, bars, effective_bpm, style, log)
+        _notify(45)
 
-        # -- Step 3: Arrangement (accompaniment) --
+        # -- Step 3: Arrangement (accompaniment) (45 → 60 %) --
         accomp_midi, chord_seq = self._arrange(effective_key, style, bars, effective_bpm, log)
+        _notify(60)
 
-        # -- Step 4: Build main melody MIDI --
+        # -- Step 4: Build main melody MIDI (60 → 65 %) --
         main_midi = self._build_main_midi(melody_notes, effective_bpm)
+        _notify(65)
 
-        # -- Step 5: Producer mix decisions --
+        # -- Step 5: Producer mix decisions (65 → 70 %) --
         db_offsets = self._producer_mix(bars, style, analysis, log)
+        _notify(70)
 
-        # -- Step 6: Render --
+        # -- Step 6: Render (70 → 95 %) — slowest step (FluidSynth) --
+        logger.info('Starting render (FluidSynth MIDI→WAV→MP3) — this may take 10-60 s ...')
         files = self._render(
             main_midi, accomp_midi,
             final_output_dir, soundfont, db_offsets, log,
         )
+        _notify(95)
 
         return {
             'files': files,
@@ -293,6 +314,13 @@ class MusicDirector:
         main_midi.write(main_path)
         accomp_midi.write(accomp_path)
 
+        # Log before the slow FluidSynth step so users see progress
+        log.add(
+            'Render Engineer', '🔊',
+            'MIDI → WAV → MP3（渲染中，最多需 60 秒）',
+            'FluidSynth 正在將 MIDI 轉換為音訊，請耐心等待...',
+        )
+
         render_results = render_all(
             main_midi_path=main_path,
             accomp_midi_path=accomp_path,
@@ -307,9 +335,12 @@ class MusicDirector:
         }
         files.update({k: v for k, v in render_results.items() if v})
 
+        # Update log with completion status
+        has_mp3 = bool(render_results.get('mp3'))
         log.add(
-            'Render Engineer', '🔊',
-            'MIDI -> WAV -> MP3',
-            f'FluidSynth render, 192 kbps MP3, output to {out.name}/',
+            'Render Engineer', '✅',
+            'MIDI -> WAV -> MP3 完成',
+            f'FluidSynth render, 192 kbps MP3, output to {out.name}/ — '
+            f'{"MP3 已生成" if has_mp3 else "僅生成 WAV（MP3 轉檔失敗）"}',
         )
         return files
