@@ -6,6 +6,8 @@ import { getAuth } from 'firebase/auth';
 import { useFamilyScoreboard } from '../hooks/useFamilyScoreboard';
 import {
   generateDisplayCode,
+  regenerateDisplayCode,
+  setDisplayCode as setDisplayCodeApi,
   createPlayer,
   updatePlayer,
   setPlayerPassword,
@@ -212,6 +214,8 @@ export default function FamilyScoreboardAdminPage() {
   const [codeLoading, setCodeLoading] = useState(false);
   const [codeCopied, setCodeCopied]   = useState(false);
   const [regenConfirm, setRegenConfirm] = useState(false);
+  const [customCodeInput, setCustomCodeInput] = useState('');
+  const [codeErr, setCodeErr] = useState<string | null>(null);
   const [playerModal, setPlayerModal] = useState<PlayerModal>(null);
 
   const [tasks, setTasks]           = useState<TaskDto[]>([]);
@@ -362,7 +366,7 @@ export default function FamilyScoreboardAdminPage() {
   async function handleRegenCode() {
     if (!regenConfirm) { setRegenConfirm(true); return; }
     setRegenConfirm(false); setCodeLoading(true);
-    try { const d = await generateDisplayCode(); setDisplayCode(d.displayCode); }
+    try { const d = await regenerateDisplayCode(); setDisplayCode(d.displayCode); }
     catch { /* silent */ } finally { setCodeLoading(false); }
   }
 
@@ -519,6 +523,7 @@ export default function FamilyScoreboardAdminPage() {
           ) : (
             <button onClick={handleReinit} disabled={loading || !familyId} className="w-full min-h-[44px] rounded-xl bg-amber-500 text-white font-semibold text-sm shadow-md disabled:opacity-50 hover:bg-amber-600 transition-colors">🔄 重新初始化</button>
           )}
+          <button onClick={() => router.push('/')} className="w-full min-h-[44px] rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-50 text-sm transition-colors">← 返回 Mido Learning</button>
         </div>
       </aside>
 
@@ -561,16 +566,36 @@ export default function FamilyScoreboardAdminPage() {
                 </div>
                 <button onClick={() => router.push('/family-login')} className="w-full min-h-[52px] bg-amber-50 text-amber-700 font-semibold rounded-2xl hover:bg-amber-100 transition-colors">👤 前往玩家登入頁</button>
                 <div className="bg-white rounded-2xl shadow-sm p-4 space-y-3">
-                  <p className="text-sm font-semibold text-gray-600">重新生成代碼</p>
-                  <p className="text-xs text-gray-400">重新生成後，舊代碼即失效，已登入的玩家不受影響</p>
-                  {regenConfirm ? (
-                    <div className="flex gap-2">
-                      <button onClick={() => setRegenConfirm(false)} className="flex-1 min-h-[48px] border border-gray-300 text-gray-600 rounded-xl font-medium text-sm">取消</button>
-                      <button onClick={handleRegenCode} disabled={codeLoading} className="flex-1 min-h-[48px] bg-red-500 text-white rounded-xl font-bold text-sm disabled:opacity-50">{codeLoading ? '生成中...' : '確定重新生成'}</button>
-                    </div>
-                  ) : (
-                    <button onClick={handleRegenCode} disabled={codeLoading || !familyId} className="w-full min-h-[48px] border-2 border-red-200 text-red-500 rounded-xl font-semibold text-sm hover:bg-red-50 transition-colors disabled:opacity-40">🔄 重新生成代碼</button>
-                  )}
+                  <p className="text-sm font-semibold text-gray-600">自訂代碼</p>
+                  <p className="text-xs text-gray-400">4-12 個英文字母或數字，家庭間不可重複，設定後不自動改變</p>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      maxLength={12}
+                      placeholder="例如：HUANG、PIN2025"
+                      value={customCodeInput}
+                      onChange={(e) => setCustomCodeInput(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))}
+                      className="flex-1 border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm font-mono font-bold outline-none min-h-[48px] tracking-widest"
+                    />
+                    <button
+                      onClick={async () => {
+                        if (!customCodeInput.trim() || !familyId) return;
+                        setCodeLoading(true); setCodeErr(null);
+                        try {
+                          const d = await setDisplayCodeApi(customCodeInput.trim());
+                          setDisplayCode(d.displayCode);
+                          setCustomCodeInput('');
+                        } catch (e: unknown) {
+                          setCodeErr(e instanceof Error ? e.message : '設定失敗');
+                        } finally { setCodeLoading(false); }
+                      }}
+                      disabled={codeLoading || customCodeInput.length < 4 || !familyId}
+                      className="min-h-[48px] px-5 bg-amber-500 text-white font-bold rounded-xl disabled:opacity-40 hover:bg-amber-600 active:scale-95 transition-all text-sm shrink-0"
+                    >
+                      {codeLoading ? '...' : '套用'}
+                    </button>
+                  </div>
+                  {codeErr && <p className="text-xs text-red-500">{codeErr}</p>}
                 </div>
               </div>
             )}

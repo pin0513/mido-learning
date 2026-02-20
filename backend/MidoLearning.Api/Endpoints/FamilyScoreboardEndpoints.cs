@@ -165,6 +165,7 @@ public static class FamilyScoreboardEndpoints
 
         // ── Admin new endpoints ───────────────────────────────────────────────
 
+        // 取得現有代碼（首次自動生成，之後固定不變）
         admin.MapPost("/generate-code", async (
             IFamilyScoreboardService svc,
             ClaimsPrincipal user,
@@ -173,7 +174,43 @@ public static class FamilyScoreboardEndpoints
             var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
             var familyId = $"family_{uid}";
-            var code = await svc.GenerateDisplayCodeAsync(familyId, ct);
+            var code = await svc.GetOrCreateDisplayCodeAsync(familyId, ct);
+            return Results.Ok(new { displayCode = code });
+        });
+
+        // 家長自訂代碼
+        admin.MapPost("/set-code", async (
+            HttpContext http,
+            IFamilyScoreboardService svc,
+            ClaimsPrincipal user,
+            CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var familyId = $"family_{uid}";
+            using var reader = new System.IO.StreamReader(http.Request.Body);
+            var body = System.Text.Json.JsonDocument.Parse(await reader.ReadToEndAsync());
+            if (!body.RootElement.TryGetProperty("code", out var codeProp))
+                return Results.BadRequest("Missing 'code' field");
+            try
+            {
+                var code = await svc.SetDisplayCodeAsync(familyId, codeProp.GetString() ?? "", ct);
+                return Results.Ok(new { displayCode = code });
+            }
+            catch (ArgumentException ex) { return Results.BadRequest(ex.Message); }
+            catch (InvalidOperationException ex) { return Results.Conflict(ex.Message); }
+        });
+
+        // 強制重新生成代碼（家長明確操作）
+        admin.MapPost("/regenerate-code", async (
+            IFamilyScoreboardService svc,
+            ClaimsPrincipal user,
+            CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var familyId = $"family_{uid}";
+            var code = await svc.RegenerateDisplayCodeAsync(familyId, ct);
             return Results.Ok(new { displayCode = code });
         });
 

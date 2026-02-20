@@ -30,7 +30,9 @@ public interface IFamilyScoreboardService
         string familyId, string? status = null, CancellationToken ct = default);
 
     // ── Display Code ──────────────────────────────────────────────────────────
-    Task<string> GenerateDisplayCodeAsync(string familyId, CancellationToken ct = default);
+    Task<string> GetOrCreateDisplayCodeAsync(string familyId, CancellationToken ct = default);
+    Task<string> RegenerateDisplayCodeAsync(string familyId, CancellationToken ct = default);
+    Task<string> SetDisplayCodeAsync(string familyId, string customCode, CancellationToken ct = default);
     Task<FamilyLookupDto?> LookupByCodeAsync(string code, CancellationToken ct = default);
 
     // ── Player CRUD ───────────────────────────────────────────────────────────

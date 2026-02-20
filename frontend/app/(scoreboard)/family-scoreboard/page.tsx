@@ -326,6 +326,12 @@ export default function FamilyScoreboardPage() {
           >
             ⚙️ 管理後台
           </button>
+          <button
+            onClick={() => router.push('/')}
+            className="w-full py-2.5 text-sm text-gray-400 hover:text-gray-600 rounded-xl hover:bg-gray-50 min-h-[48px]"
+          >
+            ← 返回 Mido Learning
+          </button>
         </div>
       </aside>
 
@@ -335,8 +341,15 @@ export default function FamilyScoreboardPage() {
         {/* Mobile Header */}
         <header className="lg:hidden bg-white shadow-sm px-4 py-3 flex items-center justify-between sticky top-0 z-20">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">⭐</span>
-            <h1 className="text-lg font-bold text-amber-800">家庭積分板</h1>
+            <button
+              onClick={() => router.push('/')}
+              className="w-9 h-9 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 text-lg"
+              aria-label="返回主頁"
+            >
+              ←
+            </button>
+            <span className="text-xl">⭐</span>
+            <h1 className="text-base font-bold text-amber-800">家庭積分板</h1>
           </div>
           <div className="flex gap-1.5 items-center">
             {displayCode && (

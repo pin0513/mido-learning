@@ -430,15 +430,67 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
     private CollectionReference TaskTemplates(string familyId) =>
         _db.Collection("families").Document(familyId).Collection("task-templates");
 
-    // ── GenerateDisplayCodeAsync ──────────────────────────────────────────────
+    // ── Display Code ─────────────────────────────────────────────────────────
 
-    public async Task<string> GenerateDisplayCodeAsync(string familyId, CancellationToken ct = default)
+    // 讀取已有代碼；若無則自動生成一次
+    public async Task<string> GetOrCreateDisplayCodeAsync(string familyId, CancellationToken ct = default)
+    {
+        var familySnap = await _db.Collection("families").Document(familyId).GetSnapshotAsync(ct);
+        if (familySnap.Exists && familySnap.ContainsField("displayCode"))
+        {
+            var existing = familySnap.GetValue<string>("displayCode");
+            if (!string.IsNullOrWhiteSpace(existing))
+                return existing;
+        }
+        // 首次：自動生成
+        return await RegenerateDisplayCodeAsync(familyId, ct);
+    }
+
+    // 家長自訂代碼（檢查重複）
+    public async Task<string> SetDisplayCodeAsync(string familyId, string customCode, CancellationToken ct = default)
+    {
+        var code = customCode.Trim().ToUpper();
+        if (string.IsNullOrWhiteSpace(code) || code.Length < 4 || code.Length > 12)
+            throw new ArgumentException("代碼長度需在 4-12 字元之間");
+        if (!System.Text.RegularExpressions.Regex.IsMatch(code, @"^[A-Z0-9]+$"))
+            throw new ArgumentException("代碼只能包含英文字母與數字");
+
+        var existing = await DisplayCodes().Document(code).GetSnapshotAsync(ct);
+        if (existing.Exists && existing.GetValue<string>("familyId") != familyId)
+            throw new InvalidOperationException("此代碼已被其他家庭使用");
+
+        var now = Timestamp.GetCurrentTimestamp();
+        await _db.Collection("families").Document(familyId).SetAsync(new Dictionary<string, object>
+        {
+            ["displayCode"] = code,
+            ["displayCodeUpdatedAt"] = now,
+            ["updatedAt"] = now,
+        }, SetOptions.MergeAll, ct);
+
+        await DisplayCodes().Document(code).SetAsync(new Dictionary<string, object>
+        {
+            ["familyId"] = familyId,
+            ["createdAt"] = now,
+        }, cancellationToken: ct);
+
+        return code;
+    }
+
+    // 強制產生新代碼（家長明確觸發）
+    public async Task<string> RegenerateDisplayCodeAsync(string familyId, CancellationToken ct = default)
     {
         var random = new Random();
-        var code = "MIDO" + random.Next(1000, 9999).ToString();
-        var now = Timestamp.GetCurrentTimestamp();
+        string code;
+        // 確保不重複
+        do
+        {
+            code = "MIDO" + random.Next(1000, 9999).ToString();
+        }
+        while ((await DisplayCodes().Document(code).GetSnapshotAsync(ct)).Exists);
 
+        var now = Timestamp.GetCurrentTimestamp();
         var familyRef = _db.Collection("families").Document(familyId);
+
         await familyRef.SetAsync(new Dictionary<string, object>
         {
             ["displayCode"] = code,

@@ -205,6 +205,30 @@ export async function generateDisplayCode(): Promise<{ displayCode: string }> {
   return res.json() as Promise<{ displayCode: string }>;
 }
 
+export async function regenerateDisplayCode(): Promise<{ displayCode: string }> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/regenerate-code`, {
+    method: 'POST',
+    headers,
+  });
+  if (!res.ok) throw new Error('Failed to regenerate code');
+  return res.json() as Promise<{ displayCode: string }>;
+}
+
+export async function setDisplayCode(code: string): Promise<{ displayCode: string }> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/set-code`, {
+    method: 'POST',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code }),
+  });
+  if (!res.ok) {
+    const msg = await res.text().catch(() => '代碼設定失敗');
+    throw new Error(msg);
+  }
+  return res.json() as Promise<{ displayCode: string }>;
+}
+
 export async function createPlayer(familyId: string, request: CreatePlayerRequest): Promise<PlayerScoreDto> {
   const headers = await getAuthHeaders();
   const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/players`, {
