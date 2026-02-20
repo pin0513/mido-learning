@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { lookupFamilyByCode, playerLogin } from '@/lib/api/family-scoreboard';
 import { savePlayerToken } from '@/lib/playerAuth';
@@ -10,7 +10,7 @@ type Step = 'enter-code' | 'select-player' | 'enter-password';
 
 const STEPS: Step[] = ['enter-code', 'select-player', 'enter-password'];
 
-export default function FamilyLoginPage() {
+function FamilyLoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>('enter-code');
@@ -219,5 +219,17 @@ export default function FamilyLoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function FamilyLoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-amber-50 flex items-center justify-center">
+        <div className="text-amber-400 text-lg">載入中...</div>
+      </div>
+    }>
+      <FamilyLoginContent />
+    </Suspense>
   );
 }
