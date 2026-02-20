@@ -676,7 +676,7 @@ public static class FamilyScoreboardEndpoints
 
         // DELETE /api/family-scoreboard/{familyId}/transactions  (batch)
         admin.MapDelete("/{familyId}/transactions", async (
-            string familyId, BatchDeleteRequest req,
+            string familyId, [Microsoft.AspNetCore.Mvc.FromBody] BatchDeleteRequest req,
             IFamilyScoreboardService svc, CancellationToken ct) =>
         {
             if (req.Ids.Count == 0) return Results.BadRequest("No IDs provided");
@@ -686,7 +686,7 @@ public static class FamilyScoreboardEndpoints
 
         // DELETE /api/family-scoreboard/{familyId}/redemptions  (batch)
         admin.MapDelete("/{familyId}/redemptions", async (
-            string familyId, BatchDeleteRequest req,
+            string familyId, [Microsoft.AspNetCore.Mvc.FromBody] BatchDeleteRequest req,
             IFamilyScoreboardService svc, CancellationToken ct) =>
         {
             if (req.Ids.Count == 0) return Results.BadRequest("No IDs provided");
