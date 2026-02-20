@@ -86,7 +86,7 @@ export default function FamilyLoginPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="text-6xl mb-3">⭐</div>
-          <h1 className="text-2xl font-black text-amber-800">家庭積分板</h1>
+          <h1 className="text-2xl font-black text-amber-800">家庭計分板</h1>
           <p className="text-amber-500 text-sm mt-1">小朋友登入</p>
         </div>
 

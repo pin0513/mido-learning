@@ -113,7 +113,7 @@ function ShareLoginLink({ displayCode }: { displayCode: string }) {
   function handleShare() {
     const url = `${window.location.origin}/family-login?code=${displayCode}`;
     if (navigator.share) {
-      navigator.share({ title: '家庭積分板登入', url }).catch(() => null);
+      navigator.share({ title: '家庭計分板登入', url }).catch(() => null);
     } else {
       navigator.clipboard.writeText(url).then(() => {
         setCopied(true);

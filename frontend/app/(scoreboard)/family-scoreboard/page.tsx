@@ -260,7 +260,7 @@ export default function FamilyScoreboardPage() {
         <div className="w-full max-w-sm space-y-6 text-center">
           <div>
             <div className="text-7xl mb-3">⭐</div>
-            <h1 className="text-2xl font-black text-amber-800">家庭積分板</h1>
+            <h1 className="text-2xl font-black text-amber-800">家庭計分板</h1>
             <p className="text-amber-500 text-sm mt-1">請選擇登入方式</p>
           </div>
 
@@ -308,7 +308,7 @@ export default function FamilyScoreboardPage() {
         <div className="px-6 py-5 border-b border-gray-100">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-2xl">⭐</span>
-            <h1 className="text-lg font-bold text-amber-800">家庭積分板</h1>
+            <h1 className="text-lg font-bold text-amber-800">家庭計分板</h1>
           </div>
           <p className="text-xs text-gray-400">Ian &amp; Justin 的成長紀錄</p>
         </div>
@@ -396,7 +396,7 @@ export default function FamilyScoreboardPage() {
               ←
             </button>
             <span className="text-xl">⭐</span>
-            <h1 className="text-base font-bold text-amber-800">家庭積分板</h1>
+            <h1 className="text-base font-bold text-amber-800">家庭計分板</h1>
           </div>
           <div className="flex gap-1.5 items-center">
             {displayCode && (
