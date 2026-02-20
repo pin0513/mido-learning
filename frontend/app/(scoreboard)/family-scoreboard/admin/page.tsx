@@ -186,7 +186,7 @@ function PlayerFormModal({ modal, familyId, onClose, onSaved }: {
             </div>
             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-2xl">
               <div className="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black text-white shadow-md" style={{ backgroundColor: color }}>
-                {emoji || name.charAt(0) || '?'}
+                {emoji || name?.charAt(0) || '?'}
               </div>
               <div>
                 <p className="font-bold text-gray-800">{name || '名稱預覽'}</p>

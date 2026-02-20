@@ -282,7 +282,7 @@ export default function PlayerPage() {
                 className="w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black text-white shadow"
                 style={{ backgroundColor: myScore.color }}
               >
-                {myScore.emoji ?? playerName.charAt(0)}
+                {myScore.emoji ?? playerName?.charAt(0) ?? '?'}
               </div>
               <div>
                 <p className="font-bold text-gray-800">{playerName}</p>
@@ -325,7 +325,7 @@ export default function PlayerPage() {
                 className="w-8 h-8 rounded-full flex items-center justify-center text-lg font-black text-white shadow"
                 style={{ backgroundColor: myScore.color + 'cc' }}
               >
-                {myScore.emoji ?? playerName.charAt(0)}
+                {myScore.emoji ?? playerName?.charAt(0) ?? '?'}
               </div>
             )}
             <span className="font-bold">{playerName}</span>
