@@ -55,6 +55,12 @@ public class FirebaseService : IFirebaseService
         return await FirebaseAuth.DefaultInstance.GetUserAsync(uid);
     }
 
+    public async Task<UserRecord?> GetUserByEmailAsync(string email)
+    {
+        try { return await FirebaseAuth.DefaultInstance.GetUserByEmailAsync(email); }
+        catch (FirebaseAuthException) { return null; }
+    }
+
     public async Task SetCustomClaimsAsync(string uid, Dictionary<string, object> claims)
     {
         await FirebaseAuth.DefaultInstance.SetCustomUserClaimsAsync(uid, claims);

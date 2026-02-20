@@ -280,6 +280,14 @@ export async function deletePlayer(familyId: string, playerId: string): Promise<
   if (!res.ok && res.status !== 404) throw new Error('Failed to delete player');
 }
 
+export async function lookupUserByEmail(email: string): Promise<{ uid: string; email: string; displayName: string | null } | null> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/lookup-user?email=${encodeURIComponent(email)}`, { headers });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error('Failed to lookup user');
+  return res.json() as Promise<{ uid: string; email: string; displayName: string | null }>;
+}
+
 export async function getCoAdmins(familyId: string): Promise<CoAdminDto[]> {
   const headers = await getAuthHeaders();
   const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/co-admins`, { headers });

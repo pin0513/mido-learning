@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using MidoLearning.Api.Models.FamilyScoreboard;
+using MidoLearning.Api.Services;
 using MidoLearning.Api.Services.FamilyScoreboard;
 
 namespace MidoLearning.Api.Endpoints;
@@ -679,6 +680,17 @@ public static class FamilyScoreboardEndpoints
         {
             await svc.RemoveCoAdminAsync(familyId, coAdminUid, ct);
             return Results.Ok();
+        });
+
+        // GET /api/family-scoreboard/lookup-user?email=xxx - 以 email 查詢帳號 UID
+        admin.MapGet("/lookup-user", async (
+            string email,
+            IFirebaseService firebaseSvc, CancellationToken ct) =>
+        {
+            if (string.IsNullOrWhiteSpace(email)) return Results.BadRequest("email is required");
+            var user = await firebaseSvc.GetUserByEmailAsync(email);
+            if (user is null) return Results.NotFound();
+            return Results.Ok(new LookupUserDto(user.Uid, user.Email ?? email, user.DisplayName));
         });
 
         // GET /api/family-scoreboard/my-family - 取得目前使用者所屬的家庭

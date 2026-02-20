@@ -47,6 +47,7 @@ import {
   addCoAdmin,
   removeCoAdmin,
   getMyFamily,
+  lookupUserByEmail,
 } from '@/lib/api/family-scoreboard';
 import type {
   PlayerScoreDto,
@@ -299,8 +300,9 @@ export default function FamilyScoreboardAdminPage() {
   // Co-admin state
   const [coAdmins, setCoAdmins] = useState<CoAdminDto[]>([]);
   const [coAdminsLoading, setCoAdminsLoading] = useState(false);
-  const [coAdminUidInput, setCoAdminUidInput] = useState('');
-  const [coAdminNameInput, setCoAdminNameInput] = useState('');
+  const [coAdminEmailInput, setCoAdminEmailInput] = useState('');
+  const [coAdminLookupResult, setCoAdminLookupResult] = useState<{ uid: string; email: string; displayName: string | null } | null>(null);
+  const [coAdminLookupState, setCoAdminLookupState] = useState<'idle' | 'searching' | 'found' | 'notfound'>('idle');
   const [coAdminAdding, setCoAdminAdding] = useState(false);
   const [coAdminErr, setCoAdminErr] = useState<string | null>(null);
   const [removingCoAdminUid, setRemovingCoAdminUid] = useState<string | null>(null);
@@ -530,17 +532,31 @@ export default function FamilyScoreboardAdminPage() {
     finally { setDeletingPlayerId(null); }
   }
 
+  async function handleLookupCoAdmin() {
+    if (!coAdminEmailInput.trim()) return;
+    setCoAdminLookupState('searching'); setCoAdminErr(null); setCoAdminLookupResult(null);
+    try {
+      const result = await lookupUserByEmail(coAdminEmailInput.trim());
+      if (result) {
+        setCoAdminLookupResult(result);
+        setCoAdminLookupState('found');
+      } else {
+        setCoAdminLookupState('notfound');
+      }
+    } catch { setCoAdminLookupState('idle'); setCoAdminErr('查詢失敗，請重試'); }
+  }
+
   async function handleAddCoAdmin() {
-    if (!familyId || !coAdminUidInput.trim()) return;
+    if (!familyId || !coAdminLookupResult) return;
     setCoAdminAdding(true); setCoAdminErr(null);
     try {
       const dto = await addCoAdmin(familyId, {
-        coAdminUid: coAdminUidInput.trim(),
-        displayName: coAdminNameInput.trim() || undefined,
+        coAdminUid: coAdminLookupResult.uid,
+        displayName: coAdminLookupResult.displayName ?? coAdminLookupResult.email,
       });
       setCoAdmins((prev) => [...prev, dto]);
-      setCoAdminUidInput(''); setCoAdminNameInput('');
-    } catch { setCoAdminErr('新增失敗，請確認 UID 是否正確'); }
+      setCoAdminEmailInput(''); setCoAdminLookupResult(null); setCoAdminLookupState('idle');
+    } catch { setCoAdminErr('新增失敗，請重試'); }
     finally { setCoAdminAdding(false); }
   }
 
@@ -1014,28 +1030,45 @@ export default function FamilyScoreboardAdminPage() {
                       ))}
                       <div className="border-t border-gray-100 pt-3 space-y-2">
                         <p className="text-xs font-medium text-gray-500">新增共同家長</p>
-                        <input
-                          type="text"
-                          placeholder="Firebase UID"
-                          value={coAdminUidInput}
-                          onChange={(e) => setCoAdminUidInput(e.target.value)}
-                          className="w-full border-2 border-gray-100 focus:border-indigo-300 rounded-xl px-4 py-2.5 text-sm outline-none"
-                        />
-                        <input
-                          type="text"
-                          placeholder="顯示名稱（選填）"
-                          value={coAdminNameInput}
-                          onChange={(e) => setCoAdminNameInput(e.target.value)}
-                          className="w-full border-2 border-gray-100 focus:border-indigo-300 rounded-xl px-4 py-2.5 text-sm outline-none"
-                        />
+                        <div className="flex gap-2">
+                          <input
+                            type="email"
+                            placeholder="輸入帳號 Email"
+                            value={coAdminEmailInput}
+                            onChange={(e) => { setCoAdminEmailInput(e.target.value); setCoAdminLookupState('idle'); setCoAdminLookupResult(null); }}
+                            onKeyDown={(e) => e.key === 'Enter' && handleLookupCoAdmin()}
+                            className="flex-1 border-2 border-gray-100 focus:border-indigo-300 rounded-xl px-4 py-2.5 text-sm outline-none"
+                          />
+                          <button
+                            onClick={handleLookupCoAdmin}
+                            disabled={coAdminLookupState === 'searching' || !coAdminEmailInput.trim()}
+                            className="min-h-[44px] px-4 border-2 border-indigo-200 text-indigo-600 rounded-xl text-sm font-medium hover:bg-indigo-50 transition-all disabled:opacity-40 shrink-0"
+                          >
+                            {coAdminLookupState === 'searching' ? '查詢中...' : '查詢'}
+                          </button>
+                        </div>
+                        {coAdminLookupState === 'notfound' && (
+                          <p className="text-xs text-amber-600">找不到此 Email 對應的帳號</p>
+                        )}
+                        {coAdminLookupState === 'found' && coAdminLookupResult && (
+                          <div className="flex items-center gap-3 p-3 bg-indigo-50 rounded-xl border border-indigo-200">
+                            <div className="w-10 h-10 rounded-full bg-indigo-200 flex items-center justify-center text-indigo-700 font-black text-sm shrink-0">
+                              {(coAdminLookupResult.displayName ?? coAdminLookupResult.email).charAt(0).toUpperCase()}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-gray-800 text-sm">{coAdminLookupResult.displayName ?? '（未設定名稱）'}</p>
+                              <p className="text-xs text-gray-500">{coAdminLookupResult.email}</p>
+                            </div>
+                            <button
+                              onClick={handleAddCoAdmin}
+                              disabled={coAdminAdding}
+                              className="min-h-[36px] px-3 bg-indigo-500 text-white text-xs font-bold rounded-lg hover:bg-indigo-600 transition-all disabled:opacity-40 shrink-0"
+                            >
+                              {coAdminAdding ? '新增中' : '新增'}
+                            </button>
+                          </div>
+                        )}
                         {coAdminErr && <p className="text-xs text-red-500">{coAdminErr}</p>}
-                        <button
-                          onClick={handleAddCoAdmin}
-                          disabled={coAdminAdding || !coAdminUidInput.trim()}
-                          className="w-full min-h-[44px] bg-indigo-500 text-white font-bold rounded-xl hover:bg-indigo-600 active:scale-95 transition-all disabled:opacity-40 text-sm"
-                        >
-                          {coAdminAdding ? '新增中...' : '+ 新增共同家長'}
-                        </button>
                       </div>
                     </div>
                   </div>

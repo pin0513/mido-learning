@@ -412,6 +412,8 @@ public record PlayerStatusDto(
 
 // ── Co-Admin ──────────────────────────────────────────────────────────────
 
+public record LookupUserDto(string Uid, string Email, string? DisplayName);
+
 public record AddCoAdminRequest(string CoAdminUid, string? DisplayName = null);
 
 public record CoAdminDto(string Uid, string? DisplayName, DateTimeOffset AddedAt);

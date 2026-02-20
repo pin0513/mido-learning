@@ -8,6 +8,7 @@ public interface IFirebaseService
 {
     Task<FirebaseToken> VerifyIdTokenAsync(string idToken);
     Task<UserRecord> GetUserAsync(string uid);
+    Task<UserRecord?> GetUserByEmailAsync(string email);
     Task SetCustomClaimsAsync(string uid, Dictionary<string, object> claims);
     Task<string> AddDocumentAsync<T>(string collection, T data) where T : class;
     Task<T?> GetDocumentAsync<T>(string collection, string documentId) where T : class;
