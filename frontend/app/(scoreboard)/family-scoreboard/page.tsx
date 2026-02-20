@@ -23,12 +23,25 @@ interface Category {
 // ── Constants ──────────────────────────────────────────────────────────────────
 
 const CATEGORIES: Category[] = [
-  { id: 'exam',    label: '考試優秀',     amount: 100, emoji: '🏆', type: 'earn' },
-  { id: 'chores',  label: '主動幫忙家事', amount: 5,   emoji: '🏠', type: 'earn' },
-  { id: 'kind',    label: '對人友善',     amount: 10,  emoji: '😊', type: 'earn' },
-  { id: 'special', label: '表現特別優秀', amount: 20,  emoji: '⭐', type: 'earn' },
-  { id: 'fight',   label: '兄弟吵架',     amount: 20,  emoji: '😤', type: 'deduct' },
-  { id: 'lie',     label: '不誠實',       amount: 30,  emoji: '🙈', type: 'deduct' },
+  // ── 加分 ──────────────────────────────────────────────────────────────
+  { id: 'exam_great',    label: '考試/作業優秀',    amount: 50,  emoji: '🏆', type: 'earn' },
+  { id: 'exam_pass',     label: '考試進步',          amount: 20,  emoji: '📈', type: 'earn' },
+  { id: 'chores',        label: '主動幫忙家事',      amount: 8,   emoji: '🏠', type: 'earn' },
+  { id: 'kind',          label: '對人友善/關心人',   amount: 10,  emoji: '💝', type: 'earn' },
+  { id: 'special',       label: '表現特別優秀',      amount: 30,  emoji: '⭐', type: 'earn' },
+  { id: 'study',         label: '主動讀書學習',      amount: 15,  emoji: '📚', type: 'earn' },
+  { id: 'sport',         label: '運動健身',          amount: 10,  emoji: '💪', type: 'earn' },
+  { id: 'tidy',          label: '自動整理房間',      amount: 8,   emoji: '🧹', type: 'earn' },
+  { id: 'brave',         label: '勇敢嘗試新事物',    amount: 15,  emoji: '🦁', type: 'earn' },
+  { id: 'help_sibling',  label: '幫助弟弟/哥哥',     amount: 10,  emoji: '🤝', type: 'earn' },
+  // ── 扣分 ──────────────────────────────────────────────────────────────
+  { id: 'fight',         label: '兄弟吵架',          amount: 20,  emoji: '😤', type: 'deduct' },
+  { id: 'lie',           label: '不誠實/說謊',       amount: 40,  emoji: '🙈', type: 'deduct' },
+  { id: 'rude',          label: '頂嘴/無禮',         amount: 15,  emoji: '😠', type: 'deduct' },
+  { id: 'forgot',        label: '忘記完成任務',      amount: 10,  emoji: '😅', type: 'deduct' },
+  { id: 'tantrum',       label: '亂發脾氣',          amount: 10,  emoji: '😡', type: 'deduct' },
+  { id: 'messy',         label: '亂丟東西不整潔',    amount: 8,   emoji: '🗑️', type: 'deduct' },
+  { id: 'screen',        label: '超時用螢幕',        amount: 15,  emoji: '📵', type: 'deduct' },
 ];
 
 const TABS: { id: Tab; label: string; emoji: string }[] = [
