@@ -31,6 +31,16 @@ const experiments = [
     color: 'from-yellow-400 to-orange-500',
     badge: '家庭工具',
   },
+  {
+    id: 'badminton-trainer',
+    title: '米字步訓練器',
+    description: '互動式羽球步伐訓練工具，跟著節奏練習米字步移動，提升場上步法靈活度。',
+    icon: '👟',
+    href: '/badminton-trainer',
+    external: false,
+    color: 'from-cyan-400 to-blue-500',
+    badge: '運動訓練',
+  },
 ];
 
 export default function ExperimentsPage() {

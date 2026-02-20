@@ -345,7 +345,7 @@ canvas{display:block;}
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8H10a3 3 0 0 1 0 6H6"/><polyline points="8,5.5 5,8 8,10.5"/></svg>
       <span class="tl">復原</span>
     </button>
-    <button class="tbtn" onclick="clearActive()" title="清除選取筆跡">
+    <button class="tbtn" onclick="clearAllStrokes()" title="清除所有線條（棋子不動）">
       <svg width="14" height="15" viewBox="0 0 14 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,3.5 13,3.5"/><path d="M4,3.5V2h6v1.5"/><rect x="2" y="3.5" width="10" height="9" rx="1"/><line x1="5" y1="6.5" x2="5" y2="10.5"/><line x1="9" y1="6.5" x2="9" y2="10.5"/></svg>
       <span class="tl">清跡</span>
     </button>
@@ -408,6 +408,13 @@ canvas{display:block;}
           <div class="hud-row">
             <span class="hud-sep">標記</span>
             <div id="hud-annots" style="display:flex;gap:4px;"></div>
+          </div>
+
+          <!-- 快速清跡 -->
+          <div class="hud-row" style="margin-top:3px;">
+            <button onclick="clearAllStrokes()" title="清除所有線條（棋子不動）" style="font-size:10px;padding:3px 10px;border-radius:6px;border:1px solid rgba(231,76,60,0.5);background:rgba(192,57,43,0.25);color:#e98;cursor:pointer;white-space:nowrap;touch-action:manipulation;">
+              🧹 清跡
+            </button>
           </div>
 
         </div><!-- /hud -->
@@ -992,10 +999,10 @@ function setDash(d) {
   ['solid','dashed','arrow'].forEach(x => document.getElementById('btn-'+x).classList.toggle('on', x===d));
 }
 
-function clearActive() {
-  const ae = getActiveEntity();
-  ae.strokes = [];
-  if (state.activeType !== 'annot') ae.pos = null;
+function clearAllStrokes() {
+  PLAYERS.forEach(p => { p.strokes = []; });
+  BALLS.forEach(b   => { b.strokes = []; });
+  ANNOTS.forEach(a  => { a.strokes = []; });
   redraw();
 }
 
