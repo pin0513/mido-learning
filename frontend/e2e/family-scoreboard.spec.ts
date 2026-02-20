@@ -87,9 +87,9 @@ test.describe.serial('家庭計分板整合測試', () => {
     // 新建
     const res = await adminReq(request, 'POST', `/api/family-scoreboard/${FAMILY_ID}/players`, {
       playerId: PLAYER_ID,
-      displayName: PLAYER_NAME,
-      password: 'test1234',
-      avatarEmoji: '🧪',
+      name: PLAYER_NAME,
+      color: '#3b82f6',
+      emoji: '🧪',
     });
     expect([200, 201]).toContain(res.status());
     console.log(`  ✓ 玩家建立: ${PLAYER_ID}`);
