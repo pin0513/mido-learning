@@ -76,27 +76,18 @@ export function Header() {
           </Link>
           {user && (
             <>
+              <Link
+                href="/family-scoreboard"
+                className="inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-3.5 py-1.5 text-sm font-semibold text-white hover:bg-amber-600 transition-colors"
+              >
+                ⭐ 家庭積分板
+              </Link>
               <Link href="/components" className="text-gray-600 hover:text-gray-900">
                 教材清單
               </Link>
               <Link href="/skill-village" className="text-gray-600 hover:text-gray-900">
                 技能村
               </Link>
-              {(userRole === 'admin' || userRole === 'teacher') && (
-                <Link href="/teacher/components" className="text-gray-600 hover:text-gray-900">
-                  教材管理
-                </Link>
-              )}
-              {userRole === 'admin' && (
-                <>
-                  <Link href="/admin" className="text-gray-600 hover:text-gray-900">
-                    統計數據
-                  </Link>
-                  <Link href="/admin/users" className="text-gray-600 hover:text-gray-900">
-                    用戶管理
-                  </Link>
-                </>
-              )}
             </>
           )}
           <Link
@@ -182,6 +173,13 @@ export function Header() {
             {user && (
               <>
                 <Link
+                  href="/family-scoreboard"
+                  className="flex items-center gap-2 rounded-full bg-amber-500 mx-1 px-4 py-2 text-base font-semibold text-white hover:bg-amber-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  ⭐ 家庭積分板
+                </Link>
+                <Link
                   href="/components"
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                   onClick={() => setMobileMenuOpen(false)}
@@ -195,33 +193,6 @@ export function Header() {
                 >
                   技能村
                 </Link>
-                {(userRole === 'admin' || userRole === 'teacher') && (
-                  <Link
-                    href="/teacher/components"
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    教材管理
-                  </Link>
-                )}
-                {userRole === 'admin' && (
-                  <>
-                    <Link
-                      href="/admin"
-                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      統計數據
-                    </Link>
-                    <Link
-                      href="/admin/users"
-                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      用戶管理
-                    </Link>
-                  </>
-                )}
               </>
             )}
             <Link

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getAuth } from 'firebase/auth';
 import { useFamilyScoreboard } from './hooks/useFamilyScoreboard';
 import type { AddTransactionRequest, CreateRedemptionRequest, PlayerScoreDto } from '@/types/family-scoreboard';
+import { generateDisplayCode } from '@/lib/api/family-scoreboard';
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -68,6 +69,26 @@ export default function FamilyScoreboardPage() {
     if (user) setUid(user.uid);
   }, []);
 
+  useEffect(() => {
+    if (!familyId) return;
+    generateDisplayCode()
+      .then((data) => setDisplayCode(data.displayCode))
+      .catch(() => {
+        // silently ignore if endpoint not available
+      });
+  }, [familyId]);
+
+  async function copyCode() {
+    if (!displayCode) return;
+    try {
+      await navigator.clipboard.writeText(displayCode);
+      setCodeCopied(true);
+      setTimeout(() => setCodeCopied(false), 2000);
+    } catch {
+      // fallback: do nothing
+    }
+  }
+
   const {
     scores,
     transactions,
@@ -98,6 +119,10 @@ export default function FamilyScoreboardPage() {
 
   // Score bounce animation
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
+
+  // Display code for players
+  const [displayCode, setDisplayCode] = useState<string | null>(null);
+  const [codeCopied, setCodeCopied] = useState(false);
 
   // Redeem
   const [selectedRewardId, setSelectedRewardId] = useState('');
@@ -268,6 +293,26 @@ export default function FamilyScoreboardPage() {
               初始化資料
             </button>
           )}
+          {displayCode && (
+            <div className="flex items-center gap-2 p-3 bg-amber-50 rounded-xl">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-gray-400 mb-0.5">玩家登入代碼</p>
+                <p className="text-sm font-mono font-black text-amber-600 tracking-widest">{displayCode}</p>
+              </div>
+              <button
+                onClick={copyCode}
+                className="text-xs text-amber-500 hover:text-amber-700 min-h-[44px] px-2 shrink-0"
+              >
+                {codeCopied ? '已複製' : '複製'}
+              </button>
+            </div>
+          )}
+          <button
+            onClick={() => router.push('/family-login')}
+            className="w-full py-2.5 text-sm bg-amber-50 text-amber-600 rounded-xl hover:bg-amber-100 min-h-[48px] font-medium"
+          >
+            👤 玩家登入頁
+          </button>
           <button
             onClick={refresh}
             disabled={loading}
@@ -293,7 +338,16 @@ export default function FamilyScoreboardPage() {
             <span className="text-2xl">⭐</span>
             <h1 className="text-lg font-bold text-amber-800">家庭積分板</h1>
           </div>
-          <div className="flex gap-1.5">
+          <div className="flex gap-1.5 items-center">
+            {displayCode && (
+              <button
+                onClick={copyCode}
+                className="px-3 py-2 text-xs bg-amber-100 text-amber-700 rounded-full font-mono font-bold min-h-[44px] flex items-center gap-1"
+              >
+                {displayCode}
+                <span className="text-[10px] opacity-60">{codeCopied ? '✓' : '複製'}</span>
+              </button>
+            )}
             {scores.length === 0 && (
               <button
                 onClick={initialize}
@@ -643,64 +697,157 @@ export default function FamilyScoreboardPage() {
             )}
 
             {/* ── Tab: Report ── */}
-            {activeTab === 'report' && (
-              <div className="p-4 lg:py-6 space-y-4">
-                <h2 className="text-base font-bold text-gray-700">統計報表</h2>
-                {scores.map((p) => (
-                  <div key={p.playerId} className="bg-white rounded-2xl shadow-sm p-5">
-                    <div className="flex items-center gap-4 mb-5">
-                      <PlayerAvatar player={p} size="md" />
-                      <div>
-                        <span className="font-bold text-gray-800 text-lg block">{p.name}</span>
-                        <div className="flex flex-wrap items-center gap-2 mt-1">
-                          {p.role && (
-                            <span
-                              className="text-xs px-2.5 py-0.5 rounded-full font-semibold text-white"
-                              style={{ backgroundColor: p.color + 'cc' }}
-                            >
-                              {p.role}
-                            </span>
-                          )}
-                          {p.birthday && (
-                            <span className="text-xs text-gray-400">
-                              🎂 {new Date(p.birthday).toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' })}
-                            </span>
-                          )}
+            {activeTab === 'report' && (() => {
+              const now = new Date();
+              const todayStr = now.toISOString().slice(0, 10);
+              const weekStart = new Date(now);
+              weekStart.setDate(now.getDate() - now.getDay());
+              weekStart.setHours(0, 0, 0, 0);
+              const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+              const statsMap = scores.reduce<Record<string, { today: number; week: number; month: number }>>((acc, p) => {
+                const mine = transactions.filter((t) => t.playerIds.includes(p.playerId));
+                acc[p.playerId] = {
+                  today: mine.filter((t) => t.type === 'earn' && t.createdAt.slice(0, 10) === todayStr).reduce((s, t) => s + t.amount, 0),
+                  week:  mine.filter((t) => t.type === 'earn' && new Date(t.createdAt) >= weekStart).reduce((s, t) => s + t.amount, 0),
+                  month: mine.filter((t) => t.type === 'earn' && new Date(t.createdAt) >= monthStart).reduce((s, t) => s + t.amount, 0),
+                };
+                return acc;
+              }, {});
+
+              const maxWeekXp = Math.max(1, ...scores.map((p) => statsMap[p.playerId]?.week ?? 0));
+              const maxMonthXp = Math.max(1, ...scores.map((p) => statsMap[p.playerId]?.month ?? 0));
+
+              return (
+                <div className="p-4 lg:py-6 space-y-4">
+                  <h2 className="text-base font-bold text-gray-700">統計報表</h2>
+
+                  {/* ── 本週 XP 比較 ── */}
+                  {scores.length > 1 && (
+                    <div className="bg-white rounded-2xl shadow-sm p-4 space-y-3">
+                      <p className="text-sm font-bold text-gray-600">⭐ 本週 XP 比較</p>
+                      {[...scores].sort((a, b) => (statsMap[b.playerId]?.week ?? 0) - (statsMap[a.playerId]?.week ?? 0)).map((p) => {
+                        const w = statsMap[p.playerId]?.week ?? 0;
+                        const pct = Math.round((w / maxWeekXp) * 100);
+                        return (
+                          <div key={p.playerId} className="space-y-1">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <PlayerAvatar player={p} size="sm" />
+                                <span className="text-sm font-semibold text-gray-700">{p.name}</span>
+                              </div>
+                              <span className="text-sm font-black tabular-nums" style={{ color: p.color }}>+{w} XP</span>
+                            </div>
+                            <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-full rounded-full transition-all duration-700"
+                                style={{ width: `${pct}%`, backgroundColor: p.color }} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* ── 本月 XP 比較 ── */}
+                  {scores.length > 1 && (
+                    <div className="bg-white rounded-2xl shadow-sm p-4 space-y-3">
+                      <p className="text-sm font-bold text-gray-600">📅 本月 XP 比較</p>
+                      {[...scores].sort((a, b) => (statsMap[b.playerId]?.month ?? 0) - (statsMap[a.playerId]?.month ?? 0)).map((p) => {
+                        const m = statsMap[p.playerId]?.month ?? 0;
+                        const pct = Math.round((m / maxMonthXp) * 100);
+                        return (
+                          <div key={p.playerId} className="space-y-1">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <PlayerAvatar player={p} size="sm" />
+                                <span className="text-sm font-semibold text-gray-700">{p.name}</span>
+                              </div>
+                              <span className="text-sm font-black tabular-nums" style={{ color: p.color }}>+{m} XP</span>
+                            </div>
+                            <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-full rounded-full transition-all duration-700"
+                                style={{ width: `${pct}%`, backgroundColor: p.color + 'bb' }} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* ── 個別玩家詳情 ── */}
+                  {scores.map((p) => {
+                    const st = statsMap[p.playerId] ?? { today: 0, week: 0, month: 0 };
+                    return (
+                      <div key={p.playerId} className="bg-white rounded-2xl shadow-sm p-5">
+                        <div className="flex items-center gap-4 mb-4">
+                          <PlayerAvatar player={p} size="md" />
+                          <div>
+                            <span className="font-bold text-gray-800 text-lg block">{p.name}</span>
+                            <div className="flex flex-wrap items-center gap-2 mt-1">
+                              {p.role && (
+                                <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold text-white" style={{ backgroundColor: p.color + 'cc' }}>
+                                  {p.role}
+                                </span>
+                              )}
+                              {p.birthday && (
+                                <span className="text-xs text-gray-400">
+                                  🎂 {new Date(p.birthday).toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 時間統計 */}
+                        <div className="grid grid-cols-3 gap-2 text-center mb-3">
+                          <div className="rounded-xl p-2.5" style={{ backgroundColor: '#fef3c7' }}>
+                            <p className="text-lg font-black text-amber-700 tabular-nums">+{st.today}</p>
+                            <p className="text-[11px] text-amber-600 mt-0.5">今日 XP</p>
+                          </div>
+                          <div className="rounded-xl p-2.5" style={{ backgroundColor: '#d1fae5' }}>
+                            <p className="text-lg font-black text-emerald-700 tabular-nums">+{st.week}</p>
+                            <p className="text-[11px] text-emerald-600 mt-0.5">本週 XP</p>
+                          </div>
+                          <div className="rounded-xl p-2.5" style={{ backgroundColor: '#dbeafe' }}>
+                            <p className="text-lg font-black text-blue-700 tabular-nums">+{st.month}</p>
+                            <p className="text-[11px] text-blue-600 mt-0.5">本月 XP</p>
+                          </div>
+                        </div>
+
+                        {/* 累計統計 */}
+                        <div className="grid grid-cols-3 gap-2 text-center mb-2">
+                          <div className="bg-amber-50 rounded-xl p-2.5">
+                            <p className="text-lg font-black tabular-nums" style={{ color: p.color }}>{p.achievementPoints}</p>
+                            <p className="text-[11px] text-gray-400 mt-0.5">成就點</p>
+                          </div>
+                          <div className="bg-emerald-50 rounded-xl p-2.5">
+                            <p className="text-lg font-black text-emerald-600 tabular-nums">{p.redeemablePoints}</p>
+                            <p className="text-[11px] text-gray-400 mt-0.5">可兌換</p>
+                          </div>
+                          <div className="bg-blue-50 rounded-xl p-2.5">
+                            <p className="text-lg font-black text-blue-500 tabular-nums">{p.totalRedeemed}</p>
+                            <p className="text-[11px] text-gray-400 mt-0.5">已兌換</p>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 text-center">
+                          <div className="bg-green-50 rounded-xl p-2.5">
+                            <p className="text-sm font-bold text-green-600">+{p.totalEarned}</p>
+                            <p className="text-[11px] text-gray-400">累計獲得</p>
+                          </div>
+                          <div className="bg-red-50 rounded-xl p-2.5">
+                            <p className="text-sm font-bold text-red-500">−{p.totalDeducted}</p>
+                            <p className="text-[11px] text-gray-400">累計扣除</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-2 text-center mb-3">
-                      <div className="bg-amber-50 rounded-xl p-3">
-                        <p className="text-2xl font-black tabular-nums" style={{ color: p.color }}>{p.achievementPoints}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">成就點</p>
-                      </div>
-                      <div className="bg-emerald-50 rounded-xl p-3">
-                        <p className="text-2xl font-black text-emerald-600 tabular-nums">{p.redeemablePoints}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">可兌換</p>
-                      </div>
-                      <div className="bg-blue-50 rounded-xl p-3">
-                        <p className="text-2xl font-black text-blue-500 tabular-nums">{p.totalRedeemed}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">已兌換</p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 text-center">
-                      <div className="bg-green-50 rounded-xl p-3">
-                        <p className="text-base font-bold text-green-600">+{p.totalEarned}</p>
-                        <p className="text-xs text-gray-400">累計獲得</p>
-                      </div>
-                      <div className="bg-red-50 rounded-xl p-3">
-                        <p className="text-base font-bold text-red-500">−{p.totalDeducted}</p>
-                        <p className="text-xs text-gray-400">累計扣除</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {scores.length === 0 && (
-                  <p className="text-center text-gray-300 py-12 text-sm">尚無資料</p>
-                )}
-              </div>
-            )}
+                    );
+                  })}
+                  {scores.length === 0 && (
+                    <p className="text-center text-gray-300 py-12 text-sm">尚無資料</p>
+                  )}
+                </div>
+              );
+            })()}
 
           </div>
         </main>

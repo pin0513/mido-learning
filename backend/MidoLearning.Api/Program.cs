@@ -107,6 +107,10 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("FamilyAdmin", policy =>
         policy.RequireAuthenticatedUser());
 
+    // Player Only - 玩家 JWT 持有者
+    options.AddPolicy("PlayerOnly", policy =>
+        policy.RequireRole("player"));
+
     // Default policy allows anonymous - individual endpoints opt-in to require auth
     options.FallbackPolicy = null;
 });
