@@ -206,6 +206,18 @@ public static class DevEndpoints
                     WeekDays:          null,
                     AssignedPlayerIds: null),
 
+                // 月考某科100分 → 1000 exp
+                new CreateTaskRequest(
+                    Title:             "月考 100 分（一科）",
+                    Type:              "achievement",
+                    Difficulty:        "hard",
+                    XpReward:          1000,
+                    AllowanceReward:   null,
+                    Description:       "🎯 高分獎勵規則：月考任一科目取得滿分（100分），即可獲得 1,000 XP 獎勵。家長確認成績單後，由家長提交完成並發放 XP。每科月考各自計算，同月可多科獲獎。",
+                    PeriodType:        null,
+                    WeekDays:          null,
+                    AssignedPlayerIds: null),
+
                 // 優秀表現（小）≈ 50元 = 500 exp
                 new CreateTaskRequest(
                     Title:             "優秀表現（小）",
@@ -245,38 +257,39 @@ public static class DevEndpoints
             }
 
             // ── Shop Items ───────────────────────────────────────────────────
-            // 匯率: 300 exp = 30元 (10 exp = 1元)
+            // 零用金 = 新台幣（NT$），兌換獎勵用零用金支付
+            // XP 轉換項目：300 exp → 30 NT$（10 exp = 1 NT$）
 
             var shopItems = new[]
             {
-                // 看 20 分鐘 → 需要 300 exp（等於花費 1 小時任務的經驗值）
+                // 看影片 20 分鐘 → NT$30
                 new CreateShopItemRequest(
                     Name:          "看影片 20 分鐘",
                     Description:   "兌換一次看 YouTube / Netflix 20 分鐘的機會（需家長批准）",
-                    Price:         300,
+                    Price:         30,
                     Type:          "reward",
                     Emoji:         "📺",
                     Stock:         null,
-                    PriceType:     "xp",
+                    PriceType:     "allowance",
                     DailyLimit:    2,
                     AllowanceGiven: null),
 
-                // 看一次自選電影 → 需要 1000 exp (= 100元)
+                // 自選電影一部 → NT$100
                 new CreateShopItemRequest(
                     Name:          "自選電影一部",
                     Description:   "自己挑一部電影，和家人一起觀看（需家長批准）",
-                    Price:         1000,
+                    Price:         100,
                     Type:          "reward",
                     Emoji:         "🎬",
                     Stock:         null,
-                    PriceType:     "xp",
+                    PriceType:     "allowance",
                     DailyLimit:    1,
                     AllowanceGiven: null),
 
-                // 零用金兌換: 300 exp → 30元（匯率 10 exp = 1元）
+                // XP 兌換零用金: 300 exp → NT$30（匯率 10 exp = 1 NT$）
                 new CreateShopItemRequest(
                     Name:          "零用金兌換 30 元",
-                    Description:   "將 300 經驗值兌換為 30 元零用金（匯率：10 exp = 1 元）",
+                    Description:   "將 300 經驗值兌換為 NT$30 零用金（匯率：10 exp = 1 NT$）",
                     Price:         300,
                     Type:          "allowance",
                     Emoji:         "💰",
@@ -285,15 +298,15 @@ public static class DevEndpoints
                     DailyLimit:    null,
                     AllowanceGiven: 30),
 
-                // 玩 Switch 30 分鐘 → 500 exp
+                // 玩 Switch 30 分鐘 → NT$50
                 new CreateShopItemRequest(
                     Name:          "玩 Switch 30 分鐘",
                     Description:   "兌換一次玩任天堂 Switch 30 分鐘的機會（需家長批准）",
-                    Price:         500,
+                    Price:         50,
                     Type:          "reward",
                     Emoji:         "🎮",
                     Stock:         null,
-                    PriceType:     "xp",
+                    PriceType:     "allowance",
                     DailyLimit:    2,
                     AllowanceGiven: null),
             };
@@ -322,7 +335,32 @@ public static class DevEndpoints
             });
         });
 
-        // ── 3. 設定初始零用金餘額（Dev only）────────────────────────────────
+        // ── 3. 初始化家庭（Dev only，指定 familyId）──────────────────────────────
+        // POST /api/dev/init-family
+        // Body: { "familyId": "...", "adminUid": "..." }
+        dev.MapPost("/init-family", async (
+            InitFamilyRequest req,
+            IFamilyScoreboardService svc,
+            CancellationToken ct) =>
+        {
+            await svc.InitializeAsync(req.FamilyId, req.AdminUid, ct);
+            return Results.Ok(new { message = $"✅ Family {req.FamilyId} initialized", adminUid = req.AdminUid });
+        });
+
+        // ── 4. 為任意家庭新增積分交易（Dev only）──────────────────────────────
+        // POST /api/dev/transaction
+        // Body: { "familyId": "...", "playerIds": [...], "type": "earn|deduct", "amount": N, "reason": "..." }
+        dev.MapPost("/transaction", async (
+            DevTransactionRequest req,
+            IFamilyScoreboardService svc,
+            CancellationToken ct) =>
+        {
+            var txReq = new AddTransactionRequest(req.PlayerIds, req.Type, req.Amount, req.Reason, null, req.Note);
+            var result = await svc.AddTransactionAsync(req.FamilyId, txReq, "dev-test", ct);
+            return Results.Created($"/api/dev/transaction/{result.Id}", result);
+        });
+
+        // ── 5. 設定初始零用金餘額（Dev only）────────────────────────────────
         // POST /api/dev/allowance-init
         dev.MapPost("/allowance-init", async (
             AllowanceInitRequest req,
@@ -345,4 +383,6 @@ public static class DevEndpoints
 
 public record PlayerTokenRequest(string FamilyId, string PlayerId, string PlayerName);
 public record SeedRequest(string FamilyId);
+public record InitFamilyRequest(string FamilyId, string AdminUid);
+public record DevTransactionRequest(string FamilyId, List<string> PlayerIds, string Type, int Amount, string Reason, string? Note = null);
 public record AllowanceInitRequest(string FamilyId, string PlayerId, int Amount);

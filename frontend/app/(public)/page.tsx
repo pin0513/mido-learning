@@ -131,16 +131,16 @@ export default function HomePage() {
                     瀏覽教材
                   </span>
                 </Link>
-                <Link href="/games">
+                <Link href="/experiments">
                   <span className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-semibold transition-all hover:bg-stone-100" style={{ background: 'transparent', color: '#2a2520', border: '2px solid #2a2520' }}>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-                    技能村
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+                    實驗場域
                   </span>
                 </Link>
-                <Link href="/dashboard/achievements">
+                <Link href="/experiments/family-scoreboard">
                   <span className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-semibold transition-all hover:bg-stone-100" style={{ background: 'transparent', color: '#2a2520', border: '2px solid #c0bab2' }}>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-                    成就系統
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    親子教養
                   </span>
                 </Link>
                 {!user && (
@@ -230,29 +230,29 @@ export default function HomePage() {
             這個網站在做什麼？
           </h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {/* Card 1 */}
+            {/* Card 1: AI 教案 */}
             <div className="group relative overflow-hidden p-8 transition-shadow hover:shadow-md" style={{ background: '#faf9f7', border: '1.5px solid #c0bab2' }}>
               <div className="mb-5 flex h-14 w-14 items-center justify-center" style={{ background: '#1a1614' }}>
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#faf9f7" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9 2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9 2.83-2.83"/></svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold" style={{ color: '#1a1614' }}>AI 生成教案</h3>
-              <p className="leading-relaxed" style={{ color: '#5a534c' }}>嘗試用 AI 工具製作教學內容，探索 AI 輔助教育的可能性。</p>
+              <h3 className="mb-2 text-xl font-bold" style={{ color: '#1a1614' }}>AI 教案</h3>
+              <p className="leading-relaxed" style={{ color: '#5a534c' }}>用 AI 工具製作互動式教學教案與投影片，讓學習內容更生動、更容易理解。</p>
             </div>
-            {/* Card 2 */}
+            {/* Card 2: 實驗場域 */}
             <div className="group relative overflow-hidden p-8 transition-shadow hover:shadow-md" style={{ background: '#faf9f7', border: '1.5px solid #c0bab2' }}>
               <div className="mb-5 flex h-14 w-14 items-center justify-center" style={{ background: '#3d3830' }}>
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#faf9f7" strokeWidth="2" strokeLinecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#faf9f7" strokeWidth="2" strokeLinecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold" style={{ color: '#1a1614' }}>技能村遊戲</h3>
-              <p className="leading-relaxed" style={{ color: '#5a534c' }}>透過遊戲化學習，讓知識變得更有趣。完成挑戰，提升技能！</p>
+              <h3 className="mb-2 text-xl font-bold" style={{ color: '#1a1614' }}>實驗場域</h3>
+              <p className="leading-relaxed" style={{ color: '#5a534c' }}>各種好奇心驅動的小實驗，從遊戲化工具到互動應用，持續探索 AI 與教育的邊界。</p>
             </div>
-            {/* Card 3 */}
+            {/* Card 3: 親子教養 */}
             <div className="group relative overflow-hidden p-8 transition-shadow hover:shadow-md" style={{ background: '#faf9f7', border: '1.5px solid #c0bab2' }}>
               <div className="mb-5 flex h-14 w-14 items-center justify-center" style={{ background: '#6b6560' }}>
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#faf9f7" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#faf9f7" strokeWidth="2" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold" style={{ color: '#1a1614' }}>成就系統</h3>
-              <p className="leading-relaxed" style={{ color: '#5a534c' }}>累積學習成果，解鎖專屬成就。記錄你的學習歷程！</p>
+              <h3 className="mb-2 text-xl font-bold" style={{ color: '#1a1614' }}>親子教養</h3>
+              <p className="leading-relaxed" style={{ color: '#5a534c' }}>家庭計分板、任務系統、零用金管理——用遊戲化方式陪伴孩子建立習慣與自律。</p>
             </div>
           </div>
         </div>

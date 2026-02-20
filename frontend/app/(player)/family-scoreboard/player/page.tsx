@@ -634,7 +634,7 @@ export default function PlayerPage() {
                   {allowance && (
                     <div className="flex items-center gap-1 bg-amber-50 px-3 py-1.5 rounded-full">
                       <span className="text-xs text-amber-600">零用金</span>
-                      <span className="font-black text-amber-700">${allowance.balance}</span>
+                      <span className="font-black text-amber-700">NT${allowance.balance}</span>
                     </div>
                   )}
                 </div>
@@ -679,10 +679,10 @@ export default function PlayerPage() {
                           </div>
                           <div className="shrink-0 text-right space-y-2">
                             <p className="font-black text-amber-600">
-                              {item.price} {isXp ? '⭐ XP' : '💰'}
+                              {isXp ? `${item.price} ⭐ XP` : `NT$${item.price}`}
                             </p>
                             {!canAfford && (
-                              <p className="text-xs text-red-400">{isXp ? 'XP 不足' : '餘額不足'}</p>
+                              <p className="text-xs text-red-400">{isXp ? 'XP 不足' : '零用金不足'}</p>
                             )}
                             <button
                               onClick={() => handleShopOrder(item)}

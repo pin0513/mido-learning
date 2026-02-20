@@ -823,6 +823,15 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             throw new InvalidOperationException($"Completion {completionId} not found");
         var preDoc = completionPreSnap.ConvertTo<TaskCompletionDoc>();
 
+        // 預讀任務資料（在 Firestore transaction 外，避免 reads-after-writes 違規）
+        TaskDoc? preTaskDoc = null;
+        if (req.Action == "approve")
+        {
+            var taskPreSnap = await Tasks(familyId).Document(preDoc.TaskId).GetSnapshotAsync(ct);
+            if (taskPreSnap.Exists)
+                preTaskDoc = taskPreSnap.ConvertTo<TaskDoc>();
+        }
+
         // 若為 approve，預取玩家 XP 倍率
         var xpMultiplier = 1.0;
         if (req.Action == "approve")
@@ -885,26 +894,21 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
                 updates["transactionId"] = txId;
 
-                // Also add allowance reward if configured
-                var taskSnap2 = await tx.GetSnapshotAsync(Tasks(familyId).Document(doc.TaskId));
-                if (taskSnap2.Exists)
+                // Also add allowance reward if configured（使用預讀的 task doc，避免 reads-after-writes）
+                if (preTaskDoc?.AllowanceReward > 0)
                 {
-                    var taskDoc = taskSnap2.ConvertTo<TaskDoc>();
-                    if (taskDoc.AllowanceReward > 0)
+                    var allowanceId = Guid.NewGuid().ToString("N");
+                    var allowanceRef = AllowanceLedger(familyId).Document(allowanceId);
+                    tx.Set(allowanceRef, new Dictionary<string, object>
                     {
-                        var allowanceId = Guid.NewGuid().ToString("N");
-                        var allowanceRef = AllowanceLedger(familyId).Document(allowanceId);
-                        tx.Set(allowanceRef, new Dictionary<string, object>
-                        {
-                            ["recordId"] = allowanceId,
-                            ["playerId"] = doc.PlayerId,
-                            ["amount"] = taskDoc.AllowanceReward,
-                            ["reason"] = $"任務完成：{doc.TaskTitle}",
-                            ["type"] = "earn",
-                            ["createdBy"] = adminUid,
-                            ["createdAt"] = now,
-                        });
-                    }
+                        ["recordId"] = allowanceId,
+                        ["playerId"] = doc.PlayerId,
+                        ["amount"] = preTaskDoc.AllowanceReward,
+                        ["reason"] = $"任務完成：{doc.TaskTitle}",
+                        ["type"] = "earn",
+                        ["createdBy"] = adminUid,
+                        ["createdAt"] = now,
+                    });
                 }
             }
 
@@ -1319,8 +1323,36 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                     await ActiveEffects(familyId).Document(effectId).SetAsync(effectData, null, ct);
                 }
             }
-            else // priceType = "allowance"（原本邏輯）
+            else // priceType = "allowance"（扣零用金）
             {
+                // 餘額檢查：確保玩家有足夠零用金
+                var balanceSnaps = await AllowanceLedger(familyId)
+                    .WhereEqualTo("playerId", order.PlayerId)
+                    .GetSnapshotAsync(ct);
+                var currentBalance = balanceSnaps.Documents
+                    .Select(d => d.ConvertTo<AllowanceLedgerDoc>())
+                    .Sum(r => r.Amount);
+
+                if (currentBalance < order.Price)
+                {
+                    // 餘額不足，自動改為拒絕
+                    var rejectUpdates = new Dictionary<string, object>
+                    {
+                        ["status"] = "rejected",
+                        ["processedAt"] = now,
+                        ["processedBy"] = adminUid,
+                        ["note"] = $"零用金不足（餘額 NT${currentBalance}，需 NT${order.Price}）",
+                    };
+                    await ShopOrders(familyId).Document(orderId).UpdateAsync(rejectUpdates, cancellationToken: ct);
+                    return new ShopOrderDoc
+                    {
+                        OrderId = order.OrderId, PlayerId = order.PlayerId, ItemId = order.ItemId,
+                        ItemName = order.ItemName, Price = order.Price, Status = "rejected",
+                        RequestedAt = order.RequestedAt, ProcessedAt = now, ProcessedBy = adminUid,
+                        Note = $"零用金不足（餘額 NT${currentBalance}，需 NT${order.Price}）",
+                    }.ToDto();
+                }
+
                 var ledgerRecordId = Guid.NewGuid().ToString("N");
                 var ledgerData = new Dictionary<string, object>
                 {
@@ -1333,6 +1365,9 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                     ["createdAt"] = now,
                 };
                 await AllowanceLedger(familyId).Document(ledgerRecordId).SetAsync(ledgerData, null, ct);
+
+                // 更新 AllowanceBalance（重新計算並快取，避免每次全掃 ledger）
+                // ✅ 餘額從 ledger 動態計算，不需要額外更新
             }
         }
 
