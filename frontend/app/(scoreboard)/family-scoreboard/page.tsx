@@ -238,10 +238,39 @@ export default function FamilyScoreboardPage() {
 
   if (!uid) {
     return (
-      <div className="min-h-screen bg-amber-50 flex items-center justify-center">
-        <div className="text-center space-y-3">
-          <div className="text-6xl">⭐</div>
-          <p className="text-amber-700 font-semibold">請先登入</p>
+      <div className="min-h-screen bg-amber-50 flex flex-col items-center justify-center px-4 py-12">
+        <div className="w-full max-w-sm space-y-6 text-center">
+          <div>
+            <div className="text-7xl mb-3">⭐</div>
+            <h1 className="text-2xl font-black text-amber-800">家庭積分板</h1>
+            <p className="text-amber-500 text-sm mt-1">請選擇登入方式</p>
+          </div>
+
+          <div className="space-y-3">
+            {/* 小孩登入 */}
+            <button
+              onClick={() => router.push('/family-login')}
+              className="w-full min-h-[72px] bg-amber-500 hover:bg-amber-600 active:scale-95 text-white rounded-3xl flex items-center gap-4 px-6 shadow-lg transition-all"
+            >
+              <span className="text-4xl">🧒</span>
+              <div className="text-left">
+                <p className="font-black text-lg">小孩登入</p>
+                <p className="text-xs text-amber-100">輸入家庭代碼與密碼</p>
+              </div>
+            </button>
+
+            {/* 家長登入 */}
+            <button
+              onClick={() => router.push('/login')}
+              className="w-full min-h-[72px] bg-white hover:bg-gray-50 active:scale-95 text-gray-700 rounded-3xl flex items-center gap-4 px-6 shadow border border-gray-100 transition-all"
+            >
+              <span className="text-4xl">👨‍👩‍👧</span>
+              <div className="text-left">
+                <p className="font-black text-lg text-gray-800">家長登入</p>
+                <p className="text-xs text-gray-400">使用 Mido Learning 帳號</p>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     );

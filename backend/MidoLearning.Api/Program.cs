@@ -240,6 +240,9 @@ app.MapMusicEndpoints();
 app.MapSkillVillageAuthEndpoints();
 app.MapSkillVillageGameEndpoints();
 
+// Dev-only endpoints (local testing helpers)
+app.MapDevEndpoints();
+
 app.Run();
 
 // Make Program accessible to test projects
