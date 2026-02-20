@@ -35,6 +35,14 @@ import type {
   TaskTemplateDto,
   CreateTaskTemplateRequest,
   FamilyBackupDto,
+  SealDto,
+  PenaltyDto,
+  ActiveEffectDto,
+  PlayerStatusDto,
+  CreateSealRequest,
+  CreatePenaltyRequest,
+  CreateEffectRequest,
+  AddTransactionWithEffectsRequest,
 } from '@/types/family-scoreboard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -582,4 +590,130 @@ export async function addAdminTransaction(
   });
   if (!res.ok) throw new Error('交易失敗');
   return res.json() as Promise<TransactionDto>;
+}
+
+export async function updateEvent(familyId: string, eventId: string, request: CreateEventRequest): Promise<EventDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/events/${eventId}`, {
+    method: 'PUT', headers, body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error('Failed to update event');
+  return res.json() as Promise<EventDto>;
+}
+
+// ─────────────────────────── Seal / Penalty / ActiveEffect ─────────────────
+
+export async function addTransactionWithEffects(
+  familyId: string, request: AddTransactionWithEffectsRequest
+): Promise<TransactionDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/transactions-with-effects`, {
+    method: 'POST', headers, body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error('交易失敗');
+  return res.json() as Promise<TransactionDto>;
+}
+
+export async function getSeals(familyId: string, playerId?: string, status?: string): Promise<SealDto[]> {
+  const headers = await getAuthHeaders();
+  const url = new URL(`${API_URL}/api/family-scoreboard/${familyId}/seals`);
+  if (playerId) url.searchParams.set('playerId', playerId);
+  if (status) url.searchParams.set('status', status);
+  const res = await fetch(url.toString(), { headers });
+  if (!res.ok) throw new Error('Failed to get seals');
+  return res.json() as Promise<SealDto[]>;
+}
+
+export async function createSeal(familyId: string, request: CreateSealRequest): Promise<SealDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/seals`, {
+    method: 'POST', headers, body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error('Failed to create seal');
+  return res.json() as Promise<SealDto>;
+}
+
+export async function liftSeal(familyId: string, sealId: string): Promise<SealDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/seals/${sealId}/lift`, {
+    method: 'POST', headers,
+  });
+  if (!res.ok) throw new Error('Failed to lift seal');
+  return res.json() as Promise<SealDto>;
+}
+
+export async function getPenalties(familyId: string, playerId?: string, status?: string): Promise<PenaltyDto[]> {
+  const headers = await getAuthHeaders();
+  const url = new URL(`${API_URL}/api/family-scoreboard/${familyId}/penalties`);
+  if (playerId) url.searchParams.set('playerId', playerId);
+  if (status) url.searchParams.set('status', status);
+  const res = await fetch(url.toString(), { headers });
+  if (!res.ok) throw new Error('Failed to get penalties');
+  return res.json() as Promise<PenaltyDto[]>;
+}
+
+export async function createPenalty(familyId: string, request: CreatePenaltyRequest): Promise<PenaltyDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/penalties`, {
+    method: 'POST', headers, body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error('Failed to create penalty');
+  return res.json() as Promise<PenaltyDto>;
+}
+
+export async function completePenalty(familyId: string, penaltyId: string): Promise<PenaltyDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/penalties/${penaltyId}/complete`, {
+    method: 'POST', headers,
+  });
+  if (!res.ok) throw new Error('Failed to complete penalty');
+  return res.json() as Promise<PenaltyDto>;
+}
+
+export async function getActiveEffects(familyId: string, playerId?: string): Promise<ActiveEffectDto[]> {
+  const headers = await getAuthHeaders();
+  const url = new URL(`${API_URL}/api/family-scoreboard/${familyId}/active-effects`);
+  if (playerId) url.searchParams.set('playerId', playerId);
+  const res = await fetch(url.toString(), { headers });
+  if (!res.ok) throw new Error('Failed to get active effects');
+  return res.json() as Promise<ActiveEffectDto[]>;
+}
+
+export async function createActiveEffect(familyId: string, request: CreateEffectRequest): Promise<ActiveEffectDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/active-effects`, {
+    method: 'POST', headers, body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error('Failed to create active effect');
+  return res.json() as Promise<ActiveEffectDto>;
+}
+
+export async function expireEffect(familyId: string, effectId: string): Promise<ActiveEffectDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/active-effects/${effectId}/expire`, {
+    method: 'POST', headers,
+  });
+  if (!res.ok) throw new Error('Failed to expire effect');
+  return res.json() as Promise<ActiveEffectDto>;
+}
+
+export async function getPlayerStatus(familyId: string, playerId: string): Promise<PlayerStatusDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/players/${playerId}/status`, { headers });
+  if (!res.ok) throw new Error('Failed to get player status');
+  return res.json() as Promise<PlayerStatusDto>;
+}
+
+export async function getMyStatus(familyId: string): Promise<PlayerStatusDto> {
+  const headers = await getPlayerAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/my-status`, { headers });
+  if (!res.ok) throw new Error('Failed to get status');
+  return res.json() as Promise<PlayerStatusDto>;
+}
+
+export async function getMyEffects(familyId: string): Promise<ActiveEffectDto[]> {
+  const headers = await getPlayerAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/my-effects`, { headers });
+  if (!res.ok) throw new Error('Failed to get effects');
+  return res.json() as Promise<ActiveEffectDto[]>;
 }

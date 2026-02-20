@@ -185,7 +185,31 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
     // ── AddTransactionAsync ───────────────────────────────────────────────────
 
     /// <summary>
+    /// 取得玩家目前最高有效的 XP 倍率（若無活躍效果則回傳 1.0）
+    /// </summary>
+    private async Task<double> GetEffectiveXpMultiplierAsync(string familyId, string playerId, CancellationToken ct)
+    {
+        var now = DateTimeOffset.UtcNow;
+        var snaps = await ActiveEffects(familyId)
+            .WhereEqualTo("playerId", playerId)
+            .WhereEqualTo("status", "active")
+            .GetSnapshotAsync(ct);
+
+        var effects = snaps.Documents
+            .Select(d => d.ConvertTo<ActiveEffectDoc>())
+            .Where(e => e.Type == "xp-multiplier" && e.Multiplier.HasValue)
+            .Where(e => !e.ExpiresAt.HasValue || e.ExpiresAt.Value.ToDateTimeOffset() >= now)
+            .ToList();
+
+        if (effects.Count == 0) return 1.0;
+
+        // 取最高倍率
+        return effects.Max(e => e.Multiplier!.Value);
+    }
+
+    /// <summary>
     /// Adds a transaction and atomically updates player scores using Firestore Transaction.
+    /// 若為 earn 類型且玩家有活躍 XP 倍率效果，自動套用最高倍率。
     /// </summary>
     public async Task<TransactionDto> AddTransactionAsync(
         string familyId, AddTransactionRequest request, string adminUid, CancellationToken ct = default)
@@ -194,6 +218,13 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         var txRef = Transactions(familyId).Document(txId);
         var isEarn = request.Type == "earn";
         TransactionDoc? result = null;
+
+        // 預取每位玩家的 XP 倍率（earn/deduct 皆會套用，在 Firestore transaction 外執行）
+        var playerMultiplierTasks = request.PlayerIds.Select(async pid =>
+            (pid, await GetEffectiveXpMultiplierAsync(familyId, pid, ct)));
+        var playerMultipliers = new Dictionary<string, double>();
+        foreach (var (pid, mult) in await Task.WhenAll(playerMultiplierTasks))
+            playerMultipliers[pid] = mult;
 
         await _db.RunTransactionAsync(async tx =>
         {
@@ -206,8 +237,18 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             foreach (var r in scoreRefs)
                 scoreSnaps.Add(await tx.GetSnapshotAsync(r));
 
-            // 2. Build transaction doc
+            // 2. Build transaction doc（記錄基礎 amount，倍率資訊寫入 note）
             var now = Timestamp.GetCurrentTimestamp();
+
+            // 取代表性倍率（多人時取第一位；實際各玩家可能不同）
+            var reprMult = playerMultipliers.Values.FirstOrDefault(1.0);
+            var multNote = reprMult != 1.0
+                ? $"（×{reprMult:G4} 倍率加成，實際 {(long)Math.Round(request.Amount * reprMult)} XP）"
+                : null;
+            var finalNote = request.Note != null
+                ? (multNote != null ? $"{request.Note} {multNote}" : request.Note)
+                : multNote;
+
             var txData = new Dictionary<string, object>
             {
                 ["id"] = txId,
@@ -219,11 +260,11 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                 ["createdAt"] = now,
             };
             if (request.CategoryId != null) txData["categoryId"] = request.CategoryId;
-            if (request.Note != null) txData["note"] = request.Note;
+            if (finalNote != null) txData["note"] = finalNote;
 
             tx.Set(txRef, txData);
 
-            // 3. Update each player's score atomically
+            // 3. Update each player's score atomically（倍率套用於 earn/deduct 兩者）
             foreach (var (scoreRef, snap) in scoreRefs.Zip(scoreSnaps))
             {
                 if (!snap.Exists)
@@ -232,6 +273,9 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                     continue;
                 }
 
+                var mult = playerMultipliers.GetValueOrDefault(scoreRef.Id, 1.0);
+                var actualXp = (long)Math.Round(request.Amount * mult);
+
                 var updates = new Dictionary<string, object>
                 {
                     ["updatedAt"] = now,
@@ -239,14 +283,15 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
                 if (isEarn)
                 {
-                    updates["achievementPoints"] = FieldValue.Increment(request.Amount);
-                    updates["redeemablePoints"] = FieldValue.Increment(request.Amount);
-                    updates["totalEarned"] = FieldValue.Increment(request.Amount);
+                    updates["achievementPoints"] = FieldValue.Increment(actualXp);
+                    updates["redeemablePoints"] = FieldValue.Increment(actualXp);
+                    updates["totalEarned"] = FieldValue.Increment(actualXp);
                 }
                 else
                 {
-                    updates["redeemablePoints"] = FieldValue.Increment(-request.Amount);
-                    updates["totalDeducted"] = FieldValue.Increment(request.Amount);
+                    // 扣分也套用倍率（例如處罰加重 ×2.0）
+                    updates["redeemablePoints"] = FieldValue.Increment(-actualXp);
+                    updates["totalDeducted"] = FieldValue.Increment(actualXp);
                 }
 
                 tx.Update(scoreRef, updates);
@@ -262,7 +307,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                 CategoryId = request.CategoryId,
                 CreatedBy = adminUid,
                 CreatedAt = now,
-                Note = request.Note,
+                Note = finalNote,
             };
         }, cancellationToken: ct);
 
@@ -429,6 +474,15 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
     private CollectionReference TaskTemplates(string familyId) =>
         _db.Collection("families").Document(familyId).Collection("task-templates");
+
+    private CollectionReference Seals(string familyId) =>
+        _db.Collection("families").Document(familyId).Collection("seals");
+
+    private CollectionReference Penalties(string familyId) =>
+        _db.Collection("families").Document(familyId).Collection("penalties");
+
+    private CollectionReference ActiveEffects(string familyId) =>
+        _db.Collection("families").Document(familyId).Collection("active-effects");
 
     // ── Display Code ─────────────────────────────────────────────────────────
 
@@ -763,6 +817,17 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
     public async Task<TaskCompletionDto> ProcessTaskCompletionAsync(string familyId, string completionId, ProcessTaskCompletionRequest req, string adminUid, CancellationToken ct = default)
     {
+        // 先讀取 completion 基本資訊以取得 playerId（在 Firestore transaction 外）
+        var completionPreSnap = await TaskCompletions(familyId).Document(completionId).GetSnapshotAsync(ct);
+        if (!completionPreSnap.Exists)
+            throw new InvalidOperationException($"Completion {completionId} not found");
+        var preDoc = completionPreSnap.ConvertTo<TaskCompletionDoc>();
+
+        // 若為 approve，預取玩家 XP 倍率
+        var xpMultiplier = 1.0;
+        if (req.Action == "approve")
+            xpMultiplier = await GetEffectiveXpMultiplierAsync(familyId, preDoc.PlayerId, ct);
+
         var completionRef = TaskCompletions(familyId).Document(completionId);
         TaskCompletionDoc? result = null;
 
@@ -792,6 +857,12 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                 var txRef = Transactions(familyId).Document(txId);
                 var scoreRef = Scores(familyId).Document(doc.PlayerId);
 
+                // 套用 XP 倍率
+                var actualXp = (long)Math.Round(doc.XpReward * xpMultiplier);
+                var multNote = xpMultiplier != 1.0
+                    ? $"（×{xpMultiplier:G4} 倍率加成，實際獲得 {actualXp} XP）"
+                    : null;
+
                 tx.Set(txRef, new Dictionary<string, object>
                 {
                     ["id"] = txId,
@@ -801,13 +872,14 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                     ["reason"] = $"任務完成：{doc.TaskTitle}",
                     ["createdBy"] = adminUid,
                     ["createdAt"] = now,
+                    ["note"] = multNote ?? (object)string.Empty,
                 });
 
                 tx.Update(scoreRef, new Dictionary<string, object>
                 {
-                    ["achievementPoints"] = FieldValue.Increment(doc.XpReward),
-                    ["redeemablePoints"] = FieldValue.Increment(doc.XpReward),
-                    ["totalEarned"] = FieldValue.Increment(doc.XpReward),
+                    ["achievementPoints"] = FieldValue.Increment(actualXp),
+                    ["redeemablePoints"] = FieldValue.Increment(actualXp),
+                    ["totalEarned"] = FieldValue.Increment(actualXp),
                     ["updatedAt"] = now,
                 });
 
@@ -1043,6 +1115,9 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         };
         if (req.Stock.HasValue) data["stock"] = req.Stock.Value;
         if (req.DailyLimit.HasValue) data["dailyLimit"] = req.DailyLimit.Value;
+        if (req.DurationMinutes.HasValue) data["durationMinutes"] = req.DurationMinutes.Value;
+        if (req.EffectType != null) data["effectType"] = req.EffectType;
+        if (req.EffectValue.HasValue) data["effectValue"] = (double)req.EffectValue.Value;
 
         await ShopItems(familyId).Document(itemId).SetAsync(data, cancellationToken: ct);
         var snap = await ShopItems(familyId).Document(itemId).GetSnapshotAsync(ct);
@@ -1063,6 +1138,9 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         };
         if (req.Stock.HasValue) updates["stock"] = req.Stock.Value;
         if (req.DailyLimit.HasValue) updates["dailyLimit"] = req.DailyLimit.Value;
+        if (req.DurationMinutes.HasValue) updates["durationMinutes"] = req.DurationMinutes.Value;
+        if (req.EffectType != null) updates["effectType"] = req.EffectType;
+        if (req.EffectValue.HasValue) updates["effectValue"] = (double)req.EffectValue.Value;
 
         var itemRef = ShopItems(familyId).Document(itemId);
         await itemRef.UpdateAsync(updates);
@@ -1213,6 +1291,32 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                         ["createdAt"] = now,
                     };
                     await AllowanceLedger(familyId).Document(allowanceId).SetAsync(allowanceData, null, ct);
+                }
+
+                // 建立時效道具 ActiveEffect（若商品有 EffectType）
+                if (!string.IsNullOrEmpty(item.EffectType))
+                {
+                    var effectId = Guid.NewGuid().ToString("N")[..16];
+                    Timestamp? expiresAt = null;
+                    if (item.DurationMinutes.HasValue)
+                        expiresAt = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow.AddMinutes(item.DurationMinutes.Value));
+
+                    var effectData = new Dictionary<string, object>
+                    {
+                        ["effectId"] = effectId,
+                        ["playerId"] = order.PlayerId,
+                        ["name"] = item.Name,
+                        ["type"] = item.EffectType,
+                        ["status"] = "active",
+                        ["source"] = "shop",
+                        ["sourceId"] = orderId,
+                        ["createdAt"] = now,
+                    };
+                    if (item.DurationMinutes.HasValue) effectData["durationMinutes"] = item.DurationMinutes.Value;
+                    if (item.EffectValue.HasValue) effectData["multiplier"] = item.EffectValue.Value;
+                    if (expiresAt.HasValue) effectData["expiresAt"] = expiresAt.Value;
+
+                    await ActiveEffects(familyId).Document(effectId).SetAsync(effectData, null, ct);
                 }
             }
             else // priceType = "allowance"（原本邏輯）
@@ -1455,5 +1559,204 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
         if (opCount > 0)
             await batch.CommitAsync(ct);
+    }
+
+    // ── AddTransactionWithEffectsAsync ────────────────────────────────────────
+
+    public async Task<TransactionDto> AddTransactionWithEffectsAsync(
+        string familyId, AddTransactionWithEffectsRequest request, string adminUid, CancellationToken ct = default)
+    {
+        // 1. 先執行積分交易
+        var baseReq = new AddTransactionRequest(
+            request.PlayerIds, request.Type, request.Amount,
+            request.Reason, request.CategoryId, request.Note);
+        var tx = await AddTransactionAsync(familyId, baseReq, adminUid, ct);
+
+        // 2. 建立封印
+        if (request.Seals != null)
+        {
+            foreach (var seal in request.Seals)
+                await CreateSealAsync(familyId, seal, adminUid, ct);
+        }
+
+        // 3. 建立處罰
+        if (request.Penalties != null)
+        {
+            foreach (var penalty in request.Penalties)
+                await CreatePenaltyAsync(familyId, penalty, adminUid, ct);
+        }
+
+        return tx;
+    }
+
+    // ── Seal ──────────────────────────────────────────────────────────────────
+
+    public async Task<SealDto> CreateSealAsync(string familyId, CreateSealRequest req, string adminUid, CancellationToken ct = default)
+    {
+        var sealId = Guid.NewGuid().ToString("N")[..16];
+        var now = Timestamp.GetCurrentTimestamp();
+
+        var data = new Dictionary<string, object>
+        {
+            ["sealId"] = sealId,
+            ["playerId"] = req.PlayerId,
+            ["name"] = req.Name,
+            ["type"] = req.Type,
+            ["status"] = "active",
+            ["createdBy"] = adminUid,
+            ["createdAt"] = now,
+        };
+        if (req.Description != null) data["description"] = req.Description;
+
+        await Seals(familyId).Document(sealId).SetAsync(data, cancellationToken: ct);
+        var snap = await Seals(familyId).Document(sealId).GetSnapshotAsync(ct);
+        return snap.ConvertTo<SealDoc>().ToDto();
+    }
+
+    public async Task<IReadOnlyList<SealDto>> GetSealsAsync(string familyId, string? playerId, string? status, CancellationToken ct = default)
+    {
+        Query query = Seals(familyId);
+        if (!string.IsNullOrEmpty(playerId)) query = query.WhereEqualTo("playerId", playerId);
+        if (!string.IsNullOrEmpty(status)) query = query.WhereEqualTo("status", status);
+
+        var snaps = await query.GetSnapshotAsync(ct);
+        return snaps.Documents.Select(d => d.ConvertTo<SealDoc>().ToDto()).ToList().AsReadOnly();
+    }
+
+    public async Task<SealDto> LiftSealAsync(string familyId, string sealId, string adminUid, CancellationToken ct = default)
+    {
+        var sealRef = Seals(familyId).Document(sealId);
+        var now = Timestamp.GetCurrentTimestamp();
+        await sealRef.UpdateAsync(new Dictionary<string, object>
+        {
+            ["status"] = "lifted",
+            ["liftedAt"] = now,
+        }, cancellationToken: ct);
+        var snap = await sealRef.GetSnapshotAsync(ct);
+        return snap.ConvertTo<SealDoc>().ToDto();
+    }
+
+    // ── Penalty ───────────────────────────────────────────────────────────────
+
+    public async Task<PenaltyDto> CreatePenaltyAsync(string familyId, CreatePenaltyRequest req, string adminUid, CancellationToken ct = default)
+    {
+        var penaltyId = Guid.NewGuid().ToString("N")[..16];
+        var now = Timestamp.GetCurrentTimestamp();
+
+        var data = new Dictionary<string, object>
+        {
+            ["penaltyId"] = penaltyId,
+            ["playerId"] = req.PlayerId,
+            ["name"] = req.Name,
+            ["type"] = req.Type,
+            ["status"] = "active",
+            ["createdBy"] = adminUid,
+            ["createdAt"] = now,
+        };
+        if (req.Description != null) data["description"] = req.Description;
+
+        await Penalties(familyId).Document(penaltyId).SetAsync(data, cancellationToken: ct);
+        var snap = await Penalties(familyId).Document(penaltyId).GetSnapshotAsync(ct);
+        return snap.ConvertTo<PenaltyDoc>().ToDto();
+    }
+
+    public async Task<IReadOnlyList<PenaltyDto>> GetPenaltiesAsync(string familyId, string? playerId, string? status, CancellationToken ct = default)
+    {
+        Query query = Penalties(familyId);
+        if (!string.IsNullOrEmpty(playerId)) query = query.WhereEqualTo("playerId", playerId);
+        if (!string.IsNullOrEmpty(status)) query = query.WhereEqualTo("status", status);
+
+        var snaps = await query.GetSnapshotAsync(ct);
+        return snaps.Documents.Select(d => d.ConvertTo<PenaltyDoc>().ToDto()).ToList().AsReadOnly();
+    }
+
+    public async Task<PenaltyDto> CompletePenaltyAsync(string familyId, string penaltyId, string adminUid, CancellationToken ct = default)
+    {
+        var penaltyRef = Penalties(familyId).Document(penaltyId);
+        var now = Timestamp.GetCurrentTimestamp();
+        await penaltyRef.UpdateAsync(new Dictionary<string, object>
+        {
+            ["status"] = "completed",
+            ["completedAt"] = now,
+        }, cancellationToken: ct);
+        var snap = await penaltyRef.GetSnapshotAsync(ct);
+        return snap.ConvertTo<PenaltyDoc>().ToDto();
+    }
+
+    // ── ActiveEffect ──────────────────────────────────────────────────────────
+
+    public async Task<ActiveEffectDto> CreateActiveEffectAsync(string familyId, CreateEffectRequest req, string adminUid, CancellationToken ct = default)
+    {
+        var effectId = Guid.NewGuid().ToString("N")[..16];
+        var now = Timestamp.GetCurrentTimestamp();
+
+        Timestamp? expiresAt = null;
+        if (req.DurationMinutes.HasValue)
+            expiresAt = Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow.AddMinutes(req.DurationMinutes.Value));
+
+        var data = new Dictionary<string, object>
+        {
+            ["effectId"] = effectId,
+            ["playerId"] = req.PlayerId,
+            ["name"] = req.Name,
+            ["type"] = req.Type,
+            ["status"] = "active",
+            ["source"] = req.Source ?? adminUid,
+            ["createdAt"] = now,
+        };
+        if (req.Multiplier.HasValue) data["multiplier"] = (double)req.Multiplier.Value;
+        if (req.DurationMinutes.HasValue) data["durationMinutes"] = req.DurationMinutes.Value;
+        if (req.Description != null) data["description"] = req.Description;
+        if (req.SourceId != null) data["sourceId"] = req.SourceId;
+        if (expiresAt.HasValue) data["expiresAt"] = expiresAt.Value;
+
+        await ActiveEffects(familyId).Document(effectId).SetAsync(data, cancellationToken: ct);
+        var snap = await ActiveEffects(familyId).Document(effectId).GetSnapshotAsync(ct);
+        return snap.ConvertTo<ActiveEffectDoc>().ToDto();
+    }
+
+    public async Task<IReadOnlyList<ActiveEffectDto>> GetActiveEffectsAsync(string familyId, string? playerId, CancellationToken ct = default)
+    {
+        Query query = ActiveEffects(familyId).WhereEqualTo("status", "active");
+        if (!string.IsNullOrEmpty(playerId)) query = query.WhereEqualTo("playerId", playerId);
+
+        var snaps = await query.GetSnapshotAsync(ct);
+        var effects = snaps.Documents.Select(d => d.ConvertTo<ActiveEffectDoc>().ToDto()).ToList();
+
+        // 自動過期：伺服器端懶惰過期
+        var now = DateTimeOffset.UtcNow;
+        var toExpire = effects.Where(e => e.ExpiresAt.HasValue && e.ExpiresAt.Value < now).ToList();
+        foreach (var e in toExpire)
+        {
+            _ = ExpireEffectAsync(familyId, e.EffectId, "system", ct);
+        }
+
+        return effects.Where(e => !e.ExpiresAt.HasValue || e.ExpiresAt.Value >= now).ToList().AsReadOnly();
+    }
+
+    public async Task<ActiveEffectDto> ExpireEffectAsync(string familyId, string effectId, string adminUid, CancellationToken ct = default)
+    {
+        var effectRef = ActiveEffects(familyId).Document(effectId);
+        var now = Timestamp.GetCurrentTimestamp();
+        await effectRef.UpdateAsync(new Dictionary<string, object>
+        {
+            ["status"] = "expired",
+            ["expiredAt"] = now,
+        }, cancellationToken: ct);
+        var snap = await effectRef.GetSnapshotAsync(ct);
+        return snap.ConvertTo<ActiveEffectDoc>().ToDto();
+    }
+
+    // ── PlayerStatus ──────────────────────────────────────────────────────────
+
+    public async Task<PlayerStatusDto> GetPlayerStatusAsync(string familyId, string playerId, CancellationToken ct = default)
+    {
+        var sealsTask = GetSealsAsync(familyId, playerId, "active", ct);
+        var penaltiesTask = GetPenaltiesAsync(familyId, playerId, "active", ct);
+        var effectsTask = GetActiveEffectsAsync(familyId, playerId, ct);
+
+        await Task.WhenAll(sealsTask, penaltiesTask, effectsTask);
+
+        return new PlayerStatusDto(playerId, sealsTask.Result, penaltiesTask.Result, effectsTask.Result);
     }
 }

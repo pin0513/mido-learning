@@ -14,6 +14,7 @@ import {
   getPlayerAllowanceBalance,
   getPlayerEvents,
   getPlayerAllowanceLedger,
+  getMyStatus,
 } from '@/lib/api/family-scoreboard';
 import { clearPlayerToken } from '@/lib/playerAuth';
 import type {
@@ -24,6 +25,7 @@ import type {
   AllowanceBalanceDto,
   EventDto,
   AllowanceLedgerDto,
+  PlayerStatusDto,
 } from '@/types/family-scoreboard';
 
 type PlayerTab = 'score' | 'tasks' | 'shop' | 'history' | 'report';
@@ -114,6 +116,7 @@ export default function PlayerPage() {
   const [shopItems, setShopItems]   = useState<ShopItemDto[]>([]);
   const [events, setEvents]         = useState<EventDto[]>([]);
   const [ledger, setLedger]         = useState<AllowanceLedgerDto[]>([]);
+  const [playerStatus, setPlayerStatus] = useState<PlayerStatusDto | null>(null);
   const [loading, setLoading]       = useState(false);
   const [error, setError]           = useState<string | null>(null);
 
@@ -139,7 +142,7 @@ export default function PlayerPage() {
     setLoading(true);
     setError(null);
     try {
-      const [scoresData, tasksData, historyData, shopData, eventsData, allowanceData, ledgerData] = await Promise.all([
+      const [scoresData, tasksData, historyData, shopData, eventsData, allowanceData, ledgerData, statusData] = await Promise.all([
         getScores(familyId),
         getAvailableTasks(familyId),
         getMyHistory(familyId),
@@ -147,6 +150,7 @@ export default function PlayerPage() {
         getPlayerEvents(familyId, currentMonth).catch(() => [] as EventDto[]),
         getPlayerAllowanceBalance(familyId).catch(() => null),
         getPlayerAllowanceLedger(familyId).catch(() => [] as AllowanceLedgerDto[]),
+        getMyStatus(familyId).catch(() => null),
       ]);
       setAllScores(scoresData);
       setMyScore(scoresData.find((s) => s.playerId === playerId) ?? null);
@@ -156,6 +160,7 @@ export default function PlayerPage() {
       setEvents(eventsData);
       setAllowance(allowanceData);
       setLedger(ledgerData);
+      setPlayerStatus(statusData);
     } catch {
       setError('載入失敗，請重試');
     } finally {
@@ -422,6 +427,79 @@ export default function PlayerPage() {
                     </div>
                   )}
                 </div>
+
+                {/* ── 封印警告 ── */}
+                {playerStatus && playerStatus.activeSeals.length > 0 && (
+                  <div className="rounded-2xl border-2 border-red-300 bg-red-50 p-4 space-y-2">
+                    <p className="text-sm font-bold text-red-600 flex items-center gap-1.5">
+                      🔒 目前封印中
+                    </p>
+                    {playerStatus.activeSeals.map((seal) => (
+                      <div key={seal.sealId} className="flex items-center gap-2 bg-white rounded-xl p-3">
+                        <span className="text-xl">🔒</span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-red-700">{seal.name}</p>
+                          {seal.description && (
+                            <p className="text-xs text-red-400">{seal.description}</p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* ── 處罰警告 ── */}
+                {playerStatus && playerStatus.activePenalties.length > 0 && (
+                  <div className="rounded-2xl border-2 border-orange-300 bg-orange-50 p-4 space-y-2">
+                    <p className="text-sm font-bold text-orange-600 flex items-center gap-1.5">
+                      ⚠️ 待完成處罰
+                    </p>
+                    {playerStatus.activePenalties.map((penalty) => (
+                      <div key={penalty.penaltyId} className="flex items-center gap-2 bg-white rounded-xl p-3">
+                        <span className="text-xl">⚠️</span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-orange-700">{penalty.name}</p>
+                          {penalty.description && (
+                            <p className="text-xs text-orange-400">{penalty.description}</p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* ── 道具箱（活躍效果） ── */}
+                {playerStatus && playerStatus.activeEffects.length > 0 && (
+                  <div className="bg-white rounded-2xl shadow-sm p-4 space-y-2">
+                    <p className="text-sm font-bold text-gray-600 mb-1">🎒 道具箱</p>
+                    {playerStatus.activeEffects.map((effect) => {
+                      const isMultiplier = effect.type === 'xp-multiplier';
+                      const expiresAt = effect.expiresAt ? new Date(effect.expiresAt) : null;
+                      const minutesLeft = expiresAt
+                        ? Math.max(0, Math.round((expiresAt.getTime() - Date.now()) / 60000))
+                        : null;
+                      return (
+                        <div key={effect.effectId} className="flex items-center gap-3 bg-purple-50 rounded-xl p-3">
+                          <span className="text-2xl">{isMultiplier ? '⚡' : '✨'}</span>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-purple-700">{effect.name}</p>
+                            {isMultiplier && effect.multiplier && (
+                              <p className="text-xs text-purple-500">XP 倍率 ×{effect.multiplier}</p>
+                            )}
+                            {minutesLeft !== null && (
+                              <p className="text-xs text-purple-400">
+                                剩餘 {minutesLeft >= 60
+                                  ? `${Math.floor(minutesLeft / 60)}小時${minutesLeft % 60}分`
+                                  : `${minutesLeft}分鐘`}
+                              </p>
+                            )}
+                          </div>
+                          <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full font-medium">生效中</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
 
                 {events.length > 0 && (
                   <div className="bg-white rounded-2xl shadow-sm p-4">

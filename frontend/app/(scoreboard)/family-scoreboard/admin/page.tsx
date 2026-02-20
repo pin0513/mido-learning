@@ -13,6 +13,7 @@ import {
   setPlayerPassword,
   getTasks,
   createTask,
+  updateTask,
   deactivateTask,
   getTaskCompletions,
   processTaskCompletion,
@@ -22,15 +23,25 @@ import {
   adjustAllowance,
   getShopItems,
   createShopItem,
+  updateShopItem,
   deactivateShopItem,
   getShopOrders,
   processShopOrder,
   getEvents,
   createEvent,
+  updateEvent,
   deleteEvent,
   exportFamilyBackup,
   importFamilyBackup,
   addAdminTransaction,
+  getSeals,
+  liftSeal,
+  getPenalties,
+  createPenalty,
+  completePenalty,
+  getActiveEffects,
+  expireEffect,
+  addTransactionWithEffects,
 } from '@/lib/api/family-scoreboard';
 import type {
   PlayerScoreDto,
@@ -48,9 +59,12 @@ import type {
   CreateEventRequest,
   AdjustAllowanceRequest,
   FamilyBackupDto,
+  SealDto,
+  PenaltyDto,
+  CreatePenaltyRequest,
 } from '@/types/family-scoreboard';
 
-type AdminTab = 'code' | 'players' | 'tasks' | 'pending' | 'allowance' | 'shop' | 'events' | 'backup';
+type AdminTab = 'code' | 'players' | 'tasks' | 'pending' | 'allowance' | 'shop' | 'events' | 'discipline' | 'backup';
 type PlayerModal =
   | { type: 'add' }
   | { type: 'edit'; player: PlayerScoreDto }
@@ -290,6 +304,44 @@ export default function FamilyScoreboardAdminPage() {
   const [importLoading, setImportLoading] = useState(false);
   const [importSuccess, setImportSuccess] = useState(false);
 
+  // Task edit state
+  const [editingTask, setEditingTask]     = useState<TaskDto | null>(null);
+  const [editTaskTitle, setEditTaskTitle] = useState('');
+  const [editTaskXp, setEditTaskXp]       = useState(0);
+  const [editTaskSaving, setEditTaskSaving] = useState(false);
+
+  // Shop item edit state
+  const [editingShopItem, setEditingShopItem] = useState<ShopItemDto | null>(null);
+  const [editShopName, setEditShopName]       = useState('');
+  const [editShopDesc, setEditShopDesc]       = useState('');
+  const [editShopPrice, setEditShopPrice]     = useState(0);
+  const [editShopEmoji, setEditShopEmoji]     = useState('🎁');
+  const [editShopSaving, setEditShopSaving]   = useState(false);
+
+  // Event edit state
+  const [editingEvent, setEditingEvent]   = useState<EventDto | null>(null);
+  const [editEventTitle, setEditEventTitle] = useState('');
+  const [editEventStart, setEditEventStart] = useState('');
+  const [editEventEnd, setEditEventEnd]     = useState('');
+  const [editEventSaving, setEditEventSaving] = useState(false);
+
+  // Discipline (封印/處罰) state
+  const [seals, setSeals]           = useState<SealDto[]>([]);
+  const [penalties, setPenalties]   = useState<PenaltyDto[]>([]);
+  const [discLoading, setDiscLoading] = useState(false);
+  const [discErr, setDiscErr]         = useState<string | null>(null);
+  const [discPlayerId, setDiscPlayerId] = useState('');
+  const [discDeductAmount, setDiscDeductAmount] = useState(50);
+  const [discReason, setDiscReason] = useState('');
+  const [discNote, setDiscNote]     = useState('');
+  const [discPenaltyName, setDiscPenaltyName] = useState('');
+  const [discPenaltyType, setDiscPenaltyType] = useState<'罰站' | '罰寫' | '道歉' | 'custom'>('罰站');
+  const [discSealName, setDiscSealName] = useState('');
+  const [discSealType, setDiscSealType] = useState<'no-tv' | 'no-toys' | 'no-games' | 'no-sweets' | 'custom'>('no-tv');
+  const [discAddSeal, setDiscAddSeal]       = useState(false);
+  const [discAddPenalty, setDiscAddPenalty] = useState(false);
+  const [discSaving, setDiscSaving] = useState(false);
+
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -345,13 +397,27 @@ export default function FamilyScoreboardAdminPage() {
     finally { setEventsLoading(false); }
   }, [familyId, currentMonth]);
 
+  const loadDisciplineData = useCallback(async () => {
+    if (!familyId) return;
+    setDiscLoading(true); setDiscErr(null);
+    try {
+      const [sealsData, penaltiesData] = await Promise.all([
+        getSeals(familyId, undefined, 'active'),
+        getPenalties(familyId, undefined, 'active'),
+      ]);
+      setSeals(sealsData); setPenalties(penaltiesData);
+    } catch { setDiscErr('載入處罰資料失敗'); }
+    finally { setDiscLoading(false); }
+  }, [familyId]);
+
   useEffect(() => {
     if (!familyId) return;
     if (activeTab === 'tasks' || activeTab === 'pending') loadTaskData();
     else if (activeTab === 'allowance') loadAllowanceData();
     else if (activeTab === 'shop') loadShopData();
     else if (activeTab === 'events') loadEventsData();
-  }, [familyId, activeTab, loadTaskData, loadAllowanceData, loadShopData, loadEventsData]);
+    else if (activeTab === 'discipline') loadDisciplineData();
+  }, [familyId, activeTab, loadTaskData, loadAllowanceData, loadShopData, loadEventsData, loadDisciplineData]);
 
   useEffect(() => {
     if (!familyId || activeTab !== 'players') return;
@@ -485,13 +551,117 @@ export default function FamilyScoreboardAdminPage() {
     { id: 'pending',   label: `待審核${pendingCount > 0 ? ` (${pendingCount})` : ''}`,  icon: '⏳' },
     { id: 'allowance', label: '零用金',                                                 icon: '💰' },
     { id: 'shop',      label: '商城管理',                                               icon: '🛒' },
-    { id: 'events',    label: '行事曆',                                                 icon: '📅' },
-    { id: 'backup',    label: '備份',                                                   icon: '💾' },
+    { id: 'events',     label: '行事曆',                                                 icon: '📅' },
+    { id: 'discipline', label: '封印/處罰',                                              icon: '🔒' },
+    { id: 'backup',     label: '備份',                                                   icon: '💾' },
   ];
 
   return (
     <div className="min-h-screen bg-amber-50 lg:flex">
       <PlayerFormModal modal={playerModal} familyId={familyId} onClose={() => setPlayerModal(null)} onSaved={() => refresh()} />
+
+      {/* ── Task Edit Modal ── */}
+      {editingTask && (
+        <div className="fixed inset-0 z-50 flex items-end lg:items-center justify-center">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setEditingTask(null)} />
+          <div className="relative bg-white w-full max-w-sm rounded-t-3xl lg:rounded-2xl shadow-2xl p-6 space-y-4 z-10">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-gray-800">編輯任務</h3>
+              <button onClick={() => setEditingTask(null)} className="w-9 h-9 flex items-center justify-center text-gray-400 text-xl rounded-full hover:bg-gray-100">✕</button>
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1.5 font-medium">任務名稱</label>
+              <input type="text" value={editTaskTitle} onChange={(e) => setEditTaskTitle(e.target.value)}
+                className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[52px]" autoFocus />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1.5 font-medium">經驗值 (XP)</label>
+              <div className="flex gap-2 flex-wrap mb-2">
+                {[50, 100, 150, 200, 300, 500].map((v) => (
+                  <button key={v} onClick={() => setEditTaskXp(v)} className={`min-h-[40px] px-3 rounded-lg text-sm font-bold transition-all ${editTaskXp === v ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-amber-100'}`}>{v}</button>
+                ))}
+              </div>
+              <input type="number" value={editTaskXp} onChange={(e) => setEditTaskXp(Number(e.target.value))}
+                className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-center font-bold outline-none min-h-[48px]" />
+            </div>
+            <button
+              disabled={editTaskSaving || !editTaskTitle.trim()}
+              onClick={async () => {
+                if (!familyId || !editingTask || !editTaskTitle.trim()) return;
+                setEditTaskSaving(true);
+                try {
+                  const updated = await updateTask(familyId, editingTask.taskId, {
+                    title: editTaskTitle.trim(), type: editingTask.type, difficulty: editingTask.difficulty,
+                    xpReward: editTaskXp, allowanceReward: editingTask.allowanceReward,
+                    periodType: editingTask.periodType, weekDays: editingTask.weekDays,
+                    assignedPlayerIds: editingTask.assignedPlayerIds,
+                  });
+                  setTasks((prev) => prev.map((t) => t.taskId === updated.taskId ? updated : t));
+                  setEditingTask(null);
+                } catch { setTasksError('更新失敗'); }
+                finally { setEditTaskSaving(false); }
+              }}
+              className="w-full min-h-[56px] bg-amber-500 text-white font-bold rounded-2xl disabled:opacity-40 hover:bg-amber-600 active:scale-95 transition-all">
+              {editTaskSaving ? '儲存中...' : '儲存'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Shop Item Edit Modal ── */}
+      {editingShopItem && (
+        <div className="fixed inset-0 z-50 flex items-end lg:items-center justify-center">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setEditingShopItem(null)} />
+          <div className="relative bg-white w-full max-w-sm rounded-t-3xl lg:rounded-2xl shadow-2xl p-6 space-y-4 z-10 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-gray-800">編輯商品</h3>
+              <button onClick={() => setEditingShopItem(null)} className="w-9 h-9 flex items-center justify-center text-gray-400 text-xl rounded-full hover:bg-gray-100">✕</button>
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1.5 font-medium">商品名稱</label>
+              <input type="text" value={editShopName} onChange={(e) => setEditShopName(e.target.value)}
+                className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[52px]" autoFocus />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1.5 font-medium">描述</label>
+              <input type="text" value={editShopDesc} onChange={(e) => setEditShopDesc(e.target.value)}
+                className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[52px]" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-gray-400 mb-1.5 font-medium">價格</label>
+                <input type="number" value={editShopPrice} onChange={(e) => setEditShopPrice(Number(e.target.value))}
+                  className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-3 py-3 text-center font-bold outline-none min-h-[48px]" />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-400 mb-1.5 font-medium">Emoji</label>
+                <input type="text" value={editShopEmoji} onChange={(e) => setEditShopEmoji(e.target.value)}
+                  className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-3 py-3 text-center text-2xl outline-none min-h-[48px]" />
+              </div>
+            </div>
+            <button
+              disabled={editShopSaving || !editShopName.trim()}
+              onClick={async () => {
+                if (!familyId || !editingShopItem || !editShopName.trim()) return;
+                setEditShopSaving(true);
+                try {
+                  const updated = await updateShopItem(familyId, editingShopItem.itemId, {
+                    name: editShopName.trim(), description: editShopDesc.trim(), price: editShopPrice,
+                    type: editingShopItem.type, emoji: editShopEmoji || '🎁',
+                    priceType: editingShopItem.priceType, allowanceGiven: editingShopItem.allowanceGiven,
+                    dailyLimit: editingShopItem.dailyLimit ?? undefined, stock: editingShopItem.stock ?? undefined,
+                  });
+                  setShopItems((prev) => prev.map((i) => i.itemId === updated.itemId ? updated : i));
+                  setEditingShopItem(null);
+                } catch { setShopErr('更新失敗'); }
+                finally { setEditShopSaving(false); }
+              }}
+              className="w-full min-h-[56px] bg-amber-500 text-white font-bold rounded-2xl disabled:opacity-40 hover:bg-amber-600 active:scale-95 transition-all">
+              {editShopSaving ? '儲存中...' : '儲存'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:shrink-0 bg-white border-r border-amber-100 shadow-sm">
@@ -823,7 +993,10 @@ export default function FamilyScoreboardAdminPage() {
                               {task.allowanceReward > 0 && <p className="text-xs text-green-600 font-bold">+{task.allowanceReward} 💰</p>}
                             </div>
                           </div>
-                          <button onClick={() => handleDeactivateTask(task.taskId)} className="text-xs text-red-400 hover:text-red-600 min-h-[44px] px-3 shrink-0">停用</button>
+                          <div className="flex flex-col gap-1 shrink-0">
+                            <button onClick={() => { setEditingTask(task); setEditTaskTitle(task.title); setEditTaskXp(task.xpReward); }} className="text-xs text-blue-400 hover:text-blue-600 min-h-[36px] px-2">編輯</button>
+                            <button onClick={() => handleDeactivateTask(task.taskId)} className="text-xs text-red-400 hover:text-red-600 min-h-[36px] px-2">停用</button>
+                          </div>
                         </div>
                       );
                     })}
@@ -1171,7 +1344,10 @@ export default function FamilyScoreboardAdminPage() {
                           {item.stock !== null && item.stock !== undefined && <p className="text-xs text-orange-500">庫存：{item.stock}</p>}
                           {item.dailyLimit && <p className="text-xs text-blue-500">每日{item.dailyLimit}次</p>}
                         </div>
-                        <button onClick={() => handleDeactivateShopItem(item.itemId)} className="text-xs text-red-400 hover:text-red-600 min-h-[44px] px-3 shrink-0">停用</button>
+                        <div className="flex flex-col gap-1 shrink-0">
+                          <button onClick={() => { setEditingShopItem(item); setEditShopName(item.name); setEditShopDesc(item.description); setEditShopPrice(item.price); setEditShopEmoji(item.emoji); }} className="text-xs text-blue-400 hover:text-blue-600 min-h-[36px] px-2">編輯</button>
+                          <button onClick={() => handleDeactivateShopItem(item.itemId)} className="text-xs text-red-400 hover:text-red-600 min-h-[36px] px-2">停用</button>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -1262,6 +1438,160 @@ export default function FamilyScoreboardAdminPage() {
                   </div>
                 )}
                 {!eventsLoading && events.length === 0 && <div className="text-center py-8 text-gray-300"><div className="text-3xl mb-2">📅</div><p className="text-sm">本月尚無家庭活動</p></div>}
+              </div>
+            )}
+
+            {/* ── Discipline Tab（封印/處罰管理） ── */}
+            {activeTab === 'discipline' && (
+              <div className="space-y-4">
+                {discErr && <div className="p-3 bg-red-50 text-red-600 text-sm rounded-xl">{discErr}</div>}
+
+                {/* 新增處罰事件（扣分 + 可選封印/處罰） */}
+                <div className="bg-white rounded-2xl p-5 shadow-sm space-y-4">
+                  <p className="text-sm font-bold text-gray-700">🚨 新增處罰事件</p>
+                  <div>
+                    <label className="block text-xs text-gray-400 mb-1.5 font-medium">對象玩家</label>
+                    <div className="flex flex-wrap gap-2">
+                      {scores.map((p) => (
+                        <button key={p.playerId} onClick={() => setDiscPlayerId(p.playerId)}
+                          className={`min-h-[44px] px-4 rounded-xl text-sm font-medium transition-all border-2 ${discPlayerId === p.playerId ? 'border-red-400 bg-red-50 text-red-700' : 'border-gray-100 text-gray-600 hover:border-gray-300'}`}>
+                          {p.emoji ?? ''} {p.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1.5 font-medium">扣除 XP</label>
+                      <input type="number" min={0} value={discDeductAmount} onChange={(e) => setDiscDeductAmount(Number(e.target.value))}
+                        className="w-full border-2 border-gray-100 focus:border-red-300 rounded-xl px-3 py-3 text-center font-bold outline-none min-h-[48px]" />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1.5 font-medium">原因</label>
+                      <input type="text" placeholder="說明處罰原因" value={discReason} onChange={(e) => setDiscReason(e.target.value)}
+                        className="w-full border-2 border-gray-100 focus:border-red-300 rounded-xl px-3 py-3 text-sm outline-none min-h-[48px]" />
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                      <input type="checkbox" checked={discAddSeal} onChange={(e) => setDiscAddSeal(e.target.checked)} className="w-4 h-4 rounded" />
+                      加封印
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                      <input type="checkbox" checked={discAddPenalty} onChange={(e) => setDiscAddPenalty(e.target.checked)} className="w-4 h-4 rounded" />
+                      加處罰項目
+                    </label>
+                  </div>
+                  {discAddSeal && (
+                    <div className="border border-red-100 rounded-xl p-3 space-y-2">
+                      <p className="text-xs text-red-500 font-medium">封印內容</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {([['no-tv','📺 不能看電視'],['no-toys','🧸 不能玩玩具'],['no-games','🎮 不能玩遊戲'],['no-sweets','🍬 不能吃零食'],['custom','自訂']] as const).map(([v,l]) => (
+                          <button key={v} onClick={() => setDiscSealType(v)}
+                            className={`min-h-[40px] rounded-lg text-xs font-medium border-2 transition-all ${discSealType === v ? 'border-red-400 bg-red-50 text-red-700' : 'border-gray-100 text-gray-500'}`}>{l}</button>
+                        ))}
+                      </div>
+                      <input type="text" placeholder="封印名稱" value={discSealName} onChange={(e) => setDiscSealName(e.target.value)}
+                        className="w-full border-2 border-gray-100 rounded-xl px-3 py-2 text-sm outline-none min-h-[44px]" />
+                    </div>
+                  )}
+                  {discAddPenalty && (
+                    <div className="border border-orange-100 rounded-xl p-3 space-y-2">
+                      <p className="text-xs text-orange-500 font-medium">處罰項目</p>
+                      <div className="flex gap-2 flex-wrap">
+                        {(['罰站','罰寫','道歉','custom'] as const).map((v) => (
+                          <button key={v} onClick={() => setDiscPenaltyType(v)}
+                            className={`min-h-[40px] px-3 rounded-lg text-xs font-medium border-2 transition-all ${discPenaltyType === v ? 'border-orange-400 bg-orange-50 text-orange-700' : 'border-gray-100 text-gray-500'}`}>{v}</button>
+                        ))}
+                      </div>
+                      <input type="text" placeholder="處罰項目名稱" value={discPenaltyName} onChange={(e) => setDiscPenaltyName(e.target.value)}
+                        className="w-full border-2 border-gray-100 rounded-xl px-3 py-2 text-sm outline-none min-h-[44px]" />
+                    </div>
+                  )}
+                  <button
+                    disabled={discSaving || !discPlayerId || !discReason.trim()}
+                    onClick={async () => {
+                      if (!familyId || !discPlayerId || !discReason.trim()) return;
+                      setDiscSaving(true); setDiscErr(null);
+                      try {
+                        await addTransactionWithEffects(familyId, {
+                          playerIds: [discPlayerId],
+                          type: 'deduct',
+                          amount: discDeductAmount,
+                          reason: discReason.trim(),
+                          seals: discAddSeal && discSealName.trim() ? [{ playerId: discPlayerId, name: discSealName.trim(), type: discSealType }] : undefined,
+                          penalties: discAddPenalty && discPenaltyName.trim() ? [{ playerId: discPlayerId, name: discPenaltyName.trim(), type: discPenaltyType }] : undefined,
+                        });
+                        setDiscReason(''); setDiscSealName(''); setDiscPenaltyName(''); setDiscAddSeal(false); setDiscAddPenalty(false);
+                        await Promise.all([loadDisciplineData(), refresh()]);
+                      } catch { setDiscErr('執行失敗，請重試'); }
+                      finally { setDiscSaving(false); }
+                    }}
+                    className="w-full min-h-[52px] bg-red-500 text-white font-bold rounded-2xl disabled:opacity-40 hover:bg-red-600 active:scale-95 transition-all">
+                    {discSaving ? '處理中...' : '🚨 執行處罰'}
+                  </button>
+                </div>
+
+                {/* 活躍封印列表 */}
+                {discLoading ? <div className="text-center py-6 text-gray-400 text-sm">載入中...</div> : (
+                  <>
+                    <div className="bg-white rounded-2xl p-4 shadow-sm space-y-3">
+                      <p className="text-sm font-bold text-gray-700">🔒 活躍封印（{seals.length}）</p>
+                      {seals.length === 0 && <p className="text-xs text-gray-400 py-2">目前無封印</p>}
+                      {seals.map((seal) => {
+                        const player = scores.find((p) => p.playerId === seal.playerId);
+                        return (
+                          <div key={seal.sealId} className="flex items-center justify-between gap-3 p-3 bg-red-50 rounded-xl border border-red-100">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="text-red-500">🔒</span>
+                              <div className="min-w-0">
+                                <p className="text-sm font-medium text-gray-800">{seal.name}</p>
+                                <p className="text-xs text-gray-400">{player?.name ?? seal.playerId} · {seal.type}</p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={async () => {
+                                if (!familyId) return;
+                                try { await liftSeal(familyId, seal.sealId); setSeals((prev) => prev.filter((s) => s.sealId !== seal.sealId)); }
+                                catch { setDiscErr('解封失敗'); }
+                              }}
+                              className="shrink-0 min-h-[40px] px-3 bg-white border border-red-300 text-red-600 text-xs font-medium rounded-lg hover:bg-red-50 active:scale-95 transition-all">
+                              解封
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="bg-white rounded-2xl p-4 shadow-sm space-y-3">
+                      <p className="text-sm font-bold text-gray-700">⚠️ 進行中處罰（{penalties.length}）</p>
+                      {penalties.length === 0 && <p className="text-xs text-gray-400 py-2">目前無處罰</p>}
+                      {penalties.map((penalty) => {
+                        const player = scores.find((p) => p.playerId === penalty.playerId);
+                        return (
+                          <div key={penalty.penaltyId} className="flex items-center justify-between gap-3 p-3 bg-orange-50 rounded-xl border border-orange-100">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="text-orange-500">⚠️</span>
+                              <div className="min-w-0">
+                                <p className="text-sm font-medium text-gray-800">{penalty.name}</p>
+                                <p className="text-xs text-gray-400">{player?.name ?? penalty.playerId} · {penalty.type}</p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={async () => {
+                                if (!familyId) return;
+                                try { await completePenalty(familyId, penalty.penaltyId); setPenalties((prev) => prev.filter((p) => p.penaltyId !== penalty.penaltyId)); }
+                                catch { setDiscErr('完成失敗'); }
+                              }}
+                              className="shrink-0 min-h-[40px] px-3 bg-white border border-orange-300 text-orange-600 text-xs font-medium rounded-lg hover:bg-orange-50 active:scale-95 transition-all">
+                              完成
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
             )}
 

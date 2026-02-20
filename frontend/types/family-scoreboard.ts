@@ -235,9 +235,12 @@ export interface ShopItemDto {
   emoji: string;
   isActive: boolean;
   stock?: number | null;
-  priceType: string;          // "allowance" | "xp"
-  dailyLimit: number | null;  // null = 無上限
-  allowanceGiven: number;     // XP 兌換時給予的零用金
+  priceType: string;            // "allowance" | "xp"
+  dailyLimit: number | null;    // null = 無上限
+  allowanceGiven: number;       // XP 兌換時給予的零用金
+  durationMinutes?: number | null;  // 時效道具持續分鐘
+  effectType?: string | null;   // 'xp-multiplier' | 'time-item' | null
+  effectValue?: number | null;  // xp-multiplier 倍率
 }
 
 export interface CreateShopItemRequest {
@@ -250,6 +253,9 @@ export interface CreateShopItemRequest {
   priceType?: string;
   dailyLimit?: number;
   allowanceGiven?: number;
+  durationMinutes?: number;
+  effectType?: string;
+  effectValue?: number;
 }
 
 export interface ShopOrderDto {
@@ -313,6 +319,99 @@ export interface CreateTaskTemplateRequest {
   name: string;
   description?: string;
   taskIds?: string[];
+}
+
+// ── 封印 (Seal) ───────────────────────────────────────────────────────────
+
+export interface SealDto {
+  sealId: string;
+  playerId: string;
+  name: string;
+  type: 'no-tv' | 'no-toys' | 'no-games' | 'no-sweets' | 'custom';
+  description?: string | null;
+  status: 'active' | 'lifted';
+  createdBy: string;
+  createdAt: string;
+  liftedAt?: string | null;
+}
+
+export interface CreateSealRequest {
+  playerId: string;
+  name: string;
+  type: 'no-tv' | 'no-toys' | 'no-games' | 'no-sweets' | 'custom';
+  description?: string;
+}
+
+// ── 處罰 (Penalty) ─────────────────────────────────────────────────────────
+
+export interface PenaltyDto {
+  penaltyId: string;
+  playerId: string;
+  name: string;
+  type: '罰站' | '罰寫' | '道歉' | 'custom';
+  description?: string | null;
+  status: 'active' | 'completed';
+  createdBy: string;
+  createdAt: string;
+  completedAt?: string | null;
+}
+
+export interface CreatePenaltyRequest {
+  playerId: string;
+  name: string;
+  type: '罰站' | '罰寫' | '道歉' | 'custom';
+  description?: string;
+}
+
+// ── 活躍效果 (ActiveEffect) ────────────────────────────────────────────────
+
+export interface ActiveEffectDto {
+  effectId: string;
+  playerId: string;
+  name: string;
+  type: 'xp-multiplier' | 'time-item' | 'custom';
+  multiplier?: number | null;
+  durationMinutes?: number | null;
+  description?: string | null;
+  status: 'active' | 'expired';
+  source: 'shop' | 'admin';
+  sourceId?: string | null;
+  createdAt: string;
+  expiresAt?: string | null;
+  expiredAt?: string | null;
+}
+
+export interface CreateEffectRequest {
+  playerId: string;
+  name: string;
+  type: 'xp-multiplier' | 'time-item' | 'custom';
+  multiplier?: number;
+  durationMinutes?: number;
+  description?: string;
+  source?: string;
+  sourceId?: string;
+}
+
+// ── 附加效果的交易 ────────────────────────────────────────────────────────
+
+export interface AddTransactionWithEffectsRequest {
+  playerIds: string[];
+  type: 'earn' | 'deduct';
+  amount: number;
+  reason: string;
+  categoryId?: string;
+  note?: string;
+  seals?: CreateSealRequest[];
+  penalties?: CreatePenaltyRequest[];
+}
+
+// ── 玩家狀態 ──────────────────────────────────────────────────────────────
+
+export interface PlayerStatusDto {
+  playerId: string;
+  activeSeals: SealDto[];
+  activePenalties: PenaltyDto[];
+  activeEffects: ActiveEffectDto[];
 }
 
 // ── Phase 4 - Backup（備份） ───────────────────────────────────────────────

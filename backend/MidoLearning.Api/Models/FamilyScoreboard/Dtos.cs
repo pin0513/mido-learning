@@ -233,7 +233,10 @@ public record ShopItemDto(
     int? Stock,
     string PriceType,
     int? DailyLimit,
-    int AllowanceGiven
+    int AllowanceGiven,
+    int? DurationMinutes,    // 若有時效，兌換後建立 ActiveEffect
+    string? EffectType,      // 'xp-multiplier' | 'time-item' | null
+    decimal? EffectValue     // xp-multiplier 的倍率
 );
 
 public record CreateShopItemRequest(
@@ -245,7 +248,10 @@ public record CreateShopItemRequest(
     int? Stock,
     string? PriceType,
     int? DailyLimit,
-    int? AllowanceGiven
+    int? AllowanceGiven,
+    int? DurationMinutes = null,
+    string? EffectType = null,
+    decimal? EffectValue = null
 );
 
 // ── Shop Orders（商城訂單） ───────────────────────────────────────────────
@@ -305,6 +311,99 @@ public record CreateTaskTemplateRequest(
     string Name,
     string? Description,
     IReadOnlyList<string>? TaskIds
+);
+
+// ── 封印 (Seal) ────────────────────────────────────────────────────────────
+
+public record SealDto(
+    string SealId,
+    string PlayerId,
+    string Name,
+    string Type,           // 'no-tv' | 'no-toys' | 'no-games' | 'no-sweets' | 'custom'
+    string? Description,
+    string Status,         // 'active' | 'lifted'
+    string CreatedBy,
+    DateTimeOffset CreatedAt,
+    DateTimeOffset? LiftedAt
+);
+
+public record CreateSealRequest(
+    string PlayerId,
+    string Name,
+    string Type,
+    string? Description
+);
+
+// ── 處罰項目 (Penalty) ─────────────────────────────────────────────────────
+
+public record PenaltyDto(
+    string PenaltyId,
+    string PlayerId,
+    string Name,
+    string Type,           // '罰站' | '罰寫' | '道歉' | 'custom'
+    string? Description,
+    string Status,         // 'active' | 'completed'
+    string CreatedBy,
+    DateTimeOffset CreatedAt,
+    DateTimeOffset? CompletedAt
+);
+
+public record CreatePenaltyRequest(
+    string PlayerId,
+    string Name,
+    string Type,
+    string? Description
+);
+
+// ── 活躍效果 (ActiveEffect) ─────────────────────────────────────────────────
+
+public record ActiveEffectDto(
+    string EffectId,
+    string PlayerId,
+    string Name,
+    string Type,             // 'xp-multiplier' | 'time-item' | 'custom'
+    decimal? Multiplier,     // for xp-multiplier, e.g. 2.0 = double XP
+    int? DurationMinutes,
+    string? Description,
+    string Status,           // 'active' | 'expired'
+    string Source,           // 'shop' | 'admin'
+    string? SourceId,
+    DateTimeOffset CreatedAt,
+    DateTimeOffset? ExpiresAt,
+    DateTimeOffset? ExpiredAt
+);
+
+public record CreateEffectRequest(
+    string PlayerId,
+    string Name,
+    string Type,
+    decimal? Multiplier,
+    int? DurationMinutes,
+    string? Description,
+    string? Source,
+    string? SourceId
+);
+
+// ── 擴充 AddTransactionRequest (支援同時建立封印/處罰) ─────────────────────
+
+public record AddTransactionWithEffectsRequest(
+    IReadOnlyList<string> PlayerIds,
+    string Type,
+    int Amount,
+    string Reason,
+    string? CategoryId,
+    string? Note,
+    IReadOnlyList<CreateSealRequest>? Seals,
+    IReadOnlyList<CreatePenaltyRequest>? Penalties
+);
+
+// ── 玩家狀態 (PlayerStatus) ─────────────────────────────────────────────────
+
+public record PlayerStatusDto(
+    string PlayerId,
+    IReadOnlyList<SealDto> ActiveSeals,
+    IReadOnlyList<PenaltyDto> ActivePenalties,
+    IReadOnlyList<ActiveEffectDto> ActiveEffects
 );
 
 // ── Backup ────────────────────────────────────────────────────────────────

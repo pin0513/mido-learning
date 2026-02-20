@@ -37,9 +37,19 @@ public class ShopItemDoc
     [FirestoreProperty("allowanceGiven")]
     public int AllowanceGiven { get; set; } // 僅 priceType=xp 時：給予多少零用金
 
+    [FirestoreProperty("durationMinutes")]
+    public int? DurationMinutes { get; set; } // 時效道具：兌換後 ActiveEffect 持續分鐘數
+
+    [FirestoreProperty("effectType")]
+    public string? EffectType { get; set; } // 'xp-multiplier' | 'time-item' | null
+
+    [FirestoreProperty("effectValue")]
+    public double? EffectValue { get; set; } // xp-multiplier 倍率（stored as double in Firestore）
+
     public ShopItemDto ToDto() => new(
         ItemId, Name, Description, Price, Type, Emoji, IsActive, Stock,
-        PriceType, DailyLimit, AllowanceGiven
+        PriceType, DailyLimit, AllowanceGiven, DurationMinutes, EffectType,
+        EffectValue.HasValue ? (decimal?)Convert.ToDecimal(EffectValue.Value) : null
     );
 }
 

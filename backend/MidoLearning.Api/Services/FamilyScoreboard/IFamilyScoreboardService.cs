@@ -84,6 +84,28 @@ public interface IFamilyScoreboardService
     Task<TaskTemplateDto> CreateTaskTemplateAsync(string familyId, CreateTaskTemplateRequest req, CancellationToken ct = default);
     Task DeleteTaskTemplateAsync(string familyId, string templateId, CancellationToken ct = default);
 
+    // ── 附加效果的交易（同時建立封印/處罰） ────────────────────────────────────────
+    Task<TransactionDto> AddTransactionWithEffectsAsync(
+        string familyId, AddTransactionWithEffectsRequest request, string adminUid, CancellationToken ct = default);
+
+    // ── 封印 (Seal) ────────────────────────────────────────────────────────────
+    Task<SealDto> CreateSealAsync(string familyId, CreateSealRequest req, string adminUid, CancellationToken ct = default);
+    Task<IReadOnlyList<SealDto>> GetSealsAsync(string familyId, string? playerId, string? status, CancellationToken ct = default);
+    Task<SealDto> LiftSealAsync(string familyId, string sealId, string adminUid, CancellationToken ct = default);
+
+    // ── 處罰 (Penalty) ────────────────────────────────────────────────────────
+    Task<PenaltyDto> CreatePenaltyAsync(string familyId, CreatePenaltyRequest req, string adminUid, CancellationToken ct = default);
+    Task<IReadOnlyList<PenaltyDto>> GetPenaltiesAsync(string familyId, string? playerId, string? status, CancellationToken ct = default);
+    Task<PenaltyDto> CompletePenaltyAsync(string familyId, string penaltyId, string adminUid, CancellationToken ct = default);
+
+    // ── 活躍效果 (ActiveEffect) ───────────────────────────────────────────────
+    Task<ActiveEffectDto> CreateActiveEffectAsync(string familyId, CreateEffectRequest req, string adminUid, CancellationToken ct = default);
+    Task<IReadOnlyList<ActiveEffectDto>> GetActiveEffectsAsync(string familyId, string? playerId, CancellationToken ct = default);
+    Task<ActiveEffectDto> ExpireEffectAsync(string familyId, string effectId, string adminUid, CancellationToken ct = default);
+
+    // ── 玩家狀態彙整 ─────────────────────────────────────────────────────────
+    Task<PlayerStatusDto> GetPlayerStatusAsync(string familyId, string playerId, CancellationToken ct = default);
+
     // ── Backup ────────────────────────────────────────────────────────────────
     Task<FamilyBackupDto> ExportBackupAsync(string familyId, CancellationToken ct = default);
     Task ImportBackupAsync(string familyId, FamilyBackupDto backup, CancellationToken ct = default);

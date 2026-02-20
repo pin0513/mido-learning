@@ -540,5 +540,115 @@ public static class FamilyScoreboardEndpoints
             if (playerId is null) return Results.Unauthorized();
             return Results.Ok(await svc.GetAllowanceLedgerAsync(familyId, playerId, ct));
         });
+
+        // ── 玩家自己的狀態（封印/處罰/效果） ─────────────────────────────────────
+        playerGroup.MapGet("/{familyId}/my-status", async (
+            string familyId, IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var playerId = user.FindFirstValue("playerId");
+            if (playerId is null) return Results.Unauthorized();
+            return Results.Ok(await svc.GetPlayerStatusAsync(familyId, playerId, ct));
+        });
+
+        // ── 玩家道具箱：已兌換且尚有效的 ActiveEffects ───────────────────────────
+        playerGroup.MapGet("/{familyId}/my-effects", async (
+            string familyId, IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var playerId = user.FindFirstValue("playerId");
+            if (playerId is null) return Results.Unauthorized();
+            return Results.Ok(await svc.GetActiveEffectsAsync(familyId, playerId, ct));
+        });
+
+        // ── Admin: 附加封印/處罰的交易 ────────────────────────────────────────────
+        admin.MapPost("/{familyId}/transactions-with-effects", async (
+            string familyId, AddTransactionWithEffectsRequest request,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var tx = await svc.AddTransactionWithEffectsAsync(familyId, request, uid, ct);
+            return Results.Created($"/api/family-scoreboard/{familyId}/transactions/{tx.Id}", tx);
+        });
+
+        // ── Admin: 封印 (Seal) 管理 ───────────────────────────────────────────────
+        admin.MapGet("/{familyId}/seals", async (
+            string familyId, string? playerId, string? status,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetSealsAsync(familyId, playerId, status, ct)));
+
+        admin.MapPost("/{familyId}/seals", async (
+            string familyId, CreateSealRequest request,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var seal = await svc.CreateSealAsync(familyId, request, uid, ct);
+            return Results.Created($"/api/family-scoreboard/{familyId}/seals/{seal.SealId}", seal);
+        });
+
+        admin.MapPost("/{familyId}/seals/{sealId}/lift", async (
+            string familyId, string sealId,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            return Results.Ok(await svc.LiftSealAsync(familyId, sealId, uid, ct));
+        });
+
+        // ── Admin: 處罰 (Penalty) 管理 ────────────────────────────────────────────
+        admin.MapGet("/{familyId}/penalties", async (
+            string familyId, string? playerId, string? status,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetPenaltiesAsync(familyId, playerId, status, ct)));
+
+        admin.MapPost("/{familyId}/penalties", async (
+            string familyId, CreatePenaltyRequest request,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var penalty = await svc.CreatePenaltyAsync(familyId, request, uid, ct);
+            return Results.Created($"/api/family-scoreboard/{familyId}/penalties/{penalty.PenaltyId}", penalty);
+        });
+
+        admin.MapPost("/{familyId}/penalties/{penaltyId}/complete", async (
+            string familyId, string penaltyId,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            return Results.Ok(await svc.CompletePenaltyAsync(familyId, penaltyId, uid, ct));
+        });
+
+        // ── Admin: 活躍效果 (ActiveEffect) 管理 ──────────────────────────────────
+        admin.MapGet("/{familyId}/active-effects", async (
+            string familyId, string? playerId,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetActiveEffectsAsync(familyId, playerId, ct)));
+
+        admin.MapPost("/{familyId}/active-effects", async (
+            string familyId, CreateEffectRequest request,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var effect = await svc.CreateActiveEffectAsync(familyId, request, uid, ct);
+            return Results.Created($"/api/family-scoreboard/{familyId}/active-effects/{effect.EffectId}", effect);
+        });
+
+        admin.MapPost("/{familyId}/active-effects/{effectId}/expire", async (
+            string familyId, string effectId,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            return Results.Ok(await svc.ExpireEffectAsync(familyId, effectId, uid, ct));
+        });
+
+        // ── Admin: 玩家狀態彙整 ──────────────────────────────────────────────────
+        admin.MapGet("/{familyId}/players/{playerId}/status", async (
+            string familyId, string playerId,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetPlayerStatusAsync(familyId, playerId, ct)));
     }
 }
