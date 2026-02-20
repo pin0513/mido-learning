@@ -432,3 +432,16 @@ export interface FamilyBackupDto {
   taskTemplates: TaskTemplateDto[];
   allowanceLedger: AllowanceLedgerDto[];
 }
+
+// ── Co-Admin ──────────────────────────────────────────────────────────────
+
+export interface CoAdminDto {
+  uid: string;
+  displayName: string | null;
+  addedAt: string;
+}
+
+export interface AddCoAdminRequest {
+  coAdminUid: string;
+  displayName?: string;
+}

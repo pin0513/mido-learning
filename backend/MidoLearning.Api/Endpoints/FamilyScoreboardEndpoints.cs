@@ -658,5 +658,37 @@ public static class FamilyScoreboardEndpoints
             string familyId, string playerId,
             IFamilyScoreboardService svc, CancellationToken ct) =>
             Results.Ok(await svc.GetPlayerStatusAsync(familyId, playerId, ct)));
+
+        // ── Admin: Co-Admin 管理 ──────────────────────────────────────────────
+        admin.MapGet("/{familyId}/co-admins", async (
+            string familyId,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetCoAdminsAsync(familyId, ct)));
+
+        admin.MapPost("/{familyId}/co-admins", async (
+            string familyId, AddCoAdminRequest request,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            var dto = await svc.AddCoAdminAsync(familyId, request, ct);
+            return Results.Created($"/api/family-scoreboard/{familyId}/co-admins/{dto.Uid}", dto);
+        });
+
+        admin.MapDelete("/{familyId}/co-admins/{coAdminUid}", async (
+            string familyId, string coAdminUid,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            await svc.RemoveCoAdminAsync(familyId, coAdminUid, ct);
+            return Results.Ok();
+        });
+
+        // GET /api/family-scoreboard/my-family - 取得目前使用者所屬的家庭
+        admin.MapGet("/my-family", async (
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var result = await svc.GetMyFamilyAsync(uid, ct);
+            return result is null ? Results.NotFound() : Results.Ok(result);
+        });
     }
 }

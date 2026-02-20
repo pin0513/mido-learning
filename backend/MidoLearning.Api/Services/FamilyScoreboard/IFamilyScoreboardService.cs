@@ -110,4 +110,10 @@ public interface IFamilyScoreboardService
     // ── Backup ────────────────────────────────────────────────────────────────
     Task<FamilyBackupDto> ExportBackupAsync(string familyId, CancellationToken ct = default);
     Task ImportBackupAsync(string familyId, FamilyBackupDto backup, CancellationToken ct = default);
+
+    // ── Co-Admin ──────────────────────────────────────────────────────────────
+    Task<CoAdminDto> AddCoAdminAsync(string familyId, AddCoAdminRequest req, CancellationToken ct = default);
+    Task<IReadOnlyList<CoAdminDto>> GetCoAdminsAsync(string familyId, CancellationToken ct = default);
+    Task RemoveCoAdminAsync(string familyId, string coAdminUid, CancellationToken ct = default);
+    Task<MyFamilyDto?> GetMyFamilyAsync(string uid, CancellationToken ct = default);
 }

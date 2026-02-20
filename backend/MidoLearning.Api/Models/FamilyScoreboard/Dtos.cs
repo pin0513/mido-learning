@@ -410,6 +410,14 @@ public record PlayerStatusDto(
     IReadOnlyList<ActiveEffectDto> ActiveEffects
 );
 
+// ── Co-Admin ──────────────────────────────────────────────────────────────
+
+public record AddCoAdminRequest(string CoAdminUid, string? DisplayName = null);
+
+public record CoAdminDto(string Uid, string? DisplayName, DateTimeOffset AddedAt);
+
+public record MyFamilyDto(string FamilyId, bool IsPrimaryAdmin);
+
 // ── Backup ────────────────────────────────────────────────────────────────
 
 public record FamilyBackupDto(

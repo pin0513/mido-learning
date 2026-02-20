@@ -42,6 +42,11 @@ import {
   getActiveEffects,
   expireEffect,
   addTransactionWithEffects,
+  deletePlayer,
+  getCoAdmins,
+  addCoAdmin,
+  removeCoAdmin,
+  getMyFamily,
 } from '@/lib/api/family-scoreboard';
 import type {
   PlayerScoreDto,
@@ -62,6 +67,7 @@ import type {
   SealDto,
   PenaltyDto,
   CreatePenaltyRequest,
+  CoAdminDto,
 } from '@/types/family-scoreboard';
 
 type AdminTab = 'code' | 'players' | 'tasks' | 'pending' | 'allowance' | 'shop' | 'events' | 'discipline' | 'backup';
@@ -275,7 +281,8 @@ function PlayerFormModal({ modal, familyId, onClose, onSaved }: {
 export default function FamilyScoreboardAdminPage() {
   const router = useRouter();
   const [uid, setUid] = useState<string | null>(null);
-  const familyId = uid ? `family_${uid}` : '';
+  const [familyId, setFamilyId] = useState('');
+  const [isPrimaryAdmin, setIsPrimaryAdmin] = useState(true);
   const [activeTab, setActiveTab] = useState<AdminTab>('code');
   const [reinitConfirm, setReinitConfirm] = useState(false);
 
@@ -286,6 +293,17 @@ export default function FamilyScoreboardAdminPage() {
   const [customCodeInput, setCustomCodeInput] = useState('');
   const [codeErr, setCodeErr] = useState<string | null>(null);
   const [playerModal, setPlayerModal] = useState<PlayerModal>(null);
+  const [deleteConfirmPlayerId, setDeleteConfirmPlayerId] = useState<string | null>(null);
+  const [deletingPlayerId, setDeletingPlayerId] = useState<string | null>(null);
+
+  // Co-admin state
+  const [coAdmins, setCoAdmins] = useState<CoAdminDto[]>([]);
+  const [coAdminsLoading, setCoAdminsLoading] = useState(false);
+  const [coAdminUidInput, setCoAdminUidInput] = useState('');
+  const [coAdminNameInput, setCoAdminNameInput] = useState('');
+  const [coAdminAdding, setCoAdminAdding] = useState(false);
+  const [coAdminErr, setCoAdminErr] = useState<string | null>(null);
+  const [removingCoAdminUid, setRemovingCoAdminUid] = useState<string | null>(null);
 
   const [tasks, setTasks]           = useState<TaskDto[]>([]);
   const [completions, setCompletions] = useState<TaskCompletionDto[]>([]);
@@ -400,7 +418,24 @@ export default function FamilyScoreboardAdminPage() {
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
-    if (user) setUid(user.uid);
+    if (!user) return;
+    setUid(user.uid);
+    // Resolve familyId: primary admin uses family_{uid}, co-admin uses getMyFamily()
+    const primaryId = `family_${user.uid}`;
+    getMyFamily()
+      .then((result) => {
+        if (result) {
+          setFamilyId(result.familyId);
+          setIsPrimaryAdmin(result.isPrimaryAdmin);
+        } else {
+          setFamilyId(primaryId);
+          setIsPrimaryAdmin(true);
+        }
+      })
+      .catch(() => {
+        setFamilyId(primaryId);
+        setIsPrimaryAdmin(true);
+      });
   }, []);
 
   const { scores, loading, error, initialize, refresh } = useFamilyScoreboard(familyId);
@@ -477,7 +512,47 @@ export default function FamilyScoreboardAdminPage() {
   useEffect(() => {
     if (!familyId || activeTab !== 'players') return;
     refresh();
+    setCoAdminsLoading(true);
+    getCoAdmins(familyId)
+      .then(setCoAdmins)
+      .catch(() => {})
+      .finally(() => setCoAdminsLoading(false));
   }, [familyId, activeTab, refresh]);
+
+  async function handleDeletePlayer(playerId: string) {
+    if (!familyId) return;
+    setDeletingPlayerId(playerId);
+    try {
+      await deletePlayer(familyId, playerId);
+      setDeleteConfirmPlayerId(null);
+      refresh();
+    } catch { /* ignore */ }
+    finally { setDeletingPlayerId(null); }
+  }
+
+  async function handleAddCoAdmin() {
+    if (!familyId || !coAdminUidInput.trim()) return;
+    setCoAdminAdding(true); setCoAdminErr(null);
+    try {
+      const dto = await addCoAdmin(familyId, {
+        coAdminUid: coAdminUidInput.trim(),
+        displayName: coAdminNameInput.trim() || undefined,
+      });
+      setCoAdmins((prev) => [...prev, dto]);
+      setCoAdminUidInput(''); setCoAdminNameInput('');
+    } catch { setCoAdminErr('新增失敗，請確認 UID 是否正確'); }
+    finally { setCoAdminAdding(false); }
+  }
+
+  async function handleRemoveCoAdmin(coAdminUid: string) {
+    if (!familyId) return;
+    setRemovingCoAdminUid(coAdminUid);
+    try {
+      await removeCoAdmin(familyId, coAdminUid);
+      setCoAdmins((prev) => prev.filter((a) => a.uid !== coAdminUid));
+    } catch { /* ignore */ }
+    finally { setRemovingCoAdminUid(null); }
+  }
 
   async function handleReinit() {
     if (!reinitConfirm) { setReinitConfirm(true); return; }
@@ -866,9 +941,105 @@ export default function FamilyScoreboardAdminPage() {
                       >
                         設定積分
                       </button>
+                      <button
+                        onClick={() => setDeleteConfirmPlayerId(player.playerId)}
+                        className="min-h-[44px] px-3 border border-red-200 text-red-500 rounded-xl text-sm font-medium hover:bg-red-50 active:scale-95 transition-all"
+                      >
+                        刪除
+                      </button>
                     </div>
                   </div>
                 ))}
+
+                {/* ── 刪除玩家確認 dialog ── */}
+                {deleteConfirmPlayerId && (() => {
+                  const player = scores.find((p) => p.playerId === deleteConfirmPlayerId);
+                  return (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                      <div className="absolute inset-0 bg-black/50" onClick={() => setDeleteConfirmPlayerId(null)} />
+                      <div className="relative bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 mx-4 space-y-4 z-10">
+                        <div className="text-center">
+                          <div className="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black text-white mx-auto mb-3 shadow-md"
+                            style={{ backgroundColor: player?.color ?? '#ef4444' }}>
+                            {player?.emoji ?? player?.name?.charAt(0) ?? '?'}
+                          </div>
+                          <h3 className="text-lg font-bold text-gray-800 mb-1">確認刪除玩家？</h3>
+                          <p className="text-sm text-gray-500">刪除 <span className="font-bold text-gray-800">{player?.name}</span> 後無法復原，所有積分與紀錄將一併移除。</p>
+                        </div>
+                        <div className="flex gap-3">
+                          <button onClick={() => setDeleteConfirmPlayerId(null)}
+                            className="flex-1 min-h-[48px] border border-gray-200 text-gray-600 rounded-xl font-medium hover:bg-gray-50 transition-all">取消</button>
+                          <button onClick={() => handleDeletePlayer(deleteConfirmPlayerId)}
+                            disabled={deletingPlayerId === deleteConfirmPlayerId}
+                            className="flex-1 min-h-[48px] bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 active:scale-95 transition-all disabled:opacity-40">
+                            {deletingPlayerId === deleteConfirmPlayerId ? '刪除中...' : '確認刪除'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* ── 共同家長（Co-Admin）管理 ── */}
+                {isPrimaryAdmin && (
+                  <div className="mt-6 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-px flex-1 bg-gray-100" />
+                      <p className="text-xs font-bold text-gray-400 px-2">共同家長管理</p>
+                      <div className="h-px flex-1 bg-gray-100" />
+                    </div>
+                    <div className="bg-white rounded-2xl p-4 shadow-sm space-y-3">
+                      <p className="text-sm font-bold text-gray-700">共同家長（{coAdmins.length} 位）</p>
+                      {coAdminsLoading && <p className="text-xs text-gray-400">載入中...</p>}
+                      {!coAdminsLoading && coAdmins.length === 0 && (
+                        <p className="text-xs text-gray-400">尚未新增共同家長</p>
+                      )}
+                      {coAdmins.map((admin) => (
+                        <div key={admin.uid} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                          <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-black text-sm shrink-0">
+                            {admin.displayName?.charAt(0) ?? admin.uid.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-gray-800 text-sm truncate">{admin.displayName || '（未命名）'}</p>
+                            <p className="text-xs text-gray-400 truncate">UID: {admin.uid}</p>
+                          </div>
+                          <button
+                            onClick={() => handleRemoveCoAdmin(admin.uid)}
+                            disabled={removingCoAdminUid === admin.uid}
+                            className="min-h-[36px] px-3 text-xs text-red-500 border border-red-200 rounded-lg hover:bg-red-50 transition-all disabled:opacity-40 shrink-0"
+                          >
+                            {removingCoAdminUid === admin.uid ? '移除中' : '解除'}
+                          </button>
+                        </div>
+                      ))}
+                      <div className="border-t border-gray-100 pt-3 space-y-2">
+                        <p className="text-xs font-medium text-gray-500">新增共同家長</p>
+                        <input
+                          type="text"
+                          placeholder="Firebase UID"
+                          value={coAdminUidInput}
+                          onChange={(e) => setCoAdminUidInput(e.target.value)}
+                          className="w-full border-2 border-gray-100 focus:border-indigo-300 rounded-xl px-4 py-2.5 text-sm outline-none"
+                        />
+                        <input
+                          type="text"
+                          placeholder="顯示名稱（選填）"
+                          value={coAdminNameInput}
+                          onChange={(e) => setCoAdminNameInput(e.target.value)}
+                          className="w-full border-2 border-gray-100 focus:border-indigo-300 rounded-xl px-4 py-2.5 text-sm outline-none"
+                        />
+                        {coAdminErr && <p className="text-xs text-red-500">{coAdminErr}</p>}
+                        <button
+                          onClick={handleAddCoAdmin}
+                          disabled={coAdminAdding || !coAdminUidInput.trim()}
+                          className="w-full min-h-[44px] bg-indigo-500 text-white font-bold rounded-xl hover:bg-indigo-600 active:scale-95 transition-all disabled:opacity-40 text-sm"
+                        >
+                          {coAdminAdding ? '新增中...' : '+ 新增共同家長'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 

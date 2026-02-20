@@ -43,6 +43,8 @@ import type {
   CreatePenaltyRequest,
   CreateEffectRequest,
   AddTransactionWithEffectsRequest,
+  CoAdminDto,
+  AddCoAdminRequest,
 } from '@/types/family-scoreboard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -267,6 +269,50 @@ export async function setPlayerPassword(familyId: string, playerId: string, requ
     body: JSON.stringify(request),
   });
   if (!res.ok) throw new Error('Failed to set password');
+}
+
+export async function deletePlayer(familyId: string, playerId: string): Promise<void> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/players/${playerId}`, {
+    method: 'DELETE',
+    headers,
+  });
+  if (!res.ok && res.status !== 404) throw new Error('Failed to delete player');
+}
+
+export async function getCoAdmins(familyId: string): Promise<CoAdminDto[]> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/co-admins`, { headers });
+  if (!res.ok) throw new Error('Failed to get co-admins');
+  return res.json() as Promise<CoAdminDto[]>;
+}
+
+export async function addCoAdmin(familyId: string, request: AddCoAdminRequest): Promise<CoAdminDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/co-admins`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error('Failed to add co-admin');
+  return res.json() as Promise<CoAdminDto>;
+}
+
+export async function removeCoAdmin(familyId: string, coAdminUid: string): Promise<void> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/co-admins/${coAdminUid}`, {
+    method: 'DELETE',
+    headers,
+  });
+  if (!res.ok && res.status !== 404) throw new Error('Failed to remove co-admin');
+}
+
+export async function getMyFamily(): Promise<{ familyId: string; isPrimaryAdmin: boolean } | null> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/my-family`, { headers });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error('Failed to get my family');
+  return res.json() as Promise<{ familyId: string; isPrimaryAdmin: boolean }>;
 }
 
 export async function createTask(familyId: string, request: CreateTaskRequest): Promise<TaskDto> {

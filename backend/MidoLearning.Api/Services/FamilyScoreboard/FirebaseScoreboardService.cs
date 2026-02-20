@@ -1806,4 +1806,65 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
         return new PlayerStatusDto(playerId, sealsTask.Result, penaltiesTask.Result, effectsTask.Result);
     }
+
+    // ── Co-Admin ──────────────────────────────────────────────────────────────
+
+    public async Task<CoAdminDto> AddCoAdminAsync(string familyId, AddCoAdminRequest req, CancellationToken ct = default)
+    {
+        var coAdminRef = _db.Collection("families").Document(familyId)
+            .Collection("coAdmins").Document(req.CoAdminUid);
+
+        var now = Timestamp.GetCurrentTimestamp();
+        await coAdminRef.SetAsync(new Dictionary<string, object>
+        {
+            ["uid"]         = req.CoAdminUid,
+            ["displayName"] = req.DisplayName ?? "",
+            ["addedAt"]     = now,
+        }, cancellationToken: ct);
+
+        return new CoAdminDto(req.CoAdminUid, req.DisplayName, now.ToDateTimeOffset());
+    }
+
+    public async Task<IReadOnlyList<CoAdminDto>> GetCoAdminsAsync(string familyId, CancellationToken ct = default)
+    {
+        var snap = await _db.Collection("families").Document(familyId)
+            .Collection("coAdmins").GetSnapshotAsync(ct);
+
+        return snap.Documents
+            .Select(d => new CoAdminDto(
+                d.GetValue<string>("uid"),
+                d.TryGetValue<string>("displayName", out var name) ? name : null,
+                d.GetValue<Timestamp>("addedAt").ToDateTimeOffset()))
+            .ToList();
+    }
+
+    public async Task RemoveCoAdminAsync(string familyId, string coAdminUid, CancellationToken ct = default)
+    {
+        await _db.Collection("families").Document(familyId)
+            .Collection("coAdmins").Document(coAdminUid).DeleteAsync(cancellationToken: ct);
+    }
+
+    public async Task<MyFamilyDto?> GetMyFamilyAsync(string uid, CancellationToken ct = default)
+    {
+        // 1. Check primary admin: family_{uid}
+        var primaryFamilyId = $"family_{uid}";
+        var primarySnap = await _db.Collection("families").Document(primaryFamilyId).GetSnapshotAsync(ct);
+        if (primarySnap.Exists)
+            return new MyFamilyDto(primaryFamilyId, true);
+
+        // 2. Check co-admin: search across all families' coAdmins subcollection
+        var coAdminQuery = await _db.CollectionGroup("coAdmins")
+            .WhereEqualTo("uid", uid)
+            .GetSnapshotAsync(ct);
+
+        var firstMatch = coAdminQuery.Documents.FirstOrDefault();
+        if (firstMatch != null)
+        {
+            // Parent path: families/{familyId}/coAdmins/{uid}
+            var familyId = firstMatch.Reference.Parent.Parent!.Id;
+            return new MyFamilyDto(familyId, false);
+        }
+
+        return null;
+    }
 }
