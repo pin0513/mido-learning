@@ -107,6 +107,10 @@ public interface IFamilyScoreboardService
     // ── 玩家狀態彙整 ─────────────────────────────────────────────────────────
     Task<PlayerStatusDto> GetPlayerStatusAsync(string familyId, string playerId, CancellationToken ct = default);
 
+    // ── 記錄刪除 ──────────────────────────────────────────────────────────────
+    Task DeleteTransactionsAsync(string familyId, IReadOnlyList<string> ids, CancellationToken ct = default);
+    Task DeleteRedemptionsAsync(string familyId, IReadOnlyList<string> ids, CancellationToken ct = default);
+
     // ── Backup ────────────────────────────────────────────────────────────────
     Task<FamilyBackupDto> ExportBackupAsync(string familyId, CancellationToken ct = default);
     Task ImportBackupAsync(string familyId, FamilyBackupDto backup, CancellationToken ct = default);

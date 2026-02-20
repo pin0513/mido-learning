@@ -48,9 +48,15 @@ import {
   removeCoAdmin,
   getMyFamily,
   lookupUserByEmail,
+  getTransactions,
+  getRedemptions,
+  deleteTransactions,
+  deleteRedemptions,
 } from '@/lib/api/family-scoreboard';
 import type {
   PlayerScoreDto,
+  TransactionDto,
+  RedemptionDto,
   TaskDto,
   TaskCompletionDto,
   PlayerSubmissionDto,
@@ -71,7 +77,7 @@ import type {
   CoAdminDto,
 } from '@/types/family-scoreboard';
 
-type AdminTab = 'code' | 'players' | 'tasks' | 'pending' | 'allowance' | 'shop' | 'events' | 'discipline' | 'backup';
+type AdminTab = 'code' | 'players' | 'tasks' | 'pending' | 'allowance' | 'shop' | 'events' | 'discipline' | 'records' | 'backup';
 type PlayerModal =
   | { type: 'add' }
   | { type: 'edit'; player: PlayerScoreDto }
@@ -398,6 +404,16 @@ export default function FamilyScoreboardAdminPage() {
   const [shopAllowanceGiven, setShopAllowanceGiven] = useState(10);
   const [shopDailyLimit, setShopDailyLimit]         = useState<number | null>(null);
 
+  // Records tab state
+  const [allTransactions, setAllTransactions]     = useState<TransactionDto[]>([]);
+  const [allRedemptions, setAllRedemptions]       = useState<RedemptionDto[]>([]);
+  const [recordsLoading, setRecordsLoading]       = useState(false);
+  const [recordsError, setRecordsError]           = useState<string | null>(null);
+  const [recordsTab, setRecordsTab]               = useState<'transactions' | 'redemptions'>('transactions');
+  const [selectedRecords, setSelectedRecords]     = useState<Set<string>>(new Set());
+  const [recordsPlayerFilter, setRecordsPlayerFilter] = useState<string>('');
+  const [deletingRecords, setDeletingRecords]     = useState(false);
+
   // Phase 4: Backup state
   const [backupLoading, setBackupLoading] = useState(false);
   const [backupErr, setBackupErr]         = useState<string | null>(null);
@@ -528,6 +544,20 @@ export default function FamilyScoreboardAdminPage() {
     finally { setDiscLoading(false); }
   }, [familyId]);
 
+  async function loadRecordsData() {
+    if (!familyId) return;
+    setRecordsLoading(true); setRecordsError(null);
+    try {
+      const [txs, reds] = await Promise.all([
+        getTransactions(familyId),
+        getRedemptions(familyId),
+      ]);
+      setAllTransactions(txs);
+      setAllRedemptions(reds);
+    } catch { setRecordsError('載入記錄失敗'); }
+    finally { setRecordsLoading(false); }
+  }
+
   useEffect(() => {
     if (!familyId) return;
     if (activeTab === 'tasks' || activeTab === 'pending') loadTaskData();
@@ -535,6 +565,8 @@ export default function FamilyScoreboardAdminPage() {
     else if (activeTab === 'shop') loadShopData();
     else if (activeTab === 'events') loadEventsData();
     else if (activeTab === 'discipline') loadDisciplineData();
+    else if (activeTab === 'records') loadRecordsData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [familyId, activeTab, loadTaskData, loadAllowanceData, loadShopData, loadEventsData, loadDisciplineData]);
 
   useEffect(() => {
@@ -727,6 +759,7 @@ export default function FamilyScoreboardAdminPage() {
     { id: 'shop',      label: '商城管理',                                               icon: '🛒' },
     { id: 'events',     label: '行事曆',                                                 icon: '📅' },
     { id: 'discipline', label: '封印/處罰',                                              icon: '🔒' },
+    { id: 'records',    label: '記錄管理',                                               icon: '🗂️' },
     { id: 'backup',     label: '備份',                                                   icon: '💾' },
   ];
 
@@ -1902,6 +1935,190 @@ export default function FamilyScoreboardAdminPage() {
                     </div>
                   </>
                 )}
+              </div>
+            )}
+
+            {/* ── Records Tab ── */}
+            {activeTab === 'records' && (
+              <div className="space-y-4">
+                {recordsError && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-700 text-sm">⚠️ {recordsError}</div>}
+
+                {/* Sub-tab 切換 */}
+                <div className="flex rounded-xl overflow-hidden border border-gray-100">
+                  <button onClick={() => { setRecordsTab('transactions'); setSelectedRecords(new Set()); }}
+                    className={`flex-1 min-h-[48px] text-sm font-bold transition-colors ${recordsTab === 'transactions' ? 'bg-amber-500 text-white' : 'bg-white text-gray-400 hover:bg-gray-50'}`}>
+                    ⭐ 積分記錄
+                  </button>
+                  <button onClick={() => { setRecordsTab('redemptions'); setSelectedRecords(new Set()); }}
+                    className={`flex-1 min-h-[48px] text-sm font-bold transition-colors ${recordsTab === 'redemptions' ? 'bg-amber-500 text-white' : 'bg-white text-gray-400 hover:bg-gray-50'}`}>
+                    🎁 兌換記錄
+                  </button>
+                </div>
+
+                {/* 玩家篩選 */}
+                <div className="bg-white rounded-xl p-3 shadow-sm">
+                  <div className="flex flex-wrap gap-2">
+                    <button onClick={() => { setRecordsPlayerFilter(''); setSelectedRecords(new Set()); }}
+                      className={`min-h-[36px] px-3 rounded-lg text-xs font-bold transition-all ${recordsPlayerFilter === '' ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-amber-100'}`}>
+                      全部
+                    </button>
+                    {scores.map((p) => (
+                      <button key={p.playerId} onClick={() => { setRecordsPlayerFilter(p.playerId); setSelectedRecords(new Set()); }}
+                        className={`min-h-[36px] px-3 rounded-lg text-xs font-bold transition-all ${recordsPlayerFilter === p.playerId ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-amber-100'}`}
+                        style={recordsPlayerFilter === p.playerId ? { backgroundColor: p.color } : {}}>
+                        {p.emoji ?? ''} {p.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 批次操作列 */}
+                {selectedRecords.size > 0 && (
+                  <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-center justify-between">
+                    <span className="text-sm text-red-700 font-medium">已選 {selectedRecords.size} 筆</span>
+                    <button
+                      onClick={async () => {
+                        if (!familyId || deletingRecords) return;
+                        setDeletingRecords(true);
+                        try {
+                          const ids = Array.from(selectedRecords);
+                          if (recordsTab === 'transactions') {
+                            await deleteTransactions(familyId, ids);
+                            setAllTransactions((prev) => prev.filter((t) => !selectedRecords.has(t.id)));
+                          } else {
+                            await deleteRedemptions(familyId, ids);
+                            setAllRedemptions((prev) => prev.filter((r) => !selectedRecords.has(r.id)));
+                          }
+                          setSelectedRecords(new Set());
+                        } catch { setRecordsError('刪除失敗，請重試'); }
+                        finally { setDeletingRecords(false); }
+                      }}
+                      disabled={deletingRecords}
+                      className="min-h-[36px] px-4 bg-red-500 text-white text-xs font-bold rounded-lg disabled:opacity-50 hover:bg-red-600 active:scale-95 transition-all">
+                      {deletingRecords ? '刪除中...' : `🗑️ 刪除 ${selectedRecords.size} 筆`}
+                    </button>
+                  </div>
+                )}
+
+                {recordsLoading && <div className="text-center py-8 text-amber-500 text-sm">載入中...</div>}
+
+                {/* 積分記錄列表 */}
+                {!recordsLoading && recordsTab === 'transactions' && (() => {
+                  const filtered = recordsPlayerFilter
+                    ? allTransactions.filter((t) => t.playerIds.includes(recordsPlayerFilter))
+                    : allTransactions;
+                  const allSelected = filtered.length > 0 && filtered.every((t) => selectedRecords.has(t.id));
+                  return (
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between px-1">
+                        <p className="text-xs text-gray-400">共 {filtered.length} 筆積分記錄</p>
+                        {filtered.length > 0 && (
+                          <button onClick={() => {
+                            if (allSelected) setSelectedRecords(new Set());
+                            else setSelectedRecords(new Set(filtered.map((t) => t.id)));
+                          }} className="text-xs text-amber-600 font-medium min-h-[36px] px-2">
+                            {allSelected ? '取消全選' : '全選'}
+                          </button>
+                        )}
+                      </div>
+                      {filtered.length === 0 && <div className="text-center py-8 text-gray-300 text-sm bg-white rounded-xl">無記錄</div>}
+                      {filtered.map((tx) => {
+                        const isSelected = selectedRecords.has(tx.id);
+                        const playerName = tx.playerIds.map((id) => scores.find((s) => s.playerId === id)?.name ?? id).join('、');
+                        return (
+                          <div key={tx.id}
+                            className={`bg-white rounded-xl shadow-sm p-3 flex items-center gap-3 cursor-pointer transition-all ${isSelected ? 'ring-2 ring-red-400 bg-red-50' : 'hover:bg-gray-50'}`}
+                            onClick={() => {
+                              setSelectedRecords((prev) => {
+                                const next = new Set(prev);
+                                if (next.has(tx.id)) next.delete(tx.id); else next.add(tx.id);
+                                return next;
+                              });
+                            }}>
+                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 ${isSelected ? 'bg-red-500 border-red-500' : 'border-gray-300'}`}>
+                              {isSelected && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className={`text-sm font-black ${tx.type === 'earn' ? 'text-amber-500' : 'text-red-500'}`}>
+                                  {tx.type === 'earn' ? '+' : '-'}{tx.amount} XP
+                                </span>
+                                <span className="text-xs text-gray-500 truncate">{tx.reason}</span>
+                              </div>
+                              <p className="text-xs text-gray-400 mt-0.5">{playerName} · {new Date(tx.createdAt).toLocaleDateString('zh-TW')}</p>
+                            </div>
+                            <button onClick={(e) => {
+                              e.stopPropagation();
+                              if (!familyId) return;
+                              deleteTransactions(familyId, [tx.id])
+                                .then(() => setAllTransactions((prev) => prev.filter((t) => t.id !== tx.id)))
+                                .catch(() => setRecordsError('刪除失敗'));
+                            }} className="text-xs text-red-400 hover:text-red-600 min-h-[36px] px-2 shrink-0">刪除</button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
+
+                {/* 兌換記錄列表 */}
+                {!recordsLoading && recordsTab === 'redemptions' && (() => {
+                  const filtered = recordsPlayerFilter
+                    ? allRedemptions.filter((r) => r.playerId === recordsPlayerFilter)
+                    : allRedemptions;
+                  const allSelected = filtered.length > 0 && filtered.every((r) => selectedRecords.has(r.id));
+                  return (
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between px-1">
+                        <p className="text-xs text-gray-400">共 {filtered.length} 筆兌換記錄</p>
+                        {filtered.length > 0 && (
+                          <button onClick={() => {
+                            if (allSelected) setSelectedRecords(new Set());
+                            else setSelectedRecords(new Set(filtered.map((r) => r.id)));
+                          }} className="text-xs text-amber-600 font-medium min-h-[36px] px-2">
+                            {allSelected ? '取消全選' : '全選'}
+                          </button>
+                        )}
+                      </div>
+                      {filtered.length === 0 && <div className="text-center py-8 text-gray-300 text-sm bg-white rounded-xl">無記錄</div>}
+                      {filtered.map((r) => {
+                        const isSelected = selectedRecords.has(r.id);
+                        const playerName = scores.find((s) => s.playerId === r.playerId)?.name ?? r.playerId;
+                        return (
+                          <div key={r.id}
+                            className={`bg-white rounded-xl shadow-sm p-3 flex items-center gap-3 cursor-pointer transition-all ${isSelected ? 'ring-2 ring-red-400 bg-red-50' : 'hover:bg-gray-50'}`}
+                            onClick={() => {
+                              setSelectedRecords((prev) => {
+                                const next = new Set(prev);
+                                if (next.has(r.id)) next.delete(r.id); else next.add(r.id);
+                                return next;
+                              });
+                            }}>
+                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 ${isSelected ? 'bg-red-500 border-red-500' : 'border-gray-300'}`}>
+                              {isSelected && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-gray-800 truncate">{r.rewardName}</span>
+                                <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${r.status === 'approved' ? 'bg-green-100 text-green-700' : r.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'}`}>
+                                  {r.status === 'approved' ? '已核准' : r.status === 'rejected' ? '已拒絕' : '待審'}
+                                </span>
+                              </div>
+                              <p className="text-xs text-gray-400 mt-0.5">{playerName} · {r.cost} pt · {new Date(r.requestedAt).toLocaleDateString('zh-TW')}</p>
+                            </div>
+                            <button onClick={(e) => {
+                              e.stopPropagation();
+                              if (!familyId) return;
+                              deleteRedemptions(familyId, [r.id])
+                                .then(() => setAllRedemptions((prev) => prev.filter((x) => x.id !== r.id)))
+                                .catch(() => setRecordsError('刪除失敗'));
+                            }} className="text-xs text-red-400 hover:text-red-600 min-h-[36px] px-2 shrink-0">刪除</button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
             )}
 

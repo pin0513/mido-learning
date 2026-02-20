@@ -771,3 +771,23 @@ export async function getMyEffects(familyId: string): Promise<ActiveEffectDto[]>
   if (!res.ok) throw new Error('Failed to get effects');
   return res.json() as Promise<ActiveEffectDto[]>;
 }
+
+export async function deleteTransactions(familyId: string, ids: string[]): Promise<void> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/transactions`, {
+    method: 'DELETE',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids }),
+  });
+  if (!res.ok) throw new Error('Failed to delete transactions');
+}
+
+export async function deleteRedemptions(familyId: string, ids: string[]): Promise<void> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/redemptions`, {
+    method: 'DELETE',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids }),
+  });
+  if (!res.ok) throw new Error('Failed to delete redemptions');
+}

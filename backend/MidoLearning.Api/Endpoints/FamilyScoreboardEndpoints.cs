@@ -674,6 +674,26 @@ public static class FamilyScoreboardEndpoints
             return Results.Created($"/api/family-scoreboard/{familyId}/co-admins/{dto.Uid}", dto);
         });
 
+        // DELETE /api/family-scoreboard/{familyId}/transactions  (batch)
+        admin.MapDelete("/{familyId}/transactions", async (
+            string familyId, BatchDeleteRequest req,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            if (req.Ids.Count == 0) return Results.BadRequest("No IDs provided");
+            await svc.DeleteTransactionsAsync(familyId, req.Ids, ct);
+            return Results.NoContent();
+        });
+
+        // DELETE /api/family-scoreboard/{familyId}/redemptions  (batch)
+        admin.MapDelete("/{familyId}/redemptions", async (
+            string familyId, BatchDeleteRequest req,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            if (req.Ids.Count == 0) return Results.BadRequest("No IDs provided");
+            await svc.DeleteRedemptionsAsync(familyId, req.Ids, ct);
+            return Results.NoContent();
+        });
+
         admin.MapDelete("/{familyId}/co-admins/{coAdminUid}", async (
             string familyId, string coAdminUid,
             IFamilyScoreboardService svc, CancellationToken ct) =>

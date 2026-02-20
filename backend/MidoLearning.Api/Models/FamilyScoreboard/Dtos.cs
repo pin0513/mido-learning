@@ -422,6 +422,8 @@ public record MyFamilyDto(string FamilyId, bool IsPrimaryAdmin);
 
 // ── Backup ────────────────────────────────────────────────────────────────
 
+public record BatchDeleteRequest(IReadOnlyList<string> Ids);
+
 public record FamilyBackupDto(
     string FamilyId,
     string Version,

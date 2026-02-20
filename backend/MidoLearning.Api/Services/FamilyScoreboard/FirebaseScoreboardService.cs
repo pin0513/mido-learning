@@ -90,6 +90,36 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             .AsReadOnly();
     }
 
+    // ── DeleteTransactionsAsync ───────────────────────────────────────────────
+
+    public async Task DeleteTransactionsAsync(
+        string familyId, IReadOnlyList<string> ids, CancellationToken ct = default)
+    {
+        for (int i = 0; i < ids.Count; i += 400)
+        {
+            var batch = _db.StartBatch();
+            foreach (var id in ids.Skip(i).Take(400))
+                batch.Delete(Transactions(familyId).Document(id));
+            await batch.CommitAsync(ct);
+        }
+        _logger.LogInformation("Deleted {Count} transactions from family {FamilyId}", ids.Count, familyId);
+    }
+
+    // ── DeleteRedemptionsAsync ────────────────────────────────────────────────
+
+    public async Task DeleteRedemptionsAsync(
+        string familyId, IReadOnlyList<string> ids, CancellationToken ct = default)
+    {
+        for (int i = 0; i < ids.Count; i += 400)
+        {
+            var batch = _db.StartBatch();
+            foreach (var id in ids.Skip(i).Take(400))
+                batch.Delete(Redemptions(familyId).Document(id));
+            await batch.CommitAsync(ct);
+        }
+        _logger.LogInformation("Deleted {Count} redemptions from family {FamilyId}", ids.Count, familyId);
+    }
+
     // ── AddTransactionAsync ───────────────────────────────────────────────────
 
     /// <summary>
