@@ -32,9 +32,10 @@ type PlayerTab = 'score' | 'tasks' | 'shop' | 'history' | 'report';
 
 // 難度設定
 const DIFFICULTY_CONFIG = {
-  easy:   { label: '簡單', color: 'bg-green-100 text-green-700', xp: 5 },
-  medium: { label: '中等', color: 'bg-amber-100 text-amber-700', xp: 15 },
-  hard:   { label: '困難', color: 'bg-red-100 text-red-700', xp: 30 },
+  easy:   { label: '簡單', color: 'bg-green-100 text-green-700', xp: 20 },
+  medium: { label: '中等', color: 'bg-amber-100 text-amber-700', xp: 50 },
+  hard:   { label: '困難', color: 'bg-red-100 text-red-700',    xp: 100 },
+  custom: { label: '自訂', color: 'bg-purple-100 text-purple-700', xp: 0 },
 } as const;
 
 // 任務類型設定
@@ -576,7 +577,7 @@ export default function PlayerPage() {
                   </div>
                 ) : (
                   filteredTasks.map((task) => {
-                    const diff      = DIFFICULTY_CONFIG[task.difficulty];
+                    const diff      = DIFFICULTY_CONFIG[task.difficulty as keyof typeof DIFFICULTY_CONFIG] ?? DIFFICULTY_CONFIG.custom;
                     const typeConf  = TYPE_CONFIG[task.type];
                     const submitted = taskSubmitted.has(task.taskId);
                     return (

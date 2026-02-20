@@ -33,122 +33,30 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
     private CollectionReference Redemptions(string familyId) =>
         _db.Collection("families").Document(familyId).Collection("redemptions");
 
-    // ── Default player definitions ────────────────────────────────────────────
-
-    /// <summary>
-    /// Default players for the family. IDs are stable so scores accumulate
-    /// correctly even if initialization is called more than once.
-    /// </summary>
-    private static readonly IReadOnlyList<(string Id, Dictionary<string, object> Fields)> DefaultPlayers =
-    [
-        ("playerA", new Dictionary<string, object>
-        {
-            ["playerId"]          = "playerA",
-            ["name"]              = "Ian 祤恩",
-            ["emoji"]             = "🌟",
-            ["color"]             = "#4CAF50",
-            ["birthday"]          = "2016-09-18",
-            ["role"]              = "哥哥",
-            ["achievementPoints"] = 0,
-            ["redeemablePoints"]  = 0,
-            ["totalEarned"]       = 0,
-            ["totalDeducted"]     = 0,
-            ["totalRedeemed"]     = 0,
-        }),
-        ("playerB", new Dictionary<string, object>
-        {
-            ["playerId"]          = "playerB",
-            ["name"]              = "Justin 祤杰",
-            ["emoji"]             = "🚀",
-            ["color"]             = "#2196F3",
-            ["birthday"]          = "2019-08-24",
-            ["role"]              = "弟弟",
-            ["achievementPoints"] = 0,
-            ["redeemablePoints"]  = 0,
-            ["totalEarned"]       = 0,
-            ["totalDeducted"]     = 0,
-            ["totalRedeemed"]     = 0,
-        }),
-    ];
-
     // ── InitializeAsync ───────────────────────────────────────────────────────
 
     /// <summary>
     /// Idempotent family initialization — safe to call multiple times.
-    /// - Always upserts family meta (preserves scores, updates admin list).
-    /// - Creates each default player only if that player doc doesn't exist yet.
-    /// - Creates default reward only if it doesn't exist yet.
+    /// Only upserts the family meta document (adminUid, familyId, updatedAt).
+    /// Players, shop items, tasks, and events are managed via:
+    ///   - Admin UI (CRUD)
+    ///   - scripts/SeedFamilyData.csx (reads scripts/seed-data/pin0513.json)
     /// </summary>
     public async Task InitializeAsync(string familyId, string adminUid, CancellationToken ct = default)
     {
         var familyRef = _db.Collection("families").Document(familyId);
         var now = Timestamp.GetCurrentTimestamp();
 
-        // 1. Upsert family meta (MergeAll preserves existing fields like createdAt)
+        // Upsert family meta only (MergeAll preserves existing fields like createdAt, displayCode)
         await familyRef.SetAsync(new Dictionary<string, object>
         {
-            ["adminUid"]    = adminUid,
-            ["familyId"]    = familyId,
-            // Multiple parents: all emails listed here have admin management access
-            ["adminEmails"] = new List<string> { "pin0513@gmail.com" },
-            ["updatedAt"]   = now,
+            ["adminUid"]  = adminUid,
+            ["familyId"]  = familyId,
+            ["updatedAt"] = now,
         }, SetOptions.MergeAll, ct);
 
-        // 2. Check each player individually — create only if missing
-        var batch = _db.StartBatch();
-        var hasBatchWork = false;
-
-        foreach (var (playerId, fields) in DefaultPlayers)
-        {
-            var playerRef = Scores(familyId).Document(playerId);
-            var playerSnap = await playerRef.GetSnapshotAsync(ct);
-            if (playerSnap.Exists)
-            {
-                _logger.LogInformation(
-                    "Player {PlayerId} already exists in family {FamilyId} — skipping", playerId, familyId);
-                continue;
-            }
-
-            var data = new Dictionary<string, object>(fields)
-            {
-                ["createdAt"] = now,
-                ["updatedAt"] = now,
-            };
-            batch.Set(playerRef, data);
-            hasBatchWork = true;
-            _logger.LogInformation(
-                "Creating player {PlayerId} ({Name}) in family {FamilyId}",
-                playerId, fields["name"], familyId);
-        }
-
-        // 3. Create default reward only if missing
-        var rewardRef = Rewards(familyId).Document("reward_1");
-        var rewardSnap = await rewardRef.GetSnapshotAsync(ct);
-        if (!rewardSnap.Exists)
-        {
-            batch.Set(rewardRef, new Dictionary<string, object>
-            {
-                ["id"]          = "reward_1",
-                ["name"]        = "看一小時 YouTube",
-                ["cost"]        = 50,
-                ["description"] = "可以看一小時 YouTube",
-                ["icon"]        = "📺",
-                ["isActive"]    = true,
-            });
-            hasBatchWork = true;
-        }
-
-        if (hasBatchWork)
-        {
-            await batch.CommitAsync(ct);
-            _logger.LogInformation(
-                "Family {FamilyId} default data committed by {AdminUid}", familyId, adminUid);
-        }
-        else
-        {
-            _logger.LogInformation(
-                "Family {FamilyId} already fully initialized — no changes needed", familyId);
-        }
+        _logger.LogInformation(
+            "Family {FamilyId} meta upserted by {AdminUid}", familyId, adminUid);
     }
 
     // ── GetScoresAsync ────────────────────────────────────────────────────────
@@ -315,27 +223,34 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
     }
 
     // ── GetRewardsAsync ───────────────────────────────────────────────────────
+    // Reads from shop-items (admin-managed) so the player redeem tab always
+    // reflects the latest shop configuration.
 
     public async Task<IReadOnlyList<RewardDto>> GetRewardsAsync(string familyId, CancellationToken ct = default)
     {
-        var snaps = await Rewards(familyId).WhereEqualTo("isActive", true).GetSnapshotAsync(ct);
+        var snaps = await ShopItems(familyId).WhereEqualTo("isActive", true).GetSnapshotAsync(ct);
         return snaps.Documents
-            .Select(d => d.ConvertTo<RewardDoc>().ToDto())
+            .Select(d =>
+            {
+                var item = d.ConvertTo<ShopItemDoc>();
+                return new RewardDto(item.ItemId, item.Name, item.Price, item.Description, item.Emoji, item.IsActive, item.Stock);
+            })
             .ToList()
             .AsReadOnly();
     }
 
     // ── CreateRedemptionAsync ─────────────────────────────────────────────────
+    // Looks up item from shop-items collection.
 
     public async Task<RedemptionDto> CreateRedemptionAsync(
         string familyId, CreateRedemptionRequest request, string playerUid, CancellationToken ct = default)
     {
-        // Fetch reward to get name and cost
-        var rewardSnap = await Rewards(familyId).Document(request.RewardId).GetSnapshotAsync(ct);
-        if (!rewardSnap.Exists)
-            throw new InvalidOperationException($"Reward {request.RewardId} not found");
+        // Fetch shop item to get name and price
+        var itemSnap = await ShopItems(familyId).Document(request.RewardId).GetSnapshotAsync(ct);
+        if (!itemSnap.Exists)
+            throw new InvalidOperationException($"Shop item {request.RewardId} not found");
 
-        var reward = rewardSnap.ConvertTo<RewardDoc>();
+        var item = itemSnap.ConvertTo<ShopItemDoc>();
 
         var redemptionId = Guid.NewGuid().ToString("N");
         var now = Timestamp.GetCurrentTimestamp();
@@ -345,8 +260,8 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             ["id"] = redemptionId,
             ["playerId"] = playerUid,
             ["rewardId"] = request.RewardId,
-            ["rewardName"] = reward.Name,
-            ["cost"] = reward.Cost,
+            ["rewardName"] = item.Name,
+            ["cost"] = item.Price,
             ["status"] = "pending",
             ["requestedAt"] = now,
         };
@@ -355,7 +270,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         await Redemptions(familyId).Document(redemptionId).SetAsync(data, cancellationToken: ct);
 
         return new RedemptionDto(
-            redemptionId, playerUid, request.RewardId, reward.Name, reward.Cost,
+            redemptionId, playerUid, request.RewardId, item.Name, item.Price,
             "pending", now.ToDateTimeOffset(), null, null, request.Note
         );
     }

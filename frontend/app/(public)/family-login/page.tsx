@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { lookupFamilyByCode, playerLogin } from '@/lib/api/family-scoreboard';
 import { savePlayerToken } from '@/lib/playerAuth';
 import type { FamilyLookupDto, PlayerSummaryDto } from '@/types/family-scoreboard';
@@ -12,6 +12,7 @@ const STEPS: Step[] = ['enter-code', 'select-player', 'enter-password'];
 
 export default function FamilyLoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>('enter-code');
   const [code, setCode] = useState('');
   const [family, setFamily] = useState<FamilyLookupDto | null>(null);
@@ -19,6 +20,20 @@ export default function FamilyLoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // 支援 ?code=XXXX 直接跳到選玩家步驟
+  useEffect(() => {
+    const codeParam = searchParams.get('code');
+    if (!codeParam) return;
+    const trimmed = codeParam.trim().toUpperCase();
+    setCode(trimmed);
+    setLoading(true);
+    lookupFamilyByCode(trimmed)
+      .then((result) => { setFamily(result); setStep('select-player'); })
+      .catch(() => setError('找不到此家庭代碼，請確認代碼是否正確'))
+      .finally(() => setLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Step 1: 查詢家庭
   async function handleLookup() {

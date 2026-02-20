@@ -132,7 +132,7 @@ export interface TaskDto {
   taskId: string;
   title: string;
   type: 'household' | 'exam' | 'activity';
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: 'easy' | 'medium' | 'hard' | 'custom';
   xpReward: number;
   allowanceReward: number;
   description?: string | null;
@@ -146,7 +146,7 @@ export interface TaskDto {
 export interface CreateTaskRequest {
   title: string;
   type: 'household' | 'exam' | 'activity';
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: 'easy' | 'medium' | 'hard' | 'custom';
   xpReward?: number;
   allowanceReward?: number;
   description?: string;

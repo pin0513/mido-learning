@@ -34,6 +34,7 @@ const CATEGORIES: Category[] = [
   { id: 'tidy',          label: '自動整理房間',      amount: 8,   emoji: '🧹', type: 'earn' },
   { id: 'brave',         label: '勇敢嘗試新事物',    amount: 15,  emoji: '🦁', type: 'earn' },
   { id: 'help_sibling',  label: '幫助弟弟/哥哥',     amount: 10,  emoji: '🤝', type: 'earn' },
+  { id: 'sport_training',label: '完成運動訓練課表',  amount: 20,  emoji: '🏋️', type: 'earn' },
   // ── 扣分 ──────────────────────────────────────────────────────────────
   { id: 'fight',         label: '兄弟吵架',          amount: 20,  emoji: '😤', type: 'deduct' },
   { id: 'lie',           label: '不誠實/說謊',       amount: 40,  emoji: '🙈', type: 'deduct' },
@@ -42,6 +43,10 @@ const CATEGORIES: Category[] = [
   { id: 'tantrum',       label: '亂發脾氣',          amount: 10,  emoji: '😡', type: 'deduct' },
   { id: 'messy',         label: '亂丟東西不整潔',    amount: 8,   emoji: '🗑️', type: 'deduct' },
   { id: 'screen',        label: '超時用螢幕',        amount: 15,  emoji: '📵', type: 'deduct' },
+  { id: 'careless',      label: '考試粗心大意',      amount: 10,  emoji: '✏️', type: 'deduct' },
+  { id: 'ugly_writing',  label: '聯絡本字太醜',      amount: 5,   emoji: '📓', type: 'deduct' },
+  { id: 'no_toys',       label: '沒有收玩具',        amount: 8,   emoji: '🧸', type: 'deduct' },
+  { id: 'no_room',       label: '沒有收房間',        amount: 10,  emoji: '🛏️', type: 'deduct' },
 ];
 
 const TABS: { id: Tab; label: string; emoji: string }[] = [

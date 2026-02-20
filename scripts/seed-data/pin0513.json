@@ -1,0 +1,268 @@
+{
+  "_comment": "pin0513@gmail.com 家庭初始 seed 資料。修改此 JSON 後重跑 SeedFamilyData.csx 即可同步到 Firestore。",
+  "account": "pin0513@gmail.com",
+  "family": {
+    "defaultDisplayCode": "MIDO9851"
+  },
+  "players": [
+    {
+      "playerId": "ian",
+      "name": "Ian（米豆）",
+      "emoji": "🌾",
+      "color": "#f59e0b",
+      "role": "大哥",
+      "birthday": "2013-05-13",
+      "initialXp": 0,
+      "initialRp": 0
+    },
+    {
+      "playerId": "justin",
+      "name": "Justin（毛豆）",
+      "emoji": "🌿",
+      "color": "#10b981",
+      "role": "弟弟",
+      "birthday": "2016-03-05",
+      "initialXp": 0,
+      "initialRp": 0
+    }
+  ],
+  "shopItems": [
+    {
+      "name": "豁免一次家事",
+      "description": "本周可以跳過一次指定家事",
+      "price": 60,
+      "type": "privilege",
+      "emoji": "👑",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "看20分鐘 YouTube",
+      "description": "可以看20分鐘 YouTube 或影片",
+      "price": 100,
+      "type": "activity",
+      "emoji": "📺",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "玩20分鐘電動/Switch",
+      "description": "可以玩20分鐘電動遊戲",
+      "price": 100,
+      "type": "activity",
+      "emoji": "🎮",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "MOS 或麥當勞",
+      "description": "週末可以吃 MOS 或麥當勞（一週末家庭上限 2 次）",
+      "price": 100,
+      "type": "activity",
+      "emoji": "🍔",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "週末自選電影",
+      "description": "週末可以選一部想看的電影",
+      "price": 50,
+      "type": "activity",
+      "emoji": "🎬",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "週末2小時外出活動指定",
+      "description": "週末可以指定一個外出活動地點（一週末家庭上限 2 次）",
+      "price": 100,
+      "type": "activity",
+      "emoji": "🏃",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "週末外出選地點",
+      "description": "週末出遊時你來決定去哪裡",
+      "price": 200,
+      "type": "activity",
+      "emoji": "🗺️",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "點一個喜歡的晚餐",
+      "description": "今天晚餐你說了算",
+      "price": 120,
+      "type": "activity",
+      "emoji": "🍜",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "買一本喜歡的書",
+      "description": "可以選一本喜歡的書（200元以內）",
+      "price": 150,
+      "type": "physical",
+      "emoji": "📚",
+      "priceType": "redeemable"
+    },
+    {
+      "name": "小玩具/文具一樣",
+      "description": "可以選一樣小玩具或文具（150元以內）",
+      "price": 180,
+      "type": "physical",
+      "emoji": "🧸",
+      "priceType": "redeemable"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "整理書包和書桌",
+      "type": "household",
+      "difficulty": "easy",
+      "xpReward": 5,
+      "periodType": "daily",
+      "weekDays": [1, 2, 3, 4, 5],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "完成回家作業",
+      "type": "exam",
+      "difficulty": "easy",
+      "xpReward": 10,
+      "periodType": "daily",
+      "weekDays": [1, 2, 3, 4, 5],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "自主閱讀20分鐘",
+      "type": "exam",
+      "difficulty": "easy",
+      "xpReward": 10,
+      "periodType": "daily",
+      "weekDays": [1, 2, 3, 4, 5],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "幫忙收拾餐桌/洗碗",
+      "type": "household",
+      "difficulty": "easy",
+      "xpReward": 8,
+      "periodType": "daily",
+      "weekDays": [0, 1, 2, 3, 4, 5, 6],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "練習才藝30分鐘",
+      "type": "activity",
+      "difficulty": "medium",
+      "xpReward": 15,
+      "periodType": "daily",
+      "weekDays": [1, 2, 3, 4, 5],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "運動/戶外活動20分鐘",
+      "type": "activity",
+      "difficulty": "easy",
+      "xpReward": 10,
+      "periodType": "daily",
+      "weekDays": [0, 1, 2, 3, 4, 5, 6],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "打掃自己的房間",
+      "type": "household",
+      "difficulty": "medium",
+      "xpReward": 20,
+      "periodType": "weekly",
+      "weekDays": [6],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "幫忙打掃客廳/廚房",
+      "type": "household",
+      "difficulty": "medium",
+      "xpReward": 25,
+      "periodType": "weekly",
+      "weekDays": [0, 6],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "幫忙倒垃圾",
+      "type": "household",
+      "difficulty": "easy",
+      "xpReward": 10,
+      "periodType": "weekly",
+      "weekDays": [2, 5],
+      "assignedPlayerIds": ["ian", "justin"]
+    },
+    {
+      "title": "整理自己的衣物",
+      "type": "household",
+      "difficulty": "easy",
+      "xpReward": 12,
+      "periodType": "weekly",
+      "weekDays": [6],
+      "assignedPlayerIds": ["ian", "justin"]
+    }
+  ],
+  "events": [
+    {
+      "title": "期中考試",
+      "type": "other",
+      "startDate": "2026-03-20",
+      "endDate": "2026-03-27",
+      "emoji": "📝",
+      "color": "#e74c3c",
+      "description": "好好複習，考出好成績！"
+    },
+    {
+      "title": "清明連假出遊",
+      "type": "trip",
+      "startDate": "2026-04-03",
+      "endDate": "2026-04-06",
+      "emoji": "🌸",
+      "color": "#22c55e",
+      "description": "清明節連假家族出遊"
+    },
+    {
+      "title": "兒童節慶典",
+      "type": "activity",
+      "startDate": "2026-04-04",
+      "endDate": "",
+      "emoji": "🎉",
+      "color": "#f97316",
+      "description": "兒童節快樂！特別加分日"
+    },
+    {
+      "title": "才藝發表會",
+      "type": "activity",
+      "startDate": "2026-05-10",
+      "endDate": "",
+      "emoji": "🎹",
+      "color": "#8b5cf6",
+      "description": "期末才藝發表，加油！"
+    },
+    {
+      "title": "母親節家庭活動",
+      "type": "activity",
+      "startDate": "2026-05-10",
+      "endDate": "",
+      "emoji": "💐",
+      "color": "#ec4899",
+      "description": "為媽媽準備驚喜"
+    },
+    {
+      "title": "學期末考試",
+      "type": "other",
+      "startDate": "2026-06-08",
+      "endDate": "2026-06-19",
+      "emoji": "📚",
+      "color": "#e74c3c",
+      "description": "期末衝刺！每天讀書有加分"
+    },
+    {
+      "title": "暑假親子旅遊",
+      "type": "trip",
+      "startDate": "2026-07-10",
+      "endDate": "2026-07-14",
+      "emoji": "🏖️",
+      "color": "#06b6d4",
+      "description": "暑假全家出遊，期待嗎？"
+    }
+  ]
+}

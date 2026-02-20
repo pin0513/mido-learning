@@ -84,9 +84,10 @@ const PLAYER_COLORS = [
 ];
 const PLAYER_EMOJIS = ['😊','🦁','🐯','🐼','🦊','🐸','🦋','⭐','🌈','🎯','🚀','🎸'];
 const DIFFICULTY_CONFIG = {
-  easy:   { label: '簡單', color: 'bg-green-100 text-green-700', xp: 5,  allowance: 5  },
-  medium: { label: '中等', color: 'bg-amber-100 text-amber-700', xp: 15, allowance: 10 },
-  hard:   { label: '困難', color: 'bg-red-100 text-red-700',    xp: 30, allowance: 20 },
+  easy:   { label: '簡單', color: 'bg-green-100 text-green-700', xp: 20,  allowance: 0  },
+  medium: { label: '中等', color: 'bg-amber-100 text-amber-700', xp: 50,  allowance: 10 },
+  hard:   { label: '困難', color: 'bg-red-100 text-red-700',    xp: 100, allowance: 30 },
+  custom: { label: '自訂', color: 'bg-purple-100 text-purple-700', xp: 0, allowance: 0 },
 } as const;
 const TYPE_CONFIG: Record<string, { label: string; emoji: string }> = {
   household: { label: '家事',      emoji: '🏠' },
@@ -106,6 +107,29 @@ const EVENT_TYPE_CONFIG: Record<string, { label: string; emoji: string; color: s
   other:    { label: '其他',     emoji: '📅', color: '#8b5cf6' },
 };
 const WEEKDAY_LABELS = ['日','一','二','三','四','五','六'];
+
+function ShareLoginLink({ displayCode }: { displayCode: string }) {
+  const [copied, setCopied] = useState(false);
+  function handleShare() {
+    const url = `${window.location.origin}/family-login?code=${displayCode}`;
+    if (navigator.share) {
+      navigator.share({ title: '家庭積分板登入', url }).catch(() => null);
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+    }
+  }
+  return (
+    <button
+      onClick={handleShare}
+      className="w-full min-h-[48px] bg-white border-2 border-amber-200 text-amber-700 font-semibold rounded-2xl hover:bg-amber-50 active:scale-95 transition-all text-sm"
+    >
+      {copied ? '✓ 連結已複製！' : '🔗 分享登入連結（帶代碼）'}
+    </button>
+  );
+}
 
 function PlayerFormModal({ modal, familyId, onClose, onSaved }: {
   modal: PlayerModal; familyId: string; onClose: () => void; onSaved: () => void;
@@ -315,7 +339,9 @@ export default function FamilyScoreboardAdminPage() {
 
   const [taskTitle, setTaskTitle]           = useState('');
   const [taskType, setTaskType]             = useState<'household' | 'exam' | 'activity'>('household');
-  const [taskDifficulty, setTaskDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
+  const [taskDifficulty, setTaskDifficulty] = useState<'easy' | 'medium' | 'hard' | 'custom'>('easy');
+  const [taskCustomXp, setTaskCustomXp]           = useState(0);
+  const [taskCustomAllowance, setTaskCustomAllowance] = useState(0);
   const [taskPeriod, setTaskPeriod]         = useState<'once' | 'daily' | 'weekly'>('once');
   const [taskWeekDays, setTaskWeekDays]     = useState<number[]>([]);
   const [taskAssigned, setTaskAssigned]     = useState<string[]>([]);
@@ -592,9 +618,11 @@ export default function FamilyScoreboardAdminPage() {
     if (!taskTitle.trim() || !familyId) return;
     setTaskCreating(true); setTasksError(null);
     try {
+      const xp  = taskDifficulty === 'custom' ? taskCustomXp       : DIFFICULTY_CONFIG[taskDifficulty].xp;
+      const all = taskDifficulty === 'custom' ? taskCustomAllowance : DIFFICULTY_CONFIG[taskDifficulty].allowance;
       const req: CreateTaskRequest = {
         title: taskTitle.trim(), type: taskType, difficulty: taskDifficulty,
-        xpReward: DIFFICULTY_CONFIG[taskDifficulty].xp, allowanceReward: DIFFICULTY_CONFIG[taskDifficulty].allowance,
+        xpReward: xp, allowanceReward: all,
         periodType: taskPeriod, weekDays: taskPeriod === 'weekly' ? taskWeekDays : undefined,
         assignedPlayerIds: taskAssigned.length > 0 ? taskAssigned : undefined,
       };
@@ -877,10 +905,11 @@ export default function FamilyScoreboardAdminPage() {
                       <button onClick={copyCode} className="w-full min-h-[56px] bg-amber-500 text-white font-bold rounded-2xl hover:bg-amber-600 active:scale-95 transition-all text-base">
                         {codeCopied ? '✓ 已複製！' : '複製代碼'}
                       </button>
+                      <ShareLoginLink displayCode={displayCode} />
                     </>
                   ) : <div className="text-gray-300 text-3xl py-4">---</div>}
                 </div>
-                <button onClick={() => router.push('/family-login')} className="w-full min-h-[52px] bg-amber-50 text-amber-700 font-semibold rounded-2xl hover:bg-amber-100 transition-colors">👤 前往玩家登入頁</button>
+                <button onClick={() => router.push(`/family-login?code=${displayCode}`)} className="w-full min-h-[52px] bg-amber-50 text-amber-700 font-semibold rounded-2xl hover:bg-amber-100 transition-colors">👤 前往玩家登入頁</button>
                 <div className="bg-white rounded-2xl shadow-sm p-4 space-y-3">
                   <p className="text-sm font-semibold text-gray-600">自訂代碼</p>
                   <p className="text-xs text-gray-400">4-12 個英文字母或數字，家庭間不可重複，設定後不自動改變</p>
@@ -1166,19 +1195,38 @@ export default function FamilyScoreboardAdminPage() {
                   <div>
                     <p className="text-xs text-gray-400 mb-2">難度</p>
                     <div className="flex rounded-xl overflow-hidden border border-gray-100">
-                      {(['easy', 'medium', 'hard'] as const).map((d) => (
-                        <button key={d} onClick={() => setTaskDifficulty(d)}
-                          className={`flex-1 min-h-[52px] flex flex-col items-center justify-center transition-colors ${taskDifficulty === d ? d === 'easy' ? 'bg-green-500 text-white' : d === 'medium' ? 'bg-amber-500 text-white' : 'bg-red-500 text-white' : 'bg-white text-gray-400 hover:bg-gray-50'}`}>
-                          <span className="text-xs font-bold">{DIFFICULTY_CONFIG[d].label}</span>
-                          <span className="text-xs opacity-75">+{DIFFICULTY_CONFIG[d].xp}XP/{DIFFICULTY_CONFIG[d].allowance}💰</span>
-                        </button>
-                      ))}
+                      {(['easy', 'medium', 'hard', 'custom'] as const).map((d) => {
+                        const active = taskDifficulty === d;
+                        const activeBg = d === 'easy' ? 'bg-green-500' : d === 'medium' ? 'bg-amber-500' : d === 'hard' ? 'bg-red-500' : 'bg-purple-500';
+                        return (
+                          <button key={d} onClick={() => setTaskDifficulty(d)}
+                            className={`flex-1 min-h-[52px] flex flex-col items-center justify-center transition-colors ${active ? `${activeBg} text-white` : 'bg-white text-gray-400 hover:bg-gray-50'}`}>
+                            <span className="text-xs font-bold">{DIFFICULTY_CONFIG[d].label}</span>
+                            {d !== 'custom' && <span className="text-xs opacity-75">+{DIFFICULTY_CONFIG[d].xp}XP/{DIFFICULTY_CONFIG[d].allowance}💰</span>}
+                            {d === 'custom' && <span className="text-xs opacity-75">自訂獎勵</span>}
+                          </button>
+                        );
+                      })}
                     </div>
+                    {taskDifficulty === 'custom' && (
+                      <div className="flex gap-3 mt-3">
+                        <div className="flex-1">
+                          <p className="text-xs text-gray-400 mb-1.5">XP 獎勵</p>
+                          <input type="number" min={0} value={taskCustomXp} onChange={(e) => setTaskCustomXp(Number(e.target.value))}
+                            className="w-full border-2 border-purple-200 focus:border-purple-400 rounded-xl px-3 py-2 text-sm font-bold text-center outline-none min-h-[44px]" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-xs text-gray-400 mb-1.5">零用金 💰</p>
+                          <input type="number" min={0} value={taskCustomAllowance} onChange={(e) => setTaskCustomAllowance(Number(e.target.value))}
+                            className="w-full border-2 border-purple-200 focus:border-purple-400 rounded-xl px-3 py-2 text-sm font-bold text-center outline-none min-h-[44px]" />
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 mb-2">頻率</p>
                     <div className="flex rounded-xl overflow-hidden border border-gray-100">
-                      {([{ id: 'once', label: '一次性' }, { id: 'daily', label: '每天' }, { id: 'weekly', label: '每週指定日' }] as const).map(({ id, label }) => (
+                      {([{ id: 'once', label: '1次' }, { id: 'daily', label: '每天' }, { id: 'weekly', label: '每週' }] as const).map(({ id, label }) => (
                         <button key={id} onClick={() => setTaskPeriod(id)}
                           className={`flex-1 min-h-[48px] text-xs font-bold transition-colors ${taskPeriod === id ? 'bg-amber-500 text-white' : 'bg-white text-gray-400 hover:bg-gray-50'}`}>
                           {label}
@@ -1225,7 +1273,10 @@ export default function FamilyScoreboardAdminPage() {
                   </div>
                   <div className="flex items-center justify-between text-xs text-gray-400 bg-gray-50 rounded-xl p-3">
                     <span>獎勵預覽</span>
-                    <span className="font-black text-amber-500">+{DIFFICULTY_CONFIG[taskDifficulty].xp} XP ＋ {DIFFICULTY_CONFIG[taskDifficulty].allowance} 💰</span>
+                    <span className="font-black text-amber-500">
+                      +{taskDifficulty === 'custom' ? taskCustomXp : DIFFICULTY_CONFIG[taskDifficulty].xp} XP
+                      ＋ {taskDifficulty === 'custom' ? taskCustomAllowance : DIFFICULTY_CONFIG[taskDifficulty].allowance} 💰
+                    </span>
                   </div>
                   <button onClick={handleCreateTask} disabled={taskCreating || !taskTitle.trim()}
                     className="w-full min-h-[52px] bg-amber-500 text-white font-bold rounded-xl disabled:opacity-40 hover:bg-amber-600 active:scale-95 transition-all">
@@ -1236,7 +1287,7 @@ export default function FamilyScoreboardAdminPage() {
                   <div className="space-y-2">
                     <p className="text-xs text-gray-400 px-1">現有任務（{tasks.length}）</p>
                     {tasks.map((task) => {
-                      const diff = DIFFICULTY_CONFIG[task.difficulty]; const type = TYPE_CONFIG[task.type];
+                      const diff = DIFFICULTY_CONFIG[task.difficulty as keyof typeof DIFFICULTY_CONFIG] ?? DIFFICULTY_CONFIG.custom; const type = TYPE_CONFIG[task.type];
                       const weekLabel = task.periodType === 'weekly' && task.weekDays.length > 0 ? task.weekDays.map((d) => WEEKDAY_LABELS[d]).join('、') : '';
                       return (
                         <div key={task.taskId} className="bg-white rounded-xl shadow-sm p-4 flex items-center gap-3">
