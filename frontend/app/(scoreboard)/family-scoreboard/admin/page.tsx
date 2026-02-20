@@ -199,7 +199,7 @@ function PlayerFormModal({ modal, familyId, onClose, onSaved }: {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black text-white shadow-md" style={{ backgroundColor: modal.player.color }}>
-                {modal.player.emoji ?? modal.player.name.charAt(0)}
+                {modal.player.emoji ?? modal.player.name?.charAt(0) ?? '?'}
               </div>
               <div><p className="font-bold text-gray-800">{modal.player.name}</p><p className="text-xs text-gray-400">設定登入密碼</p></div>
             </div>
@@ -785,7 +785,7 @@ export default function FamilyScoreboardAdminPage() {
                   <div key={player.playerId} className="bg-white rounded-2xl p-4 shadow-sm">
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black text-white shrink-0 shadow-md" style={{ backgroundColor: player.color }}>
-                        {player.emoji ?? player.name.charAt(0)}
+                        {player.emoji ?? player.name?.charAt(0) ?? '?'}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
@@ -832,7 +832,7 @@ export default function FamilyScoreboardAdminPage() {
                     {player && (
                       <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
                         <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-black text-white" style={{ backgroundColor: player.color }}>
-                          {player.emoji ?? player.name.charAt(0)}
+                          {player.emoji ?? player.name?.charAt(0) ?? '?'}
                         </div>
                         <div>
                           <p className="font-bold text-gray-800">{player.name}</p>
@@ -950,7 +950,7 @@ export default function FamilyScoreboardAdminPage() {
                             <button key={p.playerId} onClick={() => toggleAssignedPlayer(p.playerId)}
                               className={`flex items-center gap-2 px-3 min-h-[48px] rounded-xl border-2 transition-all active:scale-95 ${selected ? 'border-transparent text-white' : 'border-gray-100 bg-white text-gray-600 hover:border-amber-200'}`}
                               style={selected ? { backgroundColor: p.color } : {}}>
-                              <span className="text-xl">{p.emoji ?? p.name.charAt(0)}</span>
+                              <span className="text-xl">{p.emoji ?? p.name?.charAt(0) ?? '?'}</span>
                               <span className="text-sm font-medium">{p.name}</span>
                             </button>
                           );
@@ -1105,7 +1105,7 @@ export default function FamilyScoreboardAdminPage() {
                       return (
                         <div key={player.playerId} className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors">
                           <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-black text-white shrink-0" style={{ backgroundColor: player.color }}>
-                            {player.emoji ?? player.name.charAt(0)}
+                            {player.emoji ?? player.name?.charAt(0) ?? '?'}
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-gray-800 text-sm">{player.name}</p>
@@ -1136,7 +1136,7 @@ export default function FamilyScoreboardAdminPage() {
                         </div>
                         {player && (
                           <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                            <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-black text-white" style={{ backgroundColor: player.color }}>{player.emoji ?? player.name.charAt(0)}</div>
+                            <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl font-black text-white" style={{ backgroundColor: player.color }}>{player.emoji ?? player.name?.charAt(0) ?? '?'}</div>
                             <p className="font-bold text-gray-800">{player.name}</p>
                           </div>
                         )}

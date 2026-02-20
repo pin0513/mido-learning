@@ -536,7 +536,7 @@ export default function PlayerPage() {
                             className="w-8 h-8 rounded-full flex items-center justify-center text-base font-black text-white shrink-0"
                             style={{ backgroundColor: p.color }}
                           >
-                            {p.emoji ?? p.name.charAt(0)}
+                            {p.emoji ?? p.name?.charAt(0) ?? '?'}
                           </div>
                           <span className="flex-1 text-sm font-medium text-gray-700">{p.name}</span>
                           <span className="font-black tabular-nums" style={{ color: p.color }}>

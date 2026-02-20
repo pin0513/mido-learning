@@ -51,7 +51,7 @@ function PlayerAvatar({ player, size = 'md' }: { player: PlayerScoreDto; size?: 
       className={`${sizeClass} rounded-full flex items-center justify-center font-black text-white shadow-md shrink-0`}
       style={{ backgroundColor: player.color }}
     >
-      {player.emoji ?? player.name.charAt(0)}
+      {player.emoji ?? (player.name?.charAt(0) ?? '?')}
     </div>
   );
 }
@@ -583,7 +583,7 @@ export default function FamilyScoreboardPage() {
                         }`}
                         style={historyFilter === p.playerId ? { backgroundColor: p.color } : {}}
                       >
-                        <span>{p.emoji ?? p.name.charAt(0)}</span>
+                        <span>{p.emoji ?? p.name?.charAt(0) ?? '?'}</span>
                         {p.name}
                       </button>
                     ))}
@@ -668,7 +668,7 @@ export default function FamilyScoreboardPage() {
                               }`}
                               style={redeemPlayerId === p.playerId ? { backgroundColor: p.color, borderColor: p.color } : {}}
                             >
-                              <span className="text-3xl">{p.emoji ?? p.name.charAt(0)}</span>
+                              <span className="text-3xl">{p.emoji ?? p.name?.charAt(0) ?? '?'}</span>
                               <span className="text-sm font-bold">{p.name}</span>
                               {p.role && <span className="text-xs opacity-75">{p.role}</span>}
                             </button>

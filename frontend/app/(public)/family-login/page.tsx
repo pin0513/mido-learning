@@ -147,7 +147,7 @@ export default function FamilyLoginPage() {
                       className="w-14 h-14 rounded-full flex items-center justify-center text-3xl font-black text-white shadow-md"
                       style={{ backgroundColor: player.color }}
                     >
-                      {player.emoji ?? player.name.charAt(0)}
+                      {player.emoji ?? player.name?.charAt(0) ?? '?'}
                     </div>
                     <span className="font-bold text-gray-800 text-sm text-center leading-tight">{player.name}</span>
                     <span className="text-xs text-gray-400">需要密碼</span>
@@ -171,7 +171,7 @@ export default function FamilyLoginPage() {
                   className="w-16 h-16 rounded-full flex items-center justify-center text-4xl font-black text-white mx-auto mb-3 shadow-md"
                   style={{ backgroundColor: selectedPlayer.color }}
                 >
-                  {selectedPlayer.emoji ?? selectedPlayer.name.charAt(0)}
+                  {selectedPlayer.emoji ?? selectedPlayer.name?.charAt(0) ?? '?'}
                 </div>
                 <p className="font-bold text-gray-800">{selectedPlayer.name}</p>
                 <p className="text-sm text-gray-400 mt-1">請輸入你的密碼</p>
