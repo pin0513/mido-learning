@@ -39,6 +39,7 @@ public interface IFamilyScoreboardService
     Task<PlayerScoreDto> CreatePlayerAsync(string familyId, CreatePlayerRequest req, CancellationToken ct = default);
     Task<PlayerScoreDto> UpdatePlayerAsync(string familyId, string playerId, UpdatePlayerRequest req, CancellationToken ct = default);
     Task SetPlayerPasswordAsync(string familyId, string playerId, string password, CancellationToken ct = default);
+    Task DeletePlayerAsync(string familyId, string playerId, CancellationToken ct = default);
     Task<PlayerTokenDto> PlayerLoginAsync(PlayerLoginRequest req, IConfiguration configuration, CancellationToken ct = default);
 
     // ── Tasks ─────────────────────────────────────────────────────────────────

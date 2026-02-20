@@ -649,6 +649,16 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         }, cancellationToken: ct);
     }
 
+    // ── DeletePlayerAsync ─────────────────────────────────────────────────────
+
+    public async Task DeletePlayerAsync(string familyId, string playerId, CancellationToken ct = default)
+    {
+        // 刪除 Scores doc
+        await Scores(familyId).Document(playerId).DeleteAsync(cancellationToken: ct);
+        // 刪除 PlayerCredentials doc
+        await PlayerCredentials(familyId).Document(playerId).DeleteAsync(cancellationToken: ct);
+    }
+
     // ── PlayerLoginAsync ──────────────────────────────────────────────────────
 
     public async Task<PlayerTokenDto> PlayerLoginAsync(PlayerLoginRequest req, IConfiguration configuration, CancellationToken ct = default)

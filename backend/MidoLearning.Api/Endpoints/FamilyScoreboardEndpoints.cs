@@ -279,6 +279,14 @@ public static class FamilyScoreboardEndpoints
             return Results.Ok(task);
         });
 
+        admin.MapDelete("/{familyId}/players/{playerId}", async (
+            string familyId, string playerId,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            await svc.DeletePlayerAsync(familyId, playerId, ct);
+            return Results.Ok();
+        });
+
         admin.MapDelete("/{familyId}/tasks/{taskId}", async (
             string familyId,
             string taskId,

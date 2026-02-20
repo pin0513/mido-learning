@@ -259,10 +259,32 @@
 
 ---
 
-**版本**：1.1
+**版本**：1.2
 **建立日期**：2026-02-13
-**更新日期**：2026-02-18
+**更新日期**：2026-02-20
 **維護者**：Web Design Team
+
+---
+
+## 上版規範（Deploy Gate）
+
+### 上版前必跑 E2E 測試
+
+**任何 push 到 main 分支之前，必須通過 Playwright E2E 測試**：
+
+```bash
+cd frontend && npx playwright test e2e/family-scoreboard.spec.ts --reporter=list
+```
+
+**要求**：
+- 所有 56 個測試必須全部通過（0 failed）
+- 測試覆蓋：STEP 1–14（初始化 → 積分 → 任務 → 零用金 → 商城 → 封印處罰 → 事件 → 道具 → 摘要 → 清理）
+- 每次測試建立獨立的 `family_test{datetime}` 家庭，不污染真實帳號
+
+**E2E 測試失敗時**：
+1. 不得上版
+2. 找出失敗的 STEP，修正對應的 Backend / Frontend 程式碼
+3. 重跑測試直到全部通過
 
 ---
 
