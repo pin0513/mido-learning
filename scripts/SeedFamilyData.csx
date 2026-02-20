@@ -95,8 +95,12 @@ Console.WriteLine("\n🛒 [2/5] Seeding shop items...");
 var shopRef = familyRef.Collection("shop-items");
 var existingItems = await shopRef.GetSnapshotAsync();
 if (existingItems.Count > 0) {
-    Console.WriteLine($"  ⚠ Already has {existingItems.Count} shop items, skipping.");
-} else {
+    Console.WriteLine($"  🗑 Deleting {existingItems.Count} existing shop items...");
+    var delBatch = db.StartBatch();
+    foreach (var doc in existingItems.Documents) delBatch.Delete(doc.Reference);
+    await delBatch.CommitAsync();
+}
+{
     var shopItems = new[] {
         // ── 特權免除 ──────────────────────────────────
         new { name="豁免一次家事",       desc="本周可以跳過一次指定家事",             price=60,  type="privilege", emoji="👑", priceType="redeemable" },
@@ -141,8 +145,16 @@ Console.WriteLine("\n📋 [3/5] Seeding tasks...");
 var tasksRef = familyRef.Collection("tasks");
 var existingTasks = await tasksRef.GetSnapshotAsync();
 if (existingTasks.Count > 0) {
-    Console.WriteLine($"  ⚠ Already has {existingTasks.Count} tasks, skipping.");
-} else {
+    Console.WriteLine($"  🗑 Deleting {existingTasks.Count} existing tasks...");
+    // Firestore batch 最多 500 ops，分批刪除
+    var toDelete = existingTasks.Documents.ToList();
+    for (int i = 0; i < toDelete.Count; i += 400) {
+        var delBatch = db.StartBatch();
+        foreach (var doc in toDelete.Skip(i).Take(400)) delBatch.Delete(doc.Reference);
+        await delBatch.CommitAsync();
+    }
+}
+{
     var tasks = new[] {
         // ── 每日任務（兩人共用）────────────────────────
         new { title="整理書包和書桌",      type="household", diff="easy",   xp=5,  period="daily",  days=new[]{1,2,3,4,5},   players=new[]{"ian","justin"} },
