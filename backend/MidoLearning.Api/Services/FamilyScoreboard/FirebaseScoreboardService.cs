@@ -595,9 +595,9 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             ["playerId"] = req.PlayerId,
             ["name"] = req.Name,
             ["color"] = req.Color,
-            ["achievementPoints"] = 0,
-            ["redeemablePoints"] = 0,
-            ["totalEarned"] = 0,
+            ["achievementPoints"] = req.InitialAchievementPoints ?? 0,
+            ["redeemablePoints"] = req.InitialRedeemablePoints ?? 0,
+            ["totalEarned"] = req.InitialAchievementPoints ?? 0,
             ["totalDeducted"] = 0,
             ["totalRedeemed"] = 0,
             ["createdAt"] = now,
@@ -626,6 +626,8 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         if (req.Emoji != null) updates["emoji"] = req.Emoji;
         if (req.Role != null) updates["role"] = req.Role;
         if (req.Birthday != null) updates["birthday"] = req.Birthday;
+        if (req.AchievementPoints.HasValue) updates["achievementPoints"] = req.AchievementPoints.Value;
+        if (req.RedeemablePoints.HasValue) updates["redeemablePoints"] = req.RedeemablePoints.Value;
 
         var scoreRef = Scores(familyId).Document(playerId);
         await scoreRef.UpdateAsync(updates);

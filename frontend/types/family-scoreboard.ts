@@ -77,6 +77,8 @@ export interface CreatePlayerRequest {
   emoji?: string;
   role?: string;
   birthday?: string;
+  initialAchievementPoints?: number;
+  initialRedeemablePoints?: number;
 }
 
 export interface UpdatePlayerRequest {
@@ -85,6 +87,8 @@ export interface UpdatePlayerRequest {
   emoji?: string;
   role?: string;
   birthday?: string;
+  achievementPoints?: number;
+  redeemablePoints?: number;
 }
 
 export interface SetPlayerPasswordRequest {

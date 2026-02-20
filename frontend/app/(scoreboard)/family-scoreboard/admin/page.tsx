@@ -103,19 +103,35 @@ const WEEKDAY_LABELS = ['日','一','二','三','四','五','六'];
 function PlayerFormModal({ modal, familyId, onClose, onSaved }: {
   modal: PlayerModal; familyId: string; onClose: () => void; onSaved: () => void;
 }) {
-  const [name, setName]         = useState('');
-  const [color, setColor]       = useState(PLAYER_COLORS[0]);
-  const [emoji, setEmoji]       = useState('');
-  const [playerId, setPlayerId] = useState('');
-  const [password, setPassword] = useState('');
-  const [saving, setSaving]     = useState(false);
-  const [err, setErr]           = useState<string | null>(null);
+  const [name, setName]             = useState('');
+  const [color, setColor]           = useState(PLAYER_COLORS[0]);
+  const [emoji, setEmoji]           = useState('');
+  const [playerId, setPlayerId]     = useState('');
+  const [role, setRole]             = useState('');
+  const [birthday, setBirthday]     = useState('');
+  const [initAp, setInitAp]         = useState('');
+  const [initRp, setInitRp]         = useState('');
+  const [password, setPassword]     = useState('');
+  const [saving, setSaving]         = useState(false);
+  const [err, setErr]               = useState<string | null>(null);
 
   useEffect(() => {
     if (!modal) return;
-    if (modal.type === 'edit') { setName(modal.player.name); setColor(modal.player.color); setEmoji(modal.player.emoji ?? ''); setPlayerId(modal.player.playerId); }
-    else if (modal.type === 'password') { setPassword(''); }
-    else { setName(''); setColor(PLAYER_COLORS[0]); setEmoji(''); setPlayerId(''); }
+    if (modal.type === 'edit') {
+      setName(modal.player.name ?? '');
+      setColor(modal.player.color);
+      setEmoji(modal.player.emoji ?? '');
+      setPlayerId(modal.player.playerId);
+      setRole(modal.player.role ?? '');
+      setBirthday(modal.player.birthday ?? '');
+      setInitAp(String(modal.player.achievementPoints ?? 0));
+      setInitRp(String(modal.player.redeemablePoints ?? 0));
+    } else if (modal.type === 'password') {
+      setPassword('');
+    } else {
+      setName(''); setColor(PLAYER_COLORS[0]); setEmoji(''); setPlayerId('');
+      setRole(''); setBirthday(''); setInitAp('0'); setInitRp('0');
+    }
     setErr(null);
   }, [modal]);
 
@@ -128,9 +144,26 @@ function PlayerFormModal({ modal, familyId, onClose, onSaved }: {
     try {
       if (cm.type === 'add') {
         if (!name.trim() || !playerId.trim()) { setErr('請填寫玩家 ID 和名稱'); setSaving(false); return; }
-        await createPlayer(familyId, { playerId: playerId.trim().toLowerCase(), name: name.trim(), color, emoji: emoji || undefined } as CreatePlayerRequest);
+        await createPlayer(familyId, {
+          playerId: playerId.trim().toLowerCase(),
+          name: name.trim(),
+          color,
+          emoji: emoji || undefined,
+          role: role.trim() || undefined,
+          birthday: birthday || undefined,
+          initialAchievementPoints: initAp !== '' ? Number(initAp) : undefined,
+          initialRedeemablePoints: initRp !== '' ? Number(initRp) : undefined,
+        } as CreatePlayerRequest);
       } else if (cm.type === 'edit') {
-        await updatePlayer(familyId, cm.player.playerId, { name: name.trim(), color, emoji: emoji || undefined } as UpdatePlayerRequest);
+        await updatePlayer(familyId, cm.player.playerId, {
+          name: name.trim(),
+          color,
+          emoji: emoji || undefined,
+          role: role.trim() || undefined,
+          birthday: birthday || undefined,
+          achievementPoints: initAp !== '' ? Number(initAp) : undefined,
+          redeemablePoints: initRp !== '' ? Number(initRp) : undefined,
+        } as UpdatePlayerRequest);
       } else if (cm.type === 'password') {
         if (!password) { setErr('請輸入密碼'); setSaving(false); return; }
         await setPlayerPassword(familyId, cm.player.playerId, { password });
@@ -182,6 +215,28 @@ function PlayerFormModal({ modal, familyId, onClose, onSaved }: {
                   <button key={em} onClick={() => setEmoji(em)}
                     className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-2xl transition-all ${emoji === em ? 'border-amber-400 bg-amber-50 scale-110' : 'border-gray-100 hover:border-gray-300'}`}>{em}</button>
                 ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1.5 font-medium">角色（選填，例如：哥哥、妹妹）</label>
+              <input type="text" placeholder="角色" value={role} onChange={(e) => setRole(e.target.value)}
+                className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[52px]" />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-400 mb-1.5 font-medium">生日（選填）</label>
+              <input type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)}
+                className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[52px]" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-gray-400 mb-1.5 font-medium">成就積分（XP）</label>
+                <input type="number" min="0" value={initAp} onChange={(e) => setInitAp(e.target.value)}
+                  className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[52px]" />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-400 mb-1.5 font-medium">可兌換積分</label>
+                <input type="number" min="0" value={initRp} onChange={(e) => setInitRp(e.target.value)}
+                  className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[52px]" />
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-2xl">

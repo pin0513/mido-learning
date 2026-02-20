@@ -80,7 +80,9 @@ public record CreatePlayerRequest(
     string Color,
     string? Emoji = null,
     string? Role = null,
-    string? Birthday = null
+    string? Birthday = null,
+    int? InitialAchievementPoints = null,
+    int? InitialRedeemablePoints = null
 );
 
 public record UpdatePlayerRequest(
@@ -88,7 +90,9 @@ public record UpdatePlayerRequest(
     string Color,
     string? Emoji = null,
     string? Role = null,
-    string? Birthday = null
+    string? Birthday = null,
+    int? AchievementPoints = null,
+    int? RedeemablePoints = null
 );
 
 public record SetPlayerPasswordRequest(string Password);
