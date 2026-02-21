@@ -775,62 +775,72 @@ export default function FamilyScoreboardPage() {
                 return acc;
               }, {});
 
-              const maxWeekXp = Math.max(1, ...scores.map((p) => statsMap[p.playerId]?.week ?? 0));
-              const maxMonthXp = Math.max(1, ...scores.map((p) => statsMap[p.playerId]?.month ?? 0));
+              const catEmojiMap: Record<string, string> = Object.fromEntries(
+                CATEGORIES.map((c) => [c.id, c.emoji])
+              );
+
+              const weekEarnsMap = scores.reduce<Record<string, string[]>>((acc, p) => {
+                const mine = transactions.filter(
+                  (t) =>
+                    t.playerIds.includes(p.playerId) &&
+                    t.type === 'earn' &&
+                    new Date(t.createdAt) >= weekStart
+                );
+                acc[p.playerId] = mine.map(
+                  (t) => (t.categoryId ? (catEmojiMap[t.categoryId] ?? '⭐') : '⭐')
+                );
+                return acc;
+              }, {});
 
               return (
                 <div className="p-4 lg:py-6 space-y-4">
                   <h2 className="text-base font-bold text-gray-700">統計報表</h2>
 
-                  {/* ── 本週 XP 比較 ── */}
+                  {/* ── 本週貼紙牆比較 ── */}
                   {scores.length > 1 && (
-                    <div className="bg-white rounded-2xl shadow-sm p-4 space-y-3">
-                      <p className="text-sm font-bold text-gray-600">⭐ 本週 XP 比較</p>
-                      {[...scores].sort((a, b) => (statsMap[b.playerId]?.week ?? 0) - (statsMap[a.playerId]?.week ?? 0)).map((p) => {
-                        const w = statsMap[p.playerId]?.week ?? 0;
-                        const pct = Math.round((w / maxWeekXp) * 100);
-                        return (
-                          <div key={p.playerId} className="space-y-1">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
+                    <div className="bg-white rounded-2xl shadow-sm p-4 space-y-4">
+                      <p className="text-sm font-bold text-gray-600">🎫 本週貼紙牆</p>
+                      {[...scores]
+                        .sort((a, b) => (weekEarnsMap[b.playerId]?.length ?? 0) - (weekEarnsMap[a.playerId]?.length ?? 0))
+                        .map((p) => {
+                          const stickers = weekEarnsMap[p.playerId] ?? [];
+                          const emptyCount = Math.max(0, 10 - stickers.length);
+                          return (
+                            <div key={p.playerId}>
+                              <div className="flex items-center gap-2 mb-2">
                                 <PlayerAvatar player={p} size="sm" />
                                 <span className="text-sm font-semibold text-gray-700">{p.name}</span>
+                                <span className="ml-auto text-xs font-bold tabular-nums" style={{ color: p.color }}>
+                                  +{statsMap[p.playerId]?.week ?? 0} xp
+                                </span>
                               </div>
-                              <span className="text-sm font-black tabular-nums" style={{ color: p.color }}>+{w} XP</span>
-                            </div>
-                            <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                              <div className="h-full rounded-full transition-all duration-700"
-                                style={{ width: `${pct}%`, backgroundColor: p.color }} />
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* ── 本月 XP 比較 ── */}
-                  {scores.length > 1 && (
-                    <div className="bg-white rounded-2xl shadow-sm p-4 space-y-3">
-                      <p className="text-sm font-bold text-gray-600">📅 本月 XP 比較</p>
-                      {[...scores].sort((a, b) => (statsMap[b.playerId]?.month ?? 0) - (statsMap[a.playerId]?.month ?? 0)).map((p) => {
-                        const m = statsMap[p.playerId]?.month ?? 0;
-                        const pct = Math.round((m / maxMonthXp) * 100);
-                        return (
-                          <div key={p.playerId} className="space-y-1">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <PlayerAvatar player={p} size="sm" />
-                                <span className="text-sm font-semibold text-gray-700">{p.name}</span>
+                              <div className="flex flex-wrap gap-1.5">
+                                {stickers.map((emoji, i) => (
+                                  <span
+                                    key={i}
+                                    className="w-9 h-9 flex items-center justify-center rounded-xl text-xl"
+                                    style={{ backgroundColor: p.color + '20' }}
+                                  >
+                                    {emoji}
+                                  </span>
+                                ))}
+                                {Array.from({ length: emptyCount }).map((_, i) => (
+                                  <span
+                                    key={`empty-${i}`}
+                                    className="w-9 h-9 flex items-center justify-center rounded-xl text-gray-200 bg-gray-50 text-xl"
+                                  >
+                                    ○
+                                  </span>
+                                ))}
                               </div>
-                              <span className="text-sm font-black tabular-nums" style={{ color: p.color }}>+{m} XP</span>
+                              <p className="text-xs text-gray-400 mt-1.5">
+                                {stickers.length >= 10
+                                  ? `🎉 已集 ${stickers.length} 張，達標！`
+                                  : `已集 ${stickers.length} 張 / 目標 10 張`}
+                              </p>
                             </div>
-                            <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                              <div className="h-full rounded-full transition-all duration-700"
-                                style={{ width: `${pct}%`, backgroundColor: p.color + 'bb' }} />
-                            </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
                     </div>
                   )}
 
@@ -858,45 +868,57 @@ export default function FamilyScoreboardPage() {
                           </div>
                         </div>
 
-                        {/* 時間統計 */}
-                        <div className="grid grid-cols-3 gap-2 text-center mb-3">
-                          <div className="rounded-xl p-2.5" style={{ backgroundColor: '#fef3c7' }}>
-                            <p className="text-lg font-black text-amber-700 tabular-nums">+{st.today}</p>
-                            <p className="text-[11px] text-amber-600 mt-0.5">今日 XP</p>
+                        {/* 本週貼紙 */}
+                        <div className="mb-3">
+                          <p className="text-xs font-semibold text-gray-400 mb-2">🎫 本週貼紙</p>
+                          <div className="flex flex-wrap gap-1">
+                            {(weekEarnsMap[p.playerId] ?? []).map((emoji, i) => (
+                              <span
+                                key={i}
+                                className="w-8 h-8 flex items-center justify-center rounded-lg text-lg"
+                                style={{ backgroundColor: p.color + '20' }}
+                              >
+                                {emoji}
+                              </span>
+                            ))}
+                            {Array.from({ length: Math.max(0, 10 - (weekEarnsMap[p.playerId]?.length ?? 0)) }).map((_, i) => (
+                              <span key={`e-${i}`} className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-50 text-gray-200 text-lg">
+                                ○
+                              </span>
+                            ))}
                           </div>
-                          <div className="rounded-xl p-2.5" style={{ backgroundColor: '#d1fae5' }}>
-                            <p className="text-lg font-black text-emerald-700 tabular-nums">+{st.week}</p>
-                            <p className="text-[11px] text-emerald-600 mt-0.5">本週 XP</p>
+                          <p className="text-xs text-gray-400 mt-1">
+                            {(weekEarnsMap[p.playerId]?.length ?? 0) >= 10
+                              ? '🎉 本週達標！'
+                              : `${weekEarnsMap[p.playerId]?.length ?? 0} / 10 張`}
+                          </p>
+                        </div>
+
+                        {/* 緊湊數字 - 今日/本週/本月 */}
+                        <div className="grid grid-cols-3 gap-1.5 text-center mb-1.5">
+                          <div className="rounded-xl p-2 bg-amber-50">
+                            <p className="text-sm font-black text-amber-700 tabular-nums">+{st.today}</p>
+                            <p className="text-[10px] text-amber-500">今日</p>
                           </div>
-                          <div className="rounded-xl p-2.5" style={{ backgroundColor: '#dbeafe' }}>
-                            <p className="text-lg font-black text-blue-700 tabular-nums">+{st.month}</p>
-                            <p className="text-[11px] text-blue-600 mt-0.5">本月 XP</p>
+                          <div className="rounded-xl p-2 bg-emerald-50">
+                            <p className="text-sm font-black text-emerald-700 tabular-nums">+{st.week}</p>
+                            <p className="text-[10px] text-emerald-500">本週</p>
+                          </div>
+                          <div className="rounded-xl p-2 bg-blue-50">
+                            <p className="text-sm font-black text-blue-700 tabular-nums">+{st.month}</p>
+                            <p className="text-[10px] text-blue-500">本月</p>
                           </div>
                         </div>
 
-                        {/* 累計統計 */}
-                        <div className="grid grid-cols-3 gap-2 text-center mb-2">
-                          <div className="bg-amber-50 rounded-xl p-2.5">
-                            <p className="text-lg font-black tabular-nums" style={{ color: p.color }}>{p.achievementPoints}</p>
-                            <p className="text-[11px] text-gray-400 mt-0.5">成就點</p>
+                        {/* 成就點 / 可兌換 */}
+                        <div className="grid grid-cols-2 gap-1.5 text-center">
+                          <div className="bg-amber-50 rounded-xl p-2">
+                            <p className="text-sm font-black tabular-nums" style={{ color: p.color }}>{p.achievementPoints}</p>
+                            <p className="text-[10px] text-gray-400">成就點</p>
                           </div>
-                          <div className="bg-emerald-50 rounded-xl p-2.5">
-                            <p className="text-lg font-black text-emerald-600 tabular-nums">{p.redeemablePoints}</p>
-                            <p className="text-[11px] text-gray-400 mt-0.5">可兌換</p>
-                          </div>
-                          <div className="bg-blue-50 rounded-xl p-2.5">
-                            <p className="text-lg font-black text-blue-500 tabular-nums">{p.totalRedeemed}</p>
-                            <p className="text-[11px] text-gray-400 mt-0.5">已兌換</p>
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-2 text-center">
-                          <div className="bg-green-50 rounded-xl p-2.5">
-                            <p className="text-sm font-bold text-green-600">+{p.totalEarned}</p>
-                            <p className="text-[11px] text-gray-400">累計獲得</p>
-                          </div>
-                          <div className="bg-red-50 rounded-xl p-2.5">
-                            <p className="text-sm font-bold text-red-500">−{p.totalDeducted}</p>
-                            <p className="text-[11px] text-gray-400">累計扣除</p>
+                          <div className="bg-emerald-50 rounded-xl p-2">
+                            <p className="text-sm font-black text-emerald-600 tabular-nums">{p.redeemablePoints}</p>
+                            <p className="text-[10px] text-gray-400">可兌換</p>
                           </div>
                         </div>
                       </div>
