@@ -259,9 +259,9 @@
 
 ---
 
-**版本**：1.2
+**版本**：1.3
 **建立日期**：2026-02-13
-**更新日期**：2026-02-20
+**更新日期**：2026-02-21
 **維護者**：Web Design Team
 
 ---
@@ -285,6 +285,31 @@ cd frontend && npx playwright test e2e/family-scoreboard.spec.ts --reporter=list
 1. 不得上版
 2. 找出失敗的 STEP，修正對應的 Backend / Frontend 程式碼
 3. 重跑測試直到全部通過
+
+---
+
+## Family Scoreboard 開發備忘
+
+> 本專案除企業官網外，同時維護一個**家庭計分板 App**（`/family-scoreboard`），以下記錄核心架構與近期重要設計決策。
+
+### 核心頁面
+- **路徑**：`frontend/app/(scoreboard)/family-scoreboard/page.tsx`（單一大型頁面組件）
+- **Tabs**：首頁（home）/ 記錄（history）/ 任務（quest）/ 報表（report）/ 商城（shop）
+
+### 資料模型重點
+- `scores`：各玩家積分快照（achievementPoints、redeemablePoints、totalRedeemed 等）
+- `transactions`：所有加扣分紀錄，含 `categoryId`（對應 `CATEGORIES` 常數）
+- `CATEGORIES`：頂部常數，含 emoji、amount、type（earn / deduct）
+
+### UI 設計決策記錄
+
+| 日期 | 區塊 | 決策 |
+|------|------|------|
+| 2026-02-21 | 報表 Tab - 比較卡片 | 移除本週/本月 XP 長條圖，改為「本週貼紙牆」：每筆加分用 categoryId 對應 emoji 呈現，空格顯示 ○，目標 10 張，童趣風格優先於數字密度 |
+| 2026-02-21 | 報表 Tab - 個別玩家 | 從 8 格大數字縮減為「貼紙牆 + 5 格小數字」（今日/本週/本月 + 成就點/可兌換），移除「已兌換/累計獲得/累計扣除」以降低資訊過載 |
+
+### E2E 覆蓋範圍
+E2E 測試覆蓋 API 層與核心業務流程（56 個測試），**不覆蓋報表 Tab 視覺呈現**。報表 UI 異動後需人工在瀏覽器驗證貼紙牆顯示是否正確。
 
 ---
 
