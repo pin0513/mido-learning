@@ -103,9 +103,19 @@ export default function AdminComponentsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">教材管理</h1>
-        <p className="mt-1 text-gray-600">管理所有學習教材</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">教材管理</h1>
+          <p className="mt-1 text-gray-600">管理所有學習教材</p>
+        </div>
+        <Link href="/teacher/components/upload">
+          <Button>
+            <svg className="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            新增教材
+          </Button>
+        </Link>
       </div>
 
       {/* Filters */}
