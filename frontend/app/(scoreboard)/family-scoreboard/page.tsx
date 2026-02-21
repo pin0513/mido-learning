@@ -50,10 +50,10 @@ const CATEGORIES: Category[] = [
 ];
 
 const TABS: { id: Tab; label: string; emoji: string }[] = [
-  { id: 'home',    label: '首頁', emoji: '🏠' },
-  { id: 'history', label: '記錄', emoji: '📋' },
-  { id: 'redeem',  label: '兌換', emoji: '🎁' },
-  { id: 'report',  label: '報表', emoji: '📊' },
+  { id: 'home',    label: '首頁',     emoji: '🏠' },
+  { id: 'redeem',  label: '兌換',     emoji: '🎁' },
+  { id: 'report',  label: '成就',     emoji: '🏆' },
+  { id: 'history', label: '交易記錄', emoji: '📋' },
 ];
 
 // ── Player Avatar ─────────────────────────────────────────────────────────────
@@ -526,13 +526,13 @@ export default function FamilyScoreboardPage() {
                             >
                               {player.achievementPoints}
                             </p>
-                            <p className="text-xs text-gray-400 mt-0.5">成就點數</p>
+                            <p className="text-xs text-gray-400 mt-0.5">成就點數（經驗值）</p>
                           </div>
 
                           {/* Redeemable */}
                           <div className="w-full bg-emerald-50 rounded-xl px-2 py-2 text-center">
                             <p className="text-base font-bold text-emerald-600">{player.redeemablePoints}</p>
-                            <p className="text-xs text-emerald-400">可兌換</p>
+                            <p className="text-xs text-emerald-400">可兌換（零用金）</p>
                           </div>
 
                           {/* Edit hint */}
@@ -663,7 +663,7 @@ export default function FamilyScoreboardPage() {
                             <p className="font-semibold text-gray-800">{r.name}</p>
                             <p className="text-xs text-gray-400 mt-0.5">{r.description}</p>
                           </div>
-                          <span className="font-bold text-emerald-600 shrink-0 text-base">{r.cost} pt</span>
+                          <span className="font-bold text-emerald-600 shrink-0 text-base">零用金 {r.cost}</span>
                         </div>
                       ))}
                     </div>
@@ -701,7 +701,7 @@ export default function FamilyScoreboardPage() {
                       >
                         <option value="">選擇獎勵…</option>
                         {rewards.map((r) => (
-                          <option key={r.id} value={r.id}>{r.icon} {r.name}（{r.cost} pt）</option>
+                          <option key={r.id} value={r.id}>{r.icon} {r.name}（零用金 {r.cost}）</option>
                         ))}
                       </select>
 
@@ -729,7 +729,7 @@ export default function FamilyScoreboardPage() {
                                 {pScore && <PlayerAvatar player={pScore} size="sm" />}
                                 <div className="min-w-0">
                                   <p className="text-sm font-medium text-gray-800 truncate">{r.rewardName}</p>
-                                  <p className="text-xs text-gray-400">{getPlayerName(r.playerId)} · {r.cost} pt</p>
+                                  <p className="text-xs text-gray-400">{getPlayerName(r.playerId)} · 零用金 {r.cost}</p>
                                 </div>
                               </div>
                               <div className="flex gap-2 shrink-0">
@@ -794,12 +794,13 @@ export default function FamilyScoreboardPage() {
 
               return (
                 <div className="p-4 lg:py-6 space-y-4">
-                  <h2 className="text-base font-bold text-gray-700">統計報表</h2>
+                  <h2 className="text-base font-bold text-gray-700">成就</h2>
 
                   {/* ── 本週貼紙牆比較 ── */}
                   {scores.length > 1 && (
                     <div className="bg-white rounded-2xl shadow-sm p-4 space-y-4">
                       <p className="text-sm font-bold text-gray-600">🎫 本週貼紙牆</p>
+                      <p className="text-xs text-gray-400">每筆加分行為 = 1 張貼紙，目標每週集滿 10 張</p>
                       {[...scores]
                         .sort((a, b) => (weekEarnsMap[b.playerId]?.length ?? 0) - (weekEarnsMap[a.playerId]?.length ?? 0))
                         .map((p) => {
@@ -870,7 +871,8 @@ export default function FamilyScoreboardPage() {
 
                         {/* 本週貼紙 */}
                         <div className="mb-3">
-                          <p className="text-xs font-semibold text-gray-400 mb-2">🎫 本週貼紙</p>
+                          <p className="text-xs font-semibold text-gray-400 mb-1">🎫 本週貼紙收集</p>
+                          <p className="text-[10px] text-gray-300 mb-2">每個好行為獲得一張 · 集滿 10 張代表本週超棒！</p>
                           <div className="flex flex-wrap gap-1">
                             {(weekEarnsMap[p.playerId] ?? []).map((emoji, i) => (
                               <span
@@ -914,11 +916,11 @@ export default function FamilyScoreboardPage() {
                         <div className="grid grid-cols-2 gap-1.5 text-center">
                           <div className="bg-amber-50 rounded-xl p-2">
                             <p className="text-sm font-black tabular-nums" style={{ color: p.color }}>{p.achievementPoints}</p>
-                            <p className="text-[10px] text-gray-400">成就點</p>
+                            <p className="text-[10px] text-gray-400">成就點（經驗值）</p>
                           </div>
                           <div className="bg-emerald-50 rounded-xl p-2">
                             <p className="text-sm font-black text-emerald-600 tabular-nums">{p.redeemablePoints}</p>
-                            <p className="text-[10px] text-gray-400">可兌換</p>
+                            <p className="text-[10px] text-gray-400">可兌換（零用金）</p>
                           </div>
                         </div>
                       </div>
