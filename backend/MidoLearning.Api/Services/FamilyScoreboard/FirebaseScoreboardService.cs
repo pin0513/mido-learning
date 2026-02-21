@@ -1867,4 +1867,91 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             await coAdminRef.DeleteAsync(cancellationToken: ct);
         }
     }
+
+    // ── Super Admin ──────────────────────────────────────────────────────────
+
+    public async Task<IReadOnlyList<FamilyAdminDto>> GetAllFamiliesAsync(CancellationToken ct = default)
+    {
+        var familiesSnap = await _db.Collection("families").GetSnapshotAsync(ct);
+        var results = new List<FamilyAdminDto>();
+
+        foreach (var doc in familiesSnap.Documents)
+        {
+            var adminUid = doc.ContainsField("adminUid") ? doc.GetValue<string>("adminUid") : "";
+            var adminDisplayName = doc.ContainsField("adminDisplayName") ? doc.GetValue<string>("adminDisplayName") : null;
+            var displayCode = doc.ContainsField("displayCode") ? doc.GetValue<string>("displayCode") : null;
+            var isBanned = doc.ContainsField("isBanned") && doc.GetValue<bool>("isBanned");
+
+            DateTime createdAt;
+            if (doc.ContainsField("createdAt"))
+            {
+                var ts = doc.GetValue<Timestamp>("createdAt");
+                createdAt = ts.ToDateTime();
+            }
+            else if (doc.ContainsField("updatedAt"))
+            {
+                var ts = doc.GetValue<Timestamp>("updatedAt");
+                createdAt = ts.ToDateTime();
+            }
+            else
+            {
+                createdAt = DateTime.MinValue;
+            }
+
+            var scoresSnap = await doc.Reference.Collection("scores").GetSnapshotAsync(ct);
+            var playerCount = scoresSnap.Count;
+
+            results.Add(new FamilyAdminDto(doc.Id, adminUid, adminDisplayName, displayCode, playerCount, isBanned, createdAt));
+        }
+
+        return results.OrderByDescending(f => f.CreatedAt).ToList().AsReadOnly();
+    }
+
+    public async Task BanFamilyAsync(string familyId, CancellationToken ct = default)
+    {
+        var familyRef = _db.Collection("families").Document(familyId);
+        await familyRef.UpdateAsync(new Dictionary<string, object>
+        {
+            ["isBanned"] = true,
+            ["bannedAt"] = Timestamp.GetCurrentTimestamp(),
+        }, cancellationToken: ct);
+    }
+
+    public async Task UnbanFamilyAsync(string familyId, CancellationToken ct = default)
+    {
+        var familyRef = _db.Collection("families").Document(familyId);
+        await familyRef.UpdateAsync(new Dictionary<string, object>
+        {
+            ["isBanned"] = false,
+            ["bannedAt"] = FieldValue.Delete,
+        }, cancellationToken: ct);
+    }
+
+    public async Task DeleteFamilyPermanentlyAsync(string familyId, CancellationToken ct = default)
+    {
+        var familyRef = _db.Collection("families").Document(familyId);
+
+        // Delete all known subcollections
+        var subcollections = new[]
+        {
+            "scores", "transactions", "tasks", "rewards", "redemptions",
+            "shop-items", "shop-orders", "allowance-ledger", "task-completions",
+            "player-submissions", "events", "task-templates", "players-credentials",
+            "seals", "penalties", "active-effects", "coAdmins",
+        };
+
+        foreach (var sub in subcollections)
+        {
+            var subSnap = await familyRef.Collection(sub).GetSnapshotAsync(ct);
+            foreach (var doc in subSnap.Documents)
+            {
+                await doc.Reference.DeleteAsync(cancellationToken: ct);
+            }
+        }
+
+        // Delete the family document itself
+        await familyRef.DeleteAsync(cancellationToken: ct);
+
+        _logger.LogInformation("Family {FamilyId} permanently deleted by super admin", familyId);
+    }
 }

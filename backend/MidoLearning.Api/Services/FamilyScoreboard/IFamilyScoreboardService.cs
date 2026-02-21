@@ -122,4 +122,10 @@ public interface IFamilyScoreboardService
     Task<MyFamilyDto?> GetMyFamilyAsync(string uid, CancellationToken ct = default);
     Task<IReadOnlyList<MyFamilyItemDto>> GetMyFamiliesAsync(string uid, CancellationToken ct = default);
     Task LeaveFamilyAsync(string familyId, string uid, CancellationToken ct = default);
+
+    // ── Super Admin ─────────────────────────────────────────────────────────
+    Task<IReadOnlyList<FamilyAdminDto>> GetAllFamiliesAsync(CancellationToken ct = default);
+    Task BanFamilyAsync(string familyId, CancellationToken ct = default);
+    Task UnbanFamilyAsync(string familyId, CancellationToken ct = default);
+    Task DeleteFamilyPermanentlyAsync(string familyId, CancellationToken ct = default);
 }

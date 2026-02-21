@@ -46,6 +46,7 @@ import type {
   CoAdminDto,
   AddCoAdminRequest,
   MyFamilyItemDto,
+  FamilyAdminDto,
 } from '@/types/family-scoreboard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -823,4 +824,37 @@ export async function deleteRedemptions(familyId: string, ids: string[]): Promis
     body: JSON.stringify({ ids }),
   });
   if (!res.ok) throw new Error('Failed to delete redemptions');
+}
+
+// ─────────────────────────── Super Admin ─────────────────────────────────
+
+export async function getAllFamilies(): Promise<FamilyAdminDto[]> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/super-admin/families`, { headers });
+  if (!res.ok) throw new Error('Failed to get families');
+  return res.json() as Promise<FamilyAdminDto[]>;
+}
+
+export async function banFamily(familyId: string): Promise<void> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/super-admin/families/${familyId}/ban`, {
+    method: 'POST', headers,
+  });
+  if (!res.ok) throw new Error('Failed to ban family');
+}
+
+export async function unbanFamily(familyId: string): Promise<void> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/super-admin/families/${familyId}/unban`, {
+    method: 'POST', headers,
+  });
+  if (!res.ok) throw new Error('Failed to unban family');
+}
+
+export async function deleteFamilyPermanently(familyId: string): Promise<void> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/super-admin/families/${familyId}`, {
+    method: 'DELETE', headers,
+  });
+  if (!res.ok) throw new Error('Failed to delete family');
 }

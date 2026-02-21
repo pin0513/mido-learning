@@ -430,6 +430,17 @@ public record MyFamilyItemDto(
 
 public record BatchDeleteRequest(IReadOnlyList<string> Ids);
 
+// ── Super Admin ─────────────────────────────────────────────────────────
+
+public record FamilyAdminDto(
+    string FamilyId,
+    string AdminUid,
+    string? AdminDisplayName,
+    string? DisplayCode,
+    int PlayerCount,
+    bool IsBanned,
+    DateTime CreatedAt);
+
 public record FamilyBackupDto(
     string FamilyId,
     string Version,

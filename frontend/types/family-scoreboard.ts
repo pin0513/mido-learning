@@ -454,3 +454,15 @@ export interface MyFamilyItemDto {
   displayCode: string | null;
   adminDisplayName: string | null;
 }
+
+// ── Super Admin ──────────────────────────────────────────────────────────
+
+export interface FamilyAdminDto {
+  familyId: string;
+  adminUid: string;
+  adminDisplayName: string | null;
+  displayCode: string | null;
+  playerCount: number;
+  isBanned: boolean;
+  createdAt: string;
+}

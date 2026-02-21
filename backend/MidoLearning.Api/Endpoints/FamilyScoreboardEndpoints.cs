@@ -755,6 +755,35 @@ public static class FamilyScoreboardEndpoints
                 return Results.BadRequest(new { message = ex.Message });
             }
         });
+
+        // ── Super Admin endpoints ────────────────────────────────────────────────
+        var superAdmin = app.MapGroup("/api/family-scoreboard/super-admin")
+            .RequireAuthorization("SuperAdminOnly");
+
+        superAdmin.MapGet("/families", async (
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetAllFamiliesAsync(ct)));
+
+        superAdmin.MapPost("/families/{familyId}/ban", async (
+            string familyId, IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            await svc.BanFamilyAsync(familyId, ct);
+            return Results.Ok(new { message = "已封禁" });
+        });
+
+        superAdmin.MapPost("/families/{familyId}/unban", async (
+            string familyId, IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            await svc.UnbanFamilyAsync(familyId, ct);
+            return Results.Ok(new { message = "已解封" });
+        });
+
+        superAdmin.MapDelete("/families/{familyId}", async (
+            string familyId, IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            await svc.DeleteFamilyPermanentlyAsync(familyId, ct);
+            return Results.Ok(new { message = "已永久刪除" });
+        });
     }
 
     /// <summary>
