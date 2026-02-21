@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAuth } from 'firebase/auth';
 import { useFamilyScoreboard } from './hooks/useFamilyScoreboard';
-import type { AddTransactionRequest, CreateRedemptionRequest, PlayerScoreDto } from '@/types/family-scoreboard';
-import { generateDisplayCode } from '@/lib/api/family-scoreboard';
+import type { AddTransactionRequest, CreateRedemptionRequest, PlayerScoreDto, MyFamilyItemDto } from '@/types/family-scoreboard';
+import { generateDisplayCode, getMyFamilies, leaveFamily, initializeFamily } from '@/lib/api/family-scoreboard';
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -79,7 +79,13 @@ function PlayerAvatar({ player, size = 'md' }: { player: PlayerScoreDto; size?: 
 export default function FamilyScoreboardPage() {
   const router = useRouter();
   const [uid, setUid] = useState<string | null>(null);
-  const familyId = uid ? `family_${uid}` : '';
+
+  // Multi-family support
+  const [families, setFamilies] = useState<MyFamilyItemDto[]>([]);
+  const [selectedFamilyId, setSelectedFamilyId] = useState('');
+  const [familyLoading, setFamilyLoading] = useState(true);
+
+  const familyId = selectedFamilyId;
 
   useEffect(() => {
     const auth = getAuth();
@@ -88,8 +94,27 @@ export default function FamilyScoreboardPage() {
   }, []);
 
   useEffect(() => {
+    if (!uid) return;
+    setFamilyLoading(true);
+    getMyFamilies()
+      .then((result) => {
+        setFamilies(result);
+        if (result.length === 1) {
+          setSelectedFamilyId(result[0].familyId);
+        } else if (result.length > 1) {
+          const saved = localStorage.getItem('defaultFamilyId');
+          const match = result.find(f => f.familyId === saved);
+          setSelectedFamilyId(match ? match.familyId : result[0].familyId);
+        }
+        // result.length === 0: 新用戶，不設 familyId
+      })
+      .catch(() => setSelectedFamilyId(`family_${uid}`))
+      .finally(() => setFamilyLoading(false));
+  }, [uid]);
+
+  useEffect(() => {
     if (!familyId) return;
-    generateDisplayCode()
+    generateDisplayCode(familyId)
       .then((data) => setDisplayCode(data.displayCode))
       .catch(() => {
         // silently ignore if endpoint not available
@@ -294,6 +319,72 @@ export default function FamilyScoreboardPage() {
     );
   }
 
+  // ── 新用戶歡迎畫面（無家庭） ───────────────────────────────────────────────
+  if (!familyLoading && families.length === 0 && uid) {
+    return (
+      <div className="min-h-screen bg-amber-50 flex flex-col items-center justify-center px-4 py-12">
+        <div className="w-full max-w-sm space-y-6 text-center">
+          <div>
+            <div className="text-7xl mb-3">⭐</div>
+            <h1 className="text-2xl font-black text-amber-800">歡迎使用家庭計分板</h1>
+            <p className="text-amber-500 text-sm mt-1">選擇以下操作開始</p>
+          </div>
+          <div className="space-y-3">
+            <button
+              onClick={async () => {
+                try {
+                  await initializeFamily();
+                  const result = await getMyFamilies();
+                  setFamilies(result);
+                  if (result.length > 0) setSelectedFamilyId(result[0].familyId);
+                } catch { /* ignore */ }
+              }}
+              className="w-full min-h-[72px] bg-amber-500 hover:bg-amber-600 active:scale-95 text-white rounded-3xl flex items-center gap-4 px-6 shadow-lg transition-all"
+            >
+              <span className="text-4xl">🏠</span>
+              <div className="text-left">
+                <p className="font-black text-lg">建立新家庭</p>
+                <p className="text-xs text-amber-100">建立家庭並新增孩子</p>
+              </div>
+            </button>
+            <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm text-left">
+              <p className="text-sm text-gray-600">已被邀請為共同家長？</p>
+              <p className="text-xs text-gray-400 mt-1">請聯繫主要家長在管理後台將您加入。加入後重新整理此頁面即可看到家庭。</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-3 text-sm text-amber-600 hover:text-amber-700 font-medium min-h-[44px]"
+              >
+                🔄 重新整理
+              </button>
+            </div>
+            <button
+              onClick={() => router.push('/family-login')}
+              className="w-full min-h-[60px] bg-white hover:bg-gray-50 active:scale-95 text-gray-700 rounded-3xl flex items-center gap-4 px-6 shadow border border-gray-100 transition-all"
+            >
+              <span className="text-3xl">🧒</span>
+              <div className="text-left">
+                <p className="font-black">小孩登入</p>
+                <p className="text-xs text-gray-400">輸入家庭代碼與密碼</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Family loading ────────────────────────────────────────────────────────
+  if (familyLoading) {
+    return (
+      <div className="min-h-screen bg-amber-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-4xl mb-3 animate-bounce">⭐</div>
+          <p className="text-amber-600 font-medium">載入中...</p>
+        </div>
+      </div>
+    );
+  }
+
   // ── Render ──────────────────────────────────────────────────────────────────
   // RWD strategy:
   //   mobile       → full-width, bottom tab bar (fixed)
@@ -310,7 +401,24 @@ export default function FamilyScoreboardPage() {
             <span className="text-2xl">⭐</span>
             <h1 className="text-lg font-bold text-amber-800">家庭計分板</h1>
           </div>
-          <p className="text-xs text-gray-400">Ian &amp; Justin 的成長紀錄</p>
+          {families.length > 1 ? (
+            <select
+              value={selectedFamilyId}
+              onChange={(e) => {
+                setSelectedFamilyId(e.target.value);
+                localStorage.setItem('defaultFamilyId', e.target.value);
+              }}
+              className="mt-1 w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-amber-50 text-amber-700 font-medium"
+            >
+              {families.map((f) => (
+                <option key={f.familyId} value={f.familyId}>
+                  {f.displayCode ?? f.familyId.slice(0, 12)} {f.isPrimaryAdmin ? '(主管理者)' : '(共同家長)'}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <p className="text-xs text-gray-400">{families[0]?.displayCode ? `代碼: ${families[0].displayCode}` : '家庭計分板'}</p>
+          )}
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
@@ -331,15 +439,6 @@ export default function FamilyScoreboardPage() {
         </nav>
 
         <div className="px-3 pb-6 space-y-2">
-          {scores.length === 0 && (
-            <button
-              onClick={initialize}
-              disabled={loading}
-              className="w-full py-3 text-sm bg-amber-500 text-white rounded-xl font-semibold hover:bg-amber-600 disabled:opacity-50 min-h-[52px]"
-            >
-              初始化資料
-            </button>
-          )}
           {displayCode && (
             <div className="flex items-center gap-2 p-3 bg-amber-50 rounded-xl">
               <div className="flex-1 min-w-0">
@@ -379,6 +478,25 @@ export default function FamilyScoreboardPage() {
           >
             ← 返回 Mido Learning
           </button>
+          {families.length > 0 && !families.find(f => f.familyId === selectedFamilyId)?.isPrimaryAdmin && (
+            <button
+              onClick={async () => {
+                if (!confirm('確定要離開此家庭嗎？')) return;
+                try {
+                  await leaveFamily(selectedFamilyId);
+                  const result = await getMyFamilies();
+                  setFamilies(result);
+                  if (result.length > 0) setSelectedFamilyId(result[0].familyId);
+                  else setSelectedFamilyId('');
+                } catch (e) {
+                  alert(e instanceof Error ? e.message : '離開家庭失敗');
+                }
+              }}
+              className="w-full py-2.5 text-sm text-red-400 hover:text-red-600 rounded-xl hover:bg-red-50 min-h-[48px]"
+            >
+              離開此家庭
+            </button>
+          )}
         </div>
       </aside>
 
@@ -468,14 +586,7 @@ export default function FamilyScoreboardPage() {
                   <div className="text-center py-16 space-y-3">
                     <div className="text-6xl">🏠</div>
                     <p className="text-amber-700 font-semibold">尚無積分資料</p>
-                    <p className="text-amber-400 text-sm">點擊「初始化」來建立 Ian &amp; Justin 的積分帳戶</p>
-                    <button
-                      onClick={initialize}
-                      disabled={loading}
-                      className="mt-2 px-6 py-3 bg-amber-500 text-white rounded-xl font-semibold hover:bg-amber-600 disabled:opacity-50 min-h-[52px]"
-                    >
-                      初始化資料
-                    </button>
+                    <p className="text-amber-400 text-sm">請至管理後台初始化家庭資料</p>
                   </div>
                 )}
 

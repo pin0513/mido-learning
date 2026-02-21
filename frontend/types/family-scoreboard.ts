@@ -445,3 +445,12 @@ export interface AddCoAdminRequest {
   coAdminUid: string;
   displayName?: string;
 }
+
+// ── Multi-family support ──────────────────────────────────────────────────
+
+export interface MyFamilyItemDto {
+  familyId: string;
+  isPrimaryAdmin: boolean;
+  displayCode: string | null;
+  adminDisplayName: string | null;
+}

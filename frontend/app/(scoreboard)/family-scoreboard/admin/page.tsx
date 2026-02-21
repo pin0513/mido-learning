@@ -46,7 +46,8 @@ import {
   getCoAdmins,
   addCoAdmin,
   removeCoAdmin,
-  getMyFamily,
+  getMyFamilies,
+  leaveFamily,
   lookupUserByEmail,
   getTransactions,
   getRedemptions,
@@ -75,6 +76,7 @@ import type {
   PenaltyDto,
   CreatePenaltyRequest,
   CoAdminDto,
+  MyFamilyItemDto,
 } from '@/types/family-scoreboard';
 
 type AdminTab = 'code' | 'players' | 'tasks' | 'pending' | 'allowance' | 'shop' | 'events' | 'discipline' | 'records' | 'backup';
@@ -459,18 +461,26 @@ export default function FamilyScoreboardAdminPage() {
   const [discAddPenalty, setDiscAddPenalty] = useState(false);
   const [discSaving, setDiscSaving] = useState(false);
 
+  const [families, setFamilies] = useState<MyFamilyItemDto[]>([]);
+
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
     if (!user) return;
     setUid(user.uid);
-    // Resolve familyId: primary admin uses family_{uid}, co-admin uses getMyFamily()
     const primaryId = `family_${user.uid}`;
-    getMyFamily()
+    getMyFamilies()
       .then((result) => {
-        if (result) {
-          setFamilyId(result.familyId);
-          setIsPrimaryAdmin(result.isPrimaryAdmin);
+        setFamilies(result);
+        if (result.length === 1) {
+          setFamilyId(result[0].familyId);
+          setIsPrimaryAdmin(result[0].isPrimaryAdmin);
+        } else if (result.length > 1) {
+          const saved = localStorage.getItem('defaultFamilyId');
+          const match = result.find(f => f.familyId === saved);
+          const selected = match ?? result[0];
+          setFamilyId(selected.familyId);
+          setIsPrimaryAdmin(selected.isPrimaryAdmin);
         } else {
           setFamilyId(primaryId);
           setIsPrimaryAdmin(true);
@@ -486,7 +496,7 @@ export default function FamilyScoreboardAdminPage() {
 
   useEffect(() => {
     if (!familyId || displayCode) return;
-    generateDisplayCode().then((d) => setDisplayCode(d.displayCode)).catch(() => {});
+    generateDisplayCode(familyId).then((d) => setDisplayCode(d.displayCode)).catch(() => {});
   }, [familyId, displayCode]);
 
   const loadTaskData = useCallback(async () => {
@@ -636,7 +646,7 @@ export default function FamilyScoreboardAdminPage() {
   async function handleRegenCode() {
     if (!regenConfirm) { setRegenConfirm(true); return; }
     setRegenConfirm(false); setCodeLoading(true);
-    try { const d = await regenerateDisplayCode(); setDisplayCode(d.displayCode); }
+    try { const d = await regenerateDisplayCode(familyId); setDisplayCode(d.displayCode); }
     catch { /* silent */ } finally { setCodeLoading(false); }
   }
 
@@ -878,7 +888,27 @@ export default function FamilyScoreboardAdminPage() {
             返回積分板
           </button>
           <h1 className="text-xl font-bold text-gray-800">管理後台</h1>
-          <p className="text-xs text-gray-400 mt-1">家庭積分系統</p>
+          {families.length > 1 ? (
+            <select
+              value={familyId}
+              onChange={(e) => {
+                const sel = families.find(f => f.familyId === e.target.value);
+                setFamilyId(e.target.value);
+                setIsPrimaryAdmin(sel?.isPrimaryAdmin ?? true);
+                setDisplayCode(null);
+                localStorage.setItem('defaultFamilyId', e.target.value);
+              }}
+              className="mt-1 w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-amber-50 text-amber-700 font-medium"
+            >
+              {families.map((f) => (
+                <option key={f.familyId} value={f.familyId}>
+                  {f.displayCode ?? f.familyId.slice(0, 12)} {f.isPrimaryAdmin ? '(主管理者)' : '(共同家長)'}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <p className="text-xs text-gray-400 mt-1">家庭積分系統</p>
+          )}
         </div>
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {TABS.map((tab) => (
@@ -960,7 +990,7 @@ export default function FamilyScoreboardAdminPage() {
                         if (!customCodeInput.trim() || !familyId) return;
                         setCodeLoading(true); setCodeErr(null);
                         try {
-                          const d = await setDisplayCodeApi(customCodeInput.trim());
+                          const d = await setDisplayCodeApi(customCodeInput.trim(), familyId);
                           setDisplayCode(d.displayCode);
                           setCustomCodeInput('');
                         } catch (e: unknown) {

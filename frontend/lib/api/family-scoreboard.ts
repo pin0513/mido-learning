@@ -45,6 +45,7 @@ import type {
   AddTransactionWithEffectsRequest,
   CoAdminDto,
   AddCoAdminRequest,
+  MyFamilyItemDto,
 } from '@/types/family-scoreboard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -60,9 +61,11 @@ async function getAuthHeaders(): Promise<HeadersInit> {
 
 // ── Initialize ────────────────────────────────────────────────────────────────
 
-export async function initializeFamily(): Promise<{ familyId: string }> {
+export async function initializeFamily(familyId?: string): Promise<{ familyId: string }> {
   const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/family-scoreboard/initialize`, {
+  const url = new URL(`${API_URL}/api/family-scoreboard/initialize`);
+  if (familyId) url.searchParams.set('familyId', familyId);
+  const res = await fetch(url.toString(), {
     method: 'POST',
     headers,
   });
@@ -99,10 +102,13 @@ export async function getTransactions(
 }
 
 export async function addTransaction(
-  request: AddTransactionRequest
+  request: AddTransactionRequest,
+  familyId?: string
 ): Promise<TransactionDto> {
   const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/family-scoreboard/transactions`, {
+  const url = new URL(`${API_URL}/api/family-scoreboard/transactions`);
+  if (familyId) url.searchParams.set('familyId', familyId);
+  const res = await fetch(url.toString(), {
     method: 'POST',
     headers,
     body: JSON.stringify(request),
@@ -156,17 +162,17 @@ export async function createRedemption(
 
 export async function processRedemption(
   redemptionId: string,
-  request: ProcessRedemptionRequest
+  request: ProcessRedemptionRequest,
+  familyId?: string
 ): Promise<RedemptionDto> {
   const headers = await getAuthHeaders();
-  const res = await fetch(
-    `${API_URL}/api/family-scoreboard/redemptions/${redemptionId}/process`,
-    {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(request),
-    }
-  );
+  const url = new URL(`${API_URL}/api/family-scoreboard/redemptions/${redemptionId}/process`);
+  if (familyId) url.searchParams.set('familyId', familyId);
+  const res = await fetch(url.toString(), {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(request),
+  });
   if (res.status === 401) throw new Error('Unauthorized');
   if (!res.ok) throw new Error('Failed to process redemption');
   return res.json();
@@ -205,9 +211,11 @@ export async function playerLogin(request: PlayerLoginRequest): Promise<PlayerTo
 
 // ─────────────────────────── Admin ─────────────────────────────────────────
 
-export async function generateDisplayCode(): Promise<{ displayCode: string }> {
+export async function generateDisplayCode(familyId?: string): Promise<{ displayCode: string }> {
   const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/family-scoreboard/generate-code`, {
+  const url = new URL(`${API_URL}/api/family-scoreboard/generate-code`);
+  if (familyId) url.searchParams.set('familyId', familyId);
+  const res = await fetch(url.toString(), {
     method: 'POST',
     headers,
   });
@@ -215,9 +223,11 @@ export async function generateDisplayCode(): Promise<{ displayCode: string }> {
   return res.json() as Promise<{ displayCode: string }>;
 }
 
-export async function regenerateDisplayCode(): Promise<{ displayCode: string }> {
+export async function regenerateDisplayCode(familyId?: string): Promise<{ displayCode: string }> {
   const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/family-scoreboard/regenerate-code`, {
+  const url = new URL(`${API_URL}/api/family-scoreboard/regenerate-code`);
+  if (familyId) url.searchParams.set('familyId', familyId);
+  const res = await fetch(url.toString(), {
     method: 'POST',
     headers,
   });
@@ -225,9 +235,11 @@ export async function regenerateDisplayCode(): Promise<{ displayCode: string }> 
   return res.json() as Promise<{ displayCode: string }>;
 }
 
-export async function setDisplayCode(code: string): Promise<{ displayCode: string }> {
+export async function setDisplayCode(code: string, familyId?: string): Promise<{ displayCode: string }> {
   const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/family-scoreboard/set-code`, {
+  const url = new URL(`${API_URL}/api/family-scoreboard/set-code`);
+  if (familyId) url.searchParams.set('familyId', familyId);
+  const res = await fetch(url.toString(), {
     method: 'POST',
     headers: { ...headers, 'Content-Type': 'application/json' },
     body: JSON.stringify({ code }),
@@ -321,6 +333,25 @@ export async function getMyFamily(): Promise<{ familyId: string; isPrimaryAdmin:
   if (res.status === 404) return null;
   if (!res.ok) throw new Error('Failed to get my family');
   return res.json() as Promise<{ familyId: string; isPrimaryAdmin: boolean }>;
+}
+
+export async function getMyFamilies(): Promise<MyFamilyItemDto[]> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/my-families`, { headers });
+  if (!res.ok) throw new Error('Failed to get my families');
+  return res.json() as Promise<MyFamilyItemDto[]>;
+}
+
+export async function leaveFamily(familyId: string): Promise<void> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/leave`, {
+    method: 'POST',
+    headers,
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({ message: '離開家庭失敗' }));
+    throw new Error((data as { message: string }).message);
+  }
 }
 
 export async function createTask(familyId: string, request: CreateTaskRequest): Promise<TaskDto> {
@@ -637,10 +668,12 @@ export async function addAdminTransaction(
   request: AddTransactionRequest
 ): Promise<TransactionDto> {
   const headers = await getAuthHeaders();
-  const res = await fetch(`${API_URL}/api/family-scoreboard/transactions`, {
+  const url = new URL(`${API_URL}/api/family-scoreboard/transactions`);
+  if (familyId) url.searchParams.set('familyId', familyId);
+  const res = await fetch(url.toString(), {
     method: 'POST',
     headers,
-    body: JSON.stringify({ ...request, familyId }),
+    body: JSON.stringify(request),
   });
   if (!res.ok) throw new Error('交易失敗');
   return res.json() as Promise<TransactionDto>;

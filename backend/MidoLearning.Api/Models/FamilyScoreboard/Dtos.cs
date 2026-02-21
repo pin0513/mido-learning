@@ -420,6 +420,12 @@ public record CoAdminDto(string Uid, string? DisplayName, DateTimeOffset AddedAt
 
 public record MyFamilyDto(string FamilyId, bool IsPrimaryAdmin);
 
+public record MyFamilyItemDto(
+    string FamilyId,
+    bool IsPrimaryAdmin,
+    string? DisplayCode,
+    string? AdminDisplayName);
+
 // ── Backup ────────────────────────────────────────────────────────────────
 
 public record BatchDeleteRequest(IReadOnlyList<string> Ids);

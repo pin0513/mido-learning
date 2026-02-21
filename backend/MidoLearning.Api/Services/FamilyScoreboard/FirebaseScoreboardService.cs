@@ -1812,4 +1812,59 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
         return null;
     }
+
+    public async Task<IReadOnlyList<MyFamilyItemDto>> GetMyFamiliesAsync(string uid, CancellationToken ct = default)
+    {
+        var results = new List<MyFamilyItemDto>();
+
+        // 1. Check primary admin: family_{uid}
+        var primaryFamilyId = $"family_{uid}";
+        var primarySnap = await _db.Collection("families").Document(primaryFamilyId).GetSnapshotAsync(ct);
+        if (primarySnap.Exists)
+        {
+            var displayCode = primarySnap.ContainsField("displayCode") ? primarySnap.GetValue<string>("displayCode") : null;
+            var adminName = primarySnap.ContainsField("adminDisplayName") ? primarySnap.GetValue<string>("adminDisplayName") : null;
+            results.Add(new MyFamilyItemDto(primaryFamilyId, true, displayCode, adminName));
+        }
+
+        // 2. Check co-admin: search across all families' coAdmins subcollection
+        var coAdminQuery = await _db.CollectionGroup("coAdmins")
+            .WhereEqualTo("uid", uid)
+            .GetSnapshotAsync(ct);
+
+        foreach (var doc in coAdminQuery.Documents)
+        {
+            var familyId = doc.Reference.Parent.Parent!.Id;
+            if (familyId == primaryFamilyId) continue; // already added
+            var familySnap = await _db.Collection("families").Document(familyId).GetSnapshotAsync(ct);
+            var displayCode = familySnap.Exists && familySnap.ContainsField("displayCode") ? familySnap.GetValue<string>("displayCode") : null;
+            var adminName = familySnap.Exists && familySnap.ContainsField("adminDisplayName") ? familySnap.GetValue<string>("adminDisplayName") : null;
+            results.Add(new MyFamilyItemDto(familyId, false, displayCode, adminName));
+        }
+
+        return results;
+    }
+
+    public async Task LeaveFamilyAsync(string familyId, string uid, CancellationToken ct = default)
+    {
+        var primaryFamilyId = $"family_{uid}";
+        if (familyId == primaryFamilyId)
+        {
+            // Primary admin: only allow if no players
+            var scoresSnap = await _db.Collection("families").Document(familyId)
+                .Collection("scores").Limit(1).GetSnapshotAsync(ct);
+            if (scoresSnap.Count > 0)
+                throw new InvalidOperationException("無法離開：此家庭仍有玩家，請先移除所有玩家。");
+            await _db.Collection("families").Document(familyId).DeleteAsync(cancellationToken: ct);
+        }
+        else
+        {
+            // Co-admin: remove coAdmins/{uid} document
+            var coAdminRef = _db.Collection("families").Document(familyId).Collection("coAdmins").Document(uid);
+            var snap = await coAdminRef.GetSnapshotAsync(ct);
+            if (!snap.Exists)
+                throw new InvalidOperationException("您不是此家庭的共同家長。");
+            await coAdminRef.DeleteAsync(cancellationToken: ct);
+        }
+    }
 }

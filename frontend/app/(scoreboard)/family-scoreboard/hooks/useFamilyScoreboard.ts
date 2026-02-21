@@ -89,24 +89,24 @@ export function useFamilyScoreboard(familyId: string) {
     setLoading(true);
     setError(null);
     try {
-      await initializeFamily();
+      await initializeFamily(familyId || undefined);
       await loadAll();
     } catch {
       setError('Failed to initialize family');
     } finally {
       setLoading(false);
     }
-  }, [loadAll]);
+  }, [familyId, loadAll]);
 
   const submitTransaction = useCallback(async (request: AddTransactionRequest) => {
     setError(null);
     try {
-      await addTransaction(request);
+      await addTransaction(request, familyId || undefined);
       await Promise.all([loadScores(), loadTransactions()]);
     } catch {
       setError('Failed to add transaction');
     }
-  }, [loadScores, loadTransactions]);
+  }, [familyId, loadScores, loadTransactions]);
 
   const submitRedemption = useCallback(async (request: CreateRedemptionRequest) => {
     setError(null);
@@ -122,13 +122,13 @@ export function useFamilyScoreboard(familyId: string) {
     async (redemptionId: string, request: ProcessRedemptionRequest) => {
       setError(null);
       try {
-        await processRedemption(redemptionId, request);
+        await processRedemption(redemptionId, request, familyId || undefined);
         await Promise.all([loadScores(), loadRedemptions()]);
       } catch {
         setError('Failed to process redemption');
       }
     },
-    [loadScores, loadRedemptions]
+    [familyId, loadScores, loadRedemptions]
   );
 
   useEffect(() => {

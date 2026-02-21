@@ -13,10 +13,11 @@ public static class FamilyScoreboardEndpoints
         var admin = app.MapGroup("/api/family-scoreboard")
             .RequireAuthorization("FamilyAdmin");
 
-        // POST /api/family-scoreboard/initialize
+        // POST /api/family-scoreboard/initialize?familyId=xxx
         // Admin 初始化家庭計分板（建立預設玩家、獎勵）
         admin.MapPost("/initialize", async (
             IFamilyScoreboardService svc,
+            HttpContext httpContext,
             ClaimsPrincipal user,
             CancellationToken ct) =>
         {
@@ -24,16 +25,17 @@ public static class FamilyScoreboardEndpoints
                 ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
 
-            var familyId = $"family_{uid}";
+            var familyId = ResolveFamilyId(httpContext, uid);
             await svc.InitializeAsync(familyId, uid, ct);
             return Results.Ok(new { familyId });
         });
 
-        // POST /api/family-scoreboard/transactions
+        // POST /api/family-scoreboard/transactions?familyId=xxx
         // Admin 新增積分交易（加分 / 扣分）
         admin.MapPost("/transactions", async (
             AddTransactionRequest request,
             IFamilyScoreboardService svc,
+            HttpContext httpContext,
             ClaimsPrincipal user,
             CancellationToken ct) =>
         {
@@ -41,17 +43,18 @@ public static class FamilyScoreboardEndpoints
                 ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
 
-            var familyId = $"family_{uid}";
+            var familyId = ResolveFamilyId(httpContext, uid);
             var tx = await svc.AddTransactionAsync(familyId, request, uid, ct);
             return Results.Created($"/api/family-scoreboard/transactions/{tx.Id}", tx);
         });
 
-        // POST /api/family-scoreboard/redemptions/{id}/process
+        // POST /api/family-scoreboard/redemptions/{id}/process?familyId=xxx
         // Admin 審核兌換申請（approve / reject）
         admin.MapPost("/redemptions/{redemptionId}/process", async (
             string redemptionId,
             ProcessRedemptionRequest request,
             IFamilyScoreboardService svc,
+            HttpContext httpContext,
             ClaimsPrincipal user,
             CancellationToken ct) =>
         {
@@ -59,7 +62,7 @@ public static class FamilyScoreboardEndpoints
                 ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
 
-            var familyId = $"family_{uid}";
+            var familyId = ResolveFamilyId(httpContext, uid);
             var result = await svc.ProcessRedemptionAsync(familyId, redemptionId, request, uid, ct);
             return Results.Ok(result);
         });
@@ -169,12 +172,13 @@ public static class FamilyScoreboardEndpoints
         // 取得現有代碼（首次自動生成，之後固定不變）
         admin.MapPost("/generate-code", async (
             IFamilyScoreboardService svc,
+            HttpContext httpContext,
             ClaimsPrincipal user,
             CancellationToken ct) =>
         {
             var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
-            var familyId = $"family_{uid}";
+            var familyId = ResolveFamilyId(httpContext, uid);
             var code = await svc.GetOrCreateDisplayCodeAsync(familyId, ct);
             return Results.Ok(new { displayCode = code });
         });
@@ -188,7 +192,7 @@ public static class FamilyScoreboardEndpoints
         {
             var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
-            var familyId = $"family_{uid}";
+            var familyId = ResolveFamilyId(http, uid);
             using var reader = new System.IO.StreamReader(http.Request.Body);
             var body = System.Text.Json.JsonDocument.Parse(await reader.ReadToEndAsync());
             if (!body.RootElement.TryGetProperty("code", out var codeProp))
@@ -205,12 +209,13 @@ public static class FamilyScoreboardEndpoints
         // 強制重新生成代碼（家長明確操作）
         admin.MapPost("/regenerate-code", async (
             IFamilyScoreboardService svc,
+            HttpContext httpContext,
             ClaimsPrincipal user,
             CancellationToken ct) =>
         {
             var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
-            var familyId = $"family_{uid}";
+            var familyId = ResolveFamilyId(httpContext, uid);
             var code = await svc.RegenerateDisplayCodeAsync(familyId, ct);
             return Results.Ok(new { displayCode = code });
         });
@@ -722,5 +727,44 @@ public static class FamilyScoreboardEndpoints
             var result = await svc.GetMyFamilyAsync(uid, ct);
             return result is null ? Results.NotFound() : Results.Ok(result);
         });
+
+        // GET /api/family-scoreboard/my-families - 取得使用者所有家庭清單
+        admin.MapGet("/my-families", async (
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var result = await svc.GetMyFamiliesAsync(uid, ct);
+            return Results.Ok(result);
+        });
+
+        // POST /api/family-scoreboard/{familyId}/leave - 離開家庭
+        admin.MapPost("/{familyId}/leave", async (
+            string familyId,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            try
+            {
+                await svc.LeaveFamilyAsync(familyId, uid, ct);
+                return Results.Ok(new { message = "已離開家庭" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.BadRequest(new { message = ex.Message });
+            }
+        });
+    }
+
+    /// <summary>
+    /// 從 query string 取得 familyId，若無則 fallback 到 family_{uid}。
+    /// 這讓 co-admin 能在指定 familyId 的情況下使用原本 hardcode family_{uid} 的端點。
+    /// </summary>
+    private static string ResolveFamilyId(HttpContext httpContext, string uid)
+    {
+        return httpContext.Request.Query.TryGetValue("familyId", out var fid) && !string.IsNullOrEmpty(fid)
+            ? fid.ToString()
+            : $"family_{uid}";
     }
 }

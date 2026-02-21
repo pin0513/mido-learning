@@ -120,4 +120,6 @@ public interface IFamilyScoreboardService
     Task<IReadOnlyList<CoAdminDto>> GetCoAdminsAsync(string familyId, CancellationToken ct = default);
     Task RemoveCoAdminAsync(string familyId, string coAdminUid, CancellationToken ct = default);
     Task<MyFamilyDto?> GetMyFamilyAsync(string uid, CancellationToken ct = default);
+    Task<IReadOnlyList<MyFamilyItemDto>> GetMyFamiliesAsync(string uid, CancellationToken ct = default);
+    Task LeaveFamilyAsync(string familyId, string uid, CancellationToken ct = default);
 }
