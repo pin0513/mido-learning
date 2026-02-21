@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useFamilyScoreboard } from './hooks/useFamilyScoreboard';
 import type { AddTransactionRequest, CreateRedemptionRequest, PlayerScoreDto, MyFamilyItemDto } from '@/types/family-scoreboard';
 import { generateDisplayCode, getMyFamilies, leaveFamily, initializeFamily } from '@/lib/api/family-scoreboard';
@@ -79,6 +79,7 @@ function PlayerAvatar({ player, size = 'md' }: { player: PlayerScoreDto; size?: 
 export default function FamilyScoreboardPage() {
   const router = useRouter();
   const [uid, setUid] = useState<string | null>(null);
+  const [authReady, setAuthReady] = useState(false);
 
   // Multi-family support
   const [families, setFamilies] = useState<MyFamilyItemDto[]>([]);
@@ -89,8 +90,11 @@ export default function FamilyScoreboardPage() {
 
   useEffect(() => {
     const auth = getAuth();
-    const user = auth.currentUser;
-    if (user) setUid(user.uid);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUid(user ? user.uid : null);
+      setAuthReady(true);
+    });
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -276,6 +280,19 @@ export default function FamilyScoreboardPage() {
     historyFilter === 'all'
       ? sortedTransactions
       : sortedTransactions.filter((tx) => tx.playerIds.includes(historyFilter));
+
+  // ── Auth loading ────────────────────────────────────────────────────────────
+
+  if (!authReady) {
+    return (
+      <div className="min-h-screen bg-amber-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-5xl mb-4">⭐</div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500 mx-auto" />
+        </div>
+      </div>
+    );
+  }
 
   // ── Login guard ─────────────────────────────────────────────────────────────
 
