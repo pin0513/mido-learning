@@ -1798,16 +1798,22 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             return new MyFamilyDto(primaryFamilyId, true);
 
         // 2. Check co-admin: search across all families' coAdmins subcollection
-        var coAdminQuery = await _db.CollectionGroup("coAdmins")
-            .WhereEqualTo("uid", uid)
-            .GetSnapshotAsync(ct);
-
-        var firstMatch = coAdminQuery.Documents.FirstOrDefault();
-        if (firstMatch != null)
+        try
         {
-            // Parent path: families/{familyId}/coAdmins/{uid}
-            var familyId = firstMatch.Reference.Parent.Parent!.Id;
-            return new MyFamilyDto(familyId, false);
+            var coAdminQuery = await _db.CollectionGroup("coAdmins")
+                .WhereEqualTo("uid", uid)
+                .GetSnapshotAsync(ct);
+
+            var firstMatch = coAdminQuery.Documents.FirstOrDefault();
+            if (firstMatch != null)
+            {
+                var familyId = firstMatch.Reference.Parent.Parent!.Id;
+                return new MyFamilyDto(familyId, false);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "CollectionGroup query for coAdmins failed, skipping co-admin check");
         }
 
         return null;
@@ -1828,18 +1834,27 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         }
 
         // 2. Check co-admin: search across all families' coAdmins subcollection
-        var coAdminQuery = await _db.CollectionGroup("coAdmins")
-            .WhereEqualTo("uid", uid)
-            .GetSnapshotAsync(ct);
-
-        foreach (var doc in coAdminQuery.Documents)
+        // CollectionGroup query requires a COLLECTION_GROUP index on coAdmins.uid
+        // Gracefully degrade if the index is not ready yet
+        try
         {
-            var familyId = doc.Reference.Parent.Parent!.Id;
-            if (familyId == primaryFamilyId) continue; // already added
-            var familySnap = await _db.Collection("families").Document(familyId).GetSnapshotAsync(ct);
-            var displayCode = familySnap.Exists && familySnap.ContainsField("displayCode") ? familySnap.GetValue<string>("displayCode") : null;
-            var adminName = familySnap.Exists && familySnap.ContainsField("adminDisplayName") ? familySnap.GetValue<string>("adminDisplayName") : null;
-            results.Add(new MyFamilyItemDto(familyId, false, displayCode, adminName));
+            var coAdminQuery = await _db.CollectionGroup("coAdmins")
+                .WhereEqualTo("uid", uid)
+                .GetSnapshotAsync(ct);
+
+            foreach (var doc in coAdminQuery.Documents)
+            {
+                var familyId = doc.Reference.Parent.Parent!.Id;
+                if (familyId == primaryFamilyId) continue; // already added
+                var familySnap = await _db.Collection("families").Document(familyId).GetSnapshotAsync(ct);
+                var displayCode = familySnap.Exists && familySnap.ContainsField("displayCode") ? familySnap.GetValue<string>("displayCode") : null;
+                var adminName = familySnap.Exists && familySnap.ContainsField("adminDisplayName") ? familySnap.GetValue<string>("adminDisplayName") : null;
+                results.Add(new MyFamilyItemDto(familyId, false, displayCode, adminName));
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "CollectionGroup query for coAdmins failed (index may not be ready), returning primary family only");
         }
 
         return results;
