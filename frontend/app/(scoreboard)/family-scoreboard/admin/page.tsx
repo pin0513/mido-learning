@@ -48,6 +48,7 @@ import {
   removeCoAdmin,
   getMyFamilies,
   leaveFamily,
+  initializeFamily,
   lookupUserByEmail,
   getTransactions,
   getRedemptions,
@@ -888,27 +889,44 @@ export default function FamilyScoreboardAdminPage() {
             返回積分板
           </button>
           <h1 className="text-xl font-bold text-gray-800">管理後台</h1>
-          {families.length > 1 ? (
-            <select
-              value={familyId}
-              onChange={(e) => {
-                const sel = families.find(f => f.familyId === e.target.value);
-                setFamilyId(e.target.value);
-                setIsPrimaryAdmin(sel?.isPrimaryAdmin ?? true);
-                setDisplayCode(null);
-                localStorage.setItem('defaultFamilyId', e.target.value);
-              }}
-              className="mt-1 w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-amber-50 text-amber-700 font-medium"
-            >
-              {families.map((f) => (
-                <option key={f.familyId} value={f.familyId}>
-                  {f.displayCode ?? f.familyId.slice(0, 12)} {f.isPrimaryAdmin ? '(主管理者)' : '(共同家長)'}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <p className="text-xs text-gray-400 mt-1">家庭積分系統</p>
-          )}
+          <select
+            value={familyId}
+            onChange={(e) => {
+              const sel = families.find(f => f.familyId === e.target.value);
+              setFamilyId(e.target.value);
+              setIsPrimaryAdmin(sel?.isPrimaryAdmin ?? true);
+              setDisplayCode(null);
+              localStorage.setItem('defaultFamilyId', e.target.value);
+            }}
+            className="mt-1 w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-amber-50 text-amber-700 font-medium"
+          >
+            {families.map((f) => (
+              <option key={f.familyId} value={f.familyId}>
+                {f.displayCode ?? f.familyId.slice(0, 12)} {f.isPrimaryAdmin ? '(主管理者)' : '(共同家長)'}
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={async () => {
+              try {
+                await initializeFamily();
+                const result = await getMyFamilies();
+                setFamilies(result);
+                if (result.length > 0) {
+                  const newest = result[result.length - 1];
+                  setFamilyId(newest.familyId);
+                  setIsPrimaryAdmin(newest.isPrimaryAdmin);
+                  setDisplayCode(null);
+                  localStorage.setItem('defaultFamilyId', newest.familyId);
+                }
+              } catch (e) {
+                alert(e instanceof Error ? e.message : '建立家庭失敗');
+              }
+            }}
+            className="mt-1.5 w-full py-1.5 text-xs text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-lg font-medium transition-colors min-h-[36px]"
+          >
+            + 新增家庭
+          </button>
         </div>
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {TABS.map((tab) => (

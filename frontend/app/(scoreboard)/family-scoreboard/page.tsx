@@ -418,24 +418,39 @@ export default function FamilyScoreboardPage() {
             <span className="text-2xl">⭐</span>
             <h1 className="text-lg font-bold text-amber-800">家庭計分板</h1>
           </div>
-          {families.length > 1 ? (
-            <select
-              value={selectedFamilyId}
-              onChange={(e) => {
-                setSelectedFamilyId(e.target.value);
-                localStorage.setItem('defaultFamilyId', e.target.value);
-              }}
-              className="mt-1 w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-amber-50 text-amber-700 font-medium"
-            >
-              {families.map((f) => (
-                <option key={f.familyId} value={f.familyId}>
-                  {f.displayCode ?? f.familyId.slice(0, 12)} {f.isPrimaryAdmin ? '(主管理者)' : '(共同家長)'}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <p className="text-xs text-gray-400">{families[0]?.displayCode ? `代碼: ${families[0].displayCode}` : '家庭計分板'}</p>
-          )}
+          <select
+            value={selectedFamilyId}
+            onChange={(e) => {
+              setSelectedFamilyId(e.target.value);
+              localStorage.setItem('defaultFamilyId', e.target.value);
+            }}
+            className="mt-1 w-full text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-amber-50 text-amber-700 font-medium"
+          >
+            {families.map((f) => (
+              <option key={f.familyId} value={f.familyId}>
+                {f.displayCode ?? f.familyId.slice(0, 12)} {f.isPrimaryAdmin ? '(主管理者)' : '(共同家長)'}
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={async () => {
+              try {
+                await initializeFamily();
+                const result = await getMyFamilies();
+                setFamilies(result);
+                if (result.length > 0) {
+                  const newest = result[result.length - 1];
+                  setSelectedFamilyId(newest.familyId);
+                  localStorage.setItem('defaultFamilyId', newest.familyId);
+                }
+              } catch (e) {
+                alert(e instanceof Error ? e.message : '建立家庭失敗');
+              }
+            }}
+            className="mt-1.5 w-full py-1.5 text-xs text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-lg font-medium transition-colors min-h-[36px]"
+          >
+            + 新增家庭
+          </button>
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
@@ -495,25 +510,37 @@ export default function FamilyScoreboardPage() {
           >
             ← 返回 Mido Learning
           </button>
-          {families.length > 0 && !families.find(f => f.familyId === selectedFamilyId)?.isPrimaryAdmin && (
-            <button
-              onClick={async () => {
-                if (!confirm('確定要離開此家庭嗎？')) return;
-                try {
-                  await leaveFamily(selectedFamilyId);
-                  const result = await getMyFamilies();
-                  setFamilies(result);
-                  if (result.length > 0) setSelectedFamilyId(result[0].familyId);
-                  else setSelectedFamilyId('');
-                } catch (e) {
-                  alert(e instanceof Error ? e.message : '離開家庭失敗');
-                }
-              }}
-              className="w-full py-2.5 text-sm text-red-400 hover:text-red-600 rounded-xl hover:bg-red-50 min-h-[48px]"
-            >
-              離開此家庭
-            </button>
-          )}
+          {families.length > 0 && (() => {
+            const currentFamily = families.find(f => f.familyId === selectedFamilyId);
+            if (!currentFamily) return null;
+            const isPrimary = currentFamily.isPrimaryAdmin;
+            return (
+              <button
+                onClick={async () => {
+                  const msg = isPrimary
+                    ? '確定要刪除此家庭嗎？（需先移除所有玩家）'
+                    : '確定要離開此家庭嗎？';
+                  if (!confirm(msg)) return;
+                  try {
+                    await leaveFamily(selectedFamilyId);
+                    const result = await getMyFamilies();
+                    setFamilies(result);
+                    if (result.length > 0) {
+                      setSelectedFamilyId(result[0].familyId);
+                      localStorage.setItem('defaultFamilyId', result[0].familyId);
+                    } else {
+                      setSelectedFamilyId('');
+                    }
+                  } catch (e) {
+                    alert(e instanceof Error ? e.message : (isPrimary ? '刪除家庭失敗' : '離開家庭失敗'));
+                  }
+                }}
+                className="w-full py-2.5 text-sm text-red-400 hover:text-red-600 rounded-xl hover:bg-red-50 min-h-[48px]"
+              >
+                {isPrimary ? '🗑️ 刪除此家庭' : '離開此家庭'}
+              </button>
+            );
+          })()}
         </div>
       </aside>
 
@@ -569,6 +596,46 @@ export default function FamilyScoreboardPage() {
             </button>
           </div>
         </header>
+
+        {/* Mobile Family Switcher Bar */}
+        {families.length > 0 && (
+          <div className="lg:hidden bg-white border-b border-gray-100 px-4 py-2 flex items-center gap-2 sticky top-[52px] z-10">
+            <select
+              value={selectedFamilyId}
+              onChange={(e) => {
+                setSelectedFamilyId(e.target.value);
+                localStorage.setItem('defaultFamilyId', e.target.value);
+              }}
+              className="flex-1 text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-amber-50 text-amber-700 font-medium min-h-[36px]"
+            >
+              {families.map((f) => (
+                <option key={f.familyId} value={f.familyId}>
+                  {f.displayCode ?? f.familyId.slice(0, 12)} {f.isPrimaryAdmin ? '(主管理者)' : '(共同家長)'}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={async () => {
+                try {
+                  await initializeFamily();
+                  const result = await getMyFamilies();
+                  setFamilies(result);
+                  if (result.length > 0) {
+                    const newest = result[result.length - 1];
+                    setSelectedFamilyId(newest.familyId);
+                    localStorage.setItem('defaultFamilyId', newest.familyId);
+                  }
+                } catch (e) {
+                  alert(e instanceof Error ? e.message : '建立家庭失敗');
+                }
+              }}
+              className="shrink-0 w-9 h-9 flex items-center justify-center rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 text-sm font-bold"
+              aria-label="新增家庭"
+            >
+              +
+            </button>
+          </div>
+        )}
 
         {/* Desktop page title */}
         <header className="hidden lg:flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100">
