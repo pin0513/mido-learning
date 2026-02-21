@@ -9,6 +9,7 @@ import { Footer } from '@/components/layout/Footer';
 
 const sidebarItems = [
   { label: '教材管理', href: '/admin/components' },
+  { label: '新增教材', href: '/admin/components/new' },
   { label: '用戶管理', href: '/admin/users' },
   { label: '費用管理', href: '/admin/costs' },
   { label: '願望池', href: '/admin/wishes' },
