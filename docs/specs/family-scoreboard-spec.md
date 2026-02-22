@@ -1,10 +1,11 @@
 # 家庭計分板 (Family Scoreboard) — 功能需求規格書
 
-**文件版本**：v1.2
+**文件版本**：v2.0
 **建立日期**：2026-02-18
-**更新日期**：2026-02-18
-**狀態**：M1–M7 全部完成 ✅
-**實際路由**：`/(member)/family-scoreboard`（已部署於 member 路由群）
+**更新日期**：2026-02-22
+**狀態**：M1–M14 全部完成 ✅
+**主路由**：`/(scoreboard)/family-scoreboard`
+**玩家端路由**：`/(player)/family-scoreboard/player`
 
 ---
 
@@ -12,7 +13,7 @@
 
 ### 1.1 背景
 
-家長希望建立一套能讓孩子與父母**共同協作**的積分系統，透過正向鼓勵（而非懲罰導向）培養良好習慣與品格。此功能作為 Mido Learning **實驗功能**加入，獨立模組設計，不與學習功能混合。
+家長希望建立一套能讓孩子與父母**共同協作**的積分系統，透過正向鼓勵（而非懲罰導向）培養良好習慣與品格。此功能作為 Mido Learning **獨立模組**加入，不與學習功能混合。
 
 ### 1.2 教育理論依據
 
@@ -39,16 +40,25 @@
 
 | 角色 | 權限 | 說明 |
 |------|------|------|
-| **Admin（父母）** | 全部權限 | 加分、扣分、設定玩家、管理獎勵、查看報表 |
-| **Player（孩子）** | 唯讀 + 兌換 | 查看自己積分、查看報表、申請兌換獎勵 |
-| **Guest** | 無 | 看不到此功能入口 |
+| **Admin（主管理員）** | 全部權限 | 建立家庭、加分/扣分、管理玩家/獎勵/任務/商城/事件、審核兌換、備份匯出、邀請 Co-Admin |
+| **Co-Admin（共同家長）** | 同 Admin（除刪除家庭外） | 被邀請加入家庭的第二位家長，以 `?familyId=` 操作非自身的家庭 |
+| **Player（孩子）** | 獨立登入 + 有限操作 | 透過家庭代碼 + 密碼登入，可查看積分、提交任務完成、申請兌換、下單商城 |
+| **Super Admin** | 系統管理 | 列出所有家庭、封禁/解封/永久刪除家庭 |
+| **Guest** | 無 | 未登入用戶看不到此功能入口 |
 
 ### 2.1 存取控制
 
-- **實驗功能首頁**：所有人可見入口
-- **家庭計分板入口卡片**：**僅 Admin 登入後顯示**（其他人看不到此卡片）
-- **計分板內部**：Admin 全功能；Player 唯讀+兌換申請
-- **直接網址存取**：未登入 → 導向登入頁
+- **Admin/Co-Admin**：透過 Firebase Auth JWT 登入，存取所有管理功能
+- **Player 獨立登入**：透過 `displayCode`（家庭代碼）+ `playerId` + `password` 登入，取得 Player JWT
+- **Super Admin**：需 `SuperAdminOnly` policy 授權
+- **多家庭支援**：一位 Admin 可建立多個家庭，透過 `GET /my-families` 取得家庭清單並切換
+
+### 2.2 新用戶流程
+
+1. Admin 首次進入 → 看到歡迎畫面（建立新家庭 / 等待邀請）
+2. 選擇「建立新家庭」→ 呼叫 `POST /initialize?familyId=` 建立家庭
+3. 在設定頁產生 `displayCode` 供 Player 登入使用
+4. 選擇「邀請共同家長」→ 以 email 查詢 UID → `POST /{familyId}/co-admins`
 
 ---
 
@@ -56,22 +66,36 @@
 
 ### 3.1 核心功能列表
 
-| # | 功能模組 | 優先級 | 說明 |
-|---|---------|--------|------|
-| F1 | 玩家計分儀表板 | P0 | 快速加減分、查看目前積分 |
-| F2 | 積分交易記錄 | P0 | 每筆加減分的歷史紀錄 |
-| F3 | 雙軌積分系統 | P0 | 成就分(累計) vs 可兌換分(扣除後) |
-| F4 | 獎勵兌換系統 | P1 | 獎勵清單、申請兌換、核准流程 |
-| F5 | 習慣追蹤 | P1 | 每日任務、連續天數 Streak |
-| F6 | 成就系統 | P1 | 連續達標解鎖成就徽章 |
-| F7 | 報表儀表板 | P1 | 趨勢圖、排行榜、成長報告 |
-| F8 | 玩家管理 | P2 | 新增/編輯/停用玩家資料 |
-| F9 | 積分類別管理 | P2 | 自訂加分項目與分值 |
+| # | 功能模組 | 狀態 | 說明 |
+|---|---------|------|------|
+| F1 | 玩家計分儀表板 | ✅ | 首頁 Tab：玩家卡片、快速加減分 |
+| F2 | 積分交易記錄 | ✅ | 記錄 Tab：所有加減分的歷史紀錄 |
+| F3 | 雙軌積分系統 | ✅ | 成就分(累計) vs 可兌換分(扣除後) |
+| F4 | 獎勵兌換系統 | ✅ | 獎勵清單、申請兌換、Admin 審核 |
+| F5 | 報表儀表板 | ✅ | 報表 Tab：貼紙牆 + 個別玩家統計 |
+| F6 | 玩家管理 | ✅ | 新增/編輯/刪除玩家，含 emoji、生日、密碼 |
+| F7 | 任務系統 | ✅ | 任務 CRUD、週期設定、玩家提交、Admin 審核 |
+| F8 | 零用金系統 | ✅ | 獨立帳本、收支記錄、餘額查詢 |
+| F9 | 商城系統 | ✅ | 商品管理、玩家下單、Admin 審核、時效道具 |
+| F10 | 事件日曆 | ✅ | 家庭活動紀錄、按月查詢 |
+| F11 | 紀律系統（封印/處罰） | ✅ | 封印(seal)、處罰(penalty)、活躍效果(effect) |
+| F12 | 多家庭支援 | ✅ | 建立多個家庭、家庭切換器、離開家庭 |
+| F13 | Co-Admin 管理 | ✅ | 邀請/移除共同家長 |
+| F14 | 玩家獨立登入 | ✅ | 家庭代碼 + 密碼登入、Player JWT |
+| F15 | 家庭代碼管理 | ✅ | 自動生成/自訂/重新生成 displayCode |
+| F16 | 備份/匯入匯出 | ✅ | 完整家庭資料備份與匯入 |
+| F17 | 紀錄批次刪除 | ✅ | 批次刪除 transactions/redemptions |
+| F18 | Super Admin 管理 | ✅ | 列出所有家庭、封禁/解封/刪除 |
+| F19 | 任務範本 | ✅ | 預設任務集合，快速套用 |
+| F20 | 玩家自主提報 | ✅ | 玩家提報加分事由，Admin 審核 |
+| F21 | Admin 直接加分 | ✅ | 附帶封印/處罰效果的交易 |
 
-### 3.2 本期範疇（MVP）
+### 3.2 未來功能（尚未實作）
 
-**包含**：F1, F2, F3, F4（基本版）, F7（簡版）, F8
-**不包含（未來）**：F5 習慣追蹤、F6 成就系統、F9 類別管理
+| # | 功能模組 | 說明 |
+|---|---------|------|
+| F-future-1 | 習慣追蹤 (Habit Tracker) | 每日任務打卡、連續天數 Streak |
+| F-future-2 | 成就徽章系統 | 連續達標解鎖成就徽章 |
 
 ---
 
@@ -115,48 +139,15 @@
 
 ---
 
-## 5. 詳細功能規格
+## 5. 核心業務邏輯
 
-### 5.1 F1 — 玩家計分儀表板（主頁面）
-
-**手機操作優先（Mobile-First）**
-
-**顯示內容**：
-- 所有玩家的卡片（並排，可水平滑動）
-- 每張卡片顯示：
-  - 玩家名字 + 頭像
-  - 📊 成就分（累計總得分，只增不減）
-  - 🎁 可兌換分（可用於兌換獎勵的餘額）
-  - 最近一筆交易摘要
-
-**Admin 操作**：
-- 點擊任一玩家卡片 → 展開加減分快速操作面板
-- 快速加分按鈕：預設類別（一鍵套用）
-- 自訂輸入：輸入分值 + 原因文字
-- 確認前顯示：「給 [玩家名字] [+/-分] 因為 [原因]」
-- 支援**同時對多位玩家操作**（如兄弟吵架同時扣分）
-
-**互動流程**：
-```
-Admin 點擊玩家卡片
-  → 展開底部抽屜 (Bottom Sheet)
-  → 選擇類別 或 自訂
-  → 輸入備註（可選）
-  → 點擊確認
-  → 積分立即更新 + 動畫效果
-  → 自動關閉抽屜
-```
-
-### 5.2 F3 — 雙軌積分設計（核心設計）
-
-> 兌獎後，績分跟能變獎勵的分數應該分軌計算
+### 5.1 雙軌積分設計
 
 | 積分軌道 | 說明 | 變動規則 |
 |---------|------|---------|
-| **成就分 (Achievement Points)** | 累計總得分，只增不減，顯示人生成就 | 賺到就加，永不扣除（扣分事件不影響此數字的「總賺取量」）|
-| **可兌換分 (Redeemable Points)** | 目前可用餘額，兌換後扣除 | 賺到加，被懲罰扣，兌換時扣 |
+| **成就分 (Achievement Points)** | 累計總得分，只增不減 | 賺到就加，永不扣除 |
+| **可兌換分 (Redeemable Points)** | 目前可用餘額 | 賺到加，被懲罰扣，兌換時扣 |
 
-**舉例說明**：
 ```
 初始狀態：成就分 0，可兌換分 0
 
@@ -166,61 +157,31 @@ Admin 點擊玩家卡片
 兌換獎勵 -50      → 成就分 105，可兌換分 35  ← 成就分不變！
 ```
 
-**設計意圖**：成就分代表孩子的「人生成就累積」，絕不因懲罰或兌換而減少，保護孩子的成就感與自信心。
+### 5.2 兌換審核流程
 
-### 5.3 F4 — 獎勵兌換系統
-
-**流程**：
 ```
-玩家查看獎勵清單
-  → 點擊想兌換的獎勵
-  → 系統確認「可兌換分」是否足夠
-  → 足夠：提交兌換申請（狀態：pending）
+玩家申請兌換（狀態：pending）
   → Admin 收到通知
-  → Admin 核准 → 扣除可兌換分 → 兌換記錄完成
-  → Admin 拒絕 → 分數不扣 → 通知玩家
+  → Admin 核准 → 扣除可兌換分 → 狀態：approved
+  → Admin 拒絕 → 分數不扣 → 狀態：rejected
 ```
 
-**兌換申請狀態**：`pending` → `approved` / `rejected`
+### 5.3 任務系統流程
 
-### 5.4 F5 — 習慣追蹤（第二期）
+```
+Admin 建立任務（household/exam/activity, 週期: once/daily/weekly）
+  → Player 查看可用任務
+  → Player 提交完成回報（status: pending）
+  → Admin 審核 → approve: 自動加分 → reject: 不加分
+```
 
-> 日常習慣追蹤，要有連續天數 Streak，養成習慣才算值得計分
+### 5.4 商城系統流程
 
-**規則設計**：
-- 習慣任務設定（如：每天練琴30分鐘）
-- 每日打卡確認完成
-- Streak 計算：連續天數不中斷
-- 積分規則：
-  - 完成當日任務：+基礎分（如+2）
-  - 連續3天：+額外獎勵分（如+10）
-  - 連續7天：成就徽章 + 大量獎勵分
-  - 連續30天：超級成就 + 特殊獎勵
-- 中斷 Streak：不扣分，但 Streak 歸零重來
-
-**注意**：此功能**與遊戲成就系統脫勾**，獨立運作。
-
-### 5.5 F7 — 報表儀表板
-
-**報表類型**：
-
-1. **積分趨勢圖**（折線圖）
-   - 時間軸：過去7天 / 30天 / 90天
-   - 顯示可兌換分的變化曲線
-   - 各玩家不同顏色
-
-2. **行為分類圓餅圖**
-   - 本月加分來源比例（哪類行為賺最多分）
-   - 有助家長了解孩子行為模式
-
-3. **成就總覽**
-   - 成就分排行（家庭排行榜，正向比較，不是競爭）
-   - 最近獲得的成就徽章
-
-4. **月度成長報告**
-   - 本月總得分 / 總扣分
-   - 最常見的加分行為
-   - Streak 最高記錄
+```
+Admin 建立商品（priceType: allowance/xp, 可設 dailyLimit/stock）
+  → Player 下單（status: pending）
+  → Admin 審核 → approve: 扣除對應積分/零用金，啟動效果 → reject: 退款
+```
 
 ---
 
@@ -232,821 +193,560 @@ Admin 點擊玩家卡片
 families/
   {familyId}/                          # 家庭根節點
     config/
-      settings: {                      # 家庭設定
+      settings: {
         name: string,
         createdAt: Timestamp,
-        adminUids: string[]            # 可以操作的 Firebase UID
+        adminUids: string[],           # 主管理員 UID（陣列）
+        displayCode: string | null,    # 4-8 位家庭代碼
+        displayCodeExpiry: Timestamp | null,
+        isBanned: boolean              # Super Admin 封禁標記
       }
 
     players/
-      {playerId}: {                    # 玩家資料
-        name: string,                  # "米豆"
+      {playerId}: {
+        name: string,
         avatar: string,                # emoji 或 url
+        emoji: string,                 # 顯示用 emoji
         role: "child" | "parent",
-        color: string,                 # 個人主題色
+        color: string,
+        birthday: string | null,       # "YYYY-MM-DD"
+        password: string | null,       # 玩家登入密碼（hashed）
         isActive: boolean,
         createdAt: Timestamp
       }
 
     scores/
-      {playerId}: {                    # 即時積分（快速讀取）
-        achievementPoints: number,    # 成就分（只增不減）
-        redeemablePoints: number,     # 可兌換分（可扣）
-        totalEarned: number,          # 總賺取（統計用）
-        totalDeducted: number,        # 總扣分（統計用）
-        totalRedeemed: number,        # 總兌換（統計用）
+      {playerId}: {
+        achievementPoints: number,
+        redeemablePoints: number,
+        totalEarned: number,
+        totalDeducted: number,
+        totalRedeemed: number,
         lastUpdated: Timestamp
       }
 
     transactions/
-      {txId}: {                       # 每筆積分交易
-        playerId: string,             # 受影響玩家
-        playerIds: string[],          # 支援多玩家（如兄弟同時扣分）
-        type: "earn" | "deduct",
-        amount: number,               # 絕對值（正數）
-        reason: string,               # 原因文字
-        categoryId: string | null,    # 類別 ID（可空）
-        createdBy: string,            # admin UID
-        createdAt: Timestamp,
-        note: string | null           # 額外備註
-      }
-
-    categories/
-      {catId}: {                      # 積分類別
-        name: string,
-        defaultAmount: number,        # 預設分值（正數）
-        type: "earn" | "deduct",
-        icon: string,                 # emoji
-        isActive: boolean,
-        order: number                 # 顯示順序
-      }
-
-    rewards/
-      {rewardId}: {                   # 獎勵清單
-        name: string,
-        cost: number,                 # 所需可兌換分
-        description: string,
-        icon: string,
-        isActive: boolean,
-        stock: number | null          # null = 無限
-      }
-
-    redemptions/
-      {redemptionId}: {               # 兌換申請
+      {txId}: {
         playerId: string,
-        rewardId: string,
-        rewardName: string,           # 快照（防止獎勵被修改後失真）
-        cost: number,                 # 快照
-        status: "pending" | "approved" | "rejected",
-        requestedAt: Timestamp,
-        processedAt: Timestamp | null,
-        processedBy: string | null,   # admin UID
+        playerIds: string[],
+        type: "earn" | "deduct",
+        amount: number,
+        reason: string,
+        categoryId: string | null,
+        createdBy: string,
+        createdAt: Timestamp,
         note: string | null
       }
 
-    habits/                          # 第二期
-      {habitId}: {
+    categories/
+      {catId}: {
+        name: string,
+        defaultAmount: number,
+        type: "earn" | "deduct",
+        icon: string,
+        isActive: boolean,
+        order: number
+      }
+
+    rewards/
+      {rewardId}: {
+        name: string,
+        cost: number,
+        description: string,
+        icon: string,
+        isActive: boolean,
+        stock: number | null
+      }
+
+    redemptions/
+      {redemptionId}: {
+        playerId: string,
+        rewardId: string,
+        rewardName: string,
+        cost: number,
+        status: "pending" | "approved" | "rejected",
+        requestedAt: Timestamp,
+        processedAt: Timestamp | null,
+        processedBy: string | null,
+        note: string | null
+      }
+
+    coAdmins/
+      {uid}: {
+        displayName: string | null,
+        addedAt: Timestamp
+      }
+
+    tasks/
+      {taskId}: {
+        title: string,
+        type: "household" | "exam" | "activity",
+        difficulty: "easy" | "medium" | "hard" | "custom",
+        xpReward: number,
+        allowanceReward: number,
+        description: string | null,
+        isActive: boolean,
+        periodType: "once" | "daily" | "weekly",
+        weekDays: number[],
+        assignedPlayerIds: string[],
+        playerProposed: boolean
+      }
+
+    taskCompletions/
+      {completionId}: {
+        taskId: string,
+        taskTitle: string,
+        xpReward: number,
+        playerId: string,
+        note: string | null,
+        status: "pending" | "approved" | "rejected",
+        submittedAt: Timestamp,
+        processedAt: Timestamp | null
+      }
+
+    playerSubmissions/
+      {submissionId}: {
+        playerId: string,
+        type: "earn",
+        amount: number,
+        reason: string,
+        categoryType: "household" | "exam" | "activity",
+        note: string | null,
+        status: "pending" | "approved" | "rejected",
+        submittedAt: Timestamp,
+        processedAt: Timestamp | null
+      }
+
+    allowance/
+      {recordId}: {
+        playerId: string,
+        amount: number,
+        reason: string,
+        type: "earn" | "spend" | "adjust",
+        createdBy: string,
+        createdAt: Timestamp,
+        note: string | null
+      }
+
+    shopItems/
+      {itemId}: {
         name: string,
         description: string,
-        basePoints: number,           # 每日完成基礎分
-        streakBonus: {               # Streak 獎勵設定
-          days: number,
-          bonusPoints: number
-        }[],
-        targetPlayerIds: string[],    # 適用哪些玩家
-        isActive: boolean
+        price: number,
+        type: "physical" | "activity" | "privilege" | "money",
+        emoji: string,
+        isActive: boolean,
+        stock: number | null,
+        priceType: "allowance" | "xp",
+        dailyLimit: number | null,
+        allowanceGiven: number,
+        durationMinutes: number | null,
+        effectType: "xp-multiplier" | "time-item" | null,
+        effectValue: number | null
       }
 
-    habitLogs/                       # 第二期
-      {logId}: {
-        habitId: string,
+    shopOrders/
+      {orderId}: {
         playerId: string,
-        date: string,                 # "YYYY-MM-DD"
-        completed: boolean,
-        currentStreak: number,        # 打卡時的連續天數
-        pointsEarned: number
+        itemId: string,
+        itemName: string,
+        price: number,
+        status: "pending" | "approved" | "rejected",
+        requestedAt: Timestamp,
+        processedAt: Timestamp | null,
+        processedBy: string | null,
+        note: string | null
+      }
+
+    events/
+      {eventId}: {
+        title: string,
+        type: "trip" | "sports" | "activity" | "other",
+        startDate: string,
+        endDate: string | null,
+        description: string | null,
+        emoji: string,
+        color: string,
+        createdBy: string,
+        createdAt: Timestamp
+      }
+
+    taskTemplates/
+      {templateId}: {
+        name: string,
+        description: string | null,
+        taskIds: string[]
+      }
+
+    seals/
+      {sealId}: {
+        playerId: string,
+        name: string,
+        type: "no-tv" | "no-toys" | "no-games" | "no-sweets" | "custom",
+        description: string | null,
+        status: "active" | "lifted",
+        createdBy: string,
+        createdAt: Timestamp,
+        liftedAt: Timestamp | null
+      }
+
+    penalties/
+      {penaltyId}: {
+        playerId: string,
+        name: string,
+        type: "罰站" | "罰寫" | "道歉" | "custom",
+        description: string | null,
+        status: "active" | "completed",
+        createdBy: string,
+        createdAt: Timestamp,
+        completedAt: Timestamp | null
+      }
+
+    activeEffects/
+      {effectId}: {
+        playerId: string,
+        name: string,
+        type: "xp-multiplier" | "time-item" | "custom",
+        multiplier: number | null,
+        durationMinutes: number | null,
+        description: string | null,
+        status: "active" | "expired",
+        source: "shop" | "admin",
+        sourceId: string | null,
+        createdAt: Timestamp,
+        expiresAt: Timestamp | null,
+        expiredAt: Timestamp | null
       }
 ```
 
-### 6.2 Firestore Security Rules（草稿）
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /families/{familyId}/{document=**} {
-      // Admin 可讀寫全部
-      allow read, write: if isAdmin(familyId);
-      // Player 唯讀（兌換申請例外）
-      allow read: if isFamilyMember(familyId);
-      // 兌換申請：Player 可自行建立
-      match /redemptions/{redemptionId} {
-        allow create: if isFamilyMember(familyId)
-                      && request.resource.data.status == "pending";
-      }
-    }
-
-    function isAdmin(familyId) {
-      return request.auth != null &&
-             request.auth.uid in get(/databases/$(database)/documents/
-               families/$(familyId)/config/settings).data.adminUids;
-    }
-
-    function isFamilyMember(familyId) {
-      return request.auth != null;  // 暫定：已登入即可
-    }
-  }
-}
-```
-
-### 6.3 資料讀取策略
+### 6.2 資料讀取策略
 
 | 操作 | Collection | 策略 |
 |------|-----------|------|
-| 顯示目前積分 | `scores/{playerId}` | 即時監聽 (onSnapshot) |
-| 加減分 | Transaction: scores + transactions | Atomic write |
-| 交易記錄 | `transactions` | 分頁 + 最新20筆 |
-| 兌換申請 | `redemptions` | 監聽 pending 數量 |
+| 顯示目前積分 | `scores/{playerId}` | REST API 查詢 |
+| 加減分 | scores + transactions | Firestore Transaction (原子寫入) |
+| 交易記錄 | `transactions` | 分頁 + 最新優先 |
+| 兌換申請 | `redemptions` | 按 status 過濾 |
 | 報表資料 | `transactions` | 時間範圍 query |
+| 多家庭查詢 | `config/settings` + `coAdmins` | collectionGroup query |
 
 ---
 
 ## 7. UI/UX 設計規格
 
-### 7.1 頁面結構
+### 7.1 路由結構
 
 ```
-/experiments/family-scoreboard            # 主頁（儀表板）
-  /experiments/family-scoreboard/player/[id]  # 玩家詳細記錄
-  /experiments/family-scoreboard/rewards       # 獎勵兌換中心
-  /experiments/family-scoreboard/reports      # 報表儀表板
-  /experiments/family-scoreboard/admin        # Admin 管理設定
-    /admin/players                           # 玩家管理
-    /admin/categories                        # 積分類別管理
-    /admin/rewards-manage                    # 獎勵管理
+frontend/app/
+  (scoreboard)/
+    layout.tsx                           # Scoreboard Layout
+    family-scoreboard/
+      page.tsx                           # 主頁面（含 Tabs: 首頁/記錄/任務/報表/商城）
+      hooks/useFamilyScoreboard.ts       # 主 hook
+      admin/page.tsx                     # Admin 管理設定
+      super-admin/page.tsx               # Super Admin 家庭管理
+
+  (player)/
+    layout.tsx                           # Player Layout
+    family-scoreboard/
+      player/page.tsx                    # 玩家獨立登入端
 ```
 
-### 7.2 手機優先設計規格
+### 7.2 主頁面 Tabs
 
-- **底部導航列**（Tab Bar）：🏠首頁 | 📋記錄 | 🎁兌換 | 📊報表
-- **加減分操作**：Bottom Sheet（從下方滑出），拇指可輕鬆操作
-- **玩家卡片**：大圓角、大字體，手指觸碰面積 ≥ 44px
-- **確認按鈕**：底部固定，方便拇指點擊
-- **數字輸入**：優先觸發數字鍵盤 (`inputMode="numeric"`)
-- **動畫**：積分更新時有彈跳動畫（正面反饋）
+| Tab | 功能 |
+|-----|------|
+| **首頁 (home)** | 玩家卡片、快速加減分、家庭切換器 |
+| **記錄 (history)** | 交易紀錄列表、玩家篩選 |
+| **任務 (quest)** | 任務列表、任務完成審核、玩家提報審核 |
+| **報表 (report)** | 貼紙牆、個別玩家統計（今日/本週/本月 + 成就點/可兌換） |
+| **商城 (shop)** | 商品列表、下單/審核、零用金管理 |
 
-### 7.3 視覺風格
+### 7.3 家庭切換器
+
+- **Desktop**：Header 區域永遠顯示家庭選擇器 + 「+ 新增家庭」按鈕
+- **Mobile**：Header 下方 sticky bar 顯示當前家庭名稱 + 切換按鈕
+- localStorage 記住上次選擇的家庭
+- 新用戶（無家庭）→ 顯示歡迎畫面（建立新家庭 / 等待邀請）
+
+### 7.4 手機優先設計
+
+- **底部導航列**（Tab Bar）：首頁 | 記錄 | 任務 | 報表 | 商城
+- **加減分操作**：Bottom Sheet（從下方滑出），拇指可操作
+- **觸控目標**：≥ 44px
+- **數字輸入**：`inputMode="numeric"`
+
+### 7.5 視覺風格
 
 - **色調**：溫暖、有活力（區別於 Mido Learning 的學術風格）
-- **主色**：橙色/琥珀色系（代表活力與成就）
+- **主色**：橙色/琥珀色系
 - **玩家顏色**：米豆 = 金黃色 🌽，毛豆 = 綠色 🫘
-- **成就徽章**：圓形，有光暈效果
 - **字體**：圓體感，友善親切
 
 ---
 
-## 8. 後端架構規格（.NET 隔離層）
+## 8. 後端架構
 
-### 8.0 後端架構決策
-
-**本功能採用 .NET API 作為 Firebase 隔離層，與現有 mido-learning 後端架構一致。**
+### 8.0 架構決策
 
 ```
 Browser (Next.js)
     │
     │  REST API（JWT Auth）
     ▼
-.NET API（ASP.NET Core）
+.NET API（ASP.NET Core Minimal API）
     │
     │  Firebase Admin SDK（Server-side）
     ▼
 Firebase Firestore
 ```
 
-| 層次 | 技術選擇 | 理由 |
-|------|---------|------|
-| **前端** | Next.js（純 REST 呼叫） | 不使用 Firebase client SDK，降低前端複雜度 |
-| **API 層** | ASP.NET Core Controller | 與現有 mido-learning 後端一致，統一 JWT 驗證 |
-| **Firebase 存取** | Firebase Admin SDK（server-side） | Service Account 不暴露到 client，安全性更高 |
-| **原子性操作** | Firebase Admin SDK Transactions | server-side 執行，強制 admin 權限保護 |
-| **資料庫** | Firebase Firestore | 保留現有 Schema 設計 |
-| **Security Rules** | 簡化（後端負責授權） | .NET 層已驗證權限，Rules 只防直接存取 |
-
-**與原 Firebase-Only 方案的差異**：
-
-| 面向 | Firebase-Only（舊） | .NET 隔離層（新） |
-|------|------------------|-----------------|
-| 架構一致性 | ❌ 前端直連 Firebase | ✅ 與既有 mido-learning 一致 |
-| Secret 安全 | ⚠️ client config 外露 | ✅ Service Account 在 server |
-| 前端複雜度 | 高（需 Firebase SDK） | 低（只需呼叫 REST） |
-| 未來可遷移性 | 差（前端耦合 Firebase） | 好（只改 .NET service 層） |
-
----
+- **前端**：Next.js，純 REST 呼叫（不使用 Firebase client SDK）
+- **API 層**：ASP.NET Core Minimal API（`MapGet`/`MapPost` pattern）
+- **Firebase 存取**：Firebase Admin SDK（server-side），Service Account 不暴露到 client
+- **認證**：Firebase Auth JWT（Admin/Co-Admin）+ 自簽 Player JWT（玩家端）
 
 ### 8.1 API 端點定義
 
-所有端點需 JWT 驗證（`[Authorize]`），由現有 mido-learning 認證中介層處理。
-
-| Method | Endpoint | 說明 | 權限 |
-|--------|----------|------|------|
-| `GET` | `/api/family-scoreboard/scores` | 取得所有玩家積分 | 已登入 |
-| `GET` | `/api/family-scoreboard/transactions` | 取得交易記錄（分頁） | 已登入 |
-| `POST` | `/api/family-scoreboard/transactions` | 新增積分／扣分 | Admin |
-| `GET` | `/api/family-scoreboard/rewards` | 取得獎勵列表 | 已登入 |
-| `POST` | `/api/family-scoreboard/redemptions` | 申請兌換獎勵 | Player |
-| `PATCH` | `/api/family-scoreboard/redemptions/{id}` | 核准／拒絕兌換 | Admin |
-| `GET` | `/api/family-scoreboard/redemptions` | 取得兌換申請列表 | 已登入 |
-| `POST` | `/api/family-scoreboard/initialize` | 初始化家庭資料 | Admin |
-
-**Request / Response 範例**：
-
-```
-POST /api/family-scoreboard/transactions
-{
-  "playerIds": ["player_mido"],
-  "type": "earn",
-  "amount": 10,
-  "reason": "主動幫忙洗碗",
-  "categoryId": "cat_2"
-}
-
-→ 204 No Content
-
----
-
-PATCH /api/family-scoreboard/redemptions/{id}
-{
-  "action": "approve"   // 或 "reject"
-}
-
-→ 204 No Content
-```
-
----
-
-### 8.2 .NET Controller（C#）
-
-```csharp
-// Controllers/FamilyScoreboardController.cs
-[ApiController]
-[Route("api/family-scoreboard")]
-[Authorize]
-public class FamilyScoreboardController : ControllerBase
-{
-    private readonly IFamilyScoreboardService _service;
-
-    public FamilyScoreboardController(IFamilyScoreboardService service)
-        => _service = service;
-
-    // GET /api/family-scoreboard/scores
-    [HttpGet("scores")]
-    public async Task<IActionResult> GetScores(CancellationToken ct)
-    {
-        var familyId = GetFamilyId();
-        var scores = await _service.GetScoresAsync(familyId, ct);
-        return Ok(scores);
-    }
-
-    // GET /api/family-scoreboard/transactions?playerId=&limit=20
-    [HttpGet("transactions")]
-    public async Task<IActionResult> GetTransactions(
-        [FromQuery] string? playerId,
-        [FromQuery] int limit = 20,
-        CancellationToken ct = default)
-    {
-        var familyId = GetFamilyId();
-        var transactions = await _service.GetTransactionsAsync(familyId, playerId, limit, ct);
-        return Ok(transactions);
-    }
-
-    // POST /api/family-scoreboard/transactions  [Admin Only]
-    [HttpPost("transactions")]
-    [Authorize(Policy = "FamilyAdmin")]
-    public async Task<IActionResult> AddTransaction(
-        [FromBody] AddTransactionRequest request,
-        CancellationToken ct)
-    {
-        var familyId = GetFamilyId();
-        var adminUid = GetCurrentUid();
-        await _service.AddTransactionAsync(familyId, request with { CreatedBy = adminUid }, ct);
-        return NoContent();
-    }
-
-    // GET /api/family-scoreboard/rewards
-    [HttpGet("rewards")]
-    public async Task<IActionResult> GetRewards(CancellationToken ct)
-    {
-        var familyId = GetFamilyId();
-        var rewards = await _service.GetRewardsAsync(familyId, ct);
-        return Ok(rewards);
-    }
-
-    // POST /api/family-scoreboard/redemptions  [Player]
-    [HttpPost("redemptions")]
-    public async Task<IActionResult> CreateRedemption(
-        [FromBody] CreateRedemptionRequest request,
-        CancellationToken ct)
-    {
-        var familyId = GetFamilyId();
-        var playerId = GetCurrentUid();
-        await _service.CreateRedemptionAsync(familyId, playerId, request, ct);
-        return NoContent();
-    }
-
-    // PATCH /api/family-scoreboard/redemptions/{id}  [Admin Only]
-    [HttpPatch("redemptions/{redemptionId}")]
-    [Authorize(Policy = "FamilyAdmin")]
-    public async Task<IActionResult> ProcessRedemption(
-        string redemptionId,
-        [FromBody] ProcessRedemptionRequest request,
-        CancellationToken ct)
-    {
-        var familyId = GetFamilyId();
-        var adminUid = GetCurrentUid();
-        await _service.ProcessRedemptionAsync(familyId, redemptionId, adminUid, request.Action, ct);
-        return NoContent();
-    }
-
-    // GET /api/family-scoreboard/redemptions
-    [HttpGet("redemptions")]
-    public async Task<IActionResult> GetRedemptions(
-        [FromQuery] string? status,
-        CancellationToken ct = default)
-    {
-        var familyId = GetFamilyId();
-        var redemptions = await _service.GetRedemptionsAsync(familyId, status, ct);
-        return Ok(redemptions);
-    }
-
-    // POST /api/family-scoreboard/initialize  [Admin Only]
-    [HttpPost("initialize")]
-    [Authorize(Policy = "FamilyAdmin")]
-    public async Task<IActionResult> Initialize(CancellationToken ct)
-    {
-        var adminUid = GetCurrentUid();
-        var familyId = await _service.InitializeFamilyAsync(adminUid, ct);
-        return Ok(new { familyId });
-    }
-
-    private string GetFamilyId() => $"family_{GetCurrentUid()}";
-    private string GetCurrentUid() => User.FindFirstValue(ClaimTypes.NameIdentifier)
-        ?? throw new UnauthorizedAccessException();
-}
-```
-
----
-
-### 8.3 Service 介面（`IFamilyScoreboardService`）
-
-```csharp
-// Services/Music/IFamilyScoreboardService.cs
-using MidoLearning.Api.Models.FamilyScoreboard;
-
-namespace MidoLearning.Api.Services.FamilyScoreboard;
-
-public interface IFamilyScoreboardService
-{
-    // ── 積分查詢 ───────────────────────────────────────────────────────────────
-    Task<IReadOnlyList<PlayerScoreDto>> GetScoresAsync(
-        string familyId, CancellationToken ct = default);
-
-    Task<IReadOnlyList<TransactionDto>> GetTransactionsAsync(
-        string familyId, string? playerId = null, CancellationToken ct = default);
-
-    // ── 積分異動 ───────────────────────────────────────────────────────────────
-    /// <summary>新增加分或扣分紀錄，並原子更新 scores 文件</summary>
-    Task<TransactionDto> AddTransactionAsync(
-        string familyId, AddTransactionRequest request, string adminUid,
-        CancellationToken ct = default);
-
-    // ── 獎勵 ──────────────────────────────────────────────────────────────────
-    Task<IReadOnlyList<RewardDto>> GetRewardsAsync(
-        string familyId, CancellationToken ct = default);
-
-    // ── 兌換 ──────────────────────────────────────────────────────────────────
-    Task<RedemptionDto> CreateRedemptionAsync(
-        string familyId, CreateRedemptionRequest request, string playerUid,
-        CancellationToken ct = default);
-
-    Task<RedemptionDto> ProcessRedemptionAsync(
-        string familyId, string redemptionId, ProcessRedemptionRequest request,
-        string adminUid, CancellationToken ct = default);
-
-    Task<IReadOnlyList<RedemptionDto>> GetRedemptionsAsync(
-        string familyId, string? status = null, CancellationToken ct = default);
-
-    // ── 家庭初始化 ────────────────────────────────────────────────────────────
-    /// <summary>首次使用時建立預設玩家、類別、獎勵；已存在則直接返回</summary>
-    Task InitializeAsync(string familyId, string adminUid, CancellationToken ct = default);
-}
-```
-
----
-
-### 8.4 Firebase Admin Service 實作（`FirebaseScoreboardService`）
-
-關鍵方法範例（完整類別由 dotnet-expert 實作）：
-
-```csharp
-// Services/FamilyScoreboard/FirebaseScoreboardService.cs
-using Google.Cloud.Firestore;
-using MidoLearning.Api.Models.FamilyScoreboard;
-
-namespace MidoLearning.Api.Services.FamilyScoreboard;
-
-public class FirebaseScoreboardService : IFamilyScoreboardService
-{
-    private readonly FirestoreDb _db;
-    private readonly ILogger<FirebaseScoreboardService> _logger;
-
-    public FirebaseScoreboardService(FirestoreDb db,
-        ILogger<FirebaseScoreboardService> logger)
-    {
-        _db = db;
-        _logger = logger;
-    }
-
-    // ── 初始化（Batch Write，冪等） ────────────────────────────────────────────
-    public async Task InitializeAsync(string familyId, string adminUid,
-        CancellationToken ct = default)
-    {
-        var settingsRef = _db
-            .Collection("families").Document(familyId)
-            .Collection("config").Document("settings");
-
-        var snap = await settingsRef.GetSnapshotAsync(ct);
-        if (snap.Exists) return; // 已初始化，直接返回
-
-        var batch = _db.StartBatch();
-
-        // 家庭設定
-        batch.Set(settingsRef, new
-        {
-            name = "我的家庭計分板",
-            createdAt = Timestamp.GetCurrentTimestamp(),
-            adminUids = new[] { adminUid }
-        });
-
-        // 預設玩家（米豆 + 毛豆）
-        AddDefaultPlayer(batch, familyId, "player_mido",  "米豆", "#F59E0B");
-        AddDefaultPlayer(batch, familyId, "player_maodo", "毛豆", "#10B981");
-
-        // 預設類別（5 筆）
-        var categories = new[]
-        {
-            ("考試優秀",     100, "earn",   1),
-            ("主動幫忙家事",   5, "earn",   2),
-            ("對人友善",      10, "earn",   3),
-            ("兄弟吵架",      20, "deduct", 4),
-            ("不誠實",        30, "deduct", 5),
-        };
-        foreach (var (name, amount, type, order) in categories)
-        {
-            var catRef = _db.Collection("families").Document(familyId)
-                .Collection("categories").Document($"cat_{order}");
-            batch.Set(catRef, new
-            {
-                name, defaultAmount = amount, type,
-                isActive = true, order
-            });
-        }
-
-        // 預設獎勵（4 筆）
-        var rewards = new[]
-        {
-            ("看一集卡通",   50,   "額外看電視時間",   "reward_1"),
-            ("選擇今晚晚餐", 100,  "自己決定吃什麼",   "reward_2"),
-            ("買一個小玩具", 500,  "100元以下玩具",    "reward_3"),
-            ("出遊一次",     1000, "選擇週末去哪玩",   "reward_4"),
-        };
-        foreach (var (rName, cost, desc, rId) in rewards)
-        {
-            var rRef = _db.Collection("families").Document(familyId)
-                .Collection("rewards").Document(rId);
-            batch.Set(rRef, new { name = rName, cost, description = desc, isActive = true });
-        }
-
-        await batch.CommitAsync(ct);
-    }
-
-    // ── 新增異動（Firestore Transaction，保持 scores 原子更新） ───────────────
-    public async Task<TransactionDto> AddTransactionAsync(
-        string familyId, AddTransactionRequest req, string adminUid,
-        CancellationToken ct = default)
-    {
-        var txId = Guid.NewGuid().ToString("N");
-        var txRef = _db.Collection("families").Document(familyId)
-            .Collection("transactions").Document(txId);
-
-        await _db.RunTransactionAsync(async transaction =>
-        {
-            foreach (var playerId in req.PlayerIds)
-            {
-                var scoreRef = _db.Collection("families").Document(familyId)
-                    .Collection("scores").Document(playerId);
-
-                var scoreSnap = await transaction.GetSnapshotAsync(scoreRef, ct);
-                var current = scoreSnap.Exists
-                    ? scoreSnap.ConvertTo<PlayerScoreDoc>()
-                    : new PlayerScoreDoc();
-
-                int delta = req.Type == "earn" ? req.Amount : -req.Amount;
-                transaction.Update(scoreRef, new Dictionary<string, object>
-                {
-                    ["achievementPoints"] =
-                        req.Type == "earn"
-                            ? current.AchievementPoints + req.Amount
-                            : current.AchievementPoints,
-                    ["redeemablePoints"] =
-                        Math.Max(0, current.RedeemablePoints + delta),
-                    ["totalEarned"] =
-                        req.Type == "earn"
-                            ? current.TotalEarned + req.Amount
-                            : current.TotalEarned,
-                    ["totalDeducted"] =
-                        req.Type == "deduct"
-                            ? current.TotalDeducted + req.Amount
-                            : current.TotalDeducted,
-                    ["lastUpdated"] = Timestamp.GetCurrentTimestamp(),
-                });
-            }
-
-            transaction.Set(txRef, new
-            {
-                playerIds    = req.PlayerIds,
-                type         = req.Type,
-                amount       = req.Amount,
-                reason       = req.Reason,
-                categoryId   = req.CategoryId,
-                createdBy    = adminUid,
-                createdAt    = Timestamp.GetCurrentTimestamp(),
-                note         = req.Note,
-            });
-        }, cancellationToken: ct);
-
-        // ... 返回 DTO
-        return new TransactionDto { Id = txId, /* ... */ };
-    }
-
-    // ── 私有輔助：新增預設玩家 ────────────────────────────────────────────────
-    private void AddDefaultPlayer(WriteBatch batch, string familyId,
-        string playerId, string name, string color)
-    {
-        var playerRef = _db.Collection("families").Document(familyId)
-            .Collection("players").Document(playerId);
-        batch.Set(playerRef, new
-        {
-            name, color, role = "child", isActive = true,
-            createdAt = Timestamp.GetCurrentTimestamp()
-        });
-
-        var scoreRef = _db.Collection("families").Document(familyId)
-            .Collection("scores").Document(playerId);
-        batch.Set(scoreRef, new
-        {
-            achievementPoints = 0, redeemablePoints = 0,
-            totalEarned = 0, totalDeducted = 0, totalRedeemed = 0,
-            lastUpdated = Timestamp.GetCurrentTimestamp()
-        });
-    }
-}
-```
-
----
-
-### 8.5 C# DTO Records 與 DI 注冊
-
-#### Request / Response DTOs（`Models/FamilyScoreboard/`）
-
-```csharp
-// Models/FamilyScoreboard/Dtos.cs
-namespace MidoLearning.Api.Models.FamilyScoreboard;
-
-// ── Response DTOs ──────────────────────────────────────────────────────────────
-
-public record PlayerScoreDto(
-    string PlayerId,
-    string Name,
-    string Color,
-    int AchievementPoints,
-    int RedeemablePoints,
-    int TotalEarned,
-    int TotalDeducted,
-    int TotalRedeemed
-);
-
-public record TransactionDto(
-    string Id,
-    IReadOnlyList<string> PlayerIds,
-    string Type,        // "earn" | "deduct"
-    int Amount,
-    string Reason,
-    string? CategoryId,
-    string CreatedBy,
-    DateTimeOffset CreatedAt,
-    string? Note
-);
-
-public record RewardDto(
-    string Id,
-    string Name,
-    int Cost,
-    string Description,
-    string Icon,
-    bool IsActive,
-    int? Stock
-);
-
-public record RedemptionDto(
-    string Id,
-    string PlayerId,
-    string RewardId,
-    string RewardName,
-    int Cost,
-    string Status,      // "pending" | "approved" | "rejected"
-    DateTimeOffset RequestedAt,
-    DateTimeOffset? ProcessedAt,
-    string? ProcessedBy,
-    string? Note
-);
-
-// ── Request DTOs ───────────────────────────────────────────────────────────────
-
-public record AddTransactionRequest(
-    IReadOnlyList<string> PlayerIds,
-    string Type,         // "earn" | "deduct"
-    int Amount,
-    string Reason,
-    string? CategoryId,
-    string? Note
-);
-
-public record CreateRedemptionRequest(
-    string RewardId,
-    string? Note
-);
-
-public record ProcessRedemptionRequest(
-    string Action,       // "approve" | "reject"
-    string? Note
-);
-```
-
-#### Firestore 內部文件對應（`PlayerScoreDoc`）
-
-```csharp
-// Models/FamilyScoreboard/PlayerScoreDoc.cs
-using Google.Cloud.Firestore;
-
-namespace MidoLearning.Api.Models.FamilyScoreboard;
-
-[FirestoreData]
-public class PlayerScoreDoc
-{
-    [FirestoreProperty("achievementPoints")] public int AchievementPoints { get; set; }
-    [FirestoreProperty("redeemablePoints")]  public int RedeemablePoints  { get; set; }
-    [FirestoreProperty("totalEarned")]       public int TotalEarned       { get; set; }
-    [FirestoreProperty("totalDeducted")]     public int TotalDeducted     { get; set; }
-    [FirestoreProperty("totalRedeemed")]     public int TotalRedeemed     { get; set; }
-}
-```
-
-#### DI 注冊（`Program.cs` 新增片段）
-
-```csharp
-// Program.cs — 在現有 Firebase Admin SDK 注冊之後加入
-
-// Firebase Admin SDK（若未注冊）
-var firebaseApp = FirebaseApp.DefaultInstance
-    ?? FirebaseApp.Create(new AppOptions
-    {
-        Credential = GoogleCredential.GetApplicationDefault()
-    });
-
-// Firestore
-builder.Services.AddSingleton(_ =>
-    FirestoreDb.Create(builder.Configuration["Firebase:ProjectId"]
-        ?? throw new InvalidOperationException("Firebase:ProjectId not set")));
-
-// Family Scoreboard Service
-builder.Services.AddScoped<IFamilyScoreboardService, FirebaseScoreboardService>();
-```
-
-#### `appsettings.json` 新增設定
-
-```json
-{
-  "Firebase": {
-    "ProjectId": "mido-learning"
-  }
-}
-```
-
-> **Cloud Run 部署**：Service Account 權限透過 `GOOGLE_APPLICATION_CREDENTIALS` 環境變數或 Workload Identity 傳入，不需要在程式碼中指定金鑰檔案路徑。
-
----
-
-## 9. 技術架構規格（前端）
-
-### 8.1 模組獨立原則
-
-```
-frontend/
-  app/
-    (public)/
-      experiments/
-        family-scoreboard/           # 主路由模組（獨立）
-          page.tsx                   # 主儀表板
-          layout.tsx                 # 模組 Layout（含底部導航）
-          player/[id]/page.tsx
-          rewards/page.tsx
-          reports/page.tsx
-          admin/
-            page.tsx
-            players/page.tsx
-
-  lib/
-    family-scoreboard/               # 獨立服務層
-      firestore.ts                   # Firestore CRUD（只此模組用）
-      types.ts                       # TypeScript 型別定義
-      constants.ts                   # 預設資料（玩家、類別、獎勵）
-      utils.ts                       # 積分計算、格式化
-
-  components/
-    family-scoreboard/               # 獨立 UI 元件
-      PlayerCard.tsx
-      ScoreTransactionSheet.tsx      # Bottom Sheet
-      RewardCard.tsx
-      HabitTracker.tsx               # 第二期
-      charts/
-        PointsTrendChart.tsx
-        CategoryPieChart.tsx
-```
-
-**共用（可從 Mido Learning 引用）**：
-- `lib/firebase.ts` — Firebase 初始化（共用）
-- `components/ui/Button.tsx` — 基礎按鈕
-- `hooks/useAuth.ts` — Auth hook
-- `components/auth/AuthProvider.tsx`
-
-### 8.2 狀態管理
-
-- 使用 **React Context** 管理 `familyId`（不引入 Zustand，保持模組獨立）
-- 積分即時更新：**Firestore onSnapshot**
-- 表單狀態：`useState`（不需要全域）
-
-### 8.3 初始化邏輯
-
-```typescript
-// 第一次進入時，自動初始化預設資料
-async function initializeFamilyIfNeeded(uid: string): Promise<string> {
-  // 1. 查詢 uid 是否已有 family
-  // 2. 沒有 → 建立新 family + 預設玩家 + 預設類別 + 預設獎勵
-  // 3. 有 → 直接返回 familyId
-}
-```
+所有端點 prefix 為 `/api/family-scoreboard`。
+
+#### 公開端點（無需 Auth）
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/lookup?code=xxx` | 以家庭代碼查詢家庭資訊 |
+| `POST` | `/player-login` | 玩家登入（familyCode + playerId + password → Player JWT） |
+
+#### Admin 端點（FamilyAdmin policy）
+
+**家庭管理**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `POST` | `/initialize?familyId=xxx` | 初始化家庭（建立預設玩家/獎勵） |
+| `GET` | `/my-family` | 取得目前使用者所屬家庭 |
+| `GET` | `/my-families` | 取得使用者所有家庭清單 |
+| `POST` | `/{familyId}/leave` | 離開家庭 |
+| `GET` | `/lookup-user?email=xxx` | 以 email 查詢帳號 UID |
+
+**家庭代碼**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `POST` | `/generate-code?familyId=xxx` | 取得/首次生成家庭代碼 |
+| `POST` | `/set-code?familyId=xxx` | 自訂家庭代碼 |
+| `POST` | `/regenerate-code?familyId=xxx` | 強制重新生成代碼 |
+
+**積分交易**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `POST` | `/transactions?familyId=xxx` | 新增加分/扣分 |
+| `POST` | `/{familyId}/transactions-with-effects` | 附帶封印/處罰的交易 |
+| `DELETE` | `/{familyId}/transactions` | 批次刪除交易紀錄 |
+
+**兌換管理**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `POST` | `/redemptions/{id}/process?familyId=xxx` | 審核兌換申請 |
+| `DELETE` | `/{familyId}/redemptions` | 批次刪除兌換紀錄 |
+
+**玩家管理**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `POST` | `/{familyId}/players` | 新增玩家 |
+| `PUT` | `/{familyId}/players/{playerId}` | 編輯玩家 |
+| `DELETE` | `/{familyId}/players/{playerId}` | 刪除玩家 |
+| `PUT` | `/{familyId}/players/{playerId}/password` | 設定玩家登入密碼 |
+| `GET` | `/{familyId}/players/{playerId}/status` | 取得玩家狀態（封印/處罰/效果） |
+
+**Co-Admin 管理**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/co-admins` | 取得共同家長清單 |
+| `POST` | `/{familyId}/co-admins` | 新增共同家長 |
+| `DELETE` | `/{familyId}/co-admins/{coAdminUid}` | 移除共同家長 |
+
+**任務系統**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/tasks` | 取得任務列表 |
+| `POST` | `/{familyId}/tasks` | 建立任務 |
+| `PUT` | `/{familyId}/tasks/{taskId}` | 編輯任務 |
+| `DELETE` | `/{familyId}/tasks/{taskId}` | 停用任務 |
+| `GET` | `/{familyId}/task-completions?status=xxx` | 取得任務完成申請 |
+| `POST` | `/{familyId}/task-completions/{id}/process` | 審核任務完成 |
+| `GET` | `/{familyId}/player-submissions?status=xxx` | 取得玩家自主提報 |
+| `POST` | `/{familyId}/player-submissions/{id}/process` | 審核玩家提報 |
+
+**任務範本**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/task-templates` | 取得任務範本 |
+| `POST` | `/{familyId}/task-templates` | 建立任務範本 |
+| `DELETE` | `/{familyId}/task-templates/{templateId}` | 刪除任務範本 |
+
+**零用金**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/allowance?playerId=xxx` | 取得零用金帳本 |
+| `GET` | `/{familyId}/allowance/{playerId}/balance` | 取得玩家零用金餘額 |
+| `POST` | `/{familyId}/allowance` | 調整零用金 |
+
+**商城管理**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `POST` | `/{familyId}/shop-items` | 建立商品 |
+| `PUT` | `/{familyId}/shop-items/{itemId}` | 編輯商品 |
+| `DELETE` | `/{familyId}/shop-items/{itemId}` | 停用商品 |
+| `GET` | `/{familyId}/shop-orders?status=xxx` | 取得商城訂單 |
+| `POST` | `/{familyId}/shop-orders/{orderId}/process` | 審核訂單 |
+
+**事件日曆**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `POST` | `/{familyId}/events` | 建立事件 |
+| `PUT` | `/{familyId}/events/{eventId}` | 編輯事件 |
+| `DELETE` | `/{familyId}/events/{eventId}` | 刪除事件 |
+
+**紀律系統（封印/處罰/效果）**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/seals?playerId=&status=` | 取得封印列表 |
+| `POST` | `/{familyId}/seals` | 建立封印 |
+| `POST` | `/{familyId}/seals/{sealId}/lift` | 解除封印 |
+| `GET` | `/{familyId}/penalties?playerId=&status=` | 取得處罰列表 |
+| `POST` | `/{familyId}/penalties` | 建立處罰 |
+| `POST` | `/{familyId}/penalties/{penaltyId}/complete` | 完成處罰 |
+| `GET` | `/{familyId}/active-effects?playerId=` | 取得活躍效果列表 |
+| `POST` | `/{familyId}/active-effects` | 建立效果 |
+| `POST` | `/{familyId}/active-effects/{effectId}/expire` | 使效果過期 |
+
+**備份**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/backup` | 匯出家庭備份 |
+| `POST` | `/{familyId}/backup/import` | 匯入家庭備份 |
+
+#### 已登入端點（AuthenticatedOnly policy）
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/scores` | 查看積分排行 |
+| `GET` | `/{familyId}/transactions?playerId=xxx` | 查看交易記錄 |
+| `GET` | `/{familyId}/rewards` | 查看獎勵清單 |
+| `GET` | `/{familyId}/redemptions?status=xxx` | 查看兌換申請 |
+| `POST` | `/{familyId}/redemptions` | 提交兌換申請 |
+| `GET` | `/{familyId}/shop-items` | 查看商品列表 |
+| `GET` | `/{familyId}/events?month=xxx` | 查看事件日曆 |
+
+#### Player 端點（PlayerOnly policy）
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/tasks/available` | 查看可用任務 |
+| `POST` | `/{familyId}/task-completions` | 提交任務完成 |
+| `POST` | `/{familyId}/player-submissions` | 提交自主加分申請 |
+| `GET` | `/{familyId}/my-history` | 查看自己的交易記錄 |
+| `POST` | `/{familyId}/shop-orders` | 下單商城商品 |
+| `GET` | `/{familyId}/allowance/balance` | 查看零用金餘額 |
+| `GET` | `/{familyId}/allowance/ledger` | 查看零用金帳本 |
+| `GET` | `/{familyId}/my-status` | 查看自己的封印/處罰/效果 |
+| `GET` | `/{familyId}/my-effects` | 查看自己的活躍效果（道具箱） |
+
+#### Super Admin 端點（SuperAdminOnly policy）
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/super-admin/families` | 列出所有家庭 |
+| `POST` | `/super-admin/families/{familyId}/ban` | 封禁家庭 |
+| `POST` | `/super-admin/families/{familyId}/unban` | 解封家庭 |
+| `DELETE` | `/super-admin/families/{familyId}` | 永久刪除家庭 |
+
+#### Dev 端點（僅 Development 環境）
+
+定義於 `DevEndpoints.cs`，用於 E2E 測試。
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `POST` | `/api/dev/player-token` | 產生 Player JWT（免密碼） |
+
+### 8.2 關鍵程式碼路徑
+
+| 層次 | 路徑 |
+|------|------|
+| Endpoints | `backend/MidoLearning.Api/Endpoints/FamilyScoreboardEndpoints.cs` |
+| Dev Endpoints | `backend/MidoLearning.Api/Endpoints/DevEndpoints.cs` |
+| Service Interface | `backend/MidoLearning.Api/Services/FamilyScoreboard/IFamilyScoreboardService.cs` |
+| Service Impl | `backend/MidoLearning.Api/Services/FamilyScoreboard/FirebaseScoreboardService.cs` |
+| DTOs | `backend/MidoLearning.Api/Models/FamilyScoreboard/Dtos.cs` |
+| Frontend Types | `frontend/types/family-scoreboard.ts` |
+| Frontend API | `frontend/lib/api/family-scoreboard.ts` |
+| Frontend Page | `frontend/app/(scoreboard)/family-scoreboard/page.tsx` |
+| Frontend Hook | `frontend/app/(scoreboard)/family-scoreboard/hooks/useFamilyScoreboard.ts` |
+| Admin Page | `frontend/app/(scoreboard)/family-scoreboard/admin/page.tsx` |
+| Super Admin | `frontend/app/(scoreboard)/family-scoreboard/super-admin/page.tsx` |
+| Player Page | `frontend/app/(player)/family-scoreboard/player/page.tsx` |
 
 ---
 
 ## 9. 驗收條件（Acceptance Criteria）
 
-### AC1：Admin 存取控制
+### AC1：多家庭管理
 - Given Admin 已登入
-- When 進入 `/experiments` 頁面
-- Then 看到「家庭計分板」卡片
-- And 非 Admin 用戶看不到此卡片
+- When 呼叫 `GET /my-families`
+- Then 回傳使用者所有家庭（primary admin + co-admin）
 
-### AC2：預設玩家初始化
-- Given Admin 首次進入家庭計分板
-- When 系統自動初始化
-- Then 顯示「米豆」和「毛豆」兩位玩家，各自積分為 0
+### AC2：家庭初始化
+- Given Admin 首次建立家庭
+- When 呼叫 `POST /initialize?familyId=xxx`
+- Then 建立預設玩家（米豆、毛豆）、預設類別、預設獎勵
 
-### AC3：加分操作
-- Given Admin 在主儀表板
-- When 點擊玩家卡片 → 選擇「主動幫忙家事」(+5)
-- Then 該玩家的「可兌換分」+5，「成就分」+5
-- And 交易記錄中出現此筆記錄
-
-### AC4：雙軌積分
+### AC3：雙軌積分
 - Given 玩家有成就分 100，可兌換分 100
-- When Admin 扣分 -20（兄弟吵架）
+- When Admin 扣分 -20
 - Then 成就分維持 100，可兌換分變為 80
 
-### AC5：兌換不影響成就分
-- Given 玩家有成就分 100，可兌換分 80
-- When 玩家申請兌換「看一集卡通」(-50)，Admin 核准
-- Then 成就分維持 100，可兌換分變為 30
+### AC4：玩家獨立登入
+- Given Admin 已設定 displayCode 與玩家密碼
+- When 玩家在 Player 端輸入 familyCode + playerId + password
+- Then 取得 Player JWT，進入玩家介面
 
-### AC6：手機操作流暢
-- Given 在 375px 寬度手機上
-- When 執行加分操作
-- Then Bottom Sheet 從底部滑出，按鈕可用拇指觸及
-- And 操作不超過 3 步完成
+### AC5：任務系統
+- Given Admin 建立任務「整理房間」，xpReward: 10
+- When Player 提交完成，Admin 核准
+- Then Player 成就分 +10，可兌換分 +10
 
-### AC7：報表可讀
-- Given Admin 或 Player 進入報表頁
-- When 選擇「過去30天」
-- Then 顯示積分趨勢折線圖，各玩家用不同顏色區分
+### AC6：商城購買
+- Given 商品「看卡通30分鐘」price: 50，priceType: xp
+- When Player 下單，Admin 核准
+- Then Player 可兌換分 -50
+
+### AC7：紀律系統
+- Given Admin 對 Player 建立封印「no-tv」
+- When 查看 Player 狀態
+- Then 顯示 active 封印
+- When Admin 解除封印
+- Then 狀態變為 lifted
+
+### AC8：Co-Admin 管理
+- Given Admin 邀請 Co-Admin（以 email 查 UID）
+- When Co-Admin 以 `?familyId=xxx` 操作
+- Then 與主 Admin 擁有相同管理權限
+
+### AC9：E2E 測試
+- 56 個 Playwright API 測試全部通過
+- 覆蓋 STEP 1-14（初始化→積分→任務→零用金→商城→封印處罰→事件→道具→摘要→清理）
 
 ---
 
@@ -1055,95 +755,60 @@ async function initializeFamilyIfNeeded(uid: string): Promise<string> {
 | 項目 | 規格 |
 |------|------|
 | **效能** | 積分更新在 500ms 內反映到畫面 |
-| **離線** | 基本查看功能在無網路時顯示快取資料 |
-| **安全性** | Firestore Security Rules 防止跨家庭存取 |
-| **可擴充性** | 家庭成員可擴充（不限 2 人），未來支援多個家庭 |
+| **安全性** | Admin JWT + Player JWT 雙認證體系 |
+| **多家庭** | 一位 Admin 可管理多個家庭 |
 | **資料保護** | 兒童資料不對外公開，僅家庭成員可讀 |
+| **備份** | 支援完整家庭資料匯出/匯入 |
 
 ---
 
 ## 11. 開發里程碑
 
-| 里程碑 | 內容 | 估計 | 狀態 |
-|--------|------|------|------|
-| M1 | Firebase 資料設計 + 初始化邏輯 + 基礎型別 | 0.5 天 | ✅ 完成 |
-| M2 | 主儀表板 + 玩家卡片 + 加減分 Bottom Sheet | 1 天 | ✅ 完成 (commit: 59606db) |
-| M3 | 雙軌積分邏輯 + 交易記錄頁（玩家篩選、最新優先）| 0.5 天 | ✅ 完成 (commit: d3cadab) |
-| M4 | 獎勵清單 + 兌換申請 + Admin 核准 | 1 天 | ✅ 完成 (commit: d3cadab) |
-| M5 | 報表儀表板（簡版積分趨勢）| 0.5 天 | ✅ 完成（內嵌於主頁 report tab）|
-| M6 | Admin 管理頁 + 玩家管理 + 獎勵管理 | 0.5 天 | ✅ 完成 |
-| M7 | 整合測試清單 + 手機 UX 調整 | 0.5 天 | ✅ 完成 |
-| **合計** | | **4.5 天** | |
-
-### M6 實作備註
-
-Admin 管理頁路由：`/(member)/family-scoreboard/admin`
-
-**玩家管理**：顯示現有玩家積分摘要、顏色與狀態。
-**獎勵管理**：顯示現有獎勵列表（名稱、積分成本、狀態）。
-
-> 注意：完整的 CRUD 管理（新增/編輯玩家、新增/編輯獎勵）需要後端新增對應 API 端點。
-> 目前 M6 基本版提供「查看 + 重新初始化」功能，完整管理留待後端 API 完成後擴充。
-
-主頁面新增 ⚙️ 管理按鈕，路由至 `/family-scoreboard/admin`。
+| 里程碑 | 內容 | 狀態 |
+|--------|------|------|
+| M1 | Firebase 資料設計 + 初始化邏輯 + 基礎型別 | ✅ 完成 |
+| M2 | 主儀表板 + 玩家卡片 + 加減分 Bottom Sheet | ✅ 完成 |
+| M3 | 雙軌積分邏輯 + 交易記錄頁 | ✅ 完成 |
+| M4 | 獎勵清單 + 兌換申請 + Admin 核准 | ✅ 完成 |
+| M5 | 報表儀表板（貼紙牆 + 個別統計） | ✅ 完成 |
+| M6 | Admin 管理頁 + 玩家管理 + 獎勵管理 | ✅ 完成 |
+| M7 | 整合測試 + 手機 UX 調整 | ✅ 完成 |
+| M8 | 玩家獨立登入（displayCode + password + Player JWT） | ✅ 完成 |
+| M9 | 任務系統（CRUD + 完成回報 + 審核 + 玩家自主提報） | ✅ 完成 |
+| M10 | 零用金系統（帳本 + 餘額 + 調整） | ✅ 完成 |
+| M11 | 商城系統（商品 CRUD + 下單 + 審核 + 時效道具） | ✅ 完成 |
+| M12 | 紀律系統（封印/處罰/活躍效果 + 附帶效果交易） | ✅ 完成 |
+| M13 | 事件日曆 + 任務範本 + 備份匯出匯入 + 紀錄批次刪除 | ✅ 完成 |
+| M14 | 多家庭支援 + Co-Admin + Super Admin + 家庭切換器 | ✅ 完成 |
 
 ---
 
-### M7 整合測試清單
+## 12. E2E 測試
 
-手動測試流程（依序執行）：
+- **測試檔案**：`frontend/e2e/family-scoreboard.spec.ts`
+- **測試數量**：56 個測試
+- **認證方式**：`X-API-Key` auth + dev endpoints 繞過 Firebase Auth
+- **隔離策略**：每次建立獨立 `family_test{datetime}` 家庭
+- **覆蓋範圍**：STEP 1-14（API 層與核心業務流程）
+- **不覆蓋**：報表 Tab 視覺呈現（需人工驗證貼紙牆顯示）
 
-#### 核心流程
+### 執行方式
 
-| # | 測試項目 | 預期結果 | 狀態 |
-|---|---------|---------|------|
-| 1 | 頁面載入，首頁顯示玩家卡片 | 所有玩家卡片正常顯示，帶顏色和積分 | ⬜ |
-| 2 | 點擊玩家卡片 → Bottom Sheet 開啟 | 顯示 加分/扣分 選擇，玩家名稱正確 | ⬜ |
-| 3 | 選擇「加分」→ 選類別 → 確認 | 積分增加，成就分與可用分同步更新 | ⬜ |
-| 4 | 選擇「扣分」→ 選類別 → 確認 | 可用分扣除，成就分不減少 | ⬜ |
-| 5 | 點選「自訂」加分，輸入金額與原因 | 正確記錄並更新積分 | ⬜ |
-| 6 | 切換至「記錄」Tab，查看交易清單 | 最新紀錄顯示在最上方 | ⬜ |
-| 7 | 記錄頁篩選玩家 | 只顯示該玩家的交易 | ⬜ |
-| 8 | 切換至「兌換」Tab，選玩家與獎勵 | 顯示玩家可用積分與獎勵清單 | ⬜ |
-| 9 | 提交兌換申請 | 出現在待審核列表 | ⬜ |
-| 10 | 點「核准」兌換申請 | 玩家可用分減少，狀態變 approved | ⬜ |
-| 11 | 點「拒絕」兌換申請 | 狀態變 rejected，積分不變 | ⬜ |
-| 12 | 切換至「報表」Tab | 顯示各玩家積分統計圖 | ⬜ |
-
-#### Admin 頁面
-
-| # | 測試項目 | 預期結果 | 狀態 |
-|---|---------|---------|------|
-| 13 | 點擊主頁 ⚙️ 管理按鈕 | 導至 `/family-scoreboard/admin` | ⬜ |
-| 14 | Admin 頁玩家管理 Tab | 顯示玩家清單（顏色頭像、名稱、成就分、可用分）| ⬜ |
-| 15 | Admin 頁獎勵管理 Tab | 顯示獎勵清單（圖示、名稱、積分成本、啟用狀態）| ⬜ |
-| 16 | 按「重新初始化」→ 取消 | 確認對話框出現，按取消後維持原狀 | ⬜ |
-| 17 | 按「重新初始化」→ 確定 | 資料重置，清單刷新 | ⬜ |
-| 18 | Admin 頁返回按鈕 | 回到主頁 | ⬜ |
-
-#### 手機 UX
-
-| # | 測試項目 | 預期結果 | 狀態 |
-|---|---------|---------|------|
-| 19 | 所有按鈕觸控目標 ≥ 44px | `min-h-[44px]` 設定正確，手指可輕鬆點擊 | ⬜ |
-| 20 | Bottom Sheet 在小螢幕正常顯示 | 不超出視窗，可捲動選類別 | ⬜ |
-| 21 | 載入中狀態 (loading spinner) | 所有資料載入時有視覺回饋 | ⬜ |
-| 22 | 空資料狀態 (empty state) | 無玩家/無交易時顯示提示文字 | ⬜ |
-| 23 | 錯誤狀態 | API 失敗時顯示錯誤訊息 | ⬜ |
-
-**第二期（習慣追蹤 + 成就系統）**：另行規劃
+```bash
+cd frontend && npx playwright test e2e/family-scoreboard.spec.ts --reporter=list
+```
 
 ---
 
-## 12. 開放問題（待確認）
+## 13. UI 設計決策紀錄
 
-| # | 問題 | 預設答案 | 需確認 |
-|---|------|---------|--------|
-| Q1 | familyId 怎麼與 Firebase Auth UID 關聯？ | Admin UID = family 的唯一識別基礎 | ✅ 可確認 |
-| Q2 | 小孩(Player)是否需要獨立 Firebase 帳號？ | 目前 Admin 代為操作，Player 不需登入 | 待確認 |
-| Q3 | 積分是否有上限或下限（如最低不能低於0）？ | 可兌換分最低為 0（不能為負）| 待確認 |
-| Q4 | 兌換申請可以被玩家取消嗎？| 可以（在 pending 狀態下）| 待確認 |
-| Q5 | 習慣追蹤是否要在 MVP 一起做？ | 第二期再做 | 待確認 |
+| 日期 | 區塊 | 決策 |
+|------|------|------|
+| 2026-02-21 | 報表 Tab - 比較卡片 | 移除本週/本月 XP 長條圖，改為「本週貼紙牆」：每筆加分用 categoryId 對應 emoji 呈現，空格顯示 ○，目標 10 張，童趣風格優先於數字密度 |
+| 2026-02-21 | 報表 Tab - 個別玩家 | 從 8 格大數字縮減為「貼紙牆 + 5 格小數字」（今日/本週/本月 + 成就點/可兌換），移除「已兌換/累計獲得/累計扣除」以降低資訊過載 |
+| 2026-02-22 | 家庭選擇器 | 永遠顯示（不再需要 >1 家庭），Desktop + Mobile 都有「+ 新增家庭」按鈕 |
+| 2026-02-22 | Mobile 家庭切換 | 新增 sticky 家庭切換 bar（header 下方） |
+| 2026-02-22 | 家庭管理 | 主管理員可「刪除此家庭」（需先清玩家），共同家長「離開此家庭」 |
 
 ---
 
@@ -1152,3 +817,5 @@ Admin 管理頁路由：`/(member)/family-scoreboard/admin`
 | 版本 | 日期 | 說明 |
 |------|------|------|
 | v1.0 | 2026-02-18 | 初版，整合用戶所有需求說明 |
+| v1.2 | 2026-02-18 | M1-M7 全部完成，更新里程碑狀態 |
+| v2.0 | 2026-02-22 | 大幅更新：新增 M8-M14 功能（玩家登入、任務、零用金、商城、紀律、多家庭、Co-Admin、Super Admin）；更新路由（`/(scoreboard)` + `/(player)`）；新增角色（Co-Admin、Super Admin、Player 獨立登入）；重寫 API 端點表（60+ 端點）；補齊資料模型（15+ sub-collections）；移除過時 Controller pattern code samples |
