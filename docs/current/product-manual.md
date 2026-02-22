@@ -126,7 +126,7 @@ app/
 
 ## 6. 待實作功能
 
-詳見 `spec/FunctionalMap.md` 中標記為 📋 TODO 的 Feature。
+詳見 `docs/specs/FunctionalMap.md` 中標記為 📋 TODO 的 Feature。
 
 主要包括:
 - 學習元件系統 (COMP-001 ~ COMP-006)

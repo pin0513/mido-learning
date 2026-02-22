@@ -24,7 +24,7 @@ mido-learning/
 │   └── lib/                  # 工具函數
 ├── backend/                  # .NET 8 後端
 │   └── MidoLearning.Api/     # Minimal API 專案
-├── spec/                     # 規格文件
+├── docs/specs/               # 規格文件
 │   └── FunctionalMap.md      # 功能地圖
 ├── .github/workflows/        # CI/CD
 ├── firebase.json             # Firebase 設定
@@ -107,7 +107,7 @@ Push 到 `main` 分支會自動觸發部署：
 ### 📚 核心文件
 - **[CLAUDE.md](./CLAUDE.md)** - AI 開發指南與專案總覽
 - **[PROJECT_INDEX.md](./PROJECT_INDEX.md)** - 完整文件索引（AI 友善）
-- **[功能地圖](./spec/FunctionalMap.md)** - 完整功能規劃
+- **[功能地圖](./docs/specs/FunctionalMap.md)** - 完整功能規劃
 - **[技術債](./docs/TECH_DEBT.md)** - 已知問題與待辦事項
 
 ### 📖 架構文件

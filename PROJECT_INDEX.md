@@ -36,7 +36,9 @@
 | 2026-01-31 | Component CRUD | `docs/specs/20260131-04-learning-component-crud.md` |
 | 2026-02-01 | Material Viewer RWD | `docs/specs/20260201-01-material-viewer-rwd.md` |
 | 2026-02-11 | **Skill Village** | `docs/specs/20260211-01-skill-village.md` |
-| 2026-02-18 | **Family Scoreboard** (v2.0) | `docs/specs/family-scoreboard-spec.md` |
+| 2026-02-18 | **Family Scoreboard** (v2.0) | `docs/specs/20260218-01-family-scoreboard.md` |
+| 2026-02-18 | Badminton Court Tactics | `docs/specs/20260218-01-badminton-court-portrait-tactics.md` |
+| — | **Functional Map** (產品功能總覽) | `docs/specs/FunctionalMap.md` |
 
 ### QA Reports (docs/qa-reports/)
 
@@ -56,16 +58,6 @@
 
 ---
 
-## 📋 Specifications (spec/)
-
-| Document | Purpose |
-|----------|---------|
-| **20260214-requirement.md** | Latest requirements |
-| **FunctionalMap.md** | Feature mapping |
-| **seeds/** | Seed data definitions |
-
----
-
 ## 💻 Code Structure
 
 ### Frontend (frontend/)
@@ -75,8 +67,8 @@
 | File | Purpose |
 |------|---------|
 | **README.md** | Frontend-specific documentation |
-| **SKILL_VILLAGE_README.md** | Skill Village implementation guide |
-| **SKILL_VILLAGE_PROGRESS.md** | Development progress tracking |
+| **docs/skill-village/README.md** | Skill Village implementation guide |
+| **docs/skill-village/PROGRESS.md** | Development progress tracking |
 | **package.json** | Dependencies & scripts |
 | **next.config.js** | Next.js configuration |
 | **tailwind.config.ts** | Tailwind CSS configuration |
@@ -132,7 +124,7 @@
 | **appsettings.json** | Configuration (production) |
 | **appsettings.Development.json** | Configuration (development) |
 | **MidoLearning.Api.csproj** | Project file, dependencies |
-| **SKILL_VILLAGE_IMPLEMENTATION_STATUS.md** | Skill Village backend status |
+| **docs/skill-village/BACKEND_STATUS.md** | Skill Village backend status |
 
 #### Directories
 
@@ -182,7 +174,7 @@
 | **Wishes** | `components/wish/` | `Endpoints/WishEndpoints.cs` | `docs/specs/20260131-01-wish-chatbot-frontend.md` |
 | **Admin** | `components/admin/`, `app/(admin)/` | `Endpoints/AdminEndpoints.cs` | `docs/specs/20260131-03-admin-users.md` |
 | **Skill Village** | `components/skill-village/`, `app/(game-admin)/` | `Endpoints/GameEndpoints.cs`, `Modules/SkillVillage/` | `docs/specs/20260211-01-skill-village.md` |
-| **Family Scoreboard** | `app/(scoreboard)/family-scoreboard/`, `app/(player)/family-scoreboard/`, `types/family-scoreboard.ts`, `lib/api/family-scoreboard.ts` | `Endpoints/FamilyScoreboardEndpoints.cs`, `Services/FamilyScoreboard/`, `Models/FamilyScoreboard/` | `docs/specs/family-scoreboard-spec.md` |
+| **Family Scoreboard** | `app/(scoreboard)/family-scoreboard/`, `app/(player)/family-scoreboard/`, `types/family-scoreboard.ts`, `lib/api/family-scoreboard.ts` | `Endpoints/FamilyScoreboardEndpoints.cs`, `Services/FamilyScoreboard/`, `Models/FamilyScoreboard/` | `docs/specs/20260218-01-family-scoreboard.md` |
 
 ### By File Type
 
@@ -220,8 +212,8 @@
 
 | Path | Purpose |
 |------|---------|
-| `frontend/SKILL_VILLAGE_README.md` | Implementation guide |
-| `frontend/SKILL_VILLAGE_PROGRESS.md` | Progress tracking |
+| `docs/skill-village/README.md` | Implementation guide |
+| `docs/skill-village/PROGRESS.md` | Progress tracking |
 | `frontend/components/skill-village/` | React components |
 | `frontend/types/skill-village/` | TypeScript types |
 | `frontend/utils/skill-village/` | Utility functions |
@@ -235,7 +227,7 @@
 | `backend/MidoLearning.Api/Endpoints/GameEndpoints.cs` | API endpoints |
 | `backend/MidoLearning.Api/Modules/SkillVillage/` | Domain module |
 | `backend/MidoLearning.Api/Models/SkillVillage/` | DTOs & models |
-| `backend/MidoLearning.Api/SKILL_VILLAGE_IMPLEMENTATION_STATUS.md` | Backend status |
+| `docs/skill-village/BACKEND_STATUS.md` | Backend status |
 
 ### Documentation
 
@@ -283,7 +275,7 @@
 | **Modify database** | `docs/arch/database-design.md` + Firestore console |
 | **Deploy** | `.github/workflows/` + `gh workflow run` |
 | **Run tests** | `frontend/e2e/` (E2E) + `backend/*.Tests/` (unit) |
-| **Check Skill Village status** | `frontend/SKILL_VILLAGE_PROGRESS.md` + backend status doc |
+| **Check Skill Village status** | `docs/skill-village/PROGRESS.md` + `docs/skill-village/BACKEND_STATUS.md` |
 
 ---
 

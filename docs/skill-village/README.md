@@ -227,10 +227,10 @@ npm run dev -- -p 3001
 
 ## 相關文件
 
-- [產品規格文件](../docs/specs/20260211-01-skill-village.md)
-- [前端架構設計](../docs/arch/frontend-architecture.md)
-- [技術債文件](../docs/TECH_DEBT.md)
-- [開發進度](./SKILL_VILLAGE_PROGRESS.md)
+- [產品規格文件](../specs/20260211-01-skill-village.md)
+- [前端架構設計](../arch/frontend-architecture.md)
+- [技術債文件](../TECH_DEBT.md)
+- [開發進度](./PROGRESS.md)
 
 ---
 
