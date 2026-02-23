@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, use, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   LearningComponent,
@@ -40,6 +40,9 @@ export default function EditComponentPage({
 }) {
   const { id } = use(params);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const backPath = searchParams.get('from') === 'admin' ? '/admin/components' : '/teacher/components';
+  const backLabel = searchParams.get('from') === 'admin' ? '返回教材管理' : '返回我的教材';
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [component, setComponent] = useState<LearningComponent | null>(null);
@@ -194,7 +197,7 @@ export default function EditComponentPage({
         await updateComponentVisibility(id, { visibility });
       }
 
-      router.push('/teacher/components');
+      router.push(backPath);
     } catch (err) {
       setError(err instanceof Error ? err.message : '更新失敗，請稍後再試');
     } finally {
@@ -208,7 +211,7 @@ export default function EditComponentPage({
 
     try {
       await deleteComponent(id);
-      router.push('/teacher/components');
+      router.push(backPath);
     } catch (err) {
       setError(err instanceof Error ? err.message : '刪除失敗，請稍後再試');
       setIsDeleting(false);
@@ -229,8 +232,8 @@ export default function EditComponentPage({
       <div className="mx-auto max-w-3xl">
         <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-center">
           <p className="text-red-700">{error || '找不到教材'}</p>
-          <Link href="/teacher/components" className="mt-4 inline-block text-blue-600 hover:underline">
-            返回我的教材
+          <Link href={backPath} className="mt-4 inline-block text-blue-600 hover:underline">
+            {backLabel}
           </Link>
         </div>
       </div>
@@ -276,7 +279,7 @@ export default function EditComponentPage({
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       {/* Back button */}
-      <Link href="/teacher/components">
+      <Link href={backPath}>
         <Button variant="ghost" size="sm">
           <svg className="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
@@ -286,7 +289,7 @@ export default function EditComponentPage({
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          返回我的教材
+          {backLabel}
         </Button>
       </Link>
 
@@ -556,7 +559,7 @@ export default function EditComponentPage({
 
             {/* Submit */}
             <div className="flex justify-end gap-3 pt-4">
-              <Link href="/teacher/components">
+              <Link href={backPath}>
                 <Button type="button" variant="outline">
                   取消
                 </Button>

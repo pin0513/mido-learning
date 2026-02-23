@@ -316,6 +316,11 @@ export default function AdminComponentsPage() {
                             檢視
                           </Button>
                         </Link>
+                        <Link href={`/teacher/components/${component.id}/edit?from=admin`}>
+                          <Button size="sm" variant="ghost">
+                            編輯
+                          </Button>
+                        </Link>
                         <Button
                           size="sm"
                           variant="ghost"
