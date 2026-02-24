@@ -55,6 +55,7 @@ public class FirebaseAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
             {
                 new(ClaimTypes.NameIdentifier, decodedToken.Uid),
                 new(ClaimTypes.Email, decodedToken.Claims.GetValueOrDefault("email")?.ToString() ?? ""),
+                new(ClaimTypes.Name, decodedToken.Claims.GetValueOrDefault("name")?.ToString() ?? ""),
                 new("firebase_uid", decodedToken.Uid)
             };
 
