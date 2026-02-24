@@ -67,11 +67,6 @@ public static class ComponentEndpoints
             .WithName("GetAllComponents")
             .RequireAuthorization("AdminOnly")
             .WithOpenApi();
-
-        group.MapPost("/fix-creators", FixCreatorDisplayNames)
-            .WithName("FixCreatorDisplayNames")
-            .RequireAuthorization("AdminOnly")
-            .WithOpenApi();
     }
 
     /// <summary>
@@ -686,58 +681,6 @@ public static class ComponentEndpoints
             logger.LogError(ex, "Failed to delete component {ComponentId}", id);
             return Results.Problem(
                 detail: "Failed to delete component",
-                statusCode: StatusCodes.Status500InternalServerError);
-        }
-    }
-
-    /// <summary>
-    /// One-time fix: update createdBy.displayName for all components where it is "Unknown"
-    /// </summary>
-    private static async Task<IResult> FixCreatorDisplayNames(
-        IFirebaseService firebaseService,
-        ILogger<Program> logger)
-    {
-        try
-        {
-            // Look up the actual display name from Firebase Auth
-            var user = await firebaseService.GetUserByEmailAsync("pin0513@gmail.com");
-            if (user is null)
-            {
-                return Results.NotFound(ApiResponse.Fail("User pin0513@gmail.com not found"));
-            }
-
-            var displayName = user.DisplayName ?? "Paul Huang";
-
-            // Fetch all components
-            var (components, _) = await firebaseService.GetDocumentsAsync<LearningComponent>(
-                ComponentsCollection, 1, 1000, null, null);
-
-            var fixedCount = 0;
-            foreach (var component in components)
-            {
-                if (component.CreatedBy?.DisplayName is "Unknown" or "" or null)
-                {
-                    var updated = component with
-                    {
-                        CreatedBy = new CreatedByInfo
-                        {
-                            Uid = component.CreatedBy?.Uid ?? user.Uid,
-                            DisplayName = displayName
-                        }
-                    };
-                    await firebaseService.UpdateDocumentAsync(ComponentsCollection, component.Id, updated);
-                    fixedCount++;
-                }
-            }
-
-            logger.LogInformation("Fixed {Count} component creator display names", fixedCount);
-            return Results.Ok(ApiResponse.Ok($"已修正 {fixedCount} 筆教材的建立者名稱為 \"{displayName}\""));
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Failed to fix creator display names");
-            return Results.Problem(
-                detail: "Failed to fix creator display names",
                 statusCode: StatusCodes.Status500InternalServerError);
         }
     }
