@@ -701,6 +701,60 @@ test.describe.serial('家庭計分板整合測試', () => {
     console.log(`  ✓ 備份匯出成功`);
   });
 
+  // ── STEP 13B: 訪客排行榜 ──────────────────────────────────────────────────
+
+  let displayCode = '';
+
+  test('STEP 13B-1: 產生家庭 display code', async ({ request }) => {
+    const res = await adminReq(request, 'POST', `/api/family-scoreboard/generate-code?familyId=${FAMILY_ID}`);
+    expect(res.ok()).toBeTruthy();
+    const body = await res.json();
+    displayCode = body.displayCode as string;
+    expect(displayCode.length).toBeGreaterThanOrEqual(4);
+    console.log(`  ✓ Display code: ${displayCode}`);
+  });
+
+  test('STEP 13B-2: 訪客排行榜 (GET /visitor?code=XXX)', async ({ request }) => {
+    const res = await request.fetch(
+      `${BASE_URL}/api/family-scoreboard/visitor?code=${displayCode}`,
+    );
+    expect(res.ok()).toBeTruthy();
+    const body = await res.json();
+    expect(body.familyCode).toBe(displayCode);
+    expect(Array.isArray(body.players)).toBeTruthy();
+    expect(body.players.length).toBeGreaterThan(0);
+
+    // 驗證玩家資料結構
+    const player = body.players[0];
+    expect(player).toHaveProperty('playerId');
+    expect(player).toHaveProperty('name');
+    expect(player).toHaveProperty('color');
+    expect(player).toHaveProperty('achievementPoints');
+    expect(player).toHaveProperty('hasPassword');
+    console.log(`  ✓ 訪客排行榜: ${body.players.length} 位玩家, 第一名 ${player.name} (${player.achievementPoints} pts)`);
+  });
+
+  test('STEP 13B-3: 訪客排行榜 — 無效代碼回傳 404', async ({ request }) => {
+    const res = await request.fetch(
+      `${BASE_URL}/api/family-scoreboard/visitor?code=INVALID9999`,
+    );
+    expect(res.status()).toBe(404);
+    console.log(`  ✓ 無效代碼正確回傳 404`);
+  });
+
+  test('STEP 13B-4: 訪客排行榜按成就點數降序排列', async ({ request }) => {
+    const res = await request.fetch(
+      `${BASE_URL}/api/family-scoreboard/visitor?code=${displayCode}`,
+    );
+    expect(res.ok()).toBeTruthy();
+    const body = await res.json();
+    const points = body.players.map((p: { achievementPoints: number }) => p.achievementPoints);
+    for (let i = 1; i < points.length; i++) {
+      expect(points[i - 1]).toBeGreaterThanOrEqual(points[i]);
+    }
+    console.log(`  ✓ 排行榜排序正確 (降序)`);
+  });
+
   // ── STEP 14: 清理 ─────────────────────────────────────────────────────────
 
   test('STEP 14-1: 刪除測試玩家', async ({ request }) => {

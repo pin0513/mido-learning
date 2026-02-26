@@ -175,6 +175,12 @@ function FamilyLoginContent() {
               >
                 ← 重新輸入代碼
               </button>
+              <a
+                href={`/family/${family.familyCode}`}
+                className="block text-center text-xs text-amber-500 hover:text-amber-700 mt-1"
+              >
+                只想看排行榜？
+              </a>
             </div>
           )}
 

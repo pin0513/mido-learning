@@ -430,6 +430,22 @@ public record MyFamilyItemDto(
 
 public record BatchDeleteRequest(IReadOnlyList<string> Ids);
 
+// ── Visitor Leaderboard ──────────────────────────────────────────────────
+
+public record VisitorPlayerDto(
+    string PlayerId,
+    string Name,
+    string Color,
+    string? Emoji,
+    int AchievementPoints,
+    bool HasPassword
+);
+
+public record VisitorLeaderboardDto(
+    string FamilyCode,
+    IReadOnlyList<VisitorPlayerDto> Players
+);
+
 // ── Super Admin ─────────────────────────────────────────────────────────
 
 public record FamilyAdminDto(

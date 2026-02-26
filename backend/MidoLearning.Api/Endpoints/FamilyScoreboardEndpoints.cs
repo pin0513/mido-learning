@@ -146,6 +146,15 @@ public static class FamilyScoreboardEndpoints
             return result is null ? Results.NotFound() : Results.Ok(result);
         });
 
+        publicGroup.MapGet("/visitor", async (
+            string code,
+            IFamilyScoreboardService svc,
+            CancellationToken ct) =>
+        {
+            var result = await svc.GetVisitorLeaderboardAsync(code, ct);
+            return result is null ? Results.NotFound() : Results.Ok(result);
+        });
+
         publicGroup.MapPost("/player-login", async (
             PlayerLoginRequest request,
             IFamilyScoreboardService svc,

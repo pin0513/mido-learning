@@ -530,6 +530,32 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         return new FamilyLookupDto(familyId, code.ToUpper(), players);
     }
 
+    // ── GetVisitorLeaderboardAsync ──────────────────────────────────────────────
+
+    public async Task<VisitorLeaderboardDto?> GetVisitorLeaderboardAsync(string code, CancellationToken ct = default)
+    {
+        var codeSnap = await DisplayCodes().Document(code.ToUpper()).GetSnapshotAsync(ct);
+        if (!codeSnap.Exists) return null;
+
+        var familyId = codeSnap.GetValue<string>("familyId");
+
+        var scoresSnap = await Scores(familyId).GetSnapshotAsync(ct);
+        var credentialsSnap = await PlayerCredentials(familyId).GetSnapshotAsync(ct);
+        var credentialIds = credentialsSnap.Documents.Select(d => d.Id).ToHashSet();
+
+        var players = scoresSnap.Documents
+            .Select(d => d.ConvertTo<PlayerScoreDoc>())
+            .OrderByDescending(p => p.AchievementPoints)
+            .Select(p => new VisitorPlayerDto(
+                p.PlayerId, p.Name, p.Color, p.Emoji,
+                p.AchievementPoints,
+                credentialIds.Contains(p.PlayerId)))
+            .ToList()
+            .AsReadOnly();
+
+        return new VisitorLeaderboardDto(code.ToUpper(), players);
+    }
+
     // ── CreatePlayerAsync ─────────────────────────────────────────────────────
 
     public async Task<PlayerScoreDto> CreatePlayerAsync(string familyId, CreatePlayerRequest req, CancellationToken ct = default)

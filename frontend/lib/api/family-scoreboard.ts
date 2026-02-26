@@ -47,6 +47,7 @@ import type {
   AddCoAdminRequest,
   MyFamilyItemDto,
   FamilyAdminDto,
+  VisitorLeaderboardDto,
 } from '@/types/family-scoreboard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -192,6 +193,12 @@ async function getPlayerAuthHeaders(): Promise<HeadersInit> {
 }
 
 // ─────────────────────────── Public (no auth) ──────────────────────────────
+
+export async function getVisitorLeaderboard(code: string): Promise<VisitorLeaderboardDto> {
+  const res = await fetch(`${API_URL}/api/family-scoreboard/visitor?code=${encodeURIComponent(code)}`);
+  if (!res.ok) throw new Error('Family not found');
+  return res.json() as Promise<VisitorLeaderboardDto>;
+}
 
 export async function lookupFamilyByCode(code: string): Promise<FamilyLookupDto> {
   const res = await fetch(`${API_URL}/api/family-scoreboard/lookup?code=${encodeURIComponent(code)}`);

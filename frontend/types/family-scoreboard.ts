@@ -418,6 +418,22 @@ export interface PlayerStatusDto {
   activeEffects: ActiveEffectDto[];
 }
 
+// ── Visitor Leaderboard ──────────────────────────────────────────────────
+
+export interface VisitorPlayerDto {
+  playerId: string;
+  name: string;
+  color: string;
+  emoji?: string | null;
+  achievementPoints: number;
+  hasPassword: boolean;
+}
+
+export interface VisitorLeaderboardDto {
+  familyCode: string;
+  players: VisitorPlayerDto[];
+}
+
 // ── Phase 4 - Backup（備份） ───────────────────────────────────────────────
 
 export interface FamilyBackupDto {
