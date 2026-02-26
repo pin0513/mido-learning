@@ -426,6 +426,7 @@ export interface VisitorPlayerDto {
   color: string;
   emoji?: string | null;
   achievementPoints: number;
+  allowanceBalance: number;
   hasPassword: boolean;
 }
 

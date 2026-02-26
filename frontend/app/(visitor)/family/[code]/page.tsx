@@ -151,12 +151,16 @@ export default function VisitorLeaderboardPage() {
                   <div className="text-xs text-gray-400">點擊登入</div>
                 </div>
 
-                {/* Points */}
+                {/* Points & Allowance */}
                 <div className="text-right">
                   <div className={`text-lg font-black ${isFirst ? 'text-amber-600' : 'text-gray-700'}`}>
                     {player.achievementPoints}
                   </div>
                   <div className="text-[10px] text-gray-400 font-medium">成就點</div>
+                  <div className="text-sm font-bold text-emerald-600 mt-0.5">
+                    ${player.allowanceBalance}
+                  </div>
+                  <div className="text-[10px] text-gray-400 font-medium">零用金</div>
                 </div>
               </button>
             );

@@ -730,8 +730,9 @@ test.describe.serial('家庭計分板整合測試', () => {
     expect(player).toHaveProperty('name');
     expect(player).toHaveProperty('color');
     expect(player).toHaveProperty('achievementPoints');
+    expect(player).toHaveProperty('allowanceBalance');
     expect(player).toHaveProperty('hasPassword');
-    console.log(`  ✓ 訪客排行榜: ${body.players.length} 位玩家, 第一名 ${player.name} (${player.achievementPoints} pts)`);
+    console.log(`  ✓ 訪客排行榜: ${body.players.length} 位玩家, 第一名 ${player.name} (${player.achievementPoints} pts, $${player.allowanceBalance})`);
   });
 
   test('STEP 13B-3: 訪客排行榜 — 無效代碼回傳 404', async ({ request }) => {

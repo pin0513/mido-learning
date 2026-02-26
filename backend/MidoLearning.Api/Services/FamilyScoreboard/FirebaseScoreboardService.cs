@@ -543,12 +543,20 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         var credentialsSnap = await PlayerCredentials(familyId).GetSnapshotAsync(ct);
         var credentialIds = credentialsSnap.Documents.Select(d => d.Id).ToHashSet();
 
+        // 批次取得所有玩家的零用金餘額
+        var ledgerSnap = await AllowanceLedger(familyId).GetSnapshotAsync(ct);
+        var balanceByPlayer = ledgerSnap.Documents
+            .Select(d => d.ConvertTo<AllowanceLedgerDoc>())
+            .GroupBy(r => r.PlayerId)
+            .ToDictionary(g => g.Key, g => g.Sum(r => r.Amount));
+
         var players = scoresSnap.Documents
             .Select(d => d.ConvertTo<PlayerScoreDoc>())
             .OrderByDescending(p => p.AchievementPoints)
             .Select(p => new VisitorPlayerDto(
                 p.PlayerId, p.Name, p.Color, p.Emoji,
                 p.AchievementPoints,
+                balanceByPlayer.GetValueOrDefault(p.PlayerId, 0),
                 credentialIds.Contains(p.PlayerId)))
             .ToList()
             .AsReadOnly();

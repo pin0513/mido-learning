@@ -438,6 +438,7 @@ public record VisitorPlayerDto(
     string Color,
     string? Emoji,
     int AchievementPoints,
+    int AllowanceBalance,
     bool HasPassword
 );
 
