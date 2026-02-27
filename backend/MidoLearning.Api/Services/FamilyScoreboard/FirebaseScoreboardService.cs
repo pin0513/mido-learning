@@ -152,41 +152,16 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
     public async Task<TransactionDto> AddTransactionAsync(
         string familyId, AddTransactionRequest request, string adminUid, CancellationToken ct = default)
     {
+        var currency = request.Currency ?? "xp";
         var txId = Guid.NewGuid().ToString("N");
         var txRef = Transactions(familyId).Document(txId);
         var isEarn = request.Type == "earn";
         TransactionDoc? result = null;
 
-        // 預取每位玩家的 XP 倍率（earn/deduct 皆會套用，在 Firestore transaction 外執行）
-        var playerMultiplierTasks = request.PlayerIds.Select(async pid =>
-            (pid, await GetEffectiveXpMultiplierAsync(familyId, pid, ct)));
-        var playerMultipliers = new Dictionary<string, double>();
-        foreach (var (pid, mult) in await Task.WhenAll(playerMultiplierTasks))
-            playerMultipliers[pid] = mult;
-
-        await _db.RunTransactionAsync(async tx =>
+        if (currency == "allowance")
         {
-            // 1. Read all involved player docs
-            var scoreRefs = request.PlayerIds
-                .Select(pid => Scores(familyId).Document(pid))
-                .ToList();
-
-            var scoreSnaps = new List<DocumentSnapshot>();
-            foreach (var r in scoreRefs)
-                scoreSnaps.Add(await tx.GetSnapshotAsync(r));
-
-            // 2. Build transaction doc（記錄基礎 amount，倍率資訊寫入 note）
+            // 零用金交易：寫入 allowance-ledger，不更新 XP scores
             var now = Timestamp.GetCurrentTimestamp();
-
-            // 取代表性倍率（多人時取第一位；實際各玩家可能不同）
-            var reprMult = playerMultipliers.Values.FirstOrDefault(1.0);
-            var multNote = reprMult != 1.0
-                ? $"（×{reprMult:G4} 倍率加成，實際 {(long)Math.Round(request.Amount * reprMult)} XP）"
-                : null;
-            var finalNote = request.Note != null
-                ? (multNote != null ? $"{request.Note} {multNote}" : request.Note)
-                : multNote;
-
             var txData = new Dictionary<string, object>
             {
                 ["id"] = txId,
@@ -196,43 +171,30 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                 ["reason"] = request.Reason,
                 ["createdBy"] = adminUid,
                 ["createdAt"] = now,
+                ["currency"] = "allowance",
             };
             if (request.CategoryId != null) txData["categoryId"] = request.CategoryId;
-            if (finalNote != null) txData["note"] = finalNote;
+            if (request.Note != null) txData["note"] = request.Note;
 
-            tx.Set(txRef, txData);
+            await txRef.SetAsync(txData, cancellationToken: ct);
 
-            // 3. Update each player's score atomically（倍率套用於 earn/deduct 兩者）
-            foreach (var (scoreRef, snap) in scoreRefs.Zip(scoreSnaps))
+            // 寫入 allowance-ledger（每位玩家一筆）
+            foreach (var pid in request.PlayerIds)
             {
-                if (!snap.Exists)
+                var ledgerId = Guid.NewGuid().ToString("N")[..12];
+                var ledgerAmount = isEarn ? request.Amount : -request.Amount;
+                var ledgerData = new Dictionary<string, object>
                 {
-                    _logger.LogWarning("Player doc {PlayerId} not found in family {FamilyId}", scoreRef.Id, familyId);
-                    continue;
-                }
-
-                var mult = playerMultipliers.GetValueOrDefault(scoreRef.Id, 1.0);
-                var actualXp = (long)Math.Round(request.Amount * mult);
-
-                var updates = new Dictionary<string, object>
-                {
-                    ["updatedAt"] = now,
+                    ["recordId"] = ledgerId,
+                    ["playerId"] = pid,
+                    ["amount"] = ledgerAmount,
+                    ["reason"] = request.Reason,
+                    ["type"] = isEarn ? "earn" : "spend",
+                    ["createdBy"] = adminUid,
+                    ["createdAt"] = now,
                 };
-
-                if (isEarn)
-                {
-                    updates["achievementPoints"] = FieldValue.Increment(actualXp);
-                    updates["redeemablePoints"] = FieldValue.Increment(actualXp);
-                    updates["totalEarned"] = FieldValue.Increment(actualXp);
-                }
-                else
-                {
-                    // 扣分也套用倍率（例如處罰加重 ×2.0）
-                    updates["redeemablePoints"] = FieldValue.Increment(-actualXp);
-                    updates["totalDeducted"] = FieldValue.Increment(actualXp);
-                }
-
-                tx.Update(scoreRef, updates);
+                if (request.Note != null) ledgerData["note"] = request.Note;
+                await AllowanceLedger(familyId).Document(ledgerId).SetAsync(ledgerData, null, ct);
             }
 
             result = new TransactionDoc
@@ -245,9 +207,105 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                 CategoryId = request.CategoryId,
                 CreatedBy = adminUid,
                 CreatedAt = now,
-                Note = finalNote,
+                Note = request.Note,
+                Currency = "allowance",
             };
-        }, cancellationToken: ct);
+        }
+        else
+        {
+            // XP 交易：維持現有邏輯
+            // 預取每位玩家的 XP 倍率（earn/deduct 皆會套用，在 Firestore transaction 外執行）
+            var playerMultiplierTasks = request.PlayerIds.Select(async pid =>
+                (pid, await GetEffectiveXpMultiplierAsync(familyId, pid, ct)));
+            var playerMultipliers = new Dictionary<string, double>();
+            foreach (var (pid, mult) in await Task.WhenAll(playerMultiplierTasks))
+                playerMultipliers[pid] = mult;
+
+            await _db.RunTransactionAsync(async tx =>
+            {
+                // 1. Read all involved player docs
+                var scoreRefs = request.PlayerIds
+                    .Select(pid => Scores(familyId).Document(pid))
+                    .ToList();
+
+                var scoreSnaps = new List<DocumentSnapshot>();
+                foreach (var r in scoreRefs)
+                    scoreSnaps.Add(await tx.GetSnapshotAsync(r));
+
+                // 2. Build transaction doc（記錄基礎 amount，倍率資訊寫入 note）
+                var now = Timestamp.GetCurrentTimestamp();
+
+                // 取代表性倍率（多人時取第一位；實際各玩家可能不同）
+                var reprMult = playerMultipliers.Values.FirstOrDefault(1.0);
+                var multNote = reprMult != 1.0
+                    ? $"（×{reprMult:G4} 倍率加成，實際 {(long)Math.Round(request.Amount * reprMult)} XP）"
+                    : null;
+                var finalNote = request.Note != null
+                    ? (multNote != null ? $"{request.Note} {multNote}" : request.Note)
+                    : multNote;
+
+                var txData = new Dictionary<string, object>
+                {
+                    ["id"] = txId,
+                    ["playerIds"] = request.PlayerIds.ToList(),
+                    ["type"] = request.Type,
+                    ["amount"] = request.Amount,
+                    ["reason"] = request.Reason,
+                    ["createdBy"] = adminUid,
+                    ["createdAt"] = now,
+                };
+                if (request.CategoryId != null) txData["categoryId"] = request.CategoryId;
+                if (finalNote != null) txData["note"] = finalNote;
+
+                tx.Set(txRef, txData);
+
+                // 3. Update each player's score atomically（倍率套用於 earn/deduct 兩者）
+                foreach (var (scoreRef, snap) in scoreRefs.Zip(scoreSnaps))
+                {
+                    if (!snap.Exists)
+                    {
+                        _logger.LogWarning("Player doc {PlayerId} not found in family {FamilyId}", scoreRef.Id, familyId);
+                        continue;
+                    }
+
+                    var mult = playerMultipliers.GetValueOrDefault(scoreRef.Id, 1.0);
+                    var actualXp = (long)Math.Round(request.Amount * mult);
+
+                    var updates = new Dictionary<string, object>
+                    {
+                        ["updatedAt"] = now,
+                    };
+
+                    if (isEarn)
+                    {
+                        updates["achievementPoints"] = FieldValue.Increment(actualXp);
+                        updates["redeemablePoints"] = FieldValue.Increment(actualXp);
+                        updates["totalEarned"] = FieldValue.Increment(actualXp);
+                    }
+                    else
+                    {
+                        // 扣分也套用倍率（例如處罰加重 ×2.0）
+                        updates["redeemablePoints"] = FieldValue.Increment(-actualXp);
+                        updates["totalDeducted"] = FieldValue.Increment(actualXp);
+                    }
+
+                    tx.Update(scoreRef, updates);
+                }
+
+                result = new TransactionDoc
+                {
+                    Id = txId,
+                    PlayerIds = request.PlayerIds.ToList(),
+                    Type = request.Type,
+                    Amount = request.Amount,
+                    Reason = request.Reason,
+                    CategoryId = request.CategoryId,
+                    CreatedBy = adminUid,
+                    CreatedAt = now,
+                    Note = finalNote,
+                };
+            }, cancellationToken: ct);
+        }
 
         return result!.ToDto();
     }
@@ -263,7 +321,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             .Select(d =>
             {
                 var item = d.ConvertTo<ShopItemDoc>();
-                return new RewardDto(item.ItemId, item.Name, item.Price, item.Description, item.Emoji, item.IsActive, item.Stock);
+                return new RewardDto(item.ItemId, item.Name, item.AllowancePrice > 0 ? item.AllowancePrice : item.XpPrice, item.Description, item.Emoji, item.IsActive, item.Stock);
             })
             .ToList()
             .AsReadOnly();
@@ -291,7 +349,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             ["playerId"] = playerUid,
             ["rewardId"] = request.RewardId,
             ["rewardName"] = item.Name,
-            ["cost"] = item.Price,
+            ["cost"] = item.AllowancePrice > 0 ? item.AllowancePrice : item.XpPrice,
             ["status"] = "pending",
             ["requestedAt"] = now,
         };
@@ -299,8 +357,9 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
         await Redemptions(familyId).Document(redemptionId).SetAsync(data, cancellationToken: ct);
 
+        var itemCost = item.AllowancePrice > 0 ? item.AllowancePrice : item.XpPrice;
         return new RedemptionDto(
-            redemptionId, playerUid, request.RewardId, item.Name, item.Price,
+            redemptionId, playerUid, request.RewardId, item.Name, itemCost,
             "pending", now.ToDateTimeOffset(), null, null, request.Note
         );
     }
@@ -1101,11 +1160,11 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             ["itemId"] = itemId,
             ["name"] = req.Name,
             ["description"] = req.Description,
-            ["price"] = req.Price,
+            ["xpPrice"] = req.XpPrice,
+            ["allowancePrice"] = req.AllowancePrice ?? 0,
             ["type"] = req.Type,
             ["emoji"] = req.Emoji,
             ["isActive"] = true,
-            ["priceType"] = req.PriceType ?? "allowance",
             ["allowanceGiven"] = req.AllowanceGiven ?? 0,
         };
         if (req.Stock.HasValue) data["stock"] = req.Stock.Value;
@@ -1125,10 +1184,10 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         {
             ["name"] = req.Name,
             ["description"] = req.Description,
-            ["price"] = req.Price,
+            ["xpPrice"] = req.XpPrice,
+            ["allowancePrice"] = req.AllowancePrice ?? 0,
             ["type"] = req.Type,
             ["emoji"] = req.Emoji,
-            ["priceType"] = req.PriceType ?? "allowance",
             ["allowanceGiven"] = req.AllowanceGiven ?? 0,
         };
         if (req.Stock.HasValue) updates["stock"] = req.Stock.Value;
@@ -1157,6 +1216,11 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         if (!itemSnap.Exists) throw new InvalidOperationException($"Item {req.ItemId} not found");
         var item = itemSnap.ConvertTo<ShopItemDoc>();
 
+        // 決定付款方式與價格
+        var paymentMethod = req.PaymentMethod ?? "allowance"; // 向後相容
+        var price = paymentMethod == "xp" ? item.XpPrice : item.AllowancePrice;
+        if (price <= 0) throw new InvalidOperationException($"Item {req.ItemId} does not support payment by {paymentMethod}");
+
         var orderId = Guid.NewGuid().ToString("N");
         var now = Timestamp.GetCurrentTimestamp();
 
@@ -1166,7 +1230,8 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             ["playerId"] = playerId,
             ["itemId"] = req.ItemId,
             ["itemName"] = item.Name,
-            ["price"] = item.Price,
+            ["price"] = price,
+            ["paymentMethod"] = paymentMethod,
             ["status"] = "pending",
             ["requestedAt"] = now,
         };
@@ -1240,7 +1305,9 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
         if (action == "approve")
         {
-            if (item.PriceType == "xp")
+            var paymentMethod = order.PaymentMethod ?? "allowance"; // 向後相容
+
+            if (paymentMethod == "xp")
             {
                 // 扣除 XP（建立 deduct transaction）
                 var xpTransId = Guid.NewGuid().ToString("N")[..12];
@@ -1249,7 +1316,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                     ["id"] = xpTransId,
                     ["playerIds"] = new List<string> { order.PlayerId },
                     ["type"] = "deduct",
-                    ["amount"] = item.Price,
+                    ["amount"] = order.Price,
                     ["reason"] = $"XP 兌換：{item.Name}",
                     ["createdBy"] = adminUid,
                     ["createdAt"] = now,
@@ -1265,13 +1332,13 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                     var score = scoreSnap.ConvertTo<PlayerScoreDoc>();
                     tx.Update(scoreRef, new Dictionary<string, object>
                     {
-                        ["redeemablePoints"] = Math.Max(0, score.RedeemablePoints - item.Price),
-                        ["totalDeducted"] = score.TotalDeducted + item.Price,
+                        ["redeemablePoints"] = Math.Max(0, score.RedeemablePoints - order.Price),
+                        ["totalDeducted"] = score.TotalDeducted + order.Price,
                         ["updatedAt"] = now,
                     });
                 }, cancellationToken: ct);
 
-                // 給予零用金（若有設定）
+                // 給予零用金（若有設定，只在 XP 付款時生效）
                 if (item.AllowanceGiven > 0)
                 {
                     var allowanceId = Guid.NewGuid().ToString("N")[..12];
@@ -1314,7 +1381,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                     await ActiveEffects(familyId).Document(effectId).SetAsync(effectData, null, ct);
                 }
             }
-            else // priceType = "allowance"（扣零用金）
+            else // paymentMethod = "allowance"（扣零用金）
             {
                 // 餘額檢查：確保玩家有足夠零用金
                 var balanceSnaps = await AllowanceLedger(familyId)
@@ -1341,6 +1408,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                         ItemName = order.ItemName, Price = order.Price, Status = "rejected",
                         RequestedAt = order.RequestedAt, ProcessedAt = now, ProcessedBy = adminUid,
                         Note = $"零用金不足（餘額 NT${currentBalance}，需 NT${order.Price}）",
+                        PaymentMethod = order.PaymentMethod,
                     }.ToDto();
                 }
 
@@ -1356,9 +1424,6 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                     ["createdAt"] = now,
                 };
                 await AllowanceLedger(familyId).Document(ledgerRecordId).SetAsync(ledgerData, null, ct);
-
-                // 更新 AllowanceBalance（重新計算並快取，避免每次全掃 ledger）
-                // ✅ 餘額從 ledger 動態計算，不需要額外更新
             }
         }
 
@@ -1367,7 +1432,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             OrderId = order.OrderId, PlayerId = order.PlayerId, ItemId = order.ItemId,
             ItemName = order.ItemName, Price = order.Price, Status = newStatus,
             RequestedAt = order.RequestedAt, ProcessedAt = now, ProcessedBy = adminUid,
-            Note = note ?? order.Note,
+            Note = note ?? order.Note, PaymentMethod = order.PaymentMethod,
         }.ToDto();
     }
 
@@ -1533,11 +1598,11 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                 ["itemId"] = item.ItemId,
                 ["name"] = item.Name,
                 ["description"] = item.Description,
-                ["price"] = item.Price,
+                ["xpPrice"] = item.XpPrice,
+                ["allowancePrice"] = item.AllowancePrice,
                 ["type"] = item.Type,
                 ["emoji"] = item.Emoji,
                 ["isActive"] = item.IsActive,
-                ["priceType"] = item.PriceType,
                 ["allowanceGiven"] = item.AllowanceGiven,
             };
             if (item.Stock.HasValue) data["stock"] = item.Stock.Value;
@@ -2002,5 +2067,192 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         await familyRef.DeleteAsync(cancellationToken: ct);
 
         _logger.LogInformation("Family {FamilyId} permanently deleted by super admin", familyId);
+    }
+
+    // ── Family Settings（家庭設定） ─────────────────────────────────────────────
+
+    private CollectionReference Withdrawals(string familyId) =>
+        _db.Collection("families").Document(familyId).Collection("withdrawalRequests");
+
+    public async Task<FamilySettingsDto> GetFamilySettingsAsync(string familyId, CancellationToken ct = default)
+    {
+        var familyDoc = await _db.Collection("families").Document(familyId).GetSnapshotAsync(ct);
+        var rate = familyDoc.Exists && familyDoc.ContainsField("xpToAllowanceRate")
+            ? familyDoc.GetValue<int>("xpToAllowanceRate") : 10;
+        var enabled = familyDoc.Exists && familyDoc.ContainsField("xpToAllowanceEnabled")
+            ? familyDoc.GetValue<bool>("xpToAllowanceEnabled") : true;
+        return new FamilySettingsDto(rate, enabled);
+    }
+
+    public async Task<FamilySettingsDto> UpdateFamilySettingsAsync(string familyId, UpdateFamilySettingsRequest req, CancellationToken ct = default)
+    {
+        var updates = new Dictionary<string, object>();
+        if (req.XpToAllowanceRate.HasValue) updates["xpToAllowanceRate"] = req.XpToAllowanceRate.Value;
+        if (req.XpToAllowanceEnabled.HasValue) updates["xpToAllowanceEnabled"] = req.XpToAllowanceEnabled.Value;
+
+        if (updates.Count > 0)
+            await _db.Collection("families").Document(familyId).UpdateAsync(updates, cancellationToken: ct);
+
+        return await GetFamilySettingsAsync(familyId, ct);
+    }
+
+    // ── XP Exchange（XP 兌換零用金） ────────────────────────────────────────────
+
+    public async Task<ExchangeXpResultDto> ExchangeXpAsync(string familyId, ExchangeXpRequest req, string adminUid, CancellationToken ct = default)
+    {
+        var settings = await GetFamilySettingsAsync(familyId, ct);
+        if (!settings.XpToAllowanceEnabled)
+            throw new InvalidOperationException("XP 兌換零用金功能已關閉");
+        if (req.XpAmount <= 0)
+            throw new InvalidOperationException("XP 數量必須大於 0");
+        if (req.XpAmount % settings.XpToAllowanceRate != 0)
+            throw new InvalidOperationException($"XP 數量必須是 {settings.XpToAllowanceRate} 的倍數");
+
+        var allowanceGained = req.XpAmount / settings.XpToAllowanceRate;
+        int newRedeemable = 0;
+
+        // 原子操作：扣 redeemablePoints
+        var scoreRef = Scores(familyId).Document(req.PlayerId);
+        await _db.RunTransactionAsync(async tx =>
+        {
+            var scoreSnap = await tx.GetSnapshotAsync(scoreRef);
+            if (!scoreSnap.Exists) throw new InvalidOperationException($"Player {req.PlayerId} not found");
+            var score = scoreSnap.ConvertTo<PlayerScoreDoc>();
+            if (score.RedeemablePoints < req.XpAmount)
+                throw new InvalidOperationException($"XP 不足（餘額 {score.RedeemablePoints}，需 {req.XpAmount}）");
+
+            newRedeemable = score.RedeemablePoints - req.XpAmount;
+            tx.Update(scoreRef, new Dictionary<string, object>
+            {
+                ["redeemablePoints"] = newRedeemable,
+                ["totalRedeemed"] = score.TotalRedeemed + req.XpAmount,
+                ["updatedAt"] = Timestamp.GetCurrentTimestamp(),
+            });
+        }, cancellationToken: ct);
+
+        // 加 allowance-ledger
+        var now = Timestamp.GetCurrentTimestamp();
+        var ledgerId = Guid.NewGuid().ToString("N")[..12];
+        var ledgerData = new Dictionary<string, object>
+        {
+            ["recordId"] = ledgerId,
+            ["playerId"] = req.PlayerId,
+            ["amount"] = allowanceGained,
+            ["reason"] = $"XP 兌換零用金（{req.XpAmount} XP → NT${allowanceGained}）",
+            ["type"] = "earn",
+            ["createdBy"] = adminUid,
+            ["createdAt"] = now,
+        };
+        await AllowanceLedger(familyId).Document(ledgerId).SetAsync(ledgerData, null, ct);
+
+        // 計算新的零用金餘額
+        var balanceSnaps = await AllowanceLedger(familyId)
+            .WhereEqualTo("playerId", req.PlayerId)
+            .GetSnapshotAsync(ct);
+        var newBalance = balanceSnaps.Documents
+            .Select(d => d.ConvertTo<AllowanceLedgerDoc>())
+            .Sum(r => r.Amount);
+
+        return new ExchangeXpResultDto(req.XpAmount, allowanceGained, newRedeemable, newBalance);
+    }
+
+    // ── Withdrawals（零用金提領） ────────────────────────────────────────────────
+
+    public async Task<WithdrawalRequestDto> CreateWithdrawalAsync(string familyId, CreateWithdrawalRequest req, string playerId, CancellationToken ct = default)
+    {
+        if (req.Amount <= 0) throw new InvalidOperationException("提領金額必須大於 0");
+
+        // 餘額檢查
+        var balanceSnaps = await AllowanceLedger(familyId)
+            .WhereEqualTo("playerId", playerId)
+            .GetSnapshotAsync(ct);
+        var currentBalance = balanceSnaps.Documents
+            .Select(d => d.ConvertTo<AllowanceLedgerDoc>())
+            .Sum(r => r.Amount);
+        if (currentBalance < req.Amount)
+            throw new InvalidOperationException($"零用金不足（餘額 NT${currentBalance}，需 NT${req.Amount}）");
+
+        var requestId = Guid.NewGuid().ToString("N");
+        var now = Timestamp.GetCurrentTimestamp();
+        var data = new Dictionary<string, object>
+        {
+            ["requestId"] = requestId,
+            ["playerId"] = playerId,
+            ["amount"] = req.Amount,
+            ["reason"] = req.Reason ?? "提領零用金",
+            ["status"] = "pending",
+            ["requestedAt"] = now,
+        };
+
+        await Withdrawals(familyId).Document(requestId).SetAsync(data, cancellationToken: ct);
+        var snap = await Withdrawals(familyId).Document(requestId).GetSnapshotAsync(ct);
+        return snap.ConvertTo<WithdrawalRequestDoc>().ToDto();
+    }
+
+    public async Task<IReadOnlyList<WithdrawalRequestDto>> GetWithdrawalsAsync(string familyId, string? status, CancellationToken ct = default)
+    {
+        Query query;
+        if (!string.IsNullOrEmpty(status))
+            query = Withdrawals(familyId).WhereEqualTo("status", status).Limit(50);
+        else
+            query = Withdrawals(familyId).Limit(50);
+
+        var snaps = await query.GetSnapshotAsync(ct);
+        return snaps.Documents
+            .Select(d => d.ConvertTo<WithdrawalRequestDoc>().ToDto())
+            .OrderByDescending(w => w.RequestedAt)
+            .ToList().AsReadOnly();
+    }
+
+    public async Task<WithdrawalRequestDto> ProcessWithdrawalAsync(string familyId, string requestId, ProcessWithdrawalRequest req, string adminUid, CancellationToken ct = default)
+    {
+        var docRef = Withdrawals(familyId).Document(requestId);
+        var snap = await docRef.GetSnapshotAsync(ct);
+        if (!snap.Exists) throw new InvalidOperationException($"Withdrawal request {requestId} not found");
+        var withdrawal = snap.ConvertTo<WithdrawalRequestDoc>();
+        if (withdrawal.Status != "pending") throw new InvalidOperationException($"Withdrawal is already {withdrawal.Status}");
+
+        var now = Timestamp.GetCurrentTimestamp();
+        var updates = new Dictionary<string, object>
+        {
+            ["status"] = req.Action == "approve" ? "approved" : "rejected",
+            ["processedAt"] = now,
+            ["processedBy"] = adminUid,
+        };
+        if (req.Note != null) updates["note"] = req.Note;
+
+        await docRef.UpdateAsync(updates, cancellationToken: ct);
+
+        // approve 時扣除零用金
+        if (req.Action == "approve")
+        {
+            var ledgerId = Guid.NewGuid().ToString("N")[..12];
+            var ledgerData = new Dictionary<string, object>
+            {
+                ["recordId"] = ledgerId,
+                ["playerId"] = withdrawal.PlayerId,
+                ["amount"] = -withdrawal.Amount,
+                ["reason"] = $"提領零用金 NT${withdrawal.Amount}",
+                ["type"] = "spend",
+                ["createdBy"] = adminUid,
+                ["createdAt"] = now,
+            };
+            await AllowanceLedger(familyId).Document(ledgerId).SetAsync(ledgerData, null, ct);
+        }
+
+        var updatedSnap = await docRef.GetSnapshotAsync(ct);
+        return updatedSnap.ConvertTo<WithdrawalRequestDoc>().ToDto();
+    }
+
+    public async Task<IReadOnlyList<WithdrawalRequestDto>> GetMyWithdrawalsAsync(string familyId, string playerId, CancellationToken ct = default)
+    {
+        var snaps = await Withdrawals(familyId)
+            .WhereEqualTo("playerId", playerId)
+            .Limit(50)
+            .GetSnapshotAsync(ct);
+        return snaps.Documents
+            .Select(d => d.ConvertTo<WithdrawalRequestDoc>().ToDto())
+            .OrderByDescending(w => w.RequestedAt)
+            .ToList().AsReadOnly();
     }
 }

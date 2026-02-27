@@ -25,7 +25,8 @@ public record TransactionDto(
     string? CategoryId,
     string CreatedBy,
     DateTimeOffset CreatedAt,
-    string? Note
+    string? Note,
+    string? Currency = null
 );
 
 public record RewardDto(
@@ -59,7 +60,8 @@ public record AddTransactionRequest(
     int Amount,
     string Reason,
     string? CategoryId,
-    string? Note
+    string? Note,
+    string? Currency = null
 );
 
 public record CreateRedemptionRequest(
@@ -230,12 +232,12 @@ public record ShopItemDto(
     string ItemId,
     string Name,
     string Description,
-    int Price,
+    int XpPrice,
     string Type,
     string Emoji,
     bool IsActive,
     int? Stock,
-    string PriceType,
+    int AllowancePrice,
     int? DailyLimit,
     int AllowanceGiven,
     int? DurationMinutes,    // 若有時效，兌換後建立 ActiveEffect
@@ -246,11 +248,11 @@ public record ShopItemDto(
 public record CreateShopItemRequest(
     string Name,
     string Description,
-    int Price,
+    int XpPrice,
     string Type,
     string Emoji,
     int? Stock,
-    string? PriceType,
+    int? AllowancePrice,
     int? DailyLimit,
     int? AllowanceGiven,
     int? DurationMinutes = null,
@@ -270,10 +272,11 @@ public record ShopOrderDto(
     DateTimeOffset RequestedAt,
     DateTimeOffset? ProcessedAt,
     string? ProcessedBy,
-    string? Note
+    string? Note,
+    string? PaymentMethod = null
 );
 
-public record CreateShopOrderRequest(string ItemId, string? Note);
+public record CreateShopOrderRequest(string ItemId, string PaymentMethod, string? Note);
 
 public record ProcessShopOrderRequest(string Action, string? Note);
 
@@ -446,6 +449,22 @@ public record VisitorLeaderboardDto(
     string FamilyCode,
     IReadOnlyList<VisitorPlayerDto> Players
 );
+
+// --- Family Settings ---
+public record FamilySettingsDto(int XpToAllowanceRate, bool XpToAllowanceEnabled);
+public record UpdateFamilySettingsRequest(int? XpToAllowanceRate, bool? XpToAllowanceEnabled);
+
+// --- XP Exchange ---
+public record ExchangeXpRequest(string PlayerId, int XpAmount);
+public record ExchangeXpResultDto(int XpSpent, int AllowanceGained, int NewRedeemablePoints, int NewAllowanceBalance);
+
+// --- Withdrawal ---
+public record WithdrawalRequestDto(
+    string RequestId, string PlayerId, int Amount, string Reason,
+    string Status, DateTime RequestedAt, DateTime? ProcessedAt,
+    string? ProcessedBy, string? Note);
+public record CreateWithdrawalRequest(int Amount, string? Reason);
+public record ProcessWithdrawalRequest(string Action, string? Note);
 
 // ── Super Admin ─────────────────────────────────────────────────────────
 

@@ -10,6 +10,7 @@
  *   封印/處罰 — 新增、查詢、解除
  *   事件日曆 — 建立、查詢、更新、刪除
  *   道具效果 — 新增、玩家查詢、過期
+ *   經濟系統 — currency allowance 交易、XP兌換零用金、提領申請+審核
  *   防護機制 — 餘額不足拒絕
  *   家長摘要 — 完整管理查詢（積分/交易/任務/商城/零用金/封印/處罰/效果/備份）
  *   清理       — 測試玩家刪除確認
@@ -69,6 +70,7 @@ test.describe.serial('家庭計分板整合測試', () => {
   let balanceBeforePurchase = 0;
   let eventId = '';
   let effectId = '';
+  let withdrawalId = '';
 
   // ── STEP 1: 初始化 ────────────────────────────────────────────────────────
 
@@ -285,13 +287,13 @@ test.describe.serial('家庭計分板整合測試', () => {
     expect(res.ok()).toBeTruthy();
     const items = await res.json();
     expect(items.length).toBeGreaterThan(0);
-    // 找 allowance 商品，價格 ≤ NT$50
+    // 找有零用金標價的商品，價格 ≤ NT$50
     const affordable = items.find(
-      (i: { priceType: string; price: number }) => i.priceType === 'allowance' && i.price <= 50,
+      (i: { allowancePrice: number }) => i.allowancePrice > 0 && i.allowancePrice <= 50,
     );
     expect(affordable).toBeDefined();
     shopItemId = affordable.itemId;
-    console.log(`  ✓ 商城商品: ${items.length} 個, 選: "${affordable.name}" NT$${affordable.price}`);
+    console.log(`  ✓ 商城商品: ${items.length} 個, 選: "${affordable.name}" NT$${affordable.allowancePrice}`);
   });
 
   test('STEP 7-2: 玩家申請兌換商品', async ({ request }) => {
@@ -303,7 +305,7 @@ test.describe.serial('家庭計分板整合測試', () => {
       request, 'POST',
       `/api/family-scoreboard/${FAMILY_ID}/shop-orders`,
       playerToken,
-      { itemId: shopItemId, note: '整合測試 — 兌換獎勵' },
+      { itemId: shopItemId, paymentMethod: 'allowance', note: '整合測試 — 兌換獎勵' },
     );
     expect([200, 201]).toContain(res.status());
     const body = await res.json();
@@ -349,11 +351,11 @@ test.describe.serial('家庭計分板整合測試', () => {
     const balRes = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
     const balance = (await balRes.json()).balance as number;
 
-    // 找比餘額貴的商品
+    // 找比餘額貴的零用金商品
     const itemsRes = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/shop-items`, playerToken);
     const items = await itemsRes.json();
     const expensive = items.find(
-      (i: { priceType: string; price: number }) => i.priceType === 'allowance' && i.price > balance,
+      (i: { allowancePrice: number }) => i.allowancePrice > 0 && i.allowancePrice > balance,
     );
 
     if (!expensive) {
@@ -364,7 +366,7 @@ test.describe.serial('家庭計分板整合測試', () => {
     // 下單
     const orderRes = await playerReq(
       request, 'POST', `/api/family-scoreboard/${FAMILY_ID}/shop-orders`, playerToken,
-      { itemId: expensive.itemId, note: '測試餘額不足' },
+      { itemId: expensive.itemId, paymentMethod: 'allowance', note: '測試餘額不足' },
     );
     const order = await orderRes.json();
 
@@ -570,6 +572,137 @@ test.describe.serial('家庭計分板整合測試', () => {
     const found = effects.find((e: { effectId: string }) => e.effectId === effectId);
     expect(found).toBeUndefined();
     console.log(`  ✓ 道具已過期，不再顯示`);
+  });
+
+  // ── STEP 11B: 零用金交易 (currency: 'allowance') ─────────────────────────
+
+  test('STEP 11B-1: 家長用 currency: allowance 加零用金 +50', async ({ request }) => {
+    // 記錄加值前餘額
+    const balBefore = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
+    const before = (await balBefore.json()).balance as number;
+
+    const res = await request.post(`${BASE_URL}/api/dev/transaction`, {
+      data: {
+        familyId: FAMILY_ID,
+        playerIds: [PLAYER_ID],
+        type: 'earn',
+        amount: 50,
+        reason: '整合測試 — currency allowance 加值',
+        currency: 'allowance',
+      },
+    });
+    expect(res.status()).toBe(201);
+    const body = await res.json();
+    expect(body.currency).toBe('allowance');
+
+    // 驗證零用金餘額增加
+    const balAfter = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
+    const after = (await balAfter.json()).balance as number;
+    expect(after).toBe(before + 50);
+    console.log(`  ✓ 零用金 currency 交易: NT$${before} → NT$${after}`);
+  });
+
+  // ── STEP 11C: XP→零用金兌換 ────────────────────────────────────────────────
+
+  test('STEP 11C-1: 家長取得家庭設定 (匯率)', async ({ request }) => {
+    const res = await adminReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/settings`);
+    expect(res.ok()).toBeTruthy();
+    const settings = await res.json();
+    expect(settings.xpToAllowanceRate).toBe(10);
+    expect(settings.xpToAllowanceEnabled).toBe(true);
+    console.log(`  ✓ 家庭設定: 匯率=${settings.xpToAllowanceRate} XP/$1, 啟用=${settings.xpToAllowanceEnabled}`);
+  });
+
+  test('STEP 11C-2: XP→零用金兌換 (100 XP → $10)', async ({ request }) => {
+    // 記錄兌換前的 XP 和零用金
+    const scoresBefore = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/scores`, playerToken);
+    const scoreBefore = (await scoresBefore.json()).find((s: { playerId: string }) => s.playerId === PLAYER_ID);
+    const xpBefore = scoreBefore.redeemablePoints as number;
+
+    const balBefore = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
+    const allowanceBefore = (await balBefore.json()).balance as number;
+
+    // 執行兌換 (100 XP, 匯率 10:1 → $10)
+    const res = await adminReq(
+      request, 'POST',
+      `/api/family-scoreboard/${FAMILY_ID}/exchange-xp`,
+      { playerId: PLAYER_ID, xpAmount: 100 },
+    );
+    expect(res.ok()).toBeTruthy();
+    const result = await res.json();
+    expect(result.xpSpent).toBe(100);
+    expect(result.allowanceGained).toBe(10);
+
+    // 驗證 XP 減少
+    expect(result.newRedeemablePoints).toBe(xpBefore - 100);
+    // 驗證零用金增加
+    expect(result.newAllowanceBalance).toBe(allowanceBefore + 10);
+    console.log(`  ✓ XP 兌換: ${xpBefore} XP → ${result.newRedeemablePoints} XP, 零用金 NT$${allowanceBefore} → NT$${result.newAllowanceBalance}`);
+  });
+
+  // ── STEP 11D: 提領申請 + 審核 ──────────────────────────────────────────────
+
+  test('STEP 11D-1: 玩家申請提領零用金 NT$10', async ({ request }) => {
+    const res = await playerReq(
+      request, 'POST',
+      `/api/family-scoreboard/${FAMILY_ID}/withdrawals`,
+      playerToken,
+      { amount: 10, reason: '整合測試 — 提領零用金' },
+    );
+    expect([200, 201]).toContain(res.status());
+    const body = await res.json();
+    withdrawalId = body.requestId;
+    expect(withdrawalId).toBeTruthy();
+    expect(body.status).toBe('pending');
+    expect(body.amount).toBe(10);
+    console.log(`  ✓ 提領申請: ${withdrawalId}, NT$${body.amount}`);
+  });
+
+  test('STEP 11D-2: 玩家查看自己的提領紀錄', async ({ request }) => {
+    const res = await playerReq(
+      request, 'GET',
+      `/api/family-scoreboard/${FAMILY_ID}/my-withdrawals`,
+      playerToken,
+    );
+    expect(res.ok()).toBeTruthy();
+    const withdrawals = await res.json();
+    const found = withdrawals.find((w: { requestId: string }) => w.requestId === withdrawalId);
+    expect(found).toBeDefined();
+    expect(found.status).toBe('pending');
+    console.log(`  ✓ 玩家提領紀錄: ${withdrawals.length} 筆`);
+  });
+
+  test('STEP 11D-3: 家長查看待審提領清單', async ({ request }) => {
+    const res = await adminReq(
+      request, 'GET',
+      `/api/family-scoreboard/${FAMILY_ID}/withdrawals?status=pending`,
+    );
+    expect(res.ok()).toBeTruthy();
+    const withdrawals = await res.json();
+    const found = withdrawals.find((w: { requestId: string }) => w.requestId === withdrawalId);
+    expect(found).toBeDefined();
+    console.log(`  ✓ 待審提領: ${withdrawals.length} 筆`);
+  });
+
+  test('STEP 11D-4: 家長審核通過提領申請', async ({ request }) => {
+    // 記錄審核前零用金餘額
+    const balBefore = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
+    const before = (await balBefore.json()).balance as number;
+
+    const res = await adminReq(
+      request, 'POST',
+      `/api/family-scoreboard/${FAMILY_ID}/withdrawals/${withdrawalId}/process`,
+      { action: 'approve', note: '整合測試 — 確認提領' },
+    );
+    expect(res.ok()).toBeTruthy();
+    const body = await res.json();
+    expect(body.status).toBe('approved');
+
+    // 驗證零用金餘額扣除
+    const balAfter = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
+    const after = (await balAfter.json()).balance as number;
+    expect(after).toBe(before - 10);
+    console.log(`  ✓ 提領審核通過: 零用金 NT$${before} → NT$${after}`);
   });
 
   // ── STEP 12: 玩家資訊查詢 ────────────────────────────────────────────────

@@ -75,6 +75,19 @@ public interface IFamilyScoreboardService
     Task<IReadOnlyList<ShopOrderDto>> GetShopOrdersAsync(string familyId, string? status, CancellationToken ct = default);
     Task<ShopOrderDto> ProcessShopOrderAsync(string familyId, string orderId, ProcessShopOrderRequest req, string adminUid, CancellationToken ct = default);
 
+    // ── Family Settings（家庭設定） ─────────────────────────────────────────────
+    Task<FamilySettingsDto> GetFamilySettingsAsync(string familyId, CancellationToken ct = default);
+    Task<FamilySettingsDto> UpdateFamilySettingsAsync(string familyId, UpdateFamilySettingsRequest req, CancellationToken ct = default);
+
+    // ── XP Exchange（XP 兌換零用金） ────────────────────────────────────────────
+    Task<ExchangeXpResultDto> ExchangeXpAsync(string familyId, ExchangeXpRequest req, string adminUid, CancellationToken ct = default);
+
+    // ── Withdrawals（零用金提領） ────────────────────────────────────────────────
+    Task<WithdrawalRequestDto> CreateWithdrawalAsync(string familyId, CreateWithdrawalRequest req, string playerId, CancellationToken ct = default);
+    Task<IReadOnlyList<WithdrawalRequestDto>> GetWithdrawalsAsync(string familyId, string? status, CancellationToken ct = default);
+    Task<WithdrawalRequestDto> ProcessWithdrawalAsync(string familyId, string requestId, ProcessWithdrawalRequest req, string adminUid, CancellationToken ct = default);
+    Task<IReadOnlyList<WithdrawalRequestDto>> GetMyWithdrawalsAsync(string familyId, string playerId, CancellationToken ct = default);
+
     // ── Events（家庭活動） ────────────────────────────────────────────────────
     Task<IReadOnlyList<EventDto>> GetEventsAsync(string familyId, string? month, CancellationToken ct = default);
     Task<EventDto> CreateEventAsync(string familyId, CreateEventRequest req, string adminUid, CancellationToken ct = default);

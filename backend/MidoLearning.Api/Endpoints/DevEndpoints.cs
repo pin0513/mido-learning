@@ -262,51 +262,51 @@ public static class DevEndpoints
 
             var shopItems = new[]
             {
-                // 看影片 20 分鐘 → NT$30
+                // 看影片 20 分鐘 → NT$30（雙標價：也可用 150 XP 購買）
                 new CreateShopItemRequest(
                     Name:          "看影片 20 分鐘",
                     Description:   "兌換一次看 YouTube / Netflix 20 分鐘的機會（需家長批准）",
-                    Price:         30,
+                    XpPrice:       150,
                     Type:          "reward",
                     Emoji:         "📺",
                     Stock:         null,
-                    PriceType:     "allowance",
+                    AllowancePrice: 30,
                     DailyLimit:    2,
                     AllowanceGiven: null),
 
-                // 自選電影一部 → NT$100
+                // 自選電影一部 → NT$100（雙標價：也可用 500 XP 購買）
                 new CreateShopItemRequest(
                     Name:          "自選電影一部",
                     Description:   "自己挑一部電影，和家人一起觀看（需家長批准）",
-                    Price:         100,
+                    XpPrice:       500,
                     Type:          "reward",
                     Emoji:         "🎬",
                     Stock:         null,
-                    PriceType:     "allowance",
+                    AllowancePrice: 100,
                     DailyLimit:    1,
                     AllowanceGiven: null),
 
-                // XP 兌換零用金: 300 exp → NT$30（匯率 10 exp = 1 NT$）
+                // XP 兌換零用金: 300 exp → NT$30（僅限 XP 購買）
                 new CreateShopItemRequest(
                     Name:          "零用金兌換 30 元",
                     Description:   "將 300 經驗值兌換為 NT$30 零用金（匯率：10 exp = 1 NT$）",
-                    Price:         300,
+                    XpPrice:       300,
                     Type:          "allowance",
                     Emoji:         "💰",
                     Stock:         null,
-                    PriceType:     "xp",
+                    AllowancePrice: 0,
                     DailyLimit:    null,
                     AllowanceGiven: 30),
 
-                // 玩 Switch 30 分鐘 → NT$50
+                // 玩 Switch 30 分鐘 → NT$50（雙標價：也可用 250 XP 購買）
                 new CreateShopItemRequest(
                     Name:          "玩 Switch 30 分鐘",
                     Description:   "兌換一次玩任天堂 Switch 30 分鐘的機會（需家長批准）",
-                    Price:         50,
+                    XpPrice:       250,
                     Type:          "reward",
                     Emoji:         "🎮",
                     Stock:         null,
-                    PriceType:     "allowance",
+                    AllowancePrice: 50,
                     DailyLimit:    2,
                     AllowanceGiven: null),
             };
@@ -316,12 +316,23 @@ public static class DevEndpoints
                 try
                 {
                     var created = await svc.CreateShopItemAsync(familyId, item, ct);
-                    results.Add($"✅ Shop: {created.Name} (💎 {created.Price} exp)");
+                    results.Add($"✅ Shop: {created.Name} (XP:{created.XpPrice} / NT${created.AllowancePrice})");
                 }
                 catch (Exception ex)
                 {
                     results.Add($"⚠️ Shop '{item.Name}' failed: {ex.Message}");
                 }
+            }
+
+            // 初始化 family settings（匯率 10 XP = $1）
+            try
+            {
+                await svc.UpdateFamilySettingsAsync(familyId, new UpdateFamilySettingsRequest(10, true), ct);
+                results.Add("✅ Family settings: xpToAllowanceRate=10, enabled=true");
+            }
+            catch (Exception ex)
+            {
+                results.Add($"⚠️ Family settings failed: {ex.Message}");
             }
 
             return Results.Ok(new
@@ -355,7 +366,7 @@ public static class DevEndpoints
             IFamilyScoreboardService svc,
             CancellationToken ct) =>
         {
-            var txReq = new AddTransactionRequest(req.PlayerIds, req.Type, req.Amount, req.Reason, null, req.Note);
+            var txReq = new AddTransactionRequest(req.PlayerIds, req.Type, req.Amount, req.Reason, null, req.Note, req.Currency);
             var result = await svc.AddTransactionAsync(req.FamilyId, txReq, "dev-test", ct);
             return Results.Created($"/api/dev/transaction/{result.Id}", result);
         });
@@ -384,5 +395,5 @@ public static class DevEndpoints
 public record PlayerTokenRequest(string FamilyId, string PlayerId, string PlayerName);
 public record SeedRequest(string FamilyId);
 public record InitFamilyRequest(string FamilyId, string AdminUid);
-public record DevTransactionRequest(string FamilyId, List<string> PlayerIds, string Type, int Amount, string Reason, string? Note = null);
+public record DevTransactionRequest(string FamilyId, List<string> PlayerIds, string Type, int Amount, string Reason, string? Note = null, string? Currency = null);
 public record AllowanceInitRequest(string FamilyId, string PlayerId, int Amount);

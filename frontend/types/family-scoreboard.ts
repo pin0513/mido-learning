@@ -24,6 +24,7 @@ export interface TransactionDto {
   createdBy: string;
   createdAt: string;
   note: string | null;
+  currency?: string;
 }
 
 export interface RewardDto {
@@ -56,6 +57,7 @@ export interface AddTransactionRequest {
   reason: string;
   categoryId?: string;
   note?: string;
+  currency?: 'xp' | 'allowance';
 }
 
 export interface CreateRedemptionRequest {
@@ -234,12 +236,12 @@ export interface ShopItemDto {
   itemId: string;
   name: string;
   description: string;
-  price: number;
+  xpPrice: number;
+  allowancePrice: number;
   type: 'physical' | 'activity' | 'privilege' | 'money';
   emoji: string;
   isActive: boolean;
   stock?: number | null;
-  priceType: string;            // "allowance" | "xp"
   dailyLimit: number | null;    // null = 無上限
   allowanceGiven: number;       // XP 兌換時給予的零用金
   durationMinutes?: number | null;  // 時效道具持續分鐘
@@ -250,11 +252,11 @@ export interface ShopItemDto {
 export interface CreateShopItemRequest {
   name: string;
   description: string;
-  price: number;
+  xpPrice: number;
+  allowancePrice: number;
   type: 'physical' | 'activity' | 'privilege' | 'money';
   emoji: string;
   stock?: number;
-  priceType?: string;
   dailyLimit?: number;
   allowanceGiven?: number;
   durationMinutes?: number;
@@ -273,11 +275,13 @@ export interface ShopOrderDto {
   processedAt?: string | null;
   processedBy?: string | null;
   note?: string | null;
+  paymentMethod?: string;
 }
 
 export interface CreateShopOrderRequest {
   itemId: string;
   note?: string;
+  paymentMethod: 'xp' | 'allowance';
 }
 
 export interface ProcessShopOrderRequest {
@@ -482,4 +486,51 @@ export interface FamilyAdminDto {
   playerCount: number;
   isBanned: boolean;
   createdAt: string;
+}
+
+// --- Family Settings ---
+export interface FamilySettingsDto {
+  xpToAllowanceRate: number;
+  xpToAllowanceEnabled: boolean;
+}
+
+export interface UpdateFamilySettingsRequest {
+  xpToAllowanceRate?: number;
+  xpToAllowanceEnabled?: boolean;
+}
+
+// --- XP Exchange ---
+export interface ExchangeXpRequest {
+  playerId: string;
+  xpAmount: number;
+}
+
+export interface ExchangeXpResultDto {
+  xpSpent: number;
+  allowanceGained: number;
+  newRedeemablePoints: number;
+  newAllowanceBalance: number;
+}
+
+// --- Withdrawal ---
+export interface WithdrawalRequestDto {
+  requestId: string;
+  playerId: string;
+  amount: number;
+  reason: string;
+  status: 'pending' | 'approved' | 'rejected';
+  requestedAt: string;
+  processedAt?: string;
+  processedBy?: string;
+  note?: string;
+}
+
+export interface CreateWithdrawalRequest {
+  amount: number;
+  reason?: string;
+}
+
+export interface ProcessWithdrawalRequest {
+  action: 'approve' | 'reject';
+  note?: string;
 }

@@ -481,6 +481,42 @@ public static class FamilyScoreboardEndpoints
             return Results.Ok(result);
         });
 
+        // ── Family Settings（家庭設定） ─────────────────────────────────────────────
+        admin.MapGet("/{familyId}/settings", async (
+            string familyId, IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetFamilySettingsAsync(familyId, ct)));
+
+        admin.MapPut("/{familyId}/settings", async (
+            string familyId, UpdateFamilySettingsRequest request,
+            IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.UpdateFamilySettingsAsync(familyId, request, ct)));
+
+        // ── XP Exchange（XP 兌換零用金） ────────────────────────────────────────────
+        admin.MapPost("/{familyId}/exchange-xp", async (
+            string familyId, ExchangeXpRequest request,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var result = await svc.ExchangeXpAsync(familyId, request, uid, ct);
+            return Results.Ok(result);
+        });
+
+        // ── Withdrawals Admin（零用金提領管理） ─────────────────────────────────────
+        admin.MapGet("/{familyId}/withdrawals", async (
+            string familyId, string? status, IFamilyScoreboardService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetWithdrawalsAsync(familyId, status, ct)));
+
+        admin.MapPost("/{familyId}/withdrawals/{requestId}/process", async (
+            string familyId, string requestId, ProcessWithdrawalRequest request,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var result = await svc.ProcessWithdrawalAsync(familyId, requestId, request, uid, ct);
+            return Results.Ok(result);
+        });
+
         // ── Phase 3 Admin: Events ─────────────────────────────────────────────────
         admin.MapPost("/{familyId}/events", async (
             string familyId, CreateEventRequest request,
@@ -562,6 +598,25 @@ public static class FamilyScoreboardEndpoints
             var playerId = user.FindFirstValue("playerId");
             if (playerId is null) return Results.Unauthorized();
             return Results.Ok(await svc.GetAllowanceLedgerAsync(familyId, playerId, ct));
+        });
+
+        // ── 玩家提領零用金 ─────────────────────────────────────────────────────────
+        playerGroup.MapPost("/{familyId}/withdrawals", async (
+            string familyId, CreateWithdrawalRequest request,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var playerId = user.FindFirstValue("playerId");
+            if (playerId is null) return Results.Unauthorized();
+            var result = await svc.CreateWithdrawalAsync(familyId, request, playerId, ct);
+            return Results.Created($"/api/family-scoreboard/{familyId}/withdrawals/{result.RequestId}", result);
+        });
+
+        playerGroup.MapGet("/{familyId}/my-withdrawals", async (
+            string familyId, IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var playerId = user.FindFirstValue("playerId");
+            if (playerId is null) return Results.Unauthorized();
+            return Results.Ok(await svc.GetMyWithdrawalsAsync(familyId, playerId, ct));
         });
 
         // ── 玩家自己的狀態（封印/處罰/效果） ─────────────────────────────────────

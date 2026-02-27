@@ -48,6 +48,13 @@ import type {
   MyFamilyItemDto,
   FamilyAdminDto,
   VisitorLeaderboardDto,
+  FamilySettingsDto,
+  UpdateFamilySettingsRequest,
+  ExchangeXpRequest,
+  ExchangeXpResultDto,
+  WithdrawalRequestDto,
+  CreateWithdrawalRequest,
+  ProcessWithdrawalRequest,
 } from '@/types/family-scoreboard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -503,6 +510,82 @@ export async function adjustAllowance(familyId: string, request: AdjustAllowance
   });
   if (!res.ok) throw new Error('Failed to adjust allowance');
   return res.json() as Promise<AllowanceLedgerDto>;
+}
+
+// ─────────────────────────── Family Settings ───────────────────────────────
+
+export async function getFamilySettings(familyId: string): Promise<FamilySettingsDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/settings`, { headers });
+  if (!res.ok) throw new Error(`Failed to get family settings: ${res.status}`);
+  return res.json();
+}
+
+export async function updateFamilySettings(familyId: string, request: UpdateFamilySettingsRequest): Promise<FamilySettingsDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/settings`, {
+    method: 'PUT',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error(`Failed to update family settings: ${res.status}`);
+  return res.json();
+}
+
+// ─────────────────────────── XP Exchange ───────────────────────────────────
+
+export async function exchangeXp(familyId: string, request: ExchangeXpRequest): Promise<ExchangeXpResultDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/exchange-xp`, {
+    method: 'POST',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error(`Failed to exchange XP: ${res.status}`);
+  return res.json();
+}
+
+// ─────────────────────────── Withdrawals (Admin) ───────────────────────────
+
+export async function getWithdrawals(familyId: string, status?: string): Promise<WithdrawalRequestDto[]> {
+  const headers = await getAuthHeaders();
+  const url = status
+    ? `${API_URL}/api/family-scoreboard/${familyId}/withdrawals?status=${status}`
+    : `${API_URL}/api/family-scoreboard/${familyId}/withdrawals`;
+  const res = await fetch(url, { headers });
+  if (!res.ok) throw new Error(`Failed to get withdrawals: ${res.status}`);
+  return res.json();
+}
+
+export async function processWithdrawal(familyId: string, requestId: string, request: ProcessWithdrawalRequest): Promise<WithdrawalRequestDto> {
+  const headers = await getAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/withdrawals/${requestId}/process`, {
+    method: 'POST',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error(`Failed to process withdrawal: ${res.status}`);
+  return res.json();
+}
+
+// ─────────────────────────── Withdrawals (Player) ──────────────────────────
+
+export async function createWithdrawal(familyId: string, request: CreateWithdrawalRequest): Promise<WithdrawalRequestDto> {
+  const headers = await getPlayerAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/withdrawals`, {
+    method: 'POST',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  });
+  if (!res.ok) throw new Error(`Failed to create withdrawal: ${res.status}`);
+  return res.json();
+}
+
+export async function getMyWithdrawals(familyId: string): Promise<WithdrawalRequestDto[]> {
+  const headers = await getPlayerAuthHeaders();
+  const res = await fetch(`${API_URL}/api/family-scoreboard/${familyId}/my-withdrawals`, { headers });
+  if (!res.ok) throw new Error(`Failed to get my withdrawals: ${res.status}`);
+  return res.json();
 }
 
 // ─────────────────────────── Phase 3 Admin - Shop Management ───────────────

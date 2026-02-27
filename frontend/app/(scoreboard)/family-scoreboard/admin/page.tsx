@@ -54,6 +54,10 @@ import {
   getRedemptions,
   deleteTransactions,
   deleteRedemptions,
+  getFamilySettings,
+  updateFamilySettings,
+  getWithdrawals,
+  processWithdrawal,
 } from '@/lib/api/family-scoreboard';
 import type {
   PlayerScoreDto,
@@ -78,9 +82,11 @@ import type {
   CreatePenaltyRequest,
   CoAdminDto,
   MyFamilyItemDto,
+  FamilySettingsDto,
+  WithdrawalRequestDto,
 } from '@/types/family-scoreboard';
 
-type AdminTab = 'code' | 'players' | 'tasks' | 'pending' | 'allowance' | 'shop' | 'events' | 'discipline' | 'records' | 'backup';
+type AdminTab = 'code' | 'players' | 'tasks' | 'pending' | 'allowance' | 'shop' | 'events' | 'discipline' | 'records' | 'backup' | 'settings';
 type PlayerModal =
   | { type: 'add' }
   | { type: 'edit'; player: PlayerScoreDto }
@@ -373,10 +379,25 @@ export default function FamilyScoreboardAdminPage() {
   const [showShopForm, setShowShopForm] = useState(false);
   const [shopName, setShopName]         = useState('');
   const [shopDesc, setShopDesc]         = useState('');
-  const [shopPrice, setShopPrice]       = useState(50);
+  const [shopXpPrice, setShopXpPrice]           = useState(0);
+  const [shopAllowancePrice, setShopAllowancePrice] = useState(50);
   const [shopType, setShopType]         = useState<'physical' | 'activity' | 'privilege' | 'money'>('physical');
   const [shopEmoji, setShopEmoji]       = useState('🎁');
   const [shopCreating, setShopCreating] = useState(false);
+
+  // Family settings state
+  const [familySettings, setFamilySettings]       = useState<FamilySettingsDto | null>(null);
+  const [settingsLoading, setSettingsLoading]     = useState(false);
+  const [settingsErr, setSettingsErr]             = useState<string | null>(null);
+  const [settingsSaving, setSettingsSaving]       = useState(false);
+  const [settingsRate, setSettingsRate]           = useState(10);
+  const [settingsEnabled, setSettingsEnabled]     = useState(true);
+
+  // Withdrawal management state
+  const [withdrawals, setWithdrawals]           = useState<WithdrawalRequestDto[]>([]);
+  const [withdrawalsLoading, setWithdrawalsLoading] = useState(false);
+  const [withdrawalsErr, setWithdrawalsErr]     = useState<string | null>(null);
+  const [processingWithdrawalId, setProcessingWithdrawalId] = useState<string | null>(null);
 
   const [events, setEvents]               = useState<EventDto[]>([]);
   const [eventsLoading, setEventsLoading] = useState(false);
@@ -403,7 +424,6 @@ export default function FamilyScoreboardAdminPage() {
   const [setBalanceTarget, setSetBalanceTarget] = useState(0);
 
   // Phase 4: Shop extended state
-  const [shopPriceType, setShopPriceType]           = useState<'allowance' | 'xp'>('allowance');
   const [shopAllowanceGiven, setShopAllowanceGiven] = useState(10);
   const [shopDailyLimit, setShopDailyLimit]         = useState<number | null>(null);
 
@@ -569,6 +589,22 @@ export default function FamilyScoreboardAdminPage() {
     finally { setRecordsLoading(false); }
   }
 
+  async function loadSettingsData() {
+    if (!familyId) return;
+    setSettingsLoading(true); setSettingsErr(null);
+    try {
+      const [settings, pendingWithdrawals] = await Promise.all([
+        getFamilySettings(familyId),
+        getWithdrawals(familyId, 'pending'),
+      ]);
+      setFamilySettings(settings);
+      setSettingsRate(settings.xpToAllowanceRate);
+      setSettingsEnabled(settings.xpToAllowanceEnabled);
+      setWithdrawals(pendingWithdrawals);
+    } catch { setSettingsErr('載入設定失敗'); }
+    finally { setSettingsLoading(false); }
+  }
+
   useEffect(() => {
     if (!familyId) return;
     if (activeTab === 'tasks' || activeTab === 'pending') loadTaskData();
@@ -577,6 +613,7 @@ export default function FamilyScoreboardAdminPage() {
     else if (activeTab === 'events') loadEventsData();
     else if (activeTab === 'discipline') loadDisciplineData();
     else if (activeTab === 'records') loadRecordsData();
+    else if (activeTab === 'settings') loadSettingsData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [familyId, activeTab, loadTaskData, loadAllowanceData, loadShopData, loadEventsData, loadDisciplineData]);
 
@@ -721,19 +758,21 @@ export default function FamilyScoreboardAdminPage() {
 
   async function handleCreateShopItem() {
     if (!shopName.trim() || !familyId) return;
+    if (shopXpPrice === 0 && shopAllowancePrice === 0) { setShopErr('XP 價格和零用金價格至少需填一項（> 0）'); return; }
     setShopCreating(true); setShopErr(null);
     try {
       const req: CreateShopItemRequest = {
-        name: shopName.trim(), description: shopDesc.trim(), price: shopPrice,
+        name: shopName.trim(), description: shopDesc.trim(),
+        xpPrice: shopXpPrice, allowancePrice: shopAllowancePrice,
         type: shopType, emoji: shopEmoji,
-        priceType: shopPriceType,
-        allowanceGiven: shopPriceType === 'xp' ? shopAllowanceGiven : 0,
+        allowanceGiven: shopXpPrice > 0 ? shopAllowanceGiven : 0,
         dailyLimit: shopDailyLimit ?? undefined,
       };
       const item = await createShopItem(familyId, req);
       setShopItems((prev) => [...prev, item]);
-      setShowShopForm(false); setShopName(''); setShopDesc(''); setShopPrice(50);
-      setShopPriceType('allowance'); setShopAllowanceGiven(10); setShopDailyLimit(null);
+      setShowShopForm(false); setShopName(''); setShopDesc('');
+      setShopXpPrice(0); setShopAllowancePrice(50);
+      setShopAllowanceGiven(10); setShopDailyLimit(null);
     } catch { setShopErr('建立商品失敗'); } finally { setShopCreating(false); }
   }
 
@@ -772,6 +811,7 @@ export default function FamilyScoreboardAdminPage() {
     { id: 'discipline', label: '封印/處罰',                                              icon: '🔒' },
     { id: 'records',    label: '記錄管理',                                               icon: '🗂️' },
     { id: 'backup',     label: '備份',                                                   icon: '💾' },
+    { id: 'settings',   label: '設定',                                                   icon: '⚙️' },
   ];
 
   return (
@@ -847,7 +887,7 @@ export default function FamilyScoreboardAdminPage() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-gray-400 mb-1.5 font-medium">價格</label>
+                <label className="block text-xs text-gray-400 mb-1.5 font-medium">零用金價格 (NT$)</label>
                 <input type="number" value={editShopPrice} onChange={(e) => setEditShopPrice(Number(e.target.value))}
                   className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-3 py-3 text-center font-bold outline-none min-h-[48px]" />
               </div>
@@ -864,9 +904,10 @@ export default function FamilyScoreboardAdminPage() {
                 setEditShopSaving(true);
                 try {
                   const updated = await updateShopItem(familyId, editingShopItem.itemId, {
-                    name: editShopName.trim(), description: editShopDesc.trim(), price: editShopPrice,
+                    name: editShopName.trim(), description: editShopDesc.trim(),
+                    xpPrice: editingShopItem.xpPrice, allowancePrice: editShopPrice,
                     type: editingShopItem.type, emoji: editShopEmoji || '🎁',
-                    priceType: editingShopItem.priceType, allowanceGiven: editingShopItem.allowanceGiven,
+                    allowanceGiven: editingShopItem.allowanceGiven,
                     dailyLimit: editingShopItem.dailyLimit ?? undefined, stock: editingShopItem.stock ?? undefined,
                   });
                   setShopItems((prev) => prev.map((i) => i.itemId === updated.itemId ? updated : i));
@@ -1647,36 +1688,36 @@ export default function FamilyScoreboardAdminPage() {
                         </div>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 mb-2">付款方式</p>
-                        <div className="flex gap-2">
-                          <button onClick={() => setShopPriceType('allowance')}
-                            className={`flex-1 min-h-[48px] rounded-xl text-sm font-bold transition-all ${shopPriceType === 'allowance' ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-600'}`}>
-                            💰 零用金
-                          </button>
-                          <button onClick={() => setShopPriceType('xp')}
-                            className={`flex-1 min-h-[48px] rounded-xl text-sm font-bold transition-all ${shopPriceType === 'xp' ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-600'}`}>
-                            ⭐ 經驗值 XP
-                          </button>
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-400 mb-2">價格（{shopPriceType === 'xp' ? 'XP ⭐' : '零用金 💰'}）</p>
+                        <p className="text-xs text-gray-400 mb-2">⭐ XP 價格（0 = 不接受 XP）</p>
                         <div className="grid grid-cols-4 gap-2 mb-2">
-                          {[20, 50, 100, 200].map((p) => (
-                            <button key={p} onClick={() => setShopPrice(p)}
-                              className={`min-h-[48px] rounded-xl text-sm font-bold transition-all active:scale-95 ${shopPrice === p ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-amber-100'}`}>
-                              {p}
+                          {[0, 50, 100, 200].map((p) => (
+                            <button key={p} onClick={() => setShopXpPrice(p)}
+                              className={`min-h-[48px] rounded-xl text-sm font-bold transition-all active:scale-95 ${shopXpPrice === p ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-amber-100'}`}>
+                              {p === 0 ? '不限' : p}
                             </button>
                           ))}
                         </div>
-                        <input type="number" placeholder="自訂價格" value={shopPrice} onChange={(e) => setShopPrice(Number(e.target.value))}
+                        <input type="number" placeholder="XP 價格（0 = 不接受）" value={shopXpPrice} onChange={(e) => setShopXpPrice(Number(e.target.value))}
                           className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[48px]" />
                       </div>
-                      {shopPriceType === 'xp' && (
+                      <div>
+                        <p className="text-xs text-gray-400 mb-2">💰 零用金價格 NT$（0 = 不接受零用金）</p>
+                        <div className="grid grid-cols-4 gap-2 mb-2">
+                          {[0, 10, 30, 50].map((p) => (
+                            <button key={p} onClick={() => setShopAllowancePrice(p)}
+                              className={`min-h-[48px] rounded-xl text-sm font-bold transition-all active:scale-95 ${shopAllowancePrice === p ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-amber-100'}`}>
+                              {p === 0 ? '不限' : p}
+                            </button>
+                          ))}
+                        </div>
+                        <input type="number" placeholder="零用金價格（0 = 不接受）" value={shopAllowancePrice} onChange={(e) => setShopAllowancePrice(Number(e.target.value))}
+                          className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[48px]" />
+                      </div>
+                      {shopXpPrice > 0 && (
                         <div>
-                          <p className="text-xs text-gray-400 mb-2">給予零用金 💰</p>
+                          <p className="text-xs text-gray-400 mb-2">用 XP 兌換時給予零用金 💰</p>
                           <div className="grid grid-cols-4 gap-2 mb-2">
-                            {[5, 10, 20, 50].map((v) => (
+                            {[0, 5, 10, 20].map((v) => (
                               <button key={v} onClick={() => setShopAllowanceGiven(v)}
                                 className={`min-h-[48px] rounded-xl text-sm font-bold transition-all active:scale-95 ${shopAllowanceGiven === v ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-amber-100'}`}>
                                 {v}
@@ -1729,14 +1770,18 @@ export default function FamilyScoreboardAdminPage() {
                           <p className="text-xs text-amber-600 font-bold mt-0.5">{SHOP_TYPE_CONFIG[item.type]?.label ?? item.type}</p>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="font-black text-red-500">
-                            {item.price} {item.priceType === 'xp' ? '⭐ XP' : '💰'}
+                          <p className="font-black text-red-500 text-xs leading-tight">
+                            {item.xpPrice > 0 && item.allowancePrice > 0
+                              ? `${item.xpPrice} XP / NT$${item.allowancePrice}`
+                              : item.xpPrice > 0
+                              ? `${item.xpPrice} ⭐ XP`
+                              : `NT$${item.allowancePrice} 💰`}
                           </p>
                           {item.stock !== null && item.stock !== undefined && <p className="text-xs text-orange-500">庫存：{item.stock}</p>}
                           {item.dailyLimit && <p className="text-xs text-blue-500">每日{item.dailyLimit}次</p>}
                         </div>
                         <div className="flex flex-col gap-1 shrink-0">
-                          <button onClick={() => { setEditingShopItem(item); setEditShopName(item.name); setEditShopDesc(item.description); setEditShopPrice(item.price); setEditShopEmoji(item.emoji); }} className="text-xs text-blue-400 hover:text-blue-600 min-h-[36px] px-2">編輯</button>
+                          <button onClick={() => { setEditingShopItem(item); setEditShopName(item.name); setEditShopDesc(item.description); setEditShopPrice(item.allowancePrice); setEditShopEmoji(item.emoji); }} className="text-xs text-blue-400 hover:text-blue-600 min-h-[36px] px-2">編輯</button>
                           <button onClick={() => handleDeactivateShopItem(item.itemId)} className="text-xs text-red-400 hover:text-red-600 min-h-[36px] px-2">停用</button>
                         </div>
                       </div>
@@ -2229,6 +2274,142 @@ export default function FamilyScoreboardAdminPage() {
                     {importLoading ? '匯入中...' : '🔄 確認匯入（覆蓋資料）'}
                   </button>
                 </div>
+              </div>
+            )}
+
+            {/* ── Settings Tab ── */}
+            {activeTab === 'settings' && (
+              <div className="space-y-4">
+                {settingsErr && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-700 text-sm">⚠️ {settingsErr}</div>}
+                {settingsLoading && <div className="text-center py-8 text-amber-500 text-sm">載入中...</div>}
+
+                {!settingsLoading && (
+                  <>
+                    {/* Family Exchange Rate */}
+                    <div className="bg-white rounded-2xl p-5 shadow-sm space-y-4">
+                      <p className="text-sm font-bold text-gray-700">💱 匯率設定（XP 兌換零用金）</p>
+                      {familySettings && (
+                        <p className="text-xs text-gray-400">
+                          目前：{familySettings.xpToAllowanceEnabled ? `啟用，1 XP = NT$${(1 / familySettings.xpToAllowanceRate).toFixed(2)}（${familySettings.xpToAllowanceRate} XP = NT$1）` : '停用'}
+                        </p>
+                      )}
+                      <div>
+                        <label className="block text-xs text-gray-400 mb-1.5 font-medium">兌換率：幾 XP = NT$1</label>
+                        <input
+                          type="number" min={1} value={settingsRate}
+                          onChange={(e) => setSettingsRate(Math.max(1, Number(e.target.value)))}
+                          className="w-full border-2 border-gray-100 focus:border-amber-300 rounded-xl px-4 py-3 text-sm outline-none min-h-[48px]"
+                          placeholder="例如：10（表示 10 XP = NT$1）"
+                        />
+                        <p className="text-xs text-gray-400 mt-1">設定 {settingsRate} XP = NT$1（即 NT${(100 / settingsRate).toFixed(0)} 需 {settingsRate * 100} XP）</p>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-gray-700">啟用 XP 兌換零用金</p>
+                          <p className="text-xs text-gray-400">關閉後玩家無法使用 XP 換取零用金</p>
+                        </div>
+                        <button
+                          onClick={() => setSettingsEnabled((v) => !v)}
+                          className={`w-12 h-6 rounded-full transition-colors ${settingsEnabled ? 'bg-amber-500' : 'bg-gray-300'}`}
+                        >
+                          <span className={`block w-5 h-5 bg-white rounded-full shadow transition-transform mx-0.5 ${settingsEnabled ? 'translate-x-6' : 'translate-x-0'}`} />
+                        </button>
+                      </div>
+                      <button
+                        disabled={settingsSaving || !familyId}
+                        onClick={async () => {
+                          if (!familyId) return;
+                          setSettingsSaving(true); setSettingsErr(null);
+                          try {
+                            const updated = await updateFamilySettings(familyId, {
+                              xpToAllowanceRate: settingsRate,
+                              xpToAllowanceEnabled: settingsEnabled,
+                            });
+                            setFamilySettings(updated);
+                          } catch { setSettingsErr('儲存設定失敗'); }
+                          finally { setSettingsSaving(false); }
+                        }}
+                        className="w-full min-h-[52px] bg-amber-500 text-white font-bold rounded-2xl disabled:opacity-40 hover:bg-amber-600 active:scale-95 transition-all"
+                      >
+                        {settingsSaving ? '儲存中...' : '儲存設定'}
+                      </button>
+                    </div>
+
+                    {/* Withdrawal Management */}
+                    <div className="bg-white rounded-2xl p-5 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-bold text-gray-700">💸 提領審核</p>
+                        <button
+                          onClick={async () => {
+                            if (!familyId) return;
+                            setWithdrawalsLoading(true); setWithdrawalsErr(null);
+                            try { setWithdrawals(await getWithdrawals(familyId, 'pending')); }
+                            catch { setWithdrawalsErr('重新載入失敗'); }
+                            finally { setWithdrawalsLoading(false); }
+                          }}
+                          className="text-xs text-amber-600 font-medium min-h-[36px] px-2"
+                        >
+                          重新整理
+                        </button>
+                      </div>
+                      {withdrawalsErr && <p className="text-xs text-red-500">⚠️ {withdrawalsErr}</p>}
+                      {withdrawalsLoading && <p className="text-xs text-amber-500 text-center py-4">載入中...</p>}
+                      {!withdrawalsLoading && withdrawals.length === 0 && (
+                        <div className="text-center py-6 text-gray-300">
+                          <div className="text-3xl mb-1">💸</div>
+                          <p className="text-sm">目前無待審核的提領申請</p>
+                        </div>
+                      )}
+                      {!withdrawalsLoading && withdrawals.map((w) => {
+                        const playerName = scores.find((s) => s.playerId === w.playerId)?.name ?? w.playerId;
+                        return (
+                          <div key={w.requestId} className="border border-gray-100 rounded-xl p-4 space-y-2">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-sm font-semibold text-gray-800">{playerName}</p>
+                                <p className="text-xs text-gray-400">{new Date(w.requestedAt).toLocaleDateString('zh-TW')}</p>
+                              </div>
+                              <p className="text-lg font-black text-green-600">NT${w.amount}</p>
+                            </div>
+                            {w.reason && <p className="text-xs text-gray-500 bg-gray-50 rounded-lg px-3 py-2">{w.reason}</p>}
+                            <div className="flex gap-2">
+                              <button
+                                disabled={processingWithdrawalId === w.requestId}
+                                onClick={async () => {
+                                  if (!familyId) return;
+                                  setProcessingWithdrawalId(w.requestId);
+                                  try {
+                                    await processWithdrawal(familyId, w.requestId, { action: 'approve' });
+                                    setWithdrawals((prev) => prev.filter((x) => x.requestId !== w.requestId));
+                                  } catch { setWithdrawalsErr('處理失敗，請重試'); }
+                                  finally { setProcessingWithdrawalId(null); }
+                                }}
+                                className="flex-1 min-h-[44px] bg-green-500 text-white text-sm font-bold rounded-xl disabled:opacity-40 hover:bg-green-600 active:scale-95 transition-all"
+                              >
+                                {processingWithdrawalId === w.requestId ? '處理中...' : '核准'}
+                              </button>
+                              <button
+                                disabled={processingWithdrawalId === w.requestId}
+                                onClick={async () => {
+                                  if (!familyId) return;
+                                  setProcessingWithdrawalId(w.requestId);
+                                  try {
+                                    await processWithdrawal(familyId, w.requestId, { action: 'reject' });
+                                    setWithdrawals((prev) => prev.filter((x) => x.requestId !== w.requestId));
+                                  } catch { setWithdrawalsErr('處理失敗，請重試'); }
+                                  finally { setProcessingWithdrawalId(null); }
+                                }}
+                                className="flex-1 min-h-[44px] border-2 border-red-300 text-red-500 text-sm font-bold rounded-xl disabled:opacity-40 hover:bg-red-50 active:scale-95 transition-all"
+                              >
+                                拒絕
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
             )}
 

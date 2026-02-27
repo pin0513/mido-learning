@@ -90,9 +90,12 @@ public class TransactionDoc
     [FirestoreProperty("note")]
     public string? Note { get; set; }
 
+    [FirestoreProperty("currency")]
+    public string? Currency { get; set; }
+
     public TransactionDto ToDto() => new(
         Id, PlayerIds.AsReadOnly(), Type, Amount, Reason, CategoryId,
-        CreatedBy, CreatedAt.ToDateTimeOffset(), Note
+        CreatedBy, CreatedAt.ToDateTimeOffset(), Note, Currency
     );
 }
 

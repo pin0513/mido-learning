@@ -162,6 +162,7 @@ export default function FamilyScoreboardPage() {
   const [selectedCat, setSelectedCat]     = useState<Category | null>(null);
   const [customAmount, setCustomAmount]   = useState('');
   const [customReason, setCustomReason]   = useState('');
+  const [txCurrency, setTxCurrency]       = useState<'xp' | 'allowance'>('xp');
   const [submitting, setSubmitting]       = useState(false);
 
   // Score bounce animation
@@ -206,6 +207,7 @@ export default function FamilyScoreboardPage() {
       setSelectedCat(null);
       setCustomAmount('');
       setCustomReason('');
+      setTxCurrency('xp');
     }, 300);
   }
 
@@ -240,6 +242,7 @@ export default function FamilyScoreboardPage() {
       amount,
       reason: customReason,
       categoryId: selectedCat?.id,
+      currency: txCurrency,
     };
     await submitTransaction(req);
 
@@ -1282,8 +1285,22 @@ export default function FamilyScoreboardPage() {
             <div className="space-y-4">
 
               <div>
+                <label className="block text-xs text-gray-400 mb-2 font-medium">幣別</label>
+                <div className="flex gap-2">
+                  <button onClick={() => setTxCurrency('xp')}
+                    className={`flex-1 min-h-[44px] rounded-xl text-sm font-bold transition-all ${txCurrency === 'xp' ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-600'}`}>
+                    ⭐ 經驗值 XP
+                  </button>
+                  <button onClick={() => setTxCurrency('allowance')}
+                    className={`flex-1 min-h-[44px] rounded-xl text-sm font-bold transition-all ${txCurrency === 'allowance' ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-600'}`}>
+                    💰 零用金
+                  </button>
+                </div>
+              </div>
+
+              <div>
                 <label className="block text-xs text-gray-400 mb-2 font-medium">
-                  {txType === 'earn' ? '加' : '扣'}分數量
+                  {txType === 'earn' ? '加' : '扣'}{txCurrency === 'xp' ? '分' : '零用金'}數量
                 </label>
                 <input
                   type="number"
@@ -1321,7 +1338,7 @@ export default function FamilyScoreboardPage() {
                     <span className={`text-2xl font-black tabular-nums ${txType === 'earn' ? 'text-green-600' : 'text-red-500'}`}>
                       {txType === 'earn' ? '+' : '−'}{customAmount}
                     </span>
-                    {' '}分
+                    {' '}{txCurrency === 'xp' ? '⭐ XP' : '💰 NT$'}
                   </p>
                   <p className="text-xs text-gray-400 mt-1.5">因為：{customReason}</p>
                 </div>

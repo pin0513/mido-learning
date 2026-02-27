@@ -13,8 +13,8 @@ public class ShopItemDoc
     [FirestoreProperty("description")]
     public string Description { get; set; } = string.Empty;
 
-    [FirestoreProperty("price")]
-    public int Price { get; set; }
+    [FirestoreProperty("xpPrice")]
+    public int XpPrice { get; set; }
 
     [FirestoreProperty("type")]
     public string Type { get; set; } = "activity"; // physical | activity | privilege | money
@@ -28,8 +28,8 @@ public class ShopItemDoc
     [FirestoreProperty("stock")]
     public int? Stock { get; set; }
 
-    [FirestoreProperty("priceType")]
-    public string PriceType { get; set; } = "allowance"; // "allowance" | "xp"
+    [FirestoreProperty("allowancePrice")]
+    public int AllowancePrice { get; set; }
 
     [FirestoreProperty("dailyLimit")]
     public int? DailyLimit { get; set; } // null = 無上限; 1 = 每日一次
@@ -47,8 +47,8 @@ public class ShopItemDoc
     public double? EffectValue { get; set; } // xp-multiplier 倍率（stored as double in Firestore）
 
     public ShopItemDto ToDto() => new(
-        ItemId, Name, Description, Price, Type, Emoji, IsActive, Stock,
-        PriceType, DailyLimit, AllowanceGiven, DurationMinutes, EffectType,
+        ItemId, Name, Description, XpPrice, Type, Emoji, IsActive, Stock,
+        AllowancePrice, DailyLimit, AllowanceGiven, DurationMinutes, EffectType,
         EffectValue.HasValue ? (decimal?)Convert.ToDecimal(EffectValue.Value) : null
     );
 }
@@ -86,10 +86,50 @@ public class ShopOrderDoc
     [FirestoreProperty("note")]
     public string? Note { get; set; }
 
+    [FirestoreProperty("paymentMethod")]
+    public string? PaymentMethod { get; set; }
+
     public ShopOrderDto ToDto() => new(
         OrderId, PlayerId, ItemId, ItemName, Price, Status,
         RequestedAt.ToDateTimeOffset(),
         ProcessedAt?.ToDateTimeOffset(),
-        ProcessedBy, Note
+        ProcessedBy, Note, PaymentMethod
     );
+}
+
+[FirestoreData]
+public class WithdrawalRequestDoc
+{
+    [FirestoreProperty("requestId")]
+    public string RequestId { get; set; } = "";
+
+    [FirestoreProperty("playerId")]
+    public string PlayerId { get; set; } = "";
+
+    [FirestoreProperty("amount")]
+    public int Amount { get; set; }
+
+    [FirestoreProperty("reason")]
+    public string Reason { get; set; } = "";
+
+    [FirestoreProperty("status")]
+    public string Status { get; set; } = "pending";
+
+    [FirestoreProperty("requestedAt")]
+    public Timestamp RequestedAt { get; set; }
+
+    [FirestoreProperty("processedAt")]
+    public Timestamp? ProcessedAt { get; set; }
+
+    [FirestoreProperty("processedBy")]
+    public string? ProcessedBy { get; set; }
+
+    [FirestoreProperty("note")]
+    public string? Note { get; set; }
+
+    public WithdrawalRequestDto ToDto() => new(
+        RequestId, PlayerId, Amount, Reason, Status,
+        RequestedAt.ToDateTime(),
+        ProcessedAt?.ToDateTime(),
+        ProcessedBy, Note);
 }

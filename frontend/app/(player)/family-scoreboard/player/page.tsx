@@ -227,8 +227,10 @@ export default function PlayerPage() {
 
   async function handleShopOrder(item: ShopItemDto) {
     setOrderingItemId(item.itemId);
+    const paymentMethod: 'xp' | 'allowance' =
+      item.allowancePrice > 0 ? 'allowance' : 'xp';
     try {
-      await createPlayerShopOrder(familyId, { itemId: item.itemId });
+      await createPlayerShopOrder(familyId, { itemId: item.itemId, paymentMethod });
       setOrderSuccess(true);
       setTimeout(() => setOrderSuccess(false), 3000);
     } catch {
@@ -655,9 +657,13 @@ export default function PlayerPage() {
                   <div className="space-y-3">
                     {shopItems.map((item) => {
                       const typeConf = SHOP_TYPE_CONFIG[item.type] ?? { label: item.type, color: 'bg-gray-100 text-gray-700' };
-                      const isXp = item.priceType === 'xp';
+                      const hasXpPrice = item.xpPrice > 0;
+                      const hasAllowancePrice = item.allowancePrice > 0;
                       const playerXp = myScore?.achievementPoints ?? 0;
-                      const canAfford = isXp ? playerXp >= item.price : (allowance?.balance ?? 0) >= item.price;
+                      // Afford check: item is affordable if the player can pay with at least one available method
+                      const canAffordAllowance = hasAllowancePrice && (allowance?.balance ?? 0) >= item.allowancePrice;
+                      const canAffordXp = hasXpPrice && playerXp >= item.xpPrice;
+                      const canAfford = canAffordAllowance || canAffordXp;
                       return (
                         <div key={item.itemId} className="bg-white rounded-2xl shadow-sm p-4 flex items-center gap-4">
                           <span className="text-4xl shrink-0">{item.emoji}</span>
@@ -679,11 +685,18 @@ export default function PlayerPage() {
                             )}
                           </div>
                           <div className="shrink-0 text-right space-y-2">
-                            <p className="font-black text-amber-600">
-                              {isXp ? `${item.price} ⭐ XP` : `NT$${item.price}`}
-                            </p>
+                            <div className="font-black text-amber-600 space-y-0.5">
+                              {hasAllowancePrice && (
+                                <p>NT${item.allowancePrice}</p>
+                              )}
+                              {hasXpPrice && (
+                                <p className="text-sm">{item.xpPrice} XP</p>
+                              )}
+                            </div>
                             {!canAfford && (
-                              <p className="text-xs text-red-400">{isXp ? 'XP 不足' : '零用金不足'}</p>
+                              <p className="text-xs text-red-400">
+                                {hasAllowancePrice && hasXpPrice ? '餘額不足' : hasXpPrice ? 'XP 不足' : '零用金不足'}
+                              </p>
                             )}
                             <button
                               onClick={() => handleShopOrder(item)}
