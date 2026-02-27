@@ -56,6 +56,14 @@ graph TB
     GameAdmin --> GameDashboard[遊戲儀表板]
     GameAdmin --> Achievements[成就管理]
 
+    %% Scoreboard Routes
+    Home --> Scoreboard[家庭計分板 🔒🎮]
+    Scoreboard --> ScoreboardMain[計分板主頁]
+    Scoreboard --> ScoreboardAdmin[管理設定]
+    Scoreboard --> SuperAdmin[Super Admin]
+    Scoreboard --> Player[玩家介面]
+    Scoreboard --> PublicScoreboard[訪客排行榜]
+
     %% Fullscreen
     Home --> Fullscreen[全螢幕查看器]
 
@@ -66,6 +74,7 @@ graph TB
     style Teacher fill:#F44336,stroke:#C62828,color:#fff
     style Admin fill:#E91E63,stroke:#880E4F,color:#fff
     style GameAdmin fill:#3F51B5,stroke:#1A237E,color:#fff
+    style Scoreboard fill:#00BCD4,stroke:#006064,color:#fff
     style Fullscreen fill:#607D8B,stroke:#37474F,color:#fff
 ```
 
@@ -169,6 +178,40 @@ graph TB
 
 ---
 
+### 8️⃣ 家庭計分板 (Family Scoreboard) - 需要登入 🔒🎮
+
+| 路徑 | 頁面名稱 | 說明 | 動態參數 |
+|------|---------|------|---------|
+| `/family-scoreboard` | 家庭計分板 | 主頁面（Tabs: 首頁/記錄/任務/報表/商城） | - |
+| `/family-scoreboard/admin` | 管理設定 | 家庭管理、玩家管理、商品管理、設定 | - |
+| `/family-scoreboard/super-admin` | Super Admin | 所有家庭列表、封禁/解封/刪除 | - |
+
+**存取權限**: 🔒🎮 需要登入 + 家庭成員角色
+**重定向**: 未登入用戶會被重定向到 `/login`
+
+---
+
+### 9️⃣ 玩家端 (Player) - 家庭代碼登入 🔒
+
+| 路徑 | 頁面名稱 | 說明 | 動態參數 |
+|------|---------|------|---------|
+| `/family-scoreboard/player` | 玩家介面 | 玩家獨立登入、查看積分、提交任務、商城下單 | - |
+
+**存取權限**: 🔒 需要家庭代碼登入
+**重定向**: 未登入玩家需輸入家庭代碼
+
+---
+
+### 🔟 訪客排行榜 (Public Scoreboard)
+
+| 路徑 | 頁面名稱 | 說明 | 動態參數 |
+|------|---------|------|---------|
+| `/experiments/family-scoreboard` | 訪客排行榜 | 透過家庭代碼查看公開排名 | - |
+
+**存取權限**: ✅ 所有人（需輸入家庭代碼查看）
+
+---
+
 ### 7️⃣ 全螢幕查看器 (Fullscreen) - 動態權限
 
 | 路徑 | 頁面名稱 | 說明 | 動態參數 | 存取權限 |
@@ -207,6 +250,13 @@ graph TB
 - 分類管理 `/teacher/taxonomy`
 - 學生願望 `/teacher/wishes`
 
+### 家庭計分板 🎮
+- 計分板主頁 `/family-scoreboard`
+- 管理設定 `/family-scoreboard/admin`
+- Super Admin `/family-scoreboard/super-admin`
+- 玩家介面 `/family-scoreboard/player`
+- 訪客排行榜 `/experiments/family-scoreboard`
+
 ### 系統管理 👑
 - 用戶管理 `/admin/users`
 - 元件管理 `/admin/components`
@@ -231,8 +281,17 @@ Level 2: Teacher（教師）
 Level 3: Admin（管理員）
     └─ /admin/*, /game-admin/*（包含 Level 1 & 2 所有權限）
 
+Level S: Scoreboard（家庭計分板）
+    └─ /family-scoreboard（需要登入 + 家庭成員）
+    └─ /family-scoreboard/admin（需要家庭管理員）
+    └─ /family-scoreboard/super-admin（需要 Super Admin）
+    └─ /family-scoreboard/player（需要家庭代碼登入）
+
 Special: Dynamic（動態）
     └─ /materials/[componentId]/fullscreen（依元件設定決定）
+
+Special: Public with Code（公開但需代碼）
+    └─ /experiments/family-scoreboard（需輸入家庭代碼查看）
 ```
 
 ---
@@ -247,6 +306,7 @@ Special: Dynamic（動態）
 | (teacher) | ✅ | ✅ | ⚠️ | 部分功能需桌面操作 |
 | (admin) | ✅ | ⚠️ | ⚠️ | 建議桌面使用 |
 | (game-admin) | ✅ | ⚠️ | ⚠️ | 建議桌面使用 |
+| (scoreboard) | ✅ | ✅ | ✅ | 完整 RWD 支援 |
 | (fullscreen) | ✅ | ✅ | ✅ | 完整 RWD 支援 |
 
 ---
@@ -264,6 +324,10 @@ Special: Dynamic（動態）
 | 管理用戶 | `/admin/users` |
 | 建立成就 | `/game-admin/achievements/new` |
 | 查看我的成就 | `/dashboard/achievements` |
+| 家庭計分板 | `/family-scoreboard` |
+| 管理家庭設定 | `/family-scoreboard/admin` |
+| 玩家登入 | `/family-scoreboard/player` |
+| 查看公開排行榜 | `/experiments/family-scoreboard` |
 
 ---
 
@@ -271,13 +335,16 @@ Special: Dynamic（動態）
 
 | 類別 | 數量 |
 |------|------|
-| **總頁面數** | 39 |
+| **總頁面數** | 44 |
 | 公開頁面 | 8 |
 | 認證頁面 | 4 |
 | 會員頁面 | 10 |
 | 教師頁面 | 6 |
 | 管理員頁面 | 6 |
 | 遊戲管理員頁面 | 4 |
+| 家庭計分板頁面 | 3 |
+| 玩家端頁面 | 1 |
+| 訪客排行榜頁面 | 1 |
 | 全螢幕查看器 | 1 |
 | 動態路由 | 12 |
 
@@ -299,6 +366,7 @@ Special: Dynamic（動態）
 - `(teacher)`: 需要教師權限
 - `(admin)`: 需要管理員權限
 - `(game-admin)`: 遊戲管理員
+- `(scoreboard)`: 家庭計分板
 - `(fullscreen)`: 全螢幕顯示
 
 ---
@@ -320,5 +388,5 @@ Special: Dynamic（動態）
 - 🔄 路由變更時更新對應章節
 - 🔄 權限調整時更新權限層級
 
-**最後更新**: 2026-02-17
+**最後更新**: 2026-02-28
 **維護者**: Claude Code

@@ -1,9 +1,9 @@
 # 家庭計分板 (Family Scoreboard) — 功能需求規格書
 
-**文件版本**：v2.0
+**文件版本**：v3.0
 **建立日期**：2026-02-18
-**更新日期**：2026-02-22
-**狀態**：M1–M14 全部完成 ✅
+**更新日期**：2026-02-28
+**狀態**：M1–M15 全部完成 ✅
 **主路由**：`/(scoreboard)/family-scoreboard`
 **玩家端路由**：`/(player)/family-scoreboard/player`
 
@@ -75,8 +75,8 @@
 | F5 | 報表儀表板 | ✅ | 報表 Tab：貼紙牆 + 個別玩家統計 |
 | F6 | 玩家管理 | ✅ | 新增/編輯/刪除玩家，含 emoji、生日、密碼 |
 | F7 | 任務系統 | ✅ | 任務 CRUD、週期設定、玩家提交、Admin 審核 |
-| F8 | 零用金系統 | ✅ | 獨立帳本、收支記錄、餘額查詢 |
-| F9 | 商城系統 | ✅ | 商品管理、玩家下單、Admin 審核、時效道具 |
+| F8 | 零用金系統 | ✅ | 獨立帳本、收支記錄、餘額查詢、家長加扣零用金 |
+| F9 | 商城系統 | ✅ | 商品雙標價（XP+零用金）、玩家自選付款、Admin 審核、時效道具 |
 | F10 | 事件日曆 | ✅ | 家庭活動紀錄、按月查詢 |
 | F11 | 紀律系統（封印/處罰） | ✅ | 封印(seal)、處罰(penalty)、活躍效果(effect) |
 | F12 | 多家庭支援 | ✅ | 建立多個家庭、家庭切換器、離開家庭 |
@@ -89,6 +89,8 @@
 | F19 | 任務範本 | ✅ | 預設任務集合，快速套用 |
 | F20 | 玩家自主提報 | ✅ | 玩家提報加分事由，Admin 審核 |
 | F21 | Admin 直接加分 | ✅ | 附帶封印/處罰效果的交易 |
+| F22 | 經濟系統重構（雙幣別） | ✅ | 加扣分選擇 XP/零用金、商城雙標價、XP→零用金兌換、提領申請審核 |
+| F23 | 訪客排行榜 | ✅ | 透過家庭代碼公開瀏覽玩家排名與零用金餘額 |
 
 ### 3.2 未來功能（尚未實作）
 
@@ -178,9 +180,28 @@ Admin 建立任務（household/exam/activity, 週期: once/daily/weekly）
 ### 5.4 商城系統流程
 
 ```
-Admin 建立商品（priceType: allowance/xp, 可設 dailyLimit/stock）
-  → Player 下單（status: pending）
-  → Admin 審核 → approve: 扣除對應積分/零用金，啟動效果 → reject: 退款
+Admin 建立商品（xpPrice + allowancePrice 雙標價, 可設 dailyLimit/stock）
+  → Player 下單（選擇 paymentMethod: xp 或 allowance）
+  → Admin 審核 → approve: 依 paymentMethod 扣除對應貨幣，啟動效果 → reject: 退款
+```
+
+### 5.5 經濟系統（雙幣別）
+
+```
+家庭設定：xpToAllowanceRate（多少 XP = $1）、xpToAllowanceEnabled（是否開放兌換）
+
+加扣分幣別選擇：
+  Admin 加扣分 → 選擇 currency: "xp" 或 "allowance"
+  currency=xp → 影響 scores（成就分/可兌換分）
+  currency=allowance → 影響 allowance-ledger（零用金帳本）
+
+XP→零用金兌換：
+  Player 輸入 XP 數量 → 依匯率轉換 → 扣 redeemablePoints + 加 allowance
+
+提領零用金：
+  Player 申請提領（金額 + 原因）→ status: pending
+  → Admin 核准 → 扣除零用金餘額 → status: approved
+  → Admin 拒絕 → 不扣款 → status: rejected
 ```
 
 ---
@@ -199,7 +220,9 @@ families/
         adminUids: string[],           # 主管理員 UID（陣列）
         displayCode: string | null,    # 4-8 位家庭代碼
         displayCodeExpiry: Timestamp | null,
-        isBanned: boolean              # Super Admin 封禁標記
+        isBanned: boolean,             # Super Admin 封禁標記
+        xpToAllowanceRate: number,     # 多少 XP = $1（預設 10）
+        xpToAllowanceEnabled: boolean  # 是否開放 XP→零用金兌換
       }
 
     players/
@@ -233,6 +256,7 @@ families/
         amount: number,
         reason: string,
         categoryId: string | null,
+        currency: "xp" | "allowance",   # 幣別（預設 xp，向後相容）
         createdBy: string,
         createdAt: Timestamp,
         note: string | null
@@ -332,12 +356,12 @@ families/
       {itemId}: {
         name: string,
         description: string,
-        price: number,
+        xpPrice: number,                 # XP 價格（0 = 不可用 XP 買）
+        allowancePrice: number,          # 零用金價格（0 = 不可用零用金買）
         type: "physical" | "activity" | "privilege" | "money",
         emoji: string,
         isActive: boolean,
         stock: number | null,
-        priceType: "allowance" | "xp",
         dailyLimit: number | null,
         allowanceGiven: number,
         durationMinutes: number | null,
@@ -351,6 +375,7 @@ families/
         itemId: string,
         itemName: string,
         price: number,
+        paymentMethod: "xp" | "allowance",  # 玩家選擇的付款方式
         status: "pending" | "approved" | "rejected",
         requestedAt: Timestamp,
         processedAt: Timestamp | null,
@@ -416,6 +441,18 @@ families/
         createdAt: Timestamp,
         expiresAt: Timestamp | null,
         expiredAt: Timestamp | null
+      }
+
+    withdrawalRequests/
+      {requestId}: {
+        playerId: string,
+        amount: number,
+        reason: string | null,
+        status: "pending" | "approved" | "rejected",
+        requestedAt: Timestamp,
+        processedAt: Timestamp | null,
+        processedBy: string | null,
+        note: string | null
       }
 ```
 
@@ -631,6 +668,16 @@ Firebase Firestore
 | `POST` | `/{familyId}/active-effects` | 建立效果 |
 | `POST` | `/{familyId}/active-effects/{effectId}/expire` | 使效果過期 |
 
+**經濟系統（雙幣別）**
+
+| Method | Endpoint | 說明 |
+|--------|----------|------|
+| `GET` | `/{familyId}/settings` | 取得家庭設定（匯率、兌換開關） |
+| `PUT` | `/{familyId}/settings` | 更新家庭設定 |
+| `POST` | `/{familyId}/exchange-xp` | XP→零用金兌換 |
+| `GET` | `/{familyId}/withdrawals?status=` | 取得提領申請列表 |
+| `POST` | `/{familyId}/withdrawals/{id}/process` | 審核提領申請 |
+
 **備份**
 
 | Method | Endpoint | 說明 |
@@ -663,6 +710,8 @@ Firebase Firestore
 | `GET` | `/{familyId}/allowance/ledger` | 查看零用金帳本 |
 | `GET` | `/{familyId}/my-status` | 查看自己的封印/處罰/效果 |
 | `GET` | `/{familyId}/my-effects` | 查看自己的活躍效果（道具箱） |
+| `POST` | `/{familyId}/withdrawals` | 發起零用金提領申請 |
+| `GET` | `/{familyId}/my-withdrawals` | 查看自己的提領紀錄 |
 
 #### Super Admin 端點（SuperAdminOnly policy）
 
@@ -727,10 +776,12 @@ Firebase Firestore
 - When Player 提交完成，Admin 核准
 - Then Player 成就分 +10，可兌換分 +10
 
-### AC6：商城購買
-- Given 商品「看卡通30分鐘」price: 50，priceType: xp
-- When Player 下單，Admin 核准
+### AC6：商城購買（雙標價）
+- Given 商品「看卡通30分鐘」xpPrice: 50，allowancePrice: 10
+- When Player 選擇 paymentMethod: xp 下單，Admin 核准
 - Then Player 可兌換分 -50
+- When Player 選擇 paymentMethod: allowance 下單，Admin 核准
+- Then Player 零用金 -10
 
 ### AC7：紀律系統
 - Given Admin 對 Player 建立封印「no-tv」
@@ -745,8 +796,17 @@ Firebase Firestore
 - Then 與主 Admin 擁有相同管理權限
 
 ### AC9：E2E 測試
-- 56 個 Playwright API 測試全部通過
-- 覆蓋 STEP 1-14（初始化→積分→任務→零用金→商城→封印處罰→事件→道具→摘要→清理）
+- 67 個 Playwright API 測試全部通過
+- 覆蓋 STEP 1-14（初始化→積分→任務→零用金→商城→封印處罰→事件→道具→經濟系統→摘要→清理）
+
+### AC10：經濟系統（雙幣別）
+- Given 家庭設定 xpToAllowanceRate: 10
+- When Admin 用 currency: allowance 加分 +50
+- Then Player 零用金 +50（XP 不變）
+- When Player 兌換 100 XP
+- Then Player 可兌換分 -100，零用金 +10
+- When Player 申請提領 $5，Admin 核准
+- Then Player 零用金 -5，提領狀態 approved
 
 ---
 
@@ -780,13 +840,14 @@ Firebase Firestore
 | M12 | 紀律系統（封印/處罰/活躍效果 + 附帶效果交易） | ✅ 完成 |
 | M13 | 事件日曆 + 任務範本 + 備份匯出匯入 + 紀錄批次刪除 | ✅ 完成 |
 | M14 | 多家庭支援 + Co-Admin + Super Admin + 家庭切換器 | ✅ 完成 |
+| M15 | 經濟系統重構（雙幣別 XP+零用金、兌換、提領）+ 訪客排行榜 | ✅ 完成 |
 
 ---
 
 ## 12. E2E 測試
 
 - **測試檔案**：`frontend/e2e/family-scoreboard.spec.ts`
-- **測試數量**：56 個測試
+- **測試數量**：67 個測試
 - **認證方式**：`X-API-Key` auth + dev endpoints 繞過 Firebase Auth
 - **隔離策略**：每次建立獨立 `family_test{datetime}` 家庭
 - **覆蓋範圍**：STEP 1-14（API 層與核心業務流程）
@@ -819,3 +880,4 @@ cd frontend && npx playwright test e2e/family-scoreboard.spec.ts --reporter=list
 | v1.0 | 2026-02-18 | 初版，整合用戶所有需求說明 |
 | v1.2 | 2026-02-18 | M1-M7 全部完成，更新里程碑狀態 |
 | v2.0 | 2026-02-22 | 大幅更新：新增 M8-M14 功能（玩家登入、任務、零用金、商城、紀律、多家庭、Co-Admin、Super Admin）；更新路由（`/(scoreboard)` + `/(player)`）；新增角色（Co-Admin、Super Admin、Player 獨立登入）；重寫 API 端點表（60+ 端點）；補齊資料模型（15+ sub-collections）；移除過時 Controller pattern code samples |
+| v3.0 | 2026-02-28 | 經濟系統重構：shopItems 改雙標價（xpPrice+allowancePrice）、shopOrders 加 paymentMethod、transactions 加 currency、family settings 加匯率設定、新增 withdrawalRequests collection、新增 7 個 API 端點（settings/exchange/withdrawals）、E2E 56→67 tests、新增 F22/F23 功能、新增 AC10 驗收條件、新增 M15 里程碑 |
