@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getFirebaseAuth } from '@/lib/firebase';
+import { getActiveFamilies } from '@/lib/api/family-scoreboard';
+import type { ActiveFamilyDto } from '@/types/family-scoreboard';
 
 // ── Demo data for non-logged-in users ────────────────────────────────────────
 
@@ -79,6 +81,7 @@ export default function FamilyScoreboardExperimentPage() {
   const router = useRouter();
   const [authChecked, setAuthChecked] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [activeFamilies, setActiveFamilies] = useState<ActiveFamilyDto[]>([]);
 
   useEffect(() => {
     const auth = getFirebaseAuth();
@@ -94,6 +97,12 @@ export default function FamilyScoreboardExperimentPage() {
     });
     return () => unsubscribe();
   }, [router]);
+
+  useEffect(() => {
+    getActiveFamilies()
+      .then(setActiveFamilies)
+      .catch(() => { /* 靜默失敗 */ });
+  }, []);
 
   // 等待 auth 確認
   if (!authChecked && !isLoggedIn) {
@@ -157,6 +166,25 @@ export default function FamilyScoreboardExperimentPage() {
             ))}
           </div>
         </div>
+
+        {/* Active Families */}
+        {activeFamilies.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-center text-base font-bold text-gray-800 mb-4">Top 10 活躍家庭</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {activeFamilies.map((f) => (
+                <Link
+                  key={f.familyCode}
+                  href={`/family/${f.familyCode}`}
+                  className="flex flex-col items-center rounded-2xl bg-white p-4 shadow-md ring-1 ring-black/5 hover:shadow-lg transition-shadow"
+                >
+                  <span className="text-lg font-black text-orange-500">{f.familyCode}</span>
+                  <span className="text-xs text-gray-400 mt-1">{f.playerCount} 位成員</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
         <div className="mt-8 text-center">
