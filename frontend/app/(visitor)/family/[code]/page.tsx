@@ -158,7 +158,7 @@ export default function VisitorLeaderboardPage() {
                   </div>
                   <div className="text-[10px] text-gray-400 font-medium">成就點</div>
                   <div className="text-sm font-bold text-emerald-600 mt-0.5">
-                    ${player.allowanceBalance}
+                    ${player.redeemablePoints}
                   </div>
                   <div className="text-[10px] text-gray-400 font-medium">零用金</div>
                 </div>

@@ -35,6 +35,7 @@ public interface IFamilyScoreboardService
     Task<string> SetDisplayCodeAsync(string familyId, string customCode, CancellationToken ct = default);
     Task<FamilyLookupDto?> LookupByCodeAsync(string code, CancellationToken ct = default);
     Task<VisitorLeaderboardDto?> GetVisitorLeaderboardAsync(string code, CancellationToken ct = default);
+    Task<IReadOnlyList<ActiveFamilyDto>> GetActiveFamiliesAsync(int limit = 10, CancellationToken ct = default);
 
     // ── Player CRUD ───────────────────────────────────────────────────────────
     Task<PlayerScoreDto> CreatePlayerAsync(string familyId, CreatePlayerRequest req, CancellationToken ct = default);

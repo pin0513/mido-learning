@@ -422,6 +422,14 @@ export interface PlayerStatusDto {
   activeEffects: ActiveEffectDto[];
 }
 
+// ── Active Families ─────────────────────────────────────────────────────
+
+export interface ActiveFamilyDto {
+  familyCode: string;
+  playerCount: number;
+  lastActiveAt: string;
+}
+
 // ── Visitor Leaderboard ──────────────────────────────────────────────────
 
 export interface VisitorPlayerDto {
@@ -430,6 +438,7 @@ export interface VisitorPlayerDto {
   color: string;
   emoji?: string | null;
   achievementPoints: number;
+  redeemablePoints: number;
   allowanceBalance: number;
   hasPassword: boolean;
 }

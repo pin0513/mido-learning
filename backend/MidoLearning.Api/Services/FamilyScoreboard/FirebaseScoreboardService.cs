@@ -615,12 +615,55 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
             .Select(p => new VisitorPlayerDto(
                 p.PlayerId, p.Name, p.Color, p.Emoji,
                 p.AchievementPoints,
+                p.RedeemablePoints,
                 balanceByPlayer.GetValueOrDefault(p.PlayerId, 0),
                 credentialIds.Contains(p.PlayerId)))
             .ToList()
             .AsReadOnly();
 
         return new VisitorLeaderboardDto(code.ToUpper(), players);
+    }
+
+    // ── GetActiveFamiliesAsync ──────────────────────────────────────────────────
+
+    public async Task<IReadOnlyList<ActiveFamilyDto>> GetActiveFamiliesAsync(int limit = 10, CancellationToken ct = default)
+    {
+        var familiesSnap = await _db.Collection("families")
+            .OrderByDescending("updatedAt")
+            .Limit(limit * 3) // fetch extra to account for filtered-out families
+            .GetSnapshotAsync(ct);
+
+        var results = new List<ActiveFamilyDto>();
+
+        foreach (var doc in familiesSnap.Documents)
+        {
+            if (results.Count >= limit) break;
+
+            var isBanned = doc.ContainsField("isBanned") && doc.GetValue<bool>("isBanned");
+            if (isBanned) continue;
+
+            var displayCode = doc.ContainsField("displayCode") ? doc.GetValue<string>("displayCode") : null;
+            if (string.IsNullOrWhiteSpace(displayCode)) continue;
+
+            var scoresSnap = await doc.Reference.Collection("scores").GetSnapshotAsync(ct);
+            var playerCount = scoresSnap.Count;
+            if (playerCount == 0) continue;
+
+            DateTimeOffset lastActiveAt;
+            if (doc.ContainsField("updatedAt"))
+            {
+                var ts = doc.GetValue<Timestamp>("updatedAt");
+                lastActiveAt = ts.ToDateTimeOffset();
+            }
+            else
+            {
+                lastActiveAt = DateTimeOffset.MinValue;
+            }
+
+            results.Add(new ActiveFamilyDto(displayCode, playerCount, lastActiveAt));
+        }
+
+        return results.AsReadOnly();
     }
 
     // ── CreatePlayerAsync ─────────────────────────────────────────────────────

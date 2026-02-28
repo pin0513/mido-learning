@@ -433,6 +433,14 @@ public record MyFamilyItemDto(
 
 public record BatchDeleteRequest(IReadOnlyList<string> Ids);
 
+// ── Active Families ─────────────────────────────────────────────────────
+
+public record ActiveFamilyDto(
+    string FamilyCode,
+    int PlayerCount,
+    DateTimeOffset LastActiveAt
+);
+
 // ── Visitor Leaderboard ──────────────────────────────────────────────────
 
 public record VisitorPlayerDto(
@@ -441,6 +449,7 @@ public record VisitorPlayerDto(
     string Color,
     string? Emoji,
     int AchievementPoints,
+    int RedeemablePoints,
     int AllowanceBalance,
     bool HasPassword
 );

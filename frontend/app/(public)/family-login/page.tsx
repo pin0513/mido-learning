@@ -2,9 +2,9 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { lookupFamilyByCode, playerLogin } from '@/lib/api/family-scoreboard';
+import { lookupFamilyByCode, playerLogin, getActiveFamilies } from '@/lib/api/family-scoreboard';
 import { savePlayerToken } from '@/lib/playerAuth';
-import type { FamilyLookupDto, PlayerSummaryDto } from '@/types/family-scoreboard';
+import type { FamilyLookupDto, PlayerSummaryDto, ActiveFamilyDto } from '@/types/family-scoreboard';
 
 type Step = 'enter-code' | 'select-player' | 'enter-password';
 
@@ -20,6 +20,14 @@ function FamilyLoginContent() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activeFamilies, setActiveFamilies] = useState<ActiveFamilyDto[]>([]);
+
+  // 載入活躍家庭
+  useEffect(() => {
+    getActiveFamilies()
+      .then(setActiveFamilies)
+      .catch(() => { /* 靜默失敗 */ });
+  }, []);
 
   // 支援 ?code=XXXX 直接跳到選玩家步驟
   useEffect(() => {
@@ -223,6 +231,25 @@ function FamilyLoginContent() {
             </div>
           )}
         </div>
+
+        {/* Active Families */}
+        {activeFamilies.length > 0 && (
+          <div className="mt-6">
+            <h2 className="text-center text-sm font-bold text-amber-700 mb-3">Top 10 活躍家庭</h2>
+            <div className="grid grid-cols-2 gap-2">
+              {activeFamilies.map((f) => (
+                <a
+                  key={f.familyCode}
+                  href={`/family/${f.familyCode}`}
+                  className="block bg-white rounded-2xl p-3 shadow-sm hover:shadow-md transition-shadow text-center border border-amber-100"
+                >
+                  <div className="text-lg font-black text-amber-600">{f.familyCode}</div>
+                  <div className="text-xs text-gray-400 mt-1">{f.playerCount} 位成員</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

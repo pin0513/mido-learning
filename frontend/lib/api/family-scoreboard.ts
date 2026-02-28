@@ -48,6 +48,7 @@ import type {
   MyFamilyItemDto,
   FamilyAdminDto,
   VisitorLeaderboardDto,
+  ActiveFamilyDto,
   FamilySettingsDto,
   UpdateFamilySettingsRequest,
   ExchangeXpRequest,
@@ -205,6 +206,12 @@ export async function getVisitorLeaderboard(code: string): Promise<VisitorLeader
   const res = await fetch(`${API_URL}/api/family-scoreboard/visitor?code=${encodeURIComponent(code)}`);
   if (!res.ok) throw new Error('Family not found');
   return res.json() as Promise<VisitorLeaderboardDto>;
+}
+
+export async function getActiveFamilies(): Promise<ActiveFamilyDto[]> {
+  const res = await fetch(`${API_URL}/api/family-scoreboard/active-families`);
+  if (!res.ok) throw new Error('Failed to fetch active families');
+  return res.json() as Promise<ActiveFamilyDto[]>;
 }
 
 export async function lookupFamilyByCode(code: string): Promise<FamilyLookupDto> {

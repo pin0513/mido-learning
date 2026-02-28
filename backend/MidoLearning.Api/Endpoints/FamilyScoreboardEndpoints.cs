@@ -155,6 +155,11 @@ public static class FamilyScoreboardEndpoints
             return result is null ? Results.NotFound() : Results.Ok(result);
         });
 
+        publicGroup.MapGet("/active-families", async (
+            IFamilyScoreboardService svc,
+            CancellationToken ct) =>
+            Results.Ok(await svc.GetActiveFamiliesAsync(10, ct)));
+
         publicGroup.MapPost("/player-login", async (
             PlayerLoginRequest request,
             IFamilyScoreboardService svc,
