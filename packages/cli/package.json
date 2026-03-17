@@ -1,0 +1,28 @@
+{
+  "name": "mido-cli",
+  "version": "1.0.0",
+  "description": "MIDO Learning CLI — 教材上傳與管理工具",
+  "type": "module",
+  "bin": {
+    "mido": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "inquirer": "^12.3.2",
+    "chalk": "^5.4.1",
+    "ora": "^8.1.1",
+    "form-data": "^4.0.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/inquirer": "^9.0.7",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
