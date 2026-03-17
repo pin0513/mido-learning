@@ -319,3 +319,130 @@ E2E 測試覆蓋 API 層與核心業務流程（56 個測試），**不覆蓋報
 |------|------|------|
 | **Web Design Team** | 設計 UI、RWD、SEO、交付程式碼 | 本文件（CLAUDE.md） |
 | **Web Dev Team** | 接收 UI 程式碼、全端開發、部署 | [docs/teams/WEB-DEV-TEAM.md](docs/teams/WEB-DEV-TEAM.md) |
+
+---
+
+## mido CLI — 教材上傳工具
+
+腳本位置：`scripts/mido` | symlink: `~/bin/mido`
+
+### 架構
+
+透過 mido-learning REST API 上傳教材（非靜態檔案部署）：
+- `POST /api/components/{componentId}/materials` — 上傳 ZIP
+- API 自動解壓到 GCS、建立 Firestore 文件 + manifest、版本遞增
+- 前端透過 `/api/materials/{materialId}/content/` proxy 存取
+- 需要 Firebase Auth（TeacherOrAdmin 角色）
+
+### 指令
+
+```bash
+mido publish <path> [title]        # 智慧上傳（推薦）：自動搜尋匹配 → 詢問更新或建新
+mido login                         # 登入（貼 Firebase ID Token）
+mido upload <componentId> <path>   # 直接上傳到指定 component
+mido list <componentId>            # 列出教材
+mido delete <materialId>           # 刪除教材
+mido open <materialId>             # 瀏覽器開啟
+mido components                    # 列出 components
+mido status                        # 查看登入狀態
+```
+
+### publish 智慧上傳流程（推薦）
+
+`mido publish` 會自動：
+1. 從目錄名推斷關鍵字搜尋現有 components
+2. 找到匹配 → 詢問是否上傳新版本（v2, v3...）
+3. 沒找到 → 詢問是否建立新 component 再上傳
+4. 全程互動確認，不會靜默操作
+
+```bash
+# 1. 登入
+mido login
+
+# 2. 智慧上傳（自動搜尋「claude code」相關教材）
+mido publish ~/slides/claude-code-deep-dive/output/
+# → Found: "Claude Code 深度解析"
+# → [1] Upload as v5  [N] Create new  [Q] Cancel
+
+# 3. 帶標題提示（搜尋更精確）
+mido publish ~/slides/my-talk/output/ "投資入門"
+
+# 4. 完全新教材
+mido publish ~/slides/new-course/output/ "全新課程名稱"
+# → No match found → Create new component? → Title/Theme/Category → Upload v1
+```
+
+### 直接上傳（已知 componentId）
+
+```bash
+mido upload GUhEP9CnMcdfc7NTgVHw ~/slides/claude-code-deep-dive/output/
+mido upload GUhEP9CnMcdfc7NTgVHw ~/slides/my-talk.zip
+```
+
+### 瀏覽教材
+
+```bash
+mido open <materialId>                                     # API content proxy
+open https://learn.paulfun.net/components/<componentId>    # 前台頁面
+```
+
+### 自動登入（Claude Code 用）
+
+Claude Code 可透過 service account 自動取得 token，不需手動貼：
+
+```python
+import firebase_admin
+from firebase_admin import credentials, auth
+import requests, json
+
+SA_FILE = "credentials/firebase-admin-key.json"
+API_KEY = "<from frontend/.env.local NEXT_PUBLIC_FIREBASE_API_KEY>"
+
+# 1. Mint custom token
+cred = credentials.Certificate(SA_FILE)
+firebase_admin.initialize_app(cred)
+custom_token = auth.create_custom_token("admin-cli", {"admin": True, "role": "admin"})
+
+# 2. Exchange for ID token
+resp = requests.post(
+    f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key={API_KEY}",
+    json={"token": custom_token, "returnSecureToken": True}
+)
+id_token = resp.json()["idToken"]
+
+# 3. Save to mido CLI config
+import time
+config = {"token": id_token, "expires": int(time.time()) + 3600}
+with open(os.path.expanduser("~/.mido-cli.json"), "w") as f:
+    json.dump(config, f)
+```
+
+### 已知 Components
+
+| Component ID | 名稱 | 用途 |
+|-------------|------|------|
+| `GUhEP9CnMcdfc7NTgVHw` | Claude Code 深度解析 | Claude Code Skills/Rules/Agents/Teams 投影片 |
+| `MjGTL1xj9uHENqB3V5Q0` | AI PM與RD的協作指引 | AI 協作指引教材 |
+| `AjNK66cm7Chxk5NevFyt` | 股市投資101 | 投資教材 |
+
+### 環境變數
+
+| 變數 | 說明 | 預設 |
+|------|------|------|
+| `MIDO_API_URL` | API base URL | `https://mido-learning-api-24mwb46hra-de.a.run.app` |
+
+### Token 儲存
+
+登入 token 存於 `~/.mido-cli.json`（1 小時過期，自動檢查）。
+
+### API 端點參考
+
+| 方法 | 路徑 | 說明 | Auth |
+|------|------|------|------|
+| POST | `/api/components/{id}/materials` | 上傳 ZIP 教材 | TeacherOrAdmin |
+| GET | `/api/components/{id}/materials` | 列出教材 | Anonymous (published) |
+| DELETE | `/api/materials/{id}` | 刪除教材 | TeacherOrAdmin |
+| GET | `/api/materials/{id}/manifest` | 取得 manifest + access token | Anonymous (published) |
+| GET | `/api/materials/{id}/content/{path}` | 取得教材檔案內容 | Token/Referer |
+| GET | `/api/materials/{id}/download` | 下載（redirect to signed URL） | Auth |
+| POST | `/api/materials/batch` | 批次查詢（最多 20 筆） | Anonymous (published) |

@@ -1,0 +1,520 @@
+#!/bin/bash
+# mido - CLI for mido-learning (learn.paulfun.net)
+# Uploads teaching materials via the mido-learning API
+#
+# Usage: mido <command> [options]
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+CONFIG_FILE="$HOME/.mido-cli.json"
+API_URL="${MIDO_API_URL:-https://mido-learning-api-24mwb46hra-de.a.run.app}"
+
+# Colors
+R='\033[0;31m' G='\033[0;32m' Y='\033[1;33m' B='\033[0;34m' C='\033[0;36m' M='\033[0;35m' NC='\033[0m' BOLD='\033[1m' DIM='\033[2m'
+
+# ===== HELPERS =====
+
+check_deps() {
+  for cmd in curl jq zip; do
+    if ! command -v "$cmd" &>/dev/null; then
+      echo -e "${R}Error:${NC} '$cmd' is required. Install it first."
+      exit 1
+    fi
+  done
+}
+
+get_token() {
+  # Try to get Firebase ID token via firebase CLI or saved token
+  if [ -f "$CONFIG_FILE" ]; then
+    local token=$(jq -r '.token // empty' "$CONFIG_FILE" 2>/dev/null)
+    local expires=$(jq -r '.expires // 0' "$CONFIG_FILE" 2>/dev/null)
+    local now=$(date +%s)
+    if [ -n "$token" ] && [ "$expires" -gt "$now" ] 2>/dev/null; then
+      echo "$token"
+      return
+    fi
+  fi
+  echo ""
+}
+
+save_token() {
+  local token="$1"
+  local expires=$(( $(date +%s) + 3600 ))  # 1 hour
+  echo "{\"token\": \"$token\", \"expires\": $expires}" > "$CONFIG_FILE"
+  chmod 600 "$CONFIG_FILE"
+}
+
+api_call() {
+  local method="$1"
+  local endpoint="$2"
+  shift 2
+  local token=$(get_token)
+
+  local auth_header=""
+  if [ -n "$token" ]; then
+    auth_header="-H Authorization: Bearer $token"
+  fi
+
+  curl -s -X "$method" \
+    -H "Content-Type: application/json" \
+    ${auth_header:+-H "Authorization: Bearer $token"} \
+    "$API_URL$endpoint" "$@"
+}
+
+# ===== COMMANDS =====
+
+usage() {
+  echo -e "${BOLD}mido${NC} — mido-learning CLI (learn.paulfun.net)"
+  echo ""
+  echo -e "${C}Commands:${NC}"
+  echo "  mido publish <path> [title]        Smart upload: find or create component"
+  echo "  mido login                         Login with Firebase Auth"
+  echo "  mido upload <componentId> <path>   Upload material to specific component"
+  echo "  mido list <componentId>            List materials for a component"
+  echo "  mido delete <materialId>           Delete a material"
+  echo "  mido open <materialId>             Open material in browser"
+  echo "  mido components                    List available components"
+  echo "  mido status                        Show login & API status"
+  echo ""
+  echo -e "${C}Publish (recommended):${NC}"
+  echo "  mido publish ~/slides/my-talk/output/"
+  echo "  mido publish ~/slides/my-talk/output/ \"My Talk Title\""
+  echo ""
+  echo -e "${C}Direct Upload:${NC}"
+  echo "  mido upload <componentId> ~/slides/my-talk/output/"
+  echo ""
+  echo -e "${C}How it works:${NC}"
+  echo "  1. publish: search existing components → update or create → upload"
+  echo "  2. Dir → auto-zip → POST /api/components/{id}/materials"
+  echo "  3. API unpacks to GCS, creates Firestore doc + manifest"
+  echo ""
+  echo -e "${C}Environment:${NC}"
+  echo "  MIDO_API_URL   Override API base URL (default: production Cloud Run)"
+  echo ""
+  echo -e "${DIM}API: $API_URL${NC}"
+  exit 0
+}
+
+cmd_login() {
+  echo -e "${B}Login to mido-learning${NC}"
+  echo ""
+  echo "Paste your Firebase ID token below."
+  echo -e "${DIM}(Get it from browser DevTools → Firebase Auth → user.getIdToken())${NC}"
+  echo -e "${DIM}Or from: learn.paulfun.net → F12 → Console → copy(await firebase.auth().currentUser.getIdToken())${NC}"
+  echo ""
+  echo -n "Token: "
+  read -r token
+
+  if [ -z "$token" ]; then
+    echo -e "${R}Error:${NC} No token provided"
+    exit 1
+  fi
+
+  # Validate token by calling a protected endpoint
+  echo -e "${Y}Validating...${NC}"
+  local response
+  response=$(curl -s -w "\n%{http_code}" -H "Authorization: Bearer $token" "$API_URL/api/components?page=1&pageSize=1" 2>/dev/null)
+  local http_code=$(echo "$response" | tail -1)
+  local body=$(echo "$response" | sed '$d')
+
+  if [ "$http_code" = "200" ]; then
+    save_token "$token"
+    echo -e "${G}Login successful!${NC} Token saved to ~/.mido-cli.json (expires in 1 hour)"
+  else
+    echo -e "${R}Login failed${NC} (HTTP $http_code)"
+    echo "$body" | jq . 2>/dev/null || echo "$body"
+    exit 1
+  fi
+}
+
+cmd_publish() {
+  local source="${1:-}"
+  local hint_title="${2:-}"
+
+  if [ -z "$source" ]; then
+    echo -e "${R}Usage:${NC} mido publish <path-to-dir-or-zip> [title]"
+    exit 1
+  fi
+
+  local token=$(get_token)
+  if [ -z "$token" ]; then
+    echo -e "${R}Error:${NC} Not logged in. Run: ${B}mido login${NC}"
+    exit 1
+  fi
+
+  # Derive a search keyword from the directory name or hint
+  local search_name=""
+  if [ -n "$hint_title" ]; then
+    search_name="$hint_title"
+  elif [ -d "$source" ]; then
+    # Use parent folder name as hint (e.g. /slides/claude-code-deep-dive/output → claude-code-deep-dive)
+    local parent=$(cd "$source" && cd .. && basename "$(pwd)" 2>/dev/null || basename "$source")
+    search_name="$parent"
+  else
+    search_name=$(basename "$source" .zip)
+  fi
+
+  echo -e "${B}Searching for existing components...${NC}"
+  echo -e "  Keyword: ${DIM}$search_name${NC}"
+  echo ""
+
+  # Fetch all components and search for matches
+  local all_components
+  all_components=$(curl -s -H "Authorization: Bearer $token" "$API_URL/api/components?page=1&pageSize=100" 2>/dev/null)
+
+  # Try both .data.components and .data.items (API may use either)
+  local components_json
+  components_json=$(echo "$all_components" | jq '.data.components // .data.items // []' 2>/dev/null)
+
+  local count=$(echo "$components_json" | jq 'length' 2>/dev/null)
+
+  if [ "$count" = "0" ] || [ -z "$count" ]; then
+    echo -e "${Y}No components found.${NC}"
+  else
+    # Search for matches (case-insensitive partial match on title)
+    local search_lower=$(echo "$search_name" | tr '[:upper:]' '[:lower:]' | tr '-' ' ')
+    local matches
+    matches=$(echo "$components_json" | jq --arg q "$search_lower" '
+      [.[] | select((.title // "") | ascii_downcase | test($q; "ix"))]
+    ' 2>/dev/null)
+
+    # If no exact match, try individual words
+    if [ "$(echo "$matches" | jq 'length')" = "0" ]; then
+      local first_word=$(echo "$search_lower" | awk '{print $1}')
+      if [ ${#first_word} -ge 3 ]; then
+        matches=$(echo "$components_json" | jq --arg q "$first_word" '
+          [.[] | select((.title // "") | ascii_downcase | test($q; "ix"))]
+        ' 2>/dev/null)
+      fi
+    fi
+
+    local match_count=$(echo "$matches" | jq 'length' 2>/dev/null)
+
+    if [ "$match_count" -gt 0 ] && [ "$match_count" != "0" ]; then
+      echo -e "${G}Found $match_count matching component(s):${NC}"
+      echo ""
+
+      # Display matches with index
+      local i=0
+      while [ $i -lt "$match_count" ]; do
+        local m_id=$(echo "$matches" | jq -r ".[$i].id")
+        local m_title=$(echo "$matches" | jq -r ".[$i].title")
+        local m_count=$(echo "$matches" | jq -r ".[$i].materialCount // 0")
+        echo -e "  ${C}[$((i+1))]${NC} ${BOLD}$m_title${NC}"
+        echo -e "      ID: $m_id | Materials: $m_count"
+
+        # Show existing versions
+        if [ "$m_count" -gt 0 ]; then
+          local mat_resp
+          mat_resp=$(curl -s "$API_URL/api/components/$m_id/materials" 2>/dev/null)
+          local latest_ver=$(echo "$mat_resp" | jq -r '.data.materials[0].version // "?"' 2>/dev/null)
+          echo -e "      Latest version: ${Y}v$latest_ver${NC} → will upload as ${G}v$((latest_ver + 1))${NC}"
+        else
+          echo -e "      ${DIM}No materials yet → will upload as v1${NC}"
+        fi
+        echo ""
+        i=$((i + 1))
+      done
+
+      echo -e "  ${C}[N]${NC} Create a ${BOLD}new${NC} component instead"
+      echo -e "  ${C}[Q]${NC} Cancel"
+      echo ""
+      echo -n "Choose [1-$match_count/N/Q]: "
+      read -r choice
+
+      case "$choice" in
+        [Qq]) echo "Cancelled."; return ;;
+        [Nn])
+          # Fall through to create new
+          ;;
+        *)
+          # Validate numeric choice
+          if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "$match_count" ]; then
+            local chosen_id=$(echo "$matches" | jq -r ".[$(($choice - 1))].id")
+            local chosen_title=$(echo "$matches" | jq -r ".[$(($choice - 1))].title")
+            echo ""
+            echo -e "${B}Uploading new version to:${NC} $chosen_title"
+            cmd_upload "$chosen_id" "$source"
+            echo ""
+            echo -e "  Frontend: ${M}https://learn.paulfun.net/components/$chosen_id${NC}"
+            return
+          else
+            echo -e "${R}Invalid choice.${NC}"
+            return
+          fi
+          ;;
+      esac
+    else
+      echo -e "${Y}No matching components found.${NC}"
+      echo ""
+    fi
+  fi
+
+  # === Create new component ===
+  echo -e "${B}Create a new component${NC}"
+  echo ""
+
+  local new_title=""
+  if [ -n "$hint_title" ]; then
+    echo -e "  Suggested title: ${BOLD}$hint_title${NC}"
+    echo -n "  Use this title? [Y/n/custom]: "
+    read -r title_choice
+    case "$title_choice" in
+      [Nn]) echo -n "  Enter title: "; read -r new_title ;;
+      "") new_title="$hint_title" ;;
+      *) new_title="$title_choice" ;;
+    esac
+  else
+    echo -n "  Title: "
+    read -r new_title
+  fi
+
+  if [ -z "$new_title" ]; then
+    echo -e "${R}Error:${NC} Title is required"
+    return
+  fi
+
+  echo -n "  Theme (e.g. 技術分享/投資/教育): "
+  read -r new_theme
+  [ -z "$new_theme" ] && new_theme="技術分享"
+
+  echo -n "  Category (adult/kids) [adult]: "
+  read -r new_category
+  [ -z "$new_category" ] && new_category="adult"
+
+  echo ""
+  echo -e "  Title:    ${BOLD}$new_title${NC}"
+  echo -e "  Theme:    $new_theme"
+  echo -e "  Category: $new_category"
+  echo ""
+  echo -n "Create this component? [Y/n]: "
+  read -r create_confirm
+  if [[ "$create_confirm" =~ ^[Nn]$ ]]; then
+    echo "Cancelled."
+    return
+  fi
+
+  # POST create component
+  local create_resp
+  create_resp=$(curl -s -w "\n%{http_code}" \
+    -X POST \
+    -H "Authorization: Bearer $token" \
+    -H "Content-Type: application/json" \
+    -d "$(jq -n --arg t "$new_title" --arg th "$new_theme" --arg c "$new_category" \
+      '{title: $t, theme: $th, category: $c, tags: [], description: ""}')" \
+    "$API_URL/api/components" 2>/dev/null)
+
+  local create_code=$(echo "$create_resp" | tail -1)
+  local create_body=$(echo "$create_resp" | sed '$d')
+
+  if [ "$create_code" = "201" ] || [ "$create_code" = "200" ]; then
+    local new_id=$(echo "$create_body" | jq -r '.data.id // .data.componentId // empty')
+    echo -e "${G}Component created!${NC} ID: ${C}$new_id${NC}"
+    echo ""
+
+    # Upload material
+    cmd_upload "$new_id" "$source"
+    echo ""
+    echo -e "  Frontend: ${M}https://learn.paulfun.net/components/$new_id${NC}"
+  else
+    echo -e "${R}Create failed${NC} (HTTP $create_code)"
+    echo "$create_body" | jq . 2>/dev/null || echo "$create_body"
+  fi
+}
+
+cmd_upload() {
+  local component_id="${1:-}"
+  local source="${2:-}"
+
+  if [ -z "$component_id" ] || [ -z "$source" ]; then
+    echo -e "${R}Usage:${NC} mido upload <componentId> <path-to-dir-or-zip>"
+    exit 1
+  fi
+
+  local token=$(get_token)
+  if [ -z "$token" ]; then
+    echo -e "${R}Error:${NC} Not logged in. Run: ${B}mido login${NC}"
+    exit 1
+  fi
+
+  local zip_file=""
+  local cleanup_zip=false
+
+  if [ -f "$source" ] && [[ "$source" == *.zip ]]; then
+    zip_file="$source"
+  elif [ -d "$source" ]; then
+    echo -e "${Y}Zipping directory...${NC}"
+    zip_file="/tmp/mido-upload-$(date +%s).zip"
+    cleanup_zip=true
+    (cd "$source" && zip -r -q "$zip_file" . -x ".*" -x "__MACOSX/*")
+    echo -e "  Created: $(du -sh "$zip_file" | cut -f1)"
+  else
+    echo -e "${R}Error:${NC} '$source' is not a directory or .zip"
+    exit 1
+  fi
+
+  local filename=$(basename "$zip_file")
+  local filesize=$(stat -f%z "$zip_file" 2>/dev/null || stat -c%s "$zip_file" 2>/dev/null)
+
+  echo -e "${B}Uploading${NC} to component ${BOLD}$component_id${NC}"
+  echo -e "  File: $filename ($((filesize / 1024))KB)"
+  echo ""
+
+  local response
+  response=$(curl -s -w "\n%{http_code}" \
+    -X POST \
+    -H "Authorization: Bearer $token" \
+    -H "X-Expected-Size: $filesize" \
+    -F "file=@$zip_file;filename=$filename" \
+    "$API_URL/api/components/$component_id/materials" 2>/dev/null)
+
+  local http_code=$(echo "$response" | tail -1)
+  local body=$(echo "$response" | sed '$d')
+
+  if [ "$cleanup_zip" = true ]; then
+    rm -f "$zip_file"
+  fi
+
+  if [ "$http_code" = "201" ]; then
+    local material_id=$(echo "$body" | jq -r '.data.materialId // empty')
+    local version=$(echo "$body" | jq -r '.data.version // empty')
+    local size=$(echo "$body" | jq -r '.data.size // empty')
+
+    echo -e "${G}Upload successful!${NC}"
+    echo -e "  Material ID: ${C}$material_id${NC}"
+    echo -e "  Version:     ${C}v$version${NC}"
+    echo -e "  Size:        $((size / 1024))KB"
+    echo ""
+    echo -e "  View: ${M}mido open $material_id${NC}"
+  else
+    echo -e "${R}Upload failed${NC} (HTTP $http_code)"
+    echo "$body" | jq . 2>/dev/null || echo "$body"
+    exit 1
+  fi
+}
+
+cmd_list() {
+  local component_id="${1:-}"
+
+  if [ -z "$component_id" ]; then
+    echo -e "${R}Usage:${NC} mido list <componentId>"
+    exit 1
+  fi
+
+  echo -e "${BOLD}Materials for component ${C}$component_id${NC}"
+  echo ""
+
+  local response
+  response=$(curl -s "$API_URL/api/components/$component_id/materials" 2>/dev/null)
+
+  local materials=$(echo "$response" | jq -r '.data.materials // []')
+  local count=$(echo "$materials" | jq length)
+
+  if [ "$count" = "0" ]; then
+    echo "  (no materials)"
+    return
+  fi
+
+  echo "$materials" | jq -r '.[] | "  \(.id)  v\(.version)  \(.filename)  \(.size / 1024 | floor)KB  \(.uploadedAt)"'
+}
+
+cmd_delete() {
+  local material_id="${1:-}"
+
+  if [ -z "$material_id" ]; then
+    echo -e "${R}Usage:${NC} mido delete <materialId>"
+    exit 1
+  fi
+
+  local token=$(get_token)
+  if [ -z "$token" ]; then
+    echo -e "${R}Error:${NC} Not logged in. Run: ${B}mido login${NC}"
+    exit 1
+  fi
+
+  echo -e "Delete material ${BOLD}$material_id${NC}? [y/N] "
+  read -r confirm
+  if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+    echo "Cancelled."
+    return
+  fi
+
+  local response
+  response=$(curl -s -w "\n%{http_code}" \
+    -X DELETE \
+    -H "Authorization: Bearer $token" \
+    "$API_URL/api/materials/$material_id" 2>/dev/null)
+
+  local http_code=$(echo "$response" | tail -1)
+
+  if [ "$http_code" = "200" ]; then
+    echo -e "${G}Deleted.${NC}"
+  else
+    local body=$(echo "$response" | sed '$d')
+    echo -e "${R}Delete failed${NC} (HTTP $http_code)"
+    echo "$body" | jq . 2>/dev/null || echo "$body"
+  fi
+}
+
+cmd_open() {
+  local material_id="${1:-}"
+  if [ -z "$material_id" ]; then
+    echo -e "${R}Usage:${NC} mido open <materialId>"
+    exit 1
+  fi
+  open "$API_URL/api/materials/$material_id/content/"
+}
+
+cmd_components() {
+  echo -e "${BOLD}Components${NC}"
+  echo ""
+
+  local token=$(get_token)
+  local auth=""
+  [ -n "$token" ] && auth="-H Authorization: Bearer $token"
+
+  local response
+  response=$(curl -s ${auth:+-H "Authorization: Bearer $token"} "$API_URL/api/components?page=1&pageSize=50" 2>/dev/null)
+
+  echo "$response" | jq -r '.data.items[]? | "  \(.id)  \(.title // .name // "untitled")  [\(.visibility // "published")]"' 2>/dev/null || echo "$response"
+}
+
+cmd_status() {
+  echo -e "${BOLD}mido-learning CLI Status${NC}"
+  echo ""
+  echo -e "  API:   ${C}$API_URL${NC}"
+
+  local token=$(get_token)
+  if [ -n "$token" ]; then
+    local expires=$(jq -r '.expires // 0' "$CONFIG_FILE" 2>/dev/null)
+    local now=$(date +%s)
+    local remaining=$(( (expires - now) / 60 ))
+    echo -e "  Auth:  ${G}logged in${NC} (${remaining}m remaining)"
+  else
+    echo -e "  Auth:  ${Y}not logged in${NC}"
+  fi
+
+  echo ""
+  echo -e "  ${DIM}Run 'mido login' to authenticate${NC}"
+}
+
+# ===== MAIN =====
+check_deps
+
+case "${1:-}" in
+  login)       cmd_login ;;
+  publish|pub) shift; cmd_publish "$@" ;;
+  upload|up)   shift; cmd_upload "$@" ;;
+  list|ls)     shift; cmd_list "$@" ;;
+  delete|rm)   shift; cmd_delete "$@" ;;
+  open)        shift; cmd_open "$@" ;;
+  components)  cmd_components ;;
+  status)      cmd_status ;;
+  -h|--help|help|"") usage ;;
+  *)
+    echo -e "${R}Unknown command:${NC} $1"
+    usage
+    ;;
+esac
