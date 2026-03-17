@@ -13,6 +13,7 @@ public interface IFirebaseService
     Task<string> AddDocumentAsync<T>(string collection, T data) where T : class;
     Task<T?> GetDocumentAsync<T>(string collection, string documentId) where T : class;
     Task UpdateDocumentAsync<T>(string collection, string documentId, T data) where T : class;
+    Task UpdateFieldsAsync(string collection, string documentId, Dictionary<string, object> fields);
     Task DeleteDocumentAsync(string collection, string documentId);
     Task<UserListResult> ListUsersAsync(int page, int limit, string? role, string? search);
     Task UpdateUserRoleAsync(string uid, string role);

@@ -216,6 +216,13 @@ public class FirebaseService : IFirebaseService
         _logger.LogInformation("Updated document {DocumentId} in {Collection}", documentId, collection);
     }
 
+    public async Task UpdateFieldsAsync(string collection, string documentId, Dictionary<string, object> fields)
+    {
+        var docRef = _firestoreDb.Collection(collection).Document(documentId);
+        await docRef.UpdateAsync(fields);
+        _logger.LogInformation("Updated fields on document {DocumentId} in {Collection}", documentId, collection);
+    }
+
     public async Task DeleteDocumentAsync(string collection, string documentId)
     {
         var docRef = _firestoreDb.Collection(collection).Document(documentId);

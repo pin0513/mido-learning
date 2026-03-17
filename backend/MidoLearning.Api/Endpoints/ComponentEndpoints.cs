@@ -52,6 +52,16 @@ public static class ComponentEndpoints
             .RequireAuthorization("TeacherOrAdmin")
             .WithOpenApi();
 
+        group.MapPut("/{id}/order", UpdateComponentOrder)
+            .WithName("UpdateComponentOrder")
+            .RequireAuthorization("TeacherOrAdmin")
+            .WithOpenApi();
+
+        group.MapPut("/reorder", ReorderComponents)
+            .WithName("ReorderComponents")
+            .RequireAuthorization("TeacherOrAdmin")
+            .WithOpenApi();
+
         group.MapDelete("/{id}", DeleteComponent)
             .WithName("DeleteComponent")
             .RequireAuthorization("TeacherOrAdmin")
@@ -475,6 +485,7 @@ public static class ComponentEndpoints
                 Questions = request.Questions,
                 Materials = Array.Empty<Material>(),
                 Visibility = "private", // Default to private
+                DisplayOrder = request.DisplayOrder ?? 0,
                 RatingAverage = 0,
                 RatingCount = 0,
                 CreatedBy = new CreatedByInfo
@@ -548,6 +559,7 @@ public static class ComponentEndpoints
                 Category = request.Category ?? existing.Category,
                 Tags = request.Tags ?? existing.Tags,
                 Questions = request.Questions ?? existing.Questions,
+                DisplayOrder = request.DisplayOrder ?? existing.DisplayOrder,
                 UpdatedAt = DateTime.UtcNow
             };
 
@@ -685,6 +697,128 @@ public static class ComponentEndpoints
         }
     }
 
+    /// <summary>
+    /// Update display order of a single component - owner or admin only
+    /// </summary>
+    private static async Task<IResult> UpdateComponentOrder(
+        string id,
+        UpdateDisplayOrderRequest request,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.HasClaim("admin", "true");
+
+            var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+                ComponentsCollection,
+                id);
+
+            if (existing is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Component not found"));
+            }
+
+            var isOwner = existing.CreatedBy?.Uid == uid;
+            if (!isOwner && !isAdmin)
+            {
+                return Results.Forbid();
+            }
+
+            await firebaseService.UpdateFieldsAsync(ComponentsCollection, id, new Dictionary<string, object>
+            {
+                { "DisplayOrder", request.DisplayOrder },
+                { "UpdatedAt", DateTime.UtcNow }
+            });
+
+            logger.LogInformation(
+                "Component {ComponentId} display order updated to {DisplayOrder} by user {UserId}",
+                id,
+                request.DisplayOrder,
+                uid);
+
+            var response = ApiResponse.Ok("Display order updated");
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to update component order {ComponentId}", id);
+            return Results.Problem(
+                detail: "Failed to update component order",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    /// <summary>
+    /// Batch reorder components - teacher or admin only
+    /// </summary>
+    private static async Task<IResult> ReorderComponents(
+        ReorderComponentsRequest request,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        if (request.Items.Length == 0)
+        {
+            return Results.BadRequest(ApiResponse.Fail("Items array cannot be empty"));
+        }
+
+        try
+        {
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.HasClaim("admin", "true");
+
+            var updatedAt = DateTime.UtcNow;
+
+            foreach (var item in request.Items)
+            {
+                if (string.IsNullOrEmpty(item.Id))
+                {
+                    continue;
+                }
+
+                // Verify the component exists and user has permission
+                var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+                    ComponentsCollection,
+                    item.Id);
+
+                if (existing is null)
+                {
+                    continue; // Skip missing components
+                }
+
+                var isOwner = existing.CreatedBy?.Uid == uid;
+                if (!isOwner && !isAdmin)
+                {
+                    continue; // Skip components user doesn't own
+                }
+
+                await firebaseService.UpdateFieldsAsync(ComponentsCollection, item.Id, new Dictionary<string, object>
+                {
+                    { "DisplayOrder", item.DisplayOrder },
+                    { "UpdatedAt", updatedAt }
+                });
+            }
+
+            logger.LogInformation(
+                "Batch reorder of {Count} components by user {UserId}",
+                request.Items.Length,
+                uid);
+
+            var response = ApiResponse.Ok("Components reordered successfully");
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to reorder components");
+            return Results.Problem(
+                detail: "Failed to reorder components",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
     private static IEnumerable<LearningComponent> ApplySorting(
         IEnumerable<LearningComponent> components,
         string sortBy,
@@ -694,6 +828,9 @@ public static class ComponentEndpoints
 
         return sortBy.ToLowerInvariant() switch
         {
+            "displayorder" => isDescending
+                ? components.OrderByDescending(c => c.DisplayOrder).ThenByDescending(c => c.CreatedAt)
+                : components.OrderBy(c => c.DisplayOrder).ThenBy(c => c.CreatedAt),
             "ratingaverage" or "rating" => isDescending
                 ? components.OrderByDescending(c => c.RatingAverage)
                 : components.OrderBy(c => c.RatingAverage),

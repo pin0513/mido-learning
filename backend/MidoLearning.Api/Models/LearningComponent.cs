@@ -55,6 +55,12 @@ public record LearningComponent
     [FirestoreProperty]
     public CreatedByInfo? CreatedBy { get; init; }
 
+    /// <summary>
+    /// Custom display order for frontend sorting
+    /// </summary>
+    [FirestoreProperty]
+    public int DisplayOrder { get; init; }
+
     [FirestoreProperty]
     public DateTime CreatedAt { get; init; }
 }
@@ -107,6 +113,12 @@ public record LearningComponentDetail
     /// </summary>
     [FirestoreProperty]
     public int RatingCount { get; init; } = 0;
+
+    /// <summary>
+    /// Custom display order for frontend sorting
+    /// </summary>
+    [FirestoreProperty]
+    public int DisplayOrder { get; init; }
 
     [FirestoreProperty]
     public CreatedByInfo? CreatedBy { get; init; }
@@ -194,6 +206,8 @@ public record CreateComponentRequest
     public string[] Tags { get; init; } = Array.Empty<string>();
 
     public QuestionAnswer[] Questions { get; init; } = Array.Empty<QuestionAnswer>();
+
+    public int? DisplayOrder { get; init; }
 }
 
 /// <summary>
@@ -223,6 +237,38 @@ public record UpdateComponentRequest
     public QuestionAnswer[]? Questions { get; init; }
 
     public string? Thumbnail { get; init; }
+
+    public int? DisplayOrder { get; init; }
+}
+
+/// <summary>
+/// Request DTO for updating display order of a single component
+/// </summary>
+public record UpdateDisplayOrderRequest
+{
+    [Required(ErrorMessage = "DisplayOrder is required")]
+    public int DisplayOrder { get; init; }
+}
+
+/// <summary>
+/// Request DTO for batch reordering components
+/// </summary>
+public record ReorderComponentsRequest
+{
+    [Required(ErrorMessage = "Items are required")]
+    public ReorderItem[] Items { get; init; } = Array.Empty<ReorderItem>();
+}
+
+/// <summary>
+/// A single item in a batch reorder request
+/// </summary>
+public record ReorderItem
+{
+    [Required(ErrorMessage = "Id is required")]
+    public string Id { get; init; } = string.Empty;
+
+    [Required(ErrorMessage = "DisplayOrder is required")]
+    public int DisplayOrder { get; init; }
 }
 
 /// <summary>
