@@ -12,6 +12,7 @@ export interface PlayerScoreDto {
   emoji?: string | null;
   role?: string | null;
   birthday?: string | null;
+  allowanceBalance?: number;
 }
 
 export interface TransactionDto {

@@ -13,7 +13,8 @@ public record PlayerScoreDto(
     int TotalRedeemed,
     string? Emoji = null,
     string? Role = null,
-    string? Birthday = null
+    string? Birthday = null,
+    int AllowanceBalance = 0
 );
 
 public record TransactionDto(

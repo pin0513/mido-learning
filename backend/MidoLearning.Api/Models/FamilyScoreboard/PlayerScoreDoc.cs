@@ -48,11 +48,12 @@ public class PlayerScoreDoc
     [FirestoreProperty("updatedAt")]
     public Timestamp UpdatedAt { get; set; }
 
-    public PlayerScoreDto ToDto() => new(
+    public PlayerScoreDto ToDto(int allowanceBalance = 0) => new(
         PlayerId, Name, Color,
         AchievementPoints, RedeemablePoints,
         TotalEarned, TotalDeducted, TotalRedeemed,
-        Emoji, Role, Birthday
+        Emoji, Role, Birthday,
+        allowanceBalance
     );
 }
 

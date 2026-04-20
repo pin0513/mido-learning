@@ -63,9 +63,18 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
     public async Task<IReadOnlyList<PlayerScoreDto>> GetScoresAsync(string familyId, CancellationToken ct = default)
     {
-        var snaps = await Scores(familyId).GetSnapshotAsync(ct);
-        return snaps.Documents
-            .Select(d => d.ConvertTo<PlayerScoreDoc>().ToDto())
+        var scoresTask = Scores(familyId).GetSnapshotAsync(ct);
+        var ledgerTask = AllowanceLedger(familyId).GetSnapshotAsync(ct);
+        await Task.WhenAll(scoresTask, ledgerTask);
+
+        var balanceByPlayer = ledgerTask.Result.Documents
+            .Select(d => d.ConvertTo<AllowanceLedgerDoc>())
+            .GroupBy(r => r.PlayerId)
+            .ToDictionary(g => g.Key, g => g.Sum(r => r.Amount));
+
+        return scoresTask.Result.Documents
+            .Select(d => d.ConvertTo<PlayerScoreDoc>())
+            .Select(p => p.ToDto(balanceByPlayer.GetValueOrDefault(p.PlayerId, 0)))
             .ToList()
             .AsReadOnly();
     }

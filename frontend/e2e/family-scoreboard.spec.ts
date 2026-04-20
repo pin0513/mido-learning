@@ -602,6 +602,22 @@ test.describe.serial('家庭計分板整合測試', () => {
     console.log(`  ✓ 零用金 currency 交易: NT$${before} → NT$${after}`);
   });
 
+  // 回歸測試：主計分板 /scores 必須回傳 allowanceBalance，否則首頁玩家卡片
+  // 無法顯示零用金變動，使用者會誤判「currency: allowance 沒作用」
+  test('STEP 11B-2: /scores 回傳的玩家資料必須包含 allowanceBalance', async ({ request }) => {
+    const balRes = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
+    const expected = (await balRes.json()).balance as number;
+
+    const scoresRes = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/scores`, playerToken);
+    expect(scoresRes.ok()).toBeTruthy();
+    const scores = await scoresRes.json();
+    const player = scores.find((s: { playerId: string }) => s.playerId === PLAYER_ID);
+
+    expect(player).toHaveProperty('allowanceBalance');
+    expect(player.allowanceBalance).toBe(expected);
+    console.log(`  ✓ /scores[${PLAYER_ID}].allowanceBalance = NT$${player.allowanceBalance}`);
+  });
+
   // ── STEP 11C: XP→零用金兌換 ────────────────────────────────────────────────
 
   test('STEP 11C-1: 家長取得家庭設定 (匯率)', async ({ request }) => {

@@ -727,10 +727,16 @@ export default function FamilyScoreboardPage() {
                             <p className="text-xs text-gray-400 mt-0.5">成就點數（經驗值）</p>
                           </div>
 
-                          {/* Redeemable */}
-                          <div className="w-full bg-emerald-50 rounded-xl px-2 py-2 text-center">
-                            <p className="text-base font-bold text-emerald-600">{player.redeemablePoints}</p>
-                            <p className="text-xs text-emerald-400">可兌換（零用金）</p>
+                          {/* Redeemable XP + Allowance NT$ */}
+                          <div className="w-full grid grid-cols-2 gap-1.5">
+                            <div className="bg-amber-50 rounded-xl px-2 py-2 text-center">
+                              <p className="text-base font-bold text-amber-600 tabular-nums">{player.redeemablePoints}</p>
+                              <p className="text-[10px] text-amber-400">⭐ 可兌換 XP</p>
+                            </div>
+                            <div className="bg-emerald-50 rounded-xl px-2 py-2 text-center">
+                              <p className="text-base font-bold text-emerald-600 tabular-nums">{player.allowanceBalance ?? 0}</p>
+                              <p className="text-[10px] text-emerald-400">💰 零用金 NT$</p>
+                            </div>
                           </div>
 
                           {/* Edit hint */}
@@ -1110,15 +1116,19 @@ export default function FamilyScoreboardPage() {
                           </div>
                         </div>
 
-                        {/* 成就點 / 可兌換 */}
-                        <div className="grid grid-cols-2 gap-1.5 text-center">
+                        {/* 成就點 / 可兌換 XP / 零用金 */}
+                        <div className="grid grid-cols-3 gap-1.5 text-center">
                           <div className="bg-amber-50 rounded-xl p-2">
                             <p className="text-sm font-black tabular-nums" style={{ color: p.color }}>{p.achievementPoints}</p>
-                            <p className="text-[10px] text-gray-400">成就點（經驗值）</p>
+                            <p className="text-[10px] text-gray-400">成就點</p>
+                          </div>
+                          <div className="bg-amber-50 rounded-xl p-2">
+                            <p className="text-sm font-black text-amber-600 tabular-nums">{p.redeemablePoints}</p>
+                            <p className="text-[10px] text-gray-400">⭐ 可兌換 XP</p>
                           </div>
                           <div className="bg-emerald-50 rounded-xl p-2">
-                            <p className="text-sm font-black text-emerald-600 tabular-nums">{p.redeemablePoints}</p>
-                            <p className="text-[10px] text-gray-400">可兌換（零用金）</p>
+                            <p className="text-sm font-black text-emerald-600 tabular-nums">{p.allowanceBalance ?? 0}</p>
+                            <p className="text-[10px] text-gray-400">💰 零用金</p>
                           </div>
                         </div>
                       </div>
