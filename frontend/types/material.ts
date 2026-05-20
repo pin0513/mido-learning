@@ -23,6 +23,8 @@ export interface MaterialManifest {
   baseUrl: string;
   accessToken?: string;
   scriptPath?: string;
+  /** 教材版型：'responsive' 自適應、'fixed' 固定尺寸畫布。未提供時視為 'fixed'。 */
+  layoutMode?: 'responsive' | 'fixed';
 }
 
 export interface MaterialListResponse {

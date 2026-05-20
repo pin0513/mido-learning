@@ -122,6 +122,7 @@ interface BatchItem {
   files: string[];
   baseUrl: string;
   accessToken?: string;
+  layoutMode?: 'responsive' | 'fixed';
 }
 
 interface BatchResponse {
@@ -153,6 +154,7 @@ export async function getMaterialsBatch(ids: string[]): Promise<MaterialManifest
     files: item.files,
     baseUrl: item.baseUrl,
     accessToken: item.accessToken,
+    layoutMode: item.layoutMode,
   }));
 }
 

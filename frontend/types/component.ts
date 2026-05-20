@@ -24,6 +24,7 @@ export interface LearningComponent {
   createdBy?: string | { uid: string; displayName: string };
   createdAt: string;
   updatedAt?: string;
+  layoutMode?: 'responsive' | 'fixed';
 }
 
 export interface CreateComponentRequest {
@@ -34,6 +35,7 @@ export interface CreateComponentRequest {
   tags: string[];
   questions: Omit<Question, 'id'>[];
   thumbnailUrl?: string;
+  layoutMode?: 'responsive' | 'fixed';
 }
 
 export interface ComponentListResponse {
@@ -63,6 +65,7 @@ export interface UpdateComponentRequest {
   tags?: string[];
   questions?: Omit<Question, 'id'>[];
   thumbnailUrl?: string;
+  layoutMode?: 'responsive' | 'fixed';
 }
 
 export interface UpdateVisibilityRequest {

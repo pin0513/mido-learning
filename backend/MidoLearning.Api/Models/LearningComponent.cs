@@ -41,6 +41,14 @@ public record LearningComponent
     public string? Visibility { get; init; }
 
     /// <summary>
+    /// Layout mode: "responsive" (self-adapting, fills the viewport) or
+    /// "fixed" (fixed-width canvas, scaled to fit on small screens).
+    /// For backward compatibility, null means "fixed" (legacy documents).
+    /// </summary>
+    [FirestoreProperty]
+    public string? LayoutMode { get; init; }
+
+    /// <summary>
     /// Average rating score (1-5)
     /// </summary>
     [FirestoreProperty]
@@ -101,6 +109,14 @@ public record LearningComponentDetail
     /// </summary>
     [FirestoreProperty]
     public string? Visibility { get; init; }
+
+    /// <summary>
+    /// Layout mode: "responsive" (self-adapting, fills the viewport) or
+    /// "fixed" (fixed-width canvas, scaled to fit on small screens).
+    /// For backward compatibility, null means "fixed" (legacy documents).
+    /// </summary>
+    [FirestoreProperty]
+    public string? LayoutMode { get; init; }
 
     /// <summary>
     /// Average rating score (1-5)
@@ -208,6 +224,12 @@ public record CreateComponentRequest
     public QuestionAnswer[] Questions { get; init; } = Array.Empty<QuestionAnswer>();
 
     public int? DisplayOrder { get; init; }
+
+    /// <summary>
+    /// Layout mode: "responsive" or "fixed". Optional; defaults to "fixed" when omitted.
+    /// </summary>
+    [RegularExpression("^(responsive|fixed)$", ErrorMessage = "LayoutMode must be 'responsive' or 'fixed'")]
+    public string? LayoutMode { get; init; }
 }
 
 /// <summary>
@@ -239,6 +261,12 @@ public record UpdateComponentRequest
     public string? Thumbnail { get; init; }
 
     public int? DisplayOrder { get; init; }
+
+    /// <summary>
+    /// Layout mode: "responsive" or "fixed". Optional; keeps existing value when omitted.
+    /// </summary>
+    [RegularExpression("^(responsive|fixed)$", ErrorMessage = "LayoutMode must be 'responsive' or 'fixed'")]
+    public string? LayoutMode { get; init; }
 }
 
 /// <summary>

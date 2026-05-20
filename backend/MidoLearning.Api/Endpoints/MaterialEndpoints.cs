@@ -421,7 +421,8 @@ public static class MaterialEndpoints
                 EntryPoint = material.Manifest?.EntryPoint ?? "index.html",
                 Files = material.Manifest?.Files ?? Array.Empty<string>(),
                 BaseUrl = baseUrl,
-                AccessToken = accessToken
+                AccessToken = accessToken,
+                LayoutMode = component.LayoutMode ?? "fixed"
             });
 
             return Results.Ok(response);
@@ -730,7 +731,8 @@ public static class MaterialEndpoints
                     EntryPoint = material.Manifest?.EntryPoint ?? "index.html",
                     Files = material.Manifest?.Files ?? Array.Empty<string>(),
                     BaseUrl = baseUrl,
-                    AccessToken = accessToken
+                    AccessToken = accessToken,
+                    LayoutMode = component.LayoutMode ?? "fixed"
                 });
             }
 

@@ -485,6 +485,7 @@ public static class ComponentEndpoints
                 Questions = request.Questions,
                 Materials = Array.Empty<Material>(),
                 Visibility = "private", // Default to private
+                LayoutMode = request.LayoutMode ?? "fixed",
                 DisplayOrder = request.DisplayOrder ?? 0,
                 RatingAverage = 0,
                 RatingCount = 0,
@@ -559,6 +560,7 @@ public static class ComponentEndpoints
                 Category = request.Category ?? existing.Category,
                 Tags = request.Tags ?? existing.Tags,
                 Questions = request.Questions ?? existing.Questions,
+                LayoutMode = request.LayoutMode ?? existing.LayoutMode,
                 DisplayOrder = request.DisplayOrder ?? existing.DisplayOrder,
                 UpdatedAt = DateTime.UtcNow
             };

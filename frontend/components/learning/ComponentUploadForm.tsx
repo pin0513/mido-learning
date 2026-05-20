@@ -43,6 +43,7 @@ export function ComponentUploadForm({ backHref, backLabel, onSuccess }: Componen
   const [customCategory, setCustomCategory] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [layoutMode, setLayoutMode] = useState<'responsive' | 'fixed'>('responsive');
   const [questions, setQuestions] = useState<QuestionInput[]>([]);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
@@ -202,6 +203,7 @@ export function ComponentUploadForm({ backHref, backLabel, onSuccess }: Componen
         tags,
         questions: validQuestions,
         thumbnailUrl: thumbnailUrl.trim() || undefined,
+        layoutMode,
       };
 
       const created = await createComponent(componentData);
@@ -438,6 +440,47 @@ export function ComponentUploadForm({ backHref, backLabel, onSuccess }: Componen
               {formErrors.category && (
                 <p className="mt-1 text-sm text-red-600">{formErrors.category}</p>
               )}
+            </div>
+
+            {/* Layout mode 教材版型 */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                教材版型
+              </label>
+              <div className="space-y-2">
+                <label className="flex cursor-pointer items-start gap-2">
+                  <input
+                    type="radio"
+                    name="layoutMode"
+                    value="responsive"
+                    checked={layoutMode === 'responsive'}
+                    onChange={() => setLayoutMode('responsive')}
+                    className="mt-1"
+                  />
+                  <span className="text-sm text-gray-700">
+                    <span className="font-medium">響應式（自適應，推薦）</span>
+                    <span className="block text-xs text-gray-500">
+                      教材自動填滿螢幕，手機、平板、電腦都好讀
+                    </span>
+                  </span>
+                </label>
+                <label className="flex cursor-pointer items-start gap-2">
+                  <input
+                    type="radio"
+                    name="layoutMode"
+                    value="fixed"
+                    checked={layoutMode === 'fixed'}
+                    onChange={() => setLayoutMode('fixed')}
+                    className="mt-1"
+                  />
+                  <span className="text-sm text-gray-700">
+                    <span className="font-medium">固定尺寸（765px 畫布）</span>
+                    <span className="block text-xs text-gray-500">
+                      投影片式固定版面，手機上會等比例縮小
+                    </span>
+                  </span>
+                </label>
+              </div>
             </div>
 
             {/* Description */}

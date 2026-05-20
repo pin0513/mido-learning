@@ -44,8 +44,15 @@ export default function FullscreenMaterialPage({
     setScale(1);
   };
 
-  // 自動適應螢幕寬度
+  // 教材版型：responsive 教材自適應、不需縮放；fixed 教材維持縮放 fallback
+  const isResponsive = manifest?.layoutMode === 'responsive';
+
+  // 自動適應螢幕寬度（僅固定尺寸教材需要）
   const fitToScreen = useCallback(() => {
+    if (isResponsive) {
+      setScale(1);
+      return;
+    }
     const screenWidth = window.innerWidth;
     if (screenWidth < REFERENCE_WIDTH) {
       const newScale = (screenWidth - 16) / REFERENCE_WIDTH;
@@ -53,7 +60,7 @@ export default function FullscreenMaterialPage({
     } else {
       setScale(1);
     }
-  }, []);
+  }, [isResponsive]);
 
   // 手機版自動適應 + 監聽視窗大小變化
   useEffect(() => {
@@ -333,6 +340,9 @@ export default function FullscreenMaterialPage({
           ←
         </button>
 
+        {/* 縮放控制群 - 僅固定尺寸教材顯示；responsive 教材不需縮放 */}
+        {!isResponsive && (
+          <>
         {/* 分隔線 */}
         <div style={{ width: '1px', height: '1.5rem', background: 'rgba(255,255,255,0.3)', margin: '0 0.25rem' }} />
 
@@ -418,6 +428,8 @@ export default function FullscreenMaterialPage({
         >
           100%
         </button>
+          </>
+        )}
 
         {/* 手機版顯示方向鍵開關 */}
         {isMobile && (
@@ -444,13 +456,13 @@ export default function FullscreenMaterialPage({
         )}
       </div>
 
-      {/* 縮放容器 - 留出 footer 空間 */}
+      {/* 縮放容器 - 留出 footer 空間。responsive 教材填滿視窗、不縮放 */}
       <div
         style={{
-          width: `${REFERENCE_WIDTH}px`,
+          width: isResponsive ? '100vw' : `${REFERENCE_WIDTH}px`,
           height: 'calc(100vh - 3rem)',
           marginBottom: '3rem',
-          transform: `scale(${scale})`,
+          transform: isResponsive ? 'none' : `scale(${scale})`,
           transformOrigin: 'top center',
           display: 'flex',
           alignItems: 'center',

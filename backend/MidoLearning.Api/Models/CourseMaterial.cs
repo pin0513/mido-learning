@@ -93,6 +93,12 @@ public record MaterialManifestResponse
     public IEnumerable<string> Files { get; init; } = Array.Empty<string>();
     public string BaseUrl { get; init; } = string.Empty;
     public string? AccessToken { get; init; }
+
+    /// <summary>
+    /// Layout mode of the owning component: "responsive" or "fixed".
+    /// Defaults to "fixed" for backward compatibility.
+    /// </summary>
+    public string LayoutMode { get; init; } = "fixed";
 }
 
 /// <summary>
@@ -118,6 +124,12 @@ public record MaterialBatchItem
     public IEnumerable<string> Files { get; init; } = Array.Empty<string>();
     public string BaseUrl { get; init; } = string.Empty;
     public string? AccessToken { get; init; }
+
+    /// <summary>
+    /// Layout mode of the owning component: "responsive" or "fixed".
+    /// Defaults to "fixed" for backward compatibility.
+    /// </summary>
+    public string LayoutMode { get; init; } = "fixed";
 }
 
 /// <summary>
