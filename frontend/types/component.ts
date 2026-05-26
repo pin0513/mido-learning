@@ -25,6 +25,10 @@ export interface LearningComponent {
   createdAt: string;
   updatedAt?: string;
   layoutMode?: 'responsive' | 'fixed';
+  /** Parent (hub) component id when this is a child in a series. Null/undefined = standalone or hub. */
+  parentComponentId?: string | null;
+  /** Position within the parent series; smaller = earlier. */
+  orderInSeries?: number | null;
 }
 
 export interface CreateComponentRequest {
@@ -36,6 +40,10 @@ export interface CreateComponentRequest {
   questions: Omit<Question, 'id'>[];
   thumbnailUrl?: string;
   layoutMode?: 'responsive' | 'fixed';
+  /** Optional parent id to attach this component as a child of a hub. */
+  parentComponentId?: string | null;
+  /** Optional ordering within parent series. */
+  orderInSeries?: number | null;
 }
 
 export interface ComponentListResponse {
@@ -66,10 +74,29 @@ export interface UpdateComponentRequest {
   questions?: Omit<Question, 'id'>[];
   thumbnailUrl?: string;
   layoutMode?: 'responsive' | 'fixed';
+  /**
+   * Parent component id semantics:
+   *   undefined  → unchanged
+   *   ""         → clear (detach from current parent)
+   *   "abc"      → set to abc (must be a root component, validated server-side)
+   */
+  parentComponentId?: string | null;
+  orderInSeries?: number | null;
 }
 
 export interface UpdateVisibilityRequest {
   visibility: Visibility;
+}
+
+/** Response of GET /api/components/{id}/children */
+export interface ComponentChildrenResponse {
+  parent: { id: string; title: string };
+  children: LearningComponent[];
+}
+
+/** Request body of PUT /api/components/{id}/children/order */
+export interface ReorderChildrenRequest {
+  items: { id: string; orderInSeries: number }[];
 }
 
 export const VISIBILITY_CONFIG: Record<Visibility, {

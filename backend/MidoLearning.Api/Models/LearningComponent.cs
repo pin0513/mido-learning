@@ -69,6 +69,21 @@ public record LearningComponent
     [FirestoreProperty]
     public int DisplayOrder { get; init; }
 
+    /// <summary>
+    /// Parent component id when this component is a child in a series.
+    /// Null = standalone or a hub (top-level).
+    /// Backward-compatible: legacy documents without this field deserialize to null.
+    /// </summary>
+    [FirestoreProperty]
+    public string? ParentComponentId { get; init; }
+
+    /// <summary>
+    /// Ordering of this child within its parent series (smaller first).
+    /// Null when not part of a series.
+    /// </summary>
+    [FirestoreProperty]
+    public int? OrderInSeries { get; init; }
+
     [FirestoreProperty]
     public DateTime CreatedAt { get; init; }
 }
@@ -138,6 +153,19 @@ public record LearningComponentDetail
 
     [FirestoreProperty]
     public CreatedByInfo? CreatedBy { get; init; }
+
+    /// <summary>
+    /// Parent component id when this component is a child in a series.
+    /// Null = standalone or hub (top-level).
+    /// </summary>
+    [FirestoreProperty]
+    public string? ParentComponentId { get; init; }
+
+    /// <summary>
+    /// Ordering of this child within its parent series (smaller first).
+    /// </summary>
+    [FirestoreProperty]
+    public int? OrderInSeries { get; init; }
 
     [FirestoreProperty]
     public DateTime CreatedAt { get; init; }
@@ -230,6 +258,19 @@ public record CreateComponentRequest
     /// </summary>
     [RegularExpression("^(responsive|fixed)$", ErrorMessage = "LayoutMode must be 'responsive' or 'fixed'")]
     public string? LayoutMode { get; init; }
+
+    /// <summary>
+    /// Optional: id of the parent (hub) component. When set, this component becomes
+    /// a child in that hub's series. Must reference an existing component that itself
+    /// has no parent (1 level of nesting in v1).
+    /// </summary>
+    public string? ParentComponentId { get; init; }
+
+    /// <summary>
+    /// Optional: ordering of this child within the parent series (smaller first).
+    /// Ignored when ParentComponentId is null.
+    /// </summary>
+    public int? OrderInSeries { get; init; }
 }
 
 /// <summary>
@@ -267,6 +308,36 @@ public record UpdateComponentRequest
     /// </summary>
     [RegularExpression("^(responsive|fixed)$", ErrorMessage = "LayoutMode must be 'responsive' or 'fixed'")]
     public string? LayoutMode { get; init; }
+
+    /// <summary>
+    /// Optional: id of the parent (hub) component. Pass empty string to clear (detach
+    /// from current parent). Omit the field entirely to leave unchanged.
+    /// </summary>
+    public string? ParentComponentId { get; init; }
+
+    /// <summary>
+    /// Optional: ordering within parent series.
+    /// </summary>
+    public int? OrderInSeries { get; init; }
+}
+
+/// <summary>
+/// Response DTO returned by GET /api/components/{id}/children — lists the children
+/// of the given parent component (sorted by OrderInSeries, then CreatedAt).
+/// </summary>
+public record ComponentChildrenResponse
+{
+    public ComponentParentSummary Parent { get; init; } = new();
+    public IEnumerable<LearningComponent> Children { get; init; } = Array.Empty<LearningComponent>();
+}
+
+/// <summary>
+/// Lightweight parent info embedded in children response and (optionally) in detail view.
+/// </summary>
+public record ComponentParentSummary
+{
+    public string Id { get; init; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
 }
 
 /// <summary>
@@ -297,6 +368,28 @@ public record ReorderItem
 
     [Required(ErrorMessage = "DisplayOrder is required")]
     public int DisplayOrder { get; init; }
+}
+
+/// <summary>
+/// Request DTO for reordering children of a hub component.
+/// PUT /api/components/{parentId}/children/order
+/// </summary>
+public record ReorderChildrenRequest
+{
+    [Required(ErrorMessage = "Items are required")]
+    public ReorderChildItem[] Items { get; init; } = Array.Empty<ReorderChildItem>();
+}
+
+/// <summary>
+/// A single item in a children reorder request.
+/// </summary>
+public record ReorderChildItem
+{
+    [Required(ErrorMessage = "Id is required")]
+    public string Id { get; init; } = string.Empty;
+
+    [Required(ErrorMessage = "OrderInSeries is required")]
+    public int OrderInSeries { get; init; }
 }
 
 /// <summary>

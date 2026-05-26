@@ -77,6 +77,18 @@ public static class ComponentEndpoints
             .WithName("GetAllComponents")
             .RequireAuthorization("AdminOnly")
             .WithOpenApi();
+
+        // Series: list children of a hub component (anonymous, visibility-filtered per child)
+        group.MapGet("/{id}/children", GetComponentChildren)
+            .WithName("GetComponentChildren")
+            .AllowAnonymous()
+            .WithOpenApi();
+
+        // Series: reorder children within a hub (owner or admin)
+        group.MapPut("/{id}/children/order", ReorderComponentChildren)
+            .WithName("ReorderComponentChildren")
+            .RequireAuthorization("TeacherOrAdmin")
+            .WithOpenApi();
     }
 
     /// <summary>
@@ -470,6 +482,14 @@ public static class ComponentEndpoints
             return Results.BadRequest(ApiResponse.Fail("Validation failed", validationErrors));
         }
 
+        // Series validation: if ParentComponentId provided, parent must exist and itself be a root.
+        if (!string.IsNullOrEmpty(request.ParentComponentId))
+        {
+            var parentError = await ValidateParentReferenceAsync(
+                firebaseService, request.ParentComponentId, currentComponentId: null);
+            if (parentError is not null) return parentError;
+        }
+
         try
         {
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
@@ -489,6 +509,8 @@ public static class ComponentEndpoints
                 DisplayOrder = request.DisplayOrder ?? 0,
                 RatingAverage = 0,
                 RatingCount = 0,
+                ParentComponentId = string.IsNullOrEmpty(request.ParentComponentId) ? null : request.ParentComponentId,
+                OrderInSeries = request.OrderInSeries,
                 CreatedBy = new CreatedByInfo
                 {
                     Uid = uid,
@@ -551,6 +573,42 @@ public static class ComponentEndpoints
                 return Results.Forbid();
             }
 
+            // === Series: resolve new parent ===
+            // request.ParentComponentId semantics:
+            //   null         → field not provided → keep existing
+            //   ""           → explicit clear   → set to null
+            //   "abc"        → set to "abc" (validated below)
+            string? newParentId;
+            if (request.ParentComponentId is null)
+            {
+                newParentId = existing.ParentComponentId;
+            }
+            else if (request.ParentComponentId == string.Empty)
+            {
+                newParentId = null;
+            }
+            else
+            {
+                newParentId = request.ParentComponentId;
+            }
+
+            // Validate parent change only if it's actually changing to a non-null value
+            if (newParentId != existing.ParentComponentId && !string.IsNullOrEmpty(newParentId))
+            {
+                var parentError = await ValidateParentReferenceAsync(
+                    firebaseService, newParentId, currentComponentId: id);
+                if (parentError is not null) return parentError;
+
+                // 1-level limit also applies: if this component currently has children,
+                // it can't itself become a child (would create 2-level nesting).
+                var hasChildren = await ComponentHasChildrenAsync(firebaseService, id);
+                if (hasChildren)
+                {
+                    return Results.BadRequest(ApiResponse.Fail(
+                        "This component already has children, so it cannot itself become a child."));
+                }
+            }
+
             // Build update object with only provided fields
             var updated = existing with
             {
@@ -562,6 +620,8 @@ public static class ComponentEndpoints
                 Questions = request.Questions ?? existing.Questions,
                 LayoutMode = request.LayoutMode ?? existing.LayoutMode,
                 DisplayOrder = request.DisplayOrder ?? existing.DisplayOrder,
+                ParentComponentId = newParentId,
+                OrderInSeries = request.OrderInSeries ?? existing.OrderInSeries,
                 UpdatedAt = DateTime.UtcNow
             };
 
@@ -679,6 +739,15 @@ public static class ComponentEndpoints
             if (!isOwner && !isAdmin)
             {
                 return Results.Forbid();
+            }
+
+            // Series: prevent deleting a hub that still has children.
+            // Caller must detach or delete children first.
+            var hasChildren = await ComponentHasChildrenAsync(firebaseService, id);
+            if (hasChildren)
+            {
+                return Results.Conflict(ApiResponse.Fail(
+                    "This component has children. Remove or detach them first before deleting."));
             }
 
             await firebaseService.DeleteDocumentAsync(ComponentsCollection, id);
@@ -870,5 +939,193 @@ public static class ComponentEndpoints
         if (limit < 1) limit = DefaultPageSize;
         if (limit > MaxPageSize) limit = MaxPageSize;
         return (page, limit);
+    }
+
+    // ===== Series (hub-children) endpoints =====
+
+    /// <summary>
+    /// GET /api/components/{id}/children
+    /// Lists the children of a hub component, sorted by OrderInSeries then CreatedAt.
+    /// Anonymous-accessible; each child is filtered against the caller's permission
+    /// using its own Visibility (mirrors GetComponentById logic).
+    /// </summary>
+    private static async Task<IResult> GetComponentChildren(
+        string id,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        try
+        {
+            var parent = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+                ComponentsCollection, id);
+            if (parent is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Parent component not found"));
+            }
+
+            // Apply parent's visibility check first
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAuthenticated = !string.IsNullOrEmpty(uid);
+            var isAdmin = context.User.HasClaim("admin", "true");
+            var parentVisible = parent.Visibility switch
+            {
+                null or "" or "published" => true,
+                "login" => isAuthenticated,
+                "private" => parent.CreatedBy?.Uid == uid || isAdmin,
+                _ => false
+            };
+            if (!parentVisible) return Results.Forbid();
+
+            // Fetch all components and filter to children of this id
+            var (all, _) = await firebaseService.GetDocumentsAsync<LearningComponent>(
+                ComponentsCollection, 1, 1000, null, null);
+
+            var children = all
+                .Where(c => c.ParentComponentId == id)
+                .Where(c =>
+                {
+                    var isOwner = c.CreatedBy?.Uid == uid;
+                    return c.Visibility switch
+                    {
+                        null or "" or "published" => true,
+                        "login" => isAuthenticated,
+                        "private" => isOwner || isAdmin,
+                        _ => false
+                    };
+                })
+                .OrderBy(c => c.OrderInSeries ?? int.MaxValue)
+                .ThenBy(c => c.CreatedAt)
+                .ToList();
+
+            var response = ApiResponse<ComponentChildrenResponse>.Ok(new ComponentChildrenResponse
+            {
+                Parent = new ComponentParentSummary { Id = id, Title = parent.Title },
+                Children = children
+            });
+            return Results.Ok(response);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to get children for component {ComponentId}", id);
+            return Results.Problem(
+                detail: "Failed to retrieve children",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    /// <summary>
+    /// PUT /api/components/{id}/children/order
+    /// Batch updates OrderInSeries for children belonging to the given parent.
+    /// Caller must be the parent's owner or an admin. Items referencing a child
+    /// whose ParentComponentId != id are silently skipped.
+    /// </summary>
+    private static async Task<IResult> ReorderComponentChildren(
+        string id,
+        ReorderChildrenRequest request,
+        HttpContext context,
+        IFirebaseService firebaseService,
+        ILogger<Program> logger)
+    {
+        if (request.Items.Length == 0)
+        {
+            return Results.BadRequest(ApiResponse.Fail("Items array cannot be empty"));
+        }
+
+        try
+        {
+            var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = context.User.HasClaim("admin", "true");
+
+            var parent = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+                ComponentsCollection, id);
+            if (parent is null)
+            {
+                return Results.NotFound(ApiResponse.Fail("Parent component not found"));
+            }
+
+            var isOwner = parent.CreatedBy?.Uid == uid;
+            if (!isOwner && !isAdmin) return Results.Forbid();
+
+            var skipped = new List<string>();
+            var updated = 0;
+            foreach (var item in request.Items)
+            {
+                if (string.IsNullOrEmpty(item.Id))
+                {
+                    skipped.Add(item.Id);
+                    continue;
+                }
+                var child = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+                    ComponentsCollection, item.Id);
+                if (child is null || child.ParentComponentId != id)
+                {
+                    skipped.Add(item.Id);
+                    continue;
+                }
+                await firebaseService.UpdateFieldsAsync(ComponentsCollection, item.Id,
+                    new Dictionary<string, object>
+                    {
+                        { "OrderInSeries", item.OrderInSeries },
+                        { "UpdatedAt", DateTime.UtcNow }
+                    });
+                updated++;
+            }
+
+            logger.LogInformation(
+                "Reordered {Count} children of {ParentId} by user {Uid} (skipped {Skipped})",
+                updated, id, uid, skipped.Count);
+
+            return Results.Ok(ApiResponse<object>.Ok(new { updated, skipped }));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to reorder children for {ParentId}", id);
+            return Results.Problem(
+                detail: "Failed to reorder children",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    /// <summary>
+    /// Validates that a parent reference is valid:
+    ///  - parent exists
+    ///  - parent is itself a root (no grandparent → 1-level nesting limit)
+    ///  - parent is not the current component (no self-reference)
+    /// Returns an IResult with a 400 error if invalid; null if valid.
+    /// </summary>
+    private static async Task<IResult?> ValidateParentReferenceAsync(
+        IFirebaseService firebaseService,
+        string parentId,
+        string? currentComponentId)
+    {
+        if (currentComponentId is not null && parentId == currentComponentId)
+        {
+            return Results.BadRequest(ApiResponse.Fail("A component cannot be its own parent."));
+        }
+        var parent = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
+            ComponentsCollection, parentId);
+        if (parent is null)
+        {
+            return Results.BadRequest(ApiResponse.Fail($"Parent component '{parentId}' not found."));
+        }
+        if (!string.IsNullOrEmpty(parent.ParentComponentId))
+        {
+            return Results.BadRequest(ApiResponse.Fail(
+                "Parent component is itself a child; only one level of nesting is allowed."));
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Returns true if any component references the given id as its parent.
+    /// </summary>
+    private static async Task<bool> ComponentHasChildrenAsync(
+        IFirebaseService firebaseService,
+        string componentId)
+    {
+        var (all, _) = await firebaseService.GetDocumentsAsync<LearningComponent>(
+            ComponentsCollection, 1, 1000, null, null);
+        return all.Any(c => c.ParentComponentId == componentId);
     }
 }

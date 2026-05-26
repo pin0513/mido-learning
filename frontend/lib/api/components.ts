@@ -10,6 +10,8 @@ import {
   CreateComponentRequest,
   UpdateComponentRequest,
   UpdateVisibilityRequest,
+  ComponentChildrenResponse,
+  ReorderChildrenRequest,
 } from '@/types/component';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -334,5 +336,68 @@ export async function getAllComponents(
   // 快取結果
   apiCache.set(cacheKey, apiResponse.data);
 
+  return apiResponse.data;
+}
+
+/**
+ * Series: list children of a hub component.
+ * Anonymous-accessible; API filters each child by its own visibility.
+ */
+export async function getComponentChildren(
+  parentId: string
+): Promise<ComponentChildrenResponse> {
+  const headers = await getAuthHeaders();
+  const response = await queuedFetch(
+    `${API_URL}/api/components/${parentId}/children`,
+    { headers }
+  );
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error('Parent component not found');
+    }
+    if (response.status === 403) {
+      throw new Error('Access denied');
+    }
+    throw new Error(`Failed to fetch children: ${response.statusText}`);
+  }
+
+  const apiResponse: ApiResponse<ComponentChildrenResponse> = await response.json();
+  return apiResponse.data;
+}
+
+/**
+ * Series: batch-reorder children of a hub. Caller must own the hub or be admin.
+ * Items whose id does not belong to this hub are silently skipped server-side.
+ */
+export async function reorderComponentChildren(
+  parentId: string,
+  data: ReorderChildrenRequest
+): Promise<{ updated: number; skipped: string[] }> {
+  const headers = await getAuthHeaders();
+  const response = await fetch(
+    `${API_URL}/api/components/${parentId}/children/order`,
+    {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('Unauthorized: Please login');
+    }
+    if (response.status === 403) {
+      throw new Error('Forbidden: Only the parent owner or admin can reorder');
+    }
+    if (response.status === 404) {
+      throw new Error('Parent component not found');
+    }
+    throw new Error(`Failed to reorder children: ${response.statusText}`);
+  }
+
+  const apiResponse: ApiResponse<{ updated: number; skipped: string[] }> =
+    await response.json();
   return apiResponse.data;
 }
