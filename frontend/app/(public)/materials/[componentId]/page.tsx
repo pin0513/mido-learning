@@ -357,7 +357,7 @@ export default function GuestMaterialPage({
                 </span>
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => window.open(`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`, '_blank', 'noopener')}
+                    onClick={() => window.open(`/materials/${componentId}/fullscreen`, '_blank', 'noopener')}
                     className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
                     title="在新分頁開啟教材（完整獨立網頁）"
                   >
