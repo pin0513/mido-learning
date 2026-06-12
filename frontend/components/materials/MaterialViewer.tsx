@@ -52,6 +52,11 @@ export function MaterialViewer({
     window.open(downloadUrl, '_blank');
   }, [manifest.materialId]);
 
+  // 另開分頁：教材 proxy URL 本身就是完整獨立可運作的網頁
+  const handleOpenInNewTab = useCallback(() => {
+    window.open(iframeSrc, '_blank', 'noopener');
+  }, [iframeSrc]);
+
   const handleToggleFullscreen = useCallback(async () => {
     if (!containerRef.current) return;
 
@@ -108,6 +113,7 @@ export function MaterialViewer({
         onVersionChange={handleVersionChange}
         onToggleScript={handleToggleScript}
         onDownload={handleDownload}
+        onOpenInNewTab={handleOpenInNewTab}
         onToggleFullscreen={handleToggleFullscreen}
         onClose={handleClose}
         isFullscreen={isFullscreen}

@@ -357,6 +357,16 @@ export default function GuestMaterialPage({
                 </span>
                 <div className="flex items-center gap-2">
                   <button
+                    onClick={() => window.open(`${latestManifest.baseUrl}${latestManifest.entryPoint}${latestManifest.accessToken ? `?token=${latestManifest.accessToken}` : ''}`, '_blank', 'noopener')}
+                    className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+                    title="在新分頁開啟教材（完整獨立網頁）"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    <span className="hidden sm:inline">另開分頁</span>
+                  </button>
+                  <button
                     onClick={() => window.open(getDownloadUrl(latestManifest.materialId), '_blank')}
                     className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50"
                     title="下載教材"
