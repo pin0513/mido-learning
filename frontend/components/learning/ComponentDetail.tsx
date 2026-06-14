@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { LearningComponent, getCategoryConfig } from '@/types/component';
 import { Material } from '@/types/material';
 import { getMaterials } from '@/lib/api/materials';
+import { getComponentById, getComponentChildren } from '@/lib/api/components';
 import { TagDisplay } from './TagDisplay';
 import { QuestionList } from './QuestionList';
 import { Button } from '@/components/ui/Button';
@@ -28,6 +29,10 @@ export function ComponentDetail({
   const [isMaterialsLoading, setIsMaterialsLoading] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
+  // === Series state ===
+  const [seriesChildren, setSeriesChildren] = useState<LearningComponent[]>([]);
+  const [parentInfo, setParentInfo] = useState<{ id: string; title: string } | null>(null);
+
   const fetchMaterials = useCallback(async () => {
     setIsMaterialsLoading(true);
     try {
@@ -44,6 +49,40 @@ export function ComponentDetail({
     fetchMaterials();
   }, [fetchMaterials]);
 
+  // Fetch children for hub view; silently ignore errors (component may not be a hub).
+  useEffect(() => {
+    let cancelled = false;
+    getComponentChildren(component.id)
+      .then((res) => {
+        if (!cancelled) setSeriesChildren(res.children);
+      })
+      .catch(() => {
+        if (!cancelled) setSeriesChildren([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [component.id]);
+
+  // Fetch parent title for breadcrumb when this component is a child in a series.
+  useEffect(() => {
+    let cancelled = false;
+    if (component.parentComponentId) {
+      getComponentById(component.parentComponentId)
+        .then((p) => {
+          if (!cancelled) setParentInfo({ id: p.id, title: p.title });
+        })
+        .catch(() => {
+          if (!cancelled) setParentInfo(null);
+        });
+    } else {
+      setParentInfo(null);
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [component.parentComponentId]);
+
   const handleUploadSuccess = () => {
     setIsUploadOpen(false);
     fetchMaterials();
@@ -55,6 +94,23 @@ export function ComponentDetail({
 
   return (
     <div className="space-y-8">
+      {/* Series breadcrumb — shown when this component is a child of a hub */}
+      {parentInfo && (
+        <nav className="flex items-center gap-2 text-sm text-gray-600">
+          <Link
+            href={`/materials/${parentInfo.id}`}
+            className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5 font-medium text-gray-700 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 transition"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            回到「{parentInfo.title}」
+          </Link>
+          <span className="text-gray-300">/</span>
+          <span className="font-medium text-gray-900 truncate max-w-[60ch]">{component.title}</span>
+        </nav>
+      )}
+
       {/* Header */}
       <div className={`rounded-lg p-6 ${config.bgClass} ${config.borderClass} border`}>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -89,6 +145,53 @@ export function ComponentDetail({
           )}
         </div>
       </div>
+
+      {/* Series children — shown when this component is a hub */}
+      {seriesChildren.length > 0 && (
+        <section>
+          <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold text-gray-900">
+            <svg className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            </svg>
+            系列章節
+            <span className="ml-1 rounded-full bg-gray-100 px-2 py-0.5 text-sm font-normal text-gray-600">
+              {seriesChildren.length}
+            </span>
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {seriesChildren.map((child, idx) => {
+              const childCfg = getCategoryConfig(child.category);
+              return (
+                <Link
+                  key={child.id}
+                  href={`/materials/${child.id}`}
+                  className="group block rounded-lg border border-gray-200 bg-white p-4 hover:border-blue-400 hover:shadow-md transition"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-medium text-gray-500">
+                      第 {child.orderInSeries ?? idx + 1} 章
+                    </span>
+                    <span
+                      className={`inline-block rounded-full px-2 py-0.5 text-xs ${childCfg.badgeClass}`}
+                    >
+                      {childCfg.label}
+                    </span>
+                  </div>
+                  <h3 className="mt-1 font-semibold text-gray-900 group-hover:text-blue-700 transition">
+                    {child.title}
+                  </h3>
+                  {child.subject && (
+                    <p className="mt-0.5 text-sm text-gray-600 line-clamp-1">{child.subject}</p>
+                  )}
+                  {child.description && (
+                    <p className="mt-2 text-sm text-gray-500 line-clamp-2">{child.description}</p>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Thumbnail */}
       {component.thumbnailUrl && (
