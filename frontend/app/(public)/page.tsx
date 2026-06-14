@@ -79,7 +79,7 @@ export default function HomePage() {
 
             {!authLoading && (
               <div className="mt-10 flex flex-wrap gap-3">
-                <Link href="/components">
+                <Link href="/materials">
                   <span className="inline-flex items-center gap-2 rounded-none px-6 py-3 text-sm font-bold transition-all hover:opacity-80" style={{ background: '#1a1614', color: '#faf9f7', border: '2px solid #1a1614' }}>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                     瀏覽教材
@@ -125,7 +125,7 @@ export default function HomePage() {
               <h2 className="text-2xl font-bold" style={{ color: '#1a1614' }}>知識學習</h2>
               <p className="mt-1 text-sm" style={{ color: '#8a847a' }}>程式、語言、科學、商業思維等</p>
             </div>
-            <Link href="/components" className="text-sm font-medium hover:underline" style={{ color: '#5a534c' }}>
+            <Link href="/materials" className="text-sm font-medium hover:underline" style={{ color: '#5a534c' }}>
               查看全部 →
             </Link>
           </div>
@@ -182,7 +182,7 @@ export default function HomePage() {
 
       {/* ── Browse All CTA ── */}
       <section className="py-10 text-center" style={{ background: '#faf9f7', borderTop: '1.5px solid #e5e3de' }}>
-        <Link href="/components">
+        <Link href="/materials">
           <span className="inline-flex items-center gap-2 rounded-none px-8 py-3 text-sm font-bold transition-all hover:opacity-80" style={{ background: '#1a1614', color: '#faf9f7', border: '2px solid #1a1614' }}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             瀏覽所有教材
