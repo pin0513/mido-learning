@@ -108,7 +108,10 @@ public static class CategoryEndpoints
 
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var isAuthenticated = !string.IsNullOrEmpty(uid);
-            var isAdmin = context.User.HasClaim("admin", "true");
+            // Accept legacy admin claim AND modern role claims (admin / super_admin)
+            var isAdmin = context.User.HasClaim("admin", "true")
+                || context.User.IsInRole("admin")
+                || context.User.IsInRole("super_admin");
 
             var (components, total) = await firebaseService.GetDocumentsAsync<LearningComponent>(
                 ComponentsCollection,
