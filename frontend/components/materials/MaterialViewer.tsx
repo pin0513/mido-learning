@@ -52,10 +52,11 @@ export function MaterialViewer({
     window.open(downloadUrl, '_blank');
   }, [manifest.materialId]);
 
-  // 另開分頁：教材 proxy URL 本身就是完整獨立可運作的網頁
+  // 另開分頁：開前端自己的全螢幕頁（domain 維持 learn.paulfun.net，
+  // 不直接曝露後端 API proxy 網址）
   const handleOpenInNewTab = useCallback(() => {
-    window.open(iframeSrc, '_blank', 'noopener');
-  }, [iframeSrc]);
+    window.open(`/materials/${componentId}/fullscreen`, '_blank', 'noopener');
+  }, [componentId]);
 
   const handleToggleFullscreen = useCallback(async () => {
     if (!containerRef.current) return;
