@@ -14,6 +14,18 @@ public static class ComponentEndpoints
     // Valid visibility values
     private static readonly string[] ValidVisibilities = { "published", "login", "private" };
 
+    /// <summary>
+    /// Whether the current user has admin-level privileges over components.
+    /// Accepts the legacy <c>admin=true</c> claim AND the modern role claims
+    /// (<c>admin</c> / <c>super_admin</c>). Previously only the legacy claim was
+    /// checked, so a super_admin whose token carried only a role claim was wrongly
+    /// denied write access (edit / visibility / delete / reorder).
+    /// </summary>
+    private static bool IsAdmin(HttpContext context) =>
+        context.User.HasClaim("admin", "true")
+        || context.User.IsInRole("admin")
+        || context.User.IsInRole("super_admin");
+
     public static void MapComponentEndpoints(this IEndpointRouteBuilder app)
     {
         // Public endpoint - no auth required (outside group to avoid any auth inheritance)
@@ -189,7 +201,7 @@ public static class ComponentEndpoints
             (page, limit) = NormalizePaginationParams(page, limit);
 
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = context.User.HasClaim("admin", "true");
+            var isAdmin = IsAdmin(context);
 
             var (components, total) = await firebaseService.GetDocumentsAsync<LearningComponent>(
                 ComponentsCollection,
@@ -273,7 +285,7 @@ public static class ComponentEndpoints
             // Check visibility permissions
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var isAuthenticated = !string.IsNullOrEmpty(uid);
-            var isAdmin = context.User.HasClaim("admin", "true");
+            var isAdmin = IsAdmin(context);
             var isOwner = componentWithId.CreatedBy?.Uid == uid;
 
             // For backward compatibility, treat null/empty as "published" (legacy documents)
@@ -325,7 +337,7 @@ public static class ComponentEndpoints
                 return Results.Unauthorized();
             }
 
-            var isAdmin = context.User.IsInRole("admin");
+            var isAdmin = IsAdmin(context);
 
             (page, limit) = NormalizePaginationParams(page, limit);
 
@@ -532,7 +544,7 @@ public static class ComponentEndpoints
         try
         {
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = context.User.HasClaim("admin", "true");
+            var isAdmin = IsAdmin(context);
 
             // Get existing component
             var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
@@ -604,7 +616,7 @@ public static class ComponentEndpoints
         try
         {
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = context.User.HasClaim("admin", "true");
+            var isAdmin = IsAdmin(context);
 
             // Get existing component
             var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
@@ -662,7 +674,7 @@ public static class ComponentEndpoints
         try
         {
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = context.User.HasClaim("admin", "true");
+            var isAdmin = IsAdmin(context);
 
             // Get existing component
             var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
@@ -712,7 +724,7 @@ public static class ComponentEndpoints
         try
         {
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = context.User.HasClaim("admin", "true");
+            var isAdmin = IsAdmin(context);
 
             var existing = await firebaseService.GetDocumentAsync<LearningComponentDetail>(
                 ComponentsCollection,
@@ -770,7 +782,7 @@ public static class ComponentEndpoints
         try
         {
             var uid = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAdmin = context.User.HasClaim("admin", "true");
+            var isAdmin = IsAdmin(context);
 
             var updatedAt = DateTime.UtcNow;
 
