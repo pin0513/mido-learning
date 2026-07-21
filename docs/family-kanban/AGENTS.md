@@ -1,9 +1,13 @@
 # Family Kanban（家庭計分板）— 授權與資料可見性規則
 
-**版本**：1.0（Phase 0 安全地基）
+**版本**：1.1（Phase 0 安全地基 + Phase 3 per-user 私密文件切片）
 **日期**：2026-07-22
 **範圍**：`backend/MidoLearning.Api` 內 `/api/family-scoreboard/*` 系列端點
 **目的**：給後續開發者 / AI agent 一份「誰能呼叫什麼、看到什麼」的權威參考，避免重蹈 Phase 0 修補前的 IDOR 漏洞。
+
+**變更紀錄**：
+- v1.1：新增第 8 節「Per-User 私密文件」——提前做的 Phase 3 安全切片，複用 Phase 0 的 `CanAccessFamilyAsync` 授權範式，額外疊加 per-doc email 過濾。
+- v1.0：Phase 0 初版（IDOR gate、FamilyAdmin policy、parent allowlist 鋪路、visitor tier 遮罩、JWT/API Key 後門硬化）。
 
 ---
 
@@ -128,5 +132,41 @@ uid 可存取 familyId  ⟺  familyId == "family_{uid}"（primary admin）
 
 - `/api/family-scoreboard/{familyId}/...`（`admin` / `read` / `readExtended`）→ 非 player 呼叫者需登入 + `CanAccessFamilyAsync` 通過；player 呼叫者需路由 `familyId` 與 JWT `familyId` claim 相符（見第 3.4 節）。
 - `/api/family-scoreboard/{familyId}/...`（`playerGroup`）→ 需 `player` JWT，且路由 `familyId` 必須與 JWT `familyId` claim 相符，僅能操作 JWT 內 `playerId` 對應的資料。
+- `/api/family-scoreboard/{familyId}/private-docs`（`admin` group）→ 除了 `CanAccessFamilyAsync`，GET 還疊加 per-doc email 過濾，見第 8 節。
 - `/api/family-scoreboard/lookup`、`/visitor`、`/active-families`、`/player-login`（`publicGroup`）→ 匿名可呼叫，資料經過欄位遮罩（第 4 節）。
 - `/api/family-scoreboard/super-admin/*`（`superAdmin`）→ 需 `super_admin` role，管理全平台所有家庭，不受 `CanAccessFamilyAsync` 限制（設計如此：super admin 本來就該能管所有家庭）。
+
+---
+
+## 8. Per-User 私密文件（Phase 3 安全切片，提前完成）
+
+### 8.1 用途
+
+保羅寫給配偶的「使用說明書」這類**個人對個人**的私密內容，儲存在家庭底下，但**不是家庭共享資料**——同一個家庭的其他 admin/co-admin（包含 primary admin 自己）都不應該看到不是寫給自己的文件。這比 Phase 0 的「家庭歸屬」（`CanAccessFamilyAsync`）更嚴一層。
+
+### 8.2 資料模型
+
+Firestore 路徑：`families/{familyId}/private-docs/{docId}`
+
+`PrivateDocDoc`（`Models/FamilyScoreboard/PrivateDocDoc.cs`）：`Id`、`Title`、`Content`、`VisibleToEmail`、`CreatedBy`、`CreatedAt`。對應 DTO：`PrivateDocDto`（`Models/FamilyScoreboard/Dtos.cs`）。
+
+### 8.3 兩層授權（缺一不可）
+
+1. **家庭歸屬**（既有 Phase 0 gate）：呼叫者必須是這個 `familyId` 的 primary admin 或 co-admin（`RequireFamilyAccessAsync` 已掛在 `admin` group，自動套用，端點本身不用重複寫）。
+2. **Per-doc email 過濾**（本節新增，只在 GET 適用）：即使通過了第 1 層，`GetVisiblePrivateDocsAsync(familyId, viewerEmail)` 只回傳 `VisibleToEmail` 與呼叫者的 `ClaimTypes.Email`（大小寫不敏感）相符的文件。**不相符就是空清單，不是 403**——因為呼叫者對這個家庭本來就有權限，只是這份文件不是給他看的，語意上是「這裡沒有你能看的東西」而不是「你不該來這裡」。
+
+過濾邏輯抽成 `FirebaseScoreboardService.FilterVisiblePrivateDocs`（`internal static`，純函式，不碰 Firestore），方便脫離 Firestore 直接單元測試 email 大小寫比對與「pin0513 看不到 daisy9928 文件」這個核心不變量（見 `MidoLearning.Api.Tests/Services/PrivateDocVisibilityFilterTests.cs`）。用「先讀整個 collection 再過濾」而非 Firestore `WhereEqualTo` 查詢，是因為 Firestore 的等式查詢大小寫敏感，這裡資料量小（單一家庭的私密文件不會太多），先讀後濾比多維護一個正規化欄位划算。
+
+### 8.4 端點（掛在既有 `admin` group）
+
+| 方法 | 路徑 | 誰能建 / 看 / 刪 |
+|---|---|---|
+| `POST` | `/{familyId}/private-docs` | 家庭 primary admin / co-admin 皆可建立，`visibleToEmail` 可以指定給家庭內任何人（包含自己） |
+| `GET` | `/{familyId}/private-docs` | 家庭 primary admin / co-admin 皆可呼叫，但只看得到 `visibleToEmail` 是自己的文件（見 8.3） |
+| `DELETE` | `/{familyId}/private-docs/{docId}` | 家庭 primary admin / co-admin 皆可刪除**任何**該家庭的私密文件（本輪沒有做「只有建立者能刪」的限制，比照既有 `DeleteEventAsync` 等其他刪除端點的權限寬鬆度） |
+
+### 8.5 已知限制（誠實列出，未在本輪修）
+
+- **DELETE 沒有 per-doc email 檢查**：任何家庭 admin/co-admin 都能刪除任何私密文件，即使不是自己能看的那份。目前定位為「家長對家長」的信任關係內操作，是否要收緊留給之後判斷。
+- **沒有「編輯」端點**：只有 Create / Read / Delete，沒有 Update。目前夠用（改內容 = 刪掉重建），如果之後要加 Update，記得同樣要走兩層授權。
+- **`visibleToEmail` 沒有驗證是否為家庭成員的 email**：建立時可以填任何字串，包含根本不是任何人 email 的亂打。這不是安全漏洞（反正查詢時要精準比對到那個字串才看得到），但可能造成「打錯字永遠沒人看得到」的資料孤兒。前端（team lead 另外處理）應該在 UI 層做基本驗證。

@@ -11,6 +11,7 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
     public const string AuthenticationScheme = "TestScheme";
     public const string UserIdHeader = "X-Test-UserId";
     public const string UserRoleHeader = "X-Test-UserRole";
+    public const string UserEmailHeader = "X-Test-UserEmail";
 
     public TestAuthHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
@@ -25,6 +26,7 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
         // Check for test headers
         var userId = Request.Headers[UserIdHeader].FirstOrDefault();
         var userRole = Request.Headers[UserRoleHeader].FirstOrDefault();
+        var userEmail = Request.Headers[UserEmailHeader].FirstOrDefault();
 
         if (string.IsNullOrEmpty(userId))
         {
@@ -35,7 +37,10 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
         {
             new(ClaimTypes.NameIdentifier, userId),
             new("firebase_uid", userId),
-            new(ClaimTypes.Email, $"{userId}@test.com")
+            // 沒帶 X-Test-UserEmail 時維持既有行為（{userId}@test.com），
+            // 帶了就用指定值 —— 讓需要精確控制 email（例如 per-user 私密文件測試）的
+            // 測試可以用真實的 email 格式，不影響既有測試。
+            new(ClaimTypes.Email, string.IsNullOrEmpty(userEmail) ? $"{userId}@test.com" : userEmail)
         };
 
         if (!string.IsNullOrEmpty(userRole))

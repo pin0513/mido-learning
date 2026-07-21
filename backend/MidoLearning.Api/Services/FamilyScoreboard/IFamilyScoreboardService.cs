@@ -137,6 +137,20 @@ public interface IFamilyScoreboardService
     Task<FamilyBackupDto> ExportBackupAsync(string familyId, CancellationToken ct = default);
     Task ImportBackupAsync(string familyId, FamilyBackupDto backup, CancellationToken ct = default);
 
+    // ── Private Docs（per-user 私密文件） ──────────────────────────────────────
+    /// <summary>建立私密文件，只有 visibleToEmail 本人查詢時看得到。</summary>
+    Task<PrivateDocDto> CreatePrivateDocAsync(
+        string familyId, string title, string content, string visibleToEmail, string createdByUid, CancellationToken ct = default);
+
+    /// <summary>
+    /// 只回傳 visibleToEmail 與 viewerEmail 相符（大小寫不敏感）的文件。
+    /// 這個過濾比 CanAccessFamilyAsync 更嚴：同家庭的其他 admin/co-admin 一律看不到。
+    /// </summary>
+    Task<IReadOnlyList<PrivateDocDto>> GetVisiblePrivateDocsAsync(
+        string familyId, string viewerEmail, CancellationToken ct = default);
+
+    Task DeletePrivateDocAsync(string familyId, string docId, CancellationToken ct = default);
+
     // ── Co-Admin ──────────────────────────────────────────────────────────────
     Task<CoAdminDto> AddCoAdminAsync(string familyId, AddCoAdminRequest req, CancellationToken ct = default);
     Task<IReadOnlyList<CoAdminDto>> GetCoAdminsAsync(string familyId, CancellationToken ct = default);

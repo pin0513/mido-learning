@@ -584,6 +584,37 @@ public static class FamilyScoreboardEndpoints
             return Results.Ok(new { message = "匯入成功" });
         });
 
+        // ── Phase 3 Admin: Private Docs（per-user 私密文件） ─────────────────────────
+        // 建立/刪除受既有 admin group 的 FamilyAdmin policy + RequireFamilyAccessAsync
+        // 把關（呼叫者必須是這個家庭的 primary admin 或 co-admin）。
+        // GET 額外套用 per-doc email 過濾（GetVisiblePrivateDocsAsync）——這一層比家庭
+        // 歸屬更嚴：即使是同家庭的 primary admin，也只看得到 visibleToEmail 是自己的文件。
+        admin.MapPost("/{familyId}/private-docs", async (
+            string familyId, CreatePrivateDocRequest request,
+            IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
+            if (uid is null) return Results.Unauthorized();
+            var doc = await svc.CreatePrivateDocAsync(familyId, request.Title, request.Content, request.VisibleToEmail, uid, ct);
+            return Results.Created($"/api/family-scoreboard/{familyId}/private-docs/{doc.Id}", doc);
+        });
+
+        admin.MapGet("/{familyId}/private-docs", async (
+            string familyId, IFamilyScoreboardService svc, ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var email = user.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(email)) return Results.Ok(Array.Empty<PrivateDocDto>());
+            var docs = await svc.GetVisiblePrivateDocsAsync(familyId, email, ct);
+            return Results.Ok(docs);
+        });
+
+        admin.MapDelete("/{familyId}/private-docs/{docId}", async (
+            string familyId, string docId, IFamilyScoreboardService svc, CancellationToken ct) =>
+        {
+            await svc.DeletePrivateDocAsync(familyId, docId, ct);
+            return Results.Ok();
+        });
+
         // ── Phase 3 Player: Shop 操作 ─────────────────────────────────────────────
         playerGroup.MapPost("/{familyId}/shop-orders", async (
             string familyId, CreateShopOrderRequest request,
