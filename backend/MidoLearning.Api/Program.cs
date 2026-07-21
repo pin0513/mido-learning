@@ -52,19 +52,24 @@ builder.Services.AddScoped<RewardCalculator>();
 
 // Family Scoreboard Services
 builder.Services.AddScoped<IFamilyScoreboardService, FirebaseScoreboardService>();
+builder.Services.AddSingleton<IParentAllowlist, ParentAllowlist>();
 
 // Music Producer Services (Method A: Python subprocess in same container)
 builder.Services.AddSingleton<IPythonSidecarClient, PythonProcessRunner>();
 builder.Services.AddSingleton<MusicTaskStore>();
 builder.Services.AddScoped<IMusicProducerService, MusicProducerService>();
 
+// 非 Development 環境缺少 Jwt:Key 時，這裡會在應用程式啟動的當下（top-level 同步程式碼）
+// 直接拋出例外、讓 process 啟動失敗 —— 而不是悄悄沿用硬編碼的開發用後門金鑰。
+// 注意：一定要在 AddJwtBearer 的 lambda「外面」解析，因為 options 委派本身是延遲執行
+// （直到第一次有請求需要 "SkillVillage" scheme 才會跑），放在裡面無法做到「啟動拋錯」。
+var jwtSigningKey = MidoLearning.Api.Services.JwtKeyProvider.ResolveKey(builder.Configuration, builder.Environment);
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "MidoLearning";
+
 builder.Services.AddAuthentication("Firebase")
     .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, FirebaseAuthHandler>("Firebase", null)
     .AddJwtBearer("SkillVillage", options =>
     {
-        var jwtKey = builder.Configuration["Jwt:Key"] ?? "your-super-secret-jwt-key-change-this-in-production-skill-village";
-        var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "MidoLearning";
-
         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -74,7 +79,7 @@ builder.Services.AddAuthentication("Firebase")
             ValidIssuer = jwtIssuer,
             ValidAudience = jwtIssuer,
             IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
-                System.Text.Encoding.UTF8.GetBytes(jwtKey))
+                System.Text.Encoding.UTF8.GetBytes(jwtSigningKey))
         };
     });
 
@@ -104,8 +109,11 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("super_admin", "game_admin", "teacher", "admin"));
 
     // Family Admin - can manage family scoreboard (add transactions, process redemptions)
+    // 必須登入，但「player」JWT（子女帳號）不算 family admin —— 家長授權由
+    // CanAccessFamilyAsync 在各 endpoint 進一步把關（防止 IDOR：登入者存取非本人家庭）。
     options.AddPolicy("FamilyAdmin", policy =>
-        policy.RequireAuthenticatedUser());
+        policy.RequireAuthenticatedUser()
+              .RequireAssertion(ctx => !ctx.User.IsInRole("player")));
 
     // Player Only - 玩家 JWT 持有者
     options.AddPolicy("PlayerOnly", policy =>

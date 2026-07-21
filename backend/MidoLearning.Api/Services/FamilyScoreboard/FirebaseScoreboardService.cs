@@ -2,6 +2,7 @@ using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MidoLearning.Api.Models.FamilyScoreboard;
+using MidoLearning.Api.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,11 +13,13 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 {
     private readonly FirestoreDb _db;
     private readonly ILogger<FirebaseScoreboardService> _logger;
+    private readonly IHostEnvironment _environment;
 
-    public FirebaseScoreboardService(FirestoreDb db, ILogger<FirebaseScoreboardService> logger)
+    public FirebaseScoreboardService(FirestoreDb db, ILogger<FirebaseScoreboardService> logger, IHostEnvironment environment)
     {
         _db = db;
         _logger = logger;
+        _environment = environment;
     }
 
     // ── Firestore path helpers ────────────────────────────────────────────────
@@ -57,6 +60,30 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
         _logger.LogInformation(
             "Family {FamilyId} meta upserted by {AdminUid}", familyId, adminUid);
+    }
+
+    // ── CanAccessFamilyAsync（IDOR 防護）───────────────────────────────────────
+
+    /// <summary>
+    /// uid 有權存取 familyId 若且唯若：
+    ///   1. uid 是該家庭的 primary admin（familyId == "family_{uid}"），或
+    ///   2. uid 出現在該家庭的 coAdmins 子集合中。
+    /// 與 <see cref="GetMyFamilyAsync"/> 採用相同的歸屬定義，差別在於這裡已知目標 familyId，
+    /// 只需直接查詢該家庭的 coAdmins 子集合，不需要跨全庫的 CollectionGroup 查詢。
+    /// </summary>
+    public async Task<bool> CanAccessFamilyAsync(string uid, string familyId, CancellationToken ct = default)
+    {
+        if (string.IsNullOrEmpty(familyId))
+            return false;
+
+        // 1. Primary admin
+        if (familyId == $"family_{uid}")
+            return true;
+
+        // 2. Co-admin
+        var coAdminSnap = await _db.Collection("families").Document(familyId)
+            .Collection("coAdmins").Document(uid).GetSnapshotAsync(ct);
+        return coAdminSnap.Exists;
     }
 
     // ── GetScoresAsync ────────────────────────────────────────────────────────
@@ -611,13 +638,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         var credentialsSnap = await PlayerCredentials(familyId).GetSnapshotAsync(ct);
         var credentialIds = credentialsSnap.Documents.Select(d => d.Id).ToHashSet();
 
-        // 批次取得所有玩家的零用金餘額
-        var ledgerSnap = await AllowanceLedger(familyId).GetSnapshotAsync(ct);
-        var balanceByPlayer = ledgerSnap.Documents
-            .Select(d => d.ConvertTo<AllowanceLedgerDoc>())
-            .GroupBy(r => r.PlayerId)
-            .ToDictionary(g => g.Key, g => g.Sum(r => r.Amount));
-
+        // 注意：訪客（匿名）視圖刻意不查詢 / 不回傳零用金餘額，避免財務資訊外洩給任何知道代碼的人。
         var players = scoresSnap.Documents
             .Select(d => d.ConvertTo<PlayerScoreDoc>())
             .OrderByDescending(p => p.AchievementPoints)
@@ -625,7 +646,6 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                 p.PlayerId, p.Name, p.Color, p.Emoji,
                 p.AchievementPoints,
                 p.RedeemablePoints,
-                balanceByPlayer.GetValueOrDefault(p.PlayerId, 0),
                 credentialIds.Contains(p.PlayerId)))
             .ToList()
             .AsReadOnly();
@@ -777,7 +797,7 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         if (result == PasswordVerificationResult.Failed)
             throw new UnauthorizedAccessException("Invalid password");
 
-        var jwtKey = configuration["Jwt:Key"] ?? "your-super-secret-jwt-key-change-this-in-production-skill-village";
+        var jwtKey = JwtKeyProvider.ResolveKey(configuration, _environment);
         var jwtIssuer = configuration["Jwt:Issuer"] ?? "MidoLearning";
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));

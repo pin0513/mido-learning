@@ -11,17 +11,20 @@ public class FirebaseAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
 {
     private readonly IFirebaseService _firebaseService;
     private readonly IConfiguration _configuration;
+    private readonly IHostEnvironment _environment;
 
     public FirebaseAuthHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
         IFirebaseService firebaseService,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IHostEnvironment environment)
         : base(options, logger, encoder)
     {
         _firebaseService = firebaseService;
         _configuration = configuration;
+        _environment = environment;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -97,7 +100,7 @@ public class FirebaseAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
         var token = authHeader["Bearer ".Length..];
         try
         {
-            var jwtKey = _configuration["Jwt:Key"] ?? "your-super-secret-jwt-key-change-this-in-production-skill-village";
+            var jwtKey = MidoLearning.Api.Services.JwtKeyProvider.ResolveKey(_configuration, _environment);
             var jwtIssuer = _configuration["Jwt:Issuer"] ?? "MidoLearning";
 
             var handler = new JwtSecurityTokenHandler();
@@ -147,6 +150,13 @@ public class FirebaseAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
 
     private AuthenticateResult? TryAuthenticateWithApiKey()
     {
+        // ApiKey:TestKey 是測試專用後門，僅允許 Development 環境使用；
+        // 非 Development 一律停用，即使設定檔誤帶了這個 key 也不會生效。
+        if (!_environment.IsDevelopment())
+        {
+            return null;
+        }
+
         var apiKey = Request.Headers["X-API-Key"].FirstOrDefault();
         if (string.IsNullOrEmpty(apiKey))
         {
@@ -171,7 +181,14 @@ public class FirebaseAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
             new(ClaimTypes.Email, adminEmail),
             new(ClaimTypes.Name, "Test Admin"),
             new(ClaimTypes.Role, "admin"),
-            new("firebase_uid", adminUid)
+            new("firebase_uid", adminUid),
+            // 標記這個 identity 是 Development-only 測試後門簽發的，不是任何真實家庭的
+            // primary admin / co-admin。E2E 測試會用固定的 adminUid 操作動態建立的
+            // 測試家庭（每次 run 一個新 familyId），兩者本來就對不上 CanAccessFamilyAsync
+            // 的歸屬定義。RequireFamilyAccessAsync 看到這個 claim 會跳過家庭歸屬檢查
+            // ——這個 claim 只可能由這段程式碼設定（Development-only），不是任何
+            // 使用者可控的輸入，所以不會被拿來偽造繞過正式環境的 IDOR 防護。
+            new("auth_method", "dev_api_key"),
         };
 
         var identity = new ClaimsIdentity(claims, Scheme.Name);

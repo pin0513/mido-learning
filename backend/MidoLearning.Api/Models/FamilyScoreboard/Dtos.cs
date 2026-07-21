@@ -444,6 +444,9 @@ public record ActiveFamilyDto(
 
 // ── Visitor Leaderboard ──────────────────────────────────────────────────
 
+// 注意：VisitorPlayerDto 是給「匿名／訪客」端點（GET /visitor?code=）用的 DTO，
+// 刻意不含 AllowanceBalance（零用金餘額）等家庭財務資訊 —— 訪客只憑代碼即可讀取，
+// 不應洩漏這類敏感資料。認證後的家庭視圖請改用 PlayerScoreDto（含 AllowanceBalance）。
 public record VisitorPlayerDto(
     string PlayerId,
     string Name,
@@ -451,7 +454,6 @@ public record VisitorPlayerDto(
     string? Emoji,
     int AchievementPoints,
     int RedeemablePoints,
-    int AllowanceBalance,
     bool HasPassword
 );
 

@@ -7,6 +7,13 @@ public interface IFamilyScoreboardService
     // ── 初始化 ────────────────────────────────────────────────────────────────
     Task InitializeAsync(string familyId, string adminUid, CancellationToken ct = default);
 
+    // ── 授權（IDOR 防護） ─────────────────────────────────────────────────────
+    /// <summary>
+    /// 判斷 uid 是否有權存取指定 familyId（uid 為該家庭的 primary admin 或 co-admin）。
+    /// 供 endpoint gate 使用，禁止登入者用已知/猜測的 familyId 存取他人家庭資料。
+    /// </summary>
+    Task<bool> CanAccessFamilyAsync(string uid, string familyId, CancellationToken ct = default);
+
     // ── 積分 ──────────────────────────────────────────────────────────────────
     Task<IReadOnlyList<PlayerScoreDto>> GetScoresAsync(string familyId, CancellationToken ct = default);
 

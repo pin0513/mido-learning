@@ -1,0 +1,245 @@
+openapi: 3.0.3
+info:
+  title: Family Kanban (Family Scoreboard) — Authorization Skeleton
+  version: "0.1.0-phase0"
+  description: >-
+    這不是完整的 API 規格，只涵蓋授權相關的端點骨架（見 backend/MidoLearning.Api/Endpoints/FamilyScoreboardEndpoints.cs）。
+    目的是讓後續開發者/AI agent 一眼看出「這個端點需要什麼身份、通過什麼 gate、失敗會回什麼」。
+    完整欄位規格請直接看對應的 DTO（backend/MidoLearning.Api/Models/FamilyScoreboard/Dtos.cs）。
+    對應的文字說明見同目錄 AGENTS.md。
+
+servers:
+  - url: https://mido-learning-api-24mwb46hra-de.a.run.app
+    description: Production
+  - url: http://localhost:5199
+    description: Local development
+
+security: []
+
+components:
+  securitySchemes:
+    FirebaseIdToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Firebase ID Token。FirebaseAuthHandler 驗證後，uid 對應到
+        ClaimTypes.NameIdentifier。用於 FamilyAdmin / AuthenticatedOnly /
+        SuperAdminOnly policy。
+    PlayerJwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        由 POST /player-login 換發的短期 JWT（type=player claim），
+        內含 familyId / playerId / playerName claims。用於 PlayerOnly policy。
+    DevApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: >-
+        僅限 Development 環境的測試後門（見 ApiKey:TestKey 設定）。
+        Phase 0 起，非 Development 環境一律停用，即使設定檔誤帶也不生效。
+
+  responses:
+    Unauthorized:
+      description: 未登入，或 Token 無效/過期。
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    Forbidden:
+      description: >-
+        已登入，但不符合授權條件。可能是：
+        (a) FamilyAdmin policy 擋下 player role，或
+        (b) CanAccessFamilyAsync 判定 uid 不是該 familyId 的 primary admin / co-admin。
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+  schemas:
+    VisitorPlayerDto:
+      type: object
+      description: >-
+        匿名訪客可見的玩家資料。Phase 0 起刻意不含 allowanceBalance（零用金餘額），
+        避免任何知道家庭代碼的人看到財務資訊。
+      properties:
+        playerId: { type: string }
+        name: { type: string }
+        color: { type: string }
+        emoji: { type: string, nullable: true }
+        achievementPoints: { type: integer }
+        redeemablePoints: { type: integer }
+        hasPassword: { type: boolean }
+
+    PlayerScoreDto:
+      type: object
+      description: 已授權家長可見的完整玩家資料（含零用金）。
+      properties:
+        playerId: { type: string }
+        name: { type: string }
+        color: { type: string }
+        achievementPoints: { type: integer }
+        redeemablePoints: { type: integer }
+        totalEarned: { type: integer }
+        totalDeducted: { type: integer }
+        totalRedeemed: { type: integer }
+        emoji: { type: string, nullable: true }
+        role: { type: string, nullable: true }
+        birthday: { type: string, nullable: true }
+        allowanceBalance: { type: integer }
+
+paths:
+  # ── Public（匿名，publicGroup）───────────────────────────────────────────
+  /api/family-scoreboard/visitor:
+    get:
+      summary: 訪客排行榜（Public tier）
+      description: 無需登入。回應經過欄位遮罩，不含零用金餘額。
+      security: []
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  familyCode: { type: string }
+                  players:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/VisitorPlayerDto"
+        "404":
+          description: 代碼不存在
+
+  /api/family-scoreboard/player-login:
+    post:
+      summary: 子女（Player）登入，換發 PlayerJwt
+      security: []
+      responses:
+        "200":
+          description: OK，回傳 PlayerJwt
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ── AuthenticatedOnly + RequireFamilyAccessAsync（read / readExtended group）
+  /api/family-scoreboard/{familyId}/scores:
+    get:
+      summary: 家庭積分排行榜（Parent 或 Child 皆可呼叫，資料一致）
+      description: >-
+        需登入。Firebase 使用者（家長）需 CanAccessFamilyAsync(uid, familyId) 為 true
+        （uid 是該家庭 primary admin 或 co-admin）；Player JWT（子女）則需路由 familyId
+        等於 JWT 的 familyId claim。兩種身份都可能呼叫這個端點（家長看排行榜、
+        子女看自己家的排行榜），見 AGENTS.md 第 3.4 節。
+      security:
+        - FirebaseIdToken: []
+        - PlayerJwt: []
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlayerScoreDto"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ── FamilyAdmin + CanAccessFamilyAsync（admin group）──────────────────────
+  /api/family-scoreboard/transactions:
+    post:
+      summary: 新增積分交易（Parent tier，需 family admin/co-admin）
+      description: >-
+        需登入且非 player role（FamilyAdmin policy），
+        familyId 從 query string 解析（沒帶則預設 family_{uid}），
+        再經 CanAccessFamilyAsync 檢查。
+      security:
+        - FirebaseIdToken: []
+      parameters:
+        - name: familyId
+          in: query
+          required: false
+          schema: { type: string }
+          description: 未提供時預設為 family_{uid}
+      responses:
+        "201":
+          description: Created
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: player role 被 FamilyAdmin policy 擋下，或非該家庭 admin/co-admin
+
+  /api/family-scoreboard/{familyId}/players:
+    post:
+      summary: 新增玩家（Parent tier）
+      security:
+        - FirebaseIdToken: []
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "201":
+          description: Created
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ── PlayerOnly（playerGroup）── 路由 familyId 必須與 JWT familyId claim 相符 ─
+  /api/family-scoreboard/{familyId}/tasks/available:
+    get:
+      summary: 子女查詢可接任務（Child tier）
+      description: >-
+        需 PlayerJwt。RequireFamilyAccessAsync 會確認路由 familyId 等於 JWT 內的
+        familyId claim（見 AGENTS.md 3.4 節），再用 JWT 的 playerId 過濾任務指派對象。
+      security:
+        - PlayerJwt: []
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: 路由 familyId 與 JWT 的 familyId claim 不符
+
+  # ── SuperAdminOnly（superAdmin group）── 不受 CanAccessFamilyAsync 限制 ───
+  /api/family-scoreboard/super-admin/families:
+    get:
+      summary: 列出全平台所有家庭（Super Admin tier）
+      description: 需 super_admin role。設計上可跨所有家庭，不套用 CanAccessFamilyAsync。
+      security:
+        - FirebaseIdToken: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: 非 super_admin role

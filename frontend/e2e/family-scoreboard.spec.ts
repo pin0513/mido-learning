@@ -879,9 +879,11 @@ test.describe.serial('家庭計分板整合測試', () => {
     expect(player).toHaveProperty('name');
     expect(player).toHaveProperty('color');
     expect(player).toHaveProperty('achievementPoints');
-    expect(player).toHaveProperty('allowanceBalance');
     expect(player).toHaveProperty('hasPassword');
-    console.log(`  ✓ 訪客排行榜: ${body.players.length} 位玩家, 第一名 ${player.name} (${player.achievementPoints} pts, $${player.allowanceBalance})`);
+    // 安全性回歸測試（Phase 0）：訪客（匿名）視圖刻意不回傳零用金餘額，
+    // 避免任何知道家庭代碼的人都能看到財務資訊。
+    expect(player).not.toHaveProperty('allowanceBalance');
+    console.log(`  ✓ 訪客排行榜: ${body.players.length} 位玩家, 第一名 ${player.name} (${player.achievementPoints} pts)`);
   });
 
   test('STEP 13B-3: 訪客排行榜 — 無效代碼回傳 404', async ({ request }) => {
