@@ -277,7 +277,7 @@ cd frontend && npx playwright test e2e/family-scoreboard.spec.ts --reporter=list
 ```
 
 **要求**：
-- 所有 56 個測試必須全部通過（0 failed）
+- 所有測試必須全部通過（0 failed；當前為 68 個，數量會隨測試擴充變動，以「0 failed」為準）
 - 測試覆蓋：STEP 1–14（初始化 → 積分 → 任務 → 零用金 → 商城 → 封印處罰 → 事件 → 道具 → 摘要 → 清理）
 - 每次測試建立獨立的 `family_test{datetime}` 家庭，不污染真實帳號
 
@@ -309,7 +309,19 @@ cd frontend && npx playwright test e2e/family-scoreboard.spec.ts --reporter=list
 | 2026-02-21 | 報表 Tab - 個別玩家 | 從 8 格大數字縮減為「貼紙牆 + 5 格小數字」（今日/本週/本月 + 成就點/可兌換），移除「已兌換/累計獲得/累計扣除」以降低資訊過載 |
 
 ### E2E 覆蓋範圍
-E2E 測試覆蓋 API 層與核心業務流程（56 個測試），**不覆蓋報表 Tab 視覺呈現**。報表 UI 異動後需人工在瀏覽器驗證貼紙牆顯示是否正確。
+E2E 測試覆蓋 API 層與核心業務流程（當前 68 個測試），**不覆蓋報表 Tab 視覺呈現**。報表 UI 異動後需人工在瀏覽器驗證貼紙牆顯示是否正確。
+
+---
+
+## Family Dashboard POC（`/family-dashboard`）
+
+> 家庭儀表板 POC，與計分板（`/family-scoreboard`）不同：這是**靜態原樣呈現**的頁面，尚未串接 API。
+
+- **路由**：`learn.paulfun.net/family-dashboard`（已上線）
+- **落地**：`frontend/public/family-dashboard/index.html`（設計 mockup 原樣）+ `next.config.ts` 的 rewrite（`/family-dashboard` → 該靜態檔）
+- **資料**：全為 mockup 內建 mock，**未串接任何 API、無敏感資料進前端**
+- **後續（尚未做）**：父母權限分級、家庭分析圖（登入才看）—— 需先有後端 tier 驗證才實作
+- **本地開發**：dev script 是 `next dev -p 3001`；3001 常被其他專案佔用，被佔時另指定 port（如 `-p 3002`）
 
 ---
 
