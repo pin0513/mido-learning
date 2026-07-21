@@ -313,12 +313,12 @@ E2E 測試覆蓋 API 層與核心業務流程（當前 68 個測試），**不�
 
 ---
 
-## Family Dashboard POC（`/family-dashboard`）
+## Family Kanban POC（`/family-kanban`）
 
 > 家庭儀表板 POC，與計分板（`/family-scoreboard`）不同：這是**靜態原樣呈現**的頁面，尚未串接 API。
 
-- **路由**：`learn.paulfun.net/family-dashboard`（已上線）
-- **落地**：`frontend/public/family-dashboard/index.html`（設計 mockup 原樣）+ `next.config.ts` 的 rewrite（`/family-dashboard` → 該靜態檔）
+- **路由**：`learn.paulfun.net/family-kanban`（已上線）
+- **落地**：`frontend/public/family-kanban/index.html`（設計 mockup 原樣）+ `next.config.ts` 的 rewrite（`/family-kanban` → 該靜態檔）
 - **資料**：全為 mockup 內建 mock，**未串接任何 API、無敏感資料進前端**
 - **後續（尚未做）**：父母權限分級、家庭分析圖（登入才看）—— 需先有後端 tier 驗證才實作
 - **本地開發**：dev script 是 `next dev -p 3001`；3001 常被其他專案佔用，被佔時另指定 port（如 `-p 3002`）
