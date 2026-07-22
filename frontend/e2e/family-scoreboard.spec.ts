@@ -880,9 +880,9 @@ test.describe.serial('家庭計分板整合測試', () => {
     expect(player).toHaveProperty('color');
     expect(player).toHaveProperty('achievementPoints');
     expect(player).toHaveProperty('hasPassword');
-    // 安全性回歸測試（Phase 0）：訪客（匿名）視圖刻意不回傳零用金餘額，
-    // 避免任何知道家庭代碼的人都能看到財務資訊。
-    expect(player).not.toHaveProperty('allowanceBalance');
+    // 家庭決定把零用金餘額公開展示給知道代碼的人（owner 2026-07-22 拍板）；反轉先前
+    // 「訪客不得見零用金」的隱私設計，屬明知的 Information Disclosure，由資料擁有者明確授權接受。
+    expect(player).toHaveProperty('allowanceBalance');
     console.log(`  ✓ 訪客排行榜: ${body.players.length} 位玩家, 第一名 ${player.name} (${player.achievementPoints} pts)`);
   });
 

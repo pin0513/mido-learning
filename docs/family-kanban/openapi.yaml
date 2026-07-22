@@ -1,11 +1,16 @@
 openapi: 3.0.3
 info:
-  title: Family Kanban (Family Scoreboard) — Authorization Skeleton
-  version: "0.1.0-phase0"
+  title: Family Scoreboard + Family Kanban — Authorization Skeleton
+  version: "0.3.0-module-split"
   description: >-
-    這不是完整的 API 規格，只涵蓋授權相關的端點骨架（見 backend/MidoLearning.Api/Endpoints/FamilyScoreboardEndpoints.cs）。
-    目的是讓後續開發者/AI agent 一眼看出「這個端點需要什麼身份、通過什麼 gate、失敗會回什麼」。
-    完整欄位規格請直接看對應的 DTO（backend/MidoLearning.Api/Models/FamilyScoreboard/Dtos.cs）。
+    這不是完整的 API 規格，只涵蓋授權相關的端點骨架，涵蓋兩個獨立模組：
+    /api/family-scoreboard（見 backend/MidoLearning.Api/Endpoints/FamilyScoreboardEndpoints.cs）
+    與 /api/family-kanban（見 backend/MidoLearning.Api/Endpoints/FamilyKanbanEndpoints.cs）。
+    兩個模組彼此不直接依賴，只共用家庭歸屬授權基礎（IFamilyAccessService +
+    FamilyAccessEndpointFilter，見 AGENTS.md 第 3、9 節）。
+    目的是讓後續開發者/AI agent 一眼看出「這個端點屬於哪個模組、需要什麼身份、
+    通過什麼 gate、失敗會回什麼」。完整欄位規格請直接看對應的 DTO
+    （Models/FamilyScoreboard/Dtos.cs、Models/FamilyKanban/Dtos.cs）。
     對應的文字說明見同目錄 AGENTS.md。
 
 servers:
@@ -95,6 +100,29 @@ components:
         role: { type: string, nullable: true }
         birthday: { type: string, nullable: true }
         allowanceBalance: { type: integer }
+
+    PrivateDocDto:
+      type: object
+      description: >-
+        per-user 私密文件（例：保羅寫給配偶的使用說明書）。GET 端點只回傳
+        visibleToEmail 與呼叫者 email 相符（大小寫不敏感）的文件，見 AGENTS.md 第 8 節。
+      properties:
+        id: { type: string }
+        title: { type: string }
+        content: { type: string }
+        visibleToEmail:
+          type: string
+          description: 只有這個 email 的登入者查詢時看得到這份文件。
+        createdBy: { type: string, description: 建立者的 uid }
+        createdAt: { type: string, format: date-time }
+
+    CreatePrivateDocRequest:
+      type: object
+      required: [title, content, visibleToEmail]
+      properties:
+        title: { type: string }
+        content: { type: string }
+        visibleToEmail: { type: string }
 
 paths:
   # ── Public（匿名，publicGroup）───────────────────────────────────────────
@@ -206,6 +234,100 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # family-kanban 模組（獨立模組，前綴 /api/family-kanban，見 AGENTS.md 第 9 節）
+  # 不依賴 family-scoreboard 的 IFamilyScoreboardService，只共用 IFamilyAccessService
+  # + FamilyAccessEndpointFilter 這個授權基礎。
+  # ══════════════════════════════════════════════════════════════════════════
+
+  # ── FamilyAdmin + CanAccessFamilyAsync + per-doc email 過濾（family-kanban 的 admin group）
+  /api/family-kanban/{familyId}/private-docs:
+    post:
+      summary: 建立 per-user 私密文件（Parent tier）
+      description: >-
+        需登入且非 player role（FamilyAdmin policy）+ CanAccessFamilyAsync 通過。
+        任何家庭 admin/co-admin 都能建立，visibleToEmail 可指定給家庭內任何人（含自己）。
+        見 AGENTS.md 第 8、9 節。
+      security:
+        - FirebaseIdToken: []
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePrivateDocRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrivateDocDto"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    get:
+      summary: 查詢「我看得到」的私密文件（Parent tier，per-doc email 過濾）
+      description: >-
+        通過 CanAccessFamilyAsync 只是第一關；回應只包含 visibleToEmail 與呼叫者
+        ClaimTypes.Email 相符（大小寫不敏感）的文件。**即使是這個家庭的 primary
+        admin，查不到寫給別人的文件也是回 200 + 空陣列，不是 403**——見 AGENTS.md 8.3 節。
+      security:
+        - FirebaseIdToken: []
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK（可能是空陣列 —— 代表這個家庭沒有寫給「我」看的文件）
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PrivateDocDto"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /api/family-kanban/{familyId}/private-docs/{docId}:
+    delete:
+      summary: 刪除私密文件（Parent tier）
+      description: >-
+        任何家庭 admin/co-admin 都能刪除任何一份該家庭的私密文件（沒有 per-doc
+        email 限制，見 AGENTS.md 8.5 節已知限制）。
+      security:
+        - FirebaseIdToken: []
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema: { type: string }
+        - name: docId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # family-scoreboard 模組（原本的家庭計分板，前綴 /api/family-scoreboard）
+  # ══════════════════════════════════════════════════════════════════════════
 
   # ── PlayerOnly（playerGroup）── 路由 familyId 必須與 JWT familyId claim 相符 ─
   /api/family-scoreboard/{familyId}/tasks/available:

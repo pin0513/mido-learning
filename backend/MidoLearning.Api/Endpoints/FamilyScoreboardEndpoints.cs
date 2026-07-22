@@ -12,7 +12,7 @@ public static class FamilyScoreboardEndpoints
         // ── Family Admin routes (需要 FamilyAdmin 授權) ──────────────────────
         var admin = app.MapGroup("/api/family-scoreboard")
             .RequireAuthorization("FamilyAdmin")
-            .AddEndpointFilter(RequireFamilyAccessAsync);
+            .AddEndpointFilter(FamilyAccessEndpointFilter.RequireFamilyAccessAsync);
 
         // POST /api/family-scoreboard/initialize?familyId=xxx
         // Admin 初始化家庭計分板（建立預設玩家、獎勵）
@@ -26,7 +26,7 @@ public static class FamilyScoreboardEndpoints
                 ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
 
-            var familyId = ResolveFamilyId(httpContext, uid);
+            var familyId = FamilyAccessEndpointFilter.ResolveFamilyId(httpContext, uid);
             await svc.InitializeAsync(familyId, uid, ct);
             return Results.Ok(new { familyId });
         });
@@ -44,7 +44,7 @@ public static class FamilyScoreboardEndpoints
                 ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
 
-            var familyId = ResolveFamilyId(httpContext, uid);
+            var familyId = FamilyAccessEndpointFilter.ResolveFamilyId(httpContext, uid);
             var tx = await svc.AddTransactionAsync(familyId, request, uid, ct);
             return Results.Created($"/api/family-scoreboard/transactions/{tx.Id}", tx);
         });
@@ -63,7 +63,7 @@ public static class FamilyScoreboardEndpoints
                 ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
 
-            var familyId = ResolveFamilyId(httpContext, uid);
+            var familyId = FamilyAccessEndpointFilter.ResolveFamilyId(httpContext, uid);
             var result = await svc.ProcessRedemptionAsync(familyId, redemptionId, request, uid, ct);
             return Results.Ok(result);
         });
@@ -71,7 +71,7 @@ public static class FamilyScoreboardEndpoints
         // ── Authenticated read routes (只需登入即可) ─────────────────────────
         var read = app.MapGroup("/api/family-scoreboard")
             .RequireAuthorization("AuthenticatedOnly")
-            .AddEndpointFilter(RequireFamilyAccessAsync);
+            .AddEndpointFilter(FamilyAccessEndpointFilter.RequireFamilyAccessAsync);
 
         // GET /api/family-scoreboard/{familyId}/scores
         // 查看家庭積分排行榜
@@ -194,7 +194,7 @@ public static class FamilyScoreboardEndpoints
         {
             var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
-            var familyId = ResolveFamilyId(httpContext, uid);
+            var familyId = FamilyAccessEndpointFilter.ResolveFamilyId(httpContext, uid);
             var code = await svc.GetOrCreateDisplayCodeAsync(familyId, ct);
             return Results.Ok(new { displayCode = code });
         });
@@ -208,7 +208,7 @@ public static class FamilyScoreboardEndpoints
         {
             var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
-            var familyId = ResolveFamilyId(http, uid);
+            var familyId = FamilyAccessEndpointFilter.ResolveFamilyId(http, uid);
             using var reader = new System.IO.StreamReader(http.Request.Body);
             var body = System.Text.Json.JsonDocument.Parse(await reader.ReadToEndAsync());
             if (!body.RootElement.TryGetProperty("code", out var codeProp))
@@ -231,7 +231,7 @@ public static class FamilyScoreboardEndpoints
         {
             var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
             if (uid is null) return Results.Unauthorized();
-            var familyId = ResolveFamilyId(httpContext, uid);
+            var familyId = FamilyAccessEndpointFilter.ResolveFamilyId(httpContext, uid);
             var code = await svc.RegenerateDisplayCodeAsync(familyId, ct);
             return Results.Ok(new { displayCode = code });
         });
@@ -372,7 +372,7 @@ public static class FamilyScoreboardEndpoints
         // familyId claim 相符，避免子女 token 被拿去存取別的家庭（IDOR 的另一種變體）。
         var playerGroup = app.MapGroup("/api/family-scoreboard")
             .RequireAuthorization("PlayerOnly")
-            .AddEndpointFilter(RequireFamilyAccessAsync);
+            .AddEndpointFilter(FamilyAccessEndpointFilter.RequireFamilyAccessAsync);
 
         playerGroup.MapGet("/{familyId}/tasks/available", async (
             string familyId,
@@ -428,7 +428,7 @@ public static class FamilyScoreboardEndpoints
         // ── Phase 3 Public: Shop（玩家可瀏覽商品，需要登入） ─────────────────────
         var readExtended = app.MapGroup("/api/family-scoreboard")
             .RequireAuthorization("AuthenticatedOnly")
-            .AddEndpointFilter(RequireFamilyAccessAsync);
+            .AddEndpointFilter(FamilyAccessEndpointFilter.RequireFamilyAccessAsync);
 
         readExtended.MapGet("/{familyId}/shop-items", async (
             string familyId, IFamilyScoreboardService svc, CancellationToken ct) =>
@@ -583,6 +583,11 @@ public static class FamilyScoreboardEndpoints
             await svc.ImportBackupAsync(familyId, backup, ct);
             return Results.Ok(new { message = "匯入成功" });
         });
+
+        // Private Docs（per-user 私密文件）已搬到獨立的 family-kanban 模組
+        // （/api/family-kanban/{familyId}/private-docs，見 Endpoints/FamilyKanbanEndpoints.cs）。
+        // family-kanban 不是 family-scoreboard 的一部分，兩者只共用 FamilyAccessEndpointFilter
+        // 這個授權 gate，彼此不直接依賴。
 
         // ── Phase 3 Player: Shop 操作 ─────────────────────────────────────────────
         playerGroup.MapPost("/{familyId}/shop-orders", async (
@@ -859,73 +864,5 @@ public static class FamilyScoreboardEndpoints
             await svc.DeleteFamilyPermanentlyAsync(familyId, ct);
             return Results.Ok(new { message = "已永久刪除" });
         });
-    }
-
-    /// <summary>
-    /// 從 query string 取得 familyId，若無則 fallback 到 family_{uid}。
-    /// 這讓 co-admin 能在指定 familyId 的情況下使用原本 hardcode family_{uid} 的端點。
-    /// </summary>
-    private static string ResolveFamilyId(HttpContext httpContext, string uid)
-    {
-        return httpContext.Request.Query.TryGetValue("familyId", out var fid) && !string.IsNullOrEmpty(fid)
-            ? fid.ToString()
-            : $"family_{uid}";
-    }
-
-    /// <summary>
-    /// IDOR 防護 gate：套用在 admin / read / readExtended 三個 route group。
-    /// 解析出這次請求實際操作的 familyId（優先取路由的 {familyId}，沒有就退回
-    /// ResolveFamilyId 的 query-string/family_{uid} 邏輯），再呼叫
-    /// <see cref="IFamilyScoreboardService.CanAccessFamilyAsync"/> 確認呼叫者（uid）
-    /// 是該家庭的 primary admin 或 co-admin。不通過一律回 403 Forbidden，
-    /// 阻止登入者用已知/猜測的 familyId 讀寫他人家庭資料。
-    ///
-    /// 「player」角色（子女 JWT）走另一條分支：Player JWT 簽發時已經把 familyId
-    /// 綁在 claim 上（見 FirebaseAuthHandler.TryAuthenticatePlayerJwt），這裡的
-    /// uid（NameIdentifier）其實是 playerId，不是任何家庭的 primary admin/co-admin，
-    /// 不能拿去問 CanAccessFamilyAsync —— 那樣會把所有子女請求都擋成 403。
-    /// 子女的正確檢查是「路由的 {familyId} 是否等於 JWT 內的 familyId claim」。
-    ///
-    /// 帶 "auth_method=dev_api_key" claim 的呼叫者（見
-    /// FirebaseAuthHandler.TryAuthenticateWithApiKey）完全跳過家庭歸屬檢查：這是
-    /// Development-only 的測試後門身份，E2E 測試會用它操作每次 run 動態建立、
-    /// 隨機命名的測試家庭，本來就不會出現在任何真實家庭的 coAdmins 名單裡。
-    /// 這個 claim 只可能由該後門本身設定（非 Development 已停用、也不是使用者可控輸入），
-    /// 不會被拿來偽造繞過正式環境的 IDOR 防護。
-    /// </summary>
-    private static async ValueTask<object?> RequireFamilyAccessAsync(
-        EndpointFilterInvocationContext filterContext,
-        EndpointFilterDelegate next)
-    {
-        var httpContext = filterContext.HttpContext;
-        var user = httpContext.User;
-
-        if (user.HasClaim("auth_method", "dev_api_key"))
-            return await next(filterContext);
-
-        var routeFamilyId = httpContext.Request.RouteValues.TryGetValue("familyId", out var routeValue)
-            && routeValue is string rid && !string.IsNullOrEmpty(rid)
-            ? rid
-            : null;
-
-        if (user.IsInRole("player"))
-        {
-            var jwtFamilyId = user.FindFirstValue("familyId");
-            if (routeFamilyId is not null && routeFamilyId != jwtFamilyId)
-                return Results.Forbid();
-
-            return await next(filterContext);
-        }
-
-        var uid = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? user.FindFirstValue("user_id");
-        if (uid is null) return Results.Unauthorized();
-
-        var familyId = routeFamilyId ?? ResolveFamilyId(httpContext, uid);
-
-        var svc = httpContext.RequestServices.GetRequiredService<IFamilyScoreboardService>();
-        var canAccess = await svc.CanAccessFamilyAsync(uid, familyId, httpContext.RequestAborted);
-        if (!canAccess) return Results.Forbid();
-
-        return await next(filterContext);
     }
 }

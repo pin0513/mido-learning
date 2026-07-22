@@ -434,6 +434,9 @@ public record MyFamilyItemDto(
 
 public record BatchDeleteRequest(IReadOnlyList<string> Ids);
 
+// Private Docs（per-user 私密文件）已搬到獨立的 family-kanban 模組
+// （MidoLearning.Api.Models.FamilyKanban.Dtos），不再屬於 family-scoreboard。
+
 // ── Active Families ─────────────────────────────────────────────────────
 
 public record ActiveFamilyDto(
@@ -444,9 +447,11 @@ public record ActiveFamilyDto(
 
 // ── Visitor Leaderboard ──────────────────────────────────────────────────
 
-// 注意：VisitorPlayerDto 是給「匿名／訪客」端點（GET /visitor?code=）用的 DTO，
-// 刻意不含 AllowanceBalance（零用金餘額）等家庭財務資訊 —— 訪客只憑代碼即可讀取，
-// 不應洩漏這類敏感資料。認證後的家庭視圖請改用 PlayerScoreDto（含 AllowanceBalance）。
+// 注意：VisitorPlayerDto 是給「匿名／訪客」端點（GET /visitor?code=）用的 DTO。
+// 含 AllowanceBalance（零用金餘額）—— 家庭決定把零用金公開展示給任何知道代碼的人（owner 2026-07-22 拍板）；
+// 這是明知的 Information Disclosure，由資料擁有者授權接受。
+// 餘額一律取 allowance-ledger 加總真源（見 FirebaseScoreboardService.SumAllowanceByPlayer），
+// 與 GetAllowanceBalanceAsync / admin 面板 / 主計分板同一算法，不接會漂移的 RedeemablePoints 快照。
 public record VisitorPlayerDto(
     string PlayerId,
     string Name,
@@ -454,6 +459,7 @@ public record VisitorPlayerDto(
     string? Emoji,
     int AchievementPoints,
     int RedeemablePoints,
+    int AllowanceBalance,
     bool HasPassword
 );
 

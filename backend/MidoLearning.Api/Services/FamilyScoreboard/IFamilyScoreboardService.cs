@@ -11,6 +11,9 @@ public interface IFamilyScoreboardService
     /// <summary>
     /// 判斷 uid 是否有權存取指定 familyId（uid 為該家庭的 primary admin 或 co-admin）。
     /// 供 endpoint gate 使用，禁止登入者用已知/猜測的 familyId 存取他人家庭資料。
+    /// 實作（FirebaseScoreboardService）內部委派給共用的
+    /// MidoLearning.Api.Services.FamilyAccess.IFamilyAccessService —— 保留在這個
+    /// interface 上是為了向下相容既有呼叫端，真正的判定邏輯只有一份。
     /// </summary>
     Task<bool> CanAccessFamilyAsync(string uid, string familyId, CancellationToken ct = default);
 
@@ -136,6 +139,9 @@ public interface IFamilyScoreboardService
     // ── Backup ────────────────────────────────────────────────────────────────
     Task<FamilyBackupDto> ExportBackupAsync(string familyId, CancellationToken ct = default);
     Task ImportBackupAsync(string familyId, FamilyBackupDto backup, CancellationToken ct = default);
+
+    // Private Docs（per-user 私密文件）已搬到獨立的 family-kanban 模組
+    // （MidoLearning.Api.Services.FamilyKanban.IFamilyKanbanService），不再屬於這個 interface。
 
     // ── Co-Admin ──────────────────────────────────────────────────────────────
     Task<CoAdminDto> AddCoAdminAsync(string familyId, AddCoAdminRequest req, CancellationToken ct = default);

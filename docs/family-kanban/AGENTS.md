@@ -1,9 +1,15 @@
-# Family Kanban（家庭計分板）— 授權與資料可見性規則
+# Family Kanban / Family Scoreboard — 授權與資料可見性規則
 
-**版本**：1.0（Phase 0 安全地基）
+**版本**：2.0（Phase 0 安全地基 + Phase 3 per-user 私密文件切片 + 架構獨立化）
 **日期**：2026-07-22
-**範圍**：`backend/MidoLearning.Api` 內 `/api/family-scoreboard/*` 系列端點
-**目的**：給後續開發者 / AI agent 一份「誰能呼叫什麼、看到什麼」的權威參考，避免重蹈 Phase 0 修補前的 IDOR 漏洞。
+**範圍**：`backend/MidoLearning.Api` 內 `/api/family-scoreboard/*`（family-scoreboard 模組）與
+`/api/family-kanban/*`（family-kanban 模組，獨立模組）兩組端點，以及兩者共用的授權基礎。
+**目的**：給後續開發者 / AI agent 一份「誰能呼叫什麼、看到什麼、模組邊界在哪」的權威參考，避免重蹈 Phase 0 修補前的 IDOR 漏洞，也避免未來不小心讓兩個模組互相依賴。
+
+**變更紀錄**：
+- v2.0：**架構獨立化**——family-kanban 從 family-scoreboard 中拆成獨立模組（前綴 `/api/family-kanban`，見第 9 節）。家庭歸屬判定（原 `CanAccessFamilyAsync`）抽成共用的 `IFamilyAccessService`/`FirebaseFamilyAccessService`，endpoint gate 抽成共用的 `FamilyAccessEndpointFilter`，family-scoreboard 與 family-kanban 都依賴這兩個共用元件，但彼此不直接依賴。private-docs（第 8 節）整組搬到 family-kanban，Firestore 路徑也從 `families/{familyId}/private-docs` 改成獨立的 `family-kanban/{familyId}/private-docs`。
+- v1.1：新增第 8 節「Per-User 私密文件」——提前做的 Phase 3 安全切片，複用 Phase 0 的 `CanAccessFamilyAsync` 授權範式，額外疊加 per-doc email 過濾。
+- v1.0：Phase 0 初版（IDOR gate、FamilyAdmin policy、parent allowlist 鋪路、visitor tier 遮罩、JWT/API Key 後門硬化）。
 
 ---
 
@@ -25,17 +31,19 @@
 
 | Policy | 定義（`Program.cs`） | 套用的 Route Group |
 |---|---|---|
-| `FamilyAdmin` | 需登入，且 **不是** `player` role | `admin`（`/api/family-scoreboard`，含 `/initialize`、`/transactions`、`/{familyId}/players` 等大部分管理端點） |
+| `FamilyAdmin` | 需登入，且 **不是** `player` role | family-scoreboard 的 `admin`（`/api/family-scoreboard`，含 `/initialize`、`/transactions`、`/{familyId}/players` 等大部分管理端點）；family-kanban 的 `admin`（`/api/family-kanban`，見第 9 節） |
 | `AuthenticatedOnly` | 需登入（任何角色，含 `player`） | `read`（`/{familyId}/scores`、`/{familyId}/transactions` 等）、`readExtended`（`/{familyId}/shop-items`、`/{familyId}/events`） |
 | `PlayerOnly` | 需為 `player` role | `playerGroup`（`/{familyId}/tasks/available`、`/{familyId}/my-*` 等子女自助端點） |
 | `SuperAdminOnly` | 需為 `super_admin` role | `superAdmin`（`/super-admin/families/*`，封禁/刪除家庭） |
 | 無 policy（匿名） | — | `publicGroup`（`/lookup`、`/visitor`、`/active-families`、`/player-login`） |
 
+**注意**：`FamilyAdmin`/`AuthenticatedOnly`/`PlayerOnly`/`SuperAdminOnly` 這四個 policy 定義在 `Program.cs`，是**平台層級的共用資源**，family-scoreboard 與 family-kanban 都直接引用同一份，不算模組互相依賴。
+
 **注意**：`FamilyAdmin` / `AuthenticatedOnly` 只回答「這個人有沒有登入、是不是 player」，**不回答**「這個人能不能存取這個 familyId」。後者由第 3 節的 IDOR gate 負責。
 
 ---
 
-## 3. IDOR Gate — `CanAccessFamilyAsync`（Phase 0 新增，核心防線）
+## 3. IDOR Gate — `IFamilyAccessService.CanAccessFamilyAsync`（Phase 0 新增，v2.0 抽成共用服務，核心防線）
 
 ### 3.1 問題
 
@@ -43,32 +51,38 @@
 
 ### 3.2 解法
 
-`IFamilyScoreboardService.CanAccessFamilyAsync(uid, familyId)` 判定：
+`IFamilyAccessService.CanAccessFamilyAsync(uid, familyId)`（`Services/FamilyAccess/IFamilyAccessService.cs` + `FirebaseFamilyAccessService.cs`）判定：
 
 ```
 uid 可存取 familyId  ⟺  familyId == "family_{uid}"（primary admin）
                         或  uid 存在於 families/{familyId}/coAdmins/{uid}（co-admin）
 ```
 
-實作見 `FirebaseScoreboardService.CanAccessFamilyAsync`（`Services/FamilyScoreboard/FirebaseScoreboardService.cs`）。與既有的 `GetMyFamilyAsync` 採用**相同的歸屬定義**，差別只在於這裡已知目標 `familyId`，用單一文件存在性查詢即可，不需要 `GetMyFamilyAsync` 那種跨全庫 `CollectionGroup` 查詢。
+與既有的 `FirebaseScoreboardService.GetMyFamilyAsync` 採用**相同的歸屬定義**，差別只在於這裡已知目標 `familyId`，用單一文件存在性查詢即可，不需要 `GetMyFamilyAsync` 那種跨全庫 `CollectionGroup` 查詢。
 
-### 3.3 套用方式：Endpoint Filter
+**v2.0 架構筆記**：這個判定邏輯原本寫在 `FirebaseScoreboardService.CanAccessFamilyAsync` 裡（Phase 0），v2.0 抽成獨立、單一職責的 `IFamilyAccessService`，讓 family-scoreboard 與 family-kanban 兩個模組共用同一份判定邏輯，不各寫一份（見第 9 節）。`IFamilyScoreboardService.CanAccessFamilyAsync` 這個 interface 方法還留著，但實作內部只是委派給 `IFamilyAccessService`（向下相容既有呼叫端，不是重複邏輯）。
 
-`FamilyScoreboardEndpoints.RequireFamilyAccessAsync` 是掛在 `admin` / `read` / `readExtended` 三個 `RouteGroupBuilder` 上的 `AddEndpointFilter`，對**該群組內每一個端點**一視同仁地套用，不需要每個 handler 各自呼叫：
+### 3.3 套用方式：共用 Endpoint Filter
+
+`FamilyAccessEndpointFilter.RequireFamilyAccessAsync`（`Endpoints/FamilyAccessEndpointFilter.cs`，v2.0 從 `FamilyScoreboardEndpoints.cs` 抽出來的共用類別）是掛在多個 `RouteGroupBuilder` 上的 `AddEndpointFilter`，對**該群組內每一個端點**一視同仁地套用，不需要每個 handler 各自呼叫：
+
+- family-scoreboard：`admin` / `read` / `readExtended` / `playerGroup` 四個 group。
+- family-kanban：`admin` 一個 group（見第 9 節）。
+
+執行邏輯：
 
 1. 從 `ClaimsPrincipal` 取出 `uid`（`NameIdentifier` 或 `user_id`）。
-2. 解析這次請求的 `familyId`：優先讀路由 `{familyId}`；若路由沒有（例如 `/initialize`、`/transactions`、`/generate-code` 這類用 query string 或預設 `family_{uid}` 的端點），退回既有的 `ResolveFamilyId(httpContext, uid)` 邏輯。
-3. 呼叫 `CanAccessFamilyAsync(uid, familyId)`；不通過回 `403 Forbidden`（`Results.Forbid()`），通過才放行到實際 handler。
+2. 解析這次請求的 `familyId`：優先讀路由 `{familyId}`；若路由沒有（例如 family-scoreboard 的 `/initialize`、`/transactions`、`/generate-code` 這類用 query string 或預設 `family_{uid}` 的端點），退回 `FamilyAccessEndpointFilter.ResolveFamilyId(httpContext, uid)` 邏輯。
+3. 呼叫 `IFamilyAccessService.CanAccessFamilyAsync(uid, familyId)`；不通過回 `403 Forbidden`（`Results.Forbid()`），通過才放行到實際 handler。
 
 對於本來就不吃 `familyId` 的端點（如 `GET /lookup-user`、`GET /my-family`），fallback 會解析成 `family_{uid}`，而 `family_{uid} == family_{uid}` 恆為真，因此 gate 對這些端點是「必過」的空操作，不影響既有行為。
 
-### 3.4 Player JWT 的另一條分支（同一個 gate，不同判定邏輯）
+### 3.4 Player JWT 與 dev-api-key 的另外兩條分支（同一個 gate，不同判定邏輯）
 
-`RequireFamilyAccessAsync` 對 `role=player` 的呼叫者走**不同的判定邏輯**，而不是套用 `CanAccessFamilyAsync`：
+`FamilyAccessEndpointFilter.RequireFamilyAccessAsync` 對特殊身份走**不同的判定邏輯**，而不是套用 `CanAccessFamilyAsync`：
 
-- Player JWT 簽發時（`PlayerLoginAsync`）已經把 `familyId` 綁在 claim 上，這裡的 `uid`（`NameIdentifier`）其實是 `playerId`，**不是**任何家庭的 primary admin / co-admin，不能拿去問 `CanAccessFamilyAsync`（那樣會把所有子女的合法請求都擋成 403 —— Phase 0 開發過程中真的先這樣寫錯，靠 E2E 案例中 `playerReq(...).../scores` 這條既有用法才發現）。
-- 子女的正確檢查是：**路由的 `{familyId}` 是否等於 JWT 內的 `familyId` claim**。不符直接 403。
-- 這個分支同時套用在 `read` / `readExtended`（子女也會呼叫 `/scores` 等端點）與 `playerGroup`（`PlayerOnly` policy，全部端點都有路由 `{familyId}`）。因此 **Player JWT 跨家庭存取（例如 A 家的子女 token 讀 B 家的任務/零用金/狀態）也已經被這個 gate 擋下**，見 `MidoLearning.Api.Tests/Endpoints/PlayerJwtFamilyAccessTests.cs`。
+- **Player（role=player）**：Player JWT 簽發時（`PlayerLoginAsync`）已經把 `familyId` 綁在 claim 上，這裡的 `uid`（`NameIdentifier`）其實是 `playerId`，**不是**任何家庭的 primary admin / co-admin，不能拿去問 `CanAccessFamilyAsync`（那樣會把所有子女的合法請求都擋成 403 —— Phase 0 開發過程中真的先這樣寫錯，靠 E2E 案例中 `playerReq(...).../scores` 這條既有用法才發現）。正確檢查是：**路由的 `{familyId}` 是否等於 JWT 內的 `familyId` claim**。不符直接 403。這個分支套用在 family-scoreboard 的 `read` / `readExtended`（子女也會呼叫 `/scores` 等端點）與 `playerGroup`。因此 **Player JWT 跨家庭存取也已經被這個 gate 擋下**，見 `MidoLearning.Api.Tests/Endpoints/PlayerJwtFamilyAccessTests.cs`。
+- **dev-api-key（`auth_method=dev_api_key` claim）**：Development-only 測試後門身份，完全跳過家庭歸屬檢查（見 `FirebaseAuthHandler.TryAuthenticateWithApiKey`）。E2E 測試套件靠這個身份操作動態建立的測試家庭，這個 claim 只可能由後門本身設定，非使用者可控輸入。
 
 ### 3.5 已知限制（誠實列出，未在本輪修）
 
@@ -130,3 +144,96 @@ uid 可存取 familyId  ⟺  familyId == "family_{uid}"（primary admin）
 - `/api/family-scoreboard/{familyId}/...`（`playerGroup`）→ 需 `player` JWT，且路由 `familyId` 必須與 JWT `familyId` claim 相符，僅能操作 JWT 內 `playerId` 對應的資料。
 - `/api/family-scoreboard/lookup`、`/visitor`、`/active-families`、`/player-login`（`publicGroup`）→ 匿名可呼叫，資料經過欄位遮罩（第 4 節）。
 - `/api/family-scoreboard/super-admin/*`（`superAdmin`）→ 需 `super_admin` role，管理全平台所有家庭，不受 `CanAccessFamilyAsync` 限制（設計如此：super admin 本來就該能管所有家庭）。
+- `/api/family-kanban/{familyId}/private-docs`（family-kanban 模組的 `admin` group）→ 除了 `CanAccessFamilyAsync`，GET 還疊加 per-doc email 過濾，見第 8、9 節。
+
+---
+
+## 8. Per-User 私密文件（Phase 3 安全切片，v2.0 起屬於 family-kanban 模組）
+
+### 8.1 用途
+
+保羅寫給配偶的「使用說明書」這類**個人對個人**的私密內容，儲存在家庭底下，但**不是家庭共享資料**——同一個家庭的其他 admin/co-admin（包含 primary admin 自己）都不應該看到不是寫給自己的文件。這比「家庭歸屬」（`IFamilyAccessService.CanAccessFamilyAsync`）更嚴一層。
+
+**v2.0 架構筆記**：這個功能最初（v1.1）是直接加在 family-scoreboard 模組裡的「安全切片」，v2.0 整組搬到獨立的 family-kanban 模組（見第 9 節）——這是它的正式歸屬，不是暫時借住。
+
+### 8.2 資料模型
+
+Firestore 路徑：`family-kanban/{familyId}/private-docs/{docId}`（v2.0 起獨立於 `families/{familyId}/*`，見 9.3 節資料邊界）。
+
+`PrivateDocDoc`（`Models/FamilyKanban/PrivateDocDoc.cs`）：`Id`、`Title`、`Content`、`VisibleToEmail`、`CreatedBy`、`CreatedAt`。對應 DTO：`PrivateDocDto`（`Models/FamilyKanban/Dtos.cs`）。
+
+### 8.3 兩層授權（缺一不可）
+
+1. **家庭歸屬**（共用 gate）：呼叫者必須是這個 `familyId` 的 primary admin 或 co-admin（`FamilyAccessEndpointFilter.RequireFamilyAccessAsync` 已掛在 family-kanban 的 `admin` group，自動套用，端點本身不用重複寫）。
+2. **Per-doc email 過濾**（family-kanban 專屬，只在 GET 適用）：即使通過了第 1 層，`IFamilyKanbanService.GetVisiblePrivateDocsAsync(familyId, viewerEmail)` 只回傳 `VisibleToEmail` 與呼叫者的 `ClaimTypes.Email`（大小寫不敏感）相符的文件。**不相符就是空清單，不是 403**——因為呼叫者對這個家庭本來就有權限，只是這份文件不是給他看的，語意上是「這裡沒有你能看的東西」而不是「你不該來這裡」。
+
+過濾邏輯抽成 `FirebaseFamilyKanbanService.FilterVisiblePrivateDocs`（`internal static`，純函式，不碰 Firestore），方便脫離 Firestore 直接單元測試 email 大小寫比對與「pin0513 看不到 daisy9928 文件」這個核心不變量（見 `MidoLearning.Api.Tests/Services/PrivateDocVisibilityFilterTests.cs`）。用「先讀整個 collection 再過濾」而非 Firestore `WhereEqualTo` 查詢，是因為 Firestore 的等式查詢大小寫敏感，這裡資料量小（單一家庭的私密文件不會太多），先讀後濾比多維護一個正規化欄位划算。
+
+### 8.4 端點（掛在 family-kanban 的 `admin` group，前綴 `/api/family-kanban`）
+
+| 方法 | 路徑 | 誰能建 / 看 / 刪 |
+|---|---|---|
+| `POST` | `/{familyId}/private-docs` | 家庭 primary admin / co-admin 皆可建立，`visibleToEmail` 可以指定給家庭內任何人（包含自己） |
+| `GET` | `/{familyId}/private-docs` | 家庭 primary admin / co-admin 皆可呼叫，但只看得到 `visibleToEmail` 是自己的文件（見 8.3） |
+| `DELETE` | `/{familyId}/private-docs/{docId}` | 家庭 primary admin / co-admin 皆可刪除**任何**該家庭的私密文件（本輪沒有做「只有建立者能刪」的限制，比照 family-scoreboard 既有 `DeleteEventAsync` 等其他刪除端點的權限寬鬆度） |
+
+### 8.5 已知限制（誠實列出，未在本輪修）
+
+- **DELETE 沒有 per-doc email 檢查**：任何家庭 admin/co-admin 都能刪除任何私密文件，即使不是自己能看的那份。目前定位為「家長對家長」的信任關係內操作，是否要收緊留給之後判斷。
+- **沒有「編輯」端點**：只有 Create / Read / Delete，沒有 Update。目前夠用（改內容 = 刪掉重建），如果之後要加 Update，記得同樣要走兩層授權。
+- **`visibleToEmail` 沒有驗證是否為家庭成員的 email**：建立時可以填任何字串，包含根本不是任何人 email 的亂打。這不是安全漏洞（反正查詢時要精準比對到那個字串才看得到），但可能造成「打錯字永遠沒人看得到」的資料孤兒。前端（team lead 另外處理）應該在 UI 層做基本驗證。
+
+---
+
+## 9. family-kanban 模組架構邊界（使用者定案，v2.0）
+
+這是 Paul（使用者）明確定案的架構原則，後續開發**務必守住**，不要因為「順手」或「省事」而破壞。
+
+### 9.1 獨立模組，不是 family-scoreboard 的子功能
+
+- **URL 前綴**：`/api/family-kanban`，與 `/api/family-scoreboard` 平行，不是它的子路徑。
+- **Service**：`IFamilyKanbanService` / `FirebaseFamilyKanbanService`（`Services/FamilyKanban/`），**不實作、不繼承、不包裝** `IFamilyScoreboardService`。
+- **Endpoints**：`FamilyKanbanEndpoints.cs`（`Endpoints/`），獨立的 `MapFamilyKanbanEndpoints()`，在 `Program.cs` 單獨呼叫，不掛在 `MapFamilyScoreboardEndpoints()` 底下。
+- **Model**：`Models/FamilyKanban/`，獨立的 `Dtos.cs` 與 Firestore Doc 類別，不共用 `Models/FamilyScoreboard/Dtos.cs` 裡的型別。
+- **部署**：仍是**同一個 ASP.NET Core process / 同一個 service**（`MidoLearning.Api`），不是獨立的微服務——這是使用者定案的「獨立模組、同 service」，模組邊界在程式碼組織層級，不是部署層級。
+
+### 9.2 共用授權基礎，但彼此不直接依賴
+
+family-scoreboard 與 family-kanban 只共用兩個「平台層級」元件，兩者互相之間**沒有任何 `using`/`ProjectReference` 等級的依賴**：
+
+1. `Program.cs` 的 policy 定義（`FamilyAdmin`、`AuthenticatedOnly` 等）——ASP.NET Core 授權框架本來就是全域註冊，不算模組耦合。
+2. `IFamilyAccessService`（`Services/FamilyAccess/`）+ `FamilyAccessEndpointFilter`（`Endpoints/FamilyAccessEndpointFilter.cs`）——見第 3 節，這是「家庭歸屬」這個共同概念的單一實作來源。
+
+驗證方式（架構守則，之後每次改動都可以重跑這條檢查；已在 v2.0 這輪重構驗證過，結果為 0）：
+
+```bash
+# family-kanban 底下不應該出現任何對 FamilyScoreboard 命名空間的 using 依賴
+# （用 "^using.*FamilyScoreboard" 而不是裸的 "FamilyScoreboard"，避免誤判
+#  說明性註解——例如「不依賴 IFamilyScoreboardService」這種註解文字本身就會
+#  含有 FamilyScoreboard 字樣，但那不是真的程式碼依賴）
+grep -rn "^using.*FamilyScoreboard" backend/MidoLearning.Api/Services/FamilyKanban/ backend/MidoLearning.Api/Endpoints/FamilyKanbanEndpoints.cs backend/MidoLearning.Api/Models/FamilyKanban/
+# 預期：0 個結果（exit code 1）
+```
+
+### 9.3 資料邊界：獨立的 Firestore 頂層 collection
+
+family-kanban 的資料存在 `family-kanban/{familyId}/*`（獨立頂層 collection），**不是** `families/{familyId}/*` 底下的子集合。這不只是命名習慣，是刻意的資料所有權切割：
+
+- family-scoreboard 擁有並管理 `families/{familyId}/*`（scores、transactions、shop-items、seals、penalties、coAdmins 等）。
+- family-kanban 擁有並管理 `family-kanban/{familyId}/*`（目前只有 `private-docs`，未來可能加其他 kanban 專屬資料，如個人目標、自我覺察紀錄）。
+- family-kanban **讀** `families/{familyId}/coAdmins`（透過 `IFamilyAccessService`）來判定家庭歸屬，這是「讀」，不是「擁有」——不會寫入、不會建立、不會刪除 family-scoreboard 的資料。
+
+### 9.4 單向讀取，不碰計分邏輯（現況：連讀都還沒做）
+
+北極星（見專案記憶 `family-kanban-vision`）：family-kanban 的目的是**自我覺察，不是管控**——每個人的課題只有自己知道（per-user 私密），這與 family-scoreboard「家長管控子女積分/零用金」的定位本質不同，不應該混在一起。
+
+- **本輪（v2.0）尚未實作任何跨模組資料讀取**——private-docs 是 family-kanban 自己的資料，不涉及 family-scoreboard 的計分/零用金。
+- **未來若要顯示點數/零用金**（例如 kanban 卡片上帶一個「本週 XP」小標籤），規則是：
+  - family-kanban 只能**讀** family-scoreboard 的資料（例如呼叫 `IFamilyScoreboardService.GetScoresAsync` 或直接讀 Firestore `families/{familyId}/scores`），**不能寫**。
+  - family-kanban **絕對不實作**加分/扣分/商城兌換/封印處罰等計分板管控邏輯——那些永遠是 family-scoreboard 的職責。
+  - 如果需要跨模組讀取，優先考慮讓 family-kanban 依賴 `IFamilyScoreboardService`（唯讀呼叫），而不是讓 family-scoreboard 反過來依賴 family-kanban——依賴方向只能單向。
+
+### 9.5 已知限制 / 待確認事項
+
+- `IFamilyKanbanService` 目前完全不依賴 `IFamilyAccessService`（gate 已經在 endpoint filter 層做完，service 層不需要重複判斷）。未來若 family-kanban 有更細的 per-feature 授權需求（不只是「這個家庭的 admin/co-admin」），要重新評估這個邊界。
+- 這份文件是 v2.0 這一輪重構的「當下快照」。family-kanban 還在早期階段（目前只有 private-docs 一個功能），架構邊界會隨著功能增加持續被考驗，建議每次加新功能前重跑 9.2 節的 grep 檢查。

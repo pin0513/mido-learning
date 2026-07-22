@@ -433,9 +433,10 @@ export interface ActiveFamilyDto {
 
 // ── Visitor Leaderboard ──────────────────────────────────────────────────
 
-// 注意：VisitorPlayerDto 對應匿名 /visitor 端點，刻意不含 allowanceBalance
-// （零用金餘額）等家庭財務資訊 —— 訪客只憑代碼即可讀取，不應洩漏這類敏感資料。
-// 認證後的家庭視圖請改用 PlayerScoreDto（含 allowanceBalance）。
+// 注意：VisitorPlayerDto 對應匿名 /visitor 端點，含 allowanceBalance（零用金餘額）。
+// 家庭決定把零用金公開展示給任何知道代碼的人（owner 2026-07-22 拍板）—— 明知的
+// Information Disclosure，由資料擁有者授權。allowanceBalance 取後端 allowance-ledger
+// 加總真源，與 admin 面板 / 主計分板一致；勿改用會漂移的 redeemablePoints 快照。
 export interface VisitorPlayerDto {
   playerId: string;
   name: string;
@@ -443,6 +444,7 @@ export interface VisitorPlayerDto {
   emoji?: string | null;
   achievementPoints: number;
   redeemablePoints: number;
+  allowanceBalance: number;
   hasPassword: boolean;
 }
 

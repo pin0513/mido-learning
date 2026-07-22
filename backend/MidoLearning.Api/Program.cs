@@ -9,6 +9,8 @@ using MidoLearning.Api.Modules.SkillVillage.GameEngine.Services;
 using MidoLearning.Api.Modules.SkillVillage.GameEngine.Calculators;
 using MidoLearning.Api.Services.Music;
 using MidoLearning.Api.Services.FamilyScoreboard;
+using MidoLearning.Api.Services.FamilyAccess;
+using MidoLearning.Api.Services.FamilyKanban;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,9 +52,16 @@ builder.Services.AddScoped<SkillVillageAuthService>();
 builder.Services.AddScoped<GameEngineService>();
 builder.Services.AddScoped<RewardCalculator>();
 
+// Family Access（共用授權基礎：家庭歸屬判定，family-scoreboard 與 family-kanban 共用，
+// 兩個模組彼此不直接依賴）
+builder.Services.AddScoped<IFamilyAccessService, FirebaseFamilyAccessService>();
+
 // Family Scoreboard Services
 builder.Services.AddScoped<IFamilyScoreboardService, FirebaseScoreboardService>();
 builder.Services.AddSingleton<IParentAllowlist, ParentAllowlist>();
+
+// Family Kanban Services（獨立模組，前綴 /api/family-kanban，見 docs/family-kanban/AGENTS.md）
+builder.Services.AddScoped<IFamilyKanbanService, FirebaseFamilyKanbanService>();
 
 // Music Producer Services (Method A: Python subprocess in same container)
 builder.Services.AddSingleton<IPythonSidecarClient, PythonProcessRunner>();
@@ -240,6 +249,9 @@ app.MapAchievementEndpoints();
 
 // Family Scoreboard Endpoints
 app.MapFamilyScoreboardEndpoints();
+
+// Family Kanban Endpoints（獨立模組，前綴 /api/family-kanban）
+app.MapFamilyKanbanEndpoints();
 
 // Music Producer Endpoints
 app.MapMusicEndpoints();
