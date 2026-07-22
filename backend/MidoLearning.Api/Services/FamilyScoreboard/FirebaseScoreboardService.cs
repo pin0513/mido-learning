@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MidoLearning.Api.Models.FamilyScoreboard;
 using MidoLearning.Api.Services;
+using MidoLearning.Api.Services.FamilyAccess;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,12 +15,18 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
     private readonly FirestoreDb _db;
     private readonly ILogger<FirebaseScoreboardService> _logger;
     private readonly IHostEnvironment _environment;
+    private readonly IFamilyAccessService _familyAccessService;
 
-    public FirebaseScoreboardService(FirestoreDb db, ILogger<FirebaseScoreboardService> logger, IHostEnvironment environment)
+    public FirebaseScoreboardService(
+        FirestoreDb db,
+        ILogger<FirebaseScoreboardService> logger,
+        IHostEnvironment environment,
+        IFamilyAccessService familyAccessService)
     {
         _db = db;
         _logger = logger;
         _environment = environment;
+        _familyAccessService = familyAccessService;
     }
 
     // ── Firestore path helpers ────────────────────────────────────────────────
@@ -65,78 +72,12 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
     // ── CanAccessFamilyAsync（IDOR 防護）───────────────────────────────────────
 
     /// <summary>
-    /// uid 有權存取 familyId 若且唯若：
-    ///   1. uid 是該家庭的 primary admin（familyId == "family_{uid}"），或
-    ///   2. uid 出現在該家庭的 coAdmins 子集合中。
-    /// 與 <see cref="GetMyFamilyAsync"/> 採用相同的歸屬定義，差別在於這裡已知目標 familyId，
-    /// 只需直接查詢該家庭的 coAdmins 子集合，不需要跨全庫的 CollectionGroup 查詢。
+    /// 委派給共用的 <see cref="IFamilyAccessService"/>（family-scoreboard 與
+    /// family-kanban 共用同一份家庭歸屬判定邏輯，不各寫一份）。
+    /// 保留在這個 interface 上只是為了向下相容既有呼叫端。
     /// </summary>
-    public async Task<bool> CanAccessFamilyAsync(string uid, string familyId, CancellationToken ct = default)
-    {
-        if (string.IsNullOrEmpty(familyId))
-            return false;
-
-        // 1. Primary admin
-        if (familyId == $"family_{uid}")
-            return true;
-
-        // 2. Co-admin
-        var coAdminSnap = await _db.Collection("families").Document(familyId)
-            .Collection("coAdmins").Document(uid).GetSnapshotAsync(ct);
-        return coAdminSnap.Exists;
-    }
-
-    // ── Private Docs（per-user 私密文件，Phase 3 安全切片）───────────────────────
-
-    public async Task<PrivateDocDto> CreatePrivateDocAsync(
-        string familyId, string title, string content, string visibleToEmail, string createdByUid, CancellationToken ct = default)
-    {
-        var docId = Guid.NewGuid().ToString("N");
-        var now = Timestamp.GetCurrentTimestamp();
-
-        var data = new Dictionary<string, object>
-        {
-            ["id"] = docId,
-            ["title"] = title,
-            ["content"] = content,
-            ["visibleToEmail"] = visibleToEmail,
-            ["createdBy"] = createdByUid,
-            ["createdAt"] = now,
-        };
-
-        await PrivateDocs(familyId).Document(docId).SetAsync(data, cancellationToken: ct);
-        var snap = await PrivateDocs(familyId).Document(docId).GetSnapshotAsync(ct);
-        return snap.ConvertTo<PrivateDocDoc>().ToDto();
-    }
-
-    public async Task<IReadOnlyList<PrivateDocDto>> GetVisiblePrivateDocsAsync(
-        string familyId, string viewerEmail, CancellationToken ct = default)
-    {
-        var snap = await PrivateDocs(familyId).GetSnapshotAsync(ct);
-        var docs = snap.Documents.Select(d => d.ConvertTo<PrivateDocDoc>());
-        return FilterVisiblePrivateDocs(docs, viewerEmail);
-    }
-
-    /// <summary>
-    /// 私密文件可見性過濾（純邏輯，不碰 Firestore，故 internal static 方便單元測試 ——
-    /// 見 MidoLearning.Api.Tests/Services/PrivateDocVisibilityFilterTests.cs）。
-    /// 只保留 VisibleToEmail 與 viewerEmail 相符（大小寫不敏感）的文件。
-    /// 用「先讀整個 collection 再過濾」而非 Firestore WhereEqualTo 查詢，
-    /// 是因為 Firestore 的等式查詢是大小寫敏感的，這裡的資料量（單一家庭的私密文件）
-    /// 小到可以接受先讀後濾，換取不需要額外維護一個正規化（小寫）欄位。
-    /// </summary>
-    internal static IReadOnlyList<PrivateDocDto> FilterVisiblePrivateDocs(
-        IEnumerable<PrivateDocDoc> docs, string viewerEmail) =>
-        docs
-            .Where(doc => string.Equals(doc.VisibleToEmail, viewerEmail, StringComparison.OrdinalIgnoreCase))
-            .Select(doc => doc.ToDto())
-            .ToList()
-            .AsReadOnly();
-
-    public async Task DeletePrivateDocAsync(string familyId, string docId, CancellationToken ct = default)
-    {
-        await PrivateDocs(familyId).Document(docId).DeleteAsync();
-    }
+    public Task<bool> CanAccessFamilyAsync(string uid, string familyId, CancellationToken ct = default) =>
+        _familyAccessService.CanAccessFamilyAsync(uid, familyId, ct);
 
     // ── GetScoresAsync ────────────────────────────────────────────────────────
 
@@ -563,9 +504,6 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
     private CollectionReference Events(string familyId) =>
         _db.Collection("families").Document(familyId).Collection("events");
-
-    private CollectionReference PrivateDocs(string familyId) =>
-        _db.Collection("families").Document(familyId).Collection("private-docs");
 
     private CollectionReference TaskTemplates(string familyId) =>
         _db.Collection("families").Document(familyId).Collection("task-templates");

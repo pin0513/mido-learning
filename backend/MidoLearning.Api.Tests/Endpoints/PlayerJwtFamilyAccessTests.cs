@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MidoLearning.Api.Models.FamilyScoreboard;
 using MidoLearning.Api.Services;
+using MidoLearning.Api.Services.FamilyAccess;
 using MidoLearning.Api.Services.FamilyScoreboard;
 using Moq;
 
@@ -18,9 +19,9 @@ namespace MidoLearning.Api.Tests.Endpoints;
 
 /// <summary>
 /// 驗證 Player JWT（子女帳號）打 read group（AuthenticatedOnly）/ playerGroup（PlayerOnly）
-/// 端點時，RequireFamilyAccessAsync 的 player 分支正確生效：
+/// 端點時，FamilyAccessEndpointFilter.RequireFamilyAccessAsync 的 player 分支正確生效：
 ///   - JWT 的 familyId claim 與路由 {familyId} 相符 → 放行（回歸測試：不可誤傷正常的子女讀取，
-///     這是 Phase 0 開發過程中真的踩到的一個坑——見 FamilyScoreboardEndpoints.RequireFamilyAccessAsync 註解）。
+///     這是 Phase 0 開發過程中真的踩到的一個坑——見 FamilyAccessEndpointFilter 註解）。
 ///   - 不符 → 403（IDOR 防護：子女 token 不能拿去讀別的家庭）。
 ///
 /// 這個測試類別刻意不用 TestAuthHandler 覆蓋預設 auth scheme，
@@ -50,6 +51,13 @@ public class PlayerJwtFamilyAccessTests : IClassFixture<WebApplicationFactory<Pr
                 var firebaseDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IFirebaseService));
                 if (firebaseDescriptor != null) services.Remove(firebaseDescriptor);
                 services.AddSingleton(new Mock<IFirebaseService>().Object);
+
+                // player 分支不會呼叫 IFamilyAccessService，但防禦性地也換成 mock，
+                // 避免以後有人在這個類別加測試時不小心觸發 else 分支、意外去建構
+                // 真的 FirebaseFamilyAccessService（同樣需要真的 FirestoreDb）。
+                var accessDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IFamilyAccessService));
+                if (accessDescriptor != null) services.Remove(accessDescriptor);
+                services.AddSingleton(new Mock<IFamilyAccessService>().Object);
 
                 // 刻意不動 AddAuthentication —— 保留 Program.cs 的 "Firebase" 預設 scheme，
                 // 讓 FirebaseAuthHandler 真的驗證下面手動簽發的 Player JWT。
@@ -157,7 +165,7 @@ public class PlayerJwtFamilyAccessTests : IClassFixture<WebApplicationFactory<Pr
 /// adminUid 本來就不會是任何測試家庭的 primary admin / co-admin —— 如果
 /// RequireFamilyAccessAsync 對它也套用 CanAccessFamilyAsync，會把整套 E2E
 /// （19 處呼叫）都擋成 403。修法見 FirebaseAuthHandler.TryAuthenticateWithApiKey
-/// 加的 "auth_method=dev_api_key" claim + RequireFamilyAccessAsync 的早退分支。
+/// 加的 "auth_method=dev_api_key" claim + FamilyAccessEndpointFilter 的早退分支。
 /// </summary>
 public class DevApiKeyFamilyAccessTests : IClassFixture<WebApplicationFactory<Program>>
 {
@@ -181,6 +189,11 @@ public class DevApiKeyFamilyAccessTests : IClassFixture<WebApplicationFactory<Pr
                 var firebaseDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IFirebaseService));
                 if (firebaseDescriptor != null) services.Remove(firebaseDescriptor);
                 services.AddSingleton(new Mock<IFirebaseService>().Object);
+
+                // dev_api_key 分支不會呼叫 IFamilyAccessService，同樣防禦性地換成 mock。
+                var accessDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IFamilyAccessService));
+                if (accessDescriptor != null) services.Remove(accessDescriptor);
+                services.AddSingleton(new Mock<IFamilyAccessService>().Object);
                 // 刻意不動 AddAuthentication —— 保留 "Firebase" 預設 scheme，
                 // 讓 FirebaseAuthHandler.TryAuthenticateWithApiKey 真的跑。
             });

@@ -1,11 +1,14 @@
 using Google.Cloud.Firestore;
-namespace MidoLearning.Api.Models.FamilyScoreboard;
+namespace MidoLearning.Api.Models.FamilyKanban;
 
 /// <summary>
 /// per-user 私密文件（例如保羅寫給配偶的「使用說明書」）。
-/// 儲存路徑：families/{familyId}/private-docs/{docId}。
-/// 可見性由 VisibleToEmail 決定，過濾規則見 FirebaseScoreboardService.FilterVisiblePrivateDocs
-/// —— 比家庭歸屬（CanAccessFamilyAsync）更嚴：同家庭的其他 admin/co-admin 也看不到。
+/// 儲存路徑：family-kanban/{familyId}/private-docs/{docId} —— 獨立於
+/// family-scoreboard 的 families/{familyId}/* 集合，family-kanban 是獨立模組，
+/// 有自己的 Firestore 資料，只「讀」family-scoreboard 的家庭歸屬（coAdmins）做授權判定。
+/// 可見性由 VisibleToEmail 決定，過濾規則見 FirebaseFamilyKanbanService.FilterVisiblePrivateDocs
+/// —— 比家庭歸屬（IFamilyAccessService.CanAccessFamilyAsync）更嚴：同家庭的其他
+/// admin/co-admin 也看不到。
 /// </summary>
 [FirestoreData]
 public class PrivateDocDoc

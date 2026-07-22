@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using MidoLearning.Api.Models.FamilyScoreboard;
+using MidoLearning.Api.Services.FamilyAccess;
 using MidoLearning.Api.Services.FamilyScoreboard;
 using MidoLearning.Api.Tests.Helpers;
 using Moq;
@@ -13,17 +14,20 @@ using Moq;
 namespace MidoLearning.Api.Tests.Endpoints;
 
 /// <summary>
-/// Phase 0 安全地基：驗證 IDOR gate（CanAccessFamilyAsync）與 FamilyAdmin policy
-/// （player role 不算 family admin）確實在每個 admin / read / readExtended endpoint 生效。
+/// Phase 0 安全地基：驗證 IDOR gate（IFamilyAccessService.CanAccessFamilyAsync，
+/// 家庭歸屬架構獨立化後的共用授權服務）與 FamilyAdmin policy（player role 不算
+/// family admin）確實在每個 admin / read / readExtended endpoint 生效。
 /// </summary>
 public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly Mock<IFamilyScoreboardService> _mockSvc;
+    private readonly Mock<IFamilyAccessService> _mockAccessSvc;
 
     public FamilyScoreboardAuthorizationTests(WebApplicationFactory<Program> factory)
     {
         _mockSvc = new Mock<IFamilyScoreboardService>();
+        _mockAccessSvc = new Mock<IFamilyAccessService>();
 
         _factory = factory.WithWebHostBuilder(builder =>
         {
@@ -32,6 +36,10 @@ public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFa
                 var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IFamilyScoreboardService));
                 if (descriptor != null) services.Remove(descriptor);
                 services.AddSingleton(_mockSvc.Object);
+
+                var accessDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IFamilyAccessService));
+                if (accessDescriptor != null) services.Remove(accessDescriptor);
+                services.AddSingleton(_mockAccessSvc.Object);
 
                 services.AddAuthentication(TestAuthHandler.AuthenticationScheme)
                     .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
@@ -85,7 +93,7 @@ public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFa
     public async Task AdminEndpoint_AuthenticatedButNotFamilyOwner_Returns403()
     {
         // IDOR：uid-attacker 已登入（非 player），但不是 family_victim 的 primary admin 或 co-admin。
-        _mockSvc
+        _mockAccessSvc
             .Setup(s => s.CanAccessFamilyAsync("uid-attacker", "family_victim", It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
@@ -104,7 +112,7 @@ public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFa
     [Fact]
     public async Task AdminEndpoint_FamilyOwner_Succeeds()
     {
-        _mockSvc
+        _mockAccessSvc
             .Setup(s => s.CanAccessFamilyAsync("uid-owner", "family_uid-owner", It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
         _mockSvc
@@ -126,7 +134,7 @@ public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFa
     public async Task AdminEndpoint_CoAdmin_Succeeds()
     {
         // co-admin：familyId 不等於 family_{uid}，但 CanAccessFamilyAsync 判定為 true。
-        _mockSvc
+        _mockAccessSvc
             .Setup(s => s.CanAccessFamilyAsync("uid-coadmin", "family_primary", It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
         _mockSvc
@@ -149,7 +157,7 @@ public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFa
     [Fact]
     public async Task ReadEndpoint_AuthenticatedNonMember_Returns403()
     {
-        _mockSvc
+        _mockAccessSvc
             .Setup(s => s.CanAccessFamilyAsync("uid-stranger", "family_someone-else", It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
@@ -164,7 +172,7 @@ public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFa
     [Fact]
     public async Task ReadEndpoint_FamilyOwner_Succeeds()
     {
-        _mockSvc
+        _mockAccessSvc
             .Setup(s => s.CanAccessFamilyAsync("uid-owner", "family_uid-owner", It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
         _mockSvc
