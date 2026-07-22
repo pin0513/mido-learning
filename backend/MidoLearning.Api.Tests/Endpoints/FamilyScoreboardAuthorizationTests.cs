@@ -186,16 +186,18 @@ public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFa
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
-    // ── Visitor（匿名）endpoint 不應洩漏零用金餘額 ─────────────────────────────
+    // ── Visitor（匿名）endpoint 依家庭決定「公開展示零用金」而回傳餘額（owner 2026-07-22 拍板）──
+    // 這推翻了先前「訪客不得見零用金餘額」的隱私設計；屬明知的 Information Disclosure，
+    // 由資料擁有者明確授權接受（見 VisitorPlayerDto 註解與 FirebaseScoreboardService.SumAllowanceByPlayer）。
 
     [Fact]
-    public async Task VisitorEndpoint_ResponseDoesNotContainAllowanceBalance()
+    public async Task VisitorEndpoint_IncludesAllowanceBalance()
     {
         _mockSvc
             .Setup(s => s.GetVisitorLeaderboardAsync("ABCD", It.IsAny<CancellationToken>()))
             .ReturnsAsync(new VisitorLeaderboardDto("ABCD", new[]
             {
-                new VisitorPlayerDto("p1", "小明", "#ff0000", null, 100, 50, true)
+                new VisitorPlayerDto("p1", "小明", "#ff0000", null, 100, 50, 1385, true)
             }));
 
         var client = _factory.CreateClient(); // 匿名，無需登入
@@ -204,6 +206,7 @@ public class FamilyScoreboardAuthorizationTests : IClassFixture<WebApplicationFa
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var body = await response.Content.ReadAsStringAsync();
-        body.Should().NotContain("allowanceBalance", "訪客端點不應回傳零用金餘額等家庭財務資訊");
+        body.Should().Contain("allowanceBalance", "家庭已決定把零用金餘額公開展示給知道代碼的人");
+        body.Should().Contain("1385");
     }
 }

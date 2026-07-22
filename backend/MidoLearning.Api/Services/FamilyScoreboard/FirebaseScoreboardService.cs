@@ -631,7 +631,12 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         var credentialsSnap = await PlayerCredentials(familyId).GetSnapshotAsync(ct);
         var credentialIds = credentialsSnap.Documents.Select(d => d.Id).ToHashSet();
 
-        // 注意：訪客（匿名）視圖刻意不查詢 / 不回傳零用金餘額，避免財務資訊外洩給任何知道代碼的人。
+        // 零用金餘額：一次讀整個 allowance-ledger，依 playerId 加總（同 GetAllowanceBalanceAsync 真源），
+        // 家庭決定公開展示（owner 2026-07-22 拍板）。單次讀取，避免每位玩家各查一次。
+        var ledgerSnap = await AllowanceLedger(familyId).GetSnapshotAsync(ct);
+        var allowanceByPlayer = SumAllowanceByPlayer(
+            ledgerSnap.Documents.Select(d => d.ConvertTo<AllowanceLedgerDoc>()));
+
         var players = scoresSnap.Documents
             .Select(d => d.ConvertTo<PlayerScoreDoc>())
             .OrderByDescending(p => p.AchievementPoints)
@@ -639,12 +644,25 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
                 p.PlayerId, p.Name, p.Color, p.Emoji,
                 p.AchievementPoints,
                 p.RedeemablePoints,
+                allowanceByPlayer.GetValueOrDefault(p.PlayerId, 0),
                 credentialIds.Contains(p.PlayerId)))
             .ToList()
             .AsReadOnly();
 
         return new VisitorLeaderboardDto(code.ToUpper(), players);
     }
+
+    /// <summary>
+    /// 零用金餘額投影（純邏輯，不碰 Firestore，internal static 方便單元測試 ——
+    /// 見 MidoLearning.Api.Tests/Services/VisitorAllowanceBalanceTests.cs）。
+    /// 每位玩家餘額 = SUM(該玩家 allowance-ledger.amount)，與 GetAllowanceBalanceAsync 同一算法，
+    /// 確保訪客排行榜、admin 面板、主計分板三端零用金一致、不 drift。不做 clamp（可為負，忠實反映真源）。
+    /// ledger 沒有紀錄的玩家不在回傳 dict 裡；呼叫端以 GetValueOrDefault(playerId, 0) 補 0。
+    /// </summary>
+    internal static IReadOnlyDictionary<string, int> SumAllowanceByPlayer(IEnumerable<AllowanceLedgerDoc> records) =>
+        records
+            .GroupBy(r => r.PlayerId)
+            .ToDictionary(g => g.Key, g => g.Sum(r => r.Amount));
 
     // ── GetActiveFamiliesAsync ──────────────────────────────────────────────────
 
