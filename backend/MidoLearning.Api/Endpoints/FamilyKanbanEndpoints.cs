@@ -15,6 +15,19 @@ public static class FamilyKanbanEndpoints
 {
     public static void MapFamilyKanbanEndpoints(this WebApplication app)
     {
+        // ── Public read（家庭儀表板公開唯讀，對齊 DATA_CONTRACT §3 public）──────────
+        // 計分板「薄而誠實」單向讀取：只回 name/emoji/成就點（與既有 /family-scoreboard/visitor
+        // 同屬公開的計分板資料，不含零用金等財務欄位）。無需登入，故不套 FamilyAdmin / 家庭歸屬 gate。
+        var pub = app.MapGroup("/api/family-kanban");
+
+        // 用家庭顯示碼查詢（公開 handle，不外露內部 familyId）；碼不存在回 404。
+        pub.MapGet("/scoreboard", async (
+            string code, IFamilyKanbanService svc, CancellationToken ct) =>
+        {
+            var members = await svc.GetScoreboardByCodeAsync(code, ct);
+            return members is null ? Results.NotFound() : Results.Ok(members);
+        });
+
         // ── Family Admin routes（需要 FamilyAdmin 授權 + 家庭歸屬 gate）──────────
         var admin = app.MapGroup("/api/family-kanban")
             .RequireAuthorization("FamilyAdmin")

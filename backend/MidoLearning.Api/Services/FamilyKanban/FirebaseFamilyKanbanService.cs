@@ -1,5 +1,6 @@
 using Google.Cloud.Firestore;
 using MidoLearning.Api.Models.FamilyKanban;
+using MidoLearning.Api.Models.FamilyScoreboard; // 僅讀取資料模型（PlayerScoreDoc），不 import 計分邏輯
 
 namespace MidoLearning.Api.Services.FamilyKanban;
 
@@ -19,6 +20,39 @@ public class FirebaseFamilyKanbanService : IFamilyKanbanService
 
     private CollectionReference PrivateDocs(string familyId) =>
         _db.Collection("family-kanban").Document(familyId).Collection("private-docs");
+
+    // family-scoreboard 的 displayCodes / scores collection —— family-kanban 單向讀取（展示用），
+    // 不寫、不碰計分邏輯。displayCodes 是 code→familyId 的公開映射（visitor 端點也用它）。
+    private CollectionReference DisplayCodes() => _db.Collection("displayCodes");
+    private CollectionReference Scores(string familyId) =>
+        _db.Collection("families").Document(familyId).Collection("scores");
+
+    // ── Scoreboard（單向讀取，展示用） ──────────────────────────────────────────
+
+    public async Task<IReadOnlyList<KanbanScoreboardMemberDto>?> GetScoreboardByCodeAsync(
+        string code, CancellationToken ct = default)
+    {
+        // 顯示碼 → familyId（同 visitor 端點的解析），不存在回 null 讓 endpoint 轉 404。
+        var codeSnap = await DisplayCodes().Document(code.ToUpper()).GetSnapshotAsync(ct);
+        if (!codeSnap.Exists) return null;
+
+        var familyId = codeSnap.GetValue<string>("familyId");
+        var snap = await Scores(familyId).GetSnapshotAsync(ct);
+        return ProjectScoreboard(snap.Documents.Select(d => d.ConvertTo<PlayerScoreDoc>()));
+    }
+
+    /// <summary>
+    /// 計分板投影（純邏輯，不碰 Firestore，internal static 方便單元測試 ——
+    /// 見 MidoLearning.Api.Tests/Services/KanbanScoreboardProjectionTests.cs）。
+    /// 只投影後端 scores 真有的欄位（name / emoji / 成就點），依成就點由高到低排序。
+    /// 不含 level / badge / weekly_delta / streak / coop-goals（後端未實作，不憑空捏造）。
+    /// </summary>
+    internal static IReadOnlyList<KanbanScoreboardMemberDto> ProjectScoreboard(IEnumerable<PlayerScoreDoc> scores) =>
+        scores
+            .OrderByDescending(s => s.AchievementPoints)
+            .Select(s => new KanbanScoreboardMemberDto(s.PlayerId, s.Name, s.Emoji, s.AchievementPoints))
+            .ToList()
+            .AsReadOnly();
 
     // ── Private Docs（per-user 私密文件） ────────────────────────────────────────
 

@@ -11,6 +11,16 @@ namespace MidoLearning.Api.Services.FamilyKanban;
 /// </summary>
 public interface IFamilyKanbanService
 {
+    // ── Scoreboard（單向讀取，展示用） ────────────────────────────────────────
+    /// <summary>
+    /// 依家庭顯示碼（displayCode）單向讀取 family-scoreboard 的 scores，投影成「薄而誠實」的
+    /// 計分板（只含後端真有的欄位：name / emoji / 成就點；依成就點由高到低）。
+    /// 唯讀、不寫、不 import 計分邏輯，也不依賴 IFamilyScoreboardService。
+    /// 用顯示碼（而非內部 familyId）當公開 handle，不外露內部 id。顯示碼不存在時回 null（endpoint 轉 404）。
+    /// </summary>
+    Task<IReadOnlyList<KanbanScoreboardMemberDto>?> GetScoreboardByCodeAsync(
+        string code, CancellationToken ct = default);
+
     // ── Private Docs（per-user 私密文件） ──────────────────────────────────────
     /// <summary>建立私密文件，只有 visibleToEmail 本人查詢時看得到。</summary>
     Task<PrivateDocDto> CreatePrivateDocAsync(

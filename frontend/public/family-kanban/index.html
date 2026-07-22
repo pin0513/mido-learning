@@ -523,17 +523,7 @@ const DAYPLAN = {
   ]
 };
 
-/* Data contract shape: GET https://learn.paulfun.net/api/family-scoreboard */
-const SCOREBOARD = {
-  source: "learning.paulfun.net",
-  updated_at: "2026-07-21T06:30:00+08:00",
-  members: [
-    { id: "en", name: "祤恩", emoji: "🧗", level: "Lv.4 山峰見習生", points: 1280, weekly_delta: 120, badges: ["⛰️", "🧱", "📚"] },
-    { id: "jj", name: "祤杰", emoji: "🕺", level: "Lv.3 節奏小子", points: 1145, weekly_delta: 150, badges: ["💃", "🏸", "⚡"] },
-    { id: "dad", name: "保羅", emoji: "👨‍💻", level: "隊長", points: 860, weekly_delta: 60, badges: ["🏔️", "📷"] },
-    { id: "mom", name: "小瑜", emoji: "👩‍💼", level: "總規劃師", points: 905, weekly_delta: 80, badges: ["🧩", "🍳"] }
-  ]
-};
+/* 計分板改為單向讀取 family-kanban 端點（見下方 RENDER 區的 fetch），不再用 mock。 */
 
 const PARENT_ALLOWLIST = ["pin0513@gmail.com", "daisy9928@gmail.com"];
 
@@ -568,19 +558,32 @@ function switchTab(who) {
 }
 renderPlan("en");
 
+/* 薄而誠實：單向讀取 family-kanban 端點，只顯示後端真有的 name/emoji/成就點。
+   level/badges/本週增量後端未實作，不捏造。API base 先硬編（localhost 打本地 :5000，否則打線上）。 */
+const SB_API_BASE = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+  ? "http://localhost:5000"
+  : "https://mido-learning-api-24mwb46hra-de.a.run.app";
+const SB_FAMILY_CODE = "MIDO9851"; // Paul 家的家庭顯示碼（先硬編）
 const sb = document.getElementById("scoreboard");
-SCOREBOARD.members.forEach((m, i) => {
-  const div = document.createElement("div");
-  div.className = "sticker score-card pop";
-  div.innerHTML = `<span class="tape ${["", "blue", "pink", "green"][i % 4]}"></span>
-    <div style="font-size:38px">${m.emoji}</div>
-    <h3>${m.name}</h3>
-    <div class="lv">${m.level}</div>
-    <div class="pts" data-target="${m.points}">0</div>
-    <div class="delta">▲ 本週 +${m.weekly_delta}</div>
-    <div class="badges">${m.badges.join("")}</div>`;
-  sb.appendChild(div);
-});
+fetch(`${SB_API_BASE}/api/family-kanban/scoreboard?code=${SB_FAMILY_CODE}`)
+  .then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)))
+  .then(members => {
+    sb.innerHTML = "";
+    members.forEach((m, i) => {
+      const div = document.createElement("div");
+      div.className = "sticker score-card pop";
+      div.innerHTML = `<span class="tape ${["", "blue", "pink", "green"][i % 4]}"></span>
+        <div style="font-size:38px">${m.emoji ?? "🙂"}</div>
+        <h3>${m.name}</h3>
+        <div class="pts" data-target="${m.achievementPoints}">0</div>
+        <div class="lv">成就點</div>`;
+      sb.appendChild(div);
+      io.observe(div); // 動態卡片也要進 IntersectionObserver 才會有數字跳動
+    });
+  })
+  .catch(err => {
+    sb.innerHTML = `<div class="src-note">計分板載入失敗：${err.message}（確認後端與家庭碼 ${SB_FAMILY_CODE}）</div>`;
+  });
 
 /* ====== ANIMATIONS ====== */
 const io = new IntersectionObserver(es => es.forEach(e => {
