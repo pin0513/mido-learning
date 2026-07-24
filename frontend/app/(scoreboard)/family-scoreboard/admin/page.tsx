@@ -368,6 +368,8 @@ export default function FamilyScoreboardAdminPage() {
   const [allowanceLoading, setAllowanceLoading]   = useState(false);
   const [allowanceErr, setAllowanceErr]           = useState<string | null>(null);
   const [adjustingPlayerId, setAdjustingPlayerId] = useState<string | null>(null);
+  // 冪等鍵：開加/扣零用金 modal 時產一把，失敗（modal 不關）保留讓重按帶同鍵去重，成功後隨 modal 關閉作廢。
+  const [adjustRequestId, setAdjustRequestId] = useState('');
   const [adjustAmount, setAdjustAmount]           = useState(10);
   const [adjustReason, setAdjustReason]           = useState('');
   const [adjustSaving, setAdjustSaving]           = useState(false);
@@ -743,7 +745,7 @@ export default function FamilyScoreboardAdminPage() {
     if (!familyId || !adjustingPlayerId || !adjustReason.trim() || adjustAmount === 0) return;
     setAdjustSaving(true);
     try {
-      const req: AdjustAllowanceRequest = { playerId: adjustingPlayerId, amount: adjustAmount, reason: adjustReason.trim() };
+      const req: AdjustAllowanceRequest = { playerId: adjustingPlayerId, amount: adjustAmount, reason: adjustReason.trim(), clientRequestId: adjustRequestId };
       await adjustAllowance(familyId, req);
       setAdjustingPlayerId(null); setAdjustAmount(10); setAdjustReason('');
       await loadAllowanceData();
@@ -1547,8 +1549,8 @@ export default function FamilyScoreboardAdminPage() {
                             }
                           </div>
                           <div className="flex gap-2 shrink-0">
-                            <button onClick={() => { setAdjustingPlayerId(player.playerId); setAdjustAmount(10); setAdjustReason(''); }} className="min-h-[44px] w-11 bg-green-100 text-green-700 rounded-xl text-sm font-bold hover:bg-green-200 active:scale-95 transition-all">+</button>
-                            <button onClick={() => { setAdjustingPlayerId(player.playerId); setAdjustAmount(-10); setAdjustReason(''); }} className="min-h-[44px] w-11 bg-red-100 text-red-600 rounded-xl text-sm font-bold hover:bg-red-200 active:scale-95 transition-all">−</button>
+                            <button onClick={() => { setAdjustingPlayerId(player.playerId); setAdjustAmount(10); setAdjustReason(''); setAdjustRequestId(crypto.randomUUID()); }} className="min-h-[44px] w-11 bg-green-100 text-green-700 rounded-xl text-sm font-bold hover:bg-green-200 active:scale-95 transition-all">+</button>
+                            <button onClick={() => { setAdjustingPlayerId(player.playerId); setAdjustAmount(-10); setAdjustReason(''); setAdjustRequestId(crypto.randomUUID()); }} className="min-h-[44px] w-11 bg-red-100 text-red-600 rounded-xl text-sm font-bold hover:bg-red-200 active:scale-95 transition-all">−</button>
                           </div>
                         </div>
                       );
@@ -1640,7 +1642,7 @@ export default function FamilyScoreboardAdminPage() {
                               if (d === 0 || !adjustReason.trim()) return;
                               setAdjustSaving(true);
                               try {
-                                await adjustAllowance(familyId, { playerId: adjustingPlayerId, amount: d, reason: adjustReason.trim() });
+                                await adjustAllowance(familyId, { playerId: adjustingPlayerId, amount: d, reason: adjustReason.trim(), clientRequestId: adjustRequestId });
                                 setAdjustingPlayerId(null); setAdjustMode('adjust'); setSetBalanceTarget(0);
                                 await loadAllowanceData();
                               } catch { setAllowanceErr('設定失敗'); }

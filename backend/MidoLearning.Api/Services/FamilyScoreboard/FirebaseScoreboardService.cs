@@ -1206,7 +1206,20 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
 
     public async Task<AllowanceLedgerDto> AdjustAllowanceAsync(string familyId, AdjustAllowanceRequest req, string adminUid, CancellationToken ct = default)
     {
-        var recordId = Guid.NewGuid().ToString("N");
+        // 冪等防重送（根因修正）：帶了 clientRequestId 就用它推導確定性 doc id，雙擊/重送 → 同一筆；
+        // 沒帶（舊 client）沿用隨機 Guid，維持原行為。
+        var hasKey = !string.IsNullOrWhiteSpace(req.ClientRequestId);
+        var recordId = hasKey ? DeriveLedgerRecordId(req.ClientRequestId!) : Guid.NewGuid().ToString("N");
+        var docRef = AllowanceLedger(familyId).Document(recordId);
+
+        // 已存在 = 重送：直接回既有那筆，不重複寫、保留原始 createdAt。
+        if (hasKey)
+        {
+            var existing = await docRef.GetSnapshotAsync(ct);
+            if (existing.Exists)
+                return existing.ConvertTo<AllowanceLedgerDoc>().ToDto();
+        }
+
         var now = Timestamp.GetCurrentTimestamp();
         var type = req.Amount > 0 ? "earn" : "adjust";
 
@@ -1222,9 +1235,20 @@ public class FirebaseScoreboardService : IFamilyScoreboardService
         };
         if (req.Note != null) data["note"] = req.Note;
 
-        await AllowanceLedger(familyId).Document(recordId).SetAsync(data, cancellationToken: ct);
-        var snap = await AllowanceLedger(familyId).Document(recordId).GetSnapshotAsync(ct);
+        await docRef.SetAsync(data, cancellationToken: ct);
+        var snap = await docRef.GetSnapshotAsync(ct);
         return snap.ConvertTo<AllowanceLedgerDoc>().ToDto();
+    }
+
+    /// <summary>
+    /// 冪等鍵 → 確定性 ledger doc id（SHA256 hex，Firestore-safe）。純邏輯，見 AllowanceIdempotencyTests。
+    /// 同一 clientRequestId → 同一 doc id → 雙擊/重送只產生一筆。
+    /// </summary>
+    internal static string DeriveLedgerRecordId(string clientRequestId)
+    {
+        var bytes = System.Security.Cryptography.SHA256.HashData(
+            System.Text.Encoding.UTF8.GetBytes(clientRequestId));
+        return Convert.ToHexString(bytes).ToLowerInvariant();
     }
 
     // ── Phase 3: Shop Items（商城商品） ───────────────────────────────────────

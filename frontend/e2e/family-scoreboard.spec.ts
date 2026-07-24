@@ -280,6 +280,27 @@ test.describe.serial('家庭計分板整合測試', () => {
     console.log(`  ✓ 零用金明細: ${ledger.length} 筆`);
   });
 
+  test('STEP 6-5: 加零用金冪等 — 同 clientRequestId 送兩次只增一筆', async ({ request }) => {
+    // 根因回歸測試：模擬「第一次以為失敗而重按」。同一 clientRequestId 送兩次，
+    // 後端 DeriveLedgerRecordId 推導出同一 ledger doc id → 只算一筆（防止正式站那種 +90/+700 雙擊重複）。
+    const balBefore = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
+    const before = (await balBefore.json()).balance as number;
+
+    const payload = {
+      playerId: PLAYER_ID, amount: 30, reason: '整合測試 — 冪等雙擊', note: null,
+      clientRequestId: 'e2e-idempotency-fixed-key',
+    };
+    const r1 = await adminReq(request, 'POST', `/api/family-scoreboard/${FAMILY_ID}/allowance`, payload);
+    const r2 = await adminReq(request, 'POST', `/api/family-scoreboard/${FAMILY_ID}/allowance`, payload);
+    expect(r1.ok()).toBeTruthy();
+    expect(r2.ok()).toBeTruthy();
+
+    const balAfter = await playerReq(request, 'GET', `/api/family-scoreboard/${FAMILY_ID}/allowance/balance`, playerToken);
+    const after = (await balAfter.json()).balance as number;
+    expect(after).toBe(before + 30); // 只增 30，不是 60
+    console.log(`  ✓ 冪等：${before} → ${after}（同鍵兩次只 +30）`);
+  });
+
   // ── STEP 7: 商城兌換 (NT$) ───────────────────────────────────────────────
 
   test('STEP 7-1: 玩家取得商城清單，找可負擔商品', async ({ request }) => {

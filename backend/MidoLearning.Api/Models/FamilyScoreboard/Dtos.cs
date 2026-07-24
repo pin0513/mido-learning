@@ -217,7 +217,10 @@ public record AdjustAllowanceRequest(
     string PlayerId,
     int Amount,
     string Reason,
-    string? Note
+    string? Note,
+    // 冪等鍵（前端每個「加/扣零用金」動作產一個）；後端用它推導確定性 ledger doc id，
+    // 雙擊/重送只會產生一筆。舊 client 未帶時為 null，沿用隨機 Guid（原行為）。
+    string? ClientRequestId = null
 );
 
 public record AllowanceBalanceDto(

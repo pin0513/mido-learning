@@ -222,6 +222,9 @@ export interface AdjustAllowanceRequest {
   amount: number;
   reason: string;
   note?: string;
+  // 冪等鍵：同一次加/扣操作固定用同一把（開 modal 時產、失敗保留、成功換），
+  // 讓「以為失敗而重按」不會產生重複 ledger（後端 DeriveLedgerRecordId 去重）。
+  clientRequestId?: string;
 }
 
 export interface AllowanceBalanceDto {
