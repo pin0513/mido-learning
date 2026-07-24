@@ -401,6 +401,20 @@
     </div>
   </section>
 
+  <!-- ================= DAILY ENGLISH ================= -->
+  <section id="daily-english">
+    <h2 class="sec-title"><span class="doodle">🔤</span>每日英文 <span class="badge-tag">恩恩 &amp; 杰杰</span></h2>
+    <p class="sec-sub">每天一個單字或句型，由家庭助手 bot 產生（登入後可切換孩子）</p>
+    <div class="news" id="daily-english-list">
+      <div class="sticker item pop">
+        <span class="tape blue"></span>
+        <div class="cat" style="color:var(--blue)">🔤 今日單字</div>
+        <h4>尚無內容</h4>
+        <p>bot 每日產生「每日一句型 / 挑一個單字」後，會顯示在這裡（附中文意思與例句）。</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= SCOREBOARD ================= -->
   <section id="score">
     <h2 class="sec-title"><span class="doodle">🏆</span>家庭計分板</h2>
@@ -584,6 +598,32 @@ fetch(`${SB_API_BASE}/api/family-kanban/scoreboard?code=${SB_FAMILY_CODE}`)
   .catch(err => {
     sb.innerHTML = `<div class="src-note">計分板載入失敗：${err.message}（確認後端與家庭碼 ${SB_FAMILY_CODE}）</div>`;
   });
+
+/* ====== 報報 / 每日英文：有真資料就覆蓋 mock，沒有就保留 mock（既能動又不破相）====== */
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tapeOf = i => ["", "blue", "pink", "green"][i % 4];
+const kanbanGet = path => fetch(`${SB_API_BASE}/api/family-kanban/${path}`).then(r => r.ok ? r.json() : []);
+
+kanbanGet(`news?code=${SB_FAMILY_CODE}`).then(items => {
+  if (!Array.isArray(items) || items.length === 0) return; // 無內容 → 保留 mock
+  const badge = document.querySelector("#news .badge-tag.demo"); if (badge) badge.remove();
+  document.querySelector("#news .news").innerHTML = items.map((n, i) => `
+    <div class="sticker item pop in"><span class="tape ${tapeOf(i)}"></span>
+      <div class="cat">📰 ${esc(n.category || "報報")}</div>
+      <h4>${esc(n.title)}</h4>
+      <p>${esc(n.body)}${n.sourceUrl ? ` <a href="${esc(n.sourceUrl)}" target="_blank" rel="noopener">來源↗</a>` : ""}</p>
+    </div>`).join("");
+}).catch(() => {});
+
+kanbanGet(`daily-english?code=${SB_FAMILY_CODE}`).then(items => {
+  if (!Array.isArray(items) || items.length === 0) return; // 無內容 → 保留 mock
+  document.getElementById("daily-english-list").innerHTML = items.map((e, i) => `
+    <div class="sticker item pop in"><span class="tape ${tapeOf(i)}"></span>
+      <div class="cat">${e.kind === "sentence" ? "🗣️ 每日句型" : "🔤 每日單字"} · ${esc(e.playerId)}</div>
+      <h4>${esc(e.term)}${e.meaning ? `（${esc(e.meaning)}）` : ""}</h4>
+      <p>${esc(e.example || "")}${e.exampleZh ? `<br><span style="color:var(--ink-soft)">${esc(e.exampleZh)}</span>` : ""}</p>
+    </div>`).join("");
+}).catch(() => {});
 
 /* ====== ANIMATIONS ====== */
 const io = new IntersectionObserver(es => es.forEach(e => {
