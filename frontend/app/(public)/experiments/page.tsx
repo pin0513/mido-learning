@@ -1,6 +1,29 @@
-import Link from 'next/link';
+'use client';
 
-const experiments = [
+import Link from 'next/link';
+import { useAuth } from '@/hooks/useAuth';
+
+// 家長 allowlist：只有這兩個 email 登入時才看得到「家庭看板」外顯入口。
+// 這是純 UI 隱藏（非安全邊界）：/family-kanban 頁面本身不卡登入，只有頁內「某些卡」才需權限。
+const PARENT_ALLOWLIST = ['pin0513@gmail.com', 'daisy9928@gmail.com'];
+
+type Experiment = {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  href: string;
+  external: boolean;
+  color: string;
+  badge: string;
+  // 導向 rewrite 到完整獨立靜態 HTML 的頁面（如 /family-kanban）時需整頁導航，
+  // 不能用 client-side Link（Next 會試著當 app route render）。
+  hardNav?: boolean;
+  // 只對家長 allowlist 顯示外顯入口（例：家庭看板）。
+  parentOnly?: boolean;
+};
+
+const experiments: Experiment[] = [
   {
     id: 'badminton',
     title: '羽球戰術板',
@@ -32,6 +55,18 @@ const experiments = [
     badge: '家庭工具',
   },
   {
+    id: 'family-kanban',
+    title: '家庭看板',
+    description: '全家的節奏一站看：成員介紹、每週行事曆、每日報報，並連動家庭計分板。',
+    icon: '📋',
+    href: '/family-kanban',
+    external: false,
+    color: 'from-rose-400 to-pink-500',
+    badge: '家庭工具',
+    hardNav: true,
+    parentOnly: true,
+  },
+  {
     id: 'badminton-trainer',
     title: '米字步訓練器',
     description: '互動式羽球步伐訓練工具，跟著節奏練習米字步移動，提升場上步法靈活度。',
@@ -44,6 +79,11 @@ const experiments = [
 ];
 
 export default function ExperimentsPage() {
+  const { user } = useAuth();
+  const email = user?.email?.toLowerCase() ?? '';
+  const isParent = PARENT_ALLOWLIST.includes(email);
+  // 家長才看得到「家庭看板」入口；其餘卡片一律顯示。
+  const visibleExperiments = experiments.filter((item) => !item.parentOnly || isParent);
   return (
     <main className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-orange-50 px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-4xl">
@@ -62,7 +102,7 @@ export default function ExperimentsPage() {
 
         {/* Cards Grid */}
         <div className="grid gap-8 sm:grid-cols-2">
-          {experiments.map((item) => {
+          {visibleExperiments.map((item) => {
             const cardContent = (
               <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 {/* Gradient top bar */}
@@ -113,6 +153,11 @@ export default function ExperimentsPage() {
                 rel="noopener noreferrer"
                 className="block h-full"
               >
+                {cardContent}
+              </a>
+            ) : item.hardNav ? (
+              // 整頁導航到 rewrite 的靜態 HTML（/family-kanban），非 client-side Link
+              <a key={item.id} href={item.href} className="block h-full">
                 {cardContent}
               </a>
             ) : (
