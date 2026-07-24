@@ -28,6 +28,38 @@ public static class FamilyKanbanEndpoints
             return members is null ? Results.NotFound() : Results.Ok(members);
         });
 
+        // 成員介紹（§2）
+        pub.MapGet("/members", async (
+            string code, IFamilyKanbanService svc, CancellationToken ct) =>
+        {
+            var members = await svc.GetMembersByCodeAsync(code, ct);
+            return members is null ? Results.NotFound() : Results.Ok(members);
+        });
+
+        // 行事曆（§4）
+        pub.MapGet("/calendar", async (
+            string code, IFamilyKanbanService svc, CancellationToken ct) =>
+        {
+            var events = await svc.GetCalendarByCodeAsync(code, ct);
+            return events is null ? Results.NotFound() : Results.Ok(events);
+        });
+
+        // 報報 / 新知（§7）
+        pub.MapGet("/news", async (
+            string code, string? audience, string? date, IFamilyKanbanService svc, CancellationToken ct) =>
+        {
+            var news = await svc.GetNewsByCodeAsync(code, audience, date, ct);
+            return news is null ? Results.NotFound() : Results.Ok(news);
+        });
+
+        // 每日英文
+        pub.MapGet("/daily-english", async (
+            string code, string? playerId, string? date, IFamilyKanbanService svc, CancellationToken ct) =>
+        {
+            var items = await svc.GetDailyEnglishByCodeAsync(code, playerId, date, ct);
+            return items is null ? Results.NotFound() : Results.Ok(items);
+        });
+
         // ── Family Admin routes（需要 FamilyAdmin 授權 + 家庭歸屬 gate）──────────
         var admin = app.MapGroup("/api/family-kanban")
             .RequireAuthorization("FamilyAdmin")
@@ -62,6 +94,88 @@ public static class FamilyKanbanEndpoints
         {
             await svc.DeletePrivateDocAsync(familyId, docId, ct);
             return Results.Ok();
+        });
+
+        // ── Tasks（任務佇列，bot 介接）────────────────────────────────────────────
+        // 家長/前端 POST 建任務；bot（openab，以 admin service account）GET 拉 pending、
+        // 執行後 PATCH 回填 status + resultRef。bot 的 cron 排程本身不在後端。
+        admin.MapPost("/{familyId}/tasks", async (
+            string familyId, CreateTaskRequest request, IFamilyKanbanService svc,
+            ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var requestedBy = request.RequestedBy
+                ?? user.FindFirstValue(ClaimTypes.Email) ?? "parent";
+            var task = await svc.CreateTaskAsync(
+                familyId, request.Kind, request.PayloadJson ?? "{}", requestedBy, ct);
+            return Results.Created($"/api/family-kanban/{familyId}/tasks/{task.Id}", task);
+        });
+
+        admin.MapGet("/{familyId}/tasks", async (
+            string familyId, string? status, IFamilyKanbanService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetTasksAsync(familyId, status, ct)));
+
+        admin.MapPatch("/{familyId}/tasks/{taskId}", async (
+            string familyId, string taskId, UpdateTaskRequest request,
+            IFamilyKanbanService svc, CancellationToken ct) =>
+        {
+            try
+            {
+                var task = await svc.UpdateTaskAsync(familyId, taskId, request.Status, request.ResultRef, ct);
+                return task is null ? Results.NotFound() : Results.Ok(task);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.BadRequest(new { message = ex.Message });
+            }
+        });
+
+        // ── 內容寫入（bot 回填 / 家長維護；FamilyAdmin + 家庭歸屬 gate）─────────────
+        admin.MapPost("/{familyId}/news", async (
+            string familyId, CreateNewsRequest request, IFamilyKanbanService svc,
+            ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var by = request.CreatedBy ?? user.FindFirstValue(ClaimTypes.Email) ?? "bot";
+            var news = await svc.CreateNewsAsync(familyId, request, by, ct);
+            return Results.Created($"/api/family-kanban/news?code=&id={news.Id}", news);
+        });
+
+        admin.MapPost("/{familyId}/daily-english", async (
+            string familyId, CreateDailyEnglishRequest request, IFamilyKanbanService svc,
+            ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var by = request.CreatedBy ?? user.FindFirstValue(ClaimTypes.Email) ?? "bot";
+            var item = await svc.CreateDailyEnglishAsync(familyId, request, by, ct);
+            return Results.Created($"/api/family-kanban/daily-english?id={item.Id}", item);
+        });
+
+        admin.MapPost("/{familyId}/calendar", async (
+            string familyId, CreateCalendarEventRequest request, IFamilyKanbanService svc,
+            ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var by = request.CreatedBy ?? user.FindFirstValue(ClaimTypes.Email) ?? "parent";
+            var ev = await svc.CreateCalendarEventAsync(familyId, request, by, ct);
+            return Results.Created($"/api/family-kanban/calendar?id={ev.Id}", ev);
+        });
+
+        admin.MapPost("/{familyId}/members", async (
+            string familyId, UpsertMemberRequest request, IFamilyKanbanService svc, CancellationToken ct) =>
+        {
+            var member = await svc.UpsertMemberAsync(familyId, request, ct);
+            return Results.Ok(member);
+        });
+
+        // ── 每日學習/英文設定檔（只有家庭 admin＝pin0513 / daisy9928 可讀寫；bot 亦以 admin 讀取）──
+        admin.MapGet("/{familyId}/daily-learning-config", async (
+            string familyId, IFamilyKanbanService svc, CancellationToken ct) =>
+            Results.Ok(await svc.GetDailyLearningConfigAsync(familyId, ct)));
+
+        admin.MapPut("/{familyId}/daily-learning-config", async (
+            string familyId, UpdateDailyLearningConfigRequest request, IFamilyKanbanService svc,
+            ClaimsPrincipal user, CancellationToken ct) =>
+        {
+            var by = user.FindFirstValue(ClaimTypes.Email) ?? "admin";
+            var cfg = await svc.UpdateDailyLearningConfigAsync(familyId, request, by, ct);
+            return Results.Ok(cfg);
         });
     }
 }
