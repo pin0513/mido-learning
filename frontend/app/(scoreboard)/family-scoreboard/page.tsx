@@ -761,10 +761,11 @@ export default function FamilyScoreboardPage() {
                               <span className="text-gray-700 font-medium block leading-tight">{p.name}</span>
                               {p.role && <span className="text-xs text-gray-400">{p.role}</span>}
                             </div>
-                            <div className="ml-auto flex gap-3 text-sm font-bold tabular-nums">
+                            <div className="ml-auto flex flex-wrap justify-end gap-x-3 gap-y-1 text-sm font-bold tabular-nums">
                               <span className="text-emerald-600">+{p.totalEarned}</span>
                               <span className="text-red-400">−{p.totalDeducted}</span>
                               <span className="text-blue-500">{p.redeemablePoints} 可用</span>
+                              <span className="text-emerald-600">💰 {p.allowanceBalance ?? 0} 零用金</span>
                             </div>
                           </div>
                         ))}
