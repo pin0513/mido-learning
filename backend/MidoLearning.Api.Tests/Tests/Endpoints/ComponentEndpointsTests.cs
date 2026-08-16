@@ -598,6 +598,12 @@ public class ComponentEndpointsTests : IClassFixture<WebApplicationFactory<Progr
                 It.IsAny<string?>(),
                 It.IsAny<string[]?>()))
             .ReturnsAsync((components, components.Count));
+
+        // GetPublicComponents enriches each component with a live material count,
+        // so the material lookup must be stubbed (default: no materials).
+        _mockFirebaseService
+            .Setup(s => s.GetMaterialsByComponentIdAsync(It.IsAny<string>()))
+            .ReturnsAsync(new List<CourseMaterial>());
     }
 
     private void SetupMockGetComponentByIdAsync(string id, LearningComponentDetail? component)

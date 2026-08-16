@@ -170,10 +170,21 @@ public static class ComponentEndpoints
             var totalCount = allFiltered.Count;
 
             // Apply pagination
-            var componentList = allFiltered
+            var pagedComponents = allFiltered
                 .Skip((page - 1) * limit)
                 .Take(limit)
                 .ToList();
+
+            // Enrich each component with its real material count, computed live from the
+            // materials collection rather than a stored snapshot. The MaterialCount field is
+            // never written to the component document, so reading it back always yielded 0
+            // (count drift). Computing it here keeps a single source of truth.
+            var componentList = new List<LearningComponent>(pagedComponents.Count);
+            foreach (var c in pagedComponents)
+            {
+                var materials = await firebaseService.GetMaterialsByComponentIdAsync(c.Id);
+                componentList.Add(c with { MaterialCount = materials.Count });
+            }
 
             var response = ApiResponse<ComponentListResponse>.Ok(new ComponentListResponse
             {
