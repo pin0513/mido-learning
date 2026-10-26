@@ -15,6 +15,7 @@ on:
       - "frontend/e2e/kp.spec.ts"
       - "frontend/e2e/kp-flags-off.spec.ts"
       - "frontend/e2e/kp-published-only.spec.ts"
+      - "frontend/e2e/city-progress.spec.ts"
       - "frontend/scripts/**"
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
@@ -35,6 +36,7 @@ on:
       - "frontend/e2e/kp.spec.ts"
       - "frontend/e2e/kp-flags-off.spec.ts"
       - "frontend/e2e/kp-published-only.spec.ts"
+      - "frontend/e2e/city-progress.spec.ts"
       - "frontend/scripts/**"
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
@@ -126,7 +128,7 @@ jobs:
             curl -sf http://127.0.0.1:3000/api/kp-launch && break
             sleep 2
           done
-          pnpm exec playwright test e2e/kp.spec.ts e2e/homepage-groups.spec.ts --reporter=list
+          pnpm exec playwright test e2e/kp.spec.ts e2e/homepage-groups.spec.ts e2e/city-progress.spec.ts --reporter=list
           kill "$(cat /tmp/next.pid)" || true
           pkill -f "next start -p 3000" || true
           pkill -f "next-server" || true
