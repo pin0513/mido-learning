@@ -11,7 +11,7 @@ import {
   toCards,
   visibleCatalog,
 } from "@/lib/content";
-import { learningPathPath } from "@/lib/kp/routes";
+import { KP_SITE_ORIGIN, disciplinePath, learningPathPath } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
 
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title: { absolute: `${name}｜知識地圖` },
     description: `${name}的知識點，可再依階段、層級與核心素養篩選。`,
-    openGraph: { title: `${name}｜知識地圖`, description: `${name}的知識點列表。`, url: `https://learn.paulfun.net/kp/discipline/${id}` },
+    openGraph: { title: `${name}｜知識地圖`, description: `${name}的知識點列表。`, url: `${KP_SITE_ORIGIN}${disciplinePath(id)}` },
   };
 }
 

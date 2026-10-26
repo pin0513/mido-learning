@@ -10,7 +10,7 @@ import {
   stageName,
   visibleCatalog,
 } from "@/lib/content";
-import { competencyPath, disciplinePath, learningPathPath, stagePath } from "@/lib/kp/routes";
+import { KP_SITE_ORIGIN, competencyPath, disciplinePath, learningPathPath, stagePath } from "@/lib/kp/routes";
 
 const shell = "mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6";
 const card =
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "知識地圖｜學門、層級與階段",
     description: "從層級、階段、學門與核心素養進入 Mido Learning 的知識點。",
-    url: "https://learn.paulfun.net/kp",
+    url: `${KP_SITE_ORIGIN}/kp`,
   },
 };
 

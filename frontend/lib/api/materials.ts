@@ -10,6 +10,16 @@ import {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
+export class MaterialsRequestError extends Error {
+  readonly status: number;
+
+  constructor(status: number, message: string) {
+    super(message);
+    this.name = 'MaterialsRequestError';
+    this.status = status;
+  }
+}
+
 async function getAuthHeaders(): Promise<HeadersInit> {
   const token = await getIdToken();
   const headers: HeadersInit = {};
@@ -29,7 +39,7 @@ export async function getMaterials(componentId: string): Promise<Material[]> {
     if (response.status === 404) {
       return [];
     }
-    throw new Error(`Failed to fetch materials: ${response.statusText}`);
+    throw new MaterialsRequestError(response.status, `Failed to fetch materials: ${response.statusText}`);
   }
 
   const apiResponse: { success: boolean; data: MaterialListResponse } = await response.json();
@@ -105,9 +115,9 @@ export async function getMaterialManifest(materialId: string): Promise<MaterialM
 
   if (!response.ok) {
     if (response.status === 404) {
-      throw new Error('Material not found');
+      throw new MaterialsRequestError(404, 'Material not found');
     }
-    throw new Error(`Failed to fetch manifest: ${response.statusText}`);
+    throw new MaterialsRequestError(response.status, `Failed to fetch manifest: ${response.statusText}`);
   }
 
   const apiResponse: ApiResponse<MaterialManifest> = await response.json();
@@ -140,9 +150,9 @@ export async function getMaterialsBatch(ids: string[]): Promise<MaterialManifest
 
   if (!response.ok) {
     if (response.status === 404) {
-      throw new Error('Material not found');
+      throw new MaterialsRequestError(404, 'Material not found');
     }
-    throw new Error(`Failed to fetch materials batch: ${response.statusText}`);
+    throw new MaterialsRequestError(response.status, `Failed to fetch materials batch: ${response.statusText}`);
   }
 
   const apiResponse: ApiResponse<BatchResponse> = await response.json();

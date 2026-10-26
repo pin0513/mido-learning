@@ -24,20 +24,15 @@ function LinkedIds({
   all: ContentCatalog;
   visibleIds: Set<string>;
 }) {
-  if (ids.length === 0) return <p className="text-sm text-[#3d3830]">沒有</p>;
+  const known = ids.filter((id) => all.indexes.byId.has(id));
+  const visible = known.filter((id) => visibleIds.has(id));
+  const hidden = known.length - visible.length;
+  if (visible.length === 0 && hidden === 0) return <p className="text-sm text-[#3d3830]">沒有</p>;
   return (
     <ul className="space-y-2 text-sm">
-      {ids.map((id) => {
+      {visible.map((id) => {
         const point = all.indexes.byId.get(id);
         if (!point) return null;
-        if (!visibleIds.has(id)) {
-          return (
-            <li key={id}>
-              {point.title}
-              <span className="text-[#3d3830]">（尚未發布）</span>
-            </li>
-          );
-        }
         return (
           <li key={id}>
             <Link href={knowledgePointPath(point.concept, point.stage)} className={textLink}>
@@ -50,6 +45,7 @@ function LinkedIds({
           </li>
         );
       })}
+      {hidden > 0 ? <li>另有 {hidden} 個知識點尚未發布</li> : null}
     </ul>
   );
 }
@@ -298,7 +294,9 @@ export function KnowledgePointView({
             </div>
           ))}
         </div>
-        <p className="mt-4 text-sm leading-6 text-[#3d3830]">還沒有知識點的學門：{point.linkNotes}</p>
+        {point.linkNotes ? (
+          <p className="mt-4 text-sm leading-6 text-[#3d3830]">跨學門關聯：{point.linkNotes}</p>
+        ) : null}
       </section>
 
       <KpSlides componentIds={point.slides} title={point.title} />

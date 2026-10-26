@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ColearnCard } from "@/components/kp/ColearnCard";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
 import { layerName, loadCatalog, stageName, visibleCatalog } from "@/lib/content";
-import { disciplinePath, knowledgePointPath } from "@/lib/kp/routes";
+import { KP_SITE_ORIGIN, disciplinePath, knowledgePointPath, learningPathPath } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
 
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ pathId: s
     openGraph: {
       title: `${path.title}｜知識地圖`,
       description: path.title,
-      url: `https://learn.paulfun.net/kp/path/${pathId}`,
+      url: `${KP_SITE_ORIGIN}${learningPathPath(pathId)}`,
     },
   };
 }

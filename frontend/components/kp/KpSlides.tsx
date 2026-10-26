@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getMaterials, getMaterialsBatch } from "@/lib/api/materials";
+import { getMaterials, getMaterialsBatch, MaterialsRequestError } from "@/lib/api/materials";
 import { MaterialIframe } from "@/components/materials/MaterialIframe";
 import type { MaterialManifest } from "@/types/material";
 
@@ -50,10 +50,10 @@ function SlideFrame({ componentId, title }: { componentId: string; title: string
         }
         if (!cancelled) setState({ kind: "ready", manifest });
       } catch (error) {
-        const text = error instanceof Error ? error.message : "";
-        if (/forbidden|unauthorized|403|401/i.test(text)) {
+        const status = error instanceof MaterialsRequestError ? error.status : 0;
+        if (status === 401 || status === 403) {
           if (!cancelled) setState({ kind: "forbidden" });
-        } else if (/not found|404/i.test(text)) {
+        } else if (status === 404) {
           if (!cancelled) setState({ kind: "missing" });
         } else if (!cancelled) {
           setState({ kind: "unavailable" });
@@ -75,7 +75,7 @@ function SlideFrame({ componentId, title }: { componentId: string; title: string
 
   let src: string | null = null;
   if (state.kind === "ready") {
-    const token = state.manifest.accessToken ? `?token=${state.manifest.accessToken}` : "";
+    const token = state.manifest.accessToken ? `?token=${encodeURIComponent(state.manifest.accessToken)}` : "";
     src = `${state.manifest.baseUrl}${state.manifest.entryPoint}${token}`;
   }
 

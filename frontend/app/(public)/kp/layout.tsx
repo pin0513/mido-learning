@@ -1,16 +1,17 @@
 const PRINT_CSS = `
 @media print {
   @page { size: A4; margin: 12mm; }
-  body * { visibility: hidden; }
-  .kp-colearn-print, .kp-colearn-print * { visibility: visible; }
-  .kp-colearn-print {
+  html.kp-print-colearn body * { visibility: hidden; }
+  html.kp-print-colearn .kp-colearn-print,
+  html.kp-print-colearn .kp-colearn-print * { visibility: visible; }
+  html.kp-print-colearn .kp-colearn-print {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     border: 0 !important;
   }
-  .kp-no-print { display: none !important; }
+  html.kp-print-colearn .kp-no-print { display: none !important; }
 }
 `;
 

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AxisBrowser } from "@/components/kp/AxisBrowser";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
 import { filterOptions, loadCatalog, toCards, visibleCatalog } from "@/lib/content";
+import { KP_SITE_ORIGIN, competencyPath } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ code: str
   return {
     title: { absolute: `${name}｜知識地圖` },
     description: `核心素養 ${name} 對到的知識點。只含有課綱對應的內容。`,
-    openGraph: { title: `${name}｜知識地圖`, description: `核心素養 ${name}。`, url: `https://learn.paulfun.net/kp/competency/${code}` },
+    openGraph: { title: `${name}｜知識地圖`, description: `核心素養 ${name}。`, url: `${KP_SITE_ORIGIN}${competencyPath(code)}` },
   };
 }
 

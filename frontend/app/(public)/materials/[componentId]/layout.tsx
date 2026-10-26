@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { KP_SITE_ORIGIN } from '@/lib/kp/routes';
 import type { LearningComponent } from '@/types/component';
 
 const API_URL =
@@ -44,7 +45,7 @@ export async function generateMetadata({
     openGraph: {
       title: component.title,
       description,
-      url: `https://learn.paulfun.net/materials/${componentId}`,
+      url: `${KP_SITE_ORIGIN}/materials/${componentId}`,
       type: 'article',
       images,
     },

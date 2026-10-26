@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AxisBrowser } from "@/components/kp/AxisBrowser";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
 import { filterOptions, loadCatalog, stageName, toCards, visibleCatalog } from "@/lib/content";
+import { KP_SITE_ORIGIN, stagePath } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title: { absolute: `${name}｜知識地圖` },
     description: `${name}階段的知識點，可再依學門、層級與核心素養篩選。`,
-    openGraph: { title: `${name}｜知識地圖`, description: `${name}的知識點。`, url: `https://learn.paulfun.net/kp/stage/${id}` },
+    openGraph: { title: `${name}｜知識地圖`, description: `${name}的知識點。`, url: `${KP_SITE_ORIGIN}${stagePath(id)}` },
   };
 }
 

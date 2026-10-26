@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AxisBrowser } from "@/components/kp/AxisBrowser";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
 import { filterOptions, layerName, loadCatalog, toCards, visibleCatalog } from "@/lib/content";
+import { KP_SITE_ORIGIN } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title: { absolute: `${name}｜知識地圖` },
     description: `${name}這一層的知識點，橫向仍可依國小到大學篩選。層級不會被其他總覽取代。`,
-    openGraph: { title: `${name}｜知識地圖`, description: `${name}的知識點。`, url: `https://learn.paulfun.net/kp/layer/${id}` },
+    openGraph: { title: `${name}｜知識地圖`, description: `${name}的知識點。`, url: `${KP_SITE_ORIGIN}/kp/layer/${id}` },
   };
 }
 
