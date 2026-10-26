@@ -3,6 +3,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { annulus, focusViewBox, sectorStart, type CityMapData } from "@/lib/content/city";
+import {
+  clearStoredProgress,
+  demoProgress,
+  emptyStoredProgress,
+  readStoredProgress,
+  together,
+  toSnapshot,
+  writeStoredProgress,
+  type ProgressSnapshot,
+  type StoredProgress,
+} from "./progress";
 
 interface Level {
   district: string | null;
@@ -59,6 +70,9 @@ export function CityMapView({ data }: { data: CityMapData }) {
   const [level, setLevel] = useState<Level>(EMPTY);
   const [lotId, setLotId] = useState<string | null>(null);
   const [hover, setHover] = useState<string | null>(null);
+  const [pathId, setPathId] = useState("");
+  const [mode, setMode] = useState<"demo" | "local">("demo");
+  const [stored, setStored] = useState<StoredProgress>(emptyStoredProgress);
   const [viewBox, setViewBox] = useState(`0 0 ${data.size} ${data.size}`);
   const depth = useRef(0);
   const mapRoot = useRef<HTMLDivElement>(null);
@@ -70,6 +84,23 @@ export function CityMapView({ data }: { data: CityMapData }) {
   const stageIndex = data.stages.findIndex((stage) => stage.id === level.stage);
   const selected = level.kp ? byId.get(level.kp) : undefined;
   const hovered = hover ? byId.get(hover) : undefined;
+  const snapshot: ProgressSnapshot = mode === "demo" ? demoProgress.read() : toSnapshot(stored);
+  const path = data.landmarks.find((item) => item.id === pathId) ?? null;
+  const pathStops = path?.stops.filter((id) => byId.has(id)) ?? [];
+
+  const choosePath = (id: string) => {
+    setPathId(id);
+    const params = new URLSearchParams(window.location.search);
+    if (id) params.set("path", id);
+    else params.delete("path");
+    const search = params.toString();
+    window.history.replaceState(window.history.state, "", `${window.location.pathname}${search ? `?${search}` : ""}`);
+  };
+
+  const updateStored = (next: StoredProgress) => {
+    setStored(next);
+    writeStoredProgress(next);
+  };
 
   const targetBox = focusViewBox(
     data,
@@ -90,6 +121,9 @@ export function CityMapView({ data }: { data: CityMapData }) {
       setLevel(initial);
       window.history.replaceState({ city: initial }, "", window.location.href);
     }
+    const params = new URLSearchParams(window.location.search);
+    setPathId(params.get("path") ?? "");
+    setStored(readStoredProgress());
     const onPop = () => {
       depth.current = Math.max(0, depth.current - 1);
       setLevel(readLevel());
@@ -195,7 +229,93 @@ export function CityMapView({ data }: { data: CityMapData }) {
   };
 
   return (
-    <div ref={mapRoot} className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div ref={mapRoot}>
+      <div className="mb-4 flex flex-wrap items-end gap-3">
+        <label className="text-sm font-semibold text-[#1a1614]">
+          學習主線
+          <select
+            data-testid="city-path"
+            className="mt-1 block min-h-11 min-w-48 border border-[#1a1614] bg-white px-2"
+            value={pathId}
+            onChange={(event) => choosePath(event.target.value)}
+          >
+            <option value="">不標路線</option>
+            {data.landmarks.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.title}
+                {item.colearn ? "（有家庭時間）" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+        {path ? (
+          <Link href={`/kp/path/${path.id}`} className="inline-flex min-h-11 items-center px-2 text-sm font-semibold underline">
+            打開這條主線{path.colearn ? "・有家庭時間" : ""}
+          </Link>
+        ) : null}
+        <fieldset className="text-sm">
+          <legend className="font-semibold">進度</legend>
+          <label className="mr-3 inline-flex min-h-11 items-center gap-2">
+            <input type="radio" name="progress-mode" checked={mode === "demo"} onChange={() => setMode("demo")} />
+            範例資料
+          </label>
+          <label className="inline-flex min-h-11 items-center gap-2">
+            <input type="radio" name="progress-mode" checked={mode === "local"} onChange={() => setMode("local")} />
+            自己標記
+          </label>
+        </fieldset>
+      </div>
+      <p className="mb-4 text-sm leading-6 text-[#3d3830]" data-testid="city-progress-notice">
+        {snapshot.notice}
+      </p>
+      {mode === "local" ? (
+        <div className="mb-4 flex flex-wrap gap-3 text-sm" data-testid="city-local-progress">
+          <label>
+            大人怎麼稱呼
+            <input className="ml-2 min-h-11 border border-[#1a1614] px-2" value={stored.adultName} onChange={(event) => updateStored({ ...stored, adultName: event.target.value })} />
+          </label>
+          <label>
+            孩子怎麼稱呼
+            <input className="ml-2 min-h-11 border border-[#1a1614] px-2" value={stored.childName} onChange={(event) => updateStored({ ...stored, childName: event.target.value })} />
+          </label>
+          {selected ? (
+            <>
+              <button type="button" className="min-h-11 border border-[#1a1614] px-3" onClick={() => updateStored({ ...stored, adultAt: selected.id })}>
+                {stored.adultName}在這裡
+              </button>
+              <button type="button" className="min-h-11 border border-[#1a1614] px-3" onClick={() => updateStored({ ...stored, childAt: selected.id })}>
+                {stored.childName}在這裡
+              </button>
+              <button
+                type="button"
+                className="min-h-11 border border-[#1a1614] px-3"
+                onClick={() => updateStored({ ...stored, adultVisited: stored.adultVisited.includes(selected.id) ? stored.adultVisited : [...stored.adultVisited, selected.id] })}
+              >
+                {stored.adultName}走過
+              </button>
+              <button
+                type="button"
+                className="min-h-11 border border-[#1a1614] px-3"
+                onClick={() => updateStored({ ...stored, childVisited: stored.childVisited.includes(selected.id) ? stored.childVisited : [...stored.childVisited, selected.id] })}
+              >
+                {stored.childName}走過
+              </button>
+            </>
+          ) : null}
+          <button
+            type="button"
+            className="min-h-11 px-3 underline"
+            onClick={() => {
+              clearStoredProgress();
+              setStored(emptyStoredProgress());
+            }}
+          >
+            清除這台裝置的記號
+          </button>
+        </div>
+      ) : null}
+      {selected && together(snapshot, selected.id) ? <p className="mb-4 text-sm font-semibold">這棟你們一起學過。</p> : null}
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div>
         <nav aria-label="地圖層級" className="mb-3 flex flex-wrap items-center gap-2 text-sm">
           <button type="button" className="min-h-11 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]" onClick={() => go(EMPTY, "push")}>
@@ -332,6 +452,17 @@ export function CityMapView({ data }: { data: CityMapData }) {
                 />
               );
             })}
+            {pathStops.length > 1 ? (
+              <path
+                data-testid="city-route"
+                d={pathStops.map((id, index) => `${index === 0 ? "M" : "L"} ${byId.get(id)!.x.toFixed(1)} ${byId.get(id)!.y.toFixed(1)}`).join(" ")}
+                fill="none"
+                stroke="#1a1614"
+                strokeWidth={3}
+                strokeLinejoin="round"
+                aria-hidden="true"
+              />
+            ) : null}
             {data.lots
               .filter((item) => item.featured)
               .map((item) => (
@@ -362,6 +493,8 @@ export function CityMapView({ data }: { data: CityMapData }) {
               const w = 12;
               const active = selected?.id === building.id;
               const draft = building.status !== "published";
+              const seen = snapshot.adult.at === building.id || snapshot.adult.visited.includes(building.id) || snapshot.child.at === building.id || snapshot.child.visited.includes(building.id);
+              const stopIndex = path?.stops.indexOf(building.id) ?? -1;
               return (
                 <g key={building.id} opacity={level.district && level.district !== building.folder ? 0.35 : 1}>
                   <ellipse cx={building.x} cy={building.y} rx={8} ry={3} fill="#1a1614" fillOpacity={0.12} aria-hidden="true" />
@@ -376,14 +509,22 @@ export function CityMapView({ data }: { data: CityMapData }) {
                     width={w}
                     height={building.height}
                     fill={color}
-                    fillOpacity={draft ? 0.35 : 0.8}
+                    fillOpacity={draft ? 0.35 : seen ? 0.95 : pathStops.includes(building.id) ? 0.85 : 0.55}
                     stroke={active ? "#1a1614" : color}
                     strokeWidth={active ? 2 : 1}
                     strokeDasharray={draft ? "2.2 1.4" : undefined}
                     aria-hidden="true"
                   />
+                  {stopIndex >= 0 ? (
+                    <g aria-hidden="true" data-testid="city-stop" data-stop={stopIndex + 1}>
+                      <circle cx={building.x} cy={building.y - building.height - 12} r={7} fill="#1a1614" />
+                      <text x={building.x} y={building.y - building.height - 8.5} textAnchor="middle" fontSize={9} fontWeight={700} fill="#faf9f7">
+                        {stopIndex + 1}
+                      </text>
+                    </g>
+                  ) : null}
                   {building.aesthetics ? (
-                    <circle cx={building.x + 8} cy={building.y - building.height - 2} r={4} fill="#fffdf8" stroke="#1a1614" aria-hidden="true" />
+                    <circle cx={building.x + 9} cy={building.y - building.height + 2} r={3.5} fill="#fffdf8" stroke="#1a1614" aria-hidden="true" />
                   ) : null}
                   <g
                     role="button"
@@ -405,6 +546,19 @@ export function CityMapView({ data }: { data: CityMapData }) {
                   >
                     <rect x={building.x - 16} y={building.y - building.height - 10} width={32} height={building.height + 16} fill="transparent" />
                   </g>
+                </g>
+              );
+            })}
+            {[snapshot.child, snapshot.adult].map((person) => {
+              if (!person.at) return null;
+              const place = byId.get(person.at);
+              if (!place) return null;
+              return (
+                <g key={person.name} aria-label={`${snapshot.notice} ${person.name}目前在${place.title}`}>
+                  <rect x={place.x - 18} y={place.y - place.height - 28} width={36} height={16} rx={8} fill="#1a1614" />
+                  <text x={place.x} y={place.y - place.height - 17} textAnchor="middle" fontSize={9} fill="#faf9f7">
+                    {person.name}
+                  </text>
                 </g>
               );
             })}
@@ -490,6 +644,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
           </div>
         )}
       </aside>
+      </div>
     </div>
   );
 }

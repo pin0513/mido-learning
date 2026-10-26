@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "eslint",
     "validate:content": "tsx scripts/validate-knowledge-points.ts",
-    "test:unit": "tsx --test lib/content/city.test.ts"
+    "test:unit": "tsx --test lib/content/city.test.ts components/kp/city/progress.test.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
