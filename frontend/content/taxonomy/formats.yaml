@@ -28,4 +28,4 @@ formats:
     name: 遊戲
     value: text
     required_on_knowledge_point: false
-    note: 對應現站 category「game」。要獨立成格式或併入練習仍待決定；P1 只預留，沒有知識點填值。
+    note: 已決定獨立成 game format，不併入 exercise（D04）。P2 不實作遊戲播放，沒有知識點填值。
