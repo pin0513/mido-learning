@@ -1,112 +1,92 @@
 import { test, expect } from "@playwright/test";
 
 /**
- * HP-09、HP-11。只在 KP_HOME_ENABLED=true 的行程跑（E2E_CITY_HOME=1）。
- * 旗標關閉的首頁由既有 homepage-groups.spec.ts 覆蓋，這支檔案會整組跳過。
+ * 學門總圖。只在 KP_HOME_ENABLED=true 的行程跑（E2E_CITY_HOME=1）。
+ * 旗標關閉的首頁由 kp-flags-off.spec.ts 覆蓋，這支檔案會整組跳過。
  */
-test.describe("學習城市首頁", () => {
+const DRAFT_TITLES = [
+  "部分與整體",
+  "規律與關係",
+  "用字母代表數：方程式",
+  "認知偏誤與思考盲點",
+  "統計推論：抽樣與信賴",
+  "從平均變化率到瞬間變化率",
+];
+
+test.describe("學門總圖", () => {
   test.beforeEach(() => {
     test.skip(!process.env.E2E_CITY_HOME, "KP_HOME_ENABLED 沒開");
   });
 
-  test("預設是分層分段總圖，點頁籤才換到地圖和清單", async ({ page }) => {
+  test("切換學門會換圖，總圖不是表格", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("全家一起看的知識地圖");
-    await expect(page.getByTestId("city-layers")).toBeVisible();
-    await expect(page.getByTestId("city-map")).toBeHidden();
-    await expect(page.getByRole("group", { name: "切換檢視" }).getByRole("button")).toHaveText([
-      "分層分段總圖",
-      "知識地圖",
-      "清單",
-    ]);
-    await expect(page.getByTestId("city-progress-notice")).toContainText("範例資料");
-    await expect(page.getByTestId("section-knowledge")).toBeVisible();
-    await expect(page.getByTestId("section-kid")).toBeVisible();
-    await expect(page.getByTestId("section-game")).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("先選學門，再從上往下看");
+    const diagram = page.getByTestId("home-diagram");
+    await expect(diagram.locator("table")).toHaveCount(0);
+    await expect(diagram.getByRole("link", { name: /大事拆成小事/ })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /如果預算砍一半/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: "數學，準備中" })).toBeVisible();
 
-    await page.getByTestId("city-layers").getByRole("button", { name: /大事拆成小事/ }).first().click();
-    const card = page.getByTestId("city-card");
-    await expect(card).toContainText("大事拆成小事");
-    await expect(card).toContainText("國小");
-    await expect(card).toContainText("本質層");
-    await expect(card.getByRole("heading", { name: "先備" })).toBeVisible();
-    await expect(card.getByRole("heading", { name: "被依賴" })).toBeVisible();
-    await expect(card.getByRole("link", { name: "讀這一站" })).toBeVisible();
-
-    await page.getByTestId("city-path").selectOption("pm.estimate");
-    await expect(page.getByTestId("city-layers").getByRole("button", { name: /大事拆成小事/ }).first()).toHaveAttribute("data-on-path", "1");
-
-    await page.getByRole("group", { name: "層級" }).getByRole("button", { name: "本質層" }).click();
-    await expect(page.getByTestId("city-filter")).toContainText("本質層");
-    await page.getByRole("group", { name: "領域與階段" }).getByRole("button", { name: /專案管理與領導/ }).click();
-    await expect(page.getByTestId("city-filter")).toContainText("專案管理與領導");
-
-    await page.getByTestId("city-view-map").click();
-    await expect(page).toHaveURL(/[?&]view=map(?:&|$)/);
-    await expect(page.getByTestId("city-map")).toBeVisible();
-    await page.getByTestId("city-view-list").click();
-    await expect(page).toHaveURL(/[?&]view=list(?:&|$)/);
-    await expect(page.getByTestId("city-list")).toBeVisible();
-    await page.getByTestId("city-view-system").click();
-    await expect(page).not.toHaveURL(/[?&]view=/);
-    await expect(page.getByTestId("city-layers")).toBeVisible();
+    await page.getByRole("link", { name: "數學，準備中" }).click();
+    await expect(page).toHaveURL(/[?&]d=math(?:&|$)/);
+    await expect(page.getByRole("heading", { name: "數學正在準備中" })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /大事拆成小事/ })).toHaveCount(0);
+    await expect(diagram.locator("table")).toHaveCount(0);
   });
 
-  test("深連結還能打開總圖、地圖、清單，階段篩選留著", async ({ page }) => {
-    await page.goto("/?view=system");
-    await expect(page.getByTestId("city-layers")).toBeVisible();
-    await page.goto("/?view=map");
-    await expect(page.getByTestId("city-map")).toBeVisible();
-    await page.goto("/?view=city");
-    await expect(page.getByTestId("city-map")).toBeVisible();
-    await page.goto("/?view=list");
-    await expect(page.getByTestId("city-list")).toBeVisible();
-    await page.goto("/?s=es");
-    await expect(page.getByTestId("city-layers")).toBeVisible();
-    await expect(page.getByTestId("city-filter")).toContainText("國小");
+  test("?d 深連結打開那個學門", async ({ page }) => {
+    await page.goto("/?d=philosophy");
+    await expect(page.getByRole("link", { name: "哲學與思考方法，準備中" })).toHaveAttribute("aria-current", "page");
+    await expect(page.getByRole("heading", { name: "哲學與思考方法正在準備中" })).toBeVisible();
+    await expect(page.getByTestId("home-diagram").locator("table")).toHaveCount(0);
+
     await page.goto("/?d=pm-leadership");
-    await expect(page.getByTestId("city-filter")).toContainText("專案管理與領導");
-    await page.goto("/?d=pm-leadership&s=sh");
-    await expect(page.getByTestId("city-filter")).toContainText("高中");
-    await page.goto("/?d=pm-leadership&s=sh&kp=pm.estimate@sh");
-    await expect(page.getByTestId("city-card")).toContainText("WBS 與三點估算");
-    await page.getByTestId("city-card").getByRole("link", { name: "讀這一站" }).click();
-    await expect(page).toHaveURL(/\/kp\/pm\.estimate\/sh/);
+    await expect(page.getByRole("link", { name: "專案管理與領導" })).toHaveAttribute("aria-current", "page");
+    await expect(page.getByTestId("home-diagram").getByRole("link", { name: /WBS 與三點估算/ })).toBeVisible();
   });
 
-  test("英雄的連結點了就切換，不用整頁重載", async ({ page }) => {
-    await page.goto("/");
-    await expect(page.getByTestId("city-layers")).toBeVisible();
-
-    await page.getByRole("link", { name: "看分層分段總圖" }).click();
-    await expect(page).toHaveURL(/[?&]view=system(?:&|$)/);
-    await expect(page.getByTestId("city-layers")).toBeVisible();
-
-    await page.getByRole("link", { name: "帶孩子從國小階段看起" }).click();
-    await expect(page).toHaveURL(/[?&]view=map(?:&|$)/);
-    await expect(page).toHaveURL(/[?&]s=es(?:&|$)/);
-    await expect(page.getByTestId("city-filter")).toContainText("國小");
-    await expect(page.getByTestId("city-map")).toBeVisible();
-
-    await page.getByRole("link", { name: "看清單", exact: true }).click();
-    await expect(page).toHaveURL(/[?&]view=list(?:&|$)/);
-    await expect(page.getByTestId("city-list")).toBeVisible();
+  test("點圓點會打開說明，文字用原文", async ({ page }) => {
+    await page.goto("/?d=pm-leadership");
+    await page.getByTestId("home-diagram").getByRole("link", { name: /WBS 與三點估算/ }).click();
+    await expect(page).toHaveURL(/[?&]kp=pm\.estimate(?:%40|@)sh/);
+    const detail = page.locator("[data-testid='node-detail']:visible");
+    await expect(detail.getByRole("heading", { name: "WBS 與三點估算" })).toBeVisible();
+    await expect(detail).toContainText("高中");
+    await expect(detail).toContainText("PERT");
+    await expect(detail).toContainText("先學");
+    await expect(detail).toContainText("大事拆成小事");
+    await expect(detail).toContainText("接下來");
+    await expect(detail).toContainText("實獲值管理（EVM）");
+    await expect(detail.getByRole("link", { name: "開始學" })).toHaveAttribute("href", "/kp/pm.estimate/sh");
+    for (const title of DRAFT_TITLES) {
+      await expect(detail).not.toContainText(title);
+    }
   });
 
-  test("手機寬度從總圖打開知識點，換到地圖仍走學區卡", async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 720 });
-    await page.goto("/");
+  test("目前任務不出現草稿標題", async ({ page }) => {
+    await page.goto("/?view=task");
+    const task = page.getByTestId("task-view");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("目前任務：拆解與估算");
+    await expect(task).toContainText("數學 · 準備中");
+    await expect(task).toContainText("哲學 · 準備中");
+    await expect(task).toContainText("大事拆成小事");
+    await expect(task.locator("table")).toHaveCount(0);
+    for (const title of DRAFT_TITLES) {
+      await expect(task).not.toContainText(title);
+      await expect(page.locator("body")).not.toContainText(title);
+    }
+  });
+
+  test("手機點圓點，說明在圖裡面展開", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/?d=pm-leadership");
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
-    await expect(page.getByTestId("city-layers")).toBeVisible();
-    await page.getByTestId("city-layers").getByRole("button", { name: /大事拆成小事/ }).first().click();
-    await page.getByTestId("city-card").getByRole("link", { name: "讀這一站" }).click();
-    await expect(page).toHaveURL(/\/kp\/pm\.breakdown\/es/);
-
-    await page.goto("/");
-    await page.getByTestId("city-view-map").click();
-    await page.getByTestId("city-mobile").getByRole("button", { name: /專案管理與領導/ }).click();
-    await page.getByTestId("city-mobile").getByRole("button", { name: /大事拆成小事/ }).click();
-    await expect(page.getByTestId("city-card")).toContainText("大事拆成小事");
+    await page.getByTestId("home-diagram").getByRole("link", { name: /大事拆成小事/ }).click();
+    const detail = page.locator("[data-testid='node-detail']:visible");
+    await expect(detail).toContainText("一件大事看起來很難");
+    await expect(detail).toContainText("想一想：一件事要拆到多小，才知道明天就能開始做？");
+    const inside = await detail.evaluate((node) => Boolean(node.closest("[data-testid='home-diagram']")));
+    expect(inside).toBe(true);
   });
 });

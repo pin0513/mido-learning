@@ -49,8 +49,9 @@ test.describe("正式 build", () => {
     }
   });
 
-  test("地圖與城市首頁的 HTML、RSC 沒有草稿 slug", async ({ request }) => {
+  test("地圖與首頁的 HTML、RSC 沒有草稿 slug", async ({ request }) => {
     const slugs = ["pm.goal", "ph.parts", "ma.pattern", "ma.measure", "pm.schedule", "ma.rate"];
+    const draftTitles = ["部分與整體", "規律與關係", "從平均變化率到瞬間變化率"];
     for (const path of ["/kp/map", "/city-home", "/"]) {
       const page = await request.get(path);
       expect(page.status(), path).toBe(200);
@@ -61,7 +62,16 @@ test.describe("正式 build", () => {
         expect(html, `${path} ${slug}`).not.toContain(slug);
         expect(flight, `${path} rsc ${slug}`).not.toContain(slug);
       }
-      expect(html, path).toContain("draft-");
+      for (const title of draftTitles) {
+        expect(html, `${path} ${title}`).not.toContain(title);
+        expect(flight, `${path} rsc ${title}`).not.toContain(title);
+      }
     }
+    const map = await request.get("/kp/map");
+    expect(await map.text()).toContain("draft-");
+    const home = await request.get("/city-home");
+    const homeHtml = await home.text();
+    expect(homeHtml).toContain("先選學門，再從上往下看");
+    expect(homeHtml).not.toContain("draft-");
   });
 });
