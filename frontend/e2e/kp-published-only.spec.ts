@@ -49,19 +49,30 @@ test.describe("正式 build", () => {
     }
   });
 
-  test("地圖與城市首頁的 HTML、RSC 沒有草稿 slug", async ({ request }) => {
+  test("地圖不放草稿標題，首頁畫出公開學門", async ({ request }) => {
     const slugs = ["pm.goal", "ph.parts", "ma.pattern", "ma.measure", "pm.schedule", "ma.rate"];
-    for (const path of ["/kp/map", "/city-home", "/"]) {
+    const map = await request.get("/kp/map");
+    expect(map.status()).toBe(200);
+    const mapHtml = await map.text();
+    const mapRsc = await request.get("/kp/map", { headers: { RSC: "1", Accept: "text/x-component" } });
+    const mapFlight = mapRsc.status() === 200 ? await mapRsc.text() : "";
+    for (const slug of slugs) {
+      expect(mapHtml, slug).not.toContain(slug);
+      expect(mapFlight, slug).not.toContain(slug);
+    }
+    expect(mapHtml).toContain("draft-");
+    expect(mapHtml).not.toContain("部分與整體");
+
+    for (const path of ["/city-home", "/"]) {
       const page = await request.get(path);
       expect(page.status(), path).toBe(200);
       const html = await page.text();
-      const rsc = await request.get(path, { headers: { RSC: "1", Accept: "text/x-component" } });
-      const flight = rsc.status() === 200 ? await rsc.text() : "";
-      for (const slug of slugs) {
-        expect(html, `${path} ${slug}`).not.toContain(slug);
-        expect(flight, `${path} rsc ${slug}`).not.toContain(slug);
-      }
-      expect(html, path).toContain("draft-");
+      expect(html, path).toContain("先選學門，再從上往下看");
+      expect(html, path).toContain("規律與關係");
+      expect(html, path).toContain("ma.pattern");
+      expect(html, path).not.toContain("目標：我們想完成什麼");
+      expect(html, path).not.toContain("draft-");
+      expect(html, path).not.toContain("城市");
     }
   });
 });
