@@ -277,6 +277,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
           <label>
             孩子怎麼稱呼
             <input className="ml-2 min-h-11 border border-[#1a1614] px-2" value={stored.childName} onChange={(event) => updateStored({ ...stored, childName: event.target.value })} />
+            <span className="mt-1 block text-xs text-[#3d3830]">建議用暱稱，不要填真實姓名</span>
           </label>
           {selected ? (
             <>
@@ -549,12 +550,12 @@ export function CityMapView({ data }: { data: CityMapData }) {
                 </g>
               );
             })}
-            {[snapshot.child, snapshot.adult].map((person) => {
+            {([["child", snapshot.child], ["adult", snapshot.adult]] as const).map(([role, person]) => {
               if (!person.at) return null;
               const place = byId.get(person.at);
               if (!place) return null;
               return (
-                <g key={person.name} aria-label={`${snapshot.notice} ${person.name}目前在${place.title}`}>
+                <g key={role} role="img" aria-label={`${snapshot.notice} ${person.name}目前在${place.title}`}>
                   <rect x={place.x - 18} y={place.y - place.height - 28} width={36} height={16} rx={8} fill="#1a1614" />
                   <text x={place.x} y={place.y - place.height - 17} textAnchor="middle" fontSize={9} fill="#faf9f7">
                     {person.name}

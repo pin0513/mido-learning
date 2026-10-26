@@ -80,11 +80,19 @@ export function readStoredProgress(): StoredProgress {
 }
 
 export function writeStoredProgress(value: StoredProgress): void {
-  window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(value));
+  try {
+    window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(value));
+  } catch {
+    // 無痕模式或空間滿了時，記號留在這一頁，不讓畫面炸掉。
+  }
 }
 
 export function clearStoredProgress(): void {
-  window.localStorage.removeItem(PROGRESS_STORAGE_KEY);
+  try {
+    window.localStorage.removeItem(PROGRESS_STORAGE_KEY);
+  } catch {
+    // 清不掉就維持現況。
+  }
 }
 
 export function toSnapshot(value: StoredProgress): ProgressSnapshot {
