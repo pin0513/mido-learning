@@ -61,6 +61,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
   const [hover, setHover] = useState<string | null>(null);
   const [viewBox, setViewBox] = useState(`0 0 ${data.size} ${data.size}`);
   const depth = useRef(0);
+  const mapRoot = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useRef<{ x: number; y: number; box: [number, number, number, number] } | null>(null);
 
@@ -123,6 +124,8 @@ export function CityMapView({ data }: { data: CityMapData }) {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
+      const target = event.target;
+      if (!(target instanceof Node) || !mapRoot.current?.contains(target)) return;
       const parent = parentLevel(level);
       if (parent.district === level.district && parent.stage === level.stage && parent.kp === level.kp) return;
       event.preventDefault();
@@ -137,6 +140,8 @@ export function CityMapView({ data }: { data: CityMapData }) {
     const svg = svgRef.current;
     if (!svg) return;
     const onWheel = (event: WheelEvent) => {
+      const zooming = event.ctrlKey || event.metaKey || svg.matches(":focus-within");
+      if (!zooming) return;
       event.preventDefault();
       const [x, y, w, h] = parseViewBox(viewBox);
       const scale = event.deltaY > 0 ? 1.08 : 0.92;
@@ -154,7 +159,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
   }, [data.size, viewBox]);
 
   const onPointerDown = (event: React.PointerEvent<SVGSVGElement>) => {
-    if ((event.target as Element).closest("button, a")) return;
+    if ((event.target as Element).closest("a, button, [role='button']")) return;
     const [x, y, w, h] = parseViewBox(viewBox);
     drag.current = { x: event.clientX, y: event.clientY, box: [x, y, w, h] };
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -183,8 +188,14 @@ export function CityMapView({ data }: { data: CityMapData }) {
 
   const lot = data.lots.find((item) => item.id === lotId);
 
+  const zoomed = Boolean(level.district || level.stage);
+  const outerRing = data.rings[data.rings.length - 1];
+  const zoomRing = (districtKey: string, stageId: string | null) => {
+    go({ district: districtKey, stage: stageId, kp: null }, "push");
+  };
+
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div ref={mapRoot} className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div>
         <nav aria-label="地圖層級" className="mb-3 flex flex-wrap items-center gap-2 text-sm">
           <button type="button" className="min-h-11 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]" onClick={() => go(EMPTY, "push")}>
@@ -213,6 +224,30 @@ export function CityMapView({ data }: { data: CityMapData }) {
             </>
           ) : null}
         </nav>
+        <div className="mb-3 flex flex-wrap gap-2" role="group" aria-label="學區與環路">
+          {data.districts.map((district) => (
+            <button
+              key={district.key}
+              type="button"
+              aria-pressed={level.district === district.key && !level.stage}
+              className="inline-flex min-h-11 items-center border border-[#1a1614] px-3 text-sm font-semibold hover:bg-[#1a1614] hover:text-[#faf9f7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
+              onClick={() => go({ district: district.key, stage: null, kp: null }, "push")}
+            >
+              {district.name}
+            </button>
+          ))}
+          {data.stages.map((stage) => (
+            <button
+              key={stage.id}
+              type="button"
+              aria-pressed={level.stage === stage.id}
+              className="inline-flex min-h-11 items-center border border-[#c0bab2] bg-white px-3 text-sm font-semibold hover:border-[#1a1614] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
+              onClick={() => go({ district: level.district, stage: stage.id, kp: null }, "push")}
+            >
+              {stage.name}環
+            </button>
+          ))}
+        </div>
         <div className="relative overflow-hidden border border-[#c0bab2] bg-[#faf9f7]" style={{ backgroundImage: "radial-gradient(#c0bab2 0.6px, transparent 0.6px)", backgroundSize: "18px 18px" }}>
           <svg
             ref={svgRef}
@@ -221,7 +256,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
             viewBox={viewBox}
             role="group"
             aria-label="學習城市地圖。四個學區，環路從國小到大學。建築是知識點。"
-            className="h-auto w-full touch-none"
+            className={`h-auto w-full ${zoomed ? "touch-none" : ""}`}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
@@ -242,10 +277,15 @@ export function CityMapView({ data }: { data: CityMapData }) {
                   fillOpacity={level.district === district.key && level.stage === data.stages[sIndex]?.id ? 0.22 : level.district === district.key ? 0.12 : 0.07}
                   stroke={district.color}
                   strokeWidth={0.8}
-                  className="cursor-pointer"
-                  onClick={() => {
-                    if (level.district !== district.key) go({ district: district.key, stage: null, kp: null }, "push");
-                    else go({ district: district.key, stage: data.stages[sIndex].id, kp: null }, "push");
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${district.name}，${data.stages[sIndex]?.name}環`}
+                  className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]"
+                  onClick={() => zoomRing(district.key, level.district === district.key ? data.stages[sIndex].id : null)}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    event.preventDefault();
+                    zoomRing(district.key, level.district === district.key ? data.stages[sIndex].id : null);
                   }}
                 >
                   <title>{`${district.name}・${data.stages[sIndex]?.name}環`}</title>
@@ -253,7 +293,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
               )),
             )}
             <path
-              d={annulus(data.cx, data.cy, data.plaza, data.rings[3][1], sectorStart(data.districts.length, data.sector) + 1, sectorStart(data.districts.length, data.sector) + data.sector - 1)}
+              d={annulus(data.cx, data.cy, data.plaza, outerRing[1], sectorStart(data.districts.length, data.sector) + 1, sectorStart(data.districts.length, data.sector) + data.sector - 1)}
               fill="#5c564e"
               fillOpacity={0.06}
               stroke="#5c564e"
@@ -295,7 +335,19 @@ export function CityMapView({ data }: { data: CityMapData }) {
             {data.lots
               .filter((item) => item.featured)
               .map((item) => (
-                <g key={item.id} className="cursor-pointer" onClick={() => setLotId(item.id)}>
+                <g
+                  key={item.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`預定地：${item.name}`}
+                  className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]"
+                  onClick={() => setLotId(item.id)}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    event.preventDefault();
+                    setLotId(item.id);
+                  }}
+                >
                   <rect x={item.x - 28} y={item.y - 10} width={56} height={20} rx={2} fill="#fffdf8" stroke="#5c564e" strokeDasharray="3 2" />
                   <text x={item.x} y={item.y + 4} textAnchor="middle" fontSize={9} fill="#3d3830">
                     {item.name.slice(0, 4)}
@@ -338,7 +390,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
                     data-testid="city-building"
                     data-building-id={building.id}
                     aria-label={`${building.title}，${building.stageName}，${building.districtName}${draft ? "，草稿" : ""}${building.aesthetics ? "，美學" : ""}`}
-                    className="cursor-pointer focus:outline-none"
+                    className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
                     onClick={() => openBuilding(building.id)}
                     onKeyDown={(event) => {
                       if (event.key === "Enter" || event.key === " ") {

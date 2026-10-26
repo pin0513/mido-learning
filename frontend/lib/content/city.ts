@@ -120,6 +120,12 @@ export function annulus(cx: number, cy: number, r0: number, r1: number, a0: numb
 }
 
 export function focusViewBox(data: Pick<CityMapData, "cx" | "cy" | "plaza" | "rings" | "sector">, districtIndex: number | null, stageIndex: number | null): string {
+  if (districtIndex === null && stageIndex === null) return `0 0 ${SIZE} ${SIZE}`;
+  if (districtIndex === null && stageIndex !== null) {
+    const radius = data.rings[stageIndex][1] + 36;
+    const side = radius * 2;
+    return `${(data.cx - radius).toFixed(1)} ${(data.cy - radius).toFixed(1)} ${side.toFixed(1)} ${side.toFixed(1)}`;
+  }
   if (districtIndex === null) return `0 0 ${SIZE} ${SIZE}`;
   const a0 = sectorStart(districtIndex, data.sector);
   const a1 = a0 + data.sector;
@@ -170,7 +176,7 @@ export function buildCityMap(model: ContentModel): CityMapData {
   const districts: CityDistrict[] = districtsSource.map((root, index) => {
     const folder = root.contentFolder ?? root.id;
     const path = model.paths.find((item) => item.disciplineFolder === folder);
-    const name = folder === "pm-leadership" ? "專案管理與領導" : (path?.disciplineTitle ?? root.name);
+    const name = path?.disciplineTitle ?? root.name;
     return {
       key: folder,
       name: name.endsWith("區") ? name : `${name}區`,
