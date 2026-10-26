@@ -16,6 +16,9 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-frontend-${{ github.ref }}
+      cancel-in-progress: false
 
     permissions:
       contents: read
