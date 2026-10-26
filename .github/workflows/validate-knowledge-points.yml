@@ -8,6 +8,7 @@ on:
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
       - ".github/workflows/validate-knowledge-points.yml"
+      - "frontend/components/layout/Header.tsx"
   push:
     branches: [main]
     paths:
@@ -16,6 +17,7 @@ on:
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
       - ".github/workflows/validate-knowledge-points.yml"
+      - "frontend/components/layout/Header.tsx"
 
 jobs:
   validate:
