@@ -91,6 +91,16 @@ NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
+### CLI (`packages/cli`)
+
+`mido auth login` 與 token refresh 會從 Node 呼叫 Firebase Identity Toolkit，需要 CLI 專用的 Firebase Web API Key。網站的 `NEXT_PUBLIC_FIREBASE_API_KEY` 有 HTTP referrer 限制，不能給 CLI 使用。
+
+```env
+MIDO_FIREBASE_API_KEY=
+```
+
+未設定環境變數時，也可把同一把金鑰放在 `~/.mido-cli/config.json` 的 `firebaseApiKey`。環境變數優先。說明見 [packages/cli/README.md](packages/cli/README.md)。
+
 ### GitHub Secrets (CI/CD 需要)
 
 - `GCP_SA_KEY`: GCP 服務帳號金鑰 (JSON)

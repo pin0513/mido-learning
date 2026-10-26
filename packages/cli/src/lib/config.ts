@@ -5,8 +5,11 @@ import { join } from 'path';
 const CONFIG_DIR = join(homedir(), '.mido-cli');
 const CONFIG_FILE = join(CONFIG_DIR, 'config.json');
 
-// Firebase Web API Key（公開值，用於 REST Auth API）
-const FIREBASE_API_KEY = 'AIzaSyC36zbChe174ZzwN9c_fgBKntq5JSUdF84';
+/**
+ * Node CLI 專用 Firebase Web API Key。
+ * 網站金鑰有 HTTP referrer 限制，不能給 CLI 使用，因此不內建預設值。
+ */
+export const FIREBASE_API_KEY_ENV = 'MIDO_FIREBASE_API_KEY';
 
 // 環境設定
 const ENVIRONMENTS = {
@@ -19,6 +22,8 @@ type Env = keyof typeof ENVIRONMENTS;
 export interface CliConfig {
   env: Env;
   apiUrl?: string;
+  /** 未設定環境變數時，可從本機設定檔提供 CLI 專用 Firebase API Key。 */
+  firebaseApiKey?: string;
   auth?: {
     email: string;
     idToken: string;
@@ -56,8 +61,33 @@ export function getApiUrl(config: CliConfig): string {
   return config.apiUrl ?? ENVIRONMENTS[config.env] ?? ENVIRONMENTS.prod;
 }
 
-export function getFirebaseApiKey(): string {
-  return FIREBASE_API_KEY;
+function nonEmpty(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function missingFirebaseApiKeyMessage(): string {
+  return [
+    '缺少 Firebase API Key。Node CLI 呼叫 Firebase Auth 時必須使用專用金鑰（網站金鑰有 HTTP referrer 限制，無法使用）。',
+    `請設定環境變數 ${FIREBASE_API_KEY_ENV}，例如：`,
+    `  export ${FIREBASE_API_KEY_ENV}=<your-firebase-api-key>`,
+    `或在 ${CONFIG_FILE} 加入 "firebaseApiKey": "<your-firebase-api-key>"。`,
+    '環境變數優先於設定檔。',
+  ].join('\n');
+}
+
+/**
+ * 解析 CLI 用的 Firebase Web API Key。
+ * 優先順序：MIDO_FIREBASE_API_KEY，其次是設定檔的 firebaseApiKey。
+ * 缺少時丟出設定說明，不會回傳或印出金鑰內容。
+ */
+export function getFirebaseApiKey(config?: CliConfig): string {
+  const fromEnv = nonEmpty(process.env[FIREBASE_API_KEY_ENV]);
+  if (fromEnv) return fromEnv;
+
+  const fromFile = nonEmpty((config ?? loadConfig()).firebaseApiKey);
+  if (fromFile) return fromFile;
+
+  throw new Error(missingFirebaseApiKeyMessage());
 }
 
 export function isTokenValid(config: CliConfig): boolean {
@@ -74,9 +104,11 @@ export async function getValidToken(config: CliConfig): Promise<{ token: string;
     return { token: config.auth.idToken, config };
   }
 
+  const apiKey = getFirebaseApiKey(config);
+
   // Token 過期，用 refresh token 換新的
   const res = await fetch(
-    `https://securetoken.googleapis.com/v1/token?key=${FIREBASE_API_KEY}`,
+    `https://securetoken.googleapis.com/v1/token?key=${encodeURIComponent(apiKey)}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -403,12 +403,13 @@ open https://learn.paulfun.net/components/<componentId>    # 前台頁面
 Claude Code 可透過 service account 自動取得 token，不需手動貼：
 
 ```python
+import os
 import firebase_admin
 from firebase_admin import credentials, auth
 import requests, json
 
 SA_FILE = "credentials/firebase-admin-key.json"
-API_KEY = "<from frontend/.env.local NEXT_PUBLIC_FIREBASE_API_KEY>"
+API_KEY = os.environ["MIDO_FIREBASE_API_KEY"]  # CLI 專用金鑰；勿使用有 HTTP referrer 限制的網站金鑰
 
 # 1. Mint custom token
 cred = credentials.Certificate(SA_FILE)
@@ -441,7 +442,8 @@ with open(os.path.expanduser("~/.mido-cli.json"), "w") as f:
 
 | 變數 | 說明 | 預設 |
 |------|------|------|
-| `MIDO_API_URL` | API base URL | `https://mido-learning-api-24mwb46hra-de.a.run.app` |
+| `MIDO_API_URL` | API base URL（`scripts/mido`） | `https://mido-learning-api-24mwb46hra-de.a.run.app` |
+| `MIDO_FIREBASE_API_KEY` | Node CLI（`packages/cli`）登入與 token refresh 用的 Firebase Web API Key。須為 CLI 專用金鑰，不可使用有 HTTP referrer 限制的網站金鑰。也可寫入 `~/.mido-cli/config.json` 的 `firebaseApiKey`（環境變數優先） | 無（登入與 refresh 時必填） |
 
 ### Token 儲存
 
