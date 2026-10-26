@@ -1,0 +1,57 @@
+id: pm.cpm@sh
+concept: pm.cpm
+title: 要徑：決定專案長度的那條路
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 綜合活動
+    - 數學
+    - 科技
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.gantt@jh
+  - pm.estimate@sh
+links:
+  why: []
+  how: []
+  related:
+    - it.ds@sh
+  deeper:
+    - pm.schedule@uni
+link_notes: 數學（圖與路徑的概念）、資訊（演算法）、土木與建築（施工排程）
+competency:
+  specialist:
+    - 排程
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 用程式計算要徑、模擬延誤的影響
+  human_experience:
+    - 理解為何要徑上的人最需要支援，並實際協調
+idea: 任務依賴形成網路，最長的那條路決定最快完工時間；要徑上的任務一延誤，整個專案就延誤。
+guiding_questions:
+  - 如果多一個人手，放在哪個任務上最有用？
+scenario: 為校慶舞台搭建畫網路圖，手算要徑，討論哪些工作能平行進行。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

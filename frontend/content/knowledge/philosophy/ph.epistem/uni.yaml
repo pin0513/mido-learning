@@ -1,0 +1,46 @@
+id: ph.epistem@uni
+concept: ph.epistem
+title: 知識論與不確定性
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 知識論
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.tok@sh
+links:
+  why: []
+  how:
+    - pm.complexity@uni
+  related:
+    - ma.probmodel@uni
+  deeper: []
+link_notes: 數學（機率與統計）、專案管理（複雜性與不確定性）
+competency:
+  specialist:
+    - 知識論
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 整理證據、試算機率
+  human_experience:
+    - 願意承認自己可能錯，並說出改變的理由
+idea: 很多信念不是全有或全無，而是有程度的。看到新證據時，合理地調整信心。
+guiding_questions:
+  - 什麼樣的證據會讓你改變最堅持的看法？
+scenario: 選一個你的判斷，寫下目前的信心程度，蒐集新證據後說明你調整了多少、為什麼。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

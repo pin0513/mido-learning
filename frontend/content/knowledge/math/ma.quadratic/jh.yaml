@@ -1,0 +1,54 @@
+id: ma.quadratic@jh
+concept: ma.quadratic
+title: 二次函數與拋物線
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 代數與函數
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 數學
+    - 自然科學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+  - 畢氏定理、二次函數、機率、速率等單元的年級落點本檔只寫到階段，未標年級。
+prerequisites:
+  - ma.coord@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ma.function@sh
+link_notes: 自然科學（運動）、體育（投籃）
+competency:
+  specialist:
+    - 函數
+  generalist:
+    - 建模
+    - 跨域思考
+ai:
+  delegable:
+    - 從資料點擬合出曲線
+  human_experience:
+    - 親自投籃、拍攝、描點
+idea: 有些變化不是直線，而是先升後降的曲線，例如丟出去的球。這條曲線叫拋物線。
+guiding_questions:
+  - 為什麼球不會沿著直線飛？
+scenario: 拍下投籃的影片，在坐標紙上描出球的軌跡，找出最高點。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,53 @@
+id: ph.fallacy@jh
+concept: ph.fallacy
+title: 常見的推理謬誤
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 批判思考
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 語文
+    - 社會
+  core_competencies:
+    - A2
+    - B2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.argument@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.bias@sh
+link_notes: 語文、社會（公民）、心理學（說服）
+competency:
+  specialist:
+    - 批判思考
+  generalist:
+    - 查證
+    - 跨域思考
+ai:
+  delegable:
+    - 舉例並解釋各種謬誤
+  human_experience:
+    - 在自己跟人爭論時，發現自己也犯了謬誤
+idea: 有些說法聽起來有道理，其實推理有問題，例如稻草人、以偏概全、人身攻擊、滑坡謬誤。
+guiding_questions:
+  - 你最常在哪裡看到以偏概全？
+scenario: 製作「謬誤收集卡」：從網路留言和廣告中各找一個例子，寫下它錯在哪裡。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

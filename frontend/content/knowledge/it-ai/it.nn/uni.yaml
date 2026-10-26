@@ -1,0 +1,47 @@
+id: it.nn@uni
+concept: it.nn
+title: 神經網路與深度學習
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - 機器學習
+  layer: advanced
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.ml@sh
+  - it.ds@sh
+links:
+  why: []
+  how: []
+  related:
+    - ma.derivative@uni
+    - ma.linalg@uni
+  deeper: []
+link_notes: 數學（導數與最佳化、線性代數與資料）
+competency:
+  specialist:
+    - 機器學習
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 提供框架、加速訓練
+  human_experience:
+    - 理解數學原理、診斷訓練失敗
+idea: 神經網路由許多簡單單元層層組成，用梯度下降調整權重；資料、模型與運算資源共同決定能力。
+guiding_questions:
+  - 模型「學會」了，我們能知道它是怎麼想的嗎？
+scenario: 從零寫一個小型神經網路辨識手寫數字，觀察學習率太大或太小時會怎樣。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

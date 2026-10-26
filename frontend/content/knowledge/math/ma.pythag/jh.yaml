@@ -1,0 +1,54 @@
+id: ma.pythag@jh
+concept: ma.pythag
+title: 畢氏定理與證明初體驗
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 幾何與空間
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+  - 畢氏定理、二次函數、機率、速率等單元的年級落點本檔只寫到階段，未標年級。
+prerequisites:
+  - ma.shape@es
+links:
+  why:
+    - ph.argument@jh
+  how: []
+  related: []
+  deeper:
+    - ma.vector@sh
+    - ma.proof@sh
+link_notes: 哲學（論證的結構）、土木與建築（定直角）
+competency:
+  specialist:
+    - 幾何
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 展示多種證明方法
+  human_experience:
+    - 自己動手拼出證明，體會「一定成立」的感覺
+idea: 直角三角形兩股的平方和等於斜邊的平方。更重要的是：我們可以「證明」它永遠成立。
+guiding_questions:
+  - 量了 100 個三角形都成立，和證明它成立，有什麼不同？
+scenario: 用剪紙拼圖證明畢氏定理；再用 3、4、5 的繩結在操場拉出直角。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

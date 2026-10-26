@@ -1,0 +1,53 @@
+id: ph.question@es
+concept: ph.question
+title: 好問題從「為什麼」開始
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 提問與探究
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 語文
+    - 綜合活動
+  core_competencies:
+    - A2
+    - B1
+    - C1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.hypothesis@jh
+link_notes: 語文（閱讀與聆聽）、自然科學（好奇心）
+competency:
+  specialist:
+    - 探究
+  generalist:
+    - 提問
+    - 溝通
+ai:
+  delegable:
+    - 回答「查得到」的問題
+  human_experience:
+    - 在探究圈裡說出自己的問題，聽別人怎麼想
+idea: 問題有兩種：一種查得到答案，一種需要大家一起想。會問第二種問題，就是思考的開始。
+guiding_questions:
+  - 哪一個問題，就算問了大人也沒有標準答案？
+scenario: 讀完一本繪本後，全班圍成探究圈提問，把問題分成「查得到」和「要討論」兩堆，挑一題來討論。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,57 @@
+# 主線是知識點 id 的有序清單。知識點的 links.deeper 由下一階的 id 產生。
+id: math
+title: 數學
+paths:
+  - id: ma.algebra
+    title: 數感→代數→函數→微積分
+    knowledge_points:
+      - ma.pattern@es
+      - ma.algebra@jh
+      - ma.function@sh
+      - ma.derivative@uni
+  - id: ma.geometry
+    title: 幾何與空間
+    knowledge_points:
+      - ma.shape@es
+      - ma.pythag@jh
+      - ma.vector@sh
+      - ma.linalg@uni
+  - id: ma.change
+    title: 變化與變化率
+    knowledge_points:
+      - ma.measure@es
+      - ma.coord@jh
+      - ma.rate@sh
+      - ma.integral@uni
+    colearn: 孩子讀「測量與單位」，大人讀「從平均變化率到瞬間變化率」，一起騎一段路記錄時間並畫成坐標圖。
+  - id: ma.data
+    title: 資料、機率與統計
+    knowledge_points:
+      - ma.data@es
+      - ma.prob@jh
+      - ma.stats@sh
+      - ma.probmodel@uni
+    colearn: 孩子讀「整理資料與統計圖」，大人讀「統計推論：抽樣與信賴」，一起看一則新聞民調並討論它問了誰。
+  - id: ma.proof
+    title: 證明與推理
+    knowledge_points:
+      - ma.pattern@es
+      - ma.pythag@jh
+      - ma.proof@sh
+      - ma.limit@uni
+  - id: ma.model
+    title: 數學建模
+    knowledge_points:
+      - ma.number@es
+      - ma.quadratic@jh
+      - ma.function@sh
+      - ma.diffeq@uni
+    colearn: 孩子讀「數感：大概有多少？」，大人讀「微分方程與數學建模」，一起記錄一杯熱水的冷卻。
+  - id: ma.beauty
+    title: 數學與美
+    knowledge_points:
+      - ma.shape@es
+      - ma.similar@jh
+      - ma.trig@sh
+      - ma.beauty@uni
+    colearn: 孩子讀「形狀與空間」，大人讀「對稱與結構：數學之美」，一起找窗花或磁磚的對稱。

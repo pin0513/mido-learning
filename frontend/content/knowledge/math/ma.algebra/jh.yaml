@@ -1,0 +1,52 @@
+id: ma.algebra@jh
+concept: ma.algebra
+title: 用字母代表數：方程式
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 代數與函數
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.pattern@es
+links:
+  why: []
+  how:
+    - pm.triangle@jh
+  related: []
+  deeper:
+    - ma.function@sh
+link_notes: 專案管理（時間、金錢、品質的取捨）、經濟（成本）
+competency:
+  specialist:
+    - 代數
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 逐步檢查解題過程
+  human_experience:
+    - 自己把生活問題翻譯成方程式
+idea: 用 x 代表還不知道的數，把題目翻譯成方程式，再一步步解開。代數是把思考寫下來的語言。
+guiding_questions:
+  - 為什麼方程式兩邊同時做一樣的事，等號還會成立？
+scenario: 園遊會攤位：成本固定加每份材料費，算出要賣幾份才不會賠錢。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

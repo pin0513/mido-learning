@@ -1,0 +1,46 @@
+id: ph.complex@uni
+concept: ph.complex
+title: 複雜性思維與模型的限度
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 系統思考
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.systems@sh
+links:
+  why: []
+  how:
+    - pm.complexity@uni
+  related:
+    - ma.diffeq@uni
+  deeper: []
+link_notes: 數學（變化率與微積分概念）、資訊（模擬）、專案管理（複雜性與不確定性）
+competency:
+  specialist:
+    - 系統思考
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 撰寫與執行模擬程式
+  human_experience:
+    - 判斷模型和真實世界的落差
+idea: 簡單的規則也會湧現出複雜的整體行為；模型能幫助理解，但每個模型都有假設與盲區。
+guiding_questions:
+  - 所有模型都是錯的，那為什麼還要用模型？
+scenario: 用簡單模擬（例如交通壅塞或疾病傳播）觀察湧現現象，討論模型漏掉了什麼。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

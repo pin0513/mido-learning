@@ -1,0 +1,52 @@
+id: ph.feedback@jh
+concept: ph.feedback
+title: 因果鏈與回饋迴圈
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 系統思考
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 自然科學
+    - 綜合活動
+  core_competencies:
+    - A2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.parts@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.systems@sh
+link_notes: 心理學（習慣）、自然科學（生態平衡）
+competency:
+  specialist:
+    - 系統思考
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 協助整理因果關係
+  human_experience:
+    - 實際試著改變自己的一個習慣
+idea: 事情的原因常常不只一個，而且結果會回過頭影響原因，形成越來越強或越來越弱的循環。
+guiding_questions:
+  - 哪個循環讓你越來越好？哪個讓你越來越糟？
+scenario: 畫出自己「手機越用越晚睡」的因果迴圈圖，找一個可以打斷循環的地方。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

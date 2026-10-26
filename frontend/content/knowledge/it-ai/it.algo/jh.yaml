@@ -1,0 +1,55 @@
+id: it.algo@jh
+concept: it.algo
+title: 演算法與效率：排序與搜尋
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 運算思維
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 科技
+    - 數學
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.steps@es
+  - it.pattern@es
+links:
+  why: []
+  how: []
+  related:
+    - ma.function@sh
+  deeper:
+    - it.ds@sh
+link_notes: 數學（對數的直覺）
+competency:
+  specialist:
+    - 演算法
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 動畫展示各種排序過程
+  human_experience:
+    - 親手排、數比較次數，感受效率差別
+idea: 同一個問題有不同解法，有的快、有的慢。資料越多，好的演算法差距越明顯。
+guiding_questions:
+  - 猜 1 到 100 萬的數字，最多要猜幾次？
+scenario: 撲克牌排序比賽：比較不同排法要比較幾次；玩猜數字（1～100），用「每次砍一半」最快幾次猜中。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

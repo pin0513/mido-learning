@@ -1,0 +1,56 @@
+id: pm.lead@jh
+concept: pm.lead
+title: 領導是行為，不是職位
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 領導
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues:
+    - 生涯規劃教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.team@jh
+links:
+  why:
+    - ph.ethics@jh
+  how: []
+  related: []
+  deeper:
+    - pm.style@sh
+link_notes: 綜合活動（童軍）、哲學（倫理與榜樣）
+competency:
+  specialist:
+    - 領導
+  generalist:
+    - 領導
+    - 溝通
+    - 團隊合作
+ai:
+  delegable:
+    - 提供領導行為清單作為觀察表
+  human_experience:
+    - 在團隊中實際踏出第一步
+idea: 不當組長也能領導：主動、示範、幫助別人，讓大家朝同一個方向前進。
+guiding_questions:
+  - 你最近一次「沒有頭銜卻在帶領別人」是什麼時候？
+scenario: 觀察一次小組合作，記錄誰做了哪些「領導行為」（不只是組長）。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

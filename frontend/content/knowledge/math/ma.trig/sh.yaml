@@ -1,0 +1,53 @@
+id: ma.trig@sh
+concept: ma.trig
+title: 三角函數與週期
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 幾何與空間
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 數學
+    - 自然科學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.similar@jh
+  - ma.pythag@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ma.beauty@uni
+link_notes: 物理（波動）、藝術（音樂與音高）
+competency:
+  specialist:
+    - 函數
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 畫出各種波形、做聲音分析
+  human_experience:
+    - 把抽象的波形和真實的週期現象連起來
+idea: 三角函數從直角三角形的比例出發，延伸成描述「重複變化」的工具：摩天輪、潮汐、聲波。
+guiding_questions:
+  - 為什麼一天的氣溫變化看起來像波浪？
+scenario: 記錄摩天輪車廂高度隨時間的變化，畫出波形；用手機 App 看自己聲音的波形。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

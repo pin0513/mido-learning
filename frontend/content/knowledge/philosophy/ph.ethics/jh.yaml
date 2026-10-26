@@ -1,0 +1,55 @@
+id: ph.ethics@jh
+concept: ph.ethics
+title: 兩難與價值衝突
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 倫理
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 綜合活動
+    - 社會
+  core_competencies:
+    - A2
+    - C1
+  issues:
+    - 品德教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.fair@es
+  - ph.reason@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.ethicstheory@sh
+link_notes: 綜合活動（輔導）、社會（公民）
+competency:
+  specialist:
+    - 倫理推理
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 列出不同選擇可能的後果
+  human_experience:
+    - 面對真實的人際兩難，承擔自己的選擇
+idea: 有時候兩個都重要的價值會互相衝突，例如誠實和友情。思考兩難，是在練習做選擇並說明理由。
+guiding_questions:
+  - 你的選擇，換成別人做，你也覺得可以嗎？
+scenario: 道德兩難討論：好朋友考試作弊被你看到，你會怎麼做？分組提出不同選擇和理由。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,54 @@
+id: ph.logic@sh
+concept: ph.logic
+title: 演繹、歸納與溯因
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 邏輯與論證
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 數學
+    - 語文
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.argument@jh
+links:
+  why: []
+  how: []
+  related:
+    - ma.proof@sh
+  deeper:
+    - ph.formal@uni
+link_notes: 數學（證明、命題）、自然科學
+competency:
+  specialist:
+    - 論證
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 產生更多案例讓你練習分類
+  human_experience:
+    - 在自己的報告裡清楚使用並標示推理方式
+idea: 演繹從普遍推到個別，前提真結論必真；歸納從例子推到通則；溯因是找出最好的解釋。三種推理各有用處與風險。
+guiding_questions:
+  - 為什麼看過一萬隻白天鵝，還是不能保證天鵝都是白的？
+scenario: 用偵探小說片段和醫師診斷案例，分辨每一步用的是哪種推理。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

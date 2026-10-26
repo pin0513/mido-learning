@@ -1,0 +1,55 @@
+id: ph.fair@es
+concept: ph.fair
+title: 怎樣才公平？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 倫理
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - C1
+    - A2
+  issues:
+    - 品德教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.reason@es
+links:
+  why: []
+  how:
+    - pm.roles@es
+  related:
+    - ma.fraction@es
+  deeper:
+    - ph.ethics@jh
+link_notes: 數學（分數與平分）、專案管理（分工與說到做到）
+competency:
+  specialist:
+    - 倫理推理
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 整理每種分法的優缺點
+  human_experience:
+    - 站在別人的位置感受「不公平」
+idea: 每個人分一樣多是一種公平；照需要分、照付出分也是。公平不只有一種答案。
+guiding_questions:
+  - 如果你是最餓的那個人，你會選哪一種分法？
+scenario: 分點心情境：有人特別餓、有人出力最多，全班討論三種分法並投票，再說說投票理由。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

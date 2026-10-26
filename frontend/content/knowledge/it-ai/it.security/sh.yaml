@@ -1,0 +1,54 @@
+id: it.security@sh
+concept: it.security
+title: 資訊安全與密碼學
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 軟體與系統
+  layer: advanced
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 科技
+  core_competencies:
+    - A2
+    - B2
+    - C1
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.network@jh
+links:
+  why:
+    - ph.ethicstheory@sh
+  how: []
+  related: []
+  deeper:
+    - it.swe@uni
+link_notes: 數學（數論與機率）、哲學（倫理）
+competency:
+  specialist:
+    - 資訊安全
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 產生釣魚信範例供練習辨識
+  human_experience:
+    - 建立自己的安全習慣、幫家人檢查帳號
+idea: 加密讓訊息只有對的人看得懂；強密碼、多因素驗證和辨識釣魚，是每個人的基本防線。
+guiding_questions:
+  - 為什麼網站不應該知道你的密碼原文？
+scenario: 從凱薩密碼開始加解密，再用「上鎖的箱子」比喻理解公開金鑰；分析一封釣魚信的破綻。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

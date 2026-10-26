@@ -1,0 +1,48 @@
+id: it.swe@uni
+concept: it.swe
+title: 軟體工程：版本控制、測試與架構
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 軟體與系統
+  layer: advanced
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.build@sh
+  - it.ds@sh
+links:
+  why: []
+  how: []
+  related:
+    - pm.schedule@uni
+    - pm.risk@jh
+    - pm.team@jh
+  deeper: []
+link_notes: 專案管理（排程、風險、團隊溝通）
+competency:
+  specialist:
+    - 軟體工程
+  generalist:
+    - 團隊合作
+    - 跨域思考
+ai:
+  delegable:
+    - 產生測試、審查程式碼建議
+  human_experience:
+    - 協調分工、做架構決策、維持品質
+idea: 真實的軟體是團隊長期維護的。版本控制、自動測試、清楚的架構，讓很多人能一起改而不出亂子。
+guiding_questions:
+  - 為什麼「我電腦上可以跑」不夠？
+scenario: 團隊用 Git 協作開發一個小網站（例如學習資源分享站），練習分支、審查與自動測試。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

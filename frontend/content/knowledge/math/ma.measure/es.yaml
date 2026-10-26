@@ -1,0 +1,53 @@
+id: ma.measure@es
+concept: ma.measure
+title: 測量與單位
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 數與量
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 數學
+    - 自然科學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+  - 畢氏定理、二次函數、機率、速率等單元的年級落點本檔只寫到階段，未標年級。
+prerequisites:
+  - ma.number@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ma.coord@jh
+link_notes: 自然科學（測量）、社會（度量衡的歷史）
+competency:
+  specialist:
+    - 測量
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 換算單位、檢查計算
+  human_experience:
+    - 親自測量、感受 1 公尺和 1 公斤有多大
+idea: 用腳步量教室，每個人量的不一樣，所以需要大家都同意的單位：公分、公尺、公斤、秒。
+guiding_questions:
+  - 如果全世界都用自己的腳當單位，會發生什麼事？
+scenario: 先用自己的腳步量教室長度，再用捲尺量，討論為什麼需要標準單位；接著量走路 20 公尺要幾秒。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -6,7 +6,8 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate:content": "tsx scripts/validate-knowledge-points.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
@@ -34,9 +35,12 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "adm-zip": "^0.5.16",
+    "ajv": "8.17.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "4.20.6",
+    "typescript": "^5",
+    "yaml": "2.8.1"
   }
 }

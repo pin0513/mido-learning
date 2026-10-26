@@ -1,0 +1,46 @@
+id: ph.formal@uni
+concept: ph.formal
+title: 形式邏輯與論證分析
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 邏輯與論證
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.logic@sh
+links:
+  why: []
+  how: []
+  related:
+    - ma.proof@sh
+    - it.prog@jh
+  deeper: []
+link_notes: 數學（離散數學）、資訊（程式邏輯）
+competency:
+  specialist:
+    - 論證
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 協助轉換符號、檢查推導
+  human_experience:
+    - 決定哪些前提值得接受
+idea: 用命題與述詞邏輯把論證形式化，區分「有效」（推理正確）與「健全」（推理正確且前提為真）。
+guiding_questions:
+  - 一個有效的論證，結論一定是真的嗎？
+scenario: 把一篇政策論述形式化，評估它是否有效、是否健全。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

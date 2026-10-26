@@ -1,0 +1,52 @@
+id: it.network@jh
+concept: it.network
+title: 網路如何運作
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 網路
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 科技
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.data@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - it.security@sh
+link_notes: 社會（全球連結）
+competency:
+  specialist:
+    - 網路
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 視覺化封包傳遞路徑
+  human_experience:
+    - 親身扮演路由，理解為什麼會延遲或遺失
+idea: 訊息被切成小封包，各自找路傳到目的地再組合起來；每台裝置都有自己的位址。
+guiding_questions:
+  - 你傳出去的訊息，真的只有對方看得到嗎？
+scenario: 傳紙條遊戲：把一句話拆成編號紙條，經不同同學傳遞，最後在終點重組，模擬封包與遺失重傳。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

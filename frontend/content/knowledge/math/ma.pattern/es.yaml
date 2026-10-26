@@ -1,0 +1,53 @@
+id: ma.pattern@es
+concept: ma.pattern
+title: 規律與關係
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 代數與函數
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.number@es
+links:
+  why:
+    - ph.reason@es
+  how: []
+  related: []
+  deeper:
+    - ma.algebra@jh
+    - ma.pythag@jh
+link_notes: 藝術（音樂節奏）、哲學（說出理由）
+competency:
+  specialist:
+    - 代數
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 產生規律謎題
+  human_experience:
+    - 自己發現規律、說出「為什麼是這樣」
+idea: 很多東西藏著規律：數字、圖形、節奏。找到規律，就能預測下一個；用 □ 代表不知道的數，就是代數的開始。
+guiding_questions:
+  - 你怎麼確定第 100 個也會照這個規律？
+scenario: 用積木排出 1、3、5、7……的圖形，預測第 10 個要幾塊；用拍手節奏做出規律讓同學猜。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

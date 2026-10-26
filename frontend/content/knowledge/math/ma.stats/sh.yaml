@@ -1,0 +1,54 @@
+id: ma.stats@sh
+concept: ma.stats
+title: 統計推論：抽樣與信賴
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 資料與機率
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 數學
+    - 社會
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.prob@jh
+links:
+  why:
+    - ph.philsci@uni
+  how: []
+  related: []
+  deeper:
+    - ma.probmodel@uni
+link_notes: 社會（民意調查）、哲學（研究設計與科學方法的限制）
+competency:
+  specialist:
+    - 機率統計
+  generalist:
+    - 用數據說明
+    - 跨域思考
+ai:
+  delegable:
+    - 計算統計量、模擬抽樣
+  human_experience:
+    - 設計問卷、親自訪問、判斷偏差
+idea: 沒辦法問所有人時，就靠抽樣推估整體。抽樣方式決定結果可信度；民調數字一定有誤差範圍。
+guiding_questions:
+  - 1,000 個人的民調，為什麼可以代表上千萬人？什麼時候不行？
+scenario: 設計一份全校調查，比較隨機抽樣與「只問朋友」的結果差異。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

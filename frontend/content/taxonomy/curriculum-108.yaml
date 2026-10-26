@@ -1,0 +1,96 @@
+# 108 課綱對照，只到領域、總綱核心素養（三面九項，A1–C3）、議題。
+# 不收學習表現或學習內容代碼。科目細節以教育部公告為準。
+# 核心素養代碼只允許下面九項；驗證器會拒絕任何其他代碼。
+
+domains:
+  - id: language
+    name: 語文
+    subjects: 國語文、本土語文／新住民語文、英語文等
+    maps_to: 本質層（符號與溝通）、通才素養
+    note: 溝通能力的主要來源。
+  - id: math
+    name: 數學
+    subjects: 數學
+    maps_to: 本質層
+    note: 微積分主線的課綱落點。高中分流上線前需再核對。
+  - id: science
+    name: 自然科學
+    subjects: 國小自然科學；國中、高中分為物理（國中稱理化）、化學、生物、地球科學
+    maps_to: 基礎科學到進階理論
+    note: 科學方法知識點可放本質層。
+  - id: social
+    name: 社會
+    subjects: 歷史、地理、公民與社會
+    maps_to: 基礎科學（社會）、經濟學入門
+    note: 連結倫理與公民意識。
+  - id: arts
+    name: 藝術
+    subjects: 音樂、視覺藝術、表演藝術
+    maps_to: 貫穿主題 aesthetics
+    note: 美感可掛在任何知識點的 crosscutting。
+  - id: integrative
+    name: 綜合活動
+    subjects: 國中為家政、童軍、輔導；高中為生命教育、生涯規劃、家政
+    maps_to: 通才素養、心理學
+    note: 專案管理與領導的主要落點。
+  - id: technology
+    name: 科技
+    subjects: 資訊科技、生活科技（國中起獨立設領域）
+    maps_to: 基礎科學（資訊）到資訊科學與 AI
+    note: 國小沒有獨立科技領域，資訊教育多以議題融入或彈性學習課程實施。
+  - id: health
+    name: 健康與體育
+    subjects: 健康教育、體育（高中為健康與護理、體育）
+    maps_to: 基礎科學（生物）、心理學
+    note: 安全、身心健康。
+
+core_competencies:
+  - code: A1
+    facet: 自主行動
+    name: 身心素質與自我精進
+  - code: A2
+    facet: 自主行動
+    name: 系統思考與解決問題
+  - code: A3
+    facet: 自主行動
+    name: 規劃執行與創新應變
+  - code: B1
+    facet: 溝通互動
+    name: 符號運用與溝通表達
+  - code: B2
+    facet: 溝通互動
+    name: 科技資訊與媒體素養
+  - code: B3
+    facet: 溝通互動
+    name: 藝術涵養與美感素養
+  - code: C1
+    facet: 社會參與
+    name: 道德實踐與公民意識
+  - code: C2
+    facet: 社會參與
+    name: 人際關係與團隊合作
+  - code: C3
+    facet: 社會參與
+    name: 多元文化與國際理解
+
+# 十二年國教議題融入的 19 個議題。知識點若寫「生涯規劃」，檔案裡用正式名稱「生涯規劃教育」。
+issues:
+  - 性別平等教育
+  - 人權教育
+  - 環境教育
+  - 海洋教育
+  - 品德教育
+  - 生命教育
+  - 法治教育
+  - 科技教育
+  - 資訊教育
+  - 能源教育
+  - 安全教育
+  - 防災教育
+  - 家庭教育
+  - 生涯規劃教育
+  - 多元文化教育
+  - 閱讀素養教育
+  - 戶外教育
+  - 國際教育
+  - 原住民族教育

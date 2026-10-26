@@ -1,0 +1,52 @@
+id: ma.sequence@sh
+concept: ma.sequence
+title: 數列、級數與無窮
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 代數與函數
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.pattern@es
+  - ma.fraction@es
+links:
+  why: []
+  how: []
+  related:
+    - ma.rate@sh
+  deeper: []
+link_notes: 哲學（悖論與無窮）、經濟（分期與年金）
+competency:
+  specialist:
+    - 代數
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 算出前 100 項的和
+  human_experience:
+    - 面對「無窮」的困惑，並嘗試說服別人
+idea: 一直加下去，總和可能無限大，也可能越來越接近一個數。1/2 + 1/4 + 1/8 + …… 會越來越接近 1。
+guiding_questions:
+  - 阿基里斯真的追不上烏龜嗎？哪裡想錯了？
+scenario: 把一張紙一直對半切，排成一列，討論「加無限多塊會不會超過一張紙」；認識芝諾悖論。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,52 @@
+id: ma.similar@jh
+concept: ma.similar
+title: 相似與比例
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 幾何與空間
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.fraction@es
+  - ma.shape@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ma.trig@sh
+link_notes: 自然科學（光與影）、藝術（透視與比例）、土木與建築（縮尺模型）
+competency:
+  specialist:
+    - 幾何
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 檢查比例計算
+  human_experience:
+    - 到戶外實際量測，處理誤差
+idea: 形狀相同、大小不同的圖形，對應邊成比例。利用比例，可以量出摸不到的高度。
+guiding_questions:
+  - 地圖上的 1 公分，為什麼可以代表真實的 1 公里？
+scenario: 用影子量旗桿：同一時間量自己和旗桿的影子長，算出旗桿高度。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,55 @@
+id: pm.breakdown@es
+concept: pm.breakdown
+title: 大事拆成小事
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.goal@es
+links:
+  why:
+    - ph.parts@es
+  how: []
+  related:
+    - ma.pattern@es
+  deeper:
+    - pm.triangle@jh
+link_notes: 數學（分類與整理）
+competency:
+  specialist:
+    - 規劃
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 幫忙想「還漏了哪些任務」
+  human_experience:
+    - 判斷哪些任務自己做得到、要花多少力氣
+idea: 一件大事看起來很難，拆成一張張小任務卡，就知道明天可以從哪裡開始。
+guiding_questions:
+  - 一件事要拆到多小，才知道明天就能開始做？
+scenario: 把同樂會拆成任務卡：場地布置、遊戲、點心、邀請老師……貼在白板上。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

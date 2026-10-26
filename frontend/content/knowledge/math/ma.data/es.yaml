@@ -1,0 +1,53 @@
+id: ma.data@es
+concept: ma.data
+title: 整理資料與統計圖
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 資料與機率
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.number@es
+links:
+  why: []
+  how:
+    - pm.goal@es
+  related: []
+  deeper:
+    - ma.prob@jh
+link_notes: 社會（調查）、專案管理（目標：同樂會）
+competency:
+  specialist:
+    - 機率統計
+  generalist:
+    - 用數據說明
+    - 跨域思考
+ai:
+  delegable:
+    - 自動畫出統計圖
+  human_experience:
+    - 設計調查問題、親自收集資料
+idea: 很多資料放在一起很亂，整理成表格和長條圖，就能一眼看出哪個最多、哪個最少。
+guiding_questions:
+  - 如果只問了 5 個人，結果能代表全班嗎？
+scenario: 班級調查「最喜歡的水果」，畫長條圖，決定同樂會要買什麼水果。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,46 @@
+id: ph.philsci@uni
+concept: ph.philsci
+title: 研究設計與科學方法的限制
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 提問與探究
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.science@sh
+  - ph.bias@sh
+links:
+  why: []
+  how: []
+  related:
+    - ma.stats@sh
+  deeper: []
+link_notes: 數學（統計）、心理學（研究方法）
+competency:
+  specialist:
+    - 科學探究
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 摘要研究內容、說明統計方法
+  human_experience:
+    - 判斷研究能不能支持新聞的說法
+idea: 相關不等於因果；樣本、對照、可重現性都會影響結論的可信度。
+guiding_questions:
+  - 冰淇淋賣得多時溺水的人也多，代表吃冰淇淋會溺水嗎？
+scenario: 評讀一則「研究發現」新聞，回到原始研究，指出設計限制與新聞誇大之處。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

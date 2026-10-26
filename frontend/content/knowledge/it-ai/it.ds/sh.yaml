@@ -1,0 +1,55 @@
+id: it.ds@sh
+concept: it.ds
+title: 資料結構與演算法分析
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 軟體與系統
+  layer: advanced
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 科技
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.algo@jh
+  - it.prog@jh
+links:
+  why: []
+  how:
+    - pm.cpm@sh
+  related:
+    - ma.proof@sh
+  deeper:
+    - it.nn@uni
+link_notes: 數學（證明與數學歸納法、圖）、專案管理（要徑）
+competency:
+  specialist:
+    - 演算法
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 產生測試資料、解釋演算法
+  human_experience:
+    - 自己設計資料結構，分析取捨
+idea: 選對資料的組織方式（陣列、樹、圖），問題會簡單很多；分析演算法隨資料量增加變慢多少。
+guiding_questions:
+  - 為什麼導航 App 能在一瞬間找到路線？
+scenario: 把捷運路網畫成圖，寫程式找兩站之間轉乘最少的路線。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

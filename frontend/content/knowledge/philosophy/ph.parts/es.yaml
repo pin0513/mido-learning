@@ -1,0 +1,52 @@
+id: ph.parts@es
+concept: ph.parts
+title: 部分與整體
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 系統思考
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 自然科學
+  core_competencies:
+    - A2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.question@es
+links:
+  why: []
+  how:
+    - pm.breakdown@es
+  related: []
+  deeper:
+    - ph.feedback@jh
+link_notes: 自然科學（生態）、專案管理（大事拆成小事）
+competency:
+  specialist:
+    - 系統思考
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 提供生物之間關係的資料
+  human_experience:
+    - 到戶外實際觀察、記錄
+idea: 很多東西是一群部分連在一起運作的。拿掉其中一個，整體可能就會改變。
+guiding_questions:
+  - 班上少了一個人，會有什麼不一樣？
+scenario: 觀察校園花圃，畫出植物、蟲、鳥、雨水的關係圖，討論「如果少了蜜蜂會怎樣？」
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

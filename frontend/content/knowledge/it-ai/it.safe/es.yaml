@@ -1,0 +1,55 @@
+id: it.safe@es
+concept: it.safe
+title: 上網與使用 AI 的安全和禮貌
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 數位素養
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+prerequisites: []
+links:
+  why:
+    - ph.fact@es
+  how: []
+  related: []
+  deeper:
+    - it.media@jh
+link_notes: 健康與體育（安全）、哲學（事實還是意見？）
+competency:
+  specialist:
+    - 數位素養
+  generalist:
+    - 查證
+    - 媒體素養
+ai:
+  delegable:
+    - 提供情境範例
+  human_experience:
+    - 練習拒絕、求助，養成好習慣
+idea: 不把名字、地址、照片隨便給陌生人或 AI；AI 說的話不一定對；遇到怪怪的事要告訴大人。
+guiding_questions:
+  - 哪些資料是「只屬於你」、不能隨便給的？
+scenario: 情境卡討論：遊戲裡有人要你的照片、AI 說了奇怪的答案，你會怎麼做？演一演。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

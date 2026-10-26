@@ -1,0 +1,57 @@
+id: pm.gantt@jh
+concept: pm.gantt
+title: 甘特圖與里程碑
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 綜合活動
+    - 數學
+    - 科技
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.sequence@es
+links:
+  why: []
+  how: []
+  related:
+    - ma.coord@jh
+    - it.datatable@jh
+  deeper:
+    - pm.cpm@sh
+link_notes: 數學（座標與圖形）、科技（資訊科技：試算表）
+competency:
+  specialist:
+    - 排程
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 由任務清單自動產生甘特圖
+  human_experience:
+    - 判斷哪個日期是真正不能延的
+idea: 把任務畫成橫條放在時間軸上，用里程碑標出「這天一定要完成」的關鍵點。
+guiding_questions:
+  - 哪些橫條可以同時進行？哪些不行？
+scenario: 用試算表替班際合唱比賽畫甘特圖，標出 3 個里程碑。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

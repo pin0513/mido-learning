@@ -1,0 +1,46 @@
+id: pm.org@uni
+concept: pm.org
+title: 組織行為與心理安全感
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 團隊
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.conflict@sh
+  - pm.style@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 心理學（社會心理學）、管理學
+competency:
+  specialist:
+    - 領導
+  generalist:
+    - 團隊合作
+    - 溝通
+    - 專案管理
+ai:
+  delegable:
+    - 提供研究概念摘要與討論框架
+  human_experience:
+    - 建立信任、示範承認錯誤、真實地帶人
+idea: 高績效團隊常見的特質之一，是成員敢說出問題與錯誤。營造這種環境是領導者的核心工作。
+guiding_questions:
+  - 在你的團隊裡，說「我不知道」安全嗎？
+scenario: 分析一次失敗的團隊經驗：當時有沒有人看到問題卻沒說？為什麼？
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

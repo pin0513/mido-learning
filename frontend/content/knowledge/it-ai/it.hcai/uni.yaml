@@ -1,0 +1,49 @@
+id: it.hcai@uni
+concept: it.hcai
+title: 以人為本的人機協作
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - AI 系統
+  layer: advanced
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+prerequisites:
+  - it.aisys@uni
+  - it.governance@uni
+links:
+  why:
+    - ph.aimind@uni
+  how:
+    - pm.stakeholder@sh
+  related: []
+  deeper: []
+link_notes: 心理學、哲學（AI 時代的思考）、專案管理（利害關係人）
+competency:
+  specialist:
+    - AI 治理
+  generalist:
+    - 查證
+    - 媒體素養
+ai:
+  delegable:
+    - 協助整理觀察紀錄與方案
+  human_experience:
+    - 實地觀察、同理使用者、判斷什麼對人真正有益
+idea: 好的 AI 工具讓人變得更有能力，而不是更依賴。設計時從人的需求、能力與價值出發。
+guiding_questions:
+  - 用了 AI 之後，你變得更會思考，還是更少思考？
+scenario: 觀察一位家人或同學用 AI 完成一件事，找出困難與風險，重新設計流程並測試。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

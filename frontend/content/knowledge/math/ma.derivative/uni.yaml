@@ -1,0 +1,47 @@
+id: ma.derivative@uni
+concept: ma.derivative
+title: 導數與最佳化
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 分析
+    - 變化率
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.limit@uni
+  - ma.function@sh
+links:
+  why: []
+  how:
+    - it.nn@uni
+  related: []
+  deeper: []
+link_notes: 經濟（邊際成本）、土木與建築（材料最佳化）、資訊與 AI（梯度下降）
+competency:
+  specialist:
+    - 微積分
+  generalist:
+    - 建模
+    - 跨域思考
+ai:
+  delegable:
+    - 求導、驗算、畫圖
+  human_experience:
+    - 解釋為什麼真實的罐子不是數學最佳解
+idea: 導數是瞬間變化率，也是曲線的切線斜率。導數為零的地方，常是最大或最小值。
+guiding_questions:
+  - 數學上的最佳解，為什麼工廠不一定採用？
+scenario: 設計一個裝 350 毫升的鋁罐，找出用料最少的半徑與高度，再和市售罐子比較。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

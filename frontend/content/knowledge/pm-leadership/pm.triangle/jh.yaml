@@ -1,0 +1,56 @@
+id: pm.triangle@jh
+concept: pm.triangle
+title: 時間、金錢、品質的取捨
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 綜合活動
+    - 數學
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.project@jh
+  - pm.sequence@es
+links:
+  why: []
+  how: []
+  related:
+    - ma.algebra@jh
+  deeper:
+    - pm.estimate@sh
+link_notes: 數學（比例、一元一次方程式）、經濟（機會成本）
+competency:
+  specialist:
+    - 規劃
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 試算成本與可能的收入
+  human_experience:
+    - 在小組裡為取捨辯論並共同決定
+idea: 資源有限，想做得更好通常要更多時間或錢；三者必須一起考慮。
+guiding_questions:
+  - 如果預算砍一半，你會犧牲時間還是品質？為什麼？
+scenario: 園遊會攤位：在固定預算與兩週準備期內，比較三種菜單方案的取捨。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,54 @@
+id: it.pattern@es
+concept: it.pattern
+title: 找規律、分類與拆解
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 運算思維
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+prerequisites:
+  - it.steps@es
+links:
+  why: []
+  how: []
+  related:
+    - ma.pattern@es
+  deeper:
+    - it.algo@jh
+link_notes: 數學（規律與關係）、自然科學（生物分類）
+competency:
+  specialist:
+    - 運算思維
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 提出不同的分類方式供比較
+  human_experience:
+    - 自己訂規則、說明為什麼這樣分
+idea: 把大問題拆小、找出相同的規律、只留下重要的特徵，這三招叫運算思維，人和電腦都用得到。
+guiding_questions:
+  - 同一堆卡片，可以有幾種分法？哪一種最好用？
+scenario: 動物卡片分類：每組自訂分類規則（會飛、有腳……），讓別組猜規則是什麼。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

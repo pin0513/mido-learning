@@ -1,0 +1,47 @@
+id: it.aisys@uni
+concept: it.aisys
+title: AI 系統設計：評估與人在迴路
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - AI 系統
+  layer: advanced
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+prerequisites:
+  - it.llm@sh
+  - it.swe@uni
+links:
+  why: []
+  how:
+    - pm.aiteam@uni
+  related: []
+  deeper: []
+link_notes: 專案管理（決策、倫理與 AI 協作）、心理學（使用者行為）
+competency:
+  specialist:
+    - AI 原理
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 執行大量評估、產生測試案例
+  human_experience:
+    - 決定標準與界線、對使用者負責
+idea: 把 AI 放進產品，要定義成功標準、建立評估方法、設計人工審核點，並準備好出錯時怎麼辦。
+guiding_questions:
+  - AI 助教答錯一題，影響有多大？怎麼及早發現？
+scenario: 設計一個 AI 助教：定義它能做與不能做的事、評估題組、何時轉給真人老師。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

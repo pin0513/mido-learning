@@ -1,0 +1,47 @@
+id: ma.probmodel@uni
+concept: ma.probmodel
+title: 機率模型與不確定性
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 資料與機率
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.stats@sh
+  - ma.integral@uni
+links:
+  why:
+    - ph.epistem@uni
+  how:
+    - pm.schedule@uni
+  related: []
+  deeper: []
+link_notes: 專案管理（排程與資源最佳化）、哲學（知識論與不確定性）
+competency:
+  specialist:
+    - 機率統計
+  generalist:
+    - 建模
+    - 跨域思考
+ai:
+  delegable:
+    - 執行大量模擬
+  human_experience:
+    - 決定可接受的風險、向別人說明不確定性
+idea: 隨機變數與機率分布描述不確定的世界；用模擬可以估計複雜情況下的風險。
+guiding_questions:
+  - 「八成會準時」和「一定會準時」，對決策有什麼不同？
+scenario: 用蒙地卡羅模擬估計一個專案的完工時間分布，回答「準時完成的機率有多少」。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

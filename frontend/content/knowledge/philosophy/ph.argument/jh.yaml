@@ -1,0 +1,52 @@
+id: ph.argument@jh
+concept: ph.argument
+title: 論證的結構：前提與結論
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 邏輯與論證
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 語文
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.reason@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.logic@sh
+link_notes: 語文（議論文）
+competency:
+  specialist:
+    - 論證
+  generalist:
+    - 提問
+    - 溝通
+ai:
+  delegable:
+    - 協助標出前提與結論，供你核對
+  human_experience:
+    - 自己拆解並判斷前提是否可接受
+idea: 一段論證由前提和結論組成。先找出「它想說服我什麼」，再看「它用什麼支持」。
+guiding_questions:
+  - 如果某個前提是錯的，結論還站得住嗎？
+scenario: 把一篇報紙社論拆成前提與結論，畫成論證圖，找出沒說出口的前提。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

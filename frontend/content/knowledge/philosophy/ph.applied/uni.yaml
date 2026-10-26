@@ -1,0 +1,47 @@
+id: ph.applied@uni
+concept: ph.applied
+title: 應用倫理：科技、商業與專業責任
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 倫理
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.ethicstheory@sh
+links:
+  why: []
+  how:
+    - pm.business@uni
+    - pm.aiteam@uni
+  related:
+    - it.governance@uni
+  deeper: []
+link_notes: 專案管理（商業論證、決策倫理與 AI 協作）、資訊與 AI
+competency:
+  specialist:
+    - 倫理推理
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 列出常見倫理風險與相關原則
+  human_experience:
+    - 在利益衝突中做出並承擔判斷
+idea: 專業工作常面對倫理抉擇：隱私、公平、安全與利益如何取捨，誰該負責。
+guiding_questions:
+  - 法律沒禁止的事，就可以做嗎？
+scenario: 案例分析：一個 AI 產品上線前的倫理審查，提出風險與調整建議。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

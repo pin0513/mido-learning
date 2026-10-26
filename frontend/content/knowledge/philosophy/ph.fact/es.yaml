@@ -1,0 +1,55 @@
+id: ph.fact@es
+concept: ph.fact
+title: 事實還是意見？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 批判思考
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 語文
+    - 社會
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 閱讀素養教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.reason@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.fallacy@jh
+    - ph.evidence@jh
+link_notes: 社會（媒體識讀）、語文
+competency:
+  specialist:
+    - 批判思考
+  generalist:
+    - 查證
+    - 跨域思考
+ai:
+  delegable:
+    - 出更多練習句子
+  human_experience:
+    - 發現自己也常把意見當成事實
+idea: 「今天下雨」是事實，可以檢查；「下雨天很討厭」是意見，每個人可以不同。
+guiding_questions:
+  - 廣告為什麼常把意見說得像事實？
+scenario: 從廣告單和班刊剪下句子，分成事實和意見兩欄，討論哪些句子很難分。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

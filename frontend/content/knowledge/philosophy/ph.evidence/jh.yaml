@@ -1,0 +1,57 @@
+id: ph.evidence@jh
+concept: ph.evidence
+title: 證據與來源
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 知識論
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 社會
+    - 科技
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.fact@es
+  - ph.know@es
+links:
+  why: []
+  how: []
+  related:
+    - it.media@jh
+  deeper:
+    - ph.tok@sh
+    - ph.aijudge@sh
+link_notes: 社會（媒體素養）、科技（資訊科技）
+competency:
+  specialist:
+    - 知識論
+  generalist:
+    - 查證
+    - 跨域思考
+ai:
+  delegable:
+    - 協助搜尋可能的原始來源
+  human_experience:
+    - 判斷來源可不可信，並溫和地告訴家人
+idea: 好的判斷要有證據。分辨一手與二手來源，查證來源是誰、什麼時候說的、有沒有其他佐證。
+guiding_questions:
+  - 一則訊息被轉傳很多次，會讓它更可信嗎？
+scenario: 查證一則家族群組轉傳的訊息：找出原始出處，寫一段「查證報告」給家人。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

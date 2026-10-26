@@ -1,0 +1,53 @@
+id: ma.coord@jh
+concept: ma.coord
+title: 坐標與直線
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 代數與函數
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.algebra@jh
+  - ma.measure@es
+links:
+  why: []
+  how: []
+  related:
+    - it.datatable@jh
+  deeper:
+    - ma.rate@sh
+link_notes: 經濟（比較方案）、資訊（試算表圖表）
+competency:
+  specialist:
+    - 函數
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 快速畫圖、驗算交點
+  human_experience:
+    - 解讀交點，替家人做選擇
+idea: 把兩個量的關係畫在坐標平面上，就看得見變化。固定的變化速度，畫出來是一條直線。
+guiding_questions:
+  - 兩條線的交點，在生活中代表什麼？
+scenario: 比較兩種手機方案（月租不同、每分鐘費率不同），畫成兩條直線，找出交點代表的意義。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

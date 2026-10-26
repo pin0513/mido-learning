@@ -1,0 +1,55 @@
+id: it.blocks@es
+concept: it.blocks
+title: 積木程式：重複與條件
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 運算思維
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+    - 藝術
+  core_competencies:
+    - A2
+    - B2
+    - B3
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+prerequisites:
+  - it.steps@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - it.prog@jh
+link_notes: 藝術（動畫與故事）、數學（角度）
+competency:
+  specialist:
+    - 程式設計
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 提示下一步可以用哪個積木
+  human_experience:
+    - 自己除錯：找出角色為什麼卡住
+idea: 用積木組合指令；「重複做」讓程式變短，「如果……就……」讓程式會判斷。
+guiding_questions:
+  - 怎樣用最少的積木讓角色走完迷宮？
+scenario: 用積木程式（如 Scratch）讓角色走迷宮，碰到牆就轉彎，走到終點就跳舞。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

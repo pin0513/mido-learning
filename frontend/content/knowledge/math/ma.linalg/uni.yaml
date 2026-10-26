@@ -1,0 +1,44 @@
+id: ma.linalg@uni
+concept: ma.linalg
+title: 線性代數與資料
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 線性代數
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.vector@sh
+links:
+  why: []
+  how:
+    - it.nn@uni
+  related: []
+  deeper: []
+link_notes: 資訊與 AI（向量表示、神經網路）、物理
+competency:
+  specialist:
+    - 線性代數
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 大量矩陣運算
+  human_experience:
+    - 理解運算背後的幾何意義
+idea: 矩陣和向量可以同時處理大量數字；圖片、文字在 AI 裡都被表示成向量。
+guiding_questions:
+  - 電腦怎麼知道兩句話的意思很像？
+scenario: 把一張小圖片當成矩陣，做旋轉與縮放；用向量相似度比較幾段文字。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,53 @@
+id: ph.systems@sh
+concept: ph.systems
+title: 系統思考：槓桿點與非預期後果
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 系統思考
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 社會
+    - 自然科學
+  core_competencies:
+    - A2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.feedback@jh
+links:
+  why: []
+  how:
+    - pm.stakeholder@sh
+  related: []
+  deeper:
+    - ph.complex@uni
+link_notes: 社會（地理）、自然科學、專案管理（利害關係人）
+competency:
+  specialist:
+    - 系統思考
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 產生可能的因果關係供你檢查
+  human_experience:
+    - 訪談當事人，修正系統圖
+idea: 在系統中，用力最多的地方不一定最有效；好意的改變也可能帶來意想不到的副作用。
+guiding_questions:
+  - 有沒有哪個「解決方法」反而讓問題更嚴重？
+scenario: 分析一個社區問題（例如上學時段交通），畫系統圖，找出可能的槓桿點與副作用。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

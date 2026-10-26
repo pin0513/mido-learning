@@ -1,0 +1,55 @@
+id: pm.planb@es
+concept: pm.planb
+title: 如果下雨怎麼辦？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 風險
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+    - 健康與體育
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues:
+    - 安全教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.sequence@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - pm.risk@jh
+link_notes: 自然科學（天氣）、健康與體育（安全）
+competency:
+  specialist:
+    - 風險管理
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 列出常見的意外狀況
+  human_experience:
+    - 意外真的發生時保持冷靜、臨場應變
+idea: 計畫常會遇到意外。事先想好「萬一」，真的發生時就不會手忙腳亂。
+guiding_questions:
+  - 哪些「萬一」最可能發生？哪些發生了最麻煩？
+scenario: 每組替同樂會想 2 個「萬一」，並寫下對應的 B 計畫。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

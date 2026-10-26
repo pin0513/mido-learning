@@ -1,0 +1,64 @@
+# 主線是知識點 id 的有序清單。知識點的 links.deeper 由下一階的 id 產生。
+id: it-ai
+title: 資訊與 AI
+paths:
+  - id: it.ct
+    title: 運算思維與演算法
+    knowledge_points:
+      - it.steps@es
+      - it.algo@jh
+      - it.ds@sh
+      - it.nn@uni
+  - id: it.prog
+    title: 程式設計
+    knowledge_points:
+      - it.blocks@es
+      - it.prog@jh
+      - it.build@sh
+      - it.swe@uni
+    colearn: 孩子讀「積木程式：重複與條件」，大人讀「和 AI 一起做專題」，一起做一個家事輪值小程式。
+  - id: it.data
+    title: 資料與資訊
+    knowledge_points:
+      - it.data@es
+      - it.datatable@jh
+      - it.analysis@sh
+      - it.nn@uni
+  - id: it.net
+    title: 網路與系統
+    knowledge_points:
+      - it.data@es
+      - it.network@jh
+      - it.security@sh
+      - it.swe@uni
+    colearn: 孩子讀「資訊怎麼表示：0 與 1」，大人讀「資訊安全與密碼學」，一起檢查家人帳號的密碼與多因素驗證。
+  - id: it.ml
+    title: AI 與機器學習概念
+    knowledge_points:
+      - it.machine@es
+      - it.mlbasic@jh
+      - it.ml@sh
+      - it.nn@uni
+    colearn: 孩子讀「機器怎麼學？」，大人讀「機器學習原理：從資料學出規則」，一起訓練一個分類模型並找出它常錯的地方。
+  - id: it.literacy
+    title: AI 素養、倫理與安全
+    knowledge_points:
+      - it.safe@es
+      - it.media@jh
+      - it.ethics@sh
+      - it.governance@uni
+    colearn: 孩子讀「上網與使用 AI 的安全和禮貌」，大人讀「AI 倫理、偏誤與社會影響」，一起訂定家庭 AI 使用公約。
+  - id: it.collab
+    title: 人機協作
+    knowledge_points:
+      - it.steps@es
+      - it.media@jh
+      - it.llm@sh
+      - it.aisys@uni
+  - id: it.creative
+    title: 創意程式與美感
+    knowledge_points:
+      - it.blocks@es
+      - it.prog@jh
+      - it.build@sh
+      - it.creative@uni

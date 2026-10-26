@@ -1,0 +1,55 @@
+id: pm.team@jh
+concept: pm.team
+title: 團隊溝通與會議
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 團隊
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.roles@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - pm.conflict@sh
+    - pm.agile@sh
+link_notes: 語文（摘要與表達）、心理學（團隊發展階段）
+competency:
+  specialist:
+    - 團隊合作實作
+  generalist:
+    - 團隊合作
+    - 溝通
+    - 專案管理
+ai:
+  delegable:
+    - 把會議錄音整理成重點與待辦
+  human_experience:
+    - 意見衝突時清楚表達立場，也真正傾聽
+idea: 好團隊會經歷磨合期。開會要有目的、有紀錄、有下一步。
+guiding_questions:
+  - 一場會議結束時，怎樣才算「有開成」？
+scenario: 輪流擔任主持人與紀錄，練習寫出「決議＋負責人＋期限」的會議紀錄。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

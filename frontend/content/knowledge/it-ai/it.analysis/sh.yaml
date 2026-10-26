@@ -1,0 +1,58 @@
+id: it.analysis@sh
+concept: it.analysis
+title: 資料分析與資料倫理
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - 資料分析
+  layer: advanced
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 科技
+    - 數學
+    - 社會
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.datatable@jh
+  - it.prog@jh
+links:
+  why:
+    - ph.philsci@uni
+  how: []
+  related:
+    - ma.stats@sh
+  deeper:
+    - it.nn@uni
+link_notes: 數學（統計推論）、社會（公共議題）、哲學（研究設計）
+competency:
+  specialist:
+    - 資料分析
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 協助寫分析程式、產生圖表
+  human_experience:
+    - 提出問題、解讀結果、說明限制
+idea: 用程式分析真實資料，提出有證據的觀點；同時注意個資、授權與資料是否具代表性。
+guiding_questions:
+  - 資料說的是「發生了什麼」，還是「為什麼發生」？
+scenario: 從政府資料開放平臺（data.gov.tw）選一份資料，分析並做成一頁報告，說明資料的限制。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,55 @@
+id: it.datatable@jh
+concept: it.datatable
+title: 資料處理與視覺化
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 資料表示
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 科技
+    - 數學
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.data@es
+links:
+  why:
+    - ph.evidence@jh
+  how: []
+  related:
+    - ma.data@es
+  deeper:
+    - it.analysis@sh
+link_notes: 數學（統計圖、坐標）、哲學（證據與來源）
+competency:
+  specialist:
+    - 資料分析
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 自動整理與畫圖
+  human_experience:
+    - 決定要問什麼問題、判斷圖表是否誠實
+idea: 收集資料、整理成表格、做成圖表，才能從資料中看出故事；圖表也可能被做得誤導人。
+guiding_questions:
+  - 同一份資料，怎麼畫會讓人產生完全不同的印象？
+scenario: 用試算表整理全班一週的睡眠時數，做圖表找趨勢，再故意做一張「誤導」的圖讓同學挑錯。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26
