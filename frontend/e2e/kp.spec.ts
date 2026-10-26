@@ -27,6 +27,7 @@ test.describe("知識地圖", () => {
     await expect(page.getByTestId("kp-curriculum")).toBeVisible();
     await expect(page.getByTestId("kp-draft")).toHaveText("草稿");
     await expect(page.getByRole("link", { name: /我們想完成什麼/ })).toBeVisible();
+    await expect(page.getByText("尚未發布")).toHaveCount(0);
     await expect(page.getByTestId("kp-slides")).toHaveCount(0);
 
     await page.goto("/kp/ma.limit/uni");
