@@ -1,12 +1,12 @@
 # Mido Learning
 
-現代化線上學習平台，使用 Next.js 14 + .NET 8 + Firebase 建構。
+現代化線上學習平台，使用 Next.js 16 + .NET 8 + Firebase 建構。
 
 ## 技術棧
 
 | 層級 | 技術選擇 |
 |------|---------|
-| **前端** | Next.js 14 (App Router) + Tailwind CSS |
+| **前端** | Next.js 16.1.6 (App Router) + Tailwind CSS |
 | **後端** | .NET 8 Minimal API |
 | **資料庫** | Firebase Firestore |
 | **認證** | Firebase Auth (Email/密碼 + Google) |

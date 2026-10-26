@@ -19,10 +19,10 @@ test.describe('Homepage Category Groups', () => {
   });
 
   test('每個 section 都有查看全部連結，且指向正確 href', async ({ page }) => {
-    // 知識學習 → /components
+    // 知識學習 → /materials（首頁現況）
     const knowledgeLink = page.locator('[data-testid="section-knowledge"] a:has-text("查看全部")');
     await expect(knowledgeLink).toBeVisible();
-    await expect(knowledgeLink).toHaveAttribute('href', '/components');
+    await expect(knowledgeLink).toHaveAttribute('href', '/materials');
 
     // 小人學 → /categories/kid
     const kidLink = page.locator('[data-testid="section-kid"] a:has-text("查看全部")');
@@ -35,9 +35,9 @@ test.describe('Homepage Category Groups', () => {
     await expect(gameLink).toHaveAttribute('href', '/categories/game');
   });
 
-  test('瀏覽所有教材 button navigates to /components', async ({ page }) => {
+  test('瀏覽所有教材 button navigates to /materials', async ({ page }) => {
     await page.locator('text=瀏覽所有教材').click();
-    await expect(page).toHaveURL(/\/components/);
+    await expect(page).toHaveURL(/\/materials/);
   });
 
   test('hero section 仍然存在', async ({ page }) => {

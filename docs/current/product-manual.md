@@ -14,7 +14,7 @@
 ### 技術棧
 | 層級 | 技術 |
 |------|------|
-| 前端 | Next.js 14 (App Router) + Tailwind CSS |
+| 前端 | Next.js 16.1.6 (App Router) + Tailwind CSS |
 | 後端 | .NET 8 Minimal API |
 | 資料庫 | Firebase Firestore |
 | 認證 | Firebase Authentication |
