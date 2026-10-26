@@ -1,6 +1,8 @@
 # 知識地圖上線與回滾
 
-這份文件只談 `/kp` 知識地圖。首頁 `frontend/app/(public)/page.tsx` 沒有改。P2-07 知識圖譜與城市總覽這一輪沒有做。層級 × 階段（本質→基礎→進階→應用 × 國小→大學）和學門／階段／核心素養三軸都留在 `/kp`，之後的城市總覽若要做，是疊在這些路由上，不取代它們。
+這份文件談 `/kp` 知識地圖，以及可另外打開的學習城市首頁。層級 × 階段（本質→基礎→進階→應用 × 國小→大學）和學門／階段／核心素養三軸都留在 `/kp`。城市地圖在 `/kp/map`（P2-07 沒有另做 `/kp/graph`），層級總圖與清單是同一頁的另外兩種檢視，不取代 `/kp` 上的數量表。
+
+`KP_HOME_ENABLED` 關掉時，`/` 仍是原本的靜態首頁（`LegacyHome`），版面與打開這個旗標之前相同。打開時，middleware 把 `/` 改寫到 `/city-home`，網址還是 `/`。
 
 這次沒有建立、也沒有推送任何 git tag。
 
@@ -77,8 +79,38 @@ gcloud run services update-traffic mido-learning-frontend \
 
 另外兩個變數是 **build 期**，關掉上線開關不會改變它們：
 
-- `KP_INCLUDE_DRAFTS`：沒設時只生成 `status: published`。正式 image（Docker build 沒設這個變數）不會帶草稿頁。2026-10-26 演練時內容還沒有任何 published，那次未設草稿變數的 `pnpm build` 確認：路由表裡 `[concept]` 底下沒有任何路徑，`.next/server/app` 沒有 `pm.breakdown`，`index.json.body` 是 `[]`。筆數會隨內容改變，不要把演練數字當成現況。學門、階段、層級、核心素養這些殼頁仍會生成；主線頁只在至少有一站 published 時才進 sitemap（見產生器）。要讓草稿或日後改成 published 的頁面出現，必須重新 build。
+- `KP_INCLUDE_DRAFTS`：沒設時只生成 `status: published`。正式 image 不會帶草稿頁。目前已發布的是 `pm.estimate` 四站：`pm.breakdown@es`、`pm.triangle@jh`、`pm.estimate@sh`、`pm.evm@uni`。其餘仍是草稿。學門、階段、層級、核心素養這些殼頁仍會生成。主線只在至少有一站 published 時才進 sitemap。改發布狀態或這個變數都必須重新 build。筆數會變，不要把演練當下的筆數當成現況。
 - `KP_SLIDES_PREVIEW`：只有 build 時設成 `true` 才會做出 `/kp/preview/slides`。沒設時該 URL 是靜態 404（HTML 為 `__next_error__`）。正式 image 不要設。
+
+### 首頁旗標 `KP_HOME_ENABLED`
+
+跟 `KP_ENABLED` 一樣是**執行期**開關，預設關，沒有 `NEXT_PUBLIC_` 前綴。讀取點是 `frontend/middleware.ts`：
+
+- 未設定或不是 `"true"`：`/` 走原本的靜態頁（h1「AI 驅動的學習實驗室」），`/city-home` 回同一份 HTML 404（`這個網址目前沒有開放。`，`x-robots-tag: noindex`）。
+- `"true"`：`/` 被 rewrite 到 `/city-home`，瀏覽器網址仍是 `/`。直接開 `/city-home` 也看得到同一頁。
+
+關掉（同一張 image，開新 revision，不重新 build）：
+
+```bash
+gcloud run services update mido-learning-frontend \
+  --project mido-learning \
+  --region asia-east1 \
+  --remove-env-vars KP_HOME_ENABLED
+```
+
+兩個一起關：`--remove-env-vars KP_ENABLED,KP_HOME_ENABLED`。只設 `KP_HOME_ENABLED`、沒設 `KP_ENABLED` 時，middleware 把首頁旗標當成關，`/` 仍是舊首頁，`/city-home` 是 404。進度寫在瀏覽器 `localStorage`（`mido-city-progress`、`mido-city-view`），關掉旗標不會清這些鍵，也沒有 Firestore 資料要清。若先前做過 `--to-revisions`，關旗標之後要再執行第 3 節的 `--to-latest`，否則新 revision 沒有流量。
+
+`KP_INCLUDE_DRAFTS` 仍是 build 期。正式 image 沒設它，`/kp/map` 與城市首頁只畫已發布的建築。目前已發布的是 `pm.estimate` 四站。CI 建置有設草稿變數，HTML 才會有 100 棟。改發布狀態或草稿開關都要重新 build。
+
+本機演練（2026-10-26，同一份已含草稿的 `next build`，沒有為了開關而重新 build）：
+
+| 步驟 | 結果 |
+| --- | --- |
+| `pnpm exec next start -p 3000`，兩個旗標都沒設 | 約 667ms 後 `/api/kp-launch` 為 `{"enabled":false,"home":false}`。`/` 200，內文有「AI 驅動的」，沒有「從家庭廣場出發」，沒有建築。`/city-home`、`/kp`、`/kp/map` 都是 404，帶 `x-robots-tag: noindex`，內文是「這個網址目前沒有開放。」 |
+| 停掉行程，同一份產物改以 `KP_ENABLED=true KP_HOME_ENABLED=true` 啟動 | 約 667ms 後 `/api/kp-launch` 為 `{"enabled":true,"home":true}`。`/` 200，內文有「從家庭廣場出發」，100 棟 `city-building`。`/city-home` 與 `/kp/map` 也是 200，地圖頁同樣 100 棟。 |
+| `node .next/standalone/server.js`（`PORT=3000`）先不設、再設兩個旗標 | 關：約 271ms 就緒，`/` 200，`/city-home` 與 `/kp` 404。開：約 265ms 就緒，`/` 與 `/kp/map` 都是 200，首頁 HTML 有 100 棟建築。 |
+
+結論：`KP_HOME_ENABLED` 和 `KP_ENABLED` 都是執行期開關。關掉任一個只要重啟行程（Cloud Run 開新 revision），不用重新 build。草稿要不要進 image 才需要重新 build。
 
 ## 3. 第二道：Cloud Run 回到上一版
 
@@ -132,14 +164,24 @@ gcloud run services update-traffic mido-learning-frontend \
 2. [#14](https://github.com/pin0513/mido-learning/pull/14) `cursor/kp-pages-ea35` — `/kp` 頁面、層級 × 階段、三軸、主線、SEO、投影片、共學卡、`index.json`
 3. [#13](https://github.com/pin0513/mido-learning/pull/13) `cursor/kp-nav-ea35` — Header「知識地圖」
 4. [#15](https://github.com/pin0513/mido-learning/pull/15) `cursor/kp-e2e-docs-ea35` — E2E、CI、Next.js 版本文字
+5. [#17](https://github.com/pin0513/mido-learning/pull/17) `cursor/kp-publish-pm-estimate-ea35` — 把主線 `pm.estimate` 的四個知識點標成 published
+6. [#18](https://github.com/pin0513/mido-learning/pull/18) `cursor/kp-city-map-ea35` — `/kp/map`（HP-01～04）
+7. [#19](https://github.com/pin0513/mido-learning/pull/19) `cursor/kp-city-progress-ea35` — 主線路線與本機進度（HP-05～06）
+8. [#20](https://github.com/pin0513/mido-learning/pull/20) `cursor/kp-city-views-ea35` — 層級總圖、清單、手機（HP-07、HP-08、HP-13）
+9. [#21](https://github.com/pin0513/mido-learning/pull/21) `cursor/kp-city-home-ea35` — 首頁旗標 `KP_HOME_ENABLED`（HP-09～12）
 
-每個 PR 合併進 `main` 之後，**後合併的先 revert**（#15 → #13 → #14 → #16）：
+每個 PR 合併進 `main` 之後，**後合併的先 revert**（#21 → #20 → #19 → #18 → #17 → #15 → #13 → #14 → #16）：
 
 ```bash
-git revert <PR 15 的 squash commit>
-git revert <PR 13 的 squash commit>
-git revert <PR 14 的 squash commit>
-git revert <PR 16 的 squash commit>
+git revert <city-home 的 squash commit>      #21
+git revert <city-views 的 squash commit>     #20
+git revert <city-progress 的 squash commit>  #19
+git revert <city-map 的 squash commit>       #18
+git revert <publish-pm-estimate 的 squash commit>  #17
+git revert <e2e-docs 的 squash commit>       #15
+git revert <nav 的 squash commit>            #13
+git revert <pages 的 squash commit>          #14
+git revert <loader 的 squash commit>         #16
 ```
 
 revert 之後要重新部署，流量才會離開含 `/kp` 的 image。只 revert 不部署，線上還是舊 image。
@@ -155,15 +197,18 @@ revert 之後要重新部署，流量才會離開含 `/kp` 的 image。只 rever
 打開開關之前：
 
 - `main` 已含上述 PR，並且打了 `pre-kp-launch`（這份文件沒有代打）。
-- 確認這張 image 是不是草稿 build。正式 Dockerfile **沒有** `KP_INCLUDE_DRAFTS`。沒有任何 published 時，打開 `KP_ENABLED` 只會看到殼頁，細節頁與 `index.json` 是空的。要給審核看草稿頁，必須另建一支設了 `KP_INCLUDE_DRAFTS=true` 的 image，不要把那個變數寫進正式 workflow。
+- 確認這張 image 是不是草稿 build。正式 Dockerfile **沒有** `KP_INCLUDE_DRAFTS`。已發布的只有主線 `pm.estimate` 四站：`pm.breakdown@es`、`pm.triangle@jh`、`pm.estimate@sh`、`pm.evm@uni`。正式 image 的細節頁與地圖只含這四棟；其餘草稿要另建 `KP_INCLUDE_DRAFTS=true` 的 image 才看得到。不要把那個變數寫進正式 workflow。
+- `KP_HOME_ENABLED` 預設不要設，而且只有 `KP_ENABLED` 也是 `true` 時才生效。關掉任一個都是 `gcloud run services update ... --remove-env-vars`，**不用**重新 build。不要用 `--set-env-vars`，那個會清掉服務上其他環境變數。下一次正常的 `gcloud run deploy`（workflow 沒帶 env 旗標）會保留已經設上的變數。若先前用 `--to-revisions` 鎖過流量，恢復正常部署前要先 `--to-latest`（見第 3 節）。
 - D09 授權仍是空的。頁面文案是「授權文字尚未公告」，`data-testid="kp-license-body"` 是空的。不要在回滾或上線時補上 CC 條文。
-- 草稿網址不進 sitemap。只有一個已發布階段的 concept 不放 `/kp/{concept}`（那一頁會轉址）。主線只放至少有一站 published 的。筆數隨內容變，不寫死。`KP_ENABLED` 關掉時整份是空的。
+- 草稿網址不進 sitemap。只有一個已發布階段的 concept 不放會轉址的 `/kp/{concept}`。主線只放至少有一站 published 的。`/kp/map` 是 noindex，不進 sitemap。`KP_ENABLED` 關掉時整份是空的。筆數不寫死。
 - `to_verify` 的「課綱對應待核對」在正式站也會出現，含大學頁。
 
-建議回滾（先做第 2 節；若 image 本身有問題再做第 3 節）：
+建議回滾（先做第 2 節與下面的首頁旗標；若 image 本身有問題再做第 3 節）：
 
 - `/kp` 在旗標應關閉時仍回 200。
-- 旗標關閉時首頁出現「知識地圖」，或首頁版面與打開旗標之前不同。
+- `KP_HOME_ENABLED` 關掉之後，首頁 h1 仍是「從家庭廣場出發」，或 `/city-home` 不是 404。
+- `KP_ENABLED` 應關閉時，首頁仍出現「知識地圖」連結，或 `/kp` 仍回 200。
+- 旗標關閉時首頁版面與打開旗標之前不同。
 - 細節頁 500、層級表或三軸入口缺頁、靜態頁在 runner 上因為找不到 `content/` 而失敗。
 - sitemap 出現 draft URL、`/login` 或 `/dashboard`。
 - 授權區塊被填進尚未公告的條文。

@@ -6,6 +6,10 @@
  *   未設定或不是 "true" 就是關。關掉不需要重新 build，但行程要重啟
  *   （本機重開 next start；Cloud Run 會用同一張 image 開新 revision）。
  *
+ * KP_HOME_ENABLED：首頁是否改寫成學習城市。同樣每次請求讀取，預設關。
+ *   只有 KP_ENABLED 也是 "true" 時才算打開。只設這一個時，首頁維持原樣，/city-home 是 404。
+ *   兩個都不用重新 build，改完要重啟行程。
+ *
  * KP_INCLUDE_DRAFTS：哪些知識點會被生成成靜態頁。只在 next build / next dev 讀取。
  *   未設定則只有 status: published。改這個值必須重新 build。
  *
@@ -19,6 +23,10 @@
 
 export function isKpEnabled(): boolean {
   return process.env.KP_ENABLED === "true";
+}
+
+export function isKpHomeEnabled(): boolean {
+  return isKpEnabled() && process.env.KP_HOME_ENABLED === "true";
 }
 
 export function includeDraftKnowledgePoints(): boolean {
