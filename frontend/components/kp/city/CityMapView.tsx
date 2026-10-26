@@ -286,16 +286,18 @@ export function CityMapView({
             >
               孩子從國小環開始
             </button>
-            {data.stages.map((stage) => (
-              <button
-                key={stage.id}
-                type="button"
-                className="min-h-11 border border-[#1a1614] bg-white px-4 text-sm font-semibold hover:bg-[#f3f0ea] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
-                onClick={() => go({ district: null, stage: stage.id, kp: null }, "push")}
-              >
-                大人看{stage.name}環
-              </button>
-            ))}
+            {data.stages
+              .filter((stage) => stage.id !== "es")
+              .map((stage) => (
+                <button
+                  key={stage.id}
+                  type="button"
+                  className="min-h-11 border border-[#1a1614] bg-white px-4 text-sm font-semibold hover:bg-[#f3f0ea] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
+                  onClick={() => go({ district: null, stage: stage.id, kp: null }, "push")}
+                >
+                  大人看{stage.name}環
+                </button>
+              ))}
           </div>
         </div>
       ) : null}

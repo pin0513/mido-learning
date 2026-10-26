@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import LegacyHome from "@/app/(public)/LegacyHome";
+import LegacyHome from "@/components/home/LegacyHome";
 import { recordPageView } from "@/lib/api/analytics";
 import type { CityMapData } from "@/lib/content/city";
 import { CityMapView } from "./CityMapView";

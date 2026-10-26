@@ -2,9 +2,9 @@ import { test, expect } from "@playwright/test";
 
 /**
  * 同一份 build、不帶 KP_ENABLED / KP_HOME_ENABLED。
- * /city-home 要等首頁旗標的 middleware 才會帶 noindex，那一段在後續 PR 補上。
+ * 不帶 KP_ENABLED / KP_HOME_ENABLED。只開首頁旗標也不算打開。
  */
-const CLOSED = ["/kp", "/kp/map", "/kp/index.json"];
+const CLOSED = ["/city-home", "/kp", "/kp/map", "/kp/index.json"];
 
 test.describe("旗標關閉", () => {
   test("首頁是舊版，導覽沒有知識地圖", async ({ page }) => {

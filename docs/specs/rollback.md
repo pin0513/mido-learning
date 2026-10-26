@@ -98,7 +98,7 @@ gcloud run services update mido-learning-frontend \
   --remove-env-vars KP_HOME_ENABLED
 ```
 
-兩個一起關：`--remove-env-vars KP_ENABLED,KP_HOME_ENABLED`。城市首頁裡的 `/kp/...` 連結在 `KP_ENABLED` 關閉時會 404，所以只開首頁旗標時地圖畫得出來，點進知識點頁不行。進度寫在瀏覽器 `localStorage`（`mido-city-progress`、`mido-city-view`），關掉旗標不會清這些鍵，也沒有 Firestore 資料要清。
+兩個一起關：`--remove-env-vars KP_ENABLED,KP_HOME_ENABLED`。只設 `KP_HOME_ENABLED`、沒設 `KP_ENABLED` 時，middleware 把首頁旗標當成關，`/` 仍是舊首頁，`/city-home` 是 404。進度寫在瀏覽器 `localStorage`（`mido-city-progress`、`mido-city-view`），關掉旗標不會清這些鍵，也沒有 Firestore 資料要清。若先前做過 `--to-revisions`，關旗標之後要再執行第 3 節的 `--to-latest`，否則新 revision 沒有流量。
 
 `KP_INCLUDE_DRAFTS` 仍是 build 期。正式 image 沒設它，`/kp/map` 與城市首頁只畫已發布的建築。目前已發布的是 `pm.estimate` 四站。CI 建置有設草稿變數，HTML 才會有 100 棟。改發布狀態或草稿開關都要重新 build。
 

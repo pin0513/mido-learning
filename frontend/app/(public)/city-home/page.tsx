@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { CityHome } from "@/components/kp/city/CityHome";
 import { buildCityMap, loadCatalog, visibleCatalog } from "@/lib/content";
+import { KP_SITE_ORIGIN } from "@/lib/kp/routes";
 
 export const metadata: Metadata = {
   title: { absolute: "Mido Learning｜學習城市" },
   description: "從家庭廣場出發，沿著國小到大學的環路走進知識點。也可以改看層級總圖或清單。",
-  alternates: { canonical: "https://learn.paulfun.net/" },
+  alternates: { canonical: `${KP_SITE_ORIGIN}/` },
   openGraph: {
     title: "Mido Learning｜學習城市",
     description: "從家庭廣場出發，沿著國小到大學的環路走進知識點。",
-    url: "https://learn.paulfun.net/",
+    url: `${KP_SITE_ORIGIN}/`,
   },
 };
 

@@ -9,7 +9,7 @@ import { LearningComponent } from '@/types/component';
 import { getPublicComponents } from '@/lib/api/components';
 import { recordPageView } from '@/lib/api/analytics';
 
-const HeroIllustration = dynamic(() => import('./HeroIllustration'), { ssr: false });
+const HeroIllustration = dynamic(() => import('@/app/(public)/HeroIllustration'), { ssr: false });
 
 const KNOWLEDGE_CATEGORIES = ['adult', 'Programming', 'Language', 'Science', 'Art', '商業思維', '運動'];
 
