@@ -32,31 +32,10 @@ export function HowSection() {
         <h2 id="how" className="head">怎麼讀這座城</h2>
         <p className="how-lead">四件事。看懂了就知道自己在哪、下一站往哪走。</p>
         <div className="how-grid">
-          {HOW.map((item, index) => (
+          {HOW.map((item) => (
             <article key={item.title}>
               <h3>{item.title}</h3>
-              {index === 0 ? (
-                <div className="how-row">
-                  <p>{item.body}</p>
-                  <figure className="explain-fig">
-                    <img
-                      src="/kp/garden-city-diagram.webp"
-                      alt="霍華德 1898 年的田園城市圖：同心圓環繞中央廣場，對應城裡由內而外的四條環路"
-                      width={1123}
-                      height={824}
-                    />
-                    <figcaption>
-                      圖：
-                      <a href="https://commons.wikimedia.org/wiki/File:Garden_City_diagram.jpg">“Garden City diagram”</a>
-                      ，Ebenezer Howard（1898），
-                      <a href="https://creativecommons.org/publicdomain/mark/1.0/">公眾領域</a>
-                      ，Wikimedia Commons。同心圓用來說明環路，不是城的平面。
-                    </figcaption>
-                  </figure>
-                </div>
-              ) : (
-                <p>{item.body}</p>
-              )}
+              <p>{item.body}</p>
             </article>
           ))}
         </div>

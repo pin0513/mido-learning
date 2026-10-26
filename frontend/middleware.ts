@@ -17,29 +17,22 @@ function notFound() {
   });
 }
 
-function surface(request: NextRequest) {
-  const headers = new Headers(request.headers);
-  headers.set("x-kp-surface", "1");
-  return headers;
-}
-
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const enabled = process.env.KP_ENABLED === "true";
   const home = enabled && process.env.KP_HOME_ENABLED === "true";
   if (pathname === "/" || pathname === "/city-home") {
     if (!home) return pathname === "/city-home" ? notFound() : NextResponse.next();
-    const headers = surface(request);
     if (pathname === "/") {
       const url = request.nextUrl.clone();
       url.pathname = "/city-home";
-      return NextResponse.rewrite(url, { request: { headers } });
+      return NextResponse.rewrite(url);
     }
-    return NextResponse.next({ request: { headers } });
+    return NextResponse.next();
   }
 
   if (!enabled) return notFound();
-  return NextResponse.next({ request: { headers: surface(request) } });
+  return NextResponse.next();
 }
 
 export const config = {

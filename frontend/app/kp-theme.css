@@ -122,6 +122,8 @@
 .kp-root .path-colearn{color:var(--ink);margin-top:28px}
 .kp-root .path-colearn a{color:var(--ink)}
 .kp-root .credits a{text-decoration:underline;text-underline-offset:2px}
+.kp-root .lrow.is-link{box-shadow:inset 4px 0 0 var(--accent)}
+.kp-root .flast .wordmark{color:var(--chalk)}
 .kp-root .about-copy{max-width:42em;display:flex;flex-direction:column;gap:16px}
 .kp-root .about-copy p{max-width:40em}
 .kp-root .menu li{grid-template-columns:minmax(0,1fr);gap:4px}

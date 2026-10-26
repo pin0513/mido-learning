@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { headers } from 'next/headers';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FloatingWishBot } from '@/components/wish';
@@ -14,16 +13,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function PublicLayout({ children }: { children: React.ReactNode }) {
-  const surface = (await headers()).get("x-kp-surface") === "1";
-  if (surface) {
-    return (
-      <div className="kp-root">
-        {children}
-        <FloatingWishBot />
-      </div>
-    );
-  }
+export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />

@@ -32,6 +32,8 @@ export interface CityBuilding {
   aesthetics: boolean;
   href: string;
   pointedRoof: boolean;
+  /** 課綱核心素養代碼。不是標題。 */
+  competencies: string[];
 }
 
 export interface CityRoad {
@@ -88,6 +90,7 @@ export interface CityMapData {
   districts: CityDistrict[];
   stages: { id: string; name: string }[];
   layers: { id: string; name: string }[];
+  competencies: { code: string; name: string }[];
 }
 
 const SIZE = 1100;
@@ -243,6 +246,7 @@ export function buildCityMap(model: ContentModel): CityMapData {
       aesthetics: point.crosscutting.includes("aesthetics"),
       href: `/kp/${point.concept}/${point.stage}`,
       pointedRoof: point.layer === "essence",
+      competencies: point.curriculum108?.coreCompetencies ?? [],
     };
   });
 
@@ -317,6 +321,7 @@ export function buildCityMap(model: ContentModel): CityMapData {
     districts,
     stages,
     layers,
+    competencies: model.taxonomy.coreCompetencies.map((item) => ({ code: item.code, name: item.name })),
   };
 }
 

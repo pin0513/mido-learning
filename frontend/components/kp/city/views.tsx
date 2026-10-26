@@ -60,11 +60,13 @@ function BuildingButton({
   building,
   snapshot,
   selected,
+  linked,
   onOpen,
 }: {
   building: CityBuilding;
   snapshot: ProgressSnapshot;
   selected: boolean;
+  linked?: boolean;
   onOpen: (id: string) => void;
 }) {
   if (!building.title) return null;
@@ -72,7 +74,7 @@ function BuildingButton({
   return (
     <button
       type="button"
-      className="lrow"
+      className={linked ? "lrow is-link" : "lrow"}
       aria-current={selected ? "true" : undefined}
       onClick={() => onOpen(building.id)}
     >
@@ -97,11 +99,15 @@ export function CityList({
   data,
   snapshot,
   selectedId,
+  linkedIds = [],
+  accept = () => true,
   onOpen,
 }: {
   data: CityMapData;
   snapshot: ProgressSnapshot;
   selectedId: string | null;
+  linkedIds?: string[];
+  accept?: (building: CityBuilding) => boolean;
   onOpen: (id: string) => void;
 }) {
   return (
@@ -118,13 +124,13 @@ export function CityList({
               <div key={stage.id} className="mt-4">
                 <h3 className="text-base font-bold">{stage.name}</h3>
                 <ul className="mt-2 space-y-2">
-                  {items.filter((building) => building.title).map((building) => (
+                  {items.filter((building) => building.title && accept(building)).map((building) => (
                     <li key={building.id}>
-                      <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} onOpen={onOpen} />
+                      <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
                     </li>
                   ))}
                 </ul>
-                <DraftNote count={items.filter((building) => !building.title).length} />
+                <DraftNote count={items.filter((building) => !building.title && accept(building)).length} />
               </div>
             );
           })}
@@ -139,20 +145,26 @@ function CellBuildings({
   data,
   snapshot,
   selectedId,
+  linkedIds,
+  accept,
   onOpen,
 }: {
   items: CityBuilding[];
   data: CityMapData;
   snapshot: ProgressSnapshot;
   selectedId: string | null;
+  linkedIds: string[];
+  accept: (building: CityBuilding) => boolean;
   onOpen: (id: string) => void;
 }) {
+  const visible = items.filter(accept);
   if (items.length === 0) return <p className="small">還沒有知識點</p>;
-  const drafts = items.filter((building) => !building.title).length;
+  if (visible.length === 0) return <p className="small">這個篩選沒有知識點</p>;
+  const drafts = visible.filter((building) => !building.title).length;
   return (
     <div className="space-y-3">
       {data.districts.map((district) => {
-        const group = items.filter((building) => building.folder === district.key && building.title);
+        const group = visible.filter((building) => building.folder === district.key && building.title);
         if (group.length === 0) return null;
         return (
           <div key={district.key}>
@@ -163,7 +175,7 @@ function CellBuildings({
             <ul className="mt-1 space-y-1">
               {group.map((building) => (
                 <li key={building.id}>
-                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} onOpen={onOpen} />
+                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
                 </li>
               ))}
             </ul>
@@ -179,16 +191,26 @@ export function LayerOverview({
   data,
   snapshot,
   selectedId,
+  linkedIds = [],
+  accept = () => true,
   activeStage,
+  activeLayer = null,
   onOpen,
   onLot,
+  onPickStage,
+  onPickLayer,
 }: {
   data: CityMapData;
   snapshot: ProgressSnapshot;
   selectedId: string | null;
+  linkedIds?: string[];
+  accept?: (building: CityBuilding) => boolean;
   activeStage: string | null;
+  activeLayer?: string | null;
   onOpen: (id: string) => void;
   onLot: (id: string) => void;
+  onPickStage?: (stageId: string) => void;
+  onPickLayer?: (layerId: string) => void;
 }) {
   const cell = (layerId: string, stageId: string) =>
     data.buildings.filter((building) => building.layer === layerId && building.stage === stageId);
@@ -209,7 +231,7 @@ export function LayerOverview({
                     {stage.name}（{items.length}）
                   </h3>
                   <div className="mt-2">
-                    <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} onOpen={onOpen} />
+                    <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} linkedIds={linkedIds} accept={accept} onOpen={onOpen} />
                   </div>
                 </div>
               );
@@ -229,7 +251,11 @@ export function LayerOverview({
               </th>
               {data.stages.map((stage) => (
                 <th key={stage.id} scope="col" className="border border-[#c0bab2] bg-white px-3 py-3 text-left">
-                  {stage.name}
+                  {onPickStage ? (
+                    <button type="button" className="min-h-11 font-bold underline-offset-2 hover:underline" aria-pressed={activeStage === stage.id} onClick={() => onPickStage(stage.id)}>
+                      {stage.name}
+                    </button>
+                  ) : stage.name}
                 </th>
               ))}
               <th scope="col" className="border border-[#c0bab2] bg-white px-3 py-3 text-left">
@@ -241,7 +267,11 @@ export function LayerOverview({
             {data.layers.map((layer) => (
               <tr key={layer.id}>
                 <th scope="row" className="border border-[#c0bab2] bg-white px-3 py-3 text-left align-top">
-                  {layer.name}
+                  {onPickLayer ? (
+                    <button type="button" className="min-h-11 font-bold underline-offset-2 hover:underline" aria-pressed={activeLayer === layer.id} onClick={() => onPickLayer(layer.id)}>
+                      {layer.name}
+                    </button>
+                  ) : layer.name}
                 </th>
                 {data.stages.map((stage) => {
                   const items = cell(layer.id, stage.id);
@@ -254,7 +284,7 @@ export function LayerOverview({
                       data-count={items.length}
                       className={`border border-[#c0bab2] px-2 py-2 align-top ${active ? "bg-[#f3f0ea]" : "bg-[#faf9f7]"}`}
                     >
-                      <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} onOpen={onOpen} />
+                      <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} linkedIds={linkedIds} accept={accept} onOpen={onOpen} />
                     </td>
                   );
                 })}
@@ -296,6 +326,8 @@ export function MobileDistricts({
   onLot,
   snapshot,
   selectedId,
+  linkedIds = [],
+  accept = () => true,
 }: {
   data: CityMapData;
   district: string | null;
@@ -305,6 +337,8 @@ export function MobileDistricts({
   onLot: (id: string) => void;
   snapshot: ProgressSnapshot;
   selectedId: string | null;
+  linkedIds?: string[];
+  accept?: (building: CityBuilding) => boolean;
 }) {
   if (!district) {
     return (
@@ -353,13 +387,13 @@ export function MobileDistricts({
               </button>
             </h3>
             <ul className="mt-2 space-y-2">
-              {items.filter((building) => building.title).map((building) => (
+              {items.filter((building) => building.title && accept(building)).map((building) => (
                 <li key={building.id}>
-                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} onOpen={onOpen} />
+                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
                 </li>
               ))}
             </ul>
-            <DraftNote count={items.filter((building) => !building.title).length} />
+            <DraftNote count={items.filter((building) => !building.title && accept(building)).length} />
           </section>
         );
       })}

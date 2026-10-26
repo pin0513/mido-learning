@@ -122,6 +122,10 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <div className="flast">
+          <span className="wordmark">
+            <Mark />
+            Mido Learning
+          </span>
           <span>© {new Date().getFullYear()} Mido Learning</span>
           <a className="btn btn-quiet btn-sm" href="#main">回到頂端</a>
         </div>

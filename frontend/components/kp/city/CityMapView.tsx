@@ -20,9 +20,11 @@ interface Level {
   district: string | null;
   stage: string | null;
   kp: string | null;
+  layer: string | null;
+  competency: string | null;
 }
 
-const EMPTY: Level = { district: null, stage: null, kp: null };
+const EMPTY: Level = { district: null, stage: null, kp: null, layer: null, competency: null };
 
 function readLevel(): Level {
   const params = new URLSearchParams(window.location.search);
@@ -30,15 +32,19 @@ function readLevel(): Level {
     district: params.get("d"),
     stage: params.get("s"),
     kp: params.get("kp"),
+    layer: params.get("ly"),
+    competency: params.get("c"),
   };
 }
 
 function writeLevel(level: Level, mode: "push" | "replace") {
   const params = new URLSearchParams(window.location.search);
-  for (const key of ["d", "s", "kp"]) params.delete(key);
+  for (const key of ["d", "s", "kp", "ly", "c"]) params.delete(key);
   if (level.district) params.set("d", level.district);
   if (level.stage) params.set("s", level.stage);
   if (level.kp) params.set("kp", level.kp);
+  if (level.layer) params.set("ly", level.layer);
+  if (level.competency) params.set("c", level.competency);
   const search = params.toString();
   const url = `${window.location.pathname}${search ? `?${search}` : ""}`;
   const state = { city: level };
@@ -48,9 +54,15 @@ function writeLevel(level: Level, mode: "push" | "replace") {
 
 function parentLevel(level: Level): Level {
   if (level.kp) return { ...level, kp: null };
-  if (level.stage) return { district: level.district, stage: null, kp: null };
-  if (level.district) return EMPTY;
-  return EMPTY;
+  if (level.stage) return { ...level, stage: null, kp: null };
+  if (level.district) return { ...level, district: null, kp: null };
+  return level;
+}
+
+function inFocus(building: { layer: string; competencies: string[] }, level: Level): boolean {
+  if (level.layer && building.layer !== level.layer) return false;
+  if (level.competency && !building.competencies.includes(level.competency)) return false;
+  return true;
 }
 
 function parseViewBox(value: string): [number, number, number, number] {
@@ -77,6 +89,8 @@ export function CityMapView({
   const [stored, setStored] = useState<StoredProgress>(emptyStoredProgress);
   const [viewBox, setViewBox] = useState(`0 0 ${data.size} ${data.size}`);
   const depth = useRef(0);
+  const levelRef = useRef(level);
+  levelRef.current = level;
   const mapRoot = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useRef<{ x: number; y: number; box: [number, number, number, number] } | null>(null);
@@ -111,16 +125,17 @@ export function CityMapView({
     stageIndex >= 0 ? stageIndex : null,
   );
 
-  const go = useCallback((next: Level, mode: "push" | "replace") => {
+  const go = useCallback((patch: Partial<Level>, historyMode: "push" | "replace") => {
+    const next = { ...levelRef.current, ...patch };
     setLevel(next);
     setLotId(null);
-    if (mode === "push") depth.current += 1;
-    writeLevel(next, mode);
+    if (historyMode === "push") depth.current += 1;
+    writeLevel(next, historyMode);
   }, []);
 
   useEffect(() => {
     const initial = readLevel();
-    if (initial.district || initial.stage || initial.kp) {
+    if (initial.district || initial.stage || initial.kp || initial.layer || initial.competency) {
       setLevel(initial);
       window.history.replaceState({ city: initial }, "", window.location.href);
     }
@@ -223,7 +238,7 @@ export function CityMapView({
 
   const openLot = (id: string) => {
     setLotId(id);
-    const next = { district: level.district, stage: level.stage, kp: null };
+    const next = { ...level, kp: null };
     setLevel(next);
     writeLevel(next, "replace");
   };
@@ -247,7 +262,11 @@ export function CityMapView({
   const filterBits = [
     level.district ? data.districts.find((district) => district.key === level.district)?.name : null,
     level.stage ? data.stages.find((stage) => stage.id === level.stage)?.name : null,
+    level.layer ? data.layers.find((layer) => layer.id === level.layer)?.name : null,
+    level.competency ? data.competencies.find((item) => item.code === level.competency)?.code : null,
   ].filter(Boolean);
+  const linkedIds = selected ? [...selected.prerequisites, ...selected.requiredBy].map((item) => item.id) : [];
+  const accept = (building: { layer: string; competencies: string[] }) => inFocus(building, level);
 
   return (
     <div ref={mapRoot} data-testid="city-experience" className="city-stack">
@@ -431,6 +450,32 @@ export function CityMapView({
             </button>
           ))}
         </div>
+        <div className="chips mb-3" role="group" aria-label="層級">
+          {data.layers.map((layer) => (
+            <button
+              key={layer.id}
+              type="button"
+              aria-pressed={level.layer === layer.id}
+              className="chip"
+              onClick={() => go({ layer: level.layer === layer.id ? null : layer.id, kp: null }, "push")}
+            >
+              {layer.name}
+            </button>
+          ))}
+        </div>
+        <div className="chips mb-3" role="group" aria-label="核心素養">
+          {data.competencies.map((item) => (
+            <button
+              key={item.code}
+              type="button"
+              aria-pressed={level.competency === item.code}
+              className="chip"
+              onClick={() => go({ competency: level.competency === item.code ? null : item.code, kp: null }, "push")}
+            >
+              {item.code} {item.name}
+            </button>
+          ))}
+        </div>
         {view === "map" ? (
           <div className="mb-4 md:hidden">
             <MobileDistricts
@@ -438,7 +483,9 @@ export function CityMapView({
               district={level.district}
               snapshot={snapshot}
               selectedId={selected?.id ?? null}
-              onDistrict={(id) => go(id ? { district: id, stage: null, kp: null } : EMPTY, "push")}
+              linkedIds={linkedIds}
+              accept={accept}
+              onDistrict={(id) => go(id ? { district: id, stage: null, kp: null } : { district: null, stage: null, kp: null }, "push")}
               onStage={(stageId) => go({ district: level.district, stage: stageId, kp: null }, "push")}
               onOpen={openBuilding}
               onLot={openLot}
@@ -541,6 +588,17 @@ export function CityMapView({
                 aria-hidden="true"
               />
             ) : null}
+            {selected ? (
+              <g data-testid="city-links" aria-hidden="true">
+                {linkedIds.map((id) => {
+                  const other = byId.get(id);
+                  if (!other) return null;
+                  return (
+                    <line key={id} x1={selected.x} y1={selected.y - selected.height / 2} x2={other.x} y2={other.y - other.height / 2} stroke="#ff5b22" strokeWidth={4} />
+                  );
+                })}
+              </g>
+            ) : null}
             {data.lots
               .filter((item) => item.featured)
               .map((item) => (
@@ -573,6 +631,8 @@ export function CityMapView({
               const body = draft ? "#46594f" : "#eef0ea";
               const roof = draft ? "#5a6e64" : color;
               const active = selected?.id === building.id;
+              const linked = linkedIds.includes(building.id);
+              const focused = inFocus(building, level);
               const shape = (
                 <>
                   {building.pointedRoof ? (
@@ -580,12 +640,12 @@ export function CityMapView({
                   ) : (
                     <rect x={building.x - w / 2 - 2} y={building.y - building.height - 5} width={w + 4} height={5} fill={roof} />
                   )}
-                  <rect className="body" x={building.x - w / 2} y={building.y - building.height} width={w} height={building.height} fill={body} stroke={active ? "#ff5b22" : "none"} strokeWidth={active ? 3 : 0} />
+                  <rect className="body" x={building.x - w / 2} y={building.y - building.height} width={w} height={building.height} fill={body} stroke={active || linked ? "#ff5b22" : "none"} strokeWidth={active || linked ? 3 : 0} />
                 </>
               );
               return (
-                <g key={building.id} opacity={level.district && level.district !== building.folder ? 0.4 : 1}>
-                  {draft ? (
+                <g key={building.id} opacity={!focused ? 0.16 : level.district && level.district !== building.folder ? 0.4 : 1}>
+                  {draft || !focused ? (
                     <g className="bld-d" aria-hidden="true">{shape}</g>
                   ) : (
                     <g
@@ -655,15 +715,22 @@ export function CityMapView({
           <span className="sample">範例資料</span>
         </div>
         </div>
-        {view === "list" ? <CityList data={data} snapshot={snapshot} selectedId={selected?.id ?? null} onOpen={openBuilding} /> : null}
+        {view === "list" ? (
+          <CityList data={data} snapshot={snapshot} selectedId={selected?.id ?? null} linkedIds={linkedIds} accept={accept} onOpen={openBuilding} />
+        ) : null}
         {view === "system" ? (
           <LayerOverview
             data={data}
             snapshot={snapshot}
             selectedId={selected?.id ?? null}
+            linkedIds={linkedIds}
+            accept={accept}
             activeStage={level.stage}
+            activeLayer={level.layer}
             onOpen={openBuilding}
             onLot={openLot}
+            onPickStage={(stageId) => go({ stage: level.stage === stageId ? null : stageId, kp: null }, "push")}
+            onPickLayer={(layerId) => go({ layer: level.layer === layerId ? null : layerId, kp: null }, "push")}
           />
         ) : null}
       </div>
@@ -679,11 +746,32 @@ export function CityMapView({
             <p className="mt-3 text-sm">高度 {selected.height}（被 {selected.dependents} 個知識點當先備）</p>
             <h3 className="mt-4 text-sm font-bold">先備</h3>
             <ul className="mt-1 text-sm leading-6">
-              {selected.prerequisites.length === 0 ? <li>沒有先備</li> : selected.prerequisites.map((item) => <li key={item.id}>{item.title}</li>)}
+              {selected.prerequisites.length === 0 ? <li>沒有先備</li> : selected.prerequisites.map((item) => (
+                <li key={item.id}>
+                  <button type="button" className="min-h-11 underline" onClick={() => openBuilding(item.id)}>{item.title}</button>
+                </li>
+              ))}
             </ul>
             <h3 className="mt-3 text-sm font-bold">被依賴</h3>
             <ul className="mt-1 text-sm leading-6">
-              {selected.requiredBy.length === 0 ? <li>還沒有知識點依賴它</li> : selected.requiredBy.map((item) => <li key={item.id}>{item.title}</li>)}
+              {selected.requiredBy.length === 0 ? <li>還沒有知識點依賴它</li> : selected.requiredBy.map((item) => (
+                <li key={item.id}>
+                  <button type="button" className="min-h-11 underline" onClick={() => openBuilding(item.id)}>{item.title}</button>
+                </li>
+              ))}
+            </ul>
+            <h3 className="mt-3 text-sm font-bold">核心素養</h3>
+            <ul className="mt-1 flex flex-wrap gap-2 text-sm">
+              {selected.competencies.length === 0 ? <li>沒有標</li> : selected.competencies.map((code) => {
+                const name = data.competencies.find((item) => item.code === code)?.name ?? code;
+                return (
+                  <li key={code}>
+                    <button type="button" className="chip" aria-pressed={level.competency === code} onClick={() => go({ competency: code }, "push")}>
+                      {code} {name}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
             <h3 className="mt-3 text-sm font-bold">所在主線</h3>
             <ul className="mt-1 text-sm leading-6">
