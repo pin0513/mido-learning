@@ -1,0 +1,46 @@
+id: pm.business@uni
+concept: pm.business
+title: 商業論證與專案治理
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.stakeholder@sh
+  - pm.triangle@jh
+links:
+  why:
+    - ph.applied@uni
+  how: []
+  related: []
+  deeper: []
+link_notes: 經濟學（機會成本、成本效益分析）、管理學、哲學（價值判斷）
+competency:
+  specialist:
+    - 專案治理
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 蒐集資料、試算財務指標
+  human_experience:
+    - 對價值做判斷，並承擔決策責任
+idea: 先問「值不值得做」：成本、效益、風險與策略是否一致；治理確保每個決策都有人負責。
+guiding_questions:
+  - 如果這個案子做成了卻沒有人受益，算成功嗎？
+scenario: 為一個校園或社區改善提案寫一頁商業論證，向模擬的指導委員會簡報。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

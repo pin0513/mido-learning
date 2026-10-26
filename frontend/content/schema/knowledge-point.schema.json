@@ -1,0 +1,263 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://learn.paulfun.net/schema/knowledge-point.schema.json",
+  "title": "KnowledgePoint",
+  "description": "Mido Learning 知識點。列舉值（階段、領域、素養代碼、議題、學科路徑、專才／通才標籤）以 taxonomy/ 為準，由驗證腳本另做檢查。本檔負責欄位形狀。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "concept",
+    "title",
+    "status",
+    "version",
+    "discipline",
+    "stage",
+    "to_verify",
+    "verify_notes",
+    "prerequisites",
+    "links",
+    "link_notes",
+    "competency",
+    "ai",
+    "idea",
+    "guiding_questions",
+    "scenario",
+    "formats",
+    "authors",
+    "updated"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "概念 id + @ + 階段，例如 pm.breakdown@es。全庫唯一。",
+      "pattern": "^[a-z]{2,8}\\.[a-z0-9]+@[a-z]{2,8}$"
+    },
+    "concept": {
+      "type": "string",
+      "description": "與 id 的 @ 前段相同。同一概念日後可有多個階段版本；這一輪每個概念只有一個階段。",
+      "pattern": "^[a-z]{2,8}\\.[a-z0-9]+$"
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["draft", "review", "published"] },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "description": "字串，避免 YAML 把 0.1 讀成數字。"
+    },
+    "discipline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "layer", "crosscutting"],
+      "properties": {
+        "path": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "layer": { "type": "string", "minLength": 1 },
+        "crosscutting": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level"],
+      "properties": {
+        "level": { "type": "string", "minLength": 1 },
+        "grades": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 12 },
+          "description": "選填。P1 多數知識點不標年級，因為年級落點仍待核對。"
+        }
+      }
+    },
+    "curriculum_108": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "只在國小、國中、高中填。大學不可出現這個欄位。代碼只允許 A1–C3。",
+      "required": ["domains", "core_competencies", "issues"],
+      "properties": {
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "core_competencies": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[ABC][123]$" }
+        },
+        "issues": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "to_verify": {
+      "type": "boolean",
+      "description": "設計文件標了「需要核對」時為 true，並在 verify_notes 寫下要核對的句子。"
+    },
+    "verify_notes": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "prerequisites": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/definitions/kpId" }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["why", "how", "related", "deeper"],
+      "properties": {
+        "why": {
+          "description": "往本質追問。每一項都必須是已存在的知識點 id。",
+          "$ref": "#/definitions/idList"
+        },
+        "how": {
+          "description": "往應用延伸。",
+          "$ref": "#/definitions/idList"
+        },
+        "related": {
+          "description": "平行相關。還沒有知識點的學門不要寫進這裡，改寫在 link_notes。",
+          "$ref": "#/definitions/idList"
+        },
+        "deeper": {
+          "description": "同一主線的下一個深度，可以有多條主線，所以是陣列。目標階段必須比自己後面。",
+          "$ref": "#/definitions/idList"
+        }
+      }
+    },
+    "link_notes": {
+      "type": "string",
+      "minLength": 1,
+      "description": "示範原稿的跨科句子，保留尚未建立知識點的學門名稱。"
+    },
+    "competency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specialist", "generalist"],
+      "properties": {
+        "specialist": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "generalist": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "ai": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["delegable", "human_experience"],
+      "properties": {
+        "delegable": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "human_experience": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "idea": { "type": "string", "minLength": 1, "description": "核心概念。" },
+    "guiding_questions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "示範原稿每個知識點只有一題，所以上限 3、下限 1，不為了湊數另寫題目。"
+    },
+    "scenario": { "type": "string", "minLength": 1, "description": "動手活動或生活情境。" },
+    "formats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slides"],
+      "properties": {
+        "slides": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "既有教材的 componentId。P1 留空。",
+          "items": { "type": "string", "pattern": "^[A-Za-z0-9_-]{1,128}$" }
+        },
+        "article": { "type": "string", "minLength": 1 },
+        "exercise": { "type": "string", "minLength": 1 },
+        "project": { "type": "string", "minLength": 1 },
+        "ai_prompt": { "type": "string", "minLength": 1 },
+        "game": { "type": "string", "minLength": 1 }
+      }
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "updated": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "stage": {
+            "type": "object",
+            "properties": { "level": { "const": "uni" } },
+            "required": ["level"]
+          }
+        },
+        "required": ["stage"]
+      },
+      "then": { "properties": { "curriculum_108": false } }
+    },
+    {
+      "if": {
+        "properties": {
+          "stage": {
+            "type": "object",
+            "properties": { "level": { "enum": ["es", "jh", "sh"] } },
+            "required": ["level"]
+          }
+        },
+        "required": ["stage"]
+      },
+      "then": { "required": ["curriculum_108"] }
+    },
+    {
+      "if": {
+        "properties": { "to_verify": { "const": true } },
+        "required": ["to_verify"]
+      },
+      "then": { "properties": { "verify_notes": { "type": "array", "minItems": 1 } } }
+    }
+  ],
+  "definitions": {
+    "kpId": {
+      "type": "string",
+      "pattern": "^[a-z]{2,8}\\.[a-z0-9]+@[a-z]{2,8}$"
+    },
+    "idList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/definitions/kpId" }
+    }
+  }
+}

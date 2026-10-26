@@ -1,0 +1,54 @@
+id: pm.project@jh
+concept: pm.project
+title: 什麼是「專案」？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.goal@es
+links:
+  why:
+    - ph.reason@es
+  how: []
+  related: []
+  deeper:
+    - pm.stakeholder@sh
+link_notes: 哲學（定義與分類）
+competency:
+  specialist:
+    - 規劃
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 舉更多例子讓你練習分類
+  human_experience:
+    - 從自己參與過的活動中歸納出專案的特徵
+idea: 專案有明確的開始與結束，要做出獨特的成果；和每天重複的日常工作不同。
+guiding_questions:
+  - 社團的每週練習是專案嗎？如果是為了比賽呢？
+scenario: 把生活中的例子分成「專案」與「日常」：校慶攤位、每天打掃、畢業旅行、社團練習。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

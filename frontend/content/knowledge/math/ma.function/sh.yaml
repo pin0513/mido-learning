@@ -1,0 +1,55 @@
+id: ma.function@sh
+concept: ma.function
+title: 函數的眼光：指數與對數
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 代數與函數
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.quadratic@jh
+  - ma.algebra@jh
+links:
+  why: []
+  how: []
+  related:
+    - it.ml@sh
+  deeper:
+    - ma.derivative@uni
+    - ma.diffeq@uni
+link_notes: 經濟（複利）、自然科學（地震、聲音）、生物（族群成長）
+competency:
+  specialist:
+    - 函數
+  generalist:
+    - 建模
+    - 跨域思考
+ai:
+  delegable:
+    - 快速試算、畫圖
+  human_experience:
+    - 感受「指數成長」違反直覺之處，連結自己的理財決定
+idea: 函數是「輸入一個值、得到一個值」的關係。指數成長一開始很慢，後來快得驚人；對數把很大的範圍壓縮成好比較的尺度。
+guiding_questions:
+  - 一張紙對摺 42 次會有多厚？先猜再算。
+scenario: 比較存款單利與複利 20 年的差別；用對數理解地震規模和分貝。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

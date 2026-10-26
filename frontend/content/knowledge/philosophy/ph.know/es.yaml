@@ -1,0 +1,54 @@
+id: ph.know@es
+concept: ph.know
+title: 我怎麼知道的？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 知識論
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 自然科學
+    - 語文
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.fact@es
+links:
+  why: []
+  how: []
+  related:
+    - it.machine@es
+  deeper:
+    - ph.evidence@jh
+link_notes: 自然科學（觀察）、資訊與 AI
+competency:
+  specialist:
+    - 知識論
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 示範「AI 也會猜錯」的例子
+  human_experience:
+    - 親自比較摸到、聽到和聽說的差別
+idea: 我們知道一件事，可能是親眼看到、聽別人說、或自己推想。不同的來源，可信度不一樣，機器說的也要想一想。
+guiding_questions:
+  - 聽說的事情，要怎麼確認是真的？
+scenario: 神祕箱猜物：只能摸、只能聽或只能聽同學描述，猜完說出你是靠什麼知道的。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,227 @@
+# 學科樹。知識點的 discipline.path 用「名稱」由上往下走，layer 必須等於葉子的層級。
+# 子節點沒寫 layer 時，沿用父節點。
+# id_prefix 與 content_folder 只標在這一輪有知識點的根節點。
+# 沒有知識點的節點先留著，讓後面的學門有地方掛，驗證器不會要求每個節點都有檔案。
+
+layers:
+  - id: essence
+    name: 本質層
+    role: 知識點的 why 最終指向這裡。
+  - id: foundation
+    name: 基礎科學
+    role: 國小到國中的主體，對應課綱領域。
+  - id: advanced
+    name: 進階理論
+    role: 高中到大學，連結本質與應用。
+  - id: applied
+    name: 應用領域
+    role: 知識點的 how 最終落在這裡。
+
+crosscutting:
+  - id: aesthetics
+    name: 美學
+    note: 美感、藝術創作、設計。可掛在任何層，不取代 discipline.path。
+
+disciplines:
+  - id: philosophy
+    name: 哲學
+    layer: essence
+    id_prefix: ph
+    content_folder: philosophy
+    summary: 邏輯、知識論、倫理與思考方法。不是背哲學家名字。
+    children:
+      - id: thinking
+        name: 思考方法
+        children:
+          - id: inquiry
+            name: 提問與探究
+          - id: logic
+            name: 邏輯與論證
+          - id: critical
+            name: 批判思考
+          - id: epistemology
+            name: 知識論
+          - id: ethics
+            name: 倫理
+          - id: systems
+            name: 系統思考
+          - id: ai-judgment
+            name: AI 時代判斷
+
+  - id: psychology
+    name: 心理學
+    layer: essence
+    summary: 認知、動機、團隊與習慣。這一輪還沒有獨立知識點，只先占位。
+    children:
+      - id: cognition
+        name: 認知
+      - id: motivation
+        name: 動機
+
+  - id: math
+    name: 數學
+    layer: essence
+    id_prefix: ma
+    content_folder: math
+    summary: 量、結構、推理。本批知識點都掛在本質層，含微積分入口。
+    children:
+      - id: quantity
+        name: 數與量
+      - id: geometry
+        name: 幾何與空間
+      - id: algebra
+        name: 代數與函數
+      - id: data
+        name: 資料與機率
+      - id: analysis
+        name: 分析
+        children:
+          - id: rate
+            name: 變化率
+          - id: modeling
+            name: 建模
+      - id: reasoning
+        name: 推理
+      - id: linear-algebra
+        name: 線性代數
+      - id: beauty
+        name: 數學之美
+
+  - id: scientific-method
+    name: 科學方法
+    layer: essence
+    summary: 假設、實驗、可檢驗與會修正。這一輪以哲學主線裡的探究知識點帶過。
+
+  - id: management
+    name: 管理
+    layer: essence
+    id_prefix: pm
+    content_folder: pm-leadership
+    summary: 目標、資源、人。專案管理與領導這一輪掛在本質層。
+    children:
+      - id: pm
+        name: 專案管理與領導
+        children:
+          - id: planning
+            name: 規劃
+          - id: team
+            name: 團隊
+          - id: risk
+            name: 風險
+          - id: leadership
+            name: 領導
+          - id: review
+            name: 回顧
+
+  - id: biology
+    name: 生物
+    layer: foundation
+    summary: 尚未建立知識點。
+
+  - id: physical-science
+    name: 理化
+    layer: foundation
+    summary: 國中階段的理化統稱。尚未建立知識點。
+
+  - id: earth-science
+    name: 地球科學
+    layer: foundation
+    summary: 尚未建立知識點。
+
+  - id: information
+    name: 資訊
+    layer: foundation
+    id_prefix: it
+    content_folder: it-ai
+    summary: 運算思維在基礎層；人工智慧與軟體系統在進階層。
+    children:
+      - id: computational-thinking
+        name: 運算思維
+      - id: data-representation
+        name: 資料表示
+      - id: networking
+        name: 網路
+      - id: digital-literacy
+        name: 數位素養
+      - id: ai
+        name: 人工智慧
+        layer: advanced
+        children:
+          - id: machine-learning
+            name: 機器學習
+          - id: language-model
+            name: 語言模型
+          - id: data-analysis
+            name: 資料分析
+          - id: ai-systems
+            name: AI 系統
+          - id: ai-ethics
+            name: AI 倫理
+      - id: software
+        name: 軟體與系統
+        layer: advanced
+
+  - id: language
+    name: 語文與溝通
+    layer: foundation
+    summary: 尚未建立知識點。溝通目前先標在通才素養。
+
+  - id: society
+    name: 社會
+    layer: foundation
+    summary: 尚未建立知識點。
+
+  - id: physics
+    name: 物理
+    layer: advanced
+    summary: 尚未建立知識點。數學與資訊的 link_notes 會先點名物理。
+
+  - id: chemistry
+    name: 化學
+    layer: advanced
+    summary: 尚未建立知識點。
+
+  - id: calculus
+    name: 微積分
+    layer: advanced
+    summary: 進階理論裡的位置。本批微積分知識點仍掛在本質層「數學／分析」，避免同一批 id 拆成兩個學門。
+
+  - id: statistics
+    name: 統計
+    layer: advanced
+    summary: 進階理論裡的位置。本批統計知識點掛在「數學／資料與機率」。
+
+  - id: economics
+    name: 經濟學
+    layer: advanced
+    summary: 尚未建立知識點。
+
+  - id: organizational-behavior
+    name: 組織行為
+    layer: advanced
+    summary: 尚未建立知識點。心理安全感等主題目前在專案管理與領導。
+
+  - id: civil
+    name: 土木與建築
+    layer: applied
+    summary: 尚未建立知識點。
+
+  - id: construction
+    name: 營建管理
+    layer: applied
+    summary: 尚未建立知識點。
+
+  - id: engineering
+    name: 工程
+    layer: applied
+    summary: 尚未建立知識點。
+
+  - id: enterprise
+    name: 企業管理與專案管理
+    layer: applied
+    summary: 應用層的實務案例位。這一輪的專案管理知識點掛在本質層「管理」，不掛在這裡。
+
+  - id: ai-applied
+    name: AI 應用
+    layer: applied
+    summary: 尚未建立知識點。人機協作目前在「資訊／人工智慧」。

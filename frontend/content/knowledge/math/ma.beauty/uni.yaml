@@ -1,0 +1,45 @@
+id: ma.beauty@uni
+concept: ma.beauty
+title: 對稱與結構：數學之美
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 數學之美
+  layer: essence
+  crosscutting:
+    - aesthetics
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.linalg@uni
+  - ma.proof@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 藝術（紋樣與設計）、土木與建築、哲學（美學）
+competency:
+  specialist:
+    - 幾何
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 生成碎形與對稱圖樣
+  human_experience:
+    - 實地觀察並說出「為什麼覺得美」
+idea: 對稱、比例、碎形和簡潔的證明，讓數學有一種獨特的美。對稱可以被精確描述，甚至分類。
+guiding_questions:
+  - 一個證明「很美」，是什麼意思？
+scenario: 收集台灣傳統窗花、磁磚與廟宇紋樣，分析其中的對稱類型；用程式畫出碎形。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

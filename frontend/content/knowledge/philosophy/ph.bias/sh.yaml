@@ -1,0 +1,53 @@
+id: ph.bias@sh
+concept: ph.bias
+title: 認知偏誤與思考盲點
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 批判思考
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - C1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.fallacy@jh
+links:
+  why: []
+  how:
+    - pm.estimate@sh
+  related: []
+  deeper:
+    - ph.philsci@uni
+link_notes: 心理學（認知心理）、專案管理（WBS 與三點估算：計畫謬誤）
+competency:
+  specialist:
+    - 批判思考
+  generalist:
+    - 查證
+    - 跨域思考
+ai:
+  delegable:
+    - 解釋偏誤概念、提醒可能的盲點
+  human_experience:
+    - 誠實面對自己的盲點
+idea: 人腦有省力的捷徑，也因此有固定的盲點，例如確認偏誤、從眾、錨定效應。認識它們才能踩煞車。
+guiding_questions:
+  - 你最近一次只找「支持自己」的資料是什麼時候？
+scenario: 寫一週「決策日記」，記下每個決定的理由，週末找出可能的偏誤。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

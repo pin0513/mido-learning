@@ -1,0 +1,54 @@
+# 主線是知識點 id 的有序清單。知識點的 links.deeper 由下一階的 id 產生。
+id: pm-leadership
+title: 專案管理與領導
+paths:
+  - id: pm.goal
+    title: 目標與價值
+    knowledge_points:
+      - pm.goal@es
+      - pm.project@jh
+      - pm.stakeholder@sh
+      - pm.business@uni
+  - id: pm.estimate
+    title: 拆解與估算
+    knowledge_points:
+      - pm.breakdown@es
+      - pm.triangle@jh
+      - pm.estimate@sh
+      - pm.evm@uni
+    colearn: 孩子讀國小版「大事拆成小事」，大人讀高中版「WBS 與三點估算」，一起規劃一次家庭出遊，結束後開星星與願望回顧。
+  - id: pm.schedule
+    title: 時間與排程
+    knowledge_points:
+      - pm.sequence@es
+      - pm.gantt@jh
+      - pm.cpm@sh
+      - pm.schedule@uni
+  - id: pm.team
+    title: 團隊與溝通
+    knowledge_points:
+      - pm.roles@es
+      - pm.team@jh
+      - pm.conflict@sh
+      - pm.org@uni
+  - id: pm.risk
+    title: 風險與不確定
+    knowledge_points:
+      - pm.planb@es
+      - pm.risk@jh
+      - pm.agile@sh
+      - pm.complexity@uni
+  - id: pm.lead
+    title: 領導
+    knowledge_points:
+      - pm.roles@es
+      - pm.lead@jh
+      - pm.style@sh
+      - pm.org@uni
+  - id: pm.reflect
+    title: 回顧與 AI 協作
+    knowledge_points:
+      - pm.retro@es
+      - pm.team@jh
+      - pm.agile@sh
+      - pm.aiteam@uni

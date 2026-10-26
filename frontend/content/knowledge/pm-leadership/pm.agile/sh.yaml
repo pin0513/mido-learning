@@ -1,0 +1,57 @@
+id: pm.agile@sh
+concept: pm.agile
+title: 敏捷與迭代
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 回顧
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.retro@es
+  - pm.gantt@jh
+links:
+  why: []
+  how: []
+  related:
+    - ph.hypothesis@jh
+    - it.build@sh
+  deeper:
+    - pm.complexity@uni
+    - pm.aiteam@uni
+link_notes: 科學方法（假設與驗證）、資訊（軟體開發）、藝術（創作的反覆修改）
+competency:
+  specialist:
+    - 敏捷
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 快速產生原型、整理回饋
+  human_experience:
+    - 面對批評調整方向、判斷何時該停
+idea: 需求不確定時，與其一次規劃到底，不如先做小版本、拿回饋、再改進。
+guiding_questions:
+  - 什麼樣的專案適合一次規劃到底？什麼樣的適合邊做邊改？
+scenario: 專題製作分成 3 個兩週的衝刺，每次結束都展示成果給同學回饋。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

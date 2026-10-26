@@ -1,0 +1,55 @@
+id: it.data@es
+concept: it.data
+title: 資訊怎麼表示：0 與 1
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 資料表示
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+prerequisites:
+  - it.pattern@es
+links:
+  why: []
+  how: []
+  related:
+    - ma.number@es
+  deeper:
+    - it.datatable@jh
+    - it.network@jh
+link_notes: 藝術（像素藝術）、數學（數與量）
+competency:
+  specialist:
+    - 資料表示
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 把照片轉成像素格示範
+  human_experience:
+    - 親手編碼、解碼，體會資訊可以被傳遞
+idea: 電腦裡的文字、圖片、聲音，最後都變成 0 和 1。一張圖片就是很多小方格（像素）。
+guiding_questions:
+  - 格子越多，圖片會怎麼樣？檔案會怎麼樣？
+scenario: 在方格紙上用「塗黑＝1、空白＝0」畫像素畫，把數字唸給同學聽，看他能不能畫出一樣的圖。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

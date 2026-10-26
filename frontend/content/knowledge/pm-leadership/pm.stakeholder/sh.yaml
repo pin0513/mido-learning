@@ -1,0 +1,55 @@
+id: pm.stakeholder@sh
+concept: pm.stakeholder
+title: 利害關係人
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.team@jh
+  - pm.project@jh
+links:
+  why: []
+  how: []
+  related:
+    - ph.systems@sh
+  deeper:
+    - pm.business@uni
+link_notes: 社會（公民與社會、多元觀點）、心理學（同理）
+competency:
+  specialist:
+    - 規劃
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 模擬不同利害關係人的立場與提問
+  human_experience:
+    - 實際訪談老師、家長、同學，理解他們的感受
+idea: 專案會影響很多人，也受很多人影響。找出他們、了解他們在乎什麼，是成功的前提。
+guiding_questions:
+  - 誰沒有出現在你的名單上，卻可能讓專案失敗？
+scenario: 社團成果展：畫利害關係人地圖（影響力 × 關心程度），擬定溝通計畫。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

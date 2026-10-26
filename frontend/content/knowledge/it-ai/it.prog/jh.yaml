@@ -1,0 +1,55 @@
+id: it.prog@jh
+concept: it.prog
+title: 程式設計：變數、迴圈、函式
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 運算思維
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 科技
+    - 數學
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.blocks@es
+  - it.algo@jh
+links:
+  why: []
+  how: []
+  related:
+    - ma.algebra@jh
+  deeper:
+    - it.build@sh
+link_notes: 數學（用字母代表數）
+competency:
+  specialist:
+    - 程式設計
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 解釋錯誤訊息、提示寫法
+  human_experience:
+    - 自己除錯、忍受卡關、體會做出來的成就感
+idea: 變數記住資料、迴圈重複工作、函式把常用的步驟包起來重複使用。寫程式就是把想法變成可以執行的步驟。
+guiding_questions:
+  - 為什麼程式「看起來對」卻跑出錯的結果？
+scenario: 寫一個「班級零用錢記帳」小程式，或一個猜數字遊戲，並請同學試玩找 bug。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

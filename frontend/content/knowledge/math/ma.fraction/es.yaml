@@ -1,0 +1,52 @@
+id: ma.fraction@es
+concept: ma.fraction
+title: 分數：把一個東西平分
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 數與量
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.number@es
+links:
+  why:
+    - ph.fair@es
+  how: []
+  related: []
+  deeper:
+    - ma.similar@jh
+link_notes: 哲學（怎樣才公平？）
+competency:
+  specialist:
+    - 數感
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 產生視覺化的分數圖
+  human_experience:
+    - 親手摺、切、比較大小
+idea: 分數是「把一個整體平分成幾份，取其中幾份」。一樣大的東西，分越多份，每份越小。
+guiding_questions:
+  - 一個披薩分給 3 個人和分給 4 個人，誰拿到比較多？
+scenario: 摺紙與切披薩：用摺紙做出 1/2、1/4、1/8，比較哪一份大，再討論 2/4 和 1/2 一不一樣。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,47 @@
+id: pm.schedule@uni
+concept: pm.schedule
+title: 排程與資源最佳化
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.cpm@sh
+  - pm.estimate@sh
+links:
+  why: []
+  how: []
+  related:
+    - ma.probmodel@uni
+    - it.ds@sh
+  deeper: []
+link_notes: 數學（線性規劃、機率分布）、資訊（演算法）、土木與營建管理
+competency:
+  specialist:
+    - 排程
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 執行最佳化與模擬（例如蒙地卡羅模擬）
+  human_experience:
+    - 判斷模型與現場的落差、與包商協調
+idea: 結合 CPM／PERT 與資源限制，用模型找出較好的排程，同時理解模型背後的假設。
+guiding_questions:
+  - 模型算出的「最佳」排程，現場的人做得到嗎？
+scenario: 以小型建物施工為例做資源平準化，比較不同排程方案。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

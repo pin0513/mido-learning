@@ -1,0 +1,52 @@
+id: ma.number@es
+concept: ma.number
+title: 數感：大概有多少？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 數與量
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites: []
+links:
+  why: []
+  how:
+    - pm.estimate@sh
+  related: []
+  deeper:
+    - ma.quadratic@jh
+link_notes: 專案管理（估算時間）、自然科學（觀察）
+competency:
+  specialist:
+    - 數感
+  generalist:
+    - 用數據說明
+    - 跨域思考
+ai:
+  delegable:
+    - 出更多估算題目
+  human_experience:
+    - 親手數、比較自己的估計差多少
+idea: 數學不只是算對，還要有「大概有多少」的感覺。先估再數，估得越來越準，就是數感。
+guiding_questions:
+  - 不用一顆一顆數，有什麼方法可以知道大概有多少？
+scenario: 估一罐豆子有幾顆：先猜，再數 50 顆的高度，用「一份有多少」推估全部，最後真的數一次。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

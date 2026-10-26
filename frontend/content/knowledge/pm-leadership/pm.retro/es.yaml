@@ -1,0 +1,54 @@
+id: pm.retro@es
+concept: pm.retro
+title: 回顧：哪裡好、哪裡可以更好
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 回顧
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.roles@es
+links:
+  why: []
+  how: []
+  related:
+    - ph.hypothesis@jh
+  deeper:
+    - pm.team@jh
+link_notes: 科學方法（觀察與改進）、心理學（成長心態）
+competency:
+  specialist:
+    - 回顧
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 把大家的回饋整理成清單
+  human_experience:
+    - 誠實面對自己的表現、給別人友善的回饋
+idea: 活動結束不是終點。說出做得好的地方和可以改進的地方，下次會更好。
+guiding_questions:
+  - 下次再辦一次，你最想改變的一件事是什麼？
+scenario: 同樂會後開 10 分鐘「星星與願望」回顧會：星星是做得好的事，願望是下次希望改進的事。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

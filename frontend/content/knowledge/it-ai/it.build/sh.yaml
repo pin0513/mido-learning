@@ -1,0 +1,58 @@
+id: it.build@sh
+concept: it.build
+title: 和 AI 一起做專題
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - AI 系統
+  layer: advanced
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 科技
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.prog@jh
+  - it.llm@sh
+links:
+  why:
+    - ph.aijudge@sh
+  how:
+    - pm.agile@sh
+  related: []
+  deeper:
+    - it.swe@uni
+    - it.creative@uni
+link_notes: 專案管理（敏捷與迭代）、哲學（判斷 AI 的回答）
+competency:
+  specialist:
+    - 程式設計
+  generalist:
+    - 團隊合作
+    - 跨域思考
+ai:
+  delegable:
+    - 產生程式草稿、除錯建議、文件
+  human_experience:
+    - 定義需求、測試、判斷是否真的解決問題
+idea: AI 可以幫忙寫程式、找資料、做原型，但題目、品質把關和最後的責任在你。重點是分工與驗證。
+guiding_questions:
+  - 如果你看不懂 AI 寫的程式，你敢交出去嗎？
+scenario: 和 AI 協作做一個解決校園小問題的工具（如社團報名表），記錄每一步誰做了什麼、哪裡被 AI 帶錯。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,57 @@
+# 主線是知識點 id 的有序清單。知識點的 links.deeper 由下一階的 id 產生。
+id: philosophy
+title: 哲學與思考方法
+paths:
+  - id: ph.inquiry
+    title: 提問與科學探究
+    knowledge_points:
+      - ph.question@es
+      - ph.hypothesis@jh
+      - ph.science@sh
+      - ph.philsci@uni
+  - id: ph.logic
+    title: 邏輯與論證
+    knowledge_points:
+      - ph.reason@es
+      - ph.argument@jh
+      - ph.logic@sh
+      - ph.formal@uni
+  - id: ph.critical
+    title: 批判思考
+    knowledge_points:
+      - ph.fact@es
+      - ph.fallacy@jh
+      - ph.bias@sh
+      - ph.philsci@uni
+    colearn: 孩子讀「事實還是意見？」，大人讀「認知偏誤與思考盲點」，一起檢查一張廣告單和一則群組訊息。
+  - id: ph.epistemology
+    title: 知識論
+    knowledge_points:
+      - ph.know@es
+      - ph.evidence@jh
+      - ph.tok@sh
+      - ph.epistem@uni
+  - id: ph.ethics
+    title: 倫理與價值
+    knowledge_points:
+      - ph.fair@es
+      - ph.ethics@jh
+      - ph.ethicstheory@sh
+      - ph.applied@uni
+    colearn: 孩子讀「怎樣才公平？」，大人讀「倫理學的三種視角」，用家庭會議決定家事或零用錢怎麼分。
+  - id: ph.systems
+    title: 系統思考
+    knowledge_points:
+      - ph.parts@es
+      - ph.feedback@jh
+      - ph.systems@sh
+      - ph.complex@uni
+    colearn: 孩子讀「部分與整體」，大人讀「系統思考：槓桿點與非預期後果」，一起畫出家裡某個反覆發生的系統圖。
+  - id: ph.ai
+    title: AI 時代判斷
+    knowledge_points:
+      - ph.fact@es
+      - ph.evidence@jh
+      - ph.aijudge@sh
+      - ph.aimind@uni
+    colearn: 孩子讀「我怎麼知道的？」，大人讀「AI 時代的思考：人機分工與判斷」，一起問 AI 同一個問題再查證。

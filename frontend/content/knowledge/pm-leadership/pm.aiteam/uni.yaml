@@ -1,0 +1,47 @@
+id: pm.aiteam@uni
+concept: pm.aiteam
+title: 決策、倫理與 AI 協作
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 回顧
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.business@uni
+  - pm.complexity@uni
+links:
+  why:
+    - ph.aimind@uni
+  how: []
+  related:
+    - it.hcai@uni
+  deeper: []
+link_notes: 哲學（倫理與責任）、心理學（認知偏誤）、資訊與 AI
+competency:
+  specialist:
+    - 專案治理
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 排程、文件、風險清單、會議紀錄等大量工作
+  human_experience:
+    - 定義問題、價值判斷、對人負責
+idea: AI 能處理大量規劃與分析，但目標設定、價值取捨與責任承擔仍在人身上。學會把 AI 當隊友來分工。
+guiding_questions:
+  - 如果 AI 的建議造成損失，責任在誰？
+scenario: 用 AI 助理規劃一個專案，記錄哪些決定交給 AI、哪些自己做，並反思理由。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

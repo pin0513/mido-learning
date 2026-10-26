@@ -1,0 +1,56 @@
+id: ma.prob@jh
+concept: ma.prob
+title: 機率入門：猜得準嗎？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 資料與機率
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+  - 畢氏定理、二次函數、機率、速率等單元的年級落點本檔只寫到階段，未標年級。
+prerequisites:
+  - ma.fraction@es
+  - ma.data@es
+links:
+  why:
+    - ph.evidence@jh
+  how:
+    - pm.risk@jh
+  related: []
+  deeper:
+    - ma.stats@sh
+link_notes: 專案管理（風險：可能性 × 影響）、哲學（證據）
+competency:
+  specialist:
+    - 機率統計
+  generalist:
+    - 用數據說明
+    - 跨域思考
+ai:
+  delegable:
+    - 模擬擲一萬次骰子
+  human_experience:
+    - 親手擲、記錄，感受隨機的「不規則」
+idea: 機率描述「多可能發生」。擲越多次，實驗結果會越接近理論機率。
+guiding_questions:
+  - 連續 5 次擲到 6，下一次擲到 6 的機會變大還是變小？
+scenario: 全班各擲骰子 60 次，合併結果，比較每個點數出現的次數和理論值。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

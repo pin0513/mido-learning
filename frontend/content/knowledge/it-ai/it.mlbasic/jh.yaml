@@ -1,0 +1,55 @@
+id: it.mlbasic@jh
+concept: it.mlbasic
+title: 機器學習初探：訓練、測試與偏誤
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 數位素養
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 科技
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.machine@es
+  - it.datatable@jh
+links:
+  why:
+    - ph.fallacy@jh
+  how: []
+  related:
+    - ma.prob@jh
+  deeper:
+    - it.ml@sh
+link_notes: 數學（機率入門）、哲學（以偏概全）
+competency:
+  specialist:
+    - 機器學習
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 執行訓練並回報準確率
+  human_experience:
+    - 設計資料、分析錯誤原因
+idea: 機器學習用「訓練資料」學規律，再用沒看過的「測試資料」檢查。訓練資料有偏，模型就會有偏。
+guiding_questions:
+  - 準確率 95%，代表它可以放心用嗎？
+scenario: 訓練一個分辨垃圾分類的影像模型，分出訓練組和測試組，計算準確率，找出常錯的類別。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

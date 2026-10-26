@@ -1,0 +1,44 @@
+id: ma.integral@uni
+concept: ma.integral
+title: 積分：累積與面積
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 分析
+    - 變化率
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.derivative@uni
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 物理（位移、功）、土木與建築（面積、體積、受力）
+competency:
+  specialist:
+    - 微積分
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 數值積分、符號運算
+  human_experience:
+    - 連結「變化」與「累積」的直覺
+idea: 積分是把很多很小的量累積起來。微積分基本定理說：累積和變化率是一體兩面。
+guiding_questions:
+  - 知道每一刻的速度，就能知道走了多遠嗎？
+scenario: 從腳踏車碼表每秒的速度紀錄，算出總距離，再和地圖量的距離比較。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

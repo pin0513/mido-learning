@@ -1,0 +1,54 @@
+id: ma.proof@sh
+concept: ma.proof
+title: 證明與數學歸納法
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 推理
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.pythag@jh
+  - ma.pattern@es
+links:
+  why:
+    - ph.logic@sh
+  how: []
+  related:
+    - it.ds@sh
+  deeper:
+    - ma.limit@uni
+link_notes: 哲學（演繹、歸納與溯因）、資訊（遞迴）
+competency:
+  specialist:
+    - 證明
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 檢查證明的每一步
+  human_experience:
+    - 自己寫出完整證明，找出哪一步最容易出錯
+idea: 數學歸納法像推骨牌：證明第一塊會倒，也證明每一塊倒了會推倒下一塊，就知道全部都會倒。
+guiding_questions:
+  - 數學歸納法是「歸納」還是「演繹」？
+scenario: 用骨牌示範，再證明 1 + 3 + 5 + …… 的前 n 項和等於 n²，連回國小的積木圖形。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

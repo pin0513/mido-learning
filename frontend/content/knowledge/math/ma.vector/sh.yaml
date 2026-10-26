@@ -1,0 +1,53 @@
+id: ma.vector@sh
+concept: ma.vector
+title: 向量與空間
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 幾何與空間
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 數學
+    - 自然科學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.coord@jh
+  - ma.trig@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ma.linalg@uni
+link_notes: 物理（力學）、資訊（3D 繪圖、遊戲）
+competency:
+  specialist:
+    - 幾何
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 做 3D 視覺化
+  human_experience:
+    - 親身感受力的合成
+idea: 向量同時有大小和方向，可以描述位移、力和速度；在空間中，用三個坐標描述位置。
+guiding_questions:
+  - 兩個人往不同方向拉，箱子會往哪裡走？
+scenario: 兩人用繩子拉一個箱子，量出各自的力和方向，用向量合成預測箱子移動方向。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,54 @@
+id: pm.goal@es
+concept: pm.goal
+title: 目標：我們想完成什麼？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues:
+    - 生涯規劃教育
+to_verify: false
+verify_notes: []
+prerequisites: []
+links:
+  why:
+    - ph.question@es
+  how: []
+  related: []
+  deeper:
+    - pm.project@jh
+link_notes: 語文（表達與聆聽）、哲學（為什麼要做這件事）
+competency:
+  specialist:
+    - 規劃
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 提供活動點子、把大家的想法整理成清單
+  human_experience:
+    - 和同學討論、聽見不同意見後達成共識
+idea: 動手之前，先說清楚「成功長什麼樣子」。大家心裡的畫面一樣，才不會各做各的。
+guiding_questions:
+  - 如果同樂會結束後大家都很開心，那是因為我們做對了什麼？
+scenario: 班級同樂會：每人畫一張「同樂會成功的樣子」，再一起挑出大家都同意的三件事。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

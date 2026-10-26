@@ -1,0 +1,45 @@
+id: ma.limit@uni
+concept: ma.limit
+title: 極限與連續
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 分析
+    - 變化率
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.rate@sh
+  - ma.sequence@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 哲學（無窮與悖論）、資訊（數值計算）
+competency:
+  specialist:
+    - 微積分
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 畫圖、數值逼近
+  human_experience:
+    - 理解嚴謹定義為什麼必要
+idea: 極限精確描述「無限接近」：要多接近都做得到。這讓微積分從直覺變成嚴謹。
+guiding_questions:
+  - 0.999…… 等於 1 嗎？怎麼說服別人？
+scenario: 用程式畫出函數在某點附近的放大圖，逐步縮小範圍，觀察極限是否存在。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

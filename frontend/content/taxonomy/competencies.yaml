@@ -1,0 +1,155 @@
+# 能力軸：專才、通才，以及 AI 分工的說明。
+# 108 課綱核心素養代碼只放在 curriculum-108.yaml，而且只到 A1–C3。
+# 這裡的名稱是網站自己的技能標籤，不是課綱學習表現代碼。
+
+axes:
+  - id: specialist
+    name: 專才
+    note: 這個知識點主要在練的學科技能。
+  - id: generalist
+    name: 通才
+    note: 溝通、領導、專案管理、跨域思考等可遷移能力。從國小就可以標。
+  - id: ai_division
+    name: AI 分工
+    note: 不是代碼清單。每個知識點用 ai.delegable 與 ai.human_experience 分開寫。
+
+generalist:
+  - id: communication
+    name: 溝通
+  - id: leadership
+    name: 領導
+  - id: teamwork
+    name: 團隊合作
+  - id: project_management
+    name: 專案管理
+  - id: interdisciplinary
+    name: 跨域思考
+  - id: media_literacy
+    name: 媒體素養
+  - id: questioning
+    name: 提問
+  - id: verification
+    name: 查證
+  - id: modeling
+    name: 建模
+  - id: data_explanation
+    name: 用數據說明
+
+specialist:
+  - id: planning
+    name: 規劃
+    disciplines: [pm-leadership]
+  - id: scheduling
+    name: 排程
+    disciplines: [pm-leadership]
+  - id: risk
+    name: 風險管理
+    disciplines: [pm-leadership]
+  - id: teamwork_practice
+    name: 團隊合作實作
+    disciplines: [pm-leadership]
+  - id: leadership_practice
+    name: 領導
+    disciplines: [pm-leadership]
+  - id: retrospective
+    name: 回顧
+    disciplines: [pm-leadership]
+  - id: estimation
+    name: 估算
+    disciplines: [pm-leadership]
+  - id: agile
+    name: 敏捷
+    disciplines: [pm-leadership]
+  - id: governance
+    name: 專案治理
+    disciplines: [pm-leadership]
+  - id: inquiry
+    name: 探究
+    disciplines: [philosophy]
+  - id: argumentation
+    name: 論證
+    disciplines: [philosophy]
+  - id: critical_thinking
+    name: 批判思考
+    disciplines: [philosophy]
+  - id: ethics
+    name: 倫理推理
+    disciplines: [philosophy]
+  - id: epistemology
+    name: 知識論
+    disciplines: [philosophy]
+  - id: systems
+    name: 系統思考
+    disciplines: [philosophy]
+  - id: scientific_inquiry
+    name: 科學探究
+    disciplines: [philosophy]
+  - id: number_sense
+    name: 數感
+    disciplines: [math]
+  - id: geometry
+    name: 幾何
+    disciplines: [math]
+  - id: measurement
+    name: 測量
+    disciplines: [math]
+  - id: algebra
+    name: 代數
+    disciplines: [math]
+  - id: functions
+    name: 函數
+    disciplines: [math]
+  - id: probability
+    name: 機率統計
+    disciplines: [math]
+  - id: proof
+    name: 證明
+    disciplines: [math]
+  - id: calculus
+    name: 微積分
+    disciplines: [math]
+  - id: linear_algebra
+    name: 線性代數
+    disciplines: [math]
+  - id: math_modeling
+    name: 數學建模
+    disciplines: [math]
+  - id: computational_thinking
+    name: 運算思維
+    disciplines: [it-ai]
+  - id: programming
+    name: 程式設計
+    disciplines: [it-ai]
+  - id: data_representation
+    name: 資料表示
+    disciplines: [it-ai]
+  - id: algorithms
+    name: 演算法
+    disciplines: [it-ai]
+  - id: networking
+    name: 網路
+    disciplines: [it-ai]
+  - id: security
+    name: 資訊安全
+    disciplines: [it-ai]
+  - id: data_analysis
+    name: 資料分析
+    disciplines: [it-ai]
+  - id: machine_learning
+    name: 機器學習
+    disciplines: [it-ai]
+  - id: ai_principles
+    name: AI 原理
+    disciplines: [it-ai]
+  - id: software_engineering
+    name: 軟體工程
+    disciplines: [it-ai]
+  - id: ai_governance
+    name: AI 治理
+    disciplines: [it-ai]
+  - id: digital_literacy
+    name: 數位素養
+    disciplines: [it-ai]
+  - id: generative_art
+    name: 生成藝術
+    disciplines: [it-ai]

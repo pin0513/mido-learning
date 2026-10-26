@@ -1,0 +1,59 @@
+id: ma.rate@sh
+concept: ma.rate
+title: 從平均變化率到瞬間變化率
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 分析
+    - 變化率
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 數學
+    - 自然科學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+  - 畢氏定理、二次函數、機率、速率等單元的年級落點本檔只寫到階段，未標年級。
+prerequisites:
+  - ma.coord@jh
+  - ma.sequence@sh
+links:
+  why:
+    - ph.logic@sh
+  how:
+    - pm.schedule@uni
+  related: []
+  deeper:
+    - ma.integral@uni
+    - ma.limit@uni
+link_notes: 物理（速度）、經濟（成長率）
+competency:
+  specialist:
+    - 微積分
+  generalist:
+    - 建模
+    - 跨域思考
+ai:
+  delegable:
+    - 從影片資料計算變化率
+  human_experience:
+    - 親自量測，體會「越來越接近」的意義
+idea: 平均速度是「總距離 ÷ 總時間」。把時間間隔縮得越來越短，就逼近某一瞬間的速度：這是微積分的入口。
+guiding_questions:
+  - 區間測速和定點測速，量到的是同一個速度嗎？
+scenario: 用手機拍下推車滑下斜坡，量不同時間間隔的平均速度，觀察間隔變小時數值往哪裡靠近。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

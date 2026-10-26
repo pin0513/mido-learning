@@ -1,0 +1,54 @@
+id: pm.sequence@es
+concept: pm.sequence
+title: 先做什麼、後做什麼
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.breakdown@es
+links:
+  why: []
+  how: []
+  related:
+    - ma.measure@es
+  deeper:
+    - pm.gantt@jh
+link_notes: 數學（時間與順序）
+competency:
+  specialist:
+    - 代數
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 檢查順序有沒有前後矛盾
+  human_experience:
+    - 親身體會「來不及」的感覺，學會預留時間
+idea: 有些事要等別的事完成才能做，例如要先知道人數才能買點心。把任務排到時間線上。
+guiding_questions:
+  - 哪一張任務卡如果晚了，後面全部都會跟著晚？
+scenario: 做一張「倒數 10 天」日曆，把任務卡貼到對的日子。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

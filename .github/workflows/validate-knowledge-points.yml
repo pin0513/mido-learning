@@ -1,0 +1,46 @@
+name: Validate knowledge points
+
+on:
+  pull_request:
+    paths:
+      - "frontend/content/**"
+      - "frontend/scripts/validate-knowledge-points.ts"
+      - "frontend/package.json"
+      - "frontend/pnpm-lock.yaml"
+      - ".github/workflows/validate-knowledge-points.yml"
+  push:
+    branches: [main]
+    paths:
+      - "frontend/content/**"
+      - "frontend/scripts/validate-knowledge-points.ts"
+      - "frontend/package.json"
+      - "frontend/pnpm-lock.yaml"
+      - ".github/workflows/validate-knowledge-points.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate knowledge points
+        run: pnpm validate:content

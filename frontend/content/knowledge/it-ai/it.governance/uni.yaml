@@ -1,0 +1,49 @@
+id: it.governance@uni
+concept: it.governance
+title: AI 安全、治理與法規
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - AI 倫理
+  layer: advanced
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+prerequisites:
+  - it.ethics@sh
+  - it.aisys@uni
+links:
+  why:
+    - ph.applied@uni
+  how:
+    - pm.business@uni
+  related: []
+  deeper: []
+link_notes: 哲學（應用倫理）、專案管理（商業論證與專案治理）、社會（法律）
+competency:
+  specialist:
+    - AI 治理
+  generalist:
+    - 查證
+    - 媒體素養
+ai:
+  delegable:
+    - 整理法規與框架重點
+  human_experience:
+    - 權衡利益與風險，做出並承擔建議
+idea: 依風險高低管理 AI：透明、可解釋、可問責。各國與國際組織正在發展相關規範與框架。
+guiding_questions:
+  - AI 造成傷害時，責任在開發者、使用者還是 AI？
+scenario: 為一個 AI 應用（如履歷篩選）做風險評估，提出治理措施與申訴機制。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

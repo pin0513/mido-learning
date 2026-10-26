@@ -1,0 +1,47 @@
+id: ph.aimind@uni
+concept: ph.aimind
+title: AI 時代的思考：人機分工與判斷
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - AI 時代判斷
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.aijudge@sh
+  - ph.epistem@uni
+links:
+  why: []
+  how:
+    - pm.aiteam@uni
+  related:
+    - it.hcai@uni
+  deeper: []
+link_notes: 資訊與 AI、專案管理（決策、倫理與 AI 協作）
+competency:
+  specialist:
+    - 批判思考
+  generalist:
+    - 查證
+    - 跨域思考
+ai:
+  delegable:
+    - 大量產出、整理、比較資料
+  human_experience:
+    - 定義問題、價值判斷、對結果負責
+idea: AI 擅長產出與整理，人仍要負責定義問題、判斷價值與承擔後果；理解不等於能產出答案。
+guiding_questions:
+  - 如果答案都能問 AI，你還需要真正理解嗎？
+scenario: 設計自己的「AI 輸出審查清單」，用在一份期末報告上，記錄哪些部分交給 AI、哪些自己判斷。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

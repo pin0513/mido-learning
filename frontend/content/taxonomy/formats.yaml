@@ -1,0 +1,31 @@
+# 知識點的呈現格式。
+# slides 對應既有 LearningComponent 的 componentId，不是檔案路徑。
+# P1 全部留空，投影片回填屬於後續階段。
+formats:
+  - id: slides
+    name: 投影片
+    value: component_ids
+    required_on_knowledge_point: true
+    note: 零個或多個 componentId。一份投影片可以掛在多個知識點，也可以先不掛。
+  - id: article
+    name: 文章
+    value: text
+    required_on_knowledge_point: false
+  - id: exercise
+    name: 練習
+    value: text
+    required_on_knowledge_point: false
+  - id: project
+    name: 專題
+    value: text
+    required_on_knowledge_point: false
+  - id: ai_prompt
+    name: AI 對話提示詞
+    value: text
+    required_on_knowledge_point: false
+    note: 原則是蘇格拉底式追問，不直接給答案。P1 尚未撰寫提示詞。
+  - id: game
+    name: 遊戲
+    value: text
+    required_on_knowledge_point: false
+    note: 對應現站 category「game」。要獨立成格式或併入練習仍待決定；P1 只預留，沒有知識點填值。

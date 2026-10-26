@@ -1,0 +1,27 @@
+# 學習階段。id 用在知識點 id 的 @ 後面，例如 pm.goal@es。
+# 大學不屬 108 課綱。國小低年級的「生活課程」是統整課程，不是第九個領域。
+stages:
+  - id: es
+    name: 國小
+    learning_stages: [1, 2, 3]
+    grades: [1, 2, 3, 4, 5, 6]
+    curriculum_108: true
+    note: 1–2、3–4、5–6 年級為第一至第三學習階段。
+  - id: jh
+    name: 國中
+    learning_stages: [4]
+    grades: [7, 8, 9]
+    curriculum_108: true
+    note: 第四學習階段。
+  - id: sh
+    name: 高中
+    learning_stages: [5]
+    grades: [10, 11, 12]
+    curriculum_108: true
+    note: 第五學習階段。高中數學另有 A／B 與數學甲／乙分流，本批知識點只標到階段。
+  - id: uni
+    name: 大學
+    learning_stages: []
+    grades: []
+    curriculum_108: false
+    note: 不填 curriculum_108，改以學門路徑對應。

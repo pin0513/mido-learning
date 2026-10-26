@@ -1,0 +1,46 @@
+id: pm.evm@uni
+concept: pm.evm
+title: 實獲值管理（EVM）
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 規劃
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.estimate@sh
+  - pm.schedule@uni
+links:
+  why: []
+  how: []
+  related:
+    - ma.rate@sh
+  deeper: []
+link_notes: 數學（比率）、會計與財務
+competency:
+  specialist:
+    - 專案治理
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 自動計算指標、產生報表
+  human_experience:
+    - 解讀數字背後的原因，決定怎麼行動
+idea: 用計畫價值（PV）、實獲值（EV）、實際成本（AC）三個數字，同時看進度與成本是否健康。
+guiding_questions:
+  - CPI 很好但 SPI 很差，可能發生了什麼事？
+scenario: 拿一份專案期中資料，計算 CPI、SPI，並提出矯正行動。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

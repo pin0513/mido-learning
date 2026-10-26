@@ -1,0 +1,55 @@
+id: pm.style@sh
+concept: pm.style
+title: 情境領導
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 領導
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues:
+    - 生涯規劃教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.lead@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - pm.org@uni
+link_notes: 心理學（動機）、綜合活動（生涯規劃）
+competency:
+  specialist:
+    - 領導
+  generalist:
+    - 領導
+    - 溝通
+    - 團隊合作
+ai:
+  delegable:
+    - 提供情境案例讓你練習判斷
+  human_experience:
+    - 實際擔任幹部並接受回饋
+idea: 沒有一種領導方式適用所有人。依成員的能力與意願，調整指導或授權的程度。
+guiding_questions:
+  - 你喜歡被怎麼帶？這和你帶別人的方式一樣嗎？
+scenario: 回顧自己帶過的活動，分析對新手與老手各該如何帶領。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,56 @@
+id: pm.roles@es
+concept: pm.roles
+title: 分工與說到做到
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 團隊
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.breakdown@es
+links:
+  why: []
+  how: []
+  related:
+    - ph.fair@es
+  deeper:
+    - pm.team@jh
+    - pm.lead@jh
+link_notes: 綜合活動（團體生活）、心理學（責任感）
+competency:
+  specialist:
+    - 團隊合作實作
+  generalist:
+    - 團隊合作
+    - 溝通
+    - 專案管理
+ai:
+  delegable:
+    - 製作任務板範本
+  human_experience:
+    - 做出承諾、建立信任、鼓起勇氣請求協助
+idea: 每個人認領自己的任務，並且說到做到；需要幫忙時要早點說出來。
+guiding_questions:
+  - 如果有人的卡片一直停在「進行中」，我們可以怎麼幫他？
+scenario: 任務板分「待做／進行中／完成」三欄，每天早自習移動自己的卡片。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

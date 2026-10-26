@@ -1,0 +1,52 @@
+id: ph.reason@es
+concept: ph.reason
+title: 說出理由：「因為……所以……」
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 邏輯與論證
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 語文
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.question@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.argument@jh
+link_notes: 語文（口語表達）
+competency:
+  specialist:
+    - 論證
+  generalist:
+    - 提問
+    - 溝通
+ai:
+  delegable:
+    - 幫你想出更多支持或反對的理由
+  human_experience:
+    - 在別人反對時，好好說明而不是生氣
+idea: 說「我覺得」之後，再補一句「因為」。有理由的想法，別人才聽得懂，也才能討論。
+guiding_questions:
+  - 有沒有一個理由，讓你改變了原本的想法？
+scenario: 「小狗和金魚，誰比較適合當班寵？」每人說出主張和至少一個理由，再聽聽相反的理由。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,56 @@
+id: pm.conflict@sh
+concept: pm.conflict
+title: 衝突與協商
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 團隊
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.team@jh
+  - pm.stakeholder@sh
+links:
+  why:
+    - ph.ethicstheory@sh
+  how: []
+  related: []
+  deeper:
+    - pm.org@uni
+link_notes: 心理學（情緒）、哲學（倫理與公平）、社會（公民）
+competency:
+  specialist:
+    - 團隊合作實作
+  generalist:
+    - 團隊合作
+    - 溝通
+    - 專案管理
+ai:
+  delegable:
+    - 扮演對手讓你反覆練習
+  human_experience:
+    - 處理真實的情緒、修復關係
+idea: 衝突不一定是壞事。把「人」和「問題」分開，找出雙方真正的需求。
+guiding_questions:
+  - 對方表面上要的，和他真正需要的，是同一件事嗎？
+scenario: 角色扮演：兩個社團爭同一個場地，練習找出雙贏方案。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

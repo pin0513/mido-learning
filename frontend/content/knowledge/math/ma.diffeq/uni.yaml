@@ -1,0 +1,47 @@
+id: ma.diffeq@uni
+concept: ma.diffeq
+title: 微分方程與數學建模
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 分析
+    - 建模
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites:
+  - ma.integral@uni
+  - ma.function@sh
+links:
+  why:
+    - ph.complex@uni
+  how: []
+  related: []
+  deeper: []
+link_notes: 生物（族群）、物理（熱）、哲學（複雜性思維與模型的限度）
+competency:
+  specialist:
+    - 數學建模
+  generalist:
+    - 建模
+    - 跨域思考
+ai:
+  delegable:
+    - 求解與模擬
+  human_experience:
+    - 決定模型假設、判斷模型與現實的落差
+idea: 很多現象是「變化率取決於現況」：人口成長、熱咖啡冷卻、疾病傳播。用微分方程建模，再檢查模型是否合理。
+guiding_questions:
+  - 模型預測錯了，是模型壞了還是假設錯了？
+scenario: 記錄一杯熱水每 2 分鐘的溫度，建立冷卻模型，預測何時降到可以喝的溫度。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

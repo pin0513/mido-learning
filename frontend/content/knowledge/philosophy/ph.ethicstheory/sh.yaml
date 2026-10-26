@@ -1,0 +1,55 @@
+id: ph.ethicstheory@sh
+concept: ph.ethicstheory
+title: 倫理學的三種視角
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 倫理
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 社會
+    - 綜合活動
+  core_competencies:
+    - A2
+    - C1
+  issues:
+    - 生命教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.ethics@jh
+links:
+  why: []
+  how:
+    - pm.conflict@sh
+  related: []
+  deeper:
+    - ph.applied@uni
+link_notes: 社會（公民與社會）、綜合活動（生命教育）、專案管理（衝突與協商）
+competency:
+  specialist:
+    - 倫理推理
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 整理各視角的論點
+  human_experience:
+    - 在辯論中聽懂對方的視角
+idea: 看結果好不好（效益）、看該不該做（義務）、看會成為什麼樣的人（德行），三種視角幫助我們更完整地思考。
+guiding_questions:
+  - 結果很好，但手段不對，這件事可以做嗎？
+scenario: 用三種視角分析一個校園議題，例如手機使用規定，寫出各自的結論。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

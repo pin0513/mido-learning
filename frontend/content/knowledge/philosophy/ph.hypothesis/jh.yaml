@@ -1,0 +1,54 @@
+id: ph.hypothesis@jh
+concept: ph.hypothesis
+title: 假設與實驗：把問題變成可以檢驗的
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 提問與探究
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 自然科學
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.question@es
+  - ph.know@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.science@sh
+link_notes: 自然科學（理化）、數學（平均數）
+competency:
+  specialist:
+    - 科學探究
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 提出可能的變因供你挑選
+  human_experience:
+    - 動手做、發現實驗出乎意料的地方
+idea: 好問題可以變成假設，再設計公平的實驗來檢驗：一次只改變一個條件。
+guiding_questions:
+  - 如果結果和你的假設不同，代表你錯了嗎？
+scenario: 設計「哪種紙飛機飛最遠」的對照實驗，每種飛 5 次取平均。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

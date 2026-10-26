@@ -1,0 +1,58 @@
+id: it.llm@sh
+concept: it.llm
+title: 大型語言模型怎麼運作
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - 語言模型
+  layer: advanced
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 科技
+    - 語文
+  core_competencies:
+    - B2
+    - A2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.ml@sh
+links:
+  why:
+    - ph.tok@sh
+  how:
+    - it.build@sh
+  related:
+    - ph.aijudge@sh
+  deeper:
+    - it.aisys@uni
+link_notes: 語文（語意與文體）、哲學（判斷 AI 的回答）
+competency:
+  specialist:
+    - AI 原理
+  generalist:
+    - 提問
+    - 查證
+ai:
+  delegable:
+    - 示範不同提問方式產生的差異
+  human_experience:
+    - 判斷回答品質、追問與查證
+idea: 語言模型根據大量文字學會「預測下一個字」。它很會說話，但會一本正經地說錯（幻覺）；提問方式會影響回答。
+guiding_questions:
+  - 會說話，就代表懂嗎？
+scenario: 人工接龍：全班根據前文猜下一個詞，統計最常見答案；再比較 AI 的接法，討論為什麼會「編造」。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

@@ -1,0 +1,56 @@
+id: ph.tok@sh
+concept: ph.tok
+title: 知識論：我們怎麼知道我們知道？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 知識論
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 語文
+    - 社會
+  core_competencies:
+    - A2
+    - B1
+    - C1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.evidence@jh
+  - ph.hypothesis@jh
+links:
+  why: []
+  how: []
+  related:
+    - ma.proof@sh
+  deeper:
+    - ph.epistem@uni
+link_notes: 數學、社會（歷史）、藝術、IB 知識論的「知識問題」
+competency:
+  specialist:
+    - 知識論
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 整理不同領域的知識方法
+  human_experience:
+    - 從自己的學科經驗中找出例子
+idea: 知識不只是相信，還要有好的理由。數學、科學、歷史、藝術各有不同的「證明」方式。
+guiding_questions:
+  - 歷史課本寫的事，你憑什麼相信？
+scenario: 比較數學證明、科學實驗、歷史史料、藝術評論四種「讓人信服」的方式，寫一篇短文。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

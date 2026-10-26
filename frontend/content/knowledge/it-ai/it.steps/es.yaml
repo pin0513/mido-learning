@@ -1,0 +1,54 @@
+id: it.steps@es
+concept: it.steps
+title: 一步一步的指令
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 運算思維
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+prerequisites: []
+links:
+  why: []
+  how:
+    - pm.sequence@es
+  related: []
+  deeper:
+    - it.algo@jh
+    - it.media@jh
+link_notes: 專案管理（先做什麼、後做什麼）、語文（清楚表達）
+competency:
+  specialist:
+    - 運算思維
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 示範「指令不清楚，結果就出錯」的例子
+  human_experience:
+    - 親身體驗指令模糊時的混亂，學會說清楚
+idea: 電腦不會猜你的意思，只會照指令做。把一件事寫成清楚、有順序的步驟，就是演算法。
+guiding_questions:
+  - 「去洗手」對電腦來說，要拆成幾個步驟？
+scenario: 人體機器人：一位同學蒙眼當機器人，其他人只能用「前進一步、左轉、右轉」指揮他走出教室迷宮。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

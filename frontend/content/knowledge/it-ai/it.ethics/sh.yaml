@@ -1,0 +1,60 @@
+id: it.ethics@sh
+concept: it.ethics
+title: AI 倫理、偏誤與社會影響
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - AI 倫理
+  layer: advanced
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 科技
+    - 社會
+  core_competencies:
+    - A2
+    - B2
+    - C1
+  issues:
+    - 資訊教育
+    - 品德教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+prerequisites:
+  - it.media@jh
+  - it.ml@sh
+links:
+  why:
+    - ph.ethicstheory@sh
+  how: []
+  related: []
+  deeper:
+    - it.governance@uni
+link_notes: 哲學（倫理學的三種視角）、社會（公民與社會）
+competency:
+  specialist:
+    - AI 治理
+  generalist:
+    - 查證
+    - 媒體素養
+ai:
+  delegable:
+    - 整理各方論點與案例
+  human_experience:
+    - 站在受影響者的角度思考、形成自己的立場
+idea: AI 會影響公平、隱私、工作與民主。要問：誰受益、誰受害、誰負責、誰能申訴。
+guiding_questions:
+  - 如果 AI 的判斷比老師更一致，但更難解釋，你會選誰？
+scenario: 辯論：學校該不該用 AI 批改作文？分正反方，並提出折衷方案與規範。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

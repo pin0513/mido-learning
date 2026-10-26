@@ -1,0 +1,45 @@
+id: it.creative@uni
+concept: it.creative
+title: 創意程式與生成藝術
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 軟體與系統
+  layer: advanced
+  crosscutting:
+    - aesthetics
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.build@sh
+links:
+  why: []
+  how: []
+  related:
+    - ma.beauty@uni
+  deeper: []
+link_notes: 美學與藝術、數學（對稱與結構）
+competency:
+  specialist:
+    - 生成藝術
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 生成素材、協助寫程式
+  human_experience:
+    - 決定美感方向、說出作品想表達什麼
+idea: 程式也是創作工具：用規則與隨機產生圖像、聲音與互動作品。AI 時代要重新思考作者與原創。
+guiding_questions:
+  - 規則是你寫的、畫面是電腦畫的，作品是誰的？
+scenario: 用創意程式工具做一件生成藝術作品，再和 AI 生成的作品並陳，討論誰是作者。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

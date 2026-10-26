@@ -1,0 +1,56 @@
+id: ph.aijudge@sh
+concept: ph.aijudge
+title: 判斷 AI 的回答
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - AI 時代判斷
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 科技
+    - 語文
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.evidence@jh
+  - ph.bias@sh
+links:
+  why: []
+  how: []
+  related:
+    - it.llm@sh
+  deeper:
+    - ph.aimind@uni
+link_notes: 資訊與 AI、科技（資訊科技）
+competency:
+  specialist:
+    - 批判思考
+  generalist:
+    - 查證
+    - 跨域思考
+ai:
+  delegable:
+    - 提供初步答案與可能來源
+  human_experience:
+    - 查證並決定要不要相信、相信多少
+idea: AI 的回答可能很流暢卻是錯的。要追問來源、交叉比對，並分辨它是在給事實、推論還是猜測。
+guiding_questions:
+  - AI 說得很有把握時，你會比較相信它嗎？
+scenario: 請 AI 回答你自主學習主題的三個問題，逐句查證，標出正確、可疑與錯誤。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

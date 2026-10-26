@@ -1,0 +1,55 @@
+id: it.machine@es
+concept: it.machine
+title: 機器怎麼「學」？
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 數位素養
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 綜合活動
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+prerequisites:
+  - it.pattern@es
+links:
+  why:
+    - ph.know@es
+  how: []
+  related:
+    - ma.data@es
+  deeper:
+    - it.mlbasic@jh
+link_notes: 哲學（我怎麼知道的？）、數學（整理資料）
+competency:
+  specialist:
+    - 機器學習
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 實際被訓練、展示學習結果
+  human_experience:
+    - 設計好的例子、發現機器的錯誤
+idea: AI 不是天生就懂，而是看了很多例子，找出規律。例子給得好不好，會影響它學得準不準。
+guiding_questions:
+  - 如果只給機器看白色的貓，它會認得黑貓嗎？
+scenario: 用可以拍照訓練的線上教學工具，教電腦分辨「剪刀、石頭、布」，再故意只給一種背景的照片，看它哪裡會錯。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

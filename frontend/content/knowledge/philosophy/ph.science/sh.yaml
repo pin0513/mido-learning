@@ -1,0 +1,54 @@
+id: ph.science@sh
+concept: ph.science
+title: 科學哲學：可檢驗與會修正
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 哲學
+    - 思考方法
+    - 提問與探究
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 自然科學
+    - 社會
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - ph.hypothesis@jh
+  - ph.logic@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ph.philsci@uni
+link_notes: 自然科學（物理、地球科學）、社會（歷史）
+competency:
+  specialist:
+    - 科學探究
+  generalist:
+    - 跨域思考
+    - 溝通
+ai:
+  delegable:
+    - 提供歷史背景資料
+  human_experience:
+    - 體會「放下原本相信的東西」有多難
+idea: 好的科學理論可以被檢驗，甚至可能被推翻；科學的力量正是來自它會修正自己。
+guiding_questions:
+  - 什麼樣的說法，是怎麼樣都無法證明它錯的？那它還算科學嗎？
+scenario: 以地心說到日心說的轉變為案例，討論當時的人為什麼相信、又為什麼改變。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

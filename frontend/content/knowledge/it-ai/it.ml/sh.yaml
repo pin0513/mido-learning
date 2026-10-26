@@ -1,0 +1,56 @@
+id: it.ml@sh
+concept: it.ml
+title: 機器學習原理：從資料學出規則
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 人工智慧
+    - 機器學習
+  layer: advanced
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+    - 科技
+  core_competencies:
+    - A2
+    - B2
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+prerequisites:
+  - it.mlbasic@jh
+  - it.analysis@sh
+links:
+  why: []
+  how: []
+  related:
+    - ma.function@sh
+    - ma.stats@sh
+  deeper:
+    - it.nn@uni
+link_notes: 數學（函數、統計）
+competency:
+  specialist:
+    - 機器學習
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 訓練模型、計算誤差
+  human_experience:
+    - 解釋模型為何失準、決定是否可用
+idea: 模型用資料調整參數，讓預測誤差變小；要小心「背答案」（過度擬合），在新資料上就失準。
+guiding_questions:
+  - 考試前只背考古題，和機器過度擬合有什麼像？
+scenario: 用試算表或程式，以氣溫預測手搖飲銷量，比較直線和複雜曲線在新資料上的表現。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

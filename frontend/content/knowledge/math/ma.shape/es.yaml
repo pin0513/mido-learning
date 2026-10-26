@@ -1,0 +1,51 @@
+id: ma.shape@es
+concept: ma.shape
+title: 形狀與空間
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 數學
+    - 幾何與空間
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+    - 數學
+  core_competencies:
+    - A2
+    - B1
+  issues: []
+to_verify: true
+verify_notes:
+  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+    - ma.pythag@jh
+    - ma.similar@jh
+link_notes: 藝術（造形）、土木與建築（結構）
+competency:
+  specialist:
+    - 幾何
+  generalist:
+    - 跨域思考
+ai:
+  delegable:
+    - 提供更多拼圖挑戰
+  human_experience:
+    - 用手轉動、拼合，培養空間感
+idea: 平面圖形可以拼、可以轉；立體圖形可以攤開成平面。看懂形狀，就能想像空間。
+guiding_questions:
+  - 同樣七片七巧板，為什麼能拼出那麼多不同的東西？
+scenario: 用七巧板拼出動物；把紙盒拆開成展開圖，再設計一個自己的盒子。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

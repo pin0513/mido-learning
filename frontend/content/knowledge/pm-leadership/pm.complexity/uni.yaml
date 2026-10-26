@@ -1,0 +1,47 @@
+id: pm.complexity@uni
+concept: pm.complexity
+title: 複雜性與不確定性
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 風險
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.agile@sh
+  - pm.risk@jh
+links:
+  why:
+    - ph.epistem@uni
+    - ph.complex@uni
+  how: []
+  related: []
+  deeper: []
+link_notes: 系統思考、哲學（知識論：我們能知道多少）、資訊與 AI
+competency:
+  specialist:
+    - 風險管理
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 整理不同方法論的比較
+  human_experience:
+    - 在模糊中做決定、承擔不確定
+idea: 有些問題可以預測，有些高度複雜。先判斷問題的性質，再選擇預測式、敏捷或混合方法。
+guiding_questions:
+  - 你怎麼知道一個問題是「複雜」而不只是「困難」？
+scenario: 比較一個建築案與一個 AI 產品開發案，分析各自適合的管理方法。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

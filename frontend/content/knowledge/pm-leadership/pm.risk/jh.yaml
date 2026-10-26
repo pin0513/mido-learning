@@ -1,0 +1,55 @@
+id: pm.risk@jh
+concept: pm.risk
+title: 風險：可能性 × 影響
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 管理
+    - 專案管理與領導
+    - 風險
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 綜合活動
+    - 數學
+  core_competencies:
+    - A2
+    - A3
+    - C2
+  issues: []
+to_verify: false
+verify_notes: []
+prerequisites:
+  - pm.planb@es
+links:
+  why: []
+  how: []
+  related:
+    - ma.prob@jh
+  deeper:
+    - pm.agile@sh
+link_notes: 數學（機率入門）
+competency:
+  specialist:
+    - 風險管理
+  generalist:
+    - 專案管理
+    - 溝通
+ai:
+  delegable:
+    - 腦力激盪出風險清單
+  human_experience:
+    - 依真實經驗判斷哪些風險被高估或低估
+idea: 不是每個「萬一」都一樣重要。用「多可能發生」和「發生後多嚴重」排出優先順序。
+guiding_questions:
+  - 有沒有哪個風險很少發生，但一發生就無法挽回？
+scenario: 畢業旅行風險表：把 10 個風險放進 2×2 格子，先處理「很可能又很嚴重」的那一格。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26

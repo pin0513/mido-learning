@@ -1,0 +1,59 @@
+id: it.media@jh
+concept: it.media
+title: 生成式 AI 與媒體素養
+status: draft
+version: "0.1"
+discipline:
+  path:
+    - 資訊
+    - 數位素養
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+    - 科技
+    - 社會
+  core_competencies:
+    - A2
+    - B2
+    - C1
+  issues:
+    - 資訊教育
+to_verify: true
+verify_notes:
+  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+prerequisites:
+  - it.safe@es
+  - it.mlbasic@jh
+links:
+  why:
+    - ph.evidence@jh
+  how: []
+  related: []
+  deeper:
+    - it.ethics@sh
+    - it.llm@sh
+link_notes: 哲學（證據與來源）、社會（媒體素養）、藝術（創作與著作權）
+competency:
+  specialist:
+    - 數位素養
+  generalist:
+    - 查證
+    - 媒體素養
+ai:
+  delegable:
+    - 生成示範素材
+  human_experience:
+    - 判斷真假、思考分享前的責任
+idea: AI 能生成文字、圖片、聲音，甚至假影片。要學會辨識、查證，也要尊重創作者的權利。
+guiding_questions:
+  - 如果看不出真假，你還能怎麼判斷要不要相信？
+scenario: 混合 AI 生成和真實照片做成小測驗，全班挑戰辨識，再討論辨識線索與查證方法。
+formats:
+  slides: []
+authors:
+  - I-PING Huang
+updated: 2026-10-26
