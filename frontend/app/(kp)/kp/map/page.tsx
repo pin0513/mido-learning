@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CityMapView } from "@/components/kp/city/CityMapView";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
 import { buildCityMap, loadCatalog, presentCityMap } from "@/lib/content";
+import { includeDraftKnowledgePoints } from "@/lib/kp/flags";
 
 export const metadata: Metadata = {
   title: { absolute: "學習城市地圖" },
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function CityMapPage() {
-  const map = presentCityMap(buildCityMap(loadCatalog()));
+  const map = presentCityMap(buildCityMap(loadCatalog()), includeDraftKnowledgePoints());
   return (
     <div className="paper wrap" style={{ paddingBlock: "48px" }}>
       <h1 className="head">學習城市</h1>

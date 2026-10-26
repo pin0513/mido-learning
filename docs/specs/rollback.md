@@ -169,10 +169,12 @@ gcloud run services update-traffic mido-learning-frontend \
 7. [#19](https://github.com/pin0513/mido-learning/pull/19) `cursor/kp-city-progress-ea35` — 主線路線與本機進度（HP-05～06）
 8. [#20](https://github.com/pin0513/mido-learning/pull/20) `cursor/kp-city-views-ea35` — 層級總圖、清單、手機（HP-07、HP-08、HP-13）
 9. [#21](https://github.com/pin0513/mido-learning/pull/21) `cursor/kp-city-home-ea35` — 首頁旗標 `KP_HOME_ENABLED`（HP-09～12）
+10. [#22](https://github.com/pin0513/mido-learning/pull/22) `cursor/kp-visual-redesign-ea35` — 黑板／紙色視覺。必須 **squash merge**，否則分支歷史裡的 Switzer 字型檔會進 `main`。關旗標不會卸下這支 PR：城市路由、`public/kp` 的圖、`(kp)` 主題仍在 image 裡。legacy 頁不再預載這些字型與 `kp-theme.css`。
 
-每個 PR 合併進 `main` 之後，**後合併的先 revert**（#21 → #20 → #19 → #18 → #17 → #15 → #13 → #14 → #16）：
+每個 PR 合併進 `main` 之後，**後合併的先 revert**（#22 → #21 → #20 → #19 → #18 → #17 → #15 → #13 → #14 → #16）：
 
 ```bash
+git revert <visual-redesign 的 squash commit>  #22
 git revert <city-home 的 squash commit>      #21
 git revert <city-views 的 squash commit>     #20
 git revert <city-progress 的 squash commit>  #19

@@ -27,8 +27,8 @@ export function CityHome({ data, path }: { data: CityMapData; path: OpenPathBrie
               <img
                 src="/kp/garden-city-diagram.webp"
                 alt="霍華德 1898 年的田園城市圖：同心圓環繞中央廣場，用來說明城裡由內而外的四條環路"
-                width={1123}
-                height={824}
+                width={336}
+                height={247}
               />
               <figcaption>
                 圖：

@@ -22,6 +22,12 @@ on:
       - "frontend/app/(public)/page.tsx"
       - "frontend/components/home/**"
       - "frontend/app/(public)/city-home/**"
+      - "frontend/app/(kp)/**"
+      - "frontend/app/layout.tsx"
+      - "frontend/app/globals.css"
+      - "frontend/app/kp-theme.css"
+      - "frontend/app/fonts/**"
+      - "frontend/public/kp/**"
       - "frontend/scripts/**"
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
@@ -49,6 +55,12 @@ on:
       - "frontend/app/(public)/page.tsx"
       - "frontend/components/home/**"
       - "frontend/app/(public)/city-home/**"
+      - "frontend/app/(kp)/**"
+      - "frontend/app/layout.tsx"
+      - "frontend/app/globals.css"
+      - "frontend/app/kp-theme.css"
+      - "frontend/app/fonts/**"
+      - "frontend/public/kp/**"
       - "frontend/scripts/**"
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
@@ -184,6 +196,7 @@ jobs:
       - name: Published-only pages
         env:
           KP_ENABLED: "true"
+          KP_HOME_ENABLED: "true"
           E2E_BASE_URL: http://127.0.0.1:3000
           E2E_PUBLISHED_COUNT: "4"
         run: |

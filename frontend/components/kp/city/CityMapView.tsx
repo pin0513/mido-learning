@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { annulus, focusViewBox, sectorStart, type CityMapData } from "@/lib/content/city";
 import { CityList, LayerOverview, MobileDistricts, parseCityView, readRememberedView, ViewSwitch, writeRememberedView, type CityView } from "./views";
 import {
@@ -26,8 +27,7 @@ interface Level {
 
 const EMPTY: Level = { district: null, stage: null, kp: null, layer: null, competency: null };
 
-function readLevel(): Level {
-  const params = new URLSearchParams(window.location.search);
+function readLevel(params: URLSearchParams): Level {
   return {
     district: params.get("d"),
     stage: params.get("s"),
@@ -35,6 +35,16 @@ function readLevel(): Level {
     layer: params.get("ly"),
     competency: params.get("c"),
   };
+}
+
+/** 跟 Next 的網址同步。包在 Suspense 裡，地圖本體仍可靜態輸出。 */
+function UrlSync({ onQuery }: { onQuery: (params: URLSearchParams) => void }) {
+  const searchParams = useSearchParams();
+  const query = searchParams.toString();
+  useEffect(() => {
+    onQuery(new URLSearchParams(query));
+  }, [onQuery, query]);
+  return null;
 }
 
 function writeLevel(level: Level, mode: "push" | "replace") {
@@ -74,11 +84,9 @@ function parseViewBox(value: string): [number, number, number, number] {
 export function CityMapView({
   data,
   rememberView = false,
-  showStart = false,
 }: {
   data: CityMapData;
   rememberView?: boolean;
-  showStart?: boolean;
 }) {
   const [level, setLevel] = useState<Level>(EMPTY);
   const [view, setView] = useState<CityView>("map");
@@ -133,20 +141,27 @@ export function CityMapView({
     writeLevel(next, historyMode);
   }, []);
 
-  useEffect(() => {
-    const initial = readLevel();
-    if (initial.district || initial.stage || initial.kp || initial.layer || initial.competency) {
-      setLevel(initial);
-      window.history.replaceState({ city: initial }, "", window.location.href);
-    }
-    const params = new URLSearchParams(window.location.search);
+  const applyQuery = useCallback((params: URLSearchParams) => {
+    const next = readLevel(params);
+    setLevel(next);
     setPathId(params.get("path") ?? "");
-    setStored(readStoredProgress());
     const fromUrl = parseCityView(params.get("view"));
-    setView(fromUrl ?? (rememberView ? readRememberedView() : null) ?? "map");
+    if (fromUrl) {
+      setView(fromUrl);
+      return;
+    }
+    setView((rememberView ? readRememberedView() : null) ?? "map");
+  }, [rememberView]);
+
+  useEffect(() => {
+    setStored(readStoredProgress());
     const onPop = () => {
       depth.current = Math.max(0, depth.current - 1);
-      setLevel(readLevel());
+      const params = new URLSearchParams(window.location.search);
+      setLevel(readLevel(params));
+      setPathId(params.get("path") ?? "");
+      const fromUrl = parseCityView(params.get("view"));
+      if (fromUrl) setView(fromUrl);
     };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
@@ -270,6 +285,9 @@ export function CityMapView({
 
   return (
     <div ref={mapRoot} data-testid="city-experience" className="city-stack">
+      <Suspense fallback={null}>
+        <UrlSync onQuery={applyQuery} />
+      </Suspense>
       <a
         href="#kp-city-list"
         className="sr-only focus:not-sr-only focus:absolute focus:z-20 focus:bg-white focus:px-3 focus:py-2 focus:underline"
@@ -282,32 +300,6 @@ export function CityMapView({
         跳到清單檢視
       </a>
       <ViewSwitch view={view} onChange={setCityView} />
-      {showStart ? (
-        <div className="mb-4" data-testid="city-start">
-          <p className="text-sm font-semibold text-[#1a1614]">從這裡開始</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            <button
-              type="button"
-              className="min-h-11 border border-[#1a1614] bg-[#1a1614] px-4 text-sm font-semibold text-[#faf9f7] hover:bg-[#3d3830] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
-              onClick={() => go({ district: null, stage: "es", kp: null }, "push")}
-            >
-              孩子從國小環開始
-            </button>
-            {data.stages
-              .filter((stage) => stage.id !== "es")
-              .map((stage) => (
-                <button
-                  key={stage.id}
-                  type="button"
-                  className="min-h-11 border border-[#1a1614] bg-white px-4 text-sm font-semibold hover:bg-[#f3f0ea] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
-                  onClick={() => go({ district: null, stage: stage.id, kp: null }, "push")}
-                >
-                  大人看{stage.name}環
-                </button>
-              ))}
-          </div>
-        </div>
-      ) : null}
       <div className="controls-block kp-controls mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm font-semibold text-[#1a1614]">
           學習主線

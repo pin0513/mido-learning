@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "./kp-theme.css";
 
 :root {
   --background: #ffffff;
@@ -32,7 +31,7 @@
   --color-d-math: #e6d27a;
   --color-d-pm: #eba79c;
   --color-d-it: #a6cf96;
-  --font-kp: var(--font-switzer), var(--font-noto-tc), "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-kp: var(--font-geist-sans), "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Noto Sans CJK TC", system-ui, sans-serif;
 }
 
 /* Dark mode intentionally disabled: site uses explicit Tailwind color classes.

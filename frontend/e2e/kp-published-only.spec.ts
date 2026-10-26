@@ -48,4 +48,20 @@ test.describe("正式 build", () => {
       expect(flight, title).not.toContain(title);
     }
   });
+
+  test("地圖與城市首頁的 HTML、RSC 沒有草稿 slug", async ({ request }) => {
+    const slugs = ["pm.goal", "ph.parts", "ma.pattern", "ma.measure", "pm.schedule", "ma.rate"];
+    for (const path of ["/kp/map", "/city-home", "/"]) {
+      const page = await request.get(path);
+      expect(page.status(), path).toBe(200);
+      const html = await page.text();
+      const rsc = await request.get(path, { headers: { RSC: "1", Accept: "text/x-component" } });
+      const flight = rsc.status() === 200 ? await rsc.text() : "";
+      for (const slug of slugs) {
+        expect(html, `${path} ${slug}`).not.toContain(slug);
+        expect(flight, `${path} rsc ${slug}`).not.toContain(slug);
+      }
+      expect(html, path).toContain("draft-");
+    }
+  });
 });

@@ -345,31 +345,47 @@ function placeCell(ids: string[], sectorIndex: number, stageIndex: number, secto
   });
 }
 
-/** 地圖可以畫出施工中的建築，但標題、一句話與關聯名稱不進用戶端。 */
-export function presentCityMap(data: CityMapData): CityMapData {
+/**
+ * 地圖可以畫出施工中的建築，但標題、一句話與關聯名稱不進用戶端。
+ * keepDraftIdentity 只給草稿 build：保留真實 id，方便對照內容。
+ * 正式 build 把草稿換成 draft-N，拿掉 concept 與 href，道路和橋也不帶草稿端點。
+ * 主線選單只留至少有一站已發布的，路線只連那些站。
+ */
+export function presentCityMap(data: CityMapData, keepDraftIdentity = false): CityMapData {
   const published = new Set(data.buildings.filter((building) => building.status === "published").map((building) => building.id));
   const keep = (items: { id: string; title: string }[]) => items.filter((item) => published.has(item.id));
-  return {
-    ...data,
-    buildings: data.buildings.map((building) => {
-      if (building.status === "published") {
-        return {
-          ...building,
-          prerequisites: keep(building.prerequisites),
-          requiredBy: keep(building.requiredBy),
-          bridges: keep(building.bridges),
-        };
-      }
+  let draftNumber = 0;
+  const buildings = data.buildings.map((building) => {
+    if (building.status === "published") {
       return {
         ...building,
-        title: "",
-        idea: "",
-        prerequisites: [],
-        requiredBy: [],
-        bridges: [],
-        paths: [],
+        prerequisites: keep(building.prerequisites),
+        requiredBy: keep(building.requiredBy),
+        bridges: keep(building.bridges),
       };
-    }),
+    }
+    const hidden = {
+      ...building,
+      title: "",
+      idea: "",
+      prerequisites: [],
+      requiredBy: [],
+      bridges: [],
+      paths: [],
+    };
+    if (keepDraftIdentity) return hidden;
+    draftNumber += 1;
+    return { ...hidden, id: `draft-${draftNumber}`, concept: "", href: "" };
+  });
+  const bothPublished = (from: string, to: string) => published.has(from) && published.has(to);
+  return {
+    ...data,
+    buildings,
+    roads: keepDraftIdentity ? data.roads : data.roads.filter((road) => bothPublished(road.from, road.to)),
+    bridges: keepDraftIdentity ? data.bridges : data.bridges.filter((bridge) => bothPublished(bridge.from, bridge.to)),
+    landmarks: data.landmarks
+      .map((landmark) => ({ ...landmark, stops: landmark.stops.filter((id) => published.has(id)) }))
+      .filter((landmark) => landmark.stops.length > 0),
   };
 }
 

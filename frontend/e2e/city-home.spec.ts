@@ -32,6 +32,7 @@ test.describe("學習城市首頁", () => {
     await page.goto("/");
     await page.getByRole("link", { name: "帶孩子從國小環出發" }).click();
     await expect(page).toHaveURL(/[?&]s=es/);
+    await expect(page.getByTestId("city-filter")).toContainText("國小");
     await page.goto("/?d=pm-leadership");
     await expect(page.getByTestId("city-filter")).toContainText("專案管理與領導");
     await page.goto("/?d=pm-leadership&s=sh");
@@ -40,6 +41,23 @@ test.describe("學習城市首頁", () => {
     await expect(page.getByTestId("city-card")).toContainText("WBS 與三點估算");
     await page.getByTestId("city-card").getByRole("link", { name: "讀這一站" }).click();
     await expect(page).toHaveURL(/\/kp\/pm\.estimate\/sh/);
+  });
+
+  test("英雄的三個連結點了就切換，不用整頁重載", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("link", { name: "帶孩子從國小環出發" }).click();
+    await expect(page.getByTestId("city-filter")).toContainText("國小");
+    await expect(page.getByTestId("city-map")).toBeVisible();
+
+    // 總圖或清單打開後英雄卡會收起，所以清單連結要在地圖還在時點。
+    await page.getByRole("link", { name: "看清單", exact: true }).click();
+    await expect(page).toHaveURL(/[?&]view=list/);
+    await expect(page.getByTestId("city-list")).toBeVisible();
+
+    await page.getByTestId("city-view-map").click();
+    await page.getByRole("link", { name: "看分層分段總圖" }).click();
+    await expect(page).toHaveURL(/[?&]view=system/);
+    await expect(page.getByTestId("city-layers")).toBeVisible();
   });
 
   test("手機寬度三步內打開知識點", async ({ page }) => {

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import localFont from 'next/font/local';
 import { AuthProvider } from '@/components/auth/AuthProvider';
 import { KP_SITE_ORIGIN } from '@/lib/kp/routes';
 import './globals.css';
@@ -13,31 +12,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
-});
-
-/** Switzer is Fontshare's free font: self-hosting on a site is allowed. It is not OFL. Latin only. */
-const switzer = localFont({
-  src: [
-    { path: './fonts/switzer-400.woff2', weight: '400', style: 'normal' },
-    { path: './fonts/switzer-500.woff2', weight: '500', style: 'normal' },
-    { path: './fonts/switzer-700.woff2', weight: '700', style: 'normal' },
-    { path: './fonts/switzer-900.woff2', weight: '900', style: 'normal' },
-  ],
-  variable: '--font-switzer',
-  display: 'swap',
-});
-
-/** Noto Sans TC (OFL) traditional-Chinese subset, not preloaded. */
-const notoTc = localFont({
-  src: [
-    { path: './fonts/noto-tc-400.woff2', weight: '400', style: 'normal' },
-    { path: './fonts/noto-tc-500.woff2', weight: '500', style: 'normal' },
-    { path: './fonts/noto-tc-700.woff2', weight: '700', style: 'normal' },
-    { path: './fonts/noto-tc-900.woff2', weight: '900', style: 'normal' },
-  ],
-  variable: '--font-noto-tc',
-  display: 'swap',
-  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -66,8 +40,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-Hant-TW">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${switzer.variable} ${notoTc.variable} antialiased`}>
+    <html lang="zh-TW">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

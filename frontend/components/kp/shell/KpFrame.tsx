@@ -99,15 +99,13 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
             <h2>家庭</h2>
             <ul>
               <li><Link href="/family-scoreboard">家庭計分板</Link></li>
-              <li><Link href="/family-scoreboard">任務系統</Link></li>
-              <li><Link href="/family-scoreboard">零用金管理</Link></li>
             </ul>
           </div>
           <div>
             <h2>關於</h2>
             <ul>
               <li><Link href="/#about">這個網站</Link></li>
-              <li><Link href="/kp">授權（待定）</Link></li>
+              <li>授權：待定</li>
               <li><Link href="/kp">知識地圖</Link></li>
             </ul>
           </div>
