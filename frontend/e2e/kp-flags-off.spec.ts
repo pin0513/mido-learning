@@ -12,6 +12,7 @@ test.describe("旗標關閉", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "zh-TW");
     await expect(page.locator("h1")).toContainText("AI 驅動的");
     await expect(page.getByText("從家庭廣場出發")).toHaveCount(0);
+    await expect(page.getByText("全家一起看的知識地圖")).toHaveCount(0);
     await expect(page.locator("header").getByRole("link", { name: "知識地圖" })).toHaveCount(0);
   });
 

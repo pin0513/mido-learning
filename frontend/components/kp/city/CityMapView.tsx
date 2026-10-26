@@ -80,7 +80,31 @@ function parseViewBox(value: string): [number, number, number, number] {
   return [x, y, w, h];
 }
 
-/** /kp/map 的城市圖。建築在伺服端資料裡，互動留在這個 client 元件。 */
+function nodeRadius(node: { title: string; dependents: number }): number {
+  if (!node.title) return 6;
+  return 8 + Math.min(node.dependents, 4);
+}
+
+/** Right-angle pipe: horizontal, then vertical, then horizontal. Joints are the elbows. */
+function schematicPath(points: { x: number; y: number }[]): { d: string; joints: [number, number][] } {
+  if (points.length === 0) return { d: "", joints: [] };
+  let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+  const joints: [number, number][] = [];
+  for (let index = 1; index < points.length; index += 1) {
+    const from = points[index - 1];
+    const to = points[index];
+    if (Math.abs(from.x - to.x) < 1 || Math.abs(from.y - to.y) < 1) {
+      d += ` L ${to.x.toFixed(1)} ${to.y.toFixed(1)}`;
+      continue;
+    }
+    const mid = (from.x + to.x) / 2;
+    d += ` H ${mid.toFixed(1)} V ${to.y.toFixed(1)} H ${to.x.toFixed(1)}`;
+    joints.push([mid, from.y], [mid, to.y]);
+  }
+  return { d, joints };
+}
+
+/** /kp/map 的配線圖。節點在伺服端資料裡，互動留在這個 client 元件。 */
 export function CityMapView({
   data,
   rememberView = false,
@@ -92,7 +116,7 @@ export function CityMapView({
   rememberView?: boolean;
   defaultView?: CityView;
   tabOrder?: CityView[];
-  /** Written as ?view= when the map tab is not the default. The homepage uses "city". */
+  /** Written as ?view= when the map tab is not the default. The homepage writes "map"; "city" still parses. */
   mapParam?: string;
 }) {
   const [level, setLevel] = useState<Level>(EMPTY);
@@ -289,6 +313,10 @@ export function CityMapView({
     level.competency ? data.competencies.find((item) => item.code === level.competency)?.code : null,
   ].filter(Boolean);
   const linkedIds = selected ? [...selected.prerequisites, ...selected.requiredBy].map((item) => item.id) : [];
+  const routeWire = schematicPath(pathStops.flatMap((id) => {
+    const place = byId.get(id);
+    return place ? [place] : [];
+  }));
   const accept = (building: { layer: string; competencies: string[] }) => inFocus(building, level);
 
   return (
@@ -370,14 +398,14 @@ export function CityMapView({
                 className="min-h-11 border border-[#1a1614] px-3"
                 onClick={() => updateStored({ ...stored, adultVisited: stored.adultVisited.includes(selected.id) ? stored.adultVisited : [...stored.adultVisited, selected.id] })}
               >
-                {stored.adultName}走過
+                {stored.adultName}讀過
               </button>
               <button
                 type="button"
                 className="min-h-11 border border-[#1a1614] px-3"
                 onClick={() => updateStored({ ...stored, childVisited: stored.childVisited.includes(selected.id) ? stored.childVisited : [...stored.childVisited, selected.id] })}
               >
-                {stored.childName}走過
+                {stored.childName}讀過
               </button>
             </>
           ) : null}
@@ -393,15 +421,15 @@ export function CityMapView({
           </button>
         </div>
       ) : null}
-      {selected && together(snapshot, selected.id) ? <p className="mb-4 text-sm font-semibold">這棟你們一起學過。</p> : null}
+      {selected && together(snapshot, selected.id) ? <p className="mb-4 text-sm font-semibold">這個節點你們一起學過。</p> : null}
       <p className="controls-block progress-note mb-4 px-4 text-sm" data-testid="city-filter">
-        目前看的是{filterBits.length > 0 ? filterBits.join("・") : "全城"}
+        目前看的是{filterBits.length > 0 ? filterBits.join("・") : "全部"}
       </p>
       <div className="map-block grid gap-4">
       <div>
         <nav aria-label="地圖層級" className="mb-3 flex flex-wrap items-center gap-2 text-sm">
           <button type="button" className="min-h-11 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]" onClick={() => go(EMPTY, "push")}>
-            全城
+            全部
           </button>
           {level.district ? (
             <>
@@ -415,7 +443,7 @@ export function CityMapView({
             <>
               <span aria-hidden="true">/</span>
               <button type="button" className="min-h-11 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]" onClick={() => go({ district: level.district, stage: level.stage, kp: null }, "push")}>
-                {data.stages.find((stage) => stage.id === level.stage)?.name}環
+                {data.stages.find((stage) => stage.id === level.stage)?.name}
               </button>
             </>
           ) : null}
@@ -426,7 +454,7 @@ export function CityMapView({
             </>
           ) : null}
         </nav>
-        <div className={view === "map" ? "chips mb-3 hidden md:flex" : "chips mb-3"} role="group" aria-label="學區與環路">
+        <div className={view === "map" ? "chips mb-3 hidden md:flex" : "chips mb-3"} role="group" aria-label="領域與階段">
           {data.districts.map((district) => (
             <button
               key={district.key}
@@ -446,7 +474,7 @@ export function CityMapView({
               className="chip"
               onClick={() => go({ district: level.district, stage: stage.id, kp: null }, "push")}
             >
-              {stage.name}環
+              {stage.name}
             </button>
           ))}
         </div>
@@ -501,13 +529,13 @@ export function CityMapView({
             data-building-count={data.buildings.length}
             viewBox={viewBox}
             role="group"
-            aria-label="學習城市地圖。四個學區，環路從國小到大學。建築是知識點。"
+            aria-label="知識地圖。四個領域是空間，階段從國小到大學。節點是知識點。"
             className={`city h-auto w-full max-w-full ${zoomed ? "touch-none" : ""}`}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
           >
-            <desc>家庭廣場在中央。四條環路由內而外是國小、國中、高中、大學。亮的建築已開放，暗的是施工中。</desc>
+            <desc>家庭空間在中央。由內而外是國小、國中、高中、大學。亮的節點已開放，暗的尚未接上。</desc>
             <g aria-hidden="true">
               {data.rings.map((ring, index) => (
                 <path
@@ -525,9 +553,12 @@ export function CityMapView({
                   d={annulus(data.cx, data.cy, ring[0], ring[1], sectorStart(district.sector, data.sector) + 1, sectorStart(district.sector, data.sector) + data.sector - 1)}
                   fill={district.color}
                   fillOpacity={level.district === district.key && level.stage === data.stages[sIndex]?.id ? 0.28 : 0.12 + sIndex * 0.02}
+                  stroke="#f4f7f2"
+                  strokeOpacity={0.28}
+                  strokeWidth={1.25}
                   role="button"
                   tabIndex={0}
-                  aria-label={`${district.name}，${data.stages[sIndex]?.name}環`}
+                  aria-label={`${district.name}，${data.stages[sIndex]?.name}`}
                   className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]"
                   onClick={() => zoomRing(district.key, level.district === district.key ? data.stages[sIndex].id : null)}
                   onKeyDown={(event) => {
@@ -536,7 +567,7 @@ export function CityMapView({
                     zoomRing(district.key, level.district === district.key ? data.stages[sIndex].id : null);
                   }}
                 >
-                  <title>{`${district.name}，${data.stages[sIndex]?.name}環`}</title>
+                  <title>{`${district.name}，${data.stages[sIndex]?.name}`}</title>
                 </path>
               )),
             )}
@@ -559,7 +590,7 @@ export function CityMapView({
             <g aria-hidden="true">
               <circle cx={data.cx} cy={data.cy} r={data.plaza - 6} fill="#eef0ea" />
               <text x={data.cx} y={data.cy - 2} textAnchor="middle" fontSize={18} fontWeight={900} fill="#1a1614">家庭</text>
-              <text x={data.cx} y={data.cy + 20} textAnchor="middle" fontSize={18} fontWeight={900} fill="#1a1614">廣場</text>
+              <text x={data.cx} y={data.cy + 20} textAnchor="middle" fontSize={18} fontWeight={900} fill="#1a1614">空間</text>
               {data.districts.map((district) => {
                 const spots: Record<string, [number, number, "start" | "end"]> = {
                   philosophy: [data.size - 16, 56, "end"],
@@ -577,26 +608,38 @@ export function CityMapView({
                 );
               })}
             </g>
-            {pathStops.length > 1 ? (
-              <path
-                data-testid="city-route"
-                d={pathStops.map((id, index) => `${index === 0 ? "M" : "L"} ${byId.get(id)!.x.toFixed(1)} ${byId.get(id)!.y.toFixed(1)}`).join(" ")}
-                fill="none"
-                stroke="#ff5b22"
-                strokeWidth={7}
-                strokeLinejoin="round"
-                aria-hidden="true"
-              />
-            ) : null}
             {selected ? (
               <g data-testid="city-links" aria-hidden="true">
-                {linkedIds.map((id) => {
-                  const other = byId.get(id);
+                {([
+                  [selected.prerequisites, false],
+                  [selected.requiredBy, true],
+                ] as const).map(([ends, dashed]) => ends.map((item) => {
+                  const other = byId.get(item.id);
                   if (!other) return null;
+                  const wire = schematicPath([selected, other]);
                   return (
-                    <line key={id} x1={selected.x} y1={selected.y - selected.height / 2} x2={other.x} y2={other.y - other.height / 2} stroke="#ff5b22" strokeWidth={4} />
+                    <g key={`${dashed ? "out" : "in"}-${item.id}`}>
+                      <path d={wire.d} fill="none" stroke="#f4f7f2" strokeWidth={2.4} strokeDasharray={dashed ? "8 6" : undefined} strokeLinejoin="miter" />
+                      {wire.joints.map(([x, y], index) => <circle key={index} cx={x} cy={y} r={3.2} fill="#f4f7f2" />)}
+                    </g>
                   );
-                })}
+                }))}
+              </g>
+            ) : null}
+            {pathStops.length > 1 ? (
+              <g aria-hidden="true">
+                <path
+                  data-testid="city-route"
+                  d={routeWire.d}
+                  fill="none"
+                  stroke="#ff5b22"
+                  strokeWidth={5}
+                  strokeLinejoin="miter"
+                  strokeLinecap="square"
+                />
+                {routeWire.joints.map(([x, y], index) => (
+                  <circle key={index} cx={x} cy={y} r={4} fill="#ff5b22" />
+                ))}
               </g>
             ) : null}
             {data.lots
@@ -606,7 +649,7 @@ export function CityMapView({
                   <g
                     role="button"
                     tabIndex={0}
-                    aria-label={`預定地：${item.name}（下一輪）`}
+                    aria-label={`預留空間：${item.name}（下一輪）`}
                     className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]"
                     onClick={() => setLotId(item.id)}
                     onKeyDown={(event) => {
@@ -616,7 +659,7 @@ export function CityMapView({
                     }}
                   >
                     <rect x={item.x - 46} y={item.y - 26} width={92} height={52} fill="#24312b" stroke="#6f8279" strokeWidth={2} strokeDasharray="6 6" />
-                    <title>{`預定地：${item.name}（下一輪）`}</title>
+                    <title>{`預留空間：${item.name}（下一輪）`}</title>
                   </g>
                   <text className="lbl" x={item.x} y={item.y + 48} textAnchor="middle" fontSize={14} fill="#c3cbc5" aria-hidden="true" pointerEvents="none">
                     {item.name}
@@ -627,21 +670,19 @@ export function CityMapView({
               const district = data.districts.find((item) => item.key === building.folder);
               const color = district?.color ?? "#eef0ea";
               const draft = !building.title;
-              const w = draft ? 15 : 19;
+              const r = nodeRadius(building);
               const body = draft ? "#46594f" : "#eef0ea";
-              const roof = draft ? "#5a6e64" : color;
               const active = selected?.id === building.id;
               const linked = linkedIds.includes(building.id);
               const focused = inFocus(building, level);
-              const shape = (
+              const mark = active || linked ? "#ff5b22" : "#1c2621";
+              const shape = building.pointedRoof && !draft ? (
                 <>
-                  {building.pointedRoof ? (
-                    <path d={`M ${building.x - w / 2 - 2} ${building.y - building.height} L ${building.x} ${building.y - building.height - 9} L ${building.x + w / 2 + 2} ${building.y - building.height} Z`} fill={roof} />
-                  ) : (
-                    <rect x={building.x - w / 2 - 2} y={building.y - building.height - 5} width={w + 4} height={5} fill={roof} />
-                  )}
-                  <rect className="body" x={building.x - w / 2} y={building.y - building.height} width={w} height={building.height} fill={body} stroke={active || linked ? "#ff5b22" : "none"} strokeWidth={active || linked ? 3 : 0} />
+                  <circle cx={building.x} cy={building.y} r={r + 4} fill="none" stroke={color} strokeWidth={2} />
+                  <circle cx={building.x} cy={building.y} r={r} fill={body} stroke={mark} strokeWidth={active || linked ? 3 : 1.5} />
                 </>
+              ) : (
+                <rect x={building.x - r} y={building.y - r} width={r * 2} height={r * 2} fill={body} stroke={draft ? "#6f8279" : mark} strokeWidth={active || linked ? 3 : 1.5} />
               );
               return (
                 <g key={building.id} opacity={!focused ? 0.16 : level.district && level.district !== building.folder ? 0.4 : 1}>
@@ -677,8 +718,8 @@ export function CityMapView({
               if (!place) return null;
               return (
                 <g key={id} aria-hidden="true" data-testid="city-stop" data-stop={index + 1}>
-                  <circle cx={place.x} cy={place.y - place.height - 14} r={8} fill="#1c2621" />
-                  <text x={place.x} y={place.y - place.height - 11} textAnchor="middle" fontSize={10} fontWeight={700} fill="#eef0ea">
+                  <circle cx={place.x} cy={place.y - nodeRadius(place) - 14} r={8} fill="#1c2621" />
+                  <text x={place.x} y={place.y - nodeRadius(place) - 11} textAnchor="middle" fontSize={10} fontWeight={700} fill="#eef0ea">
                     {index + 1}
                   </text>
                 </g>
@@ -689,10 +730,11 @@ export function CityMapView({
               const place = byId.get(person.at);
               if (!place?.title) return null;
               const dot = role === "child";
+              const r = nodeRadius(place);
               return (
                 <g key={role} role="img" aria-label={`${person.name}目前在${place.title}（範例資料）`}>
-                  <circle cx={place.x + 16} cy={place.y - place.height - 8} r={dot ? 8 : 7} fill={dot ? fill : "#1c2621"} stroke={dot ? "#1c2621" : fill} strokeWidth={dot ? 3 : 4} />
-                  <text className="lbl" x={place.x + 28} y={place.y - place.height - 4} fontSize={14} fontWeight={900} fill={dot ? "#ff8a5c" : "#eef0ea"}>
+                  <circle cx={place.x + r + 12} cy={place.y - r} r={dot ? 8 : 7} fill={dot ? fill : "#1c2621"} stroke={dot ? "#1c2621" : fill} strokeWidth={dot ? 3 : 4} />
+                  <text className="lbl" x={place.x + r + 24} y={place.y - r + 4} fontSize={14} fontWeight={900} fill={dot ? "#ff8a5c" : "#eef0ea"}>
                     {person.name}
                   </text>
                 </g>
@@ -708,8 +750,10 @@ export function CityMapView({
         </div>
         <div className="legend" aria-label="圖例">
           <span className="it"><span className="sw" style={{ background: "var(--chalk)", borderRadius: 2 }} />已開放</span>
-          <span className="it"><span className="sw" style={{ background: "#46594f", borderRadius: 2 }} />施工中</span>
-          <span className="it"><span className="sw" style={{ background: "var(--accent)", borderRadius: 2, height: 6, width: 22 }} />主線路線</span>
+          <span className="it"><span className="sw" style={{ background: "#46594f", borderRadius: 2 }} />尚未接上</span>
+          <span className="it"><svg width="28" height="10" aria-hidden="true" viewBox="0 0 28 10"><path d="M1 5 H27" stroke="currentColor" strokeWidth="2" /><circle cx="14" cy="5" r="2.2" fill="currentColor" /></svg>先備</span>
+          <span className="it"><svg width="28" height="10" aria-hidden="true" viewBox="0 0 28 10"><path d="M1 5 H27" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3" /></svg>延伸</span>
+          <span className="it"><span className="sw" style={{ background: "var(--accent)", borderRadius: 2, height: 6, width: 22 }} />主線</span>
           <span className="it mk mk-child">孩子</span>
           <span className="it mk mk-adult">大人</span>
           <span className="sample">範例資料</span>
@@ -744,7 +788,7 @@ export function CityMapView({
             </p>
             <h2 className="mt-2 text-xl font-bold">{selected.title}</h2>
             <p className="mt-2 text-sm leading-6">{selected.idea}</p>
-            <p className="mt-3 text-sm">高度 {selected.height}（被 {selected.dependents} 個知識點當先備）</p>
+            <p className="mt-3 text-sm">被 {selected.dependents} 個節點當先備</p>
             <h3 className="mt-4 text-sm font-bold">先備</h3>
             <ul className="mt-1 text-sm leading-6">
               {selected.prerequisites.length === 0 ? <li>沒有先備</li> : selected.prerequisites.map((item) => (
@@ -778,9 +822,9 @@ export function CityMapView({
             <ul className="mt-1 text-sm leading-6">
               {selected.paths.length === 0 ? <li>沒有主線</li> : selected.paths.map((path) => <li key={path.id}>{path.title}・第 {path.index + 1} 站{path.colearn ? "・有家庭時間" : ""}</li>)}
             </ul>
-            <h3 className="mt-3 text-sm font-bold">跨學門橋</h3>
+            <h3 className="mt-3 text-sm font-bold">跨領域線路</h3>
             <ul className="mt-1 text-sm leading-6">
-              {selected.bridges.length === 0 ? <li>這棟沒有跨到別的學門</li> : selected.bridges.map((item) => <li key={item.id}>{item.title}</li>)}
+              {selected.bridges.length === 0 ? <li>沒有跨到別的領域</li> : selected.bridges.map((item) => <li key={item.id}>{item.title}</li>)}
             </ul>
             <Link href={selected.href} className="btn btn-ink btn-sm go">
               讀這一站
@@ -791,7 +835,7 @@ export function CityMapView({
           </div>
         ) : lot ? (
           <div>
-            <h2 className="text-xl font-bold">預定地・{lot.name}</h2>
+            <h2 className="text-xl font-bold">預留空間・{lot.name}</h2>
             <p className="mt-2 text-sm leading-6">
               {lot.layerName}。taxonomy 已經留了位子，這一輪還沒有知識點。
               {lot.summary ? ` ${lot.summary}` : ""}
@@ -819,9 +863,9 @@ export function CityMapView({
           </div>
         ) : (
           <div>
-            <h2 className="text-xl font-bold">學習城市</h2>
-            <p className="mt-2 text-sm leading-6">從家庭廣場往外是國小、國中、高中、大學四條環路。點一個學區放大，再點環路，然後點建築。</p>
-            <p className="mt-3 text-sm leading-6">開發預定區只畫下一輪的 {data.lots.filter((item) => item.featured).length} 塊空地。</p>
+            <h2 className="text-xl font-bold">知識地圖</h2>
+            <p className="mt-2 text-sm leading-6">四個領域是空間，由內而外是國小到大學。點一個領域放大，再點階段，然後點節點。實線是先備，虛線是延伸。</p>
+            <p className="mt-3 text-sm leading-6">下一輪預留 {data.lots.filter((item) => item.featured).length} 個空間，這一輪還沒有節點。</p>
             <button
               type="button"
               className="mt-4 inline-flex min-h-11 items-center border border-[#1a1614] px-4 text-sm font-semibold hover:bg-[#1a1614] hover:text-[#faf9f7]"

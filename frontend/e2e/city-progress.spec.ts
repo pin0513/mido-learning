@@ -24,7 +24,7 @@ test.describe("學習城市的主線與進度", () => {
     await expect(page.getByTestId("city-progress-notice")).toContainText("範例資料");
     await page.locator('[data-building-id="pm.breakdown@es"]').click();
     await expect(page.getByTestId("city-card")).toContainText("大事拆成小事");
-    await expect(page.getByText("這棟你們一起學過。")).toBeVisible();
+    await expect(page.getByText("這個節點你們一起學過。")).toBeVisible();
 
     const hits: string[] = [];
     page.on("request", (request) => {
@@ -37,14 +37,14 @@ test.describe("學習城市的主線與進度", () => {
     await page.getByLabel("大人怎麼稱呼").fill("爸爸");
     await page.getByLabel("孩子怎麼稱呼").fill("小明");
     await page.getByRole("button", { name: "爸爸在這裡" }).click();
-    await page.getByRole("button", { name: "小明走過" }).click();
+    await page.getByRole("button", { name: "小明讀過" }).click();
     expect(hits).toEqual([]);
 
     await page.reload();
     await page.getByRole("radio", { name: "自己標記" }).check();
     await expect(page.getByLabel("大人怎麼稱呼")).toHaveValue("爸爸");
     await page.locator('[data-building-id="pm.breakdown@es"]').click();
-    await expect(page.getByText("這棟你們一起學過。")).toBeVisible();
+    await expect(page.getByText("這個節點你們一起學過。")).toBeVisible();
 
     await page.getByRole("button", { name: "清除這台裝置的記號" }).click();
     await expect(page.getByLabel("大人怎麼稱呼")).toHaveValue("大人");

@@ -11,12 +11,12 @@ test.describe("學習城市首頁", () => {
 
   test("預設是分層分段總圖，點頁籤才換到地圖和清單", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("全家一起走的學習城市");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("全家一起看的知識地圖");
     await expect(page.getByTestId("city-layers")).toBeVisible();
     await expect(page.getByTestId("city-map")).toBeHidden();
     await expect(page.getByRole("group", { name: "切換檢視" }).getByRole("button")).toHaveText([
       "分層分段總圖",
-      "城市地圖",
+      "知識地圖",
       "清單",
     ]);
     await expect(page.getByTestId("city-progress-notice")).toContainText("範例資料");
@@ -38,11 +38,11 @@ test.describe("學習城市首頁", () => {
 
     await page.getByRole("group", { name: "層級" }).getByRole("button", { name: "本質層" }).click();
     await expect(page.getByTestId("city-filter")).toContainText("本質層");
-    await page.getByRole("group", { name: "學區與環路" }).getByRole("button", { name: /專案管理與領導/ }).click();
+    await page.getByRole("group", { name: "領域與階段" }).getByRole("button", { name: /專案管理與領導/ }).click();
     await expect(page.getByTestId("city-filter")).toContainText("專案管理與領導");
 
     await page.getByTestId("city-view-map").click();
-    await expect(page).toHaveURL(/[?&]view=city(?:&|$)/);
+    await expect(page).toHaveURL(/[?&]view=map(?:&|$)/);
     await expect(page.getByTestId("city-map")).toBeVisible();
     await page.getByTestId("city-view-list").click();
     await expect(page).toHaveURL(/[?&]view=list(?:&|$)/);
@@ -55,6 +55,8 @@ test.describe("學習城市首頁", () => {
   test("深連結還能打開總圖、地圖、清單，階段篩選留著", async ({ page }) => {
     await page.goto("/?view=system");
     await expect(page.getByTestId("city-layers")).toBeVisible();
+    await page.goto("/?view=map");
+    await expect(page.getByTestId("city-map")).toBeVisible();
     await page.goto("/?view=city");
     await expect(page.getByTestId("city-map")).toBeVisible();
     await page.goto("/?view=list");
@@ -80,8 +82,8 @@ test.describe("學習城市首頁", () => {
     await expect(page).toHaveURL(/[?&]view=system(?:&|$)/);
     await expect(page.getByTestId("city-layers")).toBeVisible();
 
-    await page.getByRole("link", { name: "帶孩子從國小環出發" }).click();
-    await expect(page).toHaveURL(/[?&]view=city(?:&|$)/);
+    await page.getByRole("link", { name: "帶孩子從國小階段看起" }).click();
+    await expect(page).toHaveURL(/[?&]view=map(?:&|$)/);
     await expect(page).toHaveURL(/[?&]s=es(?:&|$)/);
     await expect(page.getByTestId("city-filter")).toContainText("國小");
     await expect(page.getByTestId("city-map")).toBeVisible();

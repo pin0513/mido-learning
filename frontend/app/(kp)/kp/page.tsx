@@ -41,7 +41,7 @@ export default function KnowledgeMapPage() {
       <h1 className="text-3xl font-bold sm:text-4xl">知識地圖</h1>
       <p className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
         <Link href="/kp/map" className="inline-flex min-h-11 items-center font-semibold underline-offset-2 hover:underline">
-          打開學習城市
+          打開知識地圖
         </Link>
         <Link href="/kp/map?view=system" className="inline-flex min-h-11 items-center font-semibold underline-offset-2 hover:underline">
           層級總圖

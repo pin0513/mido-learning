@@ -41,7 +41,7 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
   }, []);
 
   const links = [
-    { href: "/", label: "知識城市" },
+    { href: "/", label: "首頁" },
     { href: "/#slides", label: "投影片教材" },
     { href: "/#about", label: "關於" },
     { href: "/kp", label: "知識地圖" },
@@ -79,9 +79,9 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
       <footer className="foot board">
         <div className="fcols">
           <div>
-            <h2>知識城市</h2>
+            <h2>瀏覽</h2>
             <ul>
-              <li><Link href="/kp/map">城市地圖</Link></li>
+              <li><Link href="/kp/map">知識地圖</Link></li>
               <li><Link href="/kp/map?view=system">分層分段總圖</Link></li>
               <li><Link href="/kp/map?view=list">清單</Link></li>
               <li><Link href="/kp/path/pm.estimate">主線：拆解與估算</Link></li>
@@ -129,10 +129,10 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
         </div>
         <p className="credits">
           圖片：
-          <a href="https://commons.wikimedia.org/wiki/File:Garden_City_diagram.jpg">“Garden City diagram”</a>
-          ，Ebenezer Howard（1898），
+          <a href="https://commons.wikimedia.org/wiki/File:Garden_City_diagram.jpg">Ebenezer Howard，1898</a>
+          ，
           <a href="https://creativecommons.org/publicdomain/mark/1.0/">公眾領域</a>
-          ，Wikimedia Commons。用來說明環路，不是裝飾。
+          ，Wikimedia Commons。用來說明階段怎麼套成空間，不是裝飾。
         </p>
       </footer>
     </>

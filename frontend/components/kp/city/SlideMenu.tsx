@@ -76,7 +76,7 @@ export function SlideMenu() {
     <section className="sec paper" id="slides" aria-labelledby="slides-heading">
       <div className="wrap">
         <div className="intro2 rv">
-          <h2 id="slides-heading" className="head">投影片教材也在城裡</h2>
+          <h2 id="slides-heading" className="head">投影片教材也在這裡</h2>
           <p>原本的投影片教材照舊開放。一份一份會接到對應的知識點，這一頁先不放縮圖。</p>
         </div>
         <Group testId="section-knowledge" title="知識學習（大人學）" href="/materials" items={knowledge} />
