@@ -207,6 +207,13 @@
         "game": { "type": "string", "minLength": 1 }
       }
     },
+    "audience": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "選填。大人學習者不另開階段（D03），用 kid、adult、family 標讀者。沒寫代表尚未標。",
+      "items": { "type": "string", "enum": ["kid", "adult", "family"] }
+    },
     "authors": {
       "type": "array",
       "minItems": 1,
