@@ -335,24 +335,25 @@ export function CityMapView({ data }: { data: CityMapData }) {
             {data.lots
               .filter((item) => item.featured)
               .map((item) => (
-                <g
-                  key={item.id}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`預定地：${item.name}`}
-                  className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]"
-                  onClick={() => setLotId(item.id)}
-                  onKeyDown={(event) => {
-                    if (event.key !== "Enter" && event.key !== " ") return;
-                    event.preventDefault();
-                    setLotId(item.id);
-                  }}
-                >
-                  <rect x={item.x - 28} y={item.y - 10} width={56} height={20} rx={2} fill="#fffdf8" stroke="#5c564e" strokeDasharray="3 2" />
-                  <text x={item.x} y={item.y + 4} textAnchor="middle" fontSize={9} fill="#3d3830">
+                <g key={item.id}>
+                  <g
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`預定地：${item.name}`}
+                    className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]"
+                    onClick={() => setLotId(item.id)}
+                    onKeyDown={(event) => {
+                      if (event.key !== "Enter" && event.key !== " ") return;
+                      event.preventDefault();
+                      setLotId(item.id);
+                    }}
+                  >
+                    <rect x={item.x - 28} y={item.y - 10} width={56} height={20} rx={2} fill="#fffdf8" stroke="#5c564e" strokeDasharray="3 2" />
+                    <title>{`預定地：${item.name}`}</title>
+                  </g>
+                  <text x={item.x} y={item.y + 4} textAnchor="middle" fontSize={9} fill="#3d3830" aria-hidden="true" pointerEvents="none">
                     {item.name.slice(0, 4)}
                   </text>
-                  <title>{`預定地：${item.name}`}</title>
                 </g>
               ))}
             {data.buildings.map((building) => {
