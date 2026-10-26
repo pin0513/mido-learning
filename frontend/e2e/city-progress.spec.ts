@@ -27,7 +27,12 @@ test.describe("學習城市的主線與進度", () => {
     await expect(page.getByText("這棟你們一起學過。")).toBeVisible();
 
     const hits: string[] = [];
-    page.on("request", (request) => hits.push(request.url()));
+    page.on("request", (request) => {
+      const url = request.url();
+      // Next 會預抓頁首連結的 RSC。進度本身不該打 API 或 Firestore。
+      if (url.includes("/_next/") || url.includes("_rsc=")) return;
+      hits.push(url);
+    });
     await page.getByRole("radio", { name: "自己標記" }).check();
     await page.getByLabel("大人怎麼稱呼").fill("爸爸");
     await page.getByLabel("孩子怎麼稱呼").fill("小明");
