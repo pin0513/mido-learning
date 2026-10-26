@@ -39,6 +39,12 @@ export function FloatingWishBot() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const open = () => setIsOpen(true);
+    window.addEventListener("mido-open-wish", open);
+    return () => window.removeEventListener("mido-open-wish", open);
+  }, []);
+
   const addMessage = (type: 'bot' | 'user', content: string) => {
     setMessages((prev) => [...prev, { id: crypto.randomUUID(), type, content }]);
   };

@@ -39,6 +39,11 @@ export default function KnowledgeMapPage() {
   return (
     <div className={shell}>
       <h1 className="text-3xl font-bold sm:text-4xl">知識地圖</h1>
+      <p className="mt-3">
+        <Link href="/kp/map" className="inline-flex min-h-11 items-center font-semibold underline-offset-2 hover:underline">
+          打開學習城市
+        </Link>
+      </p>
       <p className="mt-4 max-w-3xl leading-7">
         知識點掛在兩個方向上：縱向是層級（本質、基礎、進階、應用），橫向是階段（國小、國中、高中、大學）。學門與核心素養是另外兩條進入的路，不會取代這張層級表。
       </p>

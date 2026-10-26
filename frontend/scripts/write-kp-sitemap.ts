@@ -39,7 +39,6 @@ for (const path of model.paths) {
   if (!path.knowledgePointIds.some((id) => publishedIds.has(id))) continue;
   entries.push({ path: `/kp/path/${path.id}`, lastModified: latest });
 }
-
 const stagesByConcept = new Map<string, Set<string>>();
 for (const point of published) {
   const stages = stagesByConcept.get(point.concept) ?? new Set<string>();
