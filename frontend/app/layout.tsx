@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { AuthProvider } from '@/components/auth/AuthProvider';
+import { KP_SITE_ORIGIN } from '@/lib/kp/routes';
 import './globals.css';
 
 const geistSans = Geist({
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://learn.paulfun.net'),
+  metadataBase: new URL(KP_SITE_ORIGIN),
   title: {
     template: '%s | Mido Learning',
     default: 'Mido Learning - AI 驅動的學習實驗室',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     siteName: 'Mido Learning',
     locale: 'zh_TW',
     type: 'website',
-    url: 'https://learn.paulfun.net',
+    url: KP_SITE_ORIGIN,
     images: [{ url: '/images/logo.png', width: 512, height: 512, alt: 'Mido Learning' }],
   },
   twitter: {
