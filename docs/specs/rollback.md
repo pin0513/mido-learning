@@ -6,7 +6,23 @@
 
 ## 1. 上線前的基準 tag
 
-在打開 `KP_ENABLED` 之前，對**即將部署的** `main` 打 tag。下面的指令是給操作的人，本輪沒有執行。
+兩個 tag，用途不同。下面的指令是給操作的人。這份文件沒有代打，也沒有推送任何 tag。
+
+### `pre-kp-merge`：合併 #16 之前
+
+程式還沒有 `/kp` 的那一版。在合併 #16 之前，對當時的 `main`（`206a235`，`fix(cli): load the Firebase API key from the environment`，#12）打 tag：
+
+```bash
+git fetch origin main
+git tag pre-kp-merge 206a235
+git push origin pre-kp-merge
+```
+
+第 3 節若要回到「程式還沒含 `/kp`」的 revision，用這個 tag 的 SHA 去對 image。不要用 `pre-kp-launch`，那個 tag 打在合併之後，程式已經含 `/kp`，只是旗標關著。
+
+### `pre-kp-launch`：打開旗標之前
+
+在上述 PR 都合併進 `main`、**打開 `KP_ENABLED` 之前**，對即將部署的 `main` 打 tag：
 
 ```bash
 git fetch origin main
@@ -37,6 +53,15 @@ gcloud run services update mido-learning-frontend \
 
 若要留著變數但明確關掉，改用 `--update-env-vars KP_ENABLED=false`。不要用 `--set-env-vars`，那個旗標會先清掉服務上既有的環境變數。
 
+若先前做過第 3 節的 `--to-revisions`，流量還鎖在舊 revision。這時 `services update` 開出來的新 revision 是 0% 流量，旗標其實沒關。關旗標之後要把流量放回最新 revision（或把 100% 指到剛關了旗標的那個新 revision）：
+
+```bash
+gcloud run services update-traffic mido-learning-frontend \
+  --project mido-learning \
+  --region asia-east1 \
+  --to-latest
+```
+
 本機演練（2026-10-26，同一份 `next build` 產物，沒有重新 build）：
 
 | 步驟 | 結果 |
@@ -52,7 +77,7 @@ gcloud run services update mido-learning-frontend \
 
 另外兩個變數是 **build 期**，關掉上線開關不會改變它們：
 
-- `KP_INCLUDE_DRAFTS`：沒設時只生成 `status: published`。目前 100 筆都是 draft，所以正式 image（Docker build 沒設這個變數）**沒有** `/kp/[concept]/[stage]` 細節頁，`/kp/index.json` 是 `[]`。學門、階段、層級、核心素養、主線這些殼頁仍會生成。2026-10-26 未設草稿變數的 `pnpm build` 確認：路由表裡 `[concept]` 底下沒有任何路徑，`.next/server/app` 沒有 `pm.breakdown`，`index.json.body` 是 `[]`。要讓草稿或日後改成 published 的頁面出現，必須重新 build。
+- `KP_INCLUDE_DRAFTS`：沒設時只生成 `status: published`。正式 image（Docker build 沒設這個變數）不會帶草稿頁。2026-10-26 演練時內容還沒有任何 published，那次未設草稿變數的 `pnpm build` 確認：路由表裡 `[concept]` 底下沒有任何路徑，`.next/server/app` 沒有 `pm.breakdown`，`index.json.body` 是 `[]`。筆數會隨內容改變，不要把演練數字當成現況。學門、階段、層級、核心素養這些殼頁仍會生成；主線頁只在至少有一站 published 時才進 sitemap（見產生器）。要讓草稿或日後改成 published 的頁面出現，必須重新 build。
 - `KP_SLIDES_PREVIEW`：只有 build 時設成 `true` 才會做出 `/kp/preview/slides`。沒設時該 URL 是靜態 404（HTML 為 `__next_error__`）。正式 image 不要設。
 
 ## 3. 第二道：Cloud Run 回到上一版
@@ -71,13 +96,14 @@ gcloud run services update mido-learning-frontend \
 - [環境變數文件](https://docs.cloud.google.com/run/docs/configuring/services/environment-variables)：設定會留在後續 revision，除非之後的部署明確改掉。因此**下一次正常的前端部署會保留已經設上的 `KP_ENABLED`**。要關掉，用上一節的 `services update`，不要以為重新 deploy 就會清掉。
 - [`gcloud run services update-traffic`](https://docs.cloud.google.com/sdk/gcloud/reference/run/services/update-traffic) 的文件範例就是把 100% 流量指回舊 revision。
 
-把流量指回旗標還沒開、或程式還沒含 `/kp` 的 revision：
+把流量指回舊 revision。先用 image tag（就是 `github.sha`）查出 revision 名稱：
 
 ```bash
 gcloud run revisions list \
   --service mido-learning-frontend \
   --project mido-learning \
-  --region asia-east1
+  --region asia-east1 \
+  --format='table(metadata.name,spec.containers[0].image,metadata.creationTimestamp)'
 
 gcloud run services update-traffic mido-learning-frontend \
   --project mido-learning \
@@ -85,7 +111,16 @@ gcloud run services update-traffic mido-learning-frontend \
   --to-revisions REVISION_NAME=100
 ```
 
-把 `REVISION_NAME` 換成 `pre-kp-launch` 那個 SHA 對應的 revision。這一步只改流量，不改 image 內容。若那一版 revision 的服務 env 已經帶著 `KP_ENABLED=true`，流量回去之後地圖仍是開的，還要再做第 2 節。
+把 `REVISION_NAME` 換成上表裡、image tag 等於目標 SHA 的那一列。要回到程式還沒含 `/kp` 的版本，對 `pre-kp-merge`（`206a235`）。要回到旗標還沒打開、但程式已含 `/kp` 的版本，對 `pre-kp-launch`。這一步只改流量，不改 image 內容。若那一版 revision 的服務 env 已經帶著 `KP_ENABLED=true`，流量回去之後地圖仍是開的，還要再做第 2 節。
+
+`--to-revisions` 會把之後的新 revision（含第 2 節關旗標、以及 workflow 的 `gcloud run deploy`）留在 0% 流量。回滾結束、恢復正常部署之前，把流量放回最新 revision：
+
+```bash
+gcloud run services update-traffic mido-learning-frontend \
+  --project mido-learning \
+  --region asia-east1 \
+  --to-latest
+```
 
 內容不在 runner 裡的演練：draft build 起來之後把 `frontend/content` 整包移走，`GET /kp/layer/essence` 仍是 200，`/kp/index.json` 仍是 100 筆。頁面在 build 時就寫進靜態 HTML。移走後已把資料夾放回。
 
@@ -120,9 +155,9 @@ revert 之後要重新部署，流量才會離開含 `/kp` 的 image。只 rever
 打開開關之前：
 
 - `main` 已含上述 PR，並且打了 `pre-kp-launch`（這份文件沒有代打）。
-- 確認這張 image 是不是草稿 build。正式 Dockerfile **沒有** `KP_INCLUDE_DRAFTS`。100 筆都還是 draft 時，打開 `KP_ENABLED` 只會看到殼頁（學門、階段、層級、素養、主線），細節頁與 `index.json` 是空的。要給審核看草稿頁，必須另建一支設了 `KP_INCLUDE_DRAFTS=true` 的 image，不要把那個變數寫進正式 workflow。
+- 確認這張 image 是不是草稿 build。正式 Dockerfile **沒有** `KP_INCLUDE_DRAFTS`。沒有任何 published 時，打開 `KP_ENABLED` 只會看到殼頁，細節頁與 `index.json` 是空的。要給審核看草稿頁，必須另建一支設了 `KP_INCLUDE_DRAFTS=true` 的 image，不要把那個變數寫進正式 workflow。
 - D09 授權仍是空的。頁面文案是「授權文字尚未公告」，`data-testid="kp-license-body"` 是空的。不要在回滾或上線時補上 CC 條文。
-- 草稿網址不進 sitemap。sitemap 只有結構頁（這一輪 51 筆），而且 `KP_ENABLED` 關掉時整份是空的。
+- 草稿網址不進 sitemap。只有一個已發布階段的 concept 不放 `/kp/{concept}`（那一頁會轉址）。主線只放至少有一站 published 的。筆數隨內容變，不寫死。`KP_ENABLED` 關掉時整份是空的。
 - `to_verify` 的「課綱對應待核對」在正式站也會出現，含大學頁。
 
 建議回滾（先做第 2 節；若 image 本身有問題再做第 3 節）：

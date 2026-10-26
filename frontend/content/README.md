@@ -73,3 +73,14 @@ pnpm validate:content
 同一支程式也會用暫時的壞樣本做自我測試（重複 id、斷掉的連結、循環、自編素養代碼等）。內容和自我測試都過了才算通過。
 
 Pull request 若改到 `frontend/content/**`，GitHub Actions 的 “Validate knowledge points” 會跑這支指令。既有的部署 workflow 沒有改。
+
+## 建置用的環境變數
+
+正式 image 不要設這些。說明也寫在 `frontend/lib/kp/flags.ts`。
+
+| 變數 | 何時讀 | 說明 |
+| --- | --- | --- |
+| `KP_ENABLED` | 每次請求 | 上線開關。不是 `"true"` 時 `/kp` 不開放。 |
+| `KP_INCLUDE_DRAFTS` | build | `"true"` 才把 draft 知識點生成成頁面。 |
+| `KP_SLIDES_PREVIEW` | build | `"true"` 才生成 `/kp/preview/slides`。 |
+| `KP_SLIDES_FIXTURE` | build / dev | 測試用。格式 `<知識點 id>:<componentId>`，把該知識點的投影片換成這一個既有教材。 |

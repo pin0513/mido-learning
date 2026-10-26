@@ -32,20 +32,26 @@ for (const layer of model.taxonomy.layerList) {
 for (const item of model.taxonomy.coreCompetencies) {
   entries.push({ path: `/kp/competency/${item.code}`, lastModified: latest });
 }
+
+const published = model.points.filter((point) => point.status === "published");
+const publishedIds = new Set(published.map((point) => point.id));
 for (const path of model.paths) {
+  if (!path.knowledgePointIds.some((id) => publishedIds.has(id))) continue;
   entries.push({ path: `/kp/path/${path.id}`, lastModified: latest });
 }
 
-const published = model.points.filter((point) => point.status === "published");
-const concepts = new Set<string>();
+const stagesByConcept = new Map<string, Set<string>>();
 for (const point of published) {
-  concepts.add(point.concept);
+  const stages = stagesByConcept.get(point.concept) ?? new Set<string>();
+  stages.add(point.stage);
+  stagesByConcept.set(point.concept, stages);
   entries.push({
     path: `/kp/${point.concept}/${point.stage}`,
     lastModified: point.updated,
   });
 }
-for (const concept of [...concepts].sort()) {
+for (const [concept, stages] of [...stagesByConcept.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+  if (stages.size < 2) continue;
   entries.push({ path: `/kp/${concept}`, lastModified: latest });
 }
 

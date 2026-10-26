@@ -11,6 +11,10 @@
  *
  * KP_SLIDES_PREVIEW：是否生成 /kp/preview/slides（投影片空狀態與錯誤狀態的預覽頁）。
  *   同樣只在 build 讀取。正式 image 不要設。
+ *
+ * KP_SLIDES_FIXTURE：測試用，格式 `<知識點 id>:<componentId>`。
+ *   `loadCatalog` 會把該知識點的 slides 換成這一個 componentId。
+ *   只在 build / dev 讀取。正式 image 與正式 Cloud Run 都不要設。
  */
 
 export function isKpEnabled(): boolean {
