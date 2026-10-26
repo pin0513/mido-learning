@@ -6,11 +6,12 @@ import { recordPageView } from "@/lib/api/analytics";
 import type { CityMapData } from "@/lib/content/city";
 import { KpFrame } from "@/components/kp/shell/KpFrame";
 import { CityMapView } from "./CityMapView";
+import type { OpenPathBrief } from "@/lib/kp/open-path";
 import { AboutInset, HowSection, OpenPlate } from "./CitySections";
 import { SlideMenu } from "./SlideMenu";
 
 /** 旗標打開時的首頁。投影片區併進這一頁，不重複記一次 page view。 */
-export function CityHome({ data }: { data: CityMapData }) {
+export function CityHome({ data, path }: { data: CityMapData; path: OpenPathBrief | null }) {
   useEffect(() => {
     recordPageView();
   }, []);
@@ -19,12 +20,6 @@ export function CityHome({ data }: { data: CityMapData }) {
     <KpFrame>
       <section className="hero" aria-labelledby="city-hero">
         <div className="card">
-          <div className="stageband" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
           <div className="card-body rv">
             <h1 id="city-hero">全家一起走的學習城市</h1>
             <p>給親子一起讀的知識地圖。孩子走國小環，大人走自己的那一環。</p>
@@ -43,7 +38,7 @@ export function CityHome({ data }: { data: CityMapData }) {
         </div>
       </section>
       <HowSection />
-      <OpenPlate data={data} />
+      {path ? <OpenPlate path={path} /> : null}
       <SlideMenu />
       <AboutInset />
     </KpFrame>

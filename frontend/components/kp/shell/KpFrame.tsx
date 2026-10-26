@@ -77,10 +77,6 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
       </header>
       <main id="main">{children}</main>
       <footer className="foot board">
-        <div className="bigmark" aria-hidden="true">
-          <Mark />
-          <span className="wm">Mido<br />Learning</span>
-        </div>
         <div className="fcols">
           <div>
             <h2>知識城市</h2>
@@ -134,19 +130,7 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
           <a href="https://commons.wikimedia.org/wiki/File:Garden_City_diagram.jpg">“Garden City diagram”</a>
           ，Ebenezer Howard（1898），
           <a href="https://creativecommons.org/publicdomain/mark/1.0/">公眾領域</a>
-          ，Wikimedia Commons；
-          <a href="https://commons.wikimedia.org/wiki/File:Diagram_No.2_(Howard,_Ebenezer,_To-morrow.).jpg">“Diagram No.2 (Howard, Ebenezer, To-morrow.)”</a>
-          ，Ebenezer Howard，
-          <a href="https://creativecommons.org/publicdomain/mark/1.0/">公眾領域</a>
-          ，Wikimedia Commons；
-          <a href="https://www.rawpixel.com/image/13775160/image-paper-cartoon-art">“Plattegrond van de vesting Palmanova”</a>
-          ，Rijksmuseum，
-          <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>
-          ，rawpixel；
-          <a href="https://www.rawpixel.com/image/13768142/image-paper-face-person">“Gezicht op Palmanova vogelvluchtperspectief (1693)”</a>
-          ，Rijksmuseum，
-          <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>
-          ，rawpixel。
+          ，Wikimedia Commons。用來說明環路，不是裝飾。
         </p>
       </footer>
     </>

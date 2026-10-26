@@ -4,7 +4,9 @@ import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { buildCityMap, focusViewBox, footprintsOverlap, presentCityMap } from "./city";
+import { loadCatalog } from "./catalog";
 import { loadContent } from "./load";
+import { publishedEstimatePath } from "../kp/open-path";
 import type { ContentModel, KnowledgePoint } from "./types";
 
 const contentDir = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "content");
@@ -95,4 +97,21 @@ test("新增一筆知識點不用改程式就會排上地圖", () => {
   assert.equal(map.buildings.length, 101);
   assert.ok(map.buildings.some((building) => building.id === "ma.extra@es"));
   assert.equal(footprintsOverlap(map.buildings), false);
+});
+
+test("開放主線只帶已發布標題", () => {
+  const brief = publishedEstimatePath(loadCatalog());
+  assert.ok(brief);
+  assert.deepEqual(
+    brief.stops.map((stop) => stop.title),
+    ["大事拆成小事", "時間、金錢、品質的取捨", "WBS 與三點估算", "實獲值管理（EVM）"],
+  );
+  const blob = JSON.stringify(brief);
+  for (const title of ["目標：我們想完成什麼", "什麼是「專案」", "先做什麼、後做什麼"]) {
+    assert.equal(blob.includes(title), false, title);
+  }
+  assert.ok(brief.stops[0].hiddenPrerequisites >= 1);
+  assert.equal(brief.stops[0].prerequisites.length, 0);
+  assert.equal(brief.stops[2].question.length > 0, true);
+  assert.ok(brief.colearn.includes("大事拆成小事"));
 });

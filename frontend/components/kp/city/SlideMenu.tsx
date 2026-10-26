@@ -8,16 +8,6 @@ import type { LearningComponent } from "@/types/component";
 
 const KNOWLEDGE_CATEGORIES = ["adult", "Programming", "Language", "Science", "Art", "商業思維", "運動"];
 
-function Ring() {
-  return (
-    <svg className="bul" viewBox="0 0 40 40" aria-hidden="true">
-      <circle cx="20" cy="20" r="20" className="a" />
-      <circle cx="20" cy="20" r="13" className="b" />
-      <circle cx="20" cy="20" r="6" className="a" />
-    </svg>
-  );
-}
-
 function Group({
   testId,
   title,
@@ -38,7 +28,6 @@ function Group({
       <ul className="menu rv">
         {items.length === 0 ? (
           <li>
-            <Ring />
             <div>
               <p className="nm">教材庫暫時沒有回應</p>
               <p className="ds">稍後再看，或直接前往教材庫。</p>
@@ -47,7 +36,6 @@ function Group({
         ) : (
           items.map((item) => (
             <li key={item.id}>
-              <Ring />
               <div>
                 <p className="nm">
                   <Link href={`/materials/${item.id}`}>{stripEmoji(item.title)}</Link>

@@ -55,7 +55,6 @@
   .kp-root .card-body p{max-width:16em}
 }
 .kp-root .kpc,.kp-root .lrow,.kp-root h2,.kp-root h3,.kp-root .nm{word-break:keep-all}
-.kp-root .sketch-slot{position:relative;min-height:280px;overflow:hidden;background:var(--paper-2)}
 .kp-root .kp-controls{background:var(--paper);color:var(--ink);padding:16px}
 .kp-root .hero:has([data-testid="city-layers"]),
 .kp-root .hero:has([data-testid="city-list"]){grid-template-columns:1fr}
@@ -82,3 +81,52 @@
   .kp-root .nav-drawer .nav{display:none;position:absolute;right:0;top:52px;z-index:30;min-width:220px;flex-direction:column;gap:0;background:var(--board-2);padding:12px}
   .kp-root .nav-drawer[open] .nav{display:flex}
 }
+
+/* 少一點純視覺：英雄縮成引言，地圖佔滿第一屏。區塊間距收斂，把空間留給內容。 */
+.kp-root .sec{padding-block:40px 32px}
+.kp-root .hero{grid-template-columns:minmax(240px,320px) minmax(0,1fr);align-items:start}
+.kp-root .hero .card{min-height:0}
+.kp-root .hero .card-body{align-items:flex-start;text-align:left;justify-content:flex-start;padding:28px 24px 12px;gap:16px}
+.kp-root .hero .card-body h1{font-size:clamp(1.75rem,1.1rem + 1.4vw,2.5rem);text-align:left;max-width:8em}
+.kp-root .hero .card-body p{text-align:left;max-width:22em}
+@media (max-width:1100px){
+  .kp-root .hero{grid-template-columns:1fr}
+}
+.kp-root .how-lead{max-width:36em;margin-top:12px}
+.kp-root .how-grid{margin-top:20px}
+.kp-root .how-grid article{padding:16px 0;border-top:1px solid var(--paper-3)}
+.kp-root .how-grid h3{font-size:1.125rem;margin-bottom:6px}
+.kp-root .how-row{display:block}
+.kp-root .explain-fig{width:168px;margin:12px 0 0}
+.kp-root .explain-fig img{width:168px;height:auto}
+.kp-root .explain-fig figcaption{font-size:.8rem;line-height:1.45;color:var(--ink-2);margin-top:8px}
+.kp-root .explain-fig a{text-decoration:underline;text-underline-offset:2px}
+.kp-root .how-more{margin-top:20px}
+@media (max-width:700px){
+  .kp-root .explain-fig{width:148px}
+  .kp-root .explain-fig img{width:148px}
+}
+.kp-root .path-lead{max-width:40em;margin:12px 0 8px;color:var(--chalk-2)}
+.kp-root .stops{list-style:none;margin-top:8px}
+.kp-root .stop{display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 16px;padding:22px 0;border-top:1px solid var(--board-4)}
+.kp-root .stop h3{font-size:1.35rem;margin:2px 0 8px}
+.kp-root .stop .meta{color:var(--chalk-2);font-size:.85rem;font-weight:700}
+.kp-root .stop .ask{margin-top:10px}
+.kp-root .stop .ask span{display:block;font-weight:700;font-size:.85rem}
+.kp-root .stop .rel{margin-top:8px;color:var(--chalk-2)}
+.kp-root .stop .rel a{color:var(--chalk);text-decoration:underline;text-underline-offset:3px}
+.kp-root .stop-actions{margin-top:14px}
+.kp-root .stop-tool{margin-top:16px}
+.kp-root .stop-tool h4{margin-bottom:8px}
+.kp-root .path-more{margin-top:28px}
+.kp-root .path-colearn{color:var(--ink);margin-top:28px}
+.kp-root .path-colearn a{color:var(--ink)}
+.kp-root .credits a{text-decoration:underline;text-underline-offset:2px}
+.kp-root .about-copy{max-width:42em;display:flex;flex-direction:column;gap:16px}
+.kp-root .about-copy p{max-width:40em}
+.kp-root .menu li{grid-template-columns:minmax(0,1fr);gap:4px}
+.kp-root .menu{gap:20px 32px}
+.kp-root .menu-cat{margin:32px 0 16px}
+.kp-root .menu-cat h3{font-size:var(--step-lead)}
+.kp-root .fcols{margin-top:0}
+.kp-root .credits{max-width:70em}
