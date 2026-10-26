@@ -4,7 +4,16 @@ on:
   pull_request:
     paths:
       - "frontend/content/**"
-      - "frontend/scripts/validate-knowledge-points.ts"
+      - "frontend/lib/content/**"
+      - "frontend/lib/kp/**"
+      - "frontend/components/kp/**"
+      - "frontend/components/layout/Header.tsx"
+      - "frontend/app/(public)/kp/**"
+      - "frontend/app/api/kp-launch/**"
+      - "frontend/app/sitemap.ts"
+      - "frontend/middleware.ts"
+      - "frontend/e2e/kp.spec.ts"
+      - "frontend/scripts/**"
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
       - ".github/workflows/validate-knowledge-points.yml"
@@ -13,7 +22,16 @@ on:
     branches: [main]
     paths:
       - "frontend/content/**"
-      - "frontend/scripts/validate-knowledge-points.ts"
+      - "frontend/lib/content/**"
+      - "frontend/lib/kp/**"
+      - "frontend/components/kp/**"
+      - "frontend/components/layout/Header.tsx"
+      - "frontend/app/(public)/kp/**"
+      - "frontend/app/api/kp-launch/**"
+      - "frontend/app/sitemap.ts"
+      - "frontend/middleware.ts"
+      - "frontend/e2e/kp.spec.ts"
+      - "frontend/scripts/**"
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
       - ".github/workflows/validate-knowledge-points.yml"
@@ -46,3 +64,38 @@ jobs:
 
       - name: Validate knowledge points
         run: pnpm validate:content
+
+      - name: Refresh sitemap paths
+        run: pnpm exec tsx scripts/write-kp-sitemap.ts
+
+      - name: Typecheck
+        run: pnpm exec tsc --noEmit
+
+      - name: Build
+        env:
+          KP_INCLUDE_DRAFTS: "true"
+          KP_SLIDES_PREVIEW: "true"
+          # 公開頁的 Header 會初始化 Firebase Auth。沒有 apiKey 時客戶端直接丟錯，
+          # Playwright 看到的是 Application error，不是頁面。這些值只給 CI 建置，不是真的專案金鑰。
+          NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyCIDummyKeyForKpE2EOnly0000000
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: mido-learning.firebaseapp.com
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: mido-learning
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: mido-learning.appspot.com
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "000000000000"
+          NEXT_PUBLIC_FIREBASE_APP_ID: "1:000000000000:web:kp-e2e"
+        run: pnpm build
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Knowledge map e2e
+        env:
+          KP_ENABLED: "true"
+          E2E_BASE_URL: http://127.0.0.1:3000
+        run: |
+          pnpm exec next start -p 3000 &
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+            curl -sf http://127.0.0.1:3000/api/kp-launch && break
+            sleep 2
+          done
+          pnpm exec playwright test e2e/kp.spec.ts e2e/homepage-groups.spec.ts --reporter=list

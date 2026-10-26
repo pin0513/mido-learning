@@ -1,8 +1,62 @@
-# 知識點內容（P1）
+# 知識點內容
 
-這裡是 learn.paulfun.net 的知識點底稿。Git 是課程結構的來源；進度、評分、可見度仍放在 Firestore。這一層**沒有**接到頁面，也**沒有**改上傳、檢視器或後端。網站行為與加上這些檔案之前相同。
+這裡是 learn.paulfun.net 的知識點底稿。Git 是課程結構的來源；進度、評分、可見度仍放在 Firestore。P2 把這些檔案在 **build 時**讀進靜態頁，不新增後端 API，也不寫 Firestore。
 
-檔案放在 `frontend/content/`，是為了沿用現有的前端部署條件（`frontend/**`、建置目錄 `./frontend`）。內容不 import 進 Next.js。以後若要拆成獨立的內容 repo，搬整個資料夾即可。
+檔案放在 `frontend/content/`，是為了沿用現有的前端部署條件（`frontend/**`、建置目錄 `./frontend`）。Cloud Run 的 runner 只帶 `.next/standalone`，**執行時不再讀這個資料夾**。以後若要拆成獨立的內容 repo，搬整個資料夾即可。
+
+## 頁面
+
+| 網址 | 內容 |
+| --- | --- |
+| `/kp` | 層級 × 階段（本質→應用、國小→大學）與學門、階段、核心素養入口 |
+| `/kp/layer/[id]` | 四個層級各一頁（`essence`、`foundation`、`advanced`、`applied`） |
+| `/kp/discipline/[id]` | 學門，id 用 `content_folder`（`pm-leadership`、`it-ai`） |
+| `/kp/stage/[id]` | `es`、`jh`、`sh`、`uni` |
+| `/kp/competency/[code]` | A1–C3 |
+| `/kp/path/[pathId]` | 主線 |
+| `/kp/[concept]/[stage]` | 單一知識點，例如 `/kp/pm.breakdown/es` |
+| `/kp/[concept]` | 同一概念的各階段；目前各只有一個階段，會直接導向 |
+| `/kp/index.json` | 給之後家庭看板用的靜態清單 |
+
+層級 × 階段是地圖的骨幹。之後若做城市總覽，是疊在這張表上面，不取代這幾條路由。
+
+讀取與索引在 `frontend/lib/content/`（server-only）。驗證腳本走同一份 `lib/content/load.ts`，那個檔案不掛 `server-only`，因為 `tsx` 直接跑。
+
+### 兩個環境變數
+
+都不要加 `NEXT_PUBLIC_`。
+
+| 變數 | 何時讀 | 預設 | 作用 |
+| --- | --- | --- | --- |
+| `KP_ENABLED` | 每次請求（middleware、`/api/kp-launch`、sitemap） | 關 | 上線開關。關的時候 `/kp` 全部 404，導覽列沒有「知識地圖」。改值要重啟行程，**不用重新 build**。Cloud Run 用同一張 image 開新 revision 即可。 |
+| `KP_INCLUDE_DRAFTS` | `next build` / `next dev` | 關（只生成 `published`） | 草稿與 `review` 要不要變成頁面。正式站預設不生成。改值必須重新 build。 |
+
+投影片預覽頁 `/kp/preview/slides` 只有 `KP_SLIDES_PREVIEW=true` 的 build 才會出現。
+
+授權文字（D09）還沒決定，頁面上是空的占位，不要自行填入 CC 條文。
+
+### 本機預覽
+
+```bash
+cd frontend
+# frontend/.env.local
+# KP_ENABLED=true
+# KP_INCLUDE_DRAFTS=true
+
+pnpm dev
+```
+
+開發伺服器在 3001。打開 http://localhost:3001/kp 。沒設 `KP_ENABLED` 時，`/kp` 會 404，首頁維持原本的樣子。
+
+要看跟正式站相同的靜態結果：
+
+```bash
+cd frontend
+KP_INCLUDE_DRAFTS=true pnpm build
+KP_ENABLED=true pnpm start
+```
+
+`pnpm build` 會先重寫 `lib/content/published-paths.ts`（sitemap 用，不含草稿）。`next build` 應把 `/kp` 頁列成靜態。
 
 ## 目錄
 
