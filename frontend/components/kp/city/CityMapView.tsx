@@ -288,7 +288,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
                     zoomRing(district.key, level.district === district.key ? data.stages[sIndex].id : null);
                   }}
                 >
-                  <title>{`${district.name}・${data.stages[sIndex]?.name}環`}</title>
+                  <title>{`${district.name}，${data.stages[sIndex]?.name}環`}</title>
                 </path>
               )),
             )}
