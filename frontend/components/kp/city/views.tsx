@@ -102,7 +102,7 @@ export function CityList({
   onOpen: (id: string) => void;
 }) {
   return (
-    <div data-testid="city-list" className="space-y-8">
+    <div id="kp-city-list" data-testid="city-list" tabIndex={-1} className="space-y-8 outline-none">
       {data.districts.map((district) => (
         <section key={district.key} aria-labelledby={`list-${district.key}`}>
           <h2 id={`list-${district.key}`} className="text-xl font-bold">

@@ -255,6 +255,17 @@ export function CityMapView({ data, rememberView = false }: { data: CityMapData;
 
   return (
     <div ref={mapRoot} data-testid="city-experience">
+      <a
+        href="#kp-city-list"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-20 focus:bg-white focus:px-3 focus:py-2 focus:underline"
+        onClick={(event) => {
+          event.preventDefault();
+          setCityView("list");
+          window.requestAnimationFrame(() => document.getElementById("kp-city-list")?.focus());
+        }}
+      >
+        跳到清單檢視
+      </a>
       <ViewSwitch view={view} onChange={setCityView} />
       <div className="mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm font-semibold text-[#1a1614]">
