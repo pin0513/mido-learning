@@ -37,7 +37,7 @@ test.describe("學習城市的三種檢視", () => {
     await page.keyboard.press("Enter");
     await expect(page.getByTestId("city-card").getByRole("heading", { level: 2 })).toHaveText("大事拆成小事");
     await page.keyboard.press("Escape");
-    await expect(page.getByTestId("city-card").getByRole("heading", { level: 2 })).toHaveText("學習城市");
+    await expect(page.getByTestId("city-card").getByRole("heading", { level: 2 })).toHaveText("知識地圖");
 
     const results = await new AxeBuilder({ page }).include('[data-testid="city-experience"]').analyze();
     const serious = results.violations.filter((item) => item.impact === "serious" || item.impact === "critical");

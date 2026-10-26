@@ -92,7 +92,7 @@ export function CityMapView({
   rememberView?: boolean;
   defaultView?: CityView;
   tabOrder?: CityView[];
-  /** Written as ?view= when the map tab is not the default. The homepage uses "city". */
+  /** Written as ?view= when the map tab is not the default. The homepage writes "map"; "city" still parses. */
   mapParam?: string;
 }) {
   const [level, setLevel] = useState<Level>(EMPTY);
@@ -395,13 +395,13 @@ export function CityMapView({
       ) : null}
       {selected && together(snapshot, selected.id) ? <p className="mb-4 text-sm font-semibold">這棟你們一起學過。</p> : null}
       <p className="controls-block progress-note mb-4 px-4 text-sm" data-testid="city-filter">
-        目前看的是{filterBits.length > 0 ? filterBits.join("・") : "全城"}
+        目前看的是{filterBits.length > 0 ? filterBits.join("・") : "全部"}
       </p>
       <div className="map-block grid gap-4">
       <div>
         <nav aria-label="地圖層級" className="mb-3 flex flex-wrap items-center gap-2 text-sm">
           <button type="button" className="min-h-11 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]" onClick={() => go(EMPTY, "push")}>
-            全城
+            全部
           </button>
           {level.district ? (
             <>
@@ -426,7 +426,7 @@ export function CityMapView({
             </>
           ) : null}
         </nav>
-        <div className={view === "map" ? "chips mb-3 hidden md:flex" : "chips mb-3"} role="group" aria-label="學區與環路">
+        <div className={view === "map" ? "chips mb-3 hidden md:flex" : "chips mb-3"} role="group" aria-label="領域與階段">
           {data.districts.map((district) => (
             <button
               key={district.key}
@@ -501,7 +501,7 @@ export function CityMapView({
             data-building-count={data.buildings.length}
             viewBox={viewBox}
             role="group"
-            aria-label="學習城市地圖。四個學區，環路從國小到大學。建築是知識點。"
+            aria-label="知識地圖。四個領域，環路從國小到大學。建築是知識點。"
             className={`city h-auto w-full max-w-full ${zoomed ? "touch-none" : ""}`}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
@@ -819,8 +819,8 @@ export function CityMapView({
           </div>
         ) : (
           <div>
-            <h2 className="text-xl font-bold">學習城市</h2>
-            <p className="mt-2 text-sm leading-6">從家庭廣場往外是國小、國中、高中、大學四條環路。點一個學區放大，再點環路，然後點建築。</p>
+            <h2 className="text-xl font-bold">知識地圖</h2>
+            <p className="mt-2 text-sm leading-6">從家庭廣場往外是國小、國中、高中、大學四條環路。點一個領域放大，再點環路，然後點建築。</p>
             <p className="mt-3 text-sm leading-6">開發預定區只畫下一輪的 {data.lots.filter((item) => item.featured).length} 塊空地。</p>
             <button
               type="button"

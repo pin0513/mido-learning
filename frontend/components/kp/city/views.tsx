@@ -35,7 +35,7 @@ const control =
   "min-h-11 border border-[#1a1614] px-4 text-left text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]";
 
 const VIEW_LABEL: Record<CityView, string> = {
-  map: "城市地圖",
+  map: "知識地圖",
   system: "分層分段總圖",
   list: "清單",
 };
@@ -369,7 +369,7 @@ export function MobileDistricts({
   if (!district) {
     return (
       <div data-testid="city-mobile">
-        <h2 className="text-lg font-bold">學區</h2>
+        <h2 className="text-lg font-bold">領域</h2>
         <ul className="mt-3 space-y-2">
           {data.districts.map((item) => (
             <li key={item.key}>
@@ -400,7 +400,7 @@ export function MobileDistricts({
   return (
     <div data-testid="city-mobile">
       <button type="button" className={`${control} bg-white hover:bg-[#f3f0ea]`} onClick={() => onDistrict("")}>
-        回學區卡片
+        回領域
       </button>
       <h2 className="mt-4 text-lg font-bold">{name}</h2>
       {data.stages.map((stage) => {

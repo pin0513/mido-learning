@@ -12,8 +12,8 @@ const HOW = [
     body: "四條環路由內而外是國小、國中、高中、大學。孩子從內圈開始，大人可以走到外圈。同一個主題，每一環有自己讀得懂的版本。",
   },
   {
-    title: "學區是學門",
-    body: "城被切成四個學區：哲學、數學、專案管理與領導、資訊與 AI。沿著一個學區往外走，就是同一門學問一環一環長大。",
+    title: "領域是學門",
+    body: "四個領域是哲學、數學、專案管理與領導、資訊與 AI。沿著一個領域往外走，就是同一門學問一環一環長大。",
   },
   {
     title: "樓高是地基",
@@ -29,7 +29,7 @@ export function HowSection() {
   return (
     <section className="sec paper" aria-labelledby="how">
       <div className="wrap">
-        <h2 id="how" className="head">怎麼讀這座城</h2>
+        <h2 id="how" className="head">怎麼讀這張圖</h2>
         <p className="how-lead">四件事。看懂了就知道自己在哪、下一站往哪走。</p>
         <div className="how-grid">
           {HOW.map((item) => (
@@ -118,7 +118,7 @@ export function AboutInset() {
     <section className="sec paper" id="about" aria-labelledby="about-heading">
       <div className="wrap about-copy">
         <h2 id="about-heading" className="head">一位爸爸的學習實驗</h2>
-        <p>Mido Learning 是 AI 教案、親子實驗，還有家庭計分板。知識城市把先備關係排成一座城：孩子看得到自己在哪一環，大人看得到兩個人是不是走在同一條路上。</p>
+        <p>Mido Learning 是 AI 教案、親子實驗，還有家庭計分板。這張圖把先備關係排開：孩子看得到自己在哪一環，大人看得到兩個人是不是走在同一條路上。</p>
         <p>進度存在這台裝置，標示範例資料。授權仍是待定。</p>
         <p>
           <button type="button" className="btn btn-accent" onClick={() => window.dispatchEvent(new Event("mido-open-wish"))}>

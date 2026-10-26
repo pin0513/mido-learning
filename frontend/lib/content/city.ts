@@ -181,7 +181,7 @@ export function buildCityMap(model: ContentModel): CityMapData {
     const name = path?.disciplineTitle ?? root.name;
     return {
       key: folder,
-      name: name.endsWith("區") ? name : `${name}區`,
+      name,
       layer: root.layer,
       layerName: layerName.get(root.layer) ?? root.layer,
       color: DISTRICT_COLORS[index % DISTRICT_COLORS.length],
