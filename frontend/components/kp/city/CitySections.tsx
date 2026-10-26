@@ -11,7 +11,7 @@ const HOW = [
   {
     title: "環路是學習階段",
     body: "四條環路由內而外是國小、國中、高中、大學。孩子從內圈開始，大人可以走到外圈。同一個主題，每一環有自己讀得懂的版本。",
-    image: "/kp/garden-city-diagram.jpg",
+    image: "/kp/garden-city-diagram.webp",
     alt: "霍華德 1898 年的田園城市圖：同心圓環繞中央廣場",
     href: "/kp/path/pm.estimate",
     action: "看一條走完四環的主線",
@@ -19,7 +19,7 @@ const HOW = [
   {
     title: "學區是學門",
     body: "城被切成四個學區：哲學、數學、專案管理與領導、資訊與 AI。沿著一個學區往外走，就是同一門學問一環一環長大。",
-    image: "/kp/diagram-no-2-howard-ebenezer-to-morrow.jpg",
+    image: "/kp/diagram-no-2-howard-ebenezer-to-morrow.webp",
     alt: "霍華德的分區圖：城市被切成扇形的區",
   },
   {
@@ -99,7 +99,7 @@ export function OpenPlate({ data }: { data: CityMapData }) {
   const photos = [
     ["/kp/plattegrond-van-de-vesting-palmanova.webp", "帕爾馬諾瓦要塞城平面圖，九角星形的同心城"],
     ["/kp/gezicht-op-palmanova-vogelvluchtperspectief-1693.webp", "帕爾馬諾瓦鳥瞰圖，1693 年"],
-    ["/kp/garden-city-diagram.jpg", "霍華德田園城市同心圓圖"],
+    ["/kp/garden-city-diagram.webp", "霍華德田園城市同心圓圖"],
   ];
   const [photo, setPhoto] = useState(0);
   useEffect(() => {
@@ -165,7 +165,7 @@ export function AboutInset() {
         <h2 id="about-heading">一位爸爸的學習實驗</h2>
         <p className="lead">Mido Learning 是 AI 教案、親子實驗，還有家庭計分板。知識城市是這裡最新的一塊地。</p>
         <div className="shape">
-          <img src="/kp/diagram-no-2-howard-ebenezer-to-morrow.jpg" alt="霍華德分區圖局部" width={960} height={656} />
+          <img src="/kp/diagram-no-2-howard-ebenezer-to-morrow.webp" alt="霍華德分區圖局部" width={1920} height={1312} />
         </div>
       </div>
       <div className="r rv">
