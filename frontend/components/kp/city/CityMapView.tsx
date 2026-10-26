@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { annulus, focusViewBox, sectorStart, type CityMapData } from "@/lib/content/city";
+import { CityList, LayerOverview, MobileDistricts, parseCityView, readRememberedView, ViewSwitch, writeRememberedView, type CityView } from "./views";
 import {
   clearStoredProgress,
   demoProgress,
@@ -66,8 +67,9 @@ function parseViewBox(value: string): [number, number, number, number] {
 }
 
 /** /kp/map 的城市圖。建築在伺服端資料裡，互動留在這個 client 元件。 */
-export function CityMapView({ data }: { data: CityMapData }) {
+export function CityMapView({ data, rememberView = false }: { data: CityMapData; rememberView?: boolean }) {
   const [level, setLevel] = useState<Level>(EMPTY);
+  const [view, setView] = useState<CityView>("map");
   const [lotId, setLotId] = useState<string | null>(null);
   const [hover, setHover] = useState<string | null>(null);
   const [pathId, setPathId] = useState("");
@@ -124,6 +126,8 @@ export function CityMapView({ data }: { data: CityMapData }) {
     const params = new URLSearchParams(window.location.search);
     setPathId(params.get("path") ?? "");
     setStored(readStoredProgress());
+    const fromUrl = parseCityView(params.get("view"));
+    setView(fromUrl ?? (rememberView ? readRememberedView() : null) ?? "map");
     const onPop = () => {
       depth.current = Math.max(0, depth.current - 1);
       setLevel(readLevel());
@@ -216,6 +220,23 @@ export function CityMapView({ data }: { data: CityMapData }) {
     go({ district: building.folder, stage: building.stage, kp: id }, "push");
   };
 
+  const openLot = (id: string) => {
+    setLotId(id);
+    const next = { district: level.district, stage: level.stage, kp: null };
+    setLevel(next);
+    writeLevel(next, "replace");
+  };
+
+  const setCityView = (next: CityView) => {
+    setView(next);
+    if (rememberView) writeRememberedView(next);
+    const params = new URLSearchParams(window.location.search);
+    if (next === "map") params.delete("view");
+    else params.set("view", next);
+    const search = params.toString();
+    window.history.replaceState(window.history.state, "", `${window.location.pathname}${search ? `?${search}` : ""}`);
+  };
+
   const visibleBridges = selected
     ? data.bridges.filter((bridge) => bridge.from === selected.id || bridge.to === selected.id)
     : [];
@@ -227,9 +248,14 @@ export function CityMapView({ data }: { data: CityMapData }) {
   const zoomRing = (districtKey: string, stageId: string | null) => {
     go({ district: districtKey, stage: stageId, kp: null }, "push");
   };
+  const filterBits = [
+    level.district ? data.districts.find((district) => district.key === level.district)?.name : null,
+    level.stage ? data.stages.find((stage) => stage.id === level.stage)?.name : null,
+  ].filter(Boolean);
 
   return (
-    <div ref={mapRoot}>
+    <div ref={mapRoot} data-testid="city-experience">
+      <ViewSwitch view={view} onChange={setCityView} />
       <div className="mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm font-semibold text-[#1a1614]">
           學習主線
@@ -316,6 +342,9 @@ export function CityMapView({ data }: { data: CityMapData }) {
         </div>
       ) : null}
       {selected && together(snapshot, selected.id) ? <p className="mb-4 text-sm font-semibold">這棟你們一起學過。</p> : null}
+      <p className="mb-4 text-sm text-[#3d3830]" data-testid="city-filter">
+        目前看的是{filterBits.length > 0 ? filterBits.join("・") : "全城"}
+      </p>
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div>
         <nav aria-label="地圖層級" className="mb-3 flex flex-wrap items-center gap-2 text-sm">
@@ -345,7 +374,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
             </>
           ) : null}
         </nav>
-        <div className="mb-3 flex flex-wrap gap-2" role="group" aria-label="學區與環路">
+        <div className="mb-3 hidden flex-wrap gap-2 md:flex" role="group" aria-label="學區與環路">
           {data.districts.map((district) => (
             <button
               key={district.key}
@@ -369,7 +398,23 @@ export function CityMapView({ data }: { data: CityMapData }) {
             </button>
           ))}
         </div>
+        {view === "map" ? (
+          <div className="mb-4 md:hidden">
+            <MobileDistricts
+              data={data}
+              district={level.district}
+              snapshot={snapshot}
+              selectedId={selected?.id ?? null}
+              onDistrict={(id) => go(id ? { district: id, stage: null, kp: null } : EMPTY, "push")}
+              onStage={(stageId) => go({ district: level.district, stage: stageId, kp: null }, "push")}
+              onOpen={openBuilding}
+              onLot={openLot}
+            />
+          </div>
+        ) : null}
+        <div className={view === "map" ? (level.district ? "block" : "hidden md:block") : "hidden"}>
         <div className="relative overflow-hidden border border-[#c0bab2] bg-[#faf9f7]" style={{ backgroundImage: "radial-gradient(#c0bab2 0.6px, transparent 0.6px)", backgroundSize: "18px 18px" }}>
+          <p className="px-3 pt-3 text-sm font-semibold md:sr-only">小地圖</p>
           <svg
             ref={svgRef}
             data-testid="city-map"
@@ -377,11 +422,12 @@ export function CityMapView({ data }: { data: CityMapData }) {
             viewBox={viewBox}
             role="group"
             aria-label="學習城市地圖。四個學區，環路從國小到大學。建築是知識點。"
-            className={`h-auto w-full ${zoomed ? "touch-none" : ""}`}
+            className={`h-auto w-full max-w-full ${zoomed ? "touch-none" : ""}`}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
           >
+            <desc>四個學區沿環路排列。環路由內到外是國小、國中、高中、大學。每一棟建築是一個知識點，平頂是本質或基礎，尖頂是進階或應用，虛線是草稿。</desc>
             {data.rings.map((ring, index) => (
               <circle key={ring[1]} cx={data.cx} cy={data.cy} r={ring[1]} fill={index % 2 === 0 ? "#f3f0ea" : "#faf9f7"} stroke="#c0bab2" strokeWidth={1} />
             ))}
@@ -555,7 +601,7 @@ export function CityMapView({ data }: { data: CityMapData }) {
               const place = byId.get(person.at);
               if (!place) return null;
               return (
-                <g key={role} role="img" aria-label={`${snapshot.notice} ${person.name}目前在${place.title}`}>
+                <g key={role} role="img" aria-label={`${person.name}目前在${place.title}`}>
                   <rect x={place.x - 18} y={place.y - place.height - 28} width={36} height={16} rx={8} fill="#1a1614" />
                   <text x={place.x} y={place.y - place.height - 17} textAnchor="middle" fontSize={9} fill="#faf9f7">
                     {person.name}
@@ -581,6 +627,18 @@ export function CityMapView({ data }: { data: CityMapData }) {
           <li className="inline-flex min-h-11 items-center gap-2">平頂是本質或基礎，尖頂是進階或應用。虛線是草稿。</li>
           <li className="inline-flex min-h-11 items-center gap-2">小圓點是美學。</li>
         </ul>
+        </div>
+        {view === "list" ? <CityList data={data} snapshot={snapshot} selectedId={selected?.id ?? null} onOpen={openBuilding} /> : null}
+        {view === "system" ? (
+          <LayerOverview
+            data={data}
+            snapshot={snapshot}
+            selectedId={selected?.id ?? null}
+            activeStage={level.stage}
+            onOpen={openBuilding}
+            onLot={openLot}
+          />
+        ) : null}
       </div>
       <aside className="border border-[#c0bab2] bg-white p-4" data-testid="city-card">
         {selected ? (

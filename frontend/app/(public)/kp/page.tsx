@@ -39,9 +39,15 @@ export default function KnowledgeMapPage() {
   return (
     <div className={shell}>
       <h1 className="text-3xl font-bold sm:text-4xl">知識地圖</h1>
-      <p className="mt-3">
+      <p className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
         <Link href="/kp/map" className="inline-flex min-h-11 items-center font-semibold underline-offset-2 hover:underline">
           打開學習城市
+        </Link>
+        <Link href="/kp/map?view=system" className="inline-flex min-h-11 items-center font-semibold underline-offset-2 hover:underline">
+          層級總圖
+        </Link>
+        <Link href="/kp/map?view=list" className="inline-flex min-h-11 items-center font-semibold underline-offset-2 hover:underline">
+          清單
         </Link>
       </p>
       <p className="mt-4 max-w-3xl leading-7">
