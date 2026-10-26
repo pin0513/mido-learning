@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { buildCityMap, footprintsOverlap } from "./city";
+import { buildCityMap, focusViewBox, footprintsOverlap } from "./city";
 import { loadContent } from "./load";
 import type { ContentModel, KnowledgePoint } from "./types";
 
@@ -60,6 +60,16 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.equal(breakdown.height, 10 + breakdown.dependents * 7);
   assert.equal(breakdown.href, "/kp/pm.breakdown/es");
   assert.equal(map.buildings.filter((building) => building.aesthetics).length, 2);
+});
+
+test("只選環路時視野縮到那一圈", () => {
+  const map = buildCityMap(content());
+  assert.equal(focusViewBox(map, null, null), "0 0 1000 1000");
+  const ring = focusViewBox(map, null, 0).split(" ").map(Number);
+  assert.ok(ring[2] < 1000);
+  assert.ok(ring[0] > 0 && ring[1] > 0);
+  const district = focusViewBox(map, 0, null).split(" ").map(Number);
+  assert.ok(district[2] < 1000);
 });
 
 test("新增一筆知識點不用改程式就會排上地圖", () => {

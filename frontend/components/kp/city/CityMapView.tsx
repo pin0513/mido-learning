@@ -67,7 +67,15 @@ function parseViewBox(value: string): [number, number, number, number] {
 }
 
 /** /kp/map 的城市圖。建築在伺服端資料裡，互動留在這個 client 元件。 */
-export function CityMapView({ data, rememberView = false }: { data: CityMapData; rememberView?: boolean }) {
+export function CityMapView({
+  data,
+  rememberView = false,
+  showStart = false,
+}: {
+  data: CityMapData;
+  rememberView?: boolean;
+  showStart?: boolean;
+}) {
   const [level, setLevel] = useState<Level>(EMPTY);
   const [view, setView] = useState<CityView>("map");
   const [lotId, setLotId] = useState<string | null>(null);
@@ -267,6 +275,30 @@ export function CityMapView({ data, rememberView = false }: { data: CityMapData;
         跳到清單檢視
       </a>
       <ViewSwitch view={view} onChange={setCityView} />
+      {showStart ? (
+        <div className="mb-4" data-testid="city-start">
+          <p className="text-sm font-semibold text-[#1a1614]">從這裡開始</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <button
+              type="button"
+              className="min-h-11 border border-[#1a1614] bg-[#1a1614] px-4 text-sm font-semibold text-[#faf9f7] hover:bg-[#3d3830] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
+              onClick={() => go({ district: null, stage: "es", kp: null }, "push")}
+            >
+              孩子從國小環開始
+            </button>
+            {data.stages.map((stage) => (
+              <button
+                key={stage.id}
+                type="button"
+                className="min-h-11 border border-[#1a1614] bg-white px-4 text-sm font-semibold hover:bg-[#f3f0ea] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
+                onClick={() => go({ district: null, stage: stage.id, kp: null }, "push")}
+              >
+                大人看{stage.name}環
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
       <div className="mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm font-semibold text-[#1a1614]">
           學習主線

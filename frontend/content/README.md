@@ -8,7 +8,8 @@
 
 | 網址 | 內容 |
 | --- | --- |
-| `/kp` | 層級 × 階段（本質→應用、國小→大學）與學門、階段、核心素養入口 |
+| `/kp` | 層級 × 階段（本質→應用、國小→大學）與學門、階段、核心素養入口。另有連結到城市地圖、層級總圖、清單 |
+| `/kp/map` | 學習城市。`?view=system` 是層級總圖，`?view=list` 是清單。`?d=` 學區、`?s=` 階段、`?kp=` 建築 |
 | `/kp/layer/[id]` | 四個層級各一頁（`essence`、`foundation`、`advanced`、`applied`） |
 | `/kp/discipline/[id]` | 學門，id 用 `content_folder`（`pm-leadership`、`it-ai`） |
 | `/kp/stage/[id]` | `es`、`jh`、`sh`、`uni` |
@@ -18,18 +19,21 @@
 | `/kp/[concept]` | 同一概念的各階段；目前各只有一個階段，會直接導向 |
 | `/kp/index.json` | 給之後家庭看板用的靜態清單 |
 
-層級 × 階段是地圖的骨幹。之後若做城市總覽，是疊在這張表上面，不取代這幾條路由。
+層級 × 階段是地圖的骨幹。學習城市（`/kp/map`）疊在這張表上面，不取代 `/kp` 的層級表、學門、階段、核心素養。首頁要不要改成城市，看 `KP_HOME_ENABLED`，跟 `KP_ENABLED` 分開。兩個都關時，首頁與改版前相同。
 
 讀取與索引在 `frontend/lib/content/`（server-only）。驗證腳本走同一份 `lib/content/load.ts`，那個檔案不掛 `server-only`，因為 `tsx` 直接跑。
 
-### 兩個環境變數
+### 環境變數
 
 都不要加 `NEXT_PUBLIC_`。
 
 | 變數 | 何時讀 | 預設 | 作用 |
 | --- | --- | --- | --- |
-| `KP_ENABLED` | 每次請求（middleware、`/api/kp-launch`、sitemap） | 關 | 上線開關。關的時候 `/kp` 全部 404，導覽列沒有「知識地圖」。改值要重啟行程，**不用重新 build**。Cloud Run 用同一張 image 開新 revision 即可。 |
+| `KP_ENABLED` | 每次請求（middleware、`/api/kp-launch`、sitemap） | 關 | `/kp` 上線開關。關的時候 `/kp` 全部 404，導覽列沒有「知識地圖」。改值要重啟行程，**不用重新 build**。Cloud Run 用同一張 image 開新 revision 即可。 |
+| `KP_HOME_ENABLED` | 每次請求（middleware、`/api/kp-launch` 的 `home`） | 關 | 首頁開關，跟上面分開。關的時候 `/` 是原本的靜態首頁，`/city-home` 404。開的時候 middleware 把 `/` 改寫到 `/city-home`（網址仍是 `/`）。同樣不用重新 build，要重啟行程。城市裡的知識點連結仍要 `KP_ENABLED` 才開得了。 |
 | `KP_INCLUDE_DRAFTS` | `next build` / `next dev` | 關（只生成 `published`） | 草稿與 `review` 要不要變成頁面。正式站預設不生成。改值必須重新 build。 |
+
+正式站目前發布的是主線 `pm.estimate`（拆解與估算）的四站：`pm.breakdown@es` 大事拆成小事、`pm.triangle@jh` 時間、金錢、品質的取捨、`pm.estimate@sh` WBS 與三點估算、`pm.evm@uni` 實獲值管理。其餘維持草稿，正式 image 看不到。CI 與預覽把 `KP_INCLUDE_DRAFTS=true`，城市圖才會有全部建築。
 
 投影片預覽頁 `/kp/preview/slides` 只有 `KP_SLIDES_PREVIEW=true` 的 build 才會出現。
 
@@ -41,19 +45,20 @@
 cd frontend
 # frontend/.env.local
 # KP_ENABLED=true
+# KP_HOME_ENABLED=true
 # KP_INCLUDE_DRAFTS=true
 
 pnpm dev
 ```
 
-開發伺服器在 3001。打開 http://localhost:3001/kp 。沒設 `KP_ENABLED` 時，`/kp` 會 404，首頁維持原本的樣子。
+開發伺服器在 3001。打開 http://localhost:3001/kp 。沒設 `KP_ENABLED` 時，`/kp` 會 404。沒設 `KP_HOME_ENABLED` 時，首頁維持原本的樣子。
 
 要看跟正式站相同的靜態結果：
 
 ```bash
 cd frontend
 KP_INCLUDE_DRAFTS=true pnpm build
-KP_ENABLED=true pnpm start
+KP_ENABLED=true KP_HOME_ENABLED=true pnpm start
 ```
 
 `pnpm build` 會先重寫 `lib/content/published-paths.ts`（sitemap 用，不含草稿）。`next build` 應把 `/kp` 頁列成靜態。
