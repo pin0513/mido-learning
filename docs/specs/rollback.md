@@ -93,18 +93,18 @@ gcloud run services update-traffic mido-learning-frontend \
 
 分支依合併順序由下往上（先合併的在前）：
 
-1. `cursor/kp-content-loader-ea35` — 內容載入、驗證器、`yaml` 依賴、`KP_ENABLED` middleware、`/api/kp-launch`、sitemap 路徑產生器、這份文件
-2. `cursor/kp-pages-ea35` — `/kp` 頁面、層級 × 階段、三軸、主線、SEO、投影片、共學卡、`index.json`
-3. `cursor/kp-nav-ea35` — Header「知識地圖」
-4. `cursor/kp-e2e-docs-ea35` — E2E、CI、Next.js 版本文字
+1. [#16](https://github.com/pin0513/mido-learning/pull/16) `cursor/kp-content-loader-ea35` — 內容載入、驗證器、`yaml` 依賴、`KP_ENABLED` middleware、`/api/kp-launch`、sitemap 路徑產生器、這份文件
+2. [#14](https://github.com/pin0513/mido-learning/pull/14) `cursor/kp-pages-ea35` — `/kp` 頁面、層級 × 階段、三軸、主線、SEO、投影片、共學卡、`index.json`
+3. [#13](https://github.com/pin0513/mido-learning/pull/13) `cursor/kp-nav-ea35` — Header「知識地圖」
+4. [#15](https://github.com/pin0513/mido-learning/pull/15) `cursor/kp-e2e-docs-ea35` — E2E、CI、Next.js 版本文字
 
-每個 PR 合併進 `main` 之後，**後合併的先 revert**：
+每個 PR 合併進 `main` 之後，**後合併的先 revert**（#15 → #13 → #14 → #16）：
 
 ```bash
-git revert <e2e-docs 的 squash commit>
-git revert <nav 的 squash commit>
-git revert <pages 的 squash commit>
-git revert <loader 的 squash commit>
+git revert <PR 15 的 squash commit>
+git revert <PR 13 的 squash commit>
+git revert <PR 14 的 squash commit>
+git revert <PR 16 的 squash commit>
 ```
 
 revert 之後要重新部署，流量才會離開含 `/kp` 的 image。只 revert 不部署，線上還是舊 image。
