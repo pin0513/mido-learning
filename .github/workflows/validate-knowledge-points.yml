@@ -69,6 +69,9 @@ jobs:
       - name: Validate knowledge points
         run: pnpm validate:content
 
+      - name: City map unit tests
+        run: pnpm test:unit
+
       - name: Refresh sitemap paths
         run: pnpm exec tsx scripts/write-kp-sitemap.ts
 
