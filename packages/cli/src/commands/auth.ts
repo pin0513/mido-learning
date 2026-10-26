@@ -32,6 +32,7 @@ export function registerAuthCommands(program: Command): void {
     .action(async (opts: { email?: string; output: string }) => {
       try {
         const config = loadConfig();
+        const apiKey = getFirebaseApiKey(config);
 
         // 互動式輸入
         const answers = await inquirer.prompt([
@@ -56,7 +57,7 @@ export function registerAuthCommands(program: Command): void {
         const spinner = ora('登入中...').start();
 
         const res = await fetch(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${getFirebaseApiKey()}`,
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${encodeURIComponent(apiKey)}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
