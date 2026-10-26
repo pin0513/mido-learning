@@ -63,7 +63,9 @@ function stripComments(source: string, yaml: boolean): string {
   return out;
 }
 
-test("使用者看得到的程式與內容沒有「城市」", () => {
+const BANNED = ["城市", "街道", "市區", "地標", "廣場", "環路"];
+
+test("使用者看得到的程式與內容沒有城市或市區用語", () => {
   const hits: string[] = [];
   for (const root of ROOTS) {
     for (const path of filesUnder(join(ROOT, root))) {
@@ -71,7 +73,8 @@ test("使用者看得到的程式與內容沒有「城市」", () => {
       const text = stripComments(readFileSync(path, "utf8"), yaml);
       const lines = text.split("\n");
       lines.forEach((line, index) => {
-        if (line.includes("城市")) hits.push(`${relative(ROOT, path)}:${index + 1}: ${line.trim()}`);
+        const word = BANNED.find((item) => line.includes(item));
+        if (word) hits.push(`${relative(ROOT, path)}:${index + 1}: ${word}: ${line.trim()}`);
       });
     }
   }

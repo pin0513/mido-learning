@@ -132,7 +132,7 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
           <a href="https://commons.wikimedia.org/wiki/File:Garden_City_diagram.jpg">Ebenezer Howard，1898</a>
           ，
           <a href="https://creativecommons.org/publicdomain/mark/1.0/">公眾領域</a>
-          ，Wikimedia Commons。用來說明環路，不是裝飾。
+          ，Wikimedia Commons。用來說明階段怎麼套成空間，不是裝飾。
         </p>
       </footer>
     </>

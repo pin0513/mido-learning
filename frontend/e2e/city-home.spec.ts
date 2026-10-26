@@ -11,7 +11,7 @@ test.describe("學習城市首頁", () => {
 
   test("預設是分層分段總圖，點頁籤才換到地圖和清單", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("全家一起走的知識地圖");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("全家一起看的知識地圖");
     await expect(page.getByTestId("city-layers")).toBeVisible();
     await expect(page.getByTestId("city-map")).toBeHidden();
     await expect(page.getByRole("group", { name: "切換檢視" }).getByRole("button")).toHaveText([
@@ -82,7 +82,7 @@ test.describe("學習城市首頁", () => {
     await expect(page).toHaveURL(/[?&]view=system(?:&|$)/);
     await expect(page.getByTestId("city-layers")).toBeVisible();
 
-    await page.getByRole("link", { name: "帶孩子從國小環出發" }).click();
+    await page.getByRole("link", { name: "帶孩子從國小階段看起" }).click();
     await expect(page).toHaveURL(/[?&]view=map(?:&|$)/);
     await expect(page).toHaveURL(/[?&]s=es(?:&|$)/);
     await expect(page.getByTestId("city-filter")).toContainText("國小");

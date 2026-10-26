@@ -21,12 +21,12 @@ export function CityHome({ data, path }: { data: CityMapData; path: OpenPathBrie
       <section className="hero" aria-labelledby="city-hero">
         <div className="card">
           <div className="card-body rv">
-            <h1 id="city-hero">全家一起走的知識地圖</h1>
-            <p>先看層級和階段怎麼排。孩子走國小環，大人走自己的那一環。</p>
+            <h1 id="city-hero">全家一起看的知識地圖</h1>
+            <p>先看層級和階段排成的空間。知識點是節點，先備和延伸是關係線路。</p>
             <figure className="explain-fig">
               <img
                 src="/kp/garden-city-diagram.webp"
-                alt="Ebenezer Howard 1898 年的同心圓圖：由內而外四條環路，用來說明學習階段"
+                alt="Ebenezer Howard 1898 年的同心圓圖：由內而外四個階段，用來說明空間怎麼套在一起"
                 width={336}
                 height={247}
               />
@@ -42,7 +42,7 @@ export function CityHome({ data, path }: { data: CityMapData; path: OpenPathBrie
           </div>
           <div className="card-foot">
             <nav className="textlinks" aria-label="其他看法">
-              <Link href="/?view=map&s=es">帶孩子從國小環出發</Link>
+              <Link href="/?view=map&s=es">帶孩子從國小階段看起</Link>
               <Link href="/?view=list">看清單</Link>
               <Link href="/#slides">投影片教材</Link>
             </nav>

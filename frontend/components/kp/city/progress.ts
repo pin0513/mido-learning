@@ -25,7 +25,7 @@ export const PROGRESS_STORAGE_KEY = "mido-city-progress";
 
 const DEMO: ProgressSnapshot = {
   kind: "demo",
-  notice: "範例資料：家庭標記與走過的建築都是假的，不代表任何人的進度。",
+  notice: "範例資料：家庭標記與讀過的節點都是假的，不代表任何人的進度。",
   child: {
     name: "孩子",
     at: "pm.breakdown@es",

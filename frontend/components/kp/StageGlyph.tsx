@@ -1,7 +1,7 @@
 const ORDER = ["es", "jh", "sh", "uni"] as const;
-const NAMES: Record<string, string> = { es: "國小環", jh: "國中環", sh: "高中環", uni: "大學環" };
+const NAMES: Record<string, string> = { es: "國小", jh: "國中", sh: "高中", uni: "大學" };
 
-/** 四個同心圓，這一站所在的環是橘色。 */
+/** 四個同心圓，這一站所在的階段是橘色。 */
 export function StageGlyph({ stage, size = 36, label }: { stage: string; size?: number; label?: string }) {
   const rings = [20, 15, 10, 5];
   return (

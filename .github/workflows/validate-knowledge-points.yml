@@ -120,8 +120,8 @@ jobs:
 
       - name: Reject 城市 in the built pages
         run: |
-          if grep -R -n -I --exclude='*.map' --include='*.html' --include='*.js' --include='*.rsc' '城市' .next/server .next/static; then
-            echo "built pages still contain 城市"
+          if grep -R -n -I -E --exclude='*.map' --include='*.html' --include='*.js' --include='*.rsc' '城市|街道|市區|地標|廣場|環路' .next/server .next/static; then
+            echo "built pages still contain urban wording"
             exit 1
           fi
 

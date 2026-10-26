@@ -26,7 +26,7 @@ export function markLabel(snapshot: ProgressSnapshot, id: string): string {
   const bits: string[] = [];
   for (const person of [snapshot.adult, snapshot.child]) {
     if (person.at === id) bits.push(`${person.name}在這裡`);
-    else if (person.visited.includes(id)) bits.push(`${person.name}走過`);
+    else if (person.visited.includes(id)) bits.push(`${person.name}讀過`);
   }
   return bits.join("，");
 }
@@ -107,7 +107,7 @@ function BuildingButton({
 
 function DraftNote({ count }: { count: number }) {
   if (count <= 0) return null;
-  return <p className="dimrow">施工中 {count}</p>;
+  return <p className="dimrow">尚未接上 {count}</p>;
 }
 
 export function CityList({
@@ -262,14 +262,14 @@ export function LayerOverview({
                 </div>
               );
             })}
-            <h3 className="mt-3 text-sm font-bold">預定地</h3>
+            <h3 className="mt-3 text-sm font-bold">預留空間</h3>
             <LotList data={data} layerId={layer.id} onLot={onLot} />
           </section>
         ))}
       </div>
       <div className="matrix-table max-w-full overflow-x-auto" tabIndex={0} role="region" aria-label="分層分段總圖">
         <table className="w-full border-collapse text-sm">
-          <caption className="sr-only">層級與階段。列是本質到應用，欄是國小到大學，最後一欄是該層的預定地。</caption>
+          <caption className="sr-only">層級與階段。列是本質到應用，欄是國小到大學，最後一欄是該層的預留空間。</caption>
           <thead>
             <tr>
               <th scope="col" className="border border-[#c0bab2] bg-white px-3 py-3 text-left">
@@ -285,7 +285,7 @@ export function LayerOverview({
                 </th>
               ))}
               <th scope="col" className="border border-[#c0bab2] bg-white px-3 py-3 text-left">
-                預定地
+                預留空間
               </th>
             </tr>
           </thead>
@@ -380,7 +380,7 @@ export function MobileDistricts({
             </li>
           ))}
         </ul>
-        <h2 className="mt-6 text-lg font-bold">預定地</h2>
+        <h2 className="mt-6 text-lg font-bold">預留空間</h2>
         <ul className="mt-3 space-y-2">
           {data.lots
             .filter((lot) => lot.featured)
@@ -409,7 +409,7 @@ export function MobileDistricts({
           <section key={stage.id} className="mt-4" aria-labelledby={`ring-${stage.id}`}>
             <h3 id={`ring-${stage.id}`}>
               <button type="button" className={`${control} w-full bg-white hover:bg-[#f3f0ea]`} onClick={() => onStage(stage.id)}>
-                {stage.name}環（{items.length}）
+                {stage.name}（{items.length}）
               </button>
             </h3>
             <ul className="mt-2 space-y-2">

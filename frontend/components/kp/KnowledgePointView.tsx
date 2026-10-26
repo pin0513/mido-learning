@@ -114,8 +114,8 @@ export function KnowledgePointView({
         </div>
         <h1 className="head" style={{ marginTop: 16 }}>{point.title}</h1>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 16 }}>
-          <StageGlyph stage={point.stage} label={`${stage}環`} />
-          <p className="small" style={{ margin: 0 }}>{stage}環・{layer}</p>
+          <StageGlyph stage={point.stage} label={stage} />
+          <p className="small" style={{ margin: 0 }}>{stage}・{layer}</p>
         </div>
         <p className="lead" style={{ marginTop: 16 }}>{point.idea}</p>
         {point.id.startsWith("pm.estimate@") ? <Estimator /> : null}

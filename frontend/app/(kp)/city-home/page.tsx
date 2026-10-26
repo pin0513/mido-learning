@@ -7,11 +7,11 @@ import { KP_SITE_ORIGIN } from "@/lib/kp/routes";
 
 export const metadata: Metadata = {
   title: { absolute: "Mido Learning｜知識地圖" },
-  description: "先看層級和階段。沿著國小到大學的環路走進知識點，也可以改看清單。",
+  description: "先看層級和階段排成的空間。知識點是節點，也可以改看清單。",
   alternates: { canonical: `${KP_SITE_ORIGIN}/` },
   openGraph: {
     title: "Mido Learning｜知識地圖",
-    description: "先看層級和階段。沿著國小到大學的環路走進知識點。",
+    description: "先看層級和階段排成的空間。知識點是節點。",
     url: `${KP_SITE_ORIGIN}/`,
   },
 };
