@@ -22,7 +22,7 @@ export function CityHome({ data, path }: { data: CityMapData; path: OpenPathBrie
         <div className="card">
           <div className="card-body rv">
             <h1 id="city-hero">全家一起走的學習城市</h1>
-            <p>給親子一起讀的知識地圖。孩子走國小環，大人走自己的那一環。</p>
+            <p>先看層級和階段怎麼排。孩子走國小環，大人走自己的那一環。</p>
             <figure className="explain-fig">
               <img
                 src="/kp/garden-city-diagram.webp"
@@ -38,18 +38,18 @@ export function CityHome({ data, path }: { data: CityMapData; path: OpenPathBrie
                 ，Wikimedia Commons。
               </figcaption>
             </figure>
-            <Link className="btn btn-accent" href="/?s=es">帶孩子從國小環出發</Link>
+            <Link className="btn btn-accent" href="/?view=system">看分層分段總圖</Link>
           </div>
           <div className="card-foot">
             <nav className="textlinks" aria-label="其他看法">
-              <Link href="/?view=system">看分層分段總圖</Link>
+              <Link href="/?view=city&s=es">帶孩子從國小環出發</Link>
               <Link href="/?view=list">看清單</Link>
               <Link href="/#slides">投影片教材</Link>
             </nav>
           </div>
         </div>
         <div className="citypanel board-2">
-          <CityMapView data={data} rememberView />
+          <CityMapView data={data} defaultView="system" tabOrder={["system", "map", "list"]} mapParam="city" />
         </div>
       </section>
       <HowSection />

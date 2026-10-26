@@ -84,12 +84,19 @@ function parseViewBox(value: string): [number, number, number, number] {
 export function CityMapView({
   data,
   rememberView = false,
+  defaultView = "map",
+  tabOrder,
+  mapParam = "map",
 }: {
   data: CityMapData;
   rememberView?: boolean;
+  defaultView?: CityView;
+  tabOrder?: CityView[];
+  /** Written as ?view= when the map tab is not the default. The homepage uses "city". */
+  mapParam?: string;
 }) {
   const [level, setLevel] = useState<Level>(EMPTY);
-  const [view, setView] = useState<CityView>("map");
+  const [view, setView] = useState<CityView>(defaultView);
   const [lotId, setLotId] = useState<string | null>(null);
   const [hover, setHover] = useState<string | null>(null);
   const [pathId, setPathId] = useState("");
@@ -150,8 +157,8 @@ export function CityMapView({
       setView(fromUrl);
       return;
     }
-    setView((rememberView ? readRememberedView() : null) ?? "map");
-  }, [rememberView]);
+    setView((rememberView ? readRememberedView() : null) ?? defaultView);
+  }, [defaultView, rememberView]);
 
   useEffect(() => {
     setStored(readStoredProgress());
@@ -161,11 +168,11 @@ export function CityMapView({
       setLevel(readLevel(params));
       setPathId(params.get("path") ?? "");
       const fromUrl = parseCityView(params.get("view"));
-      if (fromUrl) setView(fromUrl);
+      setView(fromUrl ?? ((rememberView ? readRememberedView() : null) ?? defaultView));
     };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
-  }, []);
+  }, [defaultView, rememberView]);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -262,8 +269,9 @@ export function CityMapView({
     setView(next);
     if (rememberView) writeRememberedView(next);
     const params = new URLSearchParams(window.location.search);
-    if (next === "map") params.delete("view");
-    else params.set("view", next);
+    const token = next === defaultView ? null : next === "map" ? mapParam : next;
+    if (token) params.set("view", token);
+    else params.delete("view");
     const search = params.toString();
     window.history.replaceState(window.history.state, "", `${window.location.pathname}${search ? `?${search}` : ""}`);
   };
@@ -299,7 +307,7 @@ export function CityMapView({
       >
         跳到清單檢視
       </a>
-      <ViewSwitch view={view} onChange={setCityView} />
+      <ViewSwitch view={view} onChange={setCityView} order={tabOrder} />
       <div className="controls-block kp-controls mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm font-semibold text-[#1a1614]">
           學習主線
@@ -418,7 +426,7 @@ export function CityMapView({
             </>
           ) : null}
         </nav>
-        <div className="chips mb-3 hidden md:flex" role="group" aria-label="學區與環路">
+        <div className={view === "map" ? "chips mb-3 hidden md:flex" : "chips mb-3"} role="group" aria-label="學區與環路">
           {data.districts.map((district) => (
             <button
               key={district.key}
@@ -716,6 +724,7 @@ export function CityMapView({
             snapshot={snapshot}
             selectedId={selected?.id ?? null}
             linkedIds={linkedIds}
+            pathStops={pathStops}
             accept={accept}
             activeStage={level.stage}
             activeLayer={level.layer}
@@ -793,6 +802,19 @@ export function CityMapView({
               onClick={() => window.dispatchEvent(new Event("mido-open-wish"))}
             >
               想學這個？許個願
+            </button>
+          </div>
+        ) : view === "system" ? (
+          <div>
+            <h2 className="text-xl font-bold">分層分段總圖</h2>
+            <p className="mt-2 text-sm leading-6">列是層級，欄是階段。點一個知識點，看標題、階段、層級、先備和被依賴。</p>
+            <p className="mt-3 text-sm leading-6">選一條主線，這一站會標上橘色站號。</p>
+            <button
+              type="button"
+              className="mt-4 inline-flex min-h-11 items-center border border-[#1a1614] px-4 text-sm font-semibold hover:bg-[#1a1614] hover:text-[#faf9f7]"
+              onClick={() => window.dispatchEvent(new Event("mido-open-wish"))}
+            >
+              想學別的？許個願
             </button>
           </div>
         ) : (

@@ -53,8 +53,8 @@
 .kp-root .kp-controls{background:var(--paper);color:var(--ink);padding:16px}
 .kp-root .hero:has([data-testid="city-layers"]),
 .kp-root .hero:has([data-testid="city-list"]){grid-template-columns:1fr}
-.kp-root .hero:has([data-testid="city-layers"]) .card,
 .kp-root .hero:has([data-testid="city-list"]) .card{display:none}
+.kp-root .matrix-cards{display:none}
 .kp-root .matrix-table{display:block}
 @media (max-width:900px){
   .kp-root .matrix-table{display:none}
@@ -117,7 +117,8 @@
 .kp-root .path-colearn{color:var(--ink);margin-top:28px}
 .kp-root .path-colearn a{color:var(--ink)}
 .kp-root .credits a{text-decoration:underline;text-underline-offset:2px}
-.kp-root .lrow.is-link{box-shadow:inset 4px 0 0 var(--accent)}
+.kp-root .lrow.is-link,.kp-root .lrow.is-path{box-shadow:inset 4px 0 0 var(--accent)}
+.kp-root .lrow .stop-n{display:inline-grid;place-items:center;min-width:1.25rem;height:1.25rem;margin-right:.4rem;padding:0 .3rem;border-radius:999px;background:var(--accent);color:#1a1614;font-size:.75rem;font-weight:700;vertical-align:middle}
 .kp-root .flast .wordmark{color:var(--chalk)}
 .kp-root .about-copy{max-width:42em;display:flex;flex-direction:column;gap:16px}
 .kp-root .about-copy p{max-width:40em}

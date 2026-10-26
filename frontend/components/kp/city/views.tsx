@@ -6,7 +6,8 @@ import type { ProgressSnapshot } from "./progress";
 export type CityView = "map" | "list" | "system";
 
 export function parseCityView(value: string | null): CityView | null {
-  if (value === "map" || value === "list" || value === "system") return value;
+  if (value === "city" || value === "map") return "map";
+  if (value === "list" || value === "system") return value;
   return null;
 }
 
@@ -33,12 +34,22 @@ export function markLabel(snapshot: ProgressSnapshot, id: string): string {
 const control =
   "min-h-11 border border-[#1a1614] px-4 text-left text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]";
 
-export function ViewSwitch({ view, onChange }: { view: CityView; onChange: (view: CityView) => void }) {
-  const options: { id: CityView; label: string }[] = [
-    { id: "map", label: "城市地圖" },
-    { id: "system", label: "分層分段總圖" },
-    { id: "list", label: "清單" },
-  ];
+const VIEW_LABEL: Record<CityView, string> = {
+  map: "城市地圖",
+  system: "分層分段總圖",
+  list: "清單",
+};
+
+export function ViewSwitch({
+  view,
+  onChange,
+  order = ["map", "system", "list"],
+}: {
+  view: CityView;
+  onChange: (view: CityView) => void;
+  order?: CityView[];
+}) {
+  const options = order.map((id) => ({ id, label: VIEW_LABEL[id] }));
   return (
     <div className="views" role="group" aria-label="切換檢視">
       {options.map((option) => (
@@ -61,12 +72,14 @@ function BuildingButton({
   snapshot,
   selected,
   linked,
+  pathStop,
   onOpen,
 }: {
   building: CityBuilding;
   snapshot: ProgressSnapshot;
   selected: boolean;
   linked?: boolean;
+  pathStop?: number | null;
   onOpen: (id: string) => void;
 }) {
   if (!building.title) return null;
@@ -74,11 +87,13 @@ function BuildingButton({
   return (
     <button
       type="button"
-      className={linked ? "lrow is-link" : "lrow"}
+      className={`lrow${linked ? " is-link" : ""}${pathStop ? " is-path" : ""}`}
       aria-current={selected ? "true" : undefined}
+      data-on-path={pathStop ? String(pathStop) : undefined}
       onClick={() => onOpen(building.id)}
     >
       <span>
+        {pathStop ? <span className="stop-n">{pathStop}</span> : null}
         {building.title}
         {building.aesthetics ? "（美學）" : ""}
       </span>
@@ -146,6 +161,7 @@ function CellBuildings({
   snapshot,
   selectedId,
   linkedIds,
+  pathStops,
   accept,
   onOpen,
 }: {
@@ -154,6 +170,7 @@ function CellBuildings({
   snapshot: ProgressSnapshot;
   selectedId: string | null;
   linkedIds: string[];
+  pathStops: string[];
   accept: (building: CityBuilding) => boolean;
   onOpen: (id: string) => void;
 }) {
@@ -175,7 +192,14 @@ function CellBuildings({
             <ul className="mt-1 space-y-1">
               {group.map((building) => (
                 <li key={building.id}>
-                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
+                  <BuildingButton
+                    building={building}
+                    snapshot={snapshot}
+                    selected={selectedId === building.id}
+                    linked={linkedIds.includes(building.id)}
+                    pathStop={pathStops.indexOf(building.id) >= 0 ? pathStops.indexOf(building.id) + 1 : null}
+                    onOpen={onOpen}
+                  />
                 </li>
               ))}
             </ul>
@@ -192,6 +216,7 @@ export function LayerOverview({
   snapshot,
   selectedId,
   linkedIds = [],
+  pathStops = [],
   accept = () => true,
   activeStage,
   activeLayer = null,
@@ -204,6 +229,7 @@ export function LayerOverview({
   snapshot: ProgressSnapshot;
   selectedId: string | null;
   linkedIds?: string[];
+  pathStops?: string[];
   accept?: (building: CityBuilding) => boolean;
   activeStage: string | null;
   activeLayer?: string | null;
@@ -231,7 +257,7 @@ export function LayerOverview({
                     {stage.name}（{items.length}）
                   </h3>
                   <div className="mt-2">
-                    <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} linkedIds={linkedIds} accept={accept} onOpen={onOpen} />
+                    <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} linkedIds={linkedIds} pathStops={pathStops} accept={accept} onOpen={onOpen} />
                   </div>
                 </div>
               );
@@ -284,7 +310,7 @@ export function LayerOverview({
                       data-count={items.length}
                       className={`border border-[#c0bab2] px-2 py-2 align-top ${active ? "bg-[#f3f0ea]" : "bg-[#faf9f7]"}`}
                     >
-                      <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} linkedIds={linkedIds} accept={accept} onOpen={onOpen} />
+                      <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} linkedIds={linkedIds} pathStops={pathStops} accept={accept} onOpen={onOpen} />
                     </td>
                   );
                 })}
