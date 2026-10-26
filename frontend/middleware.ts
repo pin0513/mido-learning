@@ -19,8 +19,9 @@ function notFound() {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const enabled = process.env.KP_ENABLED === "true";
+  const home = enabled && process.env.KP_HOME_ENABLED === "true";
   if (pathname === "/" || pathname === "/city-home") {
-    const home = process.env.KP_ENABLED === "true" && process.env.KP_HOME_ENABLED === "true";
     if (!home) return pathname === "/city-home" ? notFound() : NextResponse.next();
     if (pathname === "/") {
       const url = request.nextUrl.clone();
@@ -30,8 +31,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (process.env.KP_ENABLED === "true") return NextResponse.next();
-  return notFound();
+  if (!enabled) return notFound();
+  return NextResponse.next();
 }
 
 export const config = {

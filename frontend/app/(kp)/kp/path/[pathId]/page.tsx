@@ -47,8 +47,11 @@ export default async function LearningPathPage({ params }: { params: Promise<{ p
           {full.disciplineTitle}
         </Link>
       </nav>
-      <h1 className="mt-4 text-3xl font-bold">{full.title}</h1>
-      <p className="mt-3 text-sm text-[#3d3830]">順序跟 paths 檔案一樣，由淺到深。每一站都標層級與階段。</p>
+      <h1 className="display" style={{ marginTop: 16 }}>{full.title}</h1>
+      <p className="mt-3">
+        <span className="sample">範例資料</span>
+      </p>
+      <p className="mt-3">順序跟 paths 檔案一樣，由淺到深。每一站都標層級與階段。</p>
       {hidden > 0 ? <p className="mt-3 text-sm">還有 {hidden} 筆尚未發布，正式站先不列出。</p> : null}
       {ids.length === 0 ? (
         <p className="mt-6 border border-dashed border-[#8a847a] p-4 text-sm">這條主線的知識點都還沒發布。</p>

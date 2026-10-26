@@ -6,7 +6,8 @@ import type { ProgressSnapshot } from "./progress";
 export type CityView = "map" | "list" | "system";
 
 export function parseCityView(value: string | null): CityView | null {
-  if (value === "map" || value === "list" || value === "system") return value;
+  if (value === "city" || value === "map") return "map";
+  if (value === "list" || value === "system") return value;
   return null;
 }
 
@@ -33,21 +34,30 @@ export function markLabel(snapshot: ProgressSnapshot, id: string): string {
 const control =
   "min-h-11 border border-[#1a1614] px-4 text-left text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]";
 
-export function ViewSwitch({ view, onChange }: { view: CityView; onChange: (view: CityView) => void }) {
-  const options: { id: CityView; label: string }[] = [
-    { id: "map", label: "地圖" },
-    { id: "system", label: "層級總圖" },
-    { id: "list", label: "清單" },
-  ];
+const VIEW_LABEL: Record<CityView, string> = {
+  map: "城市地圖",
+  system: "分層分段總圖",
+  list: "清單",
+};
+
+export function ViewSwitch({
+  view,
+  onChange,
+  order = ["map", "system", "list"],
+}: {
+  view: CityView;
+  onChange: (view: CityView) => void;
+  order?: CityView[];
+}) {
+  const options = order.map((id) => ({ id, label: VIEW_LABEL[id] }));
   return (
-    <div role="group" aria-label="檢視" className="mb-4 flex flex-wrap gap-2">
+    <div className="views" role="group" aria-label="切換檢視">
       {options.map((option) => (
         <button
           key={option.id}
           type="button"
           data-testid={`city-view-${option.id}`}
           aria-pressed={view === option.id}
-          className={`${control} ${view === option.id ? "bg-[#1a1614] text-[#faf9f7]" : "bg-white hover:bg-[#f3f0ea]"}`}
           onClick={() => onChange(option.id)}
         >
           {option.label}
@@ -61,28 +71,33 @@ function BuildingButton({
   building,
   snapshot,
   selected,
+  linked,
+  pathStop,
   onOpen,
 }: {
   building: CityBuilding;
   snapshot: ProgressSnapshot;
   selected: boolean;
+  linked?: boolean;
+  pathStop?: number | null;
   onOpen: (id: string) => void;
 }) {
+  if (!building.title) return null;
   const mark = markLabel(snapshot, building.id);
   return (
     <button
       type="button"
-      className={`${control} flex w-full items-center justify-between gap-2 hover:bg-[#f3f0ea] ${selected ? "bg-[#f3f0ea]" : "bg-white"}`}
+      className={`lrow${linked ? " is-link" : ""}${pathStop ? " is-path" : ""}`}
       aria-current={selected ? "true" : undefined}
+      data-on-path={pathStop ? String(pathStop) : undefined}
       onClick={() => onOpen(building.id)}
     >
       <span>
+        {pathStop ? <span className="stop-n">{pathStop}</span> : null}
         {building.title}
-        {building.status !== "published" ? "（草稿）" : ""}
         {building.aesthetics ? "（美學）" : ""}
-        {building.pointedRoof ? "（尖頂）" : "（平頂）"}
       </span>
-      <span className="shrink-0 text-xs font-normal text-[#3d3830]">
+      <span className="small">
         {building.stageName}
         {mark ? `・${mark}` : ""}
       </span>
@@ -90,15 +105,24 @@ function BuildingButton({
   );
 }
 
+function DraftNote({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return <p className="dimrow">施工中 {count}</p>;
+}
+
 export function CityList({
   data,
   snapshot,
   selectedId,
+  linkedIds = [],
+  accept = () => true,
   onOpen,
 }: {
   data: CityMapData;
   snapshot: ProgressSnapshot;
   selectedId: string | null;
+  linkedIds?: string[];
+  accept?: (building: CityBuilding) => boolean;
   onOpen: (id: string) => void;
 }) {
   return (
@@ -115,12 +139,13 @@ export function CityList({
               <div key={stage.id} className="mt-4">
                 <h3 className="text-base font-bold">{stage.name}</h3>
                 <ul className="mt-2 space-y-2">
-                  {items.map((building) => (
+                  {items.filter((building) => building.title && accept(building)).map((building) => (
                     <li key={building.id}>
-                      <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} onOpen={onOpen} />
+                      <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
                     </li>
                   ))}
                 </ul>
+                <DraftNote count={items.filter((building) => !building.title && accept(building)).length} />
               </div>
             );
           })}
@@ -135,36 +160,53 @@ function CellBuildings({
   data,
   snapshot,
   selectedId,
+  linkedIds,
+  pathStops,
+  accept,
   onOpen,
 }: {
   items: CityBuilding[];
   data: CityMapData;
   snapshot: ProgressSnapshot;
   selectedId: string | null;
+  linkedIds: string[];
+  pathStops: string[];
+  accept: (building: CityBuilding) => boolean;
   onOpen: (id: string) => void;
 }) {
-  if (items.length === 0) return <p className="text-sm text-[#3d3830]">0</p>;
+  const visible = items.filter(accept);
+  if (items.length === 0) return <p className="small">還沒有知識點</p>;
+  if (visible.length === 0) return <p className="small">這個篩選沒有知識點</p>;
+  const drafts = visible.filter((building) => !building.title).length;
   return (
     <div className="space-y-3">
       {data.districts.map((district) => {
-        const group = items.filter((building) => building.folder === district.key);
+        const group = visible.filter((building) => building.folder === district.key && building.title);
         if (group.length === 0) return null;
         return (
           <div key={district.key}>
-            <p className="text-xs font-bold text-[#1a1614]">
-              <span className="mr-1 inline-block h-2.5 w-2.5 align-middle" style={{ background: district.color }} aria-hidden="true" />
+            <p className="small">
+              <span className="sw" style={{ background: district.color, display: "inline-block" }} aria-hidden="true" />
               {district.name}
             </p>
             <ul className="mt-1 space-y-1">
               {group.map((building) => (
                 <li key={building.id}>
-                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} onOpen={onOpen} />
+                  <BuildingButton
+                    building={building}
+                    snapshot={snapshot}
+                    selected={selectedId === building.id}
+                    linked={linkedIds.includes(building.id)}
+                    pathStop={pathStops.indexOf(building.id) >= 0 ? pathStops.indexOf(building.id) + 1 : null}
+                    onOpen={onOpen}
+                  />
                 </li>
               ))}
             </ul>
           </div>
         );
       })}
+      <DraftNote count={drafts} />
     </div>
   );
 }
@@ -173,23 +215,35 @@ export function LayerOverview({
   data,
   snapshot,
   selectedId,
+  linkedIds = [],
+  pathStops = [],
+  accept = () => true,
   activeStage,
+  activeLayer = null,
   onOpen,
   onLot,
+  onPickStage,
+  onPickLayer,
 }: {
   data: CityMapData;
   snapshot: ProgressSnapshot;
   selectedId: string | null;
+  linkedIds?: string[];
+  pathStops?: string[];
+  accept?: (building: CityBuilding) => boolean;
   activeStage: string | null;
+  activeLayer?: string | null;
   onOpen: (id: string) => void;
   onLot: (id: string) => void;
+  onPickStage?: (stageId: string) => void;
+  onPickLayer?: (layerId: string) => void;
 }) {
   const cell = (layerId: string, stageId: string) =>
     data.buildings.filter((building) => building.layer === layerId && building.stage === stageId);
 
   return (
-    <div data-testid="city-layers">
-      <div className="space-y-4 md:hidden">
+    <div data-testid="city-layers" className="paper">
+      <div className="matrix-cards space-y-4">
         {data.layers.map((layer) => (
           <section key={layer.id} className="border border-[#c0bab2] bg-white p-3" aria-labelledby={`layer-m-${layer.id}`}>
             <h2 id={`layer-m-${layer.id}`} className="text-lg font-bold">
@@ -203,7 +257,7 @@ export function LayerOverview({
                     {stage.name}（{items.length}）
                   </h3>
                   <div className="mt-2">
-                    <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} onOpen={onOpen} />
+                    <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} linkedIds={linkedIds} pathStops={pathStops} accept={accept} onOpen={onOpen} />
                   </div>
                 </div>
               );
@@ -213,7 +267,7 @@ export function LayerOverview({
           </section>
         ))}
       </div>
-      <div className="hidden max-w-full overflow-x-auto md:block" tabIndex={0} role="region" aria-label="層級總圖表格">
+      <div className="matrix-table max-w-full overflow-x-auto" tabIndex={0} role="region" aria-label="分層分段總圖">
         <table className="w-full border-collapse text-sm">
           <caption className="sr-only">層級與階段。列是本質到應用，欄是國小到大學，最後一欄是該層的預定地。</caption>
           <thead>
@@ -223,7 +277,11 @@ export function LayerOverview({
               </th>
               {data.stages.map((stage) => (
                 <th key={stage.id} scope="col" className="border border-[#c0bab2] bg-white px-3 py-3 text-left">
-                  {stage.name}
+                  {onPickStage ? (
+                    <button type="button" className="min-h-11 font-bold underline-offset-2 hover:underline" aria-pressed={activeStage === stage.id} onClick={() => onPickStage(stage.id)}>
+                      {stage.name}
+                    </button>
+                  ) : stage.name}
                 </th>
               ))}
               <th scope="col" className="border border-[#c0bab2] bg-white px-3 py-3 text-left">
@@ -235,7 +293,11 @@ export function LayerOverview({
             {data.layers.map((layer) => (
               <tr key={layer.id}>
                 <th scope="row" className="border border-[#c0bab2] bg-white px-3 py-3 text-left align-top">
-                  {layer.name}
+                  {onPickLayer ? (
+                    <button type="button" className="min-h-11 font-bold underline-offset-2 hover:underline" aria-pressed={activeLayer === layer.id} onClick={() => onPickLayer(layer.id)}>
+                      {layer.name}
+                    </button>
+                  ) : layer.name}
                 </th>
                 {data.stages.map((stage) => {
                   const items = cell(layer.id, stage.id);
@@ -248,7 +310,7 @@ export function LayerOverview({
                       data-count={items.length}
                       className={`border border-[#c0bab2] px-2 py-2 align-top ${active ? "bg-[#f3f0ea]" : "bg-[#faf9f7]"}`}
                     >
-                      <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} onOpen={onOpen} />
+                      <CellBuildings items={items} data={data} snapshot={snapshot} selectedId={selectedId} linkedIds={linkedIds} pathStops={pathStops} accept={accept} onOpen={onOpen} />
                     </td>
                   );
                 })}
@@ -266,7 +328,7 @@ export function LayerOverview({
 
 function LotList({ data, layerId, onLot }: { data: CityMapData; layerId: string; onLot: (id: string) => void }) {
   const lots = data.lots.filter((lot) => lot.layer === layerId);
-  if (lots.length === 0) return <p className="text-sm text-[#3d3830]">0</p>;
+  if (lots.length === 0) return <p className="small">還沒有知識點</p>;
   return (
     <ul className="space-y-1">
       {lots.map((lot) => (
@@ -290,6 +352,8 @@ export function MobileDistricts({
   onLot,
   snapshot,
   selectedId,
+  linkedIds = [],
+  accept = () => true,
 }: {
   data: CityMapData;
   district: string | null;
@@ -299,6 +363,8 @@ export function MobileDistricts({
   onLot: (id: string) => void;
   snapshot: ProgressSnapshot;
   selectedId: string | null;
+  linkedIds?: string[];
+  accept?: (building: CityBuilding) => boolean;
 }) {
   if (!district) {
     return (
@@ -347,12 +413,13 @@ export function MobileDistricts({
               </button>
             </h3>
             <ul className="mt-2 space-y-2">
-              {items.map((building) => (
+              {items.filter((building) => building.title && accept(building)).map((building) => (
                 <li key={building.id}>
-                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} onOpen={onOpen} />
+                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
                 </li>
               ))}
             </ul>
+            <DraftNote count={items.filter((building) => !building.title && accept(building)).length} />
           </section>
         );
       })}

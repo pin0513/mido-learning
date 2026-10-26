@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { annulus, focusViewBox, sectorStart, type CityMapData } from "@/lib/content/city";
 import { CityList, LayerOverview, MobileDistricts, parseCityView, readRememberedView, ViewSwitch, writeRememberedView, type CityView } from "./views";
 import {
@@ -20,25 +21,40 @@ interface Level {
   district: string | null;
   stage: string | null;
   kp: string | null;
+  layer: string | null;
+  competency: string | null;
 }
 
-const EMPTY: Level = { district: null, stage: null, kp: null };
+const EMPTY: Level = { district: null, stage: null, kp: null, layer: null, competency: null };
 
-function readLevel(): Level {
-  const params = new URLSearchParams(window.location.search);
+function readLevel(params: URLSearchParams): Level {
   return {
     district: params.get("d"),
     stage: params.get("s"),
     kp: params.get("kp"),
+    layer: params.get("ly"),
+    competency: params.get("c"),
   };
+}
+
+/** 跟 Next 的網址同步。包在 Suspense 裡，地圖本體仍可靜態輸出。 */
+function UrlSync({ onQuery }: { onQuery: (params: URLSearchParams) => void }) {
+  const searchParams = useSearchParams();
+  const query = searchParams.toString();
+  useEffect(() => {
+    onQuery(new URLSearchParams(query));
+  }, [onQuery, query]);
+  return null;
 }
 
 function writeLevel(level: Level, mode: "push" | "replace") {
   const params = new URLSearchParams(window.location.search);
-  for (const key of ["d", "s", "kp"]) params.delete(key);
+  for (const key of ["d", "s", "kp", "ly", "c"]) params.delete(key);
   if (level.district) params.set("d", level.district);
   if (level.stage) params.set("s", level.stage);
   if (level.kp) params.set("kp", level.kp);
+  if (level.layer) params.set("ly", level.layer);
+  if (level.competency) params.set("c", level.competency);
   const search = params.toString();
   const url = `${window.location.pathname}${search ? `?${search}` : ""}`;
   const state = { city: level };
@@ -48,17 +64,15 @@ function writeLevel(level: Level, mode: "push" | "replace") {
 
 function parentLevel(level: Level): Level {
   if (level.kp) return { ...level, kp: null };
-  if (level.stage) return { district: level.district, stage: null, kp: null };
-  if (level.district) return EMPTY;
-  return EMPTY;
+  if (level.stage) return { ...level, stage: null, kp: null };
+  if (level.district) return { ...level, district: null, kp: null };
+  return level;
 }
 
-function curve(ax: number, ay: number, bx: number, by: number, cx: number, cy: number, pull: number): string {
-  const mx = (ax + bx) / 2;
-  const my = (ay + by) / 2;
-  const cpx = mx + (cx - mx) * pull;
-  const cpy = my + (cy - my) * pull;
-  return `M ${ax.toFixed(1)} ${ay.toFixed(1)} Q ${cpx.toFixed(1)} ${cpy.toFixed(1)} ${bx.toFixed(1)} ${by.toFixed(1)}`;
+function inFocus(building: { layer: string; competencies: string[] }, level: Level): boolean {
+  if (level.layer && building.layer !== level.layer) return false;
+  if (level.competency && !building.competencies.includes(level.competency)) return false;
+  return true;
 }
 
 function parseViewBox(value: string): [number, number, number, number] {
@@ -70,14 +84,19 @@ function parseViewBox(value: string): [number, number, number, number] {
 export function CityMapView({
   data,
   rememberView = false,
-  showStart = false,
+  defaultView = "map",
+  tabOrder,
+  mapParam = "map",
 }: {
   data: CityMapData;
   rememberView?: boolean;
-  showStart?: boolean;
+  defaultView?: CityView;
+  tabOrder?: CityView[];
+  /** Written as ?view= when the map tab is not the default. The homepage uses "city". */
+  mapParam?: string;
 }) {
   const [level, setLevel] = useState<Level>(EMPTY);
-  const [view, setView] = useState<CityView>("map");
+  const [view, setView] = useState<CityView>(defaultView);
   const [lotId, setLotId] = useState<string | null>(null);
   const [hover, setHover] = useState<string | null>(null);
   const [pathId, setPathId] = useState("");
@@ -85,6 +104,8 @@ export function CityMapView({
   const [stored, setStored] = useState<StoredProgress>(emptyStoredProgress);
   const [viewBox, setViewBox] = useState(`0 0 ${data.size} ${data.size}`);
   const depth = useRef(0);
+  const levelRef = useRef(level);
+  levelRef.current = level;
   const mapRoot = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const drag = useRef<{ x: number; y: number; box: [number, number, number, number] } | null>(null);
@@ -92,7 +113,8 @@ export function CityMapView({
   const byId = useMemo(() => new Map(data.buildings.map((building) => [building.id, building])), [data.buildings]);
   const districtIndex = data.districts.findIndex((district) => district.key === level.district);
   const stageIndex = data.stages.findIndex((stage) => stage.id === level.stage);
-  const selected = level.kp ? byId.get(level.kp) : undefined;
+  const rawSelected = level.kp ? byId.get(level.kp) : undefined;
+  const selected = rawSelected?.title ? rawSelected : undefined;
   const hovered = hover ? byId.get(hover) : undefined;
   const snapshot: ProgressSnapshot = mode === "demo" ? demoProgress.read() : toSnapshot(stored);
   const path = data.landmarks.find((item) => item.id === pathId) ?? null;
@@ -118,31 +140,39 @@ export function CityMapView({
     stageIndex >= 0 ? stageIndex : null,
   );
 
-  const go = useCallback((next: Level, mode: "push" | "replace") => {
+  const go = useCallback((patch: Partial<Level>, historyMode: "push" | "replace") => {
+    const next = { ...levelRef.current, ...patch };
     setLevel(next);
     setLotId(null);
-    if (mode === "push") depth.current += 1;
-    writeLevel(next, mode);
+    if (historyMode === "push") depth.current += 1;
+    writeLevel(next, historyMode);
   }, []);
 
-  useEffect(() => {
-    const initial = readLevel();
-    if (initial.district || initial.stage || initial.kp) {
-      setLevel(initial);
-      window.history.replaceState({ city: initial }, "", window.location.href);
-    }
-    const params = new URLSearchParams(window.location.search);
+  const applyQuery = useCallback((params: URLSearchParams) => {
+    const next = readLevel(params);
+    setLevel(next);
     setPathId(params.get("path") ?? "");
-    setStored(readStoredProgress());
     const fromUrl = parseCityView(params.get("view"));
-    setView(fromUrl ?? (rememberView ? readRememberedView() : null) ?? "map");
+    if (fromUrl) {
+      setView(fromUrl);
+      return;
+    }
+    setView((rememberView ? readRememberedView() : null) ?? defaultView);
+  }, [defaultView, rememberView]);
+
+  useEffect(() => {
+    setStored(readStoredProgress());
     const onPop = () => {
       depth.current = Math.max(0, depth.current - 1);
-      setLevel(readLevel());
+      const params = new URLSearchParams(window.location.search);
+      setLevel(readLevel(params));
+      setPathId(params.get("path") ?? "");
+      const fromUrl = parseCityView(params.get("view"));
+      setView(fromUrl ?? ((rememberView ? readRememberedView() : null) ?? defaultView));
     };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
-  }, []);
+  }, [defaultView, rememberView]);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -224,13 +254,13 @@ export function CityMapView({
 
   const openBuilding = (id: string) => {
     const building = byId.get(id);
-    if (!building) return;
+    if (!building?.title) return;
     go({ district: building.folder, stage: building.stage, kp: id }, "push");
   };
 
   const openLot = (id: string) => {
     setLotId(id);
-    const next = { district: level.district, stage: level.stage, kp: null };
+    const next = { ...level, kp: null };
     setLevel(next);
     writeLevel(next, "replace");
   };
@@ -239,30 +269,33 @@ export function CityMapView({
     setView(next);
     if (rememberView) writeRememberedView(next);
     const params = new URLSearchParams(window.location.search);
-    if (next === "map") params.delete("view");
-    else params.set("view", next);
+    const token = next === defaultView ? null : next === "map" ? mapParam : next;
+    if (token) params.set("view", token);
+    else params.delete("view");
     const search = params.toString();
     window.history.replaceState(window.history.state, "", `${window.location.pathname}${search ? `?${search}` : ""}`);
   };
 
-  const visibleBridges = selected
-    ? data.bridges.filter((bridge) => bridge.from === selected.id || bridge.to === selected.id)
-    : [];
-
   const lot = data.lots.find((item) => item.id === lotId);
 
   const zoomed = Boolean(level.district || level.stage);
-  const outerRing = data.rings[data.rings.length - 1];
   const zoomRing = (districtKey: string, stageId: string | null) => {
     go({ district: districtKey, stage: stageId, kp: null }, "push");
   };
   const filterBits = [
     level.district ? data.districts.find((district) => district.key === level.district)?.name : null,
     level.stage ? data.stages.find((stage) => stage.id === level.stage)?.name : null,
+    level.layer ? data.layers.find((layer) => layer.id === level.layer)?.name : null,
+    level.competency ? data.competencies.find((item) => item.code === level.competency)?.code : null,
   ].filter(Boolean);
+  const linkedIds = selected ? [...selected.prerequisites, ...selected.requiredBy].map((item) => item.id) : [];
+  const accept = (building: { layer: string; competencies: string[] }) => inFocus(building, level);
 
   return (
-    <div ref={mapRoot} data-testid="city-experience">
+    <div ref={mapRoot} data-testid="city-experience" className="city-stack">
+      <Suspense fallback={null}>
+        <UrlSync onQuery={applyQuery} />
+      </Suspense>
       <a
         href="#kp-city-list"
         className="sr-only focus:not-sr-only focus:absolute focus:z-20 focus:bg-white focus:px-3 focus:py-2 focus:underline"
@@ -274,34 +307,8 @@ export function CityMapView({
       >
         跳到清單檢視
       </a>
-      <ViewSwitch view={view} onChange={setCityView} />
-      {showStart ? (
-        <div className="mb-4" data-testid="city-start">
-          <p className="text-sm font-semibold text-[#1a1614]">從這裡開始</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            <button
-              type="button"
-              className="min-h-11 border border-[#1a1614] bg-[#1a1614] px-4 text-sm font-semibold text-[#faf9f7] hover:bg-[#3d3830] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
-              onClick={() => go({ district: null, stage: "es", kp: null }, "push")}
-            >
-              孩子從國小環開始
-            </button>
-            {data.stages
-              .filter((stage) => stage.id !== "es")
-              .map((stage) => (
-                <button
-                  key={stage.id}
-                  type="button"
-                  className="min-h-11 border border-[#1a1614] bg-white px-4 text-sm font-semibold hover:bg-[#f3f0ea] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
-                  onClick={() => go({ district: null, stage: stage.id, kp: null }, "push")}
-                >
-                  大人看{stage.name}環
-                </button>
-              ))}
-          </div>
-        </div>
-      ) : null}
-      <div className="mb-4 flex flex-wrap items-end gap-3">
+      <ViewSwitch view={view} onChange={setCityView} order={tabOrder} />
+      <div className="controls-block kp-controls mb-4 flex flex-wrap items-end gap-3">
         <label className="text-sm font-semibold text-[#1a1614]">
           學習主線
           <select
@@ -336,11 +343,11 @@ export function CityMapView({
           </label>
         </fieldset>
       </div>
-      <p className="mb-4 text-sm leading-6 text-[#3d3830]" data-testid="city-progress-notice">
+      <p className="controls-block progress-note mb-4 px-4 text-sm leading-6" data-testid="city-progress-notice">
         {snapshot.notice}
       </p>
       {mode === "local" ? (
-        <div className="mb-4 flex flex-wrap gap-3 text-sm" data-testid="city-local-progress">
+        <div className="controls-block kp-controls mb-4 flex flex-wrap gap-3 text-sm" data-testid="city-local-progress">
           <label>
             大人怎麼稱呼
             <input className="ml-2 min-h-11 border border-[#1a1614] px-2" value={stored.adultName} onChange={(event) => updateStored({ ...stored, adultName: event.target.value })} />
@@ -387,10 +394,10 @@ export function CityMapView({
         </div>
       ) : null}
       {selected && together(snapshot, selected.id) ? <p className="mb-4 text-sm font-semibold">這棟你們一起學過。</p> : null}
-      <p className="mb-4 text-sm text-[#3d3830]" data-testid="city-filter">
+      <p className="controls-block progress-note mb-4 px-4 text-sm" data-testid="city-filter">
         目前看的是{filterBits.length > 0 ? filterBits.join("・") : "全城"}
       </p>
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="map-block grid gap-4">
       <div>
         <nav aria-label="地圖層級" className="mb-3 flex flex-wrap items-center gap-2 text-sm">
           <button type="button" className="min-h-11 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]" onClick={() => go(EMPTY, "push")}>
@@ -419,13 +426,13 @@ export function CityMapView({
             </>
           ) : null}
         </nav>
-        <div className="mb-3 hidden flex-wrap gap-2 md:flex" role="group" aria-label="學區與環路">
+        <div className={view === "map" ? "chips mb-3 hidden md:flex" : "chips mb-3"} role="group" aria-label="學區與環路">
           {data.districts.map((district) => (
             <button
               key={district.key}
               type="button"
               aria-pressed={level.district === district.key && !level.stage}
-              className="inline-flex min-h-11 items-center border border-[#1a1614] px-3 text-sm font-semibold hover:bg-[#1a1614] hover:text-[#faf9f7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
+              className="chip"
               onClick={() => go({ district: district.key, stage: null, kp: null }, "push")}
             >
               {district.name}
@@ -436,10 +443,36 @@ export function CityMapView({
               key={stage.id}
               type="button"
               aria-pressed={level.stage === stage.id}
-              className="inline-flex min-h-11 items-center border border-[#c0bab2] bg-white px-3 text-sm font-semibold hover:border-[#1a1614] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
+              className="chip"
               onClick={() => go({ district: level.district, stage: stage.id, kp: null }, "push")}
             >
               {stage.name}環
+            </button>
+          ))}
+        </div>
+        <div className="chips mb-3" role="group" aria-label="層級">
+          {data.layers.map((layer) => (
+            <button
+              key={layer.id}
+              type="button"
+              aria-pressed={level.layer === layer.id}
+              className="chip"
+              onClick={() => go({ layer: level.layer === layer.id ? null : layer.id, kp: null }, "push")}
+            >
+              {layer.name}
+            </button>
+          ))}
+        </div>
+        <div className="chips mb-3" role="group" aria-label="核心素養">
+          {data.competencies.map((item) => (
+            <button
+              key={item.code}
+              type="button"
+              aria-pressed={level.competency === item.code}
+              className="chip"
+              onClick={() => go({ competency: level.competency === item.code ? null : item.code, kp: null }, "push")}
+            >
+              {item.code} {item.name}
             </button>
           ))}
         </div>
@@ -450,7 +483,9 @@ export function CityMapView({
               district={level.district}
               snapshot={snapshot}
               selectedId={selected?.id ?? null}
-              onDistrict={(id) => go(id ? { district: id, stage: null, kp: null } : EMPTY, "push")}
+              linkedIds={linkedIds}
+              accept={accept}
+              onDistrict={(id) => go(id ? { district: id, stage: null, kp: null } : { district: null, stage: null, kp: null }, "push")}
               onStage={(stageId) => go({ district: level.district, stage: stageId, kp: null }, "push")}
               onOpen={openBuilding}
               onLot={openLot}
@@ -458,7 +493,7 @@ export function CityMapView({
           </div>
         ) : null}
         <div className={view === "map" ? (level.district ? "block" : "hidden md:block") : "hidden"}>
-        <div className="relative overflow-hidden border border-[#c0bab2] bg-[#faf9f7]" style={{ backgroundImage: "radial-gradient(#c0bab2 0.6px, transparent 0.6px)", backgroundSize: "18px 18px" }}>
+        <div className="mapbox relative">
           <p className="px-3 pt-3 text-sm font-semibold md:sr-only">小地圖</p>
           <svg
             ref={svgRef}
@@ -467,28 +502,29 @@ export function CityMapView({
             viewBox={viewBox}
             role="group"
             aria-label="學習城市地圖。四個學區，環路從國小到大學。建築是知識點。"
-            className={`h-auto w-full max-w-full ${zoomed ? "touch-none" : ""}`}
+            className={`city h-auto w-full max-w-full ${zoomed ? "touch-none" : ""}`}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
           >
-            <desc>四個學區沿環路排列。環路由內到外是國小、國中、高中、大學。每一棟建築是一個知識點，平頂是本質或基礎，尖頂是進階或應用，虛線是草稿。</desc>
-            {data.rings.map((ring, index) => (
-              <circle key={ring[1]} cx={data.cx} cy={data.cy} r={ring[1]} fill={index % 2 === 0 ? "#f3f0ea" : "#faf9f7"} stroke="#c0bab2" strokeWidth={1} />
-            ))}
-            <circle cx={data.cx} cy={data.cy} r={data.plaza} fill="#fffdf8" stroke="#1a1614" strokeWidth={1.4} />
-            <text x={data.cx} y={data.cy - 4} textAnchor="middle" fontSize={15} fontWeight={700} fill="#1a1614">
-              家庭廣場
-            </text>
+            <desc>家庭廣場在中央。四條環路由內而外是國小、國中、高中、大學。亮的建築已開放，暗的是施工中。</desc>
+            <g aria-hidden="true">
+              {data.rings.map((ring, index) => (
+                <path
+                  key={ring[1]}
+                  d={`M ${data.cx - ring[1]},${data.cy} a ${ring[1]},${ring[1]} 0 1 0 ${ring[1] * 2},0 a ${ring[1]},${ring[1]} 0 1 0 ${-ring[1] * 2},0 Z M ${data.cx - ring[0]},${data.cy} a ${ring[0]},${ring[0]} 0 1 1 ${ring[0] * 2},0 a ${ring[0]},${ring[0]} 0 1 1 ${-ring[0] * 2},0 Z`}
+                  fill={["#22302a", "#26352f", "#2a3a33", "#2e3f38"][index]}
+                  fillRule="evenodd"
+                />
+              ))}
+            </g>
             {data.districts.map((district) =>
               data.rings.map((ring, sIndex) => (
                 <path
                   key={`${district.key}-${sIndex}`}
                   d={annulus(data.cx, data.cy, ring[0], ring[1], sectorStart(district.sector, data.sector) + 1, sectorStart(district.sector, data.sector) + data.sector - 1)}
                   fill={district.color}
-                  fillOpacity={level.district === district.key && level.stage === data.stages[sIndex]?.id ? 0.22 : level.district === district.key ? 0.12 : 0.07}
-                  stroke={district.color}
-                  strokeWidth={0.8}
+                  fillOpacity={level.district === district.key && level.stage === data.stages[sIndex]?.id ? 0.28 : 0.12 + sIndex * 0.02}
                   role="button"
                   tabIndex={0}
                   aria-label={`${district.name}，${data.stages[sIndex]?.name}環`}
@@ -504,56 +540,64 @@ export function CityMapView({
                 </path>
               )),
             )}
-            <path
-              d={annulus(data.cx, data.cy, data.plaza, outerRing[1], sectorStart(data.districts.length, data.sector) + 1, sectorStart(data.districts.length, data.sector) + data.sector - 1)}
-              fill="#5c564e"
-              fillOpacity={0.06}
-              stroke="#5c564e"
-              strokeDasharray="6 5"
-            />
-            {data.roads.map((road) => {
-              const from = byId.get(road.from);
-              const to = byId.get(road.to);
-              if (!from || !to) return null;
-              const hot = selected && (road.from === selected.id || road.to === selected.id);
+            {data.stages.map((stage, index) => {
+              const ring = data.rings[index];
+              if (!ring) return null;
               return (
                 <path
-                  key={`${road.from}-${road.to}`}
-                  d={curve(from.x, from.y, to.x, to.y, data.cx, data.cy, 0.05)}
-                  fill="none"
-                  stroke={from.districtName ? data.districts.find((district) => district.key === from.folder)?.color ?? "#5c564e" : "#5c564e"}
-                  strokeOpacity={hot ? 0.95 : 0.35}
-                  strokeWidth={hot ? 2.2 : 1.1}
+                  key={stage.id}
+                  className="ring-hi"
+                  d={`M ${data.cx - ring[1] + 2},${data.cy} a ${ring[1] - 2},${ring[1] - 2} 0 1 0 ${(ring[1] - 2) * 2},0 a ${ring[1] - 2},${ring[1] - 2} 0 1 0 ${-(ring[1] - 2) * 2},0 Z M ${data.cx - ring[0] - 2},${data.cy} a ${ring[0] + 2},${ring[0] + 2} 0 1 1 ${(ring[0] + 2) * 2},0 a ${ring[0] + 2},${ring[0] + 2} 0 1 1 ${-(ring[0] + 2) * 2},0 Z`}
+                  fill="#ff5b22"
+                  fillOpacity={0.16}
+                  fillRule="evenodd"
+                  opacity={level.stage === stage.id ? 1 : 0}
                   aria-hidden="true"
                 />
               );
             })}
-            {visibleBridges.map((bridge) => {
-              const from = byId.get(bridge.from);
-              const to = byId.get(bridge.to);
-              if (!from || !to) return null;
-              return (
-                <path
-                  key={`${bridge.from}-${bridge.to}`}
-                  d={curve(from.x, from.y, to.x, to.y, data.cx, data.cy, 0.45)}
-                  fill="none"
-                  stroke="#1a1614"
-                  strokeDasharray="4 3"
-                  strokeWidth={1.6}
-                  aria-hidden="true"
-                />
-              );
-            })}
+            <g aria-hidden="true">
+              <circle cx={data.cx} cy={data.cy} r={data.plaza - 6} fill="#eef0ea" />
+              <text x={data.cx} y={data.cy - 2} textAnchor="middle" fontSize={18} fontWeight={900} fill="#1a1614">家庭</text>
+              <text x={data.cx} y={data.cy + 20} textAnchor="middle" fontSize={18} fontWeight={900} fill="#1a1614">廣場</text>
+              {data.districts.map((district) => {
+                const spots: Record<string, [number, number, "start" | "end"]> = {
+                  philosophy: [data.size - 16, 56, "end"],
+                  math: [data.size - 16, data.size - 70, "end"],
+                  "pm-leadership": [16, data.size - 70, "start"],
+                  "it-ai": [16, 56, "start"],
+                };
+                const spot = spots[district.key];
+                if (!spot) return null;
+                return (
+                  <g key={district.key} className="lbl">
+                    <text x={spot[0]} y={spot[1]} textAnchor={spot[2]} fontSize={22} fontWeight={900} fill={district.color}>{district.name}</text>
+                    <text x={spot[0]} y={spot[1] + 26} textAnchor={spot[2]} fontSize={14} fill="#c3cbc5">{district.layerName}</text>
+                  </g>
+                );
+              })}
+            </g>
             {pathStops.length > 1 ? (
               <path
                 data-testid="city-route"
                 d={pathStops.map((id, index) => `${index === 0 ? "M" : "L"} ${byId.get(id)!.x.toFixed(1)} ${byId.get(id)!.y.toFixed(1)}`).join(" ")}
                 fill="none"
-                stroke="#1a1614"
-                strokeWidth={3}
+                stroke="#ff5b22"
+                strokeWidth={7}
                 strokeLinejoin="round"
                 aria-hidden="true"
               />
+            ) : null}
+            {selected ? (
+              <g data-testid="city-links" aria-hidden="true">
+                {linkedIds.map((id) => {
+                  const other = byId.get(id);
+                  if (!other) return null;
+                  return (
+                    <line key={id} x1={selected.x} y1={selected.y - selected.height / 2} x2={other.x} y2={other.y - other.height / 2} stroke="#ff5b22" strokeWidth={4} />
+                  );
+                })}
+              </g>
             ) : null}
             {data.lots
               .filter((item) => item.featured)
@@ -562,7 +606,7 @@ export function CityMapView({
                   <g
                     role="button"
                     tabIndex={0}
-                    aria-label={`預定地：${item.name}`}
+                    aria-label={`預定地：${item.name}（下一輪）`}
                     className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]"
                     onClick={() => setLotId(item.id)}
                     onKeyDown={(event) => {
@@ -571,84 +615,84 @@ export function CityMapView({
                       setLotId(item.id);
                     }}
                   >
-                    <rect x={item.x - 28} y={item.y - 10} width={56} height={20} rx={2} fill="#fffdf8" stroke="#5c564e" strokeDasharray="3 2" />
-                    <title>{`預定地：${item.name}`}</title>
+                    <rect x={item.x - 46} y={item.y - 26} width={92} height={52} fill="#24312b" stroke="#6f8279" strokeWidth={2} strokeDasharray="6 6" />
+                    <title>{`預定地：${item.name}（下一輪）`}</title>
                   </g>
-                  <text x={item.x} y={item.y + 4} textAnchor="middle" fontSize={9} fill="#3d3830" aria-hidden="true" pointerEvents="none">
-                    {item.name.slice(0, 4)}
+                  <text className="lbl" x={item.x} y={item.y + 48} textAnchor="middle" fontSize={14} fill="#c3cbc5" aria-hidden="true" pointerEvents="none">
+                    {item.name}
                   </text>
                 </g>
               ))}
             {data.buildings.map((building) => {
               const district = data.districts.find((item) => item.key === building.folder);
-              const color = district?.color ?? "#1a1614";
-              const w = 12;
+              const color = district?.color ?? "#eef0ea";
+              const draft = !building.title;
+              const w = draft ? 15 : 19;
+              const body = draft ? "#46594f" : "#eef0ea";
+              const roof = draft ? "#5a6e64" : color;
               const active = selected?.id === building.id;
-              const draft = building.status !== "published";
-              const seen = snapshot.adult.at === building.id || snapshot.adult.visited.includes(building.id) || snapshot.child.at === building.id || snapshot.child.visited.includes(building.id);
-              const stopIndex = path?.stops.indexOf(building.id) ?? -1;
-              return (
-                <g key={building.id} opacity={level.district && level.district !== building.folder ? 0.35 : 1}>
-                  <ellipse cx={building.x} cy={building.y} rx={8} ry={3} fill="#1a1614" fillOpacity={0.12} aria-hidden="true" />
+              const linked = linkedIds.includes(building.id);
+              const focused = inFocus(building, level);
+              const shape = (
+                <>
                   {building.pointedRoof ? (
-                    <path d={`M ${building.x - w / 2 - 1} ${building.y - building.height} L ${building.x} ${building.y - building.height - 7} L ${building.x + w / 2 + 1} ${building.y - building.height} Z`} fill={color} aria-hidden="true" />
+                    <path d={`M ${building.x - w / 2 - 2} ${building.y - building.height} L ${building.x} ${building.y - building.height - 9} L ${building.x + w / 2 + 2} ${building.y - building.height} Z`} fill={roof} />
                   ) : (
-                    <rect x={building.x - w / 2 - 1.5} y={building.y - building.height - 3} width={w + 3} height={3} fill={color} aria-hidden="true" />
+                    <rect x={building.x - w / 2 - 2} y={building.y - building.height - 5} width={w + 4} height={5} fill={roof} />
                   )}
-                  <rect
-                    x={building.x - w / 2}
-                    y={building.y - building.height}
-                    width={w}
-                    height={building.height}
-                    fill={color}
-                    fillOpacity={draft ? 0.35 : seen ? 0.95 : pathStops.includes(building.id) ? 0.85 : 0.55}
-                    stroke={active ? "#1a1614" : color}
-                    strokeWidth={active ? 2 : 1}
-                    strokeDasharray={draft ? "2.2 1.4" : undefined}
-                    aria-hidden="true"
-                  />
-                  {stopIndex >= 0 ? (
-                    <g aria-hidden="true" data-testid="city-stop" data-stop={stopIndex + 1}>
-                      <circle cx={building.x} cy={building.y - building.height - 12} r={7} fill="#1a1614" />
-                      <text x={building.x} y={building.y - building.height - 8.5} textAnchor="middle" fontSize={9} fontWeight={700} fill="#faf9f7">
-                        {stopIndex + 1}
-                      </text>
+                  <rect className="body" x={building.x - w / 2} y={building.y - building.height} width={w} height={building.height} fill={body} stroke={active || linked ? "#ff5b22" : "none"} strokeWidth={active || linked ? 3 : 0} />
+                </>
+              );
+              return (
+                <g key={building.id} opacity={!focused ? 0.16 : level.district && level.district !== building.folder ? 0.4 : 1}>
+                  {draft || !focused ? (
+                    <g className="bld-d" aria-hidden="true">{shape}</g>
+                  ) : (
+                    <g
+                      className="bld"
+                      role="button"
+                      tabIndex={0}
+                      data-testid="city-building"
+                      data-building-id={building.id}
+                      aria-label={`${building.title}，${building.stageName}，${building.districtName}${building.aesthetics ? "，美學" : ""}`}
+                      onClick={() => openBuilding(building.id)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          openBuilding(building.id);
+                        }
+                      }}
+                      onMouseEnter={() => setHover(building.id)}
+                      onMouseLeave={() => setHover((current) => (current === building.id ? null : current))}
+                      onFocus={() => setHover(building.id)}
+                    >
+                      {shape}
                     </g>
-                  ) : null}
-                  {building.aesthetics ? (
-                    <circle cx={building.x + 9} cy={building.y - building.height + 2} r={3.5} fill="#fffdf8" stroke="#1a1614" aria-hidden="true" />
-                  ) : null}
-                  <g
-                    role="button"
-                    tabIndex={0}
-                    data-testid="city-building"
-                    data-building-id={building.id}
-                    aria-label={`${building.title}，${building.stageName}，${building.districtName}${draft ? "，草稿" : ""}${building.aesthetics ? "，美學" : ""}`}
-                    className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]"
-                    onClick={() => openBuilding(building.id)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        openBuilding(building.id);
-                      }
-                    }}
-                    onMouseEnter={() => setHover(building.id)}
-                    onMouseLeave={() => setHover((current) => (current === building.id ? null : current))}
-                    onFocus={() => setHover(building.id)}
-                  >
-                    <rect x={building.x - 16} y={building.y - building.height - 10} width={32} height={building.height + 16} fill="transparent" />
-                  </g>
+                  )}
                 </g>
               );
             })}
-            {([["child", snapshot.child], ["adult", snapshot.adult]] as const).map(([role, person]) => {
-              if (!person.at) return null;
-              const place = byId.get(person.at);
+            {pathStops.map((id, index) => {
+              const place = byId.get(id);
               if (!place) return null;
               return (
-                <g key={role} role="img" aria-label={`${person.name}目前在${place.title}`}>
-                  <rect x={place.x - 18} y={place.y - place.height - 28} width={36} height={16} rx={8} fill="#1a1614" />
-                  <text x={place.x} y={place.y - place.height - 17} textAnchor="middle" fontSize={9} fill="#faf9f7">
+                <g key={id} aria-hidden="true" data-testid="city-stop" data-stop={index + 1}>
+                  <circle cx={place.x} cy={place.y - place.height - 14} r={8} fill="#1c2621" />
+                  <text x={place.x} y={place.y - place.height - 11} textAnchor="middle" fontSize={10} fontWeight={700} fill="#eef0ea">
+                    {index + 1}
+                  </text>
+                </g>
+              );
+            })}
+            {([["child", snapshot.child, "#ff5b22"], ["adult", snapshot.adult, "#eef0ea"]] as const).map(([role, person, fill]) => {
+              if (!person.at) return null;
+              const place = byId.get(person.at);
+              if (!place?.title) return null;
+              const dot = role === "child";
+              return (
+                <g key={role} role="img" aria-label={`${person.name}目前在${place.title}（範例資料）`}>
+                  <circle cx={place.x + 16} cy={place.y - place.height - 8} r={dot ? 8 : 7} fill={dot ? fill : "#1c2621"} stroke={dot ? "#1c2621" : fill} strokeWidth={dot ? 3 : 4} />
+                  <text className="lbl" x={place.x + 28} y={place.y - place.height - 4} fontSize={14} fontWeight={900} fill={dot ? "#ff8a5c" : "#eef0ea"}>
                     {person.name}
                   </text>
                 </g>
@@ -662,30 +706,36 @@ export function CityMapView({
             </p>
           ) : null}
         </div>
-        <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm text-[#3d3830]">
-          {data.districts.map((district) => (
-            <li key={district.key} className="inline-flex min-h-11 items-center gap-2">
-              <span className="inline-block h-3 w-3" style={{ background: district.color }} aria-hidden="true" />
-              {district.name}（{district.layerName}）
-            </li>
-          ))}
-          <li className="inline-flex min-h-11 items-center gap-2">平頂是本質或基礎，尖頂是進階或應用。虛線是草稿。</li>
-          <li className="inline-flex min-h-11 items-center gap-2">小圓點是美學。</li>
-        </ul>
+        <div className="legend" aria-label="圖例">
+          <span className="it"><span className="sw" style={{ background: "var(--chalk)", borderRadius: 2 }} />已開放</span>
+          <span className="it"><span className="sw" style={{ background: "#46594f", borderRadius: 2 }} />施工中</span>
+          <span className="it"><span className="sw" style={{ background: "var(--accent)", borderRadius: 2, height: 6, width: 22 }} />主線路線</span>
+          <span className="it mk mk-child">孩子</span>
+          <span className="it mk mk-adult">大人</span>
+          <span className="sample">範例資料</span>
         </div>
-        {view === "list" ? <CityList data={data} snapshot={snapshot} selectedId={selected?.id ?? null} onOpen={openBuilding} /> : null}
+        </div>
+        {view === "list" ? (
+          <CityList data={data} snapshot={snapshot} selectedId={selected?.id ?? null} linkedIds={linkedIds} accept={accept} onOpen={openBuilding} />
+        ) : null}
         {view === "system" ? (
           <LayerOverview
             data={data}
             snapshot={snapshot}
             selectedId={selected?.id ?? null}
+            linkedIds={linkedIds}
+            pathStops={pathStops}
+            accept={accept}
             activeStage={level.stage}
+            activeLayer={level.layer}
             onOpen={openBuilding}
             onLot={openLot}
+            onPickStage={(stageId) => go({ stage: level.stage === stageId ? null : stageId, kp: null }, "push")}
+            onPickLayer={(layerId) => go({ layer: level.layer === layerId ? null : layerId, kp: null }, "push")}
           />
         ) : null}
       </div>
-      <aside className="border border-[#c0bab2] bg-white p-4" data-testid="city-card">
+      <aside className="city-card" data-testid="city-card">
         {selected ? (
           <div>
             <p className="text-xs font-semibold tracking-wide text-[#3d3830]">
@@ -697,11 +747,32 @@ export function CityMapView({
             <p className="mt-3 text-sm">高度 {selected.height}（被 {selected.dependents} 個知識點當先備）</p>
             <h3 className="mt-4 text-sm font-bold">先備</h3>
             <ul className="mt-1 text-sm leading-6">
-              {selected.prerequisites.length === 0 ? <li>沒有先備</li> : selected.prerequisites.map((item) => <li key={item.id}>{item.title}</li>)}
+              {selected.prerequisites.length === 0 ? <li>沒有先備</li> : selected.prerequisites.map((item) => (
+                <li key={item.id}>
+                  <button type="button" className="min-h-11 underline" onClick={() => openBuilding(item.id)}>{item.title}</button>
+                </li>
+              ))}
             </ul>
             <h3 className="mt-3 text-sm font-bold">被依賴</h3>
             <ul className="mt-1 text-sm leading-6">
-              {selected.requiredBy.length === 0 ? <li>還沒有知識點依賴它</li> : selected.requiredBy.map((item) => <li key={item.id}>{item.title}</li>)}
+              {selected.requiredBy.length === 0 ? <li>還沒有知識點依賴它</li> : selected.requiredBy.map((item) => (
+                <li key={item.id}>
+                  <button type="button" className="min-h-11 underline" onClick={() => openBuilding(item.id)}>{item.title}</button>
+                </li>
+              ))}
+            </ul>
+            <h3 className="mt-3 text-sm font-bold">核心素養</h3>
+            <ul className="mt-1 flex flex-wrap gap-2 text-sm">
+              {selected.competencies.length === 0 ? <li>沒有標</li> : selected.competencies.map((code) => {
+                const name = data.competencies.find((item) => item.code === code)?.name ?? code;
+                return (
+                  <li key={code}>
+                    <button type="button" className="chip" aria-pressed={level.competency === code} onClick={() => go({ competency: code }, "push")}>
+                      {code} {name}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
             <h3 className="mt-3 text-sm font-bold">所在主線</h3>
             <ul className="mt-1 text-sm leading-6">
@@ -711,8 +782,8 @@ export function CityMapView({
             <ul className="mt-1 text-sm leading-6">
               {selected.bridges.length === 0 ? <li>這棟沒有跨到別的學門</li> : selected.bridges.map((item) => <li key={item.id}>{item.title}</li>)}
             </ul>
-            <Link href={selected.href} className="mt-4 inline-flex min-h-11 items-center bg-[#1a1614] px-4 text-sm font-semibold text-[#faf9f7] hover:bg-[#3d3830] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]">
-              打開知識點
+            <Link href={selected.href} className="btn btn-ink btn-sm go">
+              讀這一站
             </Link>
             <button type="button" className="mt-2 inline-flex min-h-11 items-center px-4 text-sm underline" onClick={() => go(parentLevel(level), "push")}>
               關閉
@@ -731,6 +802,19 @@ export function CityMapView({
               onClick={() => window.dispatchEvent(new Event("mido-open-wish"))}
             >
               想學這個？許個願
+            </button>
+          </div>
+        ) : view === "system" ? (
+          <div>
+            <h2 className="text-xl font-bold">分層分段總圖</h2>
+            <p className="mt-2 text-sm leading-6">列是層級，欄是階段。點一個知識點，看標題、階段、層級、先備和被依賴。</p>
+            <p className="mt-3 text-sm leading-6">選一條主線，這一站會標上橘色站號。</p>
+            <button
+              type="button"
+              className="mt-4 inline-flex min-h-11 items-center border border-[#1a1614] px-4 text-sm font-semibold hover:bg-[#1a1614] hover:text-[#faf9f7]"
+              onClick={() => window.dispatchEvent(new Event("mido-open-wish"))}
+            >
+              想學別的？許個願
             </button>
           </div>
         ) : (

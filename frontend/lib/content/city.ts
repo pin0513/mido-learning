@@ -7,7 +7,7 @@ import type { ContentModel, KnowledgePoint, LearningPath } from "./types";
 
 export const NEXT_LOT_IDS = ["psychology", "language", "physics", "engineering", "ai-applied"] as const;
 
-const DISTRICT_COLORS = ["#6b4f3a", "#1f6b4a", "#8a5a2b", "#2c4c7c"] as const;
+const DISTRICT_COLORS = ["#9cc3d5", "#e6d27a", "#eba79c", "#a6cf96"] as const;
 
 export interface CityBuilding {
   id: string;
@@ -32,6 +32,8 @@ export interface CityBuilding {
   aesthetics: boolean;
   href: string;
   pointedRoof: boolean;
+  /** 課綱核心素養代碼。不是標題。 */
+  competencies: string[];
 }
 
 export interface CityRoad {
@@ -88,21 +90,23 @@ export interface CityMapData {
   districts: CityDistrict[];
   stages: { id: string; name: string }[];
   layers: { id: string; name: string }[];
+  competencies: { code: string; name: string }[];
 }
 
-const SIZE = 1000;
-const CX = 500;
-const CY = 500;
-const PLAZA = 92;
+const SIZE = 1100;
+const CX = 550;
+const CY = 550;
+const PLAZA = 78;
 const RINGS: [number, number][] = [
-  [92, 190],
-  [190, 290],
-  [290, 390],
-  [390, 480],
+  [78, 175],
+  [175, 272],
+  [272, 369],
+  [369, 466],
 ];
 
+/** 四個學區各 90°，從正上方順時針，兩側各留 2°。 */
 export function sectorStart(index: number, sector: number): number {
-  return -90 - sector / 2 + index * sector;
+  return -90 + index * sector + 2;
 }
 
 export function polar(cx: number, cy: number, radius: number, deg: number): [number, number] {
@@ -167,12 +171,10 @@ export function buildCityMap(model: ContentModel): CityMapData {
   const byId = new Map(points.map((point) => [point.id, point]));
   const stages = [...model.taxonomy.stageList].sort((a, b) => a.rank - b.rank).map((stage) => ({ id: stage.id, name: stage.name }));
   const layers = model.taxonomy.layerList.map((layer) => ({ id: layer.id, name: layer.name }));
-  const stageIndex = new Map(stages.map((stage, index) => [stage.id, index]));
-  const layerIndex = new Map(layers.map((layer, index) => [layer.id, index]));
   const layerName = new Map(layers.map((layer) => [layer.id, layer.name]));
 
   const districtsSource = model.taxonomy.roots.filter((root) => root.contentFolder);
-  const sector = 360 / (districtsSource.length + 1);
+  const sector = 90;
   const districts: CityDistrict[] = districtsSource.map((root, index) => {
     const folder = root.contentFolder ?? root.id;
     const path = model.paths.find((item) => item.disciplineFolder === folder);
@@ -235,7 +237,7 @@ export function buildCityMap(model: ContentModel): CityMapData {
       status: point.status,
       x: round(pos.x),
       y: round(pos.y),
-      height: 10 + required.length * 7,
+      height: 16 + required.length * 9 + (point.status === "published" ? 8 : 0),
       dependents: required.length,
       prerequisites: point.prerequisites.filter((id) => byId.has(id)).map((id) => ({ id, title: titleOf(byId, id) })),
       requiredBy: required.map((id) => ({ id, title: titleOf(byId, id) })),
@@ -243,7 +245,8 @@ export function buildCityMap(model: ContentModel): CityMapData {
       paths: pathsByPoint.get(point.id) ?? [],
       aesthetics: point.crosscutting.includes("aesthetics"),
       href: `/kp/${point.concept}/${point.stage}`,
-      pointedRoof: (layerIndex.get(point.layer) ?? 0) >= 2,
+      pointedRoof: point.layer === "essence",
+      competencies: point.curriculum108?.coreCompetencies ?? [],
     };
   });
 
@@ -267,7 +270,13 @@ export function buildCityMap(model: ContentModel): CityMapData {
     }
   }
 
-  const lotSector = districts.length;
+  const lotSpots: Record<string, [number, number]> = {
+    psychology: [1000, 170],
+    language: [1000, 300],
+    physics: [1000, 880],
+    engineering: [100, 880],
+    "ai-applied": [100, 190],
+  };
   const lots: CityLot[] = model.taxonomy.roots
     .filter((root) => !root.contentFolder)
     .map((root) => ({
@@ -280,17 +289,11 @@ export function buildCityMap(model: ContentModel): CityMapData {
       y: 0,
       featured: (NEXT_LOT_IDS as readonly string[]).includes(root.id),
     }));
-  for (const layer of layers) {
-    const group = lots.filter((lot) => lot.layer === layer.id && lot.featured);
-    const sIndex = layers.findIndex((item) => item.id === layer.id);
-    group.forEach((lot, index) => {
-      const [r0, r1] = RINGS[Math.min(sIndex, RINGS.length - 1)] ?? RINGS[0];
-      const span = sector - 12;
-      const ang = sectorStart(lotSector, sector) + 6 + ((index + 0.5) * span) / Math.max(group.length, 1);
-      const [x, y] = polar(CX, CY, (r0 + r1) / 2, ang);
-      lot.x = round(x);
-      lot.y = round(y);
-    });
+  for (const lot of lots) {
+    const spot = lotSpots[lot.id];
+    if (!spot) continue;
+    lot.x = spot[0];
+    lot.y = spot[1];
   }
 
   const landmarks: CityLandmark[] = [...model.paths]
@@ -318,25 +321,72 @@ export function buildCityMap(model: ContentModel): CityMapData {
     districts,
     stages,
     layers,
+    competencies: model.taxonomy.coreCompetencies.map((item) => ({ code: item.code, name: item.name })),
   };
 }
 
 function placeCell(ids: string[], sectorIndex: number, stageIndex: number, sector: number, positions: Map<string, { x: number; y: number }>): void {
   if (ids.length === 0) return;
   const sorted = [...ids].sort();
-  const cols = Math.min(4, sorted.length);
-  const rows = Math.ceil(sorted.length / cols);
-  const a0 = sectorStart(sectorIndex, sector) + 7;
-  const span = sector - 14;
+  const a0 = sectorStart(sectorIndex, sector);
+  const a1 = a0 + sector - 4;
   const [r0, r1] = RINGS[stageIndex] ?? RINGS[0];
-  sorted.forEach((id, index) => {
-    const col = index % cols;
-    const row = Math.floor(index / cols);
-    const ang = a0 + ((col + 0.5) * span) / cols;
-    const radius = r0 + ((row + 1) * (r1 - r0)) / (rows + 1);
-    const [x, y] = polar(CX, CY, radius, ang);
-    positions.set(id, { x, y });
+  const span = r1 - r0;
+  const rows = sorted.length <= 4 ? [sorted] : [sorted.slice(0, Math.ceil(sorted.length / 2)), sorted.slice(Math.ceil(sorted.length / 2))];
+  const radii = rows.length === 1 ? [r0 + span * 0.55] : [r0 + span * 0.36, r0 + span * 0.8];
+  rows.forEach((row, rowIndex) => {
+    const radius = radii[rowIndex];
+    row.forEach((id, index) => {
+      let angle = a0 + 7 + (a1 - a0 - 14) * ((index + 0.5) / row.length);
+      if (rows.length === 2 && rowIndex === 1) angle += ((a1 - a0 - 14) / (2 * Math.max(row.length, 1))) * 0.5;
+      const [x, y] = polar(CX, CY, radius, angle);
+      positions.set(id, { x, y });
+    });
   });
+}
+
+/**
+ * 地圖可以畫出施工中的建築，但標題、一句話與關聯名稱不進用戶端。
+ * keepDraftIdentity 只給草稿 build：保留真實 id，方便對照內容。
+ * 正式 build 把草稿換成 draft-N，拿掉 concept 與 href，道路和橋也不帶草稿端點。
+ * 主線選單只留至少有一站已發布的，路線只連那些站。
+ */
+export function presentCityMap(data: CityMapData, keepDraftIdentity = false): CityMapData {
+  const published = new Set(data.buildings.filter((building) => building.status === "published").map((building) => building.id));
+  const keep = (items: { id: string; title: string }[]) => items.filter((item) => published.has(item.id));
+  let draftNumber = 0;
+  const buildings = data.buildings.map((building) => {
+    if (building.status === "published") {
+      return {
+        ...building,
+        prerequisites: keep(building.prerequisites),
+        requiredBy: keep(building.requiredBy),
+        bridges: keep(building.bridges),
+      };
+    }
+    const hidden = {
+      ...building,
+      title: "",
+      idea: "",
+      prerequisites: [],
+      requiredBy: [],
+      bridges: [],
+      paths: [],
+    };
+    if (keepDraftIdentity) return hidden;
+    draftNumber += 1;
+    return { ...hidden, id: `draft-${draftNumber}`, concept: "", href: "" };
+  });
+  const bothPublished = (from: string, to: string) => published.has(from) && published.has(to);
+  return {
+    ...data,
+    buildings,
+    roads: keepDraftIdentity ? data.roads : data.roads.filter((road) => bothPublished(road.from, road.to)),
+    bridges: keepDraftIdentity ? data.bridges : data.bridges.filter((bridge) => bothPublished(bridge.from, bridge.to)),
+    landmarks: data.landmarks
+      .map((landmark) => ({ ...landmark, stops: landmark.stops.filter((id) => published.has(id)) }))
+      .filter((landmark) => landmark.stops.length > 0),
+  };
 }
 
 function round(value: number): number {

@@ -1,32 +1,61 @@
 "use client";
 
 import { useEffect } from "react";
-import LegacyHome from "@/components/home/LegacyHome";
+import Link from "next/link";
 import { recordPageView } from "@/lib/api/analytics";
 import type { CityMapData } from "@/lib/content/city";
+import { KpFrame } from "@/components/kp/shell/KpFrame";
 import { CityMapView } from "./CityMapView";
+import type { OpenPathBrief } from "@/lib/kp/open-path";
+import { AboutInset, HowSection, OpenPlate } from "./CitySections";
+import { SlideMenu } from "./SlideMenu";
 
-/** 旗標打開時的首頁。投影片區沿用 LegacyHome，不重複記一次 page view。 */
-export function CityHome({ data }: { data: CityMapData }) {
+/** 旗標打開時的首頁。投影片區併進這一頁，不重複記一次 page view。 */
+export function CityHome({ data, path }: { data: CityMapData; path: OpenPathBrief | null }) {
   useEffect(() => {
     recordPageView();
   }, []);
 
   return (
-    <div style={{ background: "#faf9f7" }}>
-      <section className="border-b border-[#e5e3de]" style={{ background: "#faf9f7" }}>
-        <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#3d3830]">Mido Learning</p>
-          <h1 className="mt-3 text-4xl font-extrabold leading-tight text-[#1a1614] sm:text-5xl">從家庭廣場出發</h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-[#3d3830]">
-            環路從國小走到大學，學區依層級排開。點一棟建築，進入那個知識點。地圖、層級總圖與清單可以互換，下面仍是原來的知識學習、小人學與遊戲。
-          </p>
+    <KpFrame>
+      <section className="hero" aria-labelledby="city-hero">
+        <div className="card">
+          <div className="card-body rv">
+            <h1 id="city-hero">全家一起走的學習城市</h1>
+            <p>先看層級和階段怎麼排。孩子走國小環，大人走自己的那一環。</p>
+            <figure className="explain-fig">
+              <img
+                src="/kp/garden-city-diagram.webp"
+                alt="霍華德 1898 年的田園城市圖：同心圓環繞中央廣場，用來說明城裡由內而外的四條環路"
+                width={336}
+                height={247}
+              />
+              <figcaption>
+                圖：
+                <a href="https://commons.wikimedia.org/wiki/File:Garden_City_diagram.jpg">“Garden City diagram”</a>
+                ，Ebenezer Howard（1898），
+                <a href="https://creativecommons.org/publicdomain/mark/1.0/">公眾領域</a>
+                ，Wikimedia Commons。
+              </figcaption>
+            </figure>
+            <Link className="btn btn-accent" href="/?view=system">看分層分段總圖</Link>
+          </div>
+          <div className="card-foot">
+            <nav className="textlinks" aria-label="其他看法">
+              <Link href="/?view=city&s=es">帶孩子從國小環出發</Link>
+              <Link href="/?view=list">看清單</Link>
+              <Link href="/#slides">投影片教材</Link>
+            </nav>
+          </div>
+        </div>
+        <div className="citypanel board-2">
+          <CityMapView data={data} defaultView="system" tabOrder={["system", "map", "list"]} mapParam="city" />
         </div>
       </section>
-      <div className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6">
-        <CityMapView data={data} rememberView showStart />
-      </div>
-      <LegacyHome catalogOnly />
-    </div>
+      <HowSection />
+      {path ? <OpenPlate path={path} /> : null}
+      <SlideMenu />
+      <AboutInset />
+    </KpFrame>
   );
 }
