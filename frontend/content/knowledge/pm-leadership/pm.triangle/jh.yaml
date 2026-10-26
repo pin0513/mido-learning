@@ -21,8 +21,9 @@ curriculum_108:
     - A3
     - C2
   issues: []
-to_verify: false
-verify_notes: []
+to_verify: true
+verify_notes:
+  - 數學領域，以及 A2、A3、C2 的對應，還沒有附上課綱來源。
 prerequisites:
   - pm.project@jh
   - pm.sequence@es
@@ -45,7 +46,7 @@ ai:
     - 試算成本與可能的收入
   human_experience:
     - 在小組裡為取捨辯論並共同決定
-idea: 資源有限，想做得更好通常要更多時間或錢；三者必須一起考慮。
+idea: 資源有限，想做得更好通常要更多時間或錢；三者必須一起考慮。做多少（範疇）也是一個變數。
 guiding_questions:
   - 如果預算砍一半，你會犧牲時間還是品質？為什麼？
 scenario: 園遊會攤位：在固定預算與兩週準備期內，比較三種菜單方案的取捨。

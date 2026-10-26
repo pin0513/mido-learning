@@ -184,9 +184,9 @@
     "guiding_questions": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 3,
+      "maxItems": 4,
       "items": { "type": "string", "minLength": 1 },
-      "description": "示範原稿每個知識點只有一題，所以上限 3、下限 1，不為了湊數另寫題目。"
+      "description": "至少 1 題、最多 4 題。不要為了湊數另寫題目。"
     },
     "scenario": { "type": "string", "minLength": 1, "description": "動手活動或生活情境。" },
     "formats": {

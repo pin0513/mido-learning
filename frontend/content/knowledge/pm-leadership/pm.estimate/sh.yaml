@@ -21,8 +21,9 @@ curriculum_108:
     - A3
     - C2
   issues: []
-to_verify: false
-verify_notes: []
+to_verify: true
+verify_notes:
+  - 數學領域，以及 A2、A3、C2 的對應，還沒有附上課綱來源。
 prerequisites:
   - pm.breakdown@es
   - pm.triangle@jh
@@ -31,10 +32,10 @@ links:
     - ph.bias@sh
   how: []
   related:
-    - ma.number@es
+    - ma.stats@sh
   deeper:
     - pm.evm@uni
-link_notes: 數學（期望值、統計）、心理學（計畫謬誤）
+link_notes: 心理學（計畫謬誤）
 competency:
   specialist:
     - 估算
@@ -46,7 +47,7 @@ ai:
     - 檢查 WBS 是否遺漏、代為計算
   human_experience:
     - 比對估算與實際，修正自己的「時間感」
-idea: 把工作拆到可以估算的大小（WBS），再用樂觀、最可能、悲觀三個值估時間，承認不確定。
+idea: 把工作拆到可以估算的大小，叫做 WBS（工作分解結構）。再用樂觀（O）、最可能（M）、悲觀（P）三個值估時間。PERT 期望值 E=(O+4M+P)/6，標準差約 (P−O)/6。另一種三角分佈是 (O+M+P)/3。這樣是承認不確定，而不是假裝有一個準確數字。
 guiding_questions:
   - 為什麼人總是低估自己需要的時間？
 scenario: 替自主學習計畫建立 WBS，用三點估算算出預期工時，期末再對照實際花費。
