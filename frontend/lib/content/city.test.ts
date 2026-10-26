@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { buildCityMap, focusViewBox, footprintsOverlap } from "./city";
+import { buildCityMap, focusViewBox, footprintsOverlap, presentCityMap } from "./city";
 import { loadContent } from "./load";
 import type { ContentModel, KnowledgePoint } from "./types";
 
@@ -37,7 +37,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
     map.buildings.map((building) => `${building.id}:${building.x}:${building.y}:${building.height}`).join("\n");
   assert.equal(signature(first), signature(second));
   const digest = createHash("sha256").update(signature(first)).digest("hex");
-  assert.equal(digest, "59ac1c366d3e4935bc2a014cb4095e61822e6cd7ec47a23d7cb91f972ecb4d85");
+  assert.equal(digest, "a4f92aef3e7be84ff5e6107cd8121016b59ad8c5848bf5452821ffbf8318f217");
   for (const district of first.districts) {
     for (const stage of first.stages) {
       const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;
@@ -57,14 +57,21 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   const breakdown = map.buildings.find((building) => building.id === "pm.breakdown@es");
   assert.ok(breakdown);
   assert.equal(breakdown.dependents, source.points.filter((point) => point.prerequisites.includes("pm.breakdown@es")).length);
-  assert.equal(breakdown.height, 10 + breakdown.dependents * 7);
+  assert.equal(breakdown.height, 16 + breakdown.dependents * 9 + 8);
   assert.equal(breakdown.href, "/kp/pm.breakdown/es");
+  const shown = presentCityMap(map);
+  const draft = shown.buildings.find((building) => building.id === "pm.goal@es");
+  assert.ok(draft);
+  assert.equal(draft.status, "draft");
+  assert.equal(draft.title, "");
+  assert.equal(draft.idea, "");
+  assert.equal(shown.buildings.find((building) => building.id === "pm.breakdown@es")?.title, "大事拆成小事");
   assert.equal(map.buildings.filter((building) => building.aesthetics).length, 2);
 });
 
 test("只選環路時視野縮到那一圈", () => {
   const map = buildCityMap(content());
-  assert.equal(focusViewBox(map, null, null), "0 0 1000 1000");
+  assert.equal(focusViewBox(map, null, null), "0 0 1100 1100");
   const ring = focusViewBox(map, null, 0).split(" ").map(Number);
   assert.ok(ring[2] < 1000);
   assert.ok(ring[0] > 0 && ring[1] > 0);

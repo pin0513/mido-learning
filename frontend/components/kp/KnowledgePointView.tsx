@@ -3,6 +3,8 @@ import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { competencyName, disciplineTitle, layerName, stageName } from "@/lib/content";
 import { competencyPath, disciplinePath, knowledgePointPath, learningPathPath, stagePath } from "@/lib/kp/routes";
 import { ColearnCard } from "./ColearnCard";
+import { Estimator } from "./Estimator";
+import { StageGlyph } from "./StageGlyph";
 import { KpSlides } from "./KpSlides";
 import { LicenseNotice } from "./LicenseNotice";
 
@@ -110,8 +112,13 @@ export function KnowledgePointView({
           <span className="border border-[#c0bab2] bg-white px-2 py-1 text-xs">{layer}</span>
           <span className="border border-[#c0bab2] bg-white px-2 py-1 text-xs">{stage}</span>
         </div>
-        <h1 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl">{point.title}</h1>
-        <p className="mt-4 max-w-3xl text-lg leading-8">{point.idea}</p>
+        <h1 className="head" style={{ marginTop: 16 }}>{point.title}</h1>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 16 }}>
+          <StageGlyph stage={point.stage} label={`${stage}環`} />
+          <p className="small" style={{ margin: 0 }}>{stage}環・{layer}</p>
+        </div>
+        <p className="lead" style={{ marginTop: 16 }}>{point.idea}</p>
+        {point.id.startsWith("pm.estimate@") ? <Estimator /> : null}
       </header>
 
       {point.toVerify ? (

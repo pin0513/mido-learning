@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./kp-theme.css";
 
 :root {
   --background: #ffffff;
@@ -10,6 +11,28 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-board: #1c2621;
+  --color-board-2: #24312b;
+  --color-board-3: #2f3f38;
+  --color-board-4: #3d5048;
+  --color-chalk: #eef0ea;
+  --color-chalk-2: #c3cbc5;
+  --color-paper: #efefec;
+  --color-paper-2: #e3e3de;
+  --color-paper-3: #d2d2cb;
+  --color-ink: #1a1614;
+  --color-ink-2: #47413b;
+  --color-accent: #ff5b22;
+  --color-accent-deep: #a83a0f;
+  --color-stage-es: #1c2621;
+  --color-stage-jh: #2f4a3e;
+  --color-stage-sh: #527565;
+  --color-stage-uni: #a9c4b6;
+  --color-d-philosophy: #9cc3d5;
+  --color-d-math: #e6d27a;
+  --color-d-pm: #eba79c;
+  --color-d-it: #a6cf96;
+  --font-kp: var(--font-switzer), var(--font-noto-tc), "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
 }
 
 /* Dark mode intentionally disabled: site uses explicit Tailwind color classes.

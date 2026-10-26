@@ -10,7 +10,7 @@ export {
   visibleCatalog,
   type ContentCatalog,
 } from "./catalog";
-export { buildCityMap, type CityMapData } from "./city";
+export { buildCityMap, presentCityMap, type CityMapData } from "./city";
 export { filterOptions, toCards } from "./present";
 export type {
   ContentIndexes,

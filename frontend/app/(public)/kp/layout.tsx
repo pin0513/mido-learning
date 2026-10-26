@@ -1,3 +1,5 @@
+import { KpFrame } from "@/components/kp/shell/KpFrame";
+
 const PRINT_CSS = `
 @media print {
   @page { size: A4; margin: 12mm; }
@@ -17,9 +19,11 @@ const PRINT_CSS = `
 
 export default function KpLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[#faf9f7] text-[#1a1614]">
+    <>
       <style>{PRINT_CSS}</style>
-      {children}
-    </div>
+      <KpFrame>
+        <div className="paper" style={{ minHeight: "50vh" }}>{children}</div>
+      </KpFrame>
+    </>
   );
 }

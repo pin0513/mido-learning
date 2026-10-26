@@ -6,7 +6,7 @@ export function LicenseNotice() {
         內容授權
       </h2>
       <p data-testid="kp-license-body" className="mt-2 min-h-6 text-sm text-[#3d3830]"></p>
-      <p className="text-xs leading-5 text-[#3d3830]">授權文字尚未公告。</p>
+      <p className="small">授權：待定。授權文字尚未公告。</p>
     </section>
   );
 }

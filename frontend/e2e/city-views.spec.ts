@@ -17,7 +17,7 @@ test.describe("學習城市的三種檢視", () => {
     );
     expect(counts.reduce((sum, count) => sum + count, 0)).toBe(100);
     await expect(page.locator('td[data-layer="essence"][data-stage="es"]')).toContainText("大事拆成小事");
-    await expect(page.locator('td[data-layer="applied"][data-stage="es"]')).toContainText("0");
+    await expect(page.locator('td[data-layer="applied"][data-stage="es"]')).toContainText("還沒有知識點");
 
     await page.locator('td[data-layer="essence"][data-stage="es"]').getByRole("button", { name: /大事拆成小事/ }).click();
     await expect(page.getByTestId("city-card")).toContainText("大事拆成小事");
@@ -52,7 +52,7 @@ test.describe("學習城市的三種檢視", () => {
     await expect(page.getByTestId("city-mobile")).toBeVisible();
     await page.getByTestId("city-mobile").getByRole("button", { name: /專案管理與領導/ }).click();
     await page.getByTestId("city-mobile").getByRole("button", { name: /大事拆成小事/ }).click();
-    await page.getByRole("link", { name: "打開知識點" }).click();
+    await page.getByTestId("city-card").getByRole("link", { name: "讀這一站" }).click();
     await expect(page).toHaveURL(/\/kp\/pm\.breakdown\/es/);
     const detailOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(detailOverflow).toBeLessThanOrEqual(1);
