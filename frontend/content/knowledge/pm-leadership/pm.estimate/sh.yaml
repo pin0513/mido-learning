@@ -1,7 +1,7 @@
 id: pm.estimate@sh
 concept: pm.estimate
 title: WBS 與三點估算
-status: draft
+status: published
 version: "0.1"
 discipline:
   path:

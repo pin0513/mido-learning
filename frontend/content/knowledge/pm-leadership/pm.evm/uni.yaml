@@ -1,7 +1,7 @@
 id: pm.evm@uni
 concept: pm.evm
 title: 實獲值管理（EVM）
-status: draft
+status: published
 version: "0.1"
 discipline:
   path:

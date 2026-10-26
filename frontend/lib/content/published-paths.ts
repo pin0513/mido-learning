@@ -87,5 +87,25 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
   {
     "path": "/kp/competency/C3",
     "lastModified": "2026-10-26"
+  },
+  {
+    "path": "/kp/path/pm.estimate",
+    "lastModified": "2026-10-26"
+  },
+  {
+    "path": "/kp/pm.breakdown/es",
+    "lastModified": "2026-10-26"
+  },
+  {
+    "path": "/kp/pm.estimate/sh",
+    "lastModified": "2026-10-26"
+  },
+  {
+    "path": "/kp/pm.evm/uni",
+    "lastModified": "2026-10-26"
+  },
+  {
+    "path": "/kp/pm.triangle/jh",
+    "lastModified": "2026-10-26"
   }
 ];

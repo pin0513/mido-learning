@@ -25,7 +25,10 @@ test.describe("知識地圖", () => {
     await page.goto("/kp/pm.breakdown/es");
     await expect(page.getByRole("heading", { level: 1, name: "大事拆成小事" })).toBeVisible();
     await expect(page.getByTestId("kp-curriculum")).toBeVisible();
+    await expect(page.getByTestId("kp-draft")).toHaveCount(0);
+    await page.goto("/kp/pm.goal/es");
     await expect(page.getByTestId("kp-draft")).toHaveText("草稿");
+    await page.goto("/kp/pm.breakdown/es");
     await expect(page.getByRole("link", { name: /我們想完成什麼/ })).toBeVisible();
     await expect(page.getByText("尚未發布")).toHaveCount(0);
     await expect(page.getByTestId("kp-slides")).toHaveCount(0);
@@ -82,7 +85,8 @@ test.describe("知識地圖", () => {
     const sitemap = await request.get("/sitemap.xml");
     const xml = await sitemap.text();
     expect(xml).toContain("/kp/layer/essence");
-    expect(xml).not.toContain("/kp/pm.breakdown/es");
+    expect(xml).toContain("/kp/pm.breakdown/es");
+    expect(xml).not.toContain("/kp/pm.goal/es");
     expect(xml).not.toContain("/login");
     expect(xml).not.toContain("/dashboard");
   });
