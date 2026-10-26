@@ -27,6 +27,7 @@ export function Header() {
   const [userRole, setUserRole] = useState<UserRole>('guest');
   const [roleLoading, setRoleLoading] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showKnowledgeMap, setShowKnowledgeMap] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -49,6 +50,19 @@ export function Header() {
       setUserRole('guest');
     }
   }, [user]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/kp-launch")
+      .then((response) => (response.ok ? response.json() : { enabled: false }))
+      .then((data: { enabled?: boolean }) => {
+        if (!cancelled && data.enabled === true) setShowKnowledgeMap(true);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -74,6 +88,14 @@ export function Header() {
           <Link href="/" className="text-gray-600 hover:text-gray-900">
             首頁
           </Link>
+          {showKnowledgeMap ? (
+            <Link
+              href="/kp"
+              className="inline-flex min-h-11 items-center text-gray-600 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+            >
+              知識地圖
+            </Link>
+          ) : null}
           {user && (
             <>
               <Link href="/components" className="text-gray-600 hover:text-gray-900">
@@ -176,6 +198,15 @@ export function Header() {
             >
               首頁
             </Link>
+            {showKnowledgeMap ? (
+              <Link
+                href="/kp"
+                className="block min-h-11 rounded-md px-3 py-3 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                知識地圖
+              </Link>
+            ) : null}
             {user && (
               <>
                 <Link
