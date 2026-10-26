@@ -1,0 +1,9 @@
+# 學門總圖要公開哪些學門。改這份清單即可。
+# 沒有列進來的學門維持「準備中」，圖上不放知識點標題。
+# 這份清單不打開正式首頁。KP_ENABLED 與 KP_HOME_ENABLED 仍預設關閉。
+# 正式環境可用環境變數 KP_HOME_DISCIPLINES（逗號分隔的資料夾名稱）蓋過這份清單。
+disciplines:
+  - pm-leadership
+  - philosophy
+  - math
+  - it-ai

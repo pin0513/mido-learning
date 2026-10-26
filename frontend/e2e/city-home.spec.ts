@@ -26,19 +26,30 @@ test.describe("學門總圖", () => {
     await expect(diagram.locator("table")).toHaveCount(0);
     await expect(diagram.getByRole("link", { name: /大事拆成小事/ })).toBeVisible();
     await expect(diagram.getByRole("link", { name: /如果預算砍一半/ })).toBeVisible();
-    await expect(page.getByRole("link", { name: "數學，準備中" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "數學" })).toBeVisible();
+    await expect(page.getByText("準備中")).toHaveCount(0);
 
-    await page.getByRole("link", { name: "數學，準備中" }).click();
+    await page.getByRole("link", { name: "數學" }).click();
     await expect(page).toHaveURL(/[?&]d=math(?:&|$)/);
-    await expect(page.getByRole("heading", { name: "數學正在準備中" })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /規律與關係/ })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /你怎麼確定第 100 個/ })).toBeVisible();
     await expect(diagram.getByRole("link", { name: /大事拆成小事/ })).toHaveCount(0);
+    await expect(diagram.locator("table")).toHaveCount(0);
+
+    await page.getByRole("link", { name: "哲學與思考方法" }).click();
+    await expect(page).toHaveURL(/[?&]d=philosophy(?:&|$)/);
+    await expect(diagram.getByRole("link", { name: /部分與整體/ })).toBeVisible();
+    await page.getByRole("link", { name: "資訊與 AI" }).click();
+    await expect(page).toHaveURL(/[?&]d=it-ai(?:&|$)/);
+    await expect(diagram.getByRole("link", { name: /一步一步的指令/ })).toBeVisible();
     await expect(diagram.locator("table")).toHaveCount(0);
   });
 
   test("?d 深連結打開那個學門", async ({ page }) => {
     await page.goto("/?d=philosophy");
-    await expect(page.getByRole("link", { name: "哲學與思考方法，準備中" })).toHaveAttribute("aria-current", "page");
-    await expect(page.getByRole("heading", { name: "哲學與思考方法正在準備中" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "哲學與思考方法" })).toHaveAttribute("aria-current", "page");
+    await expect(page.getByRole("heading", { name: "哲學與思考方法的學段總圖" })).toBeVisible();
+    await expect(page.getByTestId("home-diagram").getByRole("link", { name: /好問題從/ })).toBeVisible();
     await expect(page.getByTestId("home-diagram").locator("table")).toHaveCount(0);
 
     await page.goto("/?d=pm-leadership");
@@ -64,17 +75,25 @@ test.describe("學門總圖", () => {
     }
   });
 
-  test("目前任務不出現草稿標題", async ({ page }) => {
+  test("目前任務連到已畫出的跨學門，不顯示準備中", async ({ page }) => {
     await page.goto("/?view=task");
     const task = page.getByTestId("task-view");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("目前任務：拆解與估算");
-    await expect(task).toContainText("數學 · 準備中");
-    await expect(task).toContainText("哲學 · 準備中");
+    await expect(task.getByRole("link", { name: /部分與整體/ })).toHaveAttribute("href", /d=philosophy/);
+    await expect(task.getByRole("link", { name: /規律與關係/ })).toHaveAttribute("href", /d=math/);
     await expect(task).toContainText("大事拆成小事");
+    await expect(task).not.toContainText("準備中");
     await expect(task.locator("table")).toHaveCount(0);
-    for (const title of DRAFT_TITLES) {
-      await expect(task).not.toContainText(title);
-      await expect(page.locator("body")).not.toContainText(title);
+    await expect(page.locator("body")).not.toContainText("目標：我們想完成什麼");
+  });
+
+  test("手機上四個學門都不橫向溢出", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    for (const id of ["pm-leadership", "philosophy", "math", "it-ai"]) {
+      await page.goto(`/?d=${id}`);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(overflow).toBeLessThanOrEqual(1);
+      await expect(page.getByText("準備中")).toHaveCount(0);
     }
   });
 

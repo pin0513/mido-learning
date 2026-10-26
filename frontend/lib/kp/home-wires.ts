@@ -58,7 +58,7 @@ export function routeWires(nodes: WireNode[], edges: WireEdge[], selectedId: str
       free.bot = Math.max(free.bot, bot);
       return free.x;
     }
-    const x = left - 48 - slot * 18;
+    const x = Math.max(10, left - 48 - slot * 18);
     slot += 1;
     channels.push({ top, bot, x });
     return x;

@@ -1,10 +1,13 @@
 import { disciplineRoots, disciplineTitle, type ContentCatalog } from "../content/catalog";
 import type { KnowledgePoint, StageInfo } from "../content/types";
+import { publicDisciplineIds } from "./home-public";
 import { knowledgePointPath } from "./routes";
 
 /**
- * 首頁單線圖的資料。只放已發布的知識點。
- * 草稿不帶標題、slug、id，跨學門只留學門名稱與「準備中」。
+ * 首頁單線圖。公開哪些學門由 content/home-disciplines.yaml 決定。
+ * 專案管理與領導只畫已發布的點，這張圖維持四步。
+ * 其他公開學門畫該資料夾裡的每一個知識點。
+ * 沒有畫進圖的對象，跨學門只留「準備中」，不帶標題。
  */
 
 export type DisciplineGlyph = "square" | "circle" | "triangle" | "diamond";
@@ -38,7 +41,8 @@ export interface HomeNode {
   stageId: string;
   stageName: string;
   grades: string;
-  href: string;
+  /** 已發布才有閱讀頁。草稿頁不產生，所以這裡是 null。 */
+  pageHref: string | null;
   prerequisites: HomeLink[];
   next: HomeLink | null;
   also: string[];
@@ -61,7 +65,7 @@ export interface TaskCross {
   side: "why" | "related";
   mention: string;
   glyph: DisciplineGlyph;
-  /** 草稿只會是「數學 · 準備中」這種句子，不會是知識點標題。 */
+  /** 圖上有這個點時是學門簡稱；沒有時是「數學 · 準備中」。 */
   label: string;
   title: string | null;
   href: string | null;
@@ -109,6 +113,8 @@ const PROFILE: Record<string, { shortTitle: string; mention: string; glyph: Disc
 };
 
 const OPEN_PATH_ID = "pm.estimate";
+/** 這張圖已經上線，不把同資料夾的草稿加進去。 */
+const PUBLISHED_DIAGRAMS = new Set(["pm-leadership"]);
 
 function profileOf(folder: string, title: string): { shortTitle: string; mention: string; glyph: DisciplineGlyph } {
   return PROFILE[folder] ?? { shortTitle: title, mention: title, glyph: "circle" };
@@ -121,14 +127,19 @@ function gradesOf(stage: StageInfo | undefined): string {
   return first === last ? `${first} 年級` : `${first}–${last} 年級`;
 }
 
-function publishedIn(catalog: ContentCatalog, folder: string): KnowledgePoint[] {
-  return catalog.points
-    .filter((point) => point.folder === folder && point.status === "published")
-    .sort((a, b) => {
-      const stageDelta = (catalog.taxonomy.stages.get(a.stage)?.rank ?? 0) - (catalog.taxonomy.stages.get(b.stage)?.rank ?? 0);
-      if (stageDelta !== 0) return stageDelta;
-      return a.title.localeCompare(b.title, "zh-Hant");
-    });
+function sortPoints(catalog: ContentCatalog, points: KnowledgePoint[]): KnowledgePoint[] {
+  return [...points].sort((a, b) => {
+    const stageDelta = (catalog.taxonomy.stages.get(a.stage)?.rank ?? 0) - (catalog.taxonomy.stages.get(b.stage)?.rank ?? 0);
+    if (stageDelta !== 0) return stageDelta;
+    return a.title.localeCompare(b.title, "zh-Hant");
+  });
+}
+
+function diagramPoints(catalog: ContentCatalog, folder: string, publicIds: readonly string[]): KnowledgePoint[] {
+  if (!publicIds.includes(folder)) return [];
+  const points = catalog.points.filter((point) => point.folder === folder);
+  const shown = PUBLISHED_DIAGRAMS.has(folder) ? points.filter((point) => point.status === "published") : points;
+  return sortPoints(catalog, shown);
 }
 
 function toLink(catalog: ContentCatalog, point: KnowledgePoint): HomeLink {
@@ -182,7 +193,11 @@ function edgesFor(points: KnowledgePoint[]): HomeEdge[] {
   return edges;
 }
 
-function crossesFor(catalog: ContentCatalog, point: KnowledgePoint, stepIndex: number): TaskCross[] {
+function nodeHref(folder: string, id: string): string {
+  return `/?d=${folder}&kp=${encodeURIComponent(id)}`;
+}
+
+function crossesFor(catalog: ContentCatalog, point: KnowledgePoint, stepIndex: number, onDiagram: Set<string>): TaskCross[] {
   const rows: TaskCross[] = [];
   const sides = [
     ["why", point.links.why],
@@ -194,22 +209,22 @@ function crossesFor(catalog: ContentCatalog, point: KnowledgePoint, stepIndex: n
       if (!target || target.folder === point.folder) return;
       const title = disciplineTitle(catalog, target.folder);
       const profile = profileOf(target.folder, title);
-      const published = target.status === "published";
+      const shown = onDiagram.has(target.id);
       rows.push({
         key: `${stepIndex}-${side}-${index}`,
         side,
         mention: profile.mention,
         glyph: profile.glyph,
-        label: published ? `${profile.mention} · ${side === "why" ? "為什麼" : "相關"}` : `${profile.mention} · 準備中`,
-        title: published ? target.title : null,
-        href: published ? knowledgePointPath(target.concept, target.stage) : null,
+        label: shown ? profile.mention : `${profile.mention} · 準備中`,
+        title: shown ? target.title : null,
+        href: shown ? nodeHref(target.folder, target.id) : null,
       });
     });
   }
   return rows;
 }
 
-export function buildHomeDiagram(catalog: ContentCatalog): HomeModel {
+export function buildHomeDiagram(catalog: ContentCatalog, publicIds: readonly string[] = publicDisciplineIds()): HomeModel {
   const stages: HomeStage[] = catalog.taxonomy.stageList.map((stage) => ({
     id: stage.id,
     name: stage.name,
@@ -220,6 +235,10 @@ export function buildHomeDiagram(catalog: ContentCatalog): HomeModel {
     const right = ORDER.indexOf(b.contentFolder ?? "");
     return (left === -1 ? 99 : left) - (right === -1 ? 99 : right);
   });
+  const pointsByDiscipline = new Map(roots.map((root) => {
+    const id = root.contentFolder ?? root.id;
+    return [id, diagramPoints(catalog, id, publicIds)] as const;
+  }));
   const disciplines: HomeDiscipline[] = roots.map((root) => {
     const id = root.contentFolder ?? root.id;
     const title = disciplineTitle(catalog, id);
@@ -230,18 +249,18 @@ export function buildHomeDiagram(catalog: ContentCatalog): HomeModel {
       shortTitle: profile.shortTitle,
       mention: profile.mention,
       glyph: profile.glyph,
-      ready: publishedIn(catalog, id).length > 0,
+      ready: (pointsByDiscipline.get(id)?.length ?? 0) > 0,
     };
   });
 
   const diagrams: HomeDiagram[] = disciplines.map((discipline) => {
-    const points = publishedIn(catalog, discipline.id);
+    const points = pointsByDiscipline.get(discipline.id) ?? [];
     const byId = new Map(points.map((point) => [point.id, point]));
     const nodes: HomeNode[] = points.map((point) => {
       const stage = catalog.taxonomy.stages.get(point.stage);
       const prerequisites = point.prerequisites
-        .map((id) => catalog.indexes.byId.get(id))
-        .filter((item): item is KnowledgePoint => item?.status === "published")
+        .map((id) => byId.get(id))
+        .filter((item): item is KnowledgePoint => Boolean(item))
         .map((item) => toLink(catalog, item));
       const deeper = point.links.deeper
         .map((id) => byId.get(id))
@@ -254,7 +273,7 @@ export function buildHomeDiagram(catalog: ContentCatalog): HomeModel {
         stageId: point.stage,
         stageName: stage?.name ?? point.stage,
         grades: gradesOf(stage),
-        href: knowledgePointPath(point.concept, point.stage),
+        pageHref: point.status === "published" ? knowledgePointPath(point.concept, point.stage) : null,
         prerequisites,
         next: deeper ? toLink(catalog, deeper) : null,
         also: mentionsFor(catalog, point),
@@ -262,6 +281,7 @@ export function buildHomeDiagram(catalog: ContentCatalog): HomeModel {
     });
     return { id: discipline.id, nodes, edges: edgesFor(points) };
   });
+  const onDiagram = new Set(diagrams.flatMap((diagram) => diagram.nodes.map((node) => node.id)));
 
   const path = catalog.indexes.pathsById.get(OPEN_PATH_ID);
   const defaultDisciplineId = disciplines.some((item) => item.id === path?.disciplineFolder)
@@ -286,7 +306,7 @@ export function buildHomeDiagram(catalog: ContentCatalog): HomeModel {
           href: knowledgePointPath(point.concept, point.stage),
           disciplineTitle: path.disciplineTitle,
           glyph: discipline.glyph,
-          crosses: crossesFor(catalog, point, index + 1),
+          crosses: crossesFor(catalog, point, index + 1, onDiagram),
         };
       });
       const uses: HomeTask["uses"] = [];

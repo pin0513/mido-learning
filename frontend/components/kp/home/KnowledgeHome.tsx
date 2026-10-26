@@ -1,15 +1,34 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState, type ComponentProps } from "react";
 import Link from "next/link";
 import { recordPageView } from "@/lib/api/analytics";
 import type { DisciplineGlyph, HomeDiagram, HomeModel, HomeNode, HomeTask, TaskCross } from "@/lib/kp/home-diagram";
-import type { HomeState } from "@/lib/kp/home-state";
+import { readHomeState, type HomeState } from "@/lib/kp/home-state";
 import { routeWires, type WireJoint, type WirePath } from "@/lib/kp/home-wires";
 import "./home-v2.css";
 
 const TONE = { norm: "#3a3834", hi: "#e4571e", dim: "#cfcbc3" } as const;
 const PARENT_TIP = "國小的點，孩子可以自己先看；高中、大學的點，適合大人陪著讀，或自己先讀。";
+const GoContext = createContext<(href: string) => void>(() => {});
+
+function QueryLink({ href, onClick, ...rest }: ComponentProps<typeof Link>) {
+  const go = useContext(GoContext);
+  return (
+    <Link
+      href={href}
+      scroll={false}
+      onClick={(event) => {
+        onClick?.(event);
+        if (event.defaultPrevented) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+        event.preventDefault();
+        go(typeof href === "string" ? href : href.pathname ?? "/");
+      }}
+      {...rest}
+    />
+  );
+}
 
 interface Box {
   x: number;
@@ -167,8 +186,8 @@ function NodeDetail({ node, model, homeHref }: { node: HomeNode; model: HomeMode
   return (
     <div className="hv2-det" data-testid="node-detail">
       <div className="hv2-bk">
-        <Link className="hv2-backtext" href={homeHref}>← 回到目前任務</Link>
-        <Link className="hv2-x" href={homeHref} aria-label="關閉">×</Link>
+        <QueryLink className="hv2-backtext" href={homeHref}>← 回到目前任務</QueryLink>
+        <QueryLink className="hv2-x" href={homeHref} aria-label="關閉">×</QueryLink>
       </div>
       <div className="hv2-stg">{node.stageName} · {node.grades}</div>
       <h3>{node.title}</h3>
@@ -181,8 +200,8 @@ function NodeDetail({ node, model, homeHref }: { node: HomeNode; model: HomeMode
       </div>
       {node.question ? <div className="hv2-q">想一想：{node.question}</div> : null}
       <div className="hv2-acts">
-        <Link className="hv2-btn hv2-btn-pri" href={node.href}>開始學</Link>
-        <Link className="hv2-btn hv2-btn-sec" href="/?view=task">加入目前任務</Link>
+        {node.pageHref ? <Link className="hv2-btn hv2-btn-pri" href={node.pageHref}>開始學</Link> : null}
+        <QueryLink className="hv2-btn hv2-btn-sec" href="/?view=task">加入目前任務</QueryLink>
       </div>
       {node.also.length > 0 ? (
         <p className="hv2-xd">
@@ -215,7 +234,7 @@ function TaskCard({ task }: { task: HomeTask }) {
           ))}
         </div>
       ) : null}
-      <Link className="hv2-btn hv2-btn-pri hv2-btn-block" href="/?view=task">打開任務圖</Link>
+      <QueryLink className="hv2-btn hv2-btn-pri hv2-btn-block" href="/?view=task">打開任務圖</QueryLink>
     </div>
   );
 }
@@ -258,21 +277,20 @@ function StageDiagram({
         const nodes = diagram.nodes.filter((node) => node.stageId === stage.id);
         const open = selected?.stageId === stage.id;
         return (
-          <div className={open ? "hv2-zone is-open" : "hv2-zone"} key={stage.id} style={nodes.length > 1 ? { minHeight: nodes.length * 104 } : undefined}>
+          <div className={open ? "hv2-zone is-open" : "hv2-zone"} key={stage.id} style={nodes.length > 1 ? { minHeight: nodes.length * 120 } : undefined}>
             <div className="hv2-zl">{stage.name}<small>{stage.grades}</small></div>
             {nodes.length === 0 ? <span className="hv2-ghost" data-anchor={`ghost-${stage.id}`} /> : null}
             {nodes.map((node, index) => (
-              <Link
+              <QueryLink
                 key={node.id}
                 href={`/?d=${diagram.id}&kp=${encodeURIComponent(node.id)}`}
-                scroll={false}
                 className={`hv2-node${selected?.id === node.id ? " is-on" : ""}${selected && selected.id !== node.id ? " is-dim" : ""}`}
                 style={nodes.length > 1 ? { top: `${((index + 1) / (nodes.length + 1)) * 100}%` } : undefined}
                 aria-current={selected?.id === node.id ? "page" : undefined}
               >
                 <span className="hv2-fx" data-anchor={node.id} />
-                <span className="hv2-lb"><b>{node.title}</b><span>{node.question}</span></span>
-              </Link>
+                <span className="hv2-lb"><b>{node.title}</b>{node.question ? <span>{node.question}</span> : null}</span>
+              </QueryLink>
             ))}
             {open && selected ? (
               <div className="hv2-inline">
@@ -288,7 +306,7 @@ function StageDiagram({
           <h3>{disciplineTitle}正在準備中</h3>
           <p>知識點寫好、檢查過，就會出現在這張圖上。</p>
           {readyHref ? (
-            <Link className="hv2-btn hv2-btn-pri" href={readyHref} scroll={false}>先看 {readyTitle}</Link>
+            <QueryLink className="hv2-btn hv2-btn-pri" href={readyHref}>先看 {readyTitle}</QueryLink>
           ) : null}
         </div>
       ) : null}
@@ -304,7 +322,7 @@ function CrossCard({ cross }: { cross: TaskCross }) {
     </>
   );
   if (cross.href) {
-    return <Link className="hv2-xcard" href={cross.href} data-anchor={cross.key}>{body}</Link>;
+    return <QueryLink className="hv2-xcard" href={cross.href} data-anchor={cross.key}>{body}</QueryLink>;
   }
   return <div className="hv2-xcard" data-anchor={cross.key}>{body}</div>;
 }
@@ -393,8 +411,8 @@ function Shell({ current, children }: { current: "map" | "task"; children: React
       <header className="hv2-wrap hv2-top">
         <Link className="hv2-logo" href="/"><Logo />Mido Learning</Link>
         <nav className="hv2-nav" aria-label="主要">
-          <Link className="hv2-navlink" href="/" aria-current={current === "map" ? "page" : undefined}>學門總圖</Link>
-          <Link className="hv2-navlink" href="/?view=task" aria-current={current === "task" ? "page" : undefined}>目前任務</Link>
+          <QueryLink className="hv2-navlink" href="/" aria-current={current === "map" ? "page" : undefined}>學門總圖</QueryLink>
+          <QueryLink className="hv2-navlink" href="/?view=task" aria-current={current === "task" ? "page" : undefined}>目前任務</QueryLink>
           <Link className="hv2-navlink" href="/components">投影片教材</Link>
           <Link className="hv2-login" href="/login">登入</Link>
         </nav>
@@ -436,10 +454,9 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
       <div className="hv2-wrap">
         <div className="hv2-seg" role="group" aria-label="選擇學門" data-testid="discipline-switch">
           {model.disciplines.map((item) => (
-            <Link
+            <QueryLink
               key={item.id}
               href={`/?d=${item.id}`}
-              scroll={false}
               className="hv2-sg"
               aria-pressed={item.id === discipline?.id}
               aria-current={item.id === discipline?.id ? "page" : undefined}
@@ -449,7 +466,7 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
               <span className="hv2-full">{item.title}</span>
               <span className="hv2-short">{item.shortTitle}</span>
               {item.ready ? null : <small>準備中</small>}
-            </Link>
+            </QueryLink>
           ))}
         </div>
         <div className="hv2-cols">
@@ -507,11 +524,13 @@ function TaskScreen({ model }: { model: HomeModel }) {
     <Shell current="task">
       <section className="hv2-wrap hv2-thead">
         <div>
-          <Link className="hv2-back" href={back}>← 回到學門總圖</Link>
+          <QueryLink className="hv2-back" href={back}>← 回到學門總圖</QueryLink>
           <h1>目前任務：{task?.title ?? "還沒有發布的路線"}</h1>
           <p>{task?.intro ?? "發布一條路線之後，步驟會排在這裡。"}</p>
         </div>
-        <span className="hv2-note">虛線框的知識點還在準備中。</span>
+        {task?.steps.some((step) => step.crosses.some((cross) => cross.href == null)) ? (
+          <span className="hv2-note">虛線框的知識點還在準備中。</span>
+        ) : null}
       </section>
       {task ? (
         <div className="hv2-wrap" data-testid="task-view">
@@ -537,9 +556,31 @@ function TaskScreen({ model }: { model: HomeModel }) {
 }
 
 export function KnowledgeHome({ model, state }: { model: HomeModel; state: HomeState }) {
+  const [live, setLive] = useState(state);
+  useEffect(() => {
+    setLive(state);
+  }, [state]);
   useEffect(() => {
     recordPageView();
   }, []);
-  if (state.task) return <TaskScreen model={model} />;
-  return <MapScreen model={model} state={state} />;
+  const go = useCallback((href: string) => {
+    const url = new URL(href, window.location.origin);
+    const next = readHomeState(model, { get: (name) => url.searchParams.get(name) });
+    const search = url.searchParams.toString();
+    window.history.pushState(null, "", search ? `${url.pathname}?${search}` : url.pathname);
+    setLive(next);
+  }, [model]);
+  useEffect(() => {
+    const onPop = () => {
+      const params = new URLSearchParams(window.location.search);
+      setLive(readHomeState(model, { get: (name) => params.get(name) }));
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [model]);
+  return (
+    <GoContext.Provider value={go}>
+      {live.task ? <TaskScreen model={model} /> : <MapScreen model={model} state={live} />}
+    </GoContext.Provider>
+  );
 }

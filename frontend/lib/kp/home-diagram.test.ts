@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { loadCatalog } from "../content/catalog";
 import { buildHomeDiagram } from "./home-diagram";
+import { publicDisciplineIds } from "./home-public";
 import { routeWires } from "./home-wires";
 
 const DRAFT_TITLES = [
@@ -16,15 +17,16 @@ const DRAFT_TITLES = [
 
 const DRAFT_SLUGS = ["pm.goal", "ph.parts", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "pm.schedule"];
 
-test("學段總圖只畫已發布的點，先學實線、延伸虛線", () => {
+test("四個學門都有學段總圖，專案管理仍只有已發布的四步", () => {
   const model = buildHomeDiagram(loadCatalog());
+  assert.deepEqual(publicDisciplineIds(), ["pm-leadership", "philosophy", "math", "it-ai"]);
   assert.deepEqual(
     model.disciplines.map((item) => [item.id, item.ready]),
     [
       ["pm-leadership", true],
-      ["philosophy", false],
-      ["math", false],
-      ["it-ai", false],
+      ["philosophy", true],
+      ["math", true],
+      ["it-ai", true],
     ],
   );
   assert.equal(model.defaultDisciplineId, "pm-leadership");
@@ -38,6 +40,7 @@ test("學段總圖只畫已發布的點，先學實線、延伸虛線", () => {
   assert.match(pm.nodes[1].idea, /範疇/);
   assert.match(pm.nodes[2].idea, /PERT/);
   assert.match(pm.nodes[3].idea, /CPI=EV\/AC/);
+  assert.equal(pm.nodes[2].pageHref, "/kp/pm.estimate/sh");
   assert.deepEqual(
     pm.edges.map((edge) => `${edge.kind}:${edge.from}->${edge.to}`).sort(),
     [
@@ -54,14 +57,26 @@ test("學段總圖只畫已發布的點，先學實線、延伸虛線", () => {
   );
   assert.equal(estimate.next?.title, "實獲值管理（EVM）");
   assert.deepEqual(estimate.also, ["哲學", "數學"]);
-  for (const diagram of model.diagrams) {
-    if (diagram.id === "pm-leadership") continue;
-    assert.equal(diagram.nodes.length, 0);
-    assert.equal(diagram.edges.length, 0);
+  for (const id of ["philosophy", "math", "it-ai"]) {
+    const diagram = model.diagrams.find((item) => item.id === id);
+    assert.ok(diagram);
+    assert.ok(diagram.nodes.length > 4, id);
+    for (const stage of ["es", "jh", "sh", "uni"]) {
+      assert.ok(diagram.nodes.some((node) => node.stageId === stage), `${id} ${stage}`);
+    }
+    for (const node of diagram.nodes) {
+      assert.ok(node.question.length > 0, node.id);
+      assert.equal(node.pageHref, null, node.id);
+    }
+    assert.ok(diagram.edges.some((edge) => edge.kind === "pre"), id);
+    assert.ok(diagram.edges.some((edge) => edge.kind === "ext"), id);
   }
+  const blob = JSON.stringify(model);
+  assert.equal(blob.includes("城市"), false);
+  assert.equal(blob.includes("目標：我們想完成什麼"), false);
 });
 
-test("目前任務的跨學門草稿不帶標題", () => {
+test("目前任務連到已畫出來的跨學門，沒畫的不帶標題", () => {
   const model = buildHomeDiagram(loadCatalog());
   assert.ok(model.task);
   assert.equal(model.task.title, "拆解與估算");
@@ -70,14 +85,24 @@ test("目前任務的跨學門草稿不帶標題", () => {
     model.task.uses.map((item) => item.mention),
     ["哲學", "數學"],
   );
-  const labels = model.task.steps.flatMap((step) => step.crosses.map((cross) => cross.label));
-  assert.ok(labels.includes("哲學 · 準備中"));
-  assert.ok(labels.includes("數學 · 準備中"));
-  for (const cross of model.task.steps.flatMap((step) => step.crosses)) {
-    assert.equal(cross.title, null);
-    assert.equal(cross.href, null);
-  }
-  const blob = JSON.stringify(model);
+  const crosses = model.task.steps.flatMap((step) => step.crosses);
+  const parts = crosses.find((cross) => cross.title === "部分與整體");
+  const pattern = crosses.find((cross) => cross.title === "規律與關係");
+  assert.ok(parts);
+  assert.equal(parts.label, "哲學");
+  assert.equal(parts.href, "/?d=philosophy&kp=ph.parts%40es");
+  assert.ok(pattern);
+  assert.equal(pattern.label, "數學");
+  assert.equal(pattern.href, "/?d=math&kp=ma.pattern%40es");
+  assert.equal(crosses.some((cross) => cross.label.includes("準備中")), false);
+
+  const hidden = buildHomeDiagram(loadCatalog(), ["pm-leadership"]);
+  assert.equal(hidden.disciplines.find((item) => item.id === "math")?.ready, false);
+  assert.equal(hidden.diagrams.find((item) => item.id === "math")?.nodes.length, 0);
+  const hiddenCrosses = hidden.task?.steps.flatMap((step) => step.crosses) ?? [];
+  assert.ok(hiddenCrosses.some((cross) => cross.label === "數學 · 準備中"));
+  assert.ok(hiddenCrosses.every((cross) => cross.title === null && cross.href === null));
+  const blob = JSON.stringify(hidden);
   for (const title of DRAFT_TITLES) assert.equal(blob.includes(title), false, title);
   for (const slug of DRAFT_SLUGS) assert.equal(blob.includes(slug), false, slug);
   assert.equal(blob.includes("城市"), false);
