@@ -21,6 +21,7 @@ test.describe("學門總圖", () => {
   test("切換學門會換圖，總圖不是表格", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("先選學門，再從上往下看");
+    await expect(page.getByText("待定")).toHaveCount(0);
     const diagram = page.getByTestId("home-diagram");
     await expect(diagram.locator("table")).toHaveCount(0);
     await expect(diagram.getByRole("link", { name: /大事拆成小事/ })).toBeVisible();

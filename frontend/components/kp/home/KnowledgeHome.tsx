@@ -411,7 +411,6 @@ function Shell({ current, children }: { current: "map" | "task"; children: React
           <Link href="/kp/map?view=system">分層分段總圖</Link>
           <Link href="/kp/map">知識地圖</Link>
           <Link href="/kp/map?view=list">清單</Link>
-          <span>授權：待定</span>
         </div>
       </footer>
     </div>
