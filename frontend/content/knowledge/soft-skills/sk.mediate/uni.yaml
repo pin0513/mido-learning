@@ -1,0 +1,51 @@
+id: sk.mediate@uni
+concept: sk.mediate
+title: 當調解人：幫兩方聽懂彼此
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 草稿：大學不對應 108 課綱，以學門路徑對應。
+- 引用的框架只寫名稱（調解、利益與立場），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.hardtalk@sh
+- pm.conflict@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：調解、利益與立場。跨學門先學：專案管理「衝突與協商」。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+  - 領導
+ai:
+  delegable:
+  - 整理雙方說法的重點
+  human_experience:
+  - 保持中立，在場陪兩方把話說完
+idea: 調解人不判對錯，而是讓兩方輪流說，請一方複述「你聽到他在乎什麼」，把立場轉成需要，再一起想選項。調解人要中立，也要知道什麼時候該請專業的人。
+guiding_questions:
+- 兩個朋友吵架都來找你，你要先站哪一邊？
+scenario: 親子共學：手足吵架時，大人改當調解人：不判誰對，只請兩人輪流複述對方在乎的事。
+goal: 協助兩個有衝突的人輪流說、互相複述，找到雙方都在乎的事。
+review: 在社團或工作中協助一次真實的意見衝突（或做角色扮演），會後請兩方各回答「我覺得對方懂我在乎什麼」1–5 分，兩方都 4 分以上。
+formats:
+  slides: []
+  exercise: 目標：協助兩個有衝突的人輪流說、互相複述，找到雙方都在乎的事。　檢核：在社團或工作中協助一次真實的意見衝突（或做角色扮演），會後請兩方各回答「我覺得對方懂我在乎什麼」1–5 分，兩方都 4 分以上。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

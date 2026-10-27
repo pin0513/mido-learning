@@ -113,6 +113,20 @@ disciplines:
           - id: review
             name: 回顧
 
+  - id: soft-skills
+    name: 溝通與解決問題
+    layer: essence
+    id_prefix: sk
+    content_folder: soft-skills
+    summary: 口語表達、同理與溝通、解決問題。對應 108 課綱核心素養 B1、C2、A2，跨所有領域，不屬單一科目。
+    children:
+      - id: speaking
+        name: 口語表達
+      - id: empathy
+        name: 同理與溝通
+      - id: problem-solving
+        name: 解決問題
+
   - id: biology
     name: 生物
     layer: foundation
@@ -162,9 +176,14 @@ disciplines:
         layer: advanced
 
   - id: language
-    name: 語文與溝通
+    name: 語文
     layer: foundation
-    summary: 尚未建立知識點。溝通目前先標在通才素養。
+    summary: 文字與語言本身。國文與外語還沒有知識點。
+    children:
+      - id: chinese
+        name: 國文
+      - id: foreign
+        name: 外語
 
   - id: society
     name: 社會

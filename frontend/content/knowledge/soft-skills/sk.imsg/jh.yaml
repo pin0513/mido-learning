@@ -1,0 +1,58 @@
+id: sk.imsg@jh
+concept: sk.imsg
+title: 我訊息：說感受，不指責
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - C2
+  - B1
+  issues:
+  - 家庭教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（我訊息（I-message）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.feelings@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：我訊息（I-message）。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 把一句指責改寫成我訊息的草稿
+  human_experience:
+  - 在情緒上來時選擇用我訊息
+idea: 「你訊息」聽起來像指責，對方會先防衛。「我訊息」說的是事件、我的感受和原因，對方比較聽得進去（這個說法來自心理學家高登的親子溝通）。
+guiding_questions:
+- 「你都不聽我說」和「我說到一半被打斷，覺得很挫折」，哪一句比較不會吵起來？
+scenario: 親子共學：冰箱上貼一張「你訊息 → 我訊息」改寫表，誰說了「你都……」就一起改一句。
+goal: 把「你都……」改成「當……時，我覺得……，因為……」。
+review: 孩子和家長各把 3 句最近說過的「你訊息」改寫成我訊息，互相檢查每句是否有事件、感受、原因三部分，並在一週內真的用一次。
+formats:
+  slides: []
+  exercise: 目標：把「你都……」改成「當……時，我覺得……，因為……」。　檢核：孩子和家長各把 3 句最近說過的「你訊息」改寫成我訊息，互相檢查每句是否有事件、感受、原因三部分，並在一週內真的用一次。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

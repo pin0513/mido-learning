@@ -1,0 +1,56 @@
+id: sk.a3@uni
+concept: sk.a3
+title: 一頁問題報告：帶團隊從問題到行動
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 草稿：大學不對應 108 課綱，以學門路徑對應。
+- 引用的框架只寫名稱（A3 問題解決報告），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 「A3」是紙張尺寸，不是 108 課綱核心素養 A3；頁面上寫「一頁報告」，A3 只放在說明裡。
+prerequisites:
+- sk.decide@sh
+- sk.design@sh
+- sk.consensus@sh
+links:
+  why: []
+  how: []
+  related:
+  - pm.business@uni
+  - ph.systems@sh
+  deeper: []
+link_notes: 框架：A3 問題解決報告。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 專案管理
+  - 領導
+  - 團隊合作
+ai:
+  delegable:
+  - 整理資料、排版報告
+  human_experience:
+  - 帶團隊對齊、追蹤到真的改善
+idea: A3 報告（源自豐田）把整個解題過程寫在一張紙上：背景、現況、目標、原因分析、對策、行動計畫、追蹤。寫在一頁上，逼團隊把話說清楚，也方便大家一起看、一起改。
+guiding_questions:
+- 一個問題解決了，怎麼確定它不會再發生？
+scenario: 親子共學：家庭年度檢討：大人把一件想改善的家事寫成一頁報告，孩子負責追蹤欄。
+goal: 用一頁的 A3 報告帶團隊走完：問題、原因、對策、行動與追蹤。
+review: 帶 3 人以上的團隊處理一個真實問題，交一頁報告，一個月後回報追蹤數字；請每位成員回答「我知道我負責什麼」。
+formats:
+  slides: []
+  exercise: 目標：用一頁的 A3 報告帶團隊走完：問題、原因、對策、行動與追蹤。　檢核：帶 3 人以上的團隊處理一個真實問題，交一頁報告，一個月後回報追蹤數字；請每位成員回答「我知道我負責什麼」。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

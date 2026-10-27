@@ -4,6 +4,7 @@ export interface HomeState {
   disciplineId: string;
   nodeId: string | null;
   task: boolean;
+  branchId: string | null;
 }
 
 export function readHomeState(model: HomeModel, params: { get(name: string): string | null }): HomeState {
@@ -11,8 +12,12 @@ export function readHomeState(model: HomeModel, params: { get(name: string): str
   const requested = params.get("d");
   const known = requested != null && model.disciplines.some((item) => item.id === requested);
   const disciplineId = known ? requested : model.defaultDisciplineId;
-  const diagram = model.diagrams.find((item) => item.id === disciplineId);
+  const requestedBranch = params.get("b");
+  const branchId = disciplineId === "soft-skills"
+    ? (model.branches.some((item) => item.id === requestedBranch) ? requestedBranch : model.branches[0]?.id ?? "talk")
+    : null;
+  const diagram = model.diagrams.find((item) => item.id === disciplineId && item.branchId === branchId);
   const kp = params.get("kp");
   const nodeId = !task && kp && diagram?.nodes.some((node) => node.id === kp) ? kp : null;
-  return { disciplineId, nodeId, task };
+  return { disciplineId, nodeId, task, branchId };
 }

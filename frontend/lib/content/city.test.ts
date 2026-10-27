@@ -39,7 +39,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
     map.buildings.map((building) => `${building.id}:${building.x}:${building.y}:${building.height}`).join("\n");
   assert.equal(signature(first), signature(second));
   const digest = createHash("sha256").update(signature(first)).digest("hex");
-  assert.equal(digest, "a4f92aef3e7be84ff5e6107cd8121016b59ad8c5848bf5452821ffbf8318f217");
+  assert.equal(digest, "6b65762dd27cfc27c861926ab36e838b4f1a62351a422189ca0d85add4862921");
   for (const district of first.districts) {
     for (const stage of first.stages) {
       const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;
@@ -58,7 +58,10 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.equal(estimate.colearn, true);
   const breakdown = map.buildings.find((building) => building.id === "pm.breakdown@es");
   assert.ok(breakdown);
-  assert.equal(breakdown.dependents, source.points.filter((point) => point.prerequisites.includes("pm.breakdown@es")).length);
+  assert.equal(
+    breakdown.dependents,
+    source.points.filter((point) => point.folder !== "soft-skills" && point.prerequisites.includes("pm.breakdown@es")).length,
+  );
   assert.equal(breakdown.height, 16 + breakdown.dependents * 9 + 8);
   assert.equal(breakdown.href, "/kp/pm.breakdown/es");
   const shown = presentCityMap(map);
@@ -66,7 +69,12 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   const draftConcepts = new Set(map.buildings.filter((building) => building.status !== "published").map((building) => building.concept));
   const blob = JSON.stringify(shown);
   for (const id of draftIds) assert.equal(blob.includes(id), false, id);
-  for (const concept of draftConcepts) assert.equal(blob.includes(`"${concept}"`), false, concept);
+  // 路線 id 沿用概念名（ph.logic）。發布 ph.reason 後這條路線會留在地圖上，不是草稿概念外洩。
+  const pathIds = new Set(shown.landmarks.map((landmark) => landmark.id));
+  for (const concept of draftConcepts) {
+    if (pathIds.has(concept)) continue;
+    assert.equal(blob.includes(`"${concept}"`), false, concept);
+  }
   const hidden = shown.buildings.find((building) => building.status === "draft");
   assert.ok(hidden);
   assert.match(hidden.id, /^draft-\d+$/);
@@ -78,9 +86,13 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.equal(shown.buildings.find((building) => building.id === "pm.breakdown@es")?.title, "大事拆成小事");
   assert.ok(shown.roads.every((road) => !draftIds.has(road.from) && !draftIds.has(road.to)));
   assert.ok(shown.bridges.every((bridge) => !draftIds.has(bridge.from) && !draftIds.has(bridge.to)));
-  assert.equal(shown.landmarks.length, 1);
-  assert.equal(shown.landmarks[0].id, "pm.estimate");
-  assert.deepEqual(shown.landmarks[0].stops, ["pm.breakdown@es", "pm.triangle@jh", "pm.estimate@sh", "pm.evm@uni"]);
+  assert.equal(shown.landmarks.length, 2);
+  const shownEstimate = shown.landmarks.find((landmark) => landmark.id === "pm.estimate");
+  assert.ok(shownEstimate);
+  assert.deepEqual(shownEstimate.stops, ["pm.breakdown@es", "pm.triangle@jh", "pm.estimate@sh", "pm.evm@uni"]);
+  const shownLogic = shown.landmarks.find((landmark) => landmark.id === "ph.logic");
+  assert.ok(shownLogic);
+  assert.deepEqual(shownLogic.stops, ["ph.reason@es"]);
   const identified = presentCityMap(map, true);
   const namedDraft = identified.buildings.find((building) => building.id === "pm.goal@es");
   assert.ok(namedDraft);

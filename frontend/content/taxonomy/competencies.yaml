@@ -153,3 +153,12 @@ specialist:
   - id: generative_art
     name: 生成藝術
     disciplines: [it-ai]
+  - id: speaking
+    name: 口語表達
+    disciplines: [soft-skills]
+  - id: empathic_communication
+    name: 同理溝通
+    disciplines: [soft-skills]
+  - id: problem_solving
+    name: 問題解決
+    disciplines: [soft-skills]

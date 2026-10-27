@@ -66,7 +66,8 @@ test("四個學門都有學段總圖，專案管理仍只有已發布的四步",
     }
     for (const node of diagram.nodes) {
       assert.ok(node.question.length > 0, node.id);
-      assert.equal(node.pageHref, null, node.id);
+      const href = node.id === "ph.reason@es" ? "/kp/ph.reason/es" : null;
+      assert.equal(node.pageHref, href, node.id);
     }
     assert.ok(diagram.edges.some((edge) => edge.kind === "pre"), id);
     assert.ok(diagram.edges.some((edge) => edge.kind === "ext"), id);
@@ -213,4 +214,46 @@ test("先學的點都排在依賴它的點上面", () => {
   assert.ok(elementary.indexOf("數感：大概有多少？") < elementary.indexOf("測量與單位"));
   assert.ok(junior.indexOf("用字母代表數：方程式") < junior.indexOf("坐標與直線"));
   assert.ok(junior.indexOf("坐標與直線") < junior.indexOf("二次函數與拋物線"));
+});
+
+test("溝通與解決問題預設不進學門切換，打開後只有口語表達", () => {
+  const closed = buildHomeDiagram(loadCatalog());
+  assert.equal(closed.disciplines.some((item) => item.id === "soft-skills" || item.id === "language"), false);
+  assert.equal(closed.branches.length, 0);
+  const blob = JSON.stringify(closed);
+  assert.equal(blob.includes("說話讓人聽得清楚"), false);
+  assert.equal(blob.includes("說出感覺：我覺得……因為……"), false);
+
+  const open = buildHomeDiagram(loadCatalog(), publicDisciplineIds(), true);
+  assert.deepEqual(
+    open.disciplines.map((item) => item.id),
+    ["pm-leadership", "philosophy", "math", "it-ai", "language", "soft-skills"],
+  );
+  assert.equal(open.disciplines.find((item) => item.id === "language")?.ready, false);
+  assert.equal(open.disciplines.find((item) => item.id === "language")?.title, "語文");
+  assert.deepEqual(open.branches.map((item) => [item.id, item.ready]), [
+    ["talk", true],
+    ["emp", false],
+    ["solve", false],
+  ]);
+  const talk = open.diagrams.find((item) => item.branchId === "talk");
+  assert.ok(talk);
+  assert.equal(talk.nodes.length, 11);
+  assert.equal(talk.nodes.every((node) => node.pageHref?.startsWith("/kp/sk.")), true);
+  const point = talk.nodes.find((node) => node.id === "sk.point@es");
+  assert.ok(point);
+  assert.equal(point.priors.some((prior) => prior.label.includes("說出理由") && prior.href), true);
+  assert.equal(point.priors.some((prior) => prior.href == null && prior.label.startsWith("準備中")), false);
+  const discuss = talk.nodes.find((node) => node.id === "sk.discuss@jh");
+  assert.ok(discuss);
+  assert.ok(discuss.priors.some((prior) => prior.href == null && prior.label.includes("準備中")));
+  assert.equal(JSON.stringify(discuss.priors).includes("專心聽，再說回來"), false);
+  const emp = open.diagrams.find((item) => item.branchId === "emp");
+  const solve = open.diagrams.find((item) => item.branchId === "solve");
+  assert.equal(emp?.nodes.length, 0);
+  assert.equal(solve?.nodes.length, 0);
+  const openBlob = JSON.stringify(open);
+  assert.equal(openBlob.includes("說出感覺：我覺得……因為……"), false);
+  assert.equal(openBlob.includes("問五次為什麼"), false);
+  assert.equal(open.branches.find((item) => item.id === "talk")?.task?.title, "從開口到說服");
 });

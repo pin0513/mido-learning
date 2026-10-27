@@ -1,0 +1,61 @@
+id: sk.polya@es
+concept: sk.polya
+title: 解題四步：看懂、想法、動手、回頭看
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 數學
+  - 綜合活動
+  core_competencies:
+  - A2
+  - A3
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（Polya 解題四步驟），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.why5@es
+links:
+  why: []
+  how: []
+  related:
+  - pm.retro@es
+  deeper:
+  - sk.pdca@jh
+link_notes: 框架：Polya 解題四步驟。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 提問
+  - 建模
+ai:
+  delegable:
+  - 幫忙想更多辦法
+  human_experience:
+  - 真的去試，並誠實記錄結果
+idea: 數學家波利亞把解題分成四步：了解問題、擬定計畫、執行計畫、回顧。這四步不只用在數學題，也能用在生活：想三個辦法挑一個試，試完回頭看有沒有變好，沒有就換一個。
+guiding_questions:
+- 試了一個辦法沒成功，下一步該怎麼辦？
+scenario: 親子共學：把一道數學應用題和一個生活問題並排，親子一起用同樣四步走一次。
+goal: 遇到問題照四步走：先看懂、想辦法、試試看、回頭檢查有沒有變好。
+review: 針對「五個為什麼」找到的原因，想 3 個辦法、挑 1 個試一週，用貼紙表記錄每天有沒有做到；週末一起回頭看，決定繼續或換辦法。
+formats:
+  slides: []
+  exercise: 目標：遇到問題照四步走：先看懂、想辦法、試試看、回頭檢查有沒有變好。　檢核：針對「五個為什麼」找到的原因，想 3 個辦法、挑 1 個試一週，用貼紙表記錄每天有沒有做到；週末一起回頭看，決定繼續或換辦法。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

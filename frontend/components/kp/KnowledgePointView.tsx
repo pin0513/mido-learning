@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { competencyName, disciplineTitle, layerName, stageName } from "@/lib/content";
+import { isSoftSkillsEnabled } from "@/lib/kp/flags";
 import { competencyPath, disciplinePath, knowledgePointPath, learningPathPath, stagePath } from "@/lib/kp/routes";
 import { ColearnCard } from "./ColearnCard";
 import { Estimator } from "./Estimator";
@@ -68,7 +69,8 @@ export function KnowledgePointView({
   const neighbors = visible.indexes.neighbors.get(point.id) ?? [];
   const requiredBy = (visible.indexes.requiredBy.get(point.id) ?? [])
     .map((id) => visible.indexes.byId.get(id))
-    .filter((item): item is KnowledgePoint => Boolean(item));
+    .filter((item): item is KnowledgePoint => Boolean(item))
+    .filter((item) => isSoftSkillsEnabled() || point.folder === "soft-skills" || item.folder !== "soft-skills");
   const colearnPaths = all.paths.filter((path) => path.colearn && path.knowledgePointIds.includes(point.id));
   const showCurriculum = point.stage !== "uni" && point.curriculum108;
 
@@ -118,6 +120,8 @@ export function KnowledgePointView({
           <p className="small" style={{ margin: 0 }}>{stage}・{layer}</p>
         </div>
         <p className="lead" style={{ marginTop: 16 }}>{point.idea}</p>
+        {point.goal ? <p className="mt-4 leading-7" data-testid="kp-goal"><b>一句目標　</b>{point.goal}</p> : null}
+        {point.review ? <p className="mt-2 leading-7" data-testid="kp-review"><b>家長檢核　</b>{point.review}</p> : null}
         {point.id.startsWith("pm.estimate@") ? <Estimator /> : null}
       </header>
 

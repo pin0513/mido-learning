@@ -1,0 +1,59 @@
+id: sk.why5@es
+concept: sk.why5
+title: 問五次為什麼
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - A2
+  issues:
+  - 家庭教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（5 Whys（五個為什麼）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.problem@es
+- ph.reason@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.fishbone@jh
+link_notes: 框架：5 Whys（五個為什麼）。跨學門先學：哲學「說出理由：「因為……所以……」」。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 提出可能的原因供參考
+  human_experience:
+  - 誠實面對自己的習慣
+idea: 第一個想到的原因常常只是表面。一直問「為什麼會這樣？」問三到五次，就會找到更根本、自己改得動的原因（豐田的「五個為什麼」）。要問「為什麼」，不要問「是誰的錯」。
+guiding_questions:
+- 早上常常遲到，真正的原因是起不來，還是別的？
+scenario: 親子共學：大人也挑一個自己的問題（例如常忘記帶鑰匙），請孩子當「為什麼小偵探」一直追問。
+goal: 對一個問題連續問「為什麼」，找到自己改得動的原因。
+review: 對「早上常遲到」或「作業忘了帶」一起問到第 3–5 層，畫成一串；家長檢查最後一個原因是「我們改得動的事」，而且沒有變成責怪某個人。
+formats:
+  slides: []
+  exercise: 目標：對一個問題連續問「為什麼」，找到自己改得動的原因。　檢核：對「早上常遲到」或「作業忘了帶」一起問到第 3–5 層，畫成一串；家長檢查最後一個原因是「我們改得動的事」，而且沒有變成責怪某個人。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

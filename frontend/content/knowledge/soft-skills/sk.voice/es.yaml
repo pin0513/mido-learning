@@ -1,0 +1,56 @@
+id: sk.voice@es
+concept: sk.voice
+title: 說話讓人聽得清楚
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues:
+  - 家庭教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（國語文「口語表達」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：國語文「口語表達」。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 把錄音轉成文字，找出口頭禪
+  human_experience:
+  - 站在人面前開口、看著對方的眼睛
+idea: 說話的人要替聽的人著想：聲音大到最後一排聽得到，速度慢到對方跟得上，眼睛看著人。緊張很正常，先深呼吸再開口。
+guiding_questions:
+- 你說話時，坐在最後一排的人聽得到嗎？
+scenario: 親子共學：晚餐時輪流當「今日播報員」，每人說一分鐘今天發生的事，其他人只聽不插話。大人也要輪。
+goal: 用夠大的聲音、不趕的速度、看著聽的人，說完一分鐘。
+review: 錄一段 1 分鐘自我介紹，一起看回放，家長勾三格：聽得清楚、不趕、有看鏡頭；一週後再錄一次，比較哪一格進步。
+formats:
+  slides: []
+  exercise: 目標：用夠大的聲音、不趕的速度、看著聽的人，說完一分鐘。　檢核：錄一段 1 分鐘自我介紹，一起看回放，家長勾三格：聽得清楚、不趕、有看鏡頭；一週後再錄一次，比較哪一格進步。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

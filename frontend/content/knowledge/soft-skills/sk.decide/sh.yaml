@@ -1,0 +1,62 @@
+id: sk.decide@sh
+concept: sk.decide
+title: 選方案：準則、權重、取捨
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 綜合活動
+  - 數學
+  core_competencies:
+  - A2
+  - A3
+  issues:
+  - 生涯規劃教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（決策矩陣（加權評分）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.issuetree@jh
+- pm.triangle@jh
+links:
+  why: []
+  how: []
+  related:
+  - ph.ethics@jh
+  deeper: []
+link_notes: 框架：決策矩陣（加權評分）。跨學門先學：專案管理「時間、金錢、品質的取捨」。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 建模
+  - 跨域思考
+ai:
+  delegable:
+  - 計算加權分數、列出更多方案
+  human_experience:
+  - 決定什麼最重要，承擔選擇
+idea: 好的決定先決定「怎麼比」，再看選項。列出準則、給權重、替每個方案打分，算出總分後還要問：結果跟直覺不同嗎？為什麼？分數是幫助思考，不是取代判斷。
+guiding_questions:
+- 選社團時，「好朋友在那裡」應該佔幾分？
+scenario: 親子共學：全家用同一張決策矩陣選下一次旅行地點，每個人先各自訂權重，再比較誰的權重不同、為什麼。
+goal: 用決策矩陣比較方案：先訂準則與權重，再打分，最後說出取捨。
+review: 用決策矩陣做一個真實選擇（選組、選社團、買哪台電腦）；家長檢查權重在打分前就寫好、至少 3 個方案與 4 個準則，最後有一段「我放棄了什麼」。
+formats:
+  slides: []
+  exercise: 目標：用決策矩陣比較方案：先訂準則與權重，再打分，最後說出取捨。　檢核：用決策矩陣做一個真實選擇（選組、選社團、買哪台電腦）；家長檢查權重在打分前就寫好、至少 3 個方案與 4 個準則，最後有一段「我放棄了什麼」。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

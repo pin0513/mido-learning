@@ -18,6 +18,7 @@ on:
       - "frontend/e2e/city-progress.spec.ts"
       - "frontend/e2e/city-views.spec.ts"
       - "frontend/e2e/city-home.spec.ts"
+      - "frontend/e2e/softskills.spec.ts"
       - "frontend/e2e/homepage-groups.spec.ts"
       - "frontend/app/(public)/page.tsx"
       - "frontend/components/home/**"
@@ -54,6 +55,7 @@ on:
       - "frontend/e2e/city-progress.spec.ts"
       - "frontend/e2e/city-views.spec.ts"
       - "frontend/e2e/city-home.spec.ts"
+      - "frontend/e2e/softskills.spec.ts"
       - "frontend/e2e/homepage-groups.spec.ts"
       - "frontend/app/(public)/page.tsx"
       - "frontend/components/home/**"
@@ -174,6 +176,30 @@ jobs:
             sleep 1
           done
 
+      - name: Soft-skills homepage e2e
+        env:
+          KP_ENABLED: "true"
+          KP_HOME_ENABLED: "true"
+          KP_SOFTSKILLS_ENABLED: "true"
+          E2E_CITY_HOME: "1"
+          E2E_SOFTSKILLS: "1"
+          E2E_BASE_URL: http://127.0.0.1:3000
+        run: |
+          pnpm exec next start -p 3000 > /tmp/next-soft.log 2>&1 &
+          echo $! > /tmp/next.pid
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+            curl -sf http://127.0.0.1:3000/api/kp-launch && break
+            sleep 2
+          done
+          pnpm exec playwright test e2e/softskills.spec.ts --reporter=list
+          kill "$(cat /tmp/next.pid)" || true
+          pkill -f "next start -p 3000" || true
+          pkill -f "next-server" || true
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if ! curl -sf -o /dev/null http://127.0.0.1:3000/api/kp-launch; then break; fi
+            sleep 1
+          done
+
       - name: City homepage e2e
         env:
           KP_ENABLED: "true"
@@ -211,7 +237,7 @@ jobs:
           KP_ENABLED: "true"
           KP_HOME_ENABLED: "true"
           E2E_BASE_URL: http://127.0.0.1:3000
-          E2E_PUBLISHED_COUNT: "4"
+          E2E_PUBLISHED_COUNT: "16"
         run: |
           pnpm exec next start -p 3000 > /tmp/next-published.log 2>&1 &
           echo $! > /tmp/next.pid

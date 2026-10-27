@@ -1,0 +1,59 @@
+id: sk.listen@es
+concept: sk.listen
+title: 專心聽，再說回來
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 綜合活動
+  - 語文
+  core_competencies:
+  - C2
+  - B1
+  issues:
+  - 家庭教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（積極聆聽），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.discuss@jh
+link_notes: 框架：積極聆聽。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 事後幫忙整理對話重點
+  human_experience:
+  - 放下手邊的事，專心看著對方
+idea: 聽的時候放下手上的東西、看著對方、點頭；等他說完，用「你是說……對嗎？」說回重點。對方說「對！」，才算真的聽懂了。
+guiding_questions:
+- 怎麼讓對方知道你真的有在聽？
+scenario: 親子共學：吃飯時手機放旁邊，輪流說一件今天的小事，下一個人先說回上一個人的重點再說自己的。
+goal: 別人說話時看著對方、不插嘴，聽完用「你是說……」說回重點。
+review: 家長說一件 1 分鐘的小煩惱，孩子聽完複述；家長判斷「人、事、感覺」三樣有沒有說對，再交換角色。
+formats:
+  slides: []
+  exercise: 目標：別人說話時看著對方、不插嘴，聽完用「你是說……」說回重點。　檢核：家長說一件 1 分鐘的小煩惱，孩子聽完複述；家長判斷「人、事、感覺」三樣有沒有說對，再交換角色。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,52 @@
+# 主線是知識點 id 的有序清單。這一輪只發布口語表達；同理與解題仍是草稿。
+id: soft-skills
+title: 溝通與解決問題
+paths:
+  - id: sk.talk
+    title: 從開口到說服
+    knowledge_points:
+      - sk.showtell@es
+      - sk.speech@jh
+      - sk.present@sh
+      - sk.persuade@uni
+    colearn: 孩子做「一分鐘分享」，大人把下一個工作提案講給家人聽；孩子用三格檢核表（聽得清楚、先說重點、有例子）回饋大人。
+  - id: sk.meet
+    title: 一起做決定
+    knowledge_points:
+      - sk.listen@es
+      - sk.discuss@jh
+      - sk.consensus@sh
+      - sk.facilitate@uni
+    colearn: 每月一次家庭會議：國小孩子練「說回來」，國中以上輪流主持，大人示範收斂與五指表態。
+  - id: sk.empathy
+    title: 看見別人的需要
+    knowledge_points:
+      - sk.otherside@es
+      - sk.empmap@jh
+      - sk.interview@sh
+      - sk.coach@uni
+    colearn: 親子互畫同理心地圖，再交換確認哪一格猜錯了。
+  - id: sk.conflict
+    title: 有話好好說
+    knowledge_points:
+      - sk.feelings@es
+      - sk.nvc@jh
+      - sk.hardtalk@sh
+      - sk.mediate@uni
+    colearn: 大人先示範把一次發脾氣用非暴力溝通四句重說；孩子用情緒詞說出當時的感覺。
+  - id: sk.solve
+    title: 從為什麼到真正原因
+    knowledge_points:
+      - sk.why5@es
+      - sk.fishbone@jh
+      - sk.rootcause@sh
+      - sk.hypo@uni
+    colearn: 全家挑一個「早上很趕」的問題：孩子問五個為什麼，大人畫魚骨圖，一起記一週資料。
+  - id: sk.improve
+    title: 試、看、改
+    knowledge_points:
+      - sk.polya@es
+      - sk.pdca@jh
+      - sk.design@sh
+      - sk.a3@uni
+    colearn: 親子各跑一輪兩週的小改進（孩子：讀書方法；大人：睡眠或運動），用同一張紀錄表報告數字。

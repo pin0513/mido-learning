@@ -90,6 +90,10 @@ export interface KnowledgePoint {
   delegable: string[];
   humanExperience: string[];
   idea: string;
+  /** 選填。一句目標。 */
+  goal?: string;
+  /** 選填。家長看得到的檢核。 */
+  review?: string;
   guidingQuestions: string[];
   scenario: string;
   slides: string[];

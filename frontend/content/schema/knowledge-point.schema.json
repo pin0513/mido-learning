@@ -189,6 +189,8 @@
       "description": "至少 1 題、最多 4 題。不要為了湊數另寫題目。"
     },
     "scenario": { "type": "string", "minLength": 1, "description": "動手活動或生活情境。" },
+    "goal": { "type": "string", "minLength": 1, "description": "選填。一句目標，家長和學生都看得懂。" },
+    "review": { "type": "string", "minLength": 1, "description": "選填。家長看得到的檢核。" },
     "formats": {
       "type": "object",
       "additionalProperties": false,

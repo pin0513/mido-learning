@@ -10,6 +10,7 @@ import "./home-v2.css";
 
 const TONE = { norm: "#3a3834", hi: "#e4571e", dim: "#cfcbc3" } as const;
 const PARENT_TIP = "國小的點，孩子可以自己先看；高中、大學的點，適合大人陪著讀，或自己先讀。";
+const SOFT_TIP = "每個點都附一個看得到的檢核，例如錄一分鐘影片、數幾次「我聽到你說」。國小的點適合全家一起做，大人也輪一次；高中、大學的點，大人可以自己先讀。";
 const GoContext = createContext<(href: string) => void>(() => {});
 
 function QueryLink({ href, onClick, ...rest }: ComponentProps<typeof Link>) {
@@ -91,7 +92,65 @@ function Glyph({ name, size = 18, color = "#1d1c1a" }: { name: DisciplineGlyph; 
   if (name === "triangle") {
     return <svg {...common}><path d={`M${size / 2} 3 L${size - 3} ${size - 3} L3 ${size - 3} Z`} fill={color} /></svg>;
   }
+  if (name === "pentagon") {
+    const cx = size / 2;
+    const cy = size / 2;
+    const radius = size / 2 - 2;
+    const points = Array.from({ length: 5 }, (_, index) => {
+      const angle = -Math.PI / 2 + index * ((Math.PI * 2) / 5);
+      return `${cx + radius * Math.cos(angle)},${cy + radius * Math.sin(angle)}`;
+    }).join(" ");
+    return <svg {...common}><polygon points={points} fill={color} /></svg>;
+  }
+  if (name === "bubble") {
+    return (
+      <svg {...common}>
+        <path
+          d={`M4 3.5 H${size - 4} Q${size - 2} 3.5 ${size - 2} 5.5 V${size - 8} Q${size - 2} ${size - 6} ${size - 4} ${size - 6} H${size * 0.42} L${size * 0.28} ${size - 2} V${size - 6} H4 Q2 ${size - 6} 2 ${size - 8} V5.5 Q2 3.5 4 3.5 Z`}
+          fill={color}
+        />
+      </svg>
+    );
+  }
   return <svg {...common}><path d={`M${size / 2} 2.5 L${size - 2.5} ${size / 2} L${size / 2} ${size - 2.5} L2.5 ${size / 2} Z`} fill={color} /></svg>;
+}
+
+function titleParts(text: string): string[] {
+  const parts: string[] = [];
+  let buffer = "";
+  for (const char of text) {
+    buffer += char;
+    if (char === "：") {
+      parts.push(buffer);
+      buffer = "";
+    }
+  }
+  if (buffer) parts.push(buffer);
+  return parts;
+}
+
+function questionParts(text: string): string[] {
+  const parts: string[] = [];
+  let buffer = "";
+  let quoted = false;
+  for (const char of text) {
+    buffer += char;
+    if (char === "「") quoted = true;
+    else if (char === "」") quoted = false;
+    else if (!quoted && (char === "，" || char === "？")) {
+      parts.push(buffer);
+      buffer = "";
+    }
+  }
+  if (buffer) parts.push(buffer);
+  return parts;
+}
+
+function Segments({ text, mode }: { text: string; mode: "title" | "question" }) {
+  const parts = mode === "title" ? titleParts(text) : questionParts(text);
+  return parts.map((part, index) => (
+    <span className="ss-tseg" key={`${index}-${part}`}>{part}</span>
+  ));
 }
 
 function Logo() {
@@ -245,6 +304,7 @@ function StageDiagram({
   disciplineTitle,
   readyTitle,
   readyHref,
+  segmented,
 }: {
   model: HomeModel;
   diagram: HomeDiagram;
@@ -252,6 +312,7 @@ function StageDiagram({
   disciplineTitle: string;
   readyTitle: string;
   readyHref: string;
+  segmented: boolean;
 }) {
   const { root, boxes } = useBoxes(`${diagram.id}:${selected?.id ?? ""}`);
   const placed = diagram.nodes.flatMap((node) => {
@@ -265,7 +326,7 @@ function StageDiagram({
   const detail = boxes.detail;
   if (detail && detail.bottom - detail.top > 8) avoid.push(detail);
   const routed = routeWires(placed, diagram.edges, selected?.id ?? null, { avoid });
-  const homeHref = `/?d=${diagram.id}`;
+  const homeHref = diagram.branchId ? `/?d=${diagram.id}&b=${diagram.branchId}` : `/?d=${diagram.id}`;
   const previousOf = new Map(diagram.nodes.slice(1).map((node, index) => [node.id, diagram.nodes[index]]));
 
   return (
@@ -285,21 +346,56 @@ function StageDiagram({
                 const learned = node.prerequisites
                   .filter((item) => !previous || item.title !== previous.title || item.stageName !== previous.stageName)
                   .map((item) => item.title);
+                const nodeHref = `/?d=${diagram.id}${diagram.branchId ? `&b=${diagram.branchId}` : ""}&kp=${encodeURIComponent(node.id)}`;
+                const nodeClass = `hv2-node${selected?.id === node.id ? " is-on" : ""}${selected && selected.id !== node.id ? " is-dim" : ""}`;
+                const priors = node.priors.length > 0 ? (
+                  <small className="hv2-prior ss-prior">
+                    <span className="ss-pk">先學：</span>
+                    <span className="ss-pl">
+                      {node.priors.map((prior) => (
+                        prior.href ? (
+                          <QueryLink key={prior.id} href={prior.href}><Segments text={prior.label} mode="title" /></QueryLink>
+                        ) : (
+                          <span key={prior.id} data-testid="prior-pending"><Segments text={prior.label} mode="title" /></span>
+                        )
+                      ))}
+                    </span>
+                  </small>
+                ) : learned.length > 0 ? (
+                  <small className="hv2-prior">先學：{learned.join("、")}</small>
+                ) : null;
+                const title = (
+                  <>
+                    <b>{segmented ? <Segments text={node.title} mode="title" /> : node.title}</b>
+                    {node.question ? <span>{segmented ? <Segments text={node.question} mode="question" /> : node.question}</span> : null}
+                  </>
+                );
+                if (!segmented) {
+                  return (
+                    <QueryLink
+                      key={node.id}
+                      href={nodeHref}
+                      className={nodeClass}
+                      aria-current={selected?.id === node.id ? "page" : undefined}
+                      data-prereq-ids={node.prerequisites.map((item) => item.id).join(" ")}
+                    >
+                      <span className="hv2-fx" data-anchor={node.id} />
+                      <span className="hv2-lb">{title}{priors}</span>
+                    </QueryLink>
+                  );
+                }
                 return (
-                  <QueryLink
+                  <div
                     key={node.id}
-                    href={`/?d=${diagram.id}&kp=${encodeURIComponent(node.id)}`}
-                    className={`hv2-node${selected?.id === node.id ? " is-on" : ""}${selected && selected.id !== node.id ? " is-dim" : ""}`}
-                    aria-current={selected?.id === node.id ? "page" : undefined}
+                    className={nodeClass}
                     data-prereq-ids={node.prerequisites.map((item) => item.id).join(" ")}
                   >
-                    <span className="hv2-fx" data-anchor={node.id} />
+                    <QueryLink href={nodeHref} className="hv2-fx" tabIndex={-1} aria-hidden="true" data-anchor={node.id} />
                     <span className="hv2-lb">
-                      <b>{node.title}</b>
-                      {node.question ? <span>{node.question}</span> : null}
-                      {learned.length > 0 ? <small className="hv2-prior">先學：{learned.join("、")}</small> : null}
+                      <QueryLink href={nodeHref} aria-current={selected?.id === node.id ? "page" : undefined}>{title}</QueryLink>
+                      {priors}
                     </span>
-                  </QueryLink>
+                  </div>
                 );
               })}
             </div>
@@ -448,10 +544,14 @@ function Shell({ current, children }: { current: "map" | "task"; children: React
 
 function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
   const discipline = model.disciplines.find((item) => item.id === state.disciplineId) ?? model.disciplines[0];
-  const diagram = model.diagrams.find((item) => item.id === discipline?.id) ?? model.diagrams[0];
+  const diagram = model.diagrams.find((item) => item.id === discipline?.id && item.branchId === state.branchId) ?? model.diagrams[0];
   const selected = diagram?.nodes.find((node) => node.id === state.nodeId) ?? null;
   const ready = model.disciplines.find((item) => item.ready);
-  const homeHref = `/?d=${discipline?.id ?? ""}`;
+  const homeHref = state.branchId ? `/?d=${discipline?.id ?? ""}&b=${state.branchId}` : `/?d=${discipline?.id ?? ""}`;
+  const branch = model.branches.find((item) => item.id === state.branchId);
+  const task = discipline?.id === "soft-skills" ? branch?.task ?? null : model.task;
+  const segmented = discipline?.id === "soft-skills";
+  const wideSwitch = model.disciplines.length > 4;
 
   return (
     <Shell current="map">
@@ -463,7 +563,7 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
         <HeroDeco />
       </section>
       <div className="hv2-wrap">
-        <div className="hv2-seg" role="group" aria-label="選擇學門" data-testid="discipline-switch">
+        <div className={wideSwitch ? "hv2-seg ss-seg6" : "hv2-seg"} role="group" aria-label="選擇學門" data-testid="discipline-switch">
           {model.disciplines.map((item) => (
             <QueryLink
               key={item.id}
@@ -485,7 +585,7 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
             <div className="hv2-ph">
               <div>
                 <h2 id="stage-map-title">{discipline ? <Glyph name={discipline.glyph} size={20} color="#e4571e" /> : null} {discipline?.title}的學段總圖</h2>
-                <p>{diagram && diagram.nodes.length > 0 ? "最上面是國小，越往下越進階。點一個圓點看它在學什麼。" : "這個學門的知識點還在整理。"}</p>
+                <p>{segmented ? "分成三條線，一次看一條。最上面是國小，越往下越進階。" : diagram && diagram.nodes.length > 0 ? "最上面是國小，越往下越進階。點一個圓點看它在學什麼。" : "這個學門的知識點還在整理。"}</p>
               </div>
               {diagram && diagram.edges.some((edge) => edge.kind === "pre") ? (
                 <div className="hv2-leg" aria-label="圖例">
@@ -499,15 +599,52 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
                 </div>
               ) : null}
             </div>
+            {segmented && model.branches.length > 0 ? (
+              <div className="ss-btog" role="group" aria-label="選擇線" data-testid="branch-switch">
+                {model.branches.map((item) => {
+                  const body = (
+                    <>
+                      <b>{item.title}</b>
+                      <small>{item.ready ? item.blurb : "準備中"}</small>
+                    </>
+                  );
+                  if (!item.ready) {
+                    return (
+                      <span
+                        key={item.id}
+                        className="ss-bt"
+                        aria-disabled="true"
+                        aria-pressed={item.id === state.branchId}
+                        aria-label={`${item.title}，準備中`}
+                      >
+                        {body}
+                      </span>
+                    );
+                  }
+                  return (
+                    <QueryLink
+                      key={item.id}
+                      href={`/?d=soft-skills&b=${item.id}`}
+                      className="ss-bt"
+                      aria-pressed={item.id === state.branchId}
+                      aria-current={item.id === state.branchId ? "page" : undefined}
+                    >
+                      {body}
+                    </QueryLink>
+                  );
+                })}
+              </div>
+            ) : null}
             <div data-testid="home-diagram">
               {diagram && discipline ? (
                 <StageDiagram
                   model={model}
                   diagram={diagram}
                   selected={selected}
-                  disciplineTitle={discipline.title}
+                  disciplineTitle={segmented && branch && !branch.ready ? branch.title : discipline.title}
                   readyTitle={ready?.title ?? ""}
                   readyHref={ready ? `/?d=${ready.id}` : ""}
+                  segmented={segmented}
                 />
               ) : null}
             </div>
@@ -518,13 +655,13 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
                 <NodeDetail node={selected} model={model} homeHref={homeHref} />
               </div>
             ) : null}
-            {model.task ? (
+            {task ? (
               <div className={selected ? "hv2-task-mobile" : undefined}>
-                <TaskCard task={model.task} />
+                <TaskCard task={task} />
               </div>
             ) : null}
             {selected ? null : (
-              <div className="hv2-tip"><b>給家長</b>{PARENT_TIP}</div>
+              <div className="hv2-tip"><b>給家長</b>{segmented ? SOFT_TIP : PARENT_TIP}</div>
             )}
           </aside>
         </div>

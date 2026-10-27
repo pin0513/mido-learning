@@ -1,0 +1,59 @@
+id: sk.feelings@es
+concept: sk.feelings
+title: 說出感覺：我覺得……因為……
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 綜合活動
+  - 健康與體育
+  core_competencies:
+  - A1
+  - C2
+  issues:
+  - 生命教育
+  - 家庭教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.nvc@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 提供更多情緒詞彙
+  human_experience:
+  - 察覺自己身上的感覺
+idea: 感覺不只開心和生氣，還有失望、擔心、委屈、害羞、興奮……。說得出更精確的感覺，別人才知道怎麼幫你，你也比較不會用發脾氣代替說話。
+guiding_questions:
+- 「不爽」裡面，可能藏著哪些不一樣的感覺？
+scenario: 親子共學：睡前「心情溫度計」：每人說一個今天的感覺和原因，大人也要說，不評論別人的感覺。
+goal: 分辨並說出至少 8 種感覺，用「我覺得……因為……」說出來。
+review: 用情緒卡或表情圖，孩子能說出 8 種感覺的名字；一週內，家長記錄孩子主動用「我覺得……因為……」說出 3 次。
+formats:
+  slides: []
+  exercise: 目標：分辨並說出至少 8 種感覺，用「我覺得……因為……」說出來。　檢核：用情緒卡或表情圖，孩子能說出 8 種感覺的名字；一週內，家長記錄孩子主動用「我覺得……因為……」說出 3 次。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

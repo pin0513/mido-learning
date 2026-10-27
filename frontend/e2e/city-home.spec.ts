@@ -27,6 +27,8 @@ test.describe("學門總圖", () => {
     await expect(diagram.getByRole("link", { name: /^大事拆成小事/ })).toBeVisible();
     await expect(diagram.getByRole("link", { name: /^時間、金錢、品質的取捨/ })).toBeVisible();
     await expect(page.getByRole("link", { name: "數學" })).toBeVisible();
+    await expect(page.getByTestId("discipline-switch").locator("a")).toHaveCount(4);
+    await expect(page.getByText("溝通與解決問題")).toHaveCount(0);
     await expect(page.getByText("準備中")).toHaveCount(0);
 
     await page.getByRole("link", { name: "數學" }).click();

@@ -1,0 +1,61 @@
+id: sk.fishbone@jh
+concept: sk.fishbone
+title: 魚骨圖：把原因分類找
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 綜合活動
+  - 自然科學
+  core_competencies:
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（魚骨圖（石川圖）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.why5@es
+- ph.parts@es
+links:
+  why: []
+  how: []
+  related:
+  - ph.feedback@jh
+  deeper:
+  - sk.rootcause@sh
+link_notes: 框架：魚骨圖（石川圖）。跨學門先學：哲學「部分與整體」。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 提問
+  - 建模
+ai:
+  delegable:
+  - 補充可能遺漏的原因類別
+  human_experience:
+  - 判斷哪個原因最可能，親自去確認
+idea: 魚骨圖（石川圖）把問題寫在魚頭，原因分類寫在魚骨上，例如方法、時間、環境、身心。分類可以逼自己想到平常忽略的原因；畫完再圈出最可能的兩三個去查證。
+guiding_questions:
+- 數學退步，可能的原因只有「不夠用功」嗎？
+scenario: 親子共學：全家一起畫「為什麼早上總是很趕」的魚骨圖，每個人都要在別人的分類裡補一個原因。
+goal: 用魚骨圖把可能的原因分成幾類，圈出最值得先查證的原因。
+review: 為一個真實問題（例如段考退步）畫魚骨圖：至少 4 類、每類 2 個原因，圈出 2 個最可能的原因並寫下「要怎麼確認」；家長檢查原因不是在責怪人。
+formats:
+  slides: []
+  exercise: 目標：用魚骨圖把可能的原因分成幾類，圈出最值得先查證的原因。　檢核：為一個真實問題（例如段考退步）畫魚骨圖：至少 4 類、每類 2 個原因，圈出 2 個最可能的原因並寫下「要怎麼確認」；家長檢查原因不是在責怪人。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

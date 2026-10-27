@@ -1,0 +1,61 @@
+id: sk.interview@sh
+concept: sk.interview
+title: 同理訪談：問開放式問題
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 綜合活動
+  - 科技
+  core_competencies:
+  - C2
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（設計思考：同理階段、開放式問題），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.empmap@jh
+- ph.question@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.coach@uni
+link_notes: 框架：設計思考：同理階段、開放式問題。跨學門先學：哲學「好問題從「為什麼」開始」。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 提問
+  - 溝通
+ai:
+  delegable:
+  - 把錄音轉成逐字稿、初步分類
+  human_experience:
+  - 面對面聽，察覺對方沒說出口的事
+idea: 設計思考的第一步是同理：去問、去看真正會用的人。問「上次……的時候發生什麼事？」這種開放式問題，再追問「為什麼」；不推銷自己的點子，多聽少說。
+guiding_questions:
+- 「你喜歡這個 App 嗎？」問了能得到什麼？
+scenario: 親子共學：孩子訪談一位長輩「你小時候怎麼上學」，大人在旁邊數開放式問題和追問的次數。
+goal: 訪談一位使用者 20 分鐘，用開放式問題和追問找出他真正的困擾。
+review: 把訪談錄音整理成逐字稿，家長數一數：開放式問題至少一半、追問至少 3 次、孩子說話時間少於三分之一；最後寫出一個「沒想到」的發現。
+formats:
+  slides: []
+  exercise: 目標：訪談一位使用者 20 分鐘，用開放式問題和追問找出他真正的困擾。　檢核：把訪談錄音整理成逐字稿，家長數一數：開放式問題至少一半、追問至少 3 次、孩子說話時間少於三分之一；最後寫出一個「沒想到」的發現。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'
