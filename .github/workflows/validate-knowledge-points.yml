@@ -31,6 +31,9 @@ on:
       - "frontend/scripts/**"
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
+      - "frontend/Dockerfile"
+      - "frontend/next.config.ts"
+      - "frontend/.dockerignore"
       - ".github/workflows/validate-knowledge-points.yml"
       - "frontend/components/layout/Header.tsx"
   push:
@@ -64,6 +67,9 @@ on:
       - "frontend/scripts/**"
       - "frontend/package.json"
       - "frontend/pnpm-lock.yaml"
+      - "frontend/Dockerfile"
+      - "frontend/next.config.ts"
+      - "frontend/.dockerignore"
       - ".github/workflows/validate-knowledge-points.yml"
       - "frontend/components/layout/Header.tsx"
 

@@ -1,0 +1,115 @@
+name: Frontend image smoke
+
+on:
+  pull_request:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-image-smoke.yml"
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-image-smoke.yml"
+
+# 只建置並跑正式 image，不部署、不改 Cloud Run 旗標。
+jobs:
+  image-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build production image
+        working-directory: frontend
+        run: |
+          docker build \
+            --build-arg NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyCIDummyKeyForKpE2EOnly0000000 \
+            --build-arg NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=mido-learning.firebaseapp.com \
+            --build-arg NEXT_PUBLIC_FIREBASE_PROJECT_ID=mido-learning \
+            --build-arg NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=mido-learning.appspot.com \
+            --build-arg NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=000000000000 \
+            --build-arg NEXT_PUBLIC_FIREBASE_APP_ID=1:000000000000:web:kp-e2e \
+            --build-arg NEXT_PUBLIC_API_URL=http://127.0.0.1:8080 \
+            -t mido-frontend-smoke \
+            .
+
+      - name: Run image with homepage flags
+        run: |
+          set -euo pipefail
+          # KP_HOME_DISCIPLINES 刻意不設，預設清單必須來自 image 裡的 YAML。
+          docker run -d --name kp-image-smoke -p 3000:3000 \
+            -e KP_ENABLED=true \
+            -e KP_HOME_ENABLED=true \
+            mido-frontend-smoke
+          cleanup() {
+            status=$?
+            if [ "$status" -ne 0 ]; then
+              echo "----- container logs -----"
+              docker logs kp-image-smoke >&2 || true
+            fi
+            docker rm -f kp-image-smoke >/dev/null 2>&1 || true
+            exit "$status"
+          }
+          trap cleanup EXIT
+
+          docker exec kp-image-smoke sh -c 'test -z "${KP_HOME_DISCIPLINES:-}"'
+          for file in \
+            content/home-disciplines.yaml \
+            content/schema/knowledge-point.schema.json \
+            content/taxonomy/stages.yaml \
+            content/taxonomy/disciplines.yaml \
+            content/paths/pm-leadership.yaml \
+            content/paths/philosophy.yaml \
+            content/paths/math.yaml \
+            content/paths/it-ai.yaml \
+            content/knowledge/pm-leadership/pm.estimate/sh.yaml
+          do
+            docker exec kp-image-smoke test -f "/app/$file" || {
+              echo "missing /app/$file"
+              exit 1
+            }
+          done
+
+          ready=0
+          for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+            if curl -sf http://127.0.0.1:3000/api/kp-launch | grep -q '"home":true'; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "image did not become ready"
+            exit 1
+          fi
+
+          check() {
+            local path="$1"
+            local file="$2"
+            local code
+            code="$(curl -sS -o "$file" -w '%{http_code}' "http://127.0.0.1:3000${path}")"
+            if [ "$code" != "200" ]; then
+              echo "GET ${path} returned ${code}"
+              cat "$file" >&2 || true
+              exit 1
+            fi
+          }
+
+          check "/" /tmp/home.html
+          for name in "專案管理與領導" "哲學與思考方法" "數學" "資訊與 AI"; do
+            if ! grep -F "$name" /tmp/home.html >/dev/null; then
+              echo "homepage HTML missing ${name}"
+              exit 1
+            fi
+          done
+          if grep -F "城市" /tmp/home.html >/dev/null; then
+            echo "homepage HTML contains 城市"
+            exit 1
+          fi
+
+          for discipline in pm-leadership philosophy math it-ai; do
+            check "/?d=${discipline}" "/tmp/d-${discipline}.html"
+          done
+          check "/kp" /tmp/kp.html
+          check "/kp/map" /tmp/kp-map.html
