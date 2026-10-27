@@ -50,7 +50,6 @@ export function FloatingWishBot() {
   }, []);
 
   useEffect(() => {
-    const query = window.matchMedia("(max-width: 767px)");
     let lastY = window.scrollY;
     let frame = 0;
 
@@ -63,11 +62,10 @@ export function FloatingWishBot() {
     const update = () => {
       frame = 0;
       const y = window.scrollY;
-      const narrow = query.matches;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const nearTop = y < 48;
       const atBottom = max - y < 48;
-      if (!narrow || nearTop || atBottom || openRef.current) setTuckedIf(false);
+      if (nearTop || atBottom || openRef.current) setTuckedIf(false);
       else if (y > lastY + 6) setTuckedIf(true);
       else if (y < lastY - 6) setTuckedIf(false);
       lastY = y;
@@ -78,12 +76,10 @@ export function FloatingWishBot() {
       frame = requestAnimationFrame(update);
     };
 
-    query.addEventListener("change", update);
     window.addEventListener("scroll", onScroll, { passive: true });
     update();
     return () => {
       if (frame) cancelAnimationFrame(frame);
-      query.removeEventListener("change", update);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
@@ -218,9 +214,12 @@ export function FloatingWishBot() {
         )}
       </button>
 
-      {/* 窄螢幕不顯示氣泡，避免蓋住內文。桌面維持原樣。 */}
+      {/* 氣泡會壓到右欄卡片，各寬度都只留圓按鈕。 */}
       {!isOpen && (
-        <div data-testid="wish-bubble" className="fixed bottom-[max(5.5rem,calc(env(safe-area-inset-bottom,0px)+4rem))] right-[max(1.5rem,env(safe-area-inset-right,0px))] z-50 hidden animate-bounce md:block">
+        <div
+          data-testid="wish-bubble"
+          className="fixed bottom-[max(5.5rem,calc(env(safe-area-inset-bottom,0px)+4rem))] right-[max(1.5rem,env(safe-area-inset-right,0px))] z-50 hidden"
+        >
           <div className="rounded-lg bg-violet-600 px-3 py-1 text-xs font-medium text-white shadow-lg">
             許個學習願望吧！
           </div>
