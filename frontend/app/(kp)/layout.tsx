@@ -1,5 +1,4 @@
-import { FloatingWishBot } from "@/components/wish";
-import { isWishFabEnabled } from "@/lib/kp/flags";
+import { WishFabGate } from "@/components/wish/WishFabGate";
 import "../kp-theme.css";
 
 /**
@@ -11,7 +10,7 @@ export default function KpSurfaceLayout({ children }: { children: React.ReactNod
   return (
     <div className="kp-root">
       {children}
-      {isWishFabEnabled() ? <FloatingWishBot /> : null}
+      <WishFabGate />
     </div>
   );
 }

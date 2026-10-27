@@ -214,7 +214,11 @@ test.describe("學門總圖", () => {
     for (const width of [390, 1280]) {
       await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
       for (const entry of pages) {
+        const wishFlag = page.waitForResponse((response) => response.url().includes("/api/wish-fab") && response.request().method() === "GET");
         await page.goto(entry.path);
+        const flag = await wishFlag;
+        expect(flag.ok(), entry.path).toBe(true);
+        expect((await flag.json()).enabled, entry.path).toBe(false);
         await expect(entry.ready, entry.path).toBeVisible();
         await expect(page.getByRole("button", { name: "開啟學習願望聊天" }), entry.path).toHaveCount(0);
         await expect(page.getByRole("button", { name: "關閉聊天" }), entry.path).toHaveCount(0);

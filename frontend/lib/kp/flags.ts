@@ -21,8 +21,9 @@
  *   只在 build / dev 讀取。正式 image 與正式 Cloud Run 都不要設。
  *
  * WISH_FAB_ENABLED：右下角學習願望浮動按鈕（氣泡與聊天視窗一起）。
- *   未設定或不是 "true" 就是關。不要加 NEXT_PUBLIC_，避免寫進 client bundle。
- *   元件與許願 API 都留著，只是不掛到頁面上。改完要重啟行程。
+ *   未設定或不是 "true" 就是關。不要加 NEXT_PUBLIC_，避免在 build 時寫死。
+ *   頁面載入後問 /api/wish-fab，所以靜態頁重啟行程就會跟著開或關。
+ *   元件與許願 API 都留著，只是預設不掛到頁面上。
  */
 
 export function isKpEnabled(): boolean {
