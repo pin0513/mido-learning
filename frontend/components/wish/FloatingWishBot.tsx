@@ -37,7 +37,11 @@ export function FloatingWishBot() {
   const [step, setStep] = useState<ChatStep>('greeting');
   const [wishContent, setWishContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [tucked, setTucked] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const tuckedRef = useRef(false);
+  const openRef = useRef(false);
+  openRef.current = isOpen;
 
   useEffect(() => {
     const open = () => setIsOpen(true);
@@ -46,10 +50,42 @@ export function FloatingWishBot() {
   }, []);
 
   useEffect(() => {
-    const shell = document.querySelector(".kp-root") ?? document.querySelector("[data-public-shell]");
-    if (!(shell instanceof HTMLElement)) return;
-    shell.classList.add("wish-scroll");
-    return () => shell.classList.remove("wish-scroll");
+    const query = window.matchMedia("(max-width: 767px)");
+    let lastY = window.scrollY;
+    let frame = 0;
+
+    const setTuckedIf = (next: boolean) => {
+      if (tuckedRef.current === next) return;
+      tuckedRef.current = next;
+      setTucked(next);
+    };
+
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      const narrow = query.matches;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const nearTop = y < 48;
+      const atBottom = max - y < 48;
+      if (!narrow || nearTop || atBottom || openRef.current) setTuckedIf(false);
+      else if (y > lastY + 6) setTuckedIf(true);
+      else if (y < lastY - 6) setTuckedIf(false);
+      lastY = y;
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
+
+    query.addEventListener("change", update);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      query.removeEventListener("change", update);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const addMessage = (type: 'bot' | 'user', content: string) => {
@@ -161,12 +197,16 @@ export function FloatingWishBot() {
     <>
       <button
         data-testid="wish-fab"
+        data-tucked={tucked ? "true" : "false"}
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed right-[max(1.5rem,env(safe-area-inset-right,0px))] bottom-[max(1.5rem,env(safe-area-inset-bottom,0px))] z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all duration-300 ${
+        className={`fixed right-[max(1.5rem,env(safe-area-inset-right,0px))] bottom-[max(1.5rem,env(safe-area-inset-bottom,0px))] z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all duration-300 motion-reduce:transition-none ${
+          tucked ? "pointer-events-none translate-y-[calc(100%+2rem)] opacity-0" : "translate-y-0 opacity-100"
+        } ${
           isOpen
             ? 'bg-gray-600 hover:bg-gray-700'
             : 'bg-violet-600 hover:bg-violet-700 hover:scale-110'
         }`}
+        aria-hidden={tucked}
         aria-label={isOpen ? '關閉聊天' : '開啟學習願望聊天'}
       >
         {isOpen ? (

@@ -202,24 +202,22 @@ test.describe("學門總圖", () => {
   test("學習願望按鈕不蓋住圖上的文字", async ({ page }) => {
     const overlaps = () =>
       page.evaluate(() => {
-        const visible = (el: Element) => {
+        const shown = (el: Element) => {
           const style = getComputedStyle(el);
-          if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) === 0) return null;
+          if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.5) return null;
           const box = el.getBoundingClientRect();
           if (box.width < 1 || box.height < 1 || box.bottom <= 0 || box.top >= window.innerHeight) return null;
           return box;
         };
-        const shell = document.querySelector(".wish-scroll");
-        const view = shell?.getBoundingClientRect() ?? new DOMRect(0, 0, window.innerWidth, window.innerHeight);
         const widgets = [...document.querySelectorAll("[data-testid='wish-fab'], [data-testid='wish-bubble']")]
-          .map(visible)
+          .map(shown)
           .filter((box): box is DOMRect => Boolean(box));
-        const texts = [...document.querySelectorAll(".hv2-node .hv2-lb, .hv2-side .hv2-card, .hv2-side-det")].flatMap((el) => {
+        const texts = [...document.querySelectorAll(".hv2-node .hv2-lb, .hv2-side .hv2-card, .hv2-side .hv2-tip, .hv2-side-det")].flatMap((el) => {
           const box = el.getBoundingClientRect();
-          const top = Math.max(box.top, view.top);
-          const bottom = Math.min(box.bottom, view.bottom);
-          const left = Math.max(box.left, view.left);
-          const right = Math.min(box.right, view.right);
+          const top = Math.max(box.top, 0);
+          const bottom = Math.min(box.bottom, window.innerHeight);
+          const left = Math.max(box.left, 0);
+          const right = Math.min(box.right, window.innerWidth);
           if (bottom - top < 2 || right - left < 2) return [];
           return [{ top, bottom, left, right, text: (el.textContent ?? "").replace(/\s+/g, " ").trim().slice(0, 24) }];
         });
@@ -237,42 +235,61 @@ test.describe("學門總圖", () => {
         return hits;
       });
 
-    for (const width of [390, 1280]) {
-      await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
+    const scrollBy = (top: number) => page.evaluate((y) => window.scrollBy({ top: y, behavior: "instant" }), top);
+    const scrollToBottom = () => page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }));
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/?d=math");
+    const diagram = page.getByTestId("stage-diagram");
+    await expect(diagram.getByTestId("stage-label").first()).toBeVisible();
+    const bubble = page.getByTestId("wish-bubble");
+    const fab = page.getByTestId("wish-fab");
+    await expect(bubble).toBeHidden();
+    await expect(fab).toHaveAttribute("aria-label", "開啟學習願望聊天");
+    await expect(fab).toHaveAttribute("data-tucked", "false");
+    const size = await fab.boundingBox();
+    expect(size?.width ?? 0).toBeGreaterThanOrEqual(44);
+    expect(size?.height ?? 0).toBeGreaterThanOrEqual(44);
+    expect(await overlaps(), "390 top").toEqual([]);
+
+    await scrollBy(640);
+    await expect(fab).toHaveAttribute("data-tucked", "true");
+    await scrollBy(-80);
+    await expect(fab).toHaveAttribute("data-tucked", "false");
+    expect(await overlaps(), "390 after scroll up").toEqual([]);
+
+    const nodes = diagram.locator(".hv2-node");
+    const count = await nodes.count();
+    await nodes.nth(Math.floor(count / 2)).scrollIntoViewIfNeeded();
+    await expect(fab).toHaveAttribute("data-tucked", "true");
+    await scrollBy(-80);
+    await expect(fab).toHaveAttribute("data-tucked", "false");
+    expect(await overlaps(), "390 mid").toEqual([]);
+
+    await scrollToBottom();
+    await expect(fab).toHaveAttribute("data-tucked", "false");
+    const footerClear = await page.evaluate(() => {
+      const button = document.querySelector("[data-testid='wish-fab']")?.getBoundingClientRect();
+      const links = [...document.querySelectorAll(".hv2-more a")].map((el) => el.getBoundingClientRect());
+      if (!button || links.length === 0) return false;
+      return links.every((link) => link.bottom <= button.top + 1);
+    });
+    expect(footerClear, "390 footer links above the button").toBe(true);
+    expect(await overlaps(), "390 bottom").toEqual([]);
+
+    for (const width of [1024, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
       await page.goto("/?d=math");
-      const diagram = page.getByTestId("stage-diagram");
       await expect(diagram.getByTestId("stage-label").first()).toBeVisible();
-      const bubble = page.getByTestId("wish-bubble");
-      const fab = page.getByTestId("wish-fab");
-      await expect(fab).toHaveAttribute("aria-label", "開啟學習願望聊天");
-      const size = await fab.boundingBox();
-      expect(size?.width ?? 0).toBeGreaterThanOrEqual(44);
-      expect(size?.height ?? 0).toBeGreaterThanOrEqual(44);
-      if (width === 390) await expect(bubble).toBeHidden();
-      else await expect(bubble).toBeVisible();
-      const gap = await page.evaluate(() => {
-        const shell = document.querySelector(".wish-scroll")?.getBoundingClientRect();
-        const boxes = [...document.querySelectorAll("[data-testid='wish-fab'], [data-testid='wish-bubble']")]
-          .filter((el) => getComputedStyle(el).display !== "none" && getComputedStyle(el).visibility !== "hidden")
-          .map((el) => el.getBoundingClientRect());
-        if (!shell || boxes.length === 0) return -1;
-        return Math.min(...boxes.map((box) => box.top)) - shell.bottom;
-      });
-      expect(gap, `${width} content ends above the widget`).toBeGreaterThanOrEqual(0);
-
+      await expect(bubble).toBeVisible();
+      await expect(fab).toHaveAttribute("data-tucked", "false");
       expect(await overlaps(), `${width} top`).toEqual([]);
-      const nodes = diagram.locator(".hv2-node");
-      const count = await nodes.count();
-      await nodes.nth(Math.floor(count / 2)).scrollIntoViewIfNeeded();
-      await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      const wideNodes = diagram.locator(".hv2-node");
+      await wideNodes.nth(Math.floor(await wideNodes.count() / 2)).scrollIntoViewIfNeeded();
+      await expect(fab).toHaveAttribute("data-tucked", "false");
       expect(await overlaps(), `${width} mid`).toEqual([]);
-
-      await page.evaluate(() => {
-        const shell = document.querySelector(".wish-scroll");
-        if (shell) shell.scrollTo({ top: shell.scrollHeight, behavior: "instant" });
-        else window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" });
-      });
-      await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      await scrollToBottom();
+      await expect(fab).toHaveAttribute("data-tucked", "false");
       expect(await overlaps(), `${width} bottom`).toEqual([]);
     }
   });

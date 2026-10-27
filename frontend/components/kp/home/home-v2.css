@@ -4,6 +4,9 @@
 }
 
 .kp-root .hv2 {
+  /* 桌面氣泡約 120px，再加右側 1.5rem 與一點空隙。窄螢幕沒有氣泡，只讓圓按鈕。 */
+  --wish-reserve: 9.75rem;
+  --wish-gutter: max(0px, calc(var(--wish-reserve) - max(20px, (100% - 1200px) / 2)));
   --ink: #1d1c1a;
   --ink-2: #57544e;
   --muted: #8a867e;
@@ -400,6 +403,9 @@
 .kp-root .hv2-go span { color: var(--ink-2); font-size: 15px; }
 
 .kp-root .hv2-foot { margin-top: 96px; padding-bottom: 40px; }
+@media (min-width: 601px) {
+  .kp-root .hv2-wrap { padding-right: var(--wish-gutter); }
+}
 .kp-root .hv2-footline { overflow: hidden; height: 72px; }
 .kp-root .hv2-ft { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; color: var(--muted); margin-top: 14px; }
 .kp-root .hv2-more { margin-top: 18px; font-size: 14px; color: var(--muted); }
@@ -407,6 +413,9 @@
 .kp-root .hv2-more a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; margin-right: 14px; padding: 6px 0; display: inline-block; }
 .kp-root .hv2-more a:hover { color: var(--accent-ink); }
 
+@media (max-width: 767px) {
+  .kp-root .hv2 { --wish-reserve: 5.5rem; }
+}
 @media (max-width: 600px) {
   .kp-root .hv2 { font-size: 16px; }
   .kp-root .hv2-wrap { width: auto; margin: 0 16px; }
@@ -431,7 +440,7 @@
   .kp-root .hv2-sg small { display: none; }
   .kp-root .hv2-sg .hv2-short { display: block; }
   .kp-root .hv2-cols { display: block; margin-top: 14px; }
-  .kp-root .hv2-panel { padding: 20px 16px 22px; border-radius: 18px; }
+  .kp-root .hv2-panel { padding: 20px 4.5rem 22px 16px; border-radius: 18px; }
   .kp-root .hv2-ph { display: block; }
   .kp-root .hv2-ph h2 { font-size: 21px; }
   .kp-root .hv2-ph p { font-size: 15px; }
@@ -448,7 +457,7 @@
   .kp-root .hv2-tband .hv2-zl { display: none; }
   .kp-root .hv2-side-det { display: none; }
   .kp-root .hv2-bk .hv2-backtext { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .kp-root .hv2-side { margin-top: 14px; }
+  .kp-root .hv2-side { margin-top: 14px; padding-right: 4.5rem; }
   .kp-root .hv2-card { padding: 20px; }
   .kp-root .hv2-msg { padding: 22px; }
   .kp-root .hv2-thead { display: block; padding: 12px 0 16px; }
@@ -475,7 +484,7 @@
   .kp-root .hv2-go span { display: block; margin-top: 10px; }
   .kp-root .hv2-ft { display: block; }
   .kp-root .hv2-ft span { display: block; }
-  .kp-root .hv2-foot { margin-top: 48px; }
+  .kp-root .hv2-foot { margin-top: 48px; padding-right: 4.5rem; }
 }
 
 @media (min-width: 601px) {
