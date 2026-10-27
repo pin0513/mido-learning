@@ -57,10 +57,18 @@ test.describe("溝通與解決問題", () => {
       test.setTimeout(120_000);
       const errors: string[] = [];
       page.on("pageerror", (error) => errors.push(error.message));
+      page.on("requestfailed", (request) => {
+        const url = request.url();
+        const reason = request.failure()?.errorText ?? "";
+        if (/analytics|8080|firebase|favicon/i.test(url)) return;
+        // 換頁時 Next 會取消還沒回來的 prefetch（_rsc）。
+        if (reason.includes("ERR_ABORTED") || url.includes("_rsc=")) return;
+        errors.push(`${reason || "failed"} ${url}`);
+      });
       page.on("console", (message) => {
         if (message.type() !== "error") return;
         const text = message.text();
-        if (/analytics|8080|firebase|favicon/i.test(text)) return;
+        if (/analytics|8080|firebase|favicon|ERR_CONNECTION_REFUSED/i.test(text)) return;
         errors.push(text);
       });
       await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
@@ -76,6 +84,11 @@ test.describe("溝通與解決問題", () => {
         await expect(page.getByRole("button", { name: "開啟學習願望聊天" })).toHaveCount(0);
         await expect(page.getByText("許個學習願望吧！")).toHaveCount(0);
       }
+
+      const index = await page.request.get("/kp/index.json");
+      expect(index.status()).toBe(200);
+      const indexRows = (await index.json()) as { id: string }[];
+      expect(indexRows.some((row) => row.id === "sk.voice@es")).toBe(true);
 
       await page.goto("/?d=soft-skills&b=talk", { waitUntil: "networkidle" });
       const slots = page.getByTestId("discipline-switch").locator("a");

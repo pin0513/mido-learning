@@ -210,10 +210,30 @@ function topoWithin(group: KnowledgePoint[], fileOrder: Map<string, number>): Kn
   return sorted;
 }
 
+/** 大綱表格順序。同一個學段裡沒有先學關係時，用這個當次序，不跟檔名字母走。 */
+const SOFT_ORDER = [
+  "sk.voice@es", "sk.point@es", "sk.showtell@es",
+  "sk.audience@jh", "sk.speech@jh", "sk.discuss@jh",
+  "sk.consensus@sh", "sk.present@sh", "sk.qa@sh",
+  "sk.persuade@uni", "sk.facilitate@uni",
+  "sk.feelings@es", "sk.listen@es", "sk.otherside@es",
+  "sk.empmap@jh", "sk.imsg@jh", "sk.nvc@jh",
+  "sk.hardtalk@sh", "sk.interview@sh", "sk.feedback@sh",
+  "sk.coach@uni", "sk.mediate@uni",
+  "sk.problem@es", "sk.why5@es", "sk.polya@es",
+  "sk.pdca@jh", "sk.issuetree@jh", "sk.fishbone@jh",
+  "sk.rootcause@sh", "sk.decide@sh", "sk.design@sh",
+  "sk.a3@uni", "sk.hypo@uni",
+];
+
 function diagramPoints(catalog: ContentCatalog, folder: string, publicIds: readonly string[]): KnowledgePoint[] {
   if (!publicIds.includes(folder)) return [];
   const points = catalog.points.filter((point) => point.folder === folder);
   const shown = PUBLISHED_DIAGRAMS.has(folder) ? points.filter((point) => point.status === "published") : points;
+  if (folder === "soft-skills") {
+    const rank = new Map(SOFT_ORDER.map((id, index) => [id, index]));
+    shown.sort((a, b) => (rank.get(a.id) ?? 999) - (rank.get(b.id) ?? 999) || a.id.localeCompare(b.id));
+  }
   return sortPoints(catalog, shown);
 }
 
