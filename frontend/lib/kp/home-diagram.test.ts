@@ -127,12 +127,12 @@ test("虛線只拿掉實線已經到得了的，實線保持原樣", () => {
   assert.equal(math.edges.some((edge) => edge.kind === "pre" && edge.from === "ma.pattern@es"), true);
 });
 
-test("跳過中間學段的先學走直角，轉角有接點", () => {
+test("主線只把相鄰的點往下連，跳過的先學不畫成一排垂直線", () => {
   const nodes = [
-    { id: "pm.breakdown@es", x: 232, y: 59 },
-    { id: "pm.triangle@jh", x: 232, y: 189 },
-    { id: "pm.estimate@sh", x: 232, y: 319 },
-    { id: "pm.evm@uni", x: 232, y: 449 },
+    { id: "pm.breakdown@es", x: 180, y: 40 },
+    { id: "pm.triangle@jh", x: 180, y: 140 },
+    { id: "pm.estimate@sh", x: 180, y: 240 },
+    { id: "pm.evm@uni", x: 180, y: 340 },
   ];
   const edges = [
     { from: "pm.breakdown@es", to: "pm.triangle@jh", kind: "ext" as const },
@@ -141,54 +141,28 @@ test("跳過中間學段的先學走直角，轉角有接點", () => {
     { from: "pm.breakdown@es", to: "pm.estimate@sh", kind: "pre" as const },
   ];
   const { paths, joints } = routeWires(nodes, edges, "pm.estimate@sh");
-  const elbow = paths.find((path) => path.d.includes(" H "));
-  assert.ok(elbow);
-  assert.equal(elbow.kind, "pre");
-  assert.equal(elbow.tone, "hi");
-  assert.equal(joints.length, 2);
-  assert.equal(paths.filter((path) => path.kind === "ext")[0].tone, "dim");
-  assert.equal(paths.filter((path) => !path.d.includes(" H ")).length, 3);
-});
-
-test("平行的垂直線至少隔 7px，而且避開學段名稱", () => {
-  const nodes = [0, 1, 2, 3, 4, 5].map((index) => ({ id: `n${index}`, x: 140, y: 40 + index * 90 }));
-  const edges = [
-    { from: "n0", to: "n2", kind: "pre" as const },
-    { from: "n0", to: "n3", kind: "pre" as const },
-    { from: "n1", to: "n4", kind: "pre" as const },
-    { from: "n1", to: "n5", kind: "pre" as const },
-  ];
-  const obstacle = { left: 16, top: 150, right: 120, bottom: 190 };
-  const { paths } = routeWires(nodes, edges, null, { obstacles: [obstacle], minGap: 7 });
-  const verticals = new Set<number>();
-  for (const path of paths) {
-    const tokens = path.d.split(/\s+/);
-    let x = 0;
-    let y = 0;
-    for (let index = 0; index < tokens.length; index += 1) {
-      const token = tokens[index];
-      if (token === "M") {
-        x = Number(tokens[index + 1]);
-        y = Number(tokens[index + 2]);
-        index += 2;
-      } else if (token === "H") {
-        x = Number(tokens[index + 1]);
-        index += 1;
-      } else if (token === "V") {
-        const next = Number(tokens[index + 1]);
-        if (Math.abs(next - y) > 24) verticals.add(x);
-        const top = Math.min(y, next);
-        const bot = Math.max(y, next);
-        const overlaps = x >= obstacle.left && x <= obstacle.right && bot > obstacle.top && top < obstacle.bottom;
-        assert.equal(overlaps, false, path.d);
-        y = next;
-        index += 1;
-      }
-    }
-  }
-  const xs = [...verticals].sort((a, b) => a - b);
-  assert.ok(xs.length >= 2);
-  for (let index = 1; index < xs.length; index += 1) {
-    assert.ok(xs[index] - xs[index - 1] >= 7, xs.join(","));
-  }
+  assert.equal(paths.length, 3);
+  assert.equal(joints.length, 0);
+  assert.equal(paths.some((path) => path.d.includes(" H ")), false);
+  assert.equal(paths[0].kind, "ext");
+  assert.equal(paths[0].tone, "dim");
+  assert.equal(paths[1].kind, "pre");
+  assert.equal(paths[1].tone, "hi");
+  assert.equal(paths[2].tone, "hi");
+  const blocked = routeWires(nodes, edges, null, { avoid: [{ left: 160, top: 150, right: 200, bottom: 230 }] });
+  assert.equal(blocked.paths.length, 2);
+  assert.equal(blocked.paths.some((path) => path.d.includes("V 224")), false);
+  const split = routeWires(
+    [
+      { id: "a", x: 180, y: 40 },
+      { id: "b", x: 180, y: 300 },
+    ],
+    [],
+    null,
+    { avoid: [{ left: 0, top: 140, right: 400, bottom: 180 }] },
+  );
+  assert.equal(split.paths.length, 2);
+  assert.equal(split.paths[0].head, false);
+  assert.equal(split.paths[1].head, true);
+  assert.ok(split.paths.every((path) => !path.d.includes(" H ")));
 });

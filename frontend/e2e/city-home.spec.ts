@@ -24,24 +24,24 @@ test.describe("學門總圖", () => {
     await expect(page.getByText("待定")).toHaveCount(0);
     const diagram = page.getByTestId("home-diagram");
     await expect(diagram.locator("table")).toHaveCount(0);
-    await expect(diagram.getByRole("link", { name: /大事拆成小事/ })).toBeVisible();
-    await expect(diagram.getByRole("link", { name: /如果預算砍一半/ })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /^大事拆成小事/ })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /^時間、金錢、品質的取捨/ })).toBeVisible();
     await expect(page.getByRole("link", { name: "數學" })).toBeVisible();
     await expect(page.getByText("準備中")).toHaveCount(0);
 
     await page.getByRole("link", { name: "數學" }).click();
     await expect(page).toHaveURL(/[?&]d=math(?:&|$)/);
-    await expect(diagram.getByRole("link", { name: /規律與關係/ })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /^規律與關係/ })).toBeVisible();
     await expect(diagram.getByRole("link", { name: /你怎麼確定第 100 個/ })).toBeVisible();
-    await expect(diagram.getByRole("link", { name: /大事拆成小事/ })).toHaveCount(0);
+    await expect(diagram.getByRole("link", { name: /^大事拆成小事/ })).toHaveCount(0);
     await expect(diagram.locator("table")).toHaveCount(0);
 
     await page.getByRole("link", { name: "哲學與思考方法" }).click();
     await expect(page).toHaveURL(/[?&]d=philosophy(?:&|$)/);
-    await expect(diagram.getByRole("link", { name: /部分與整體/ })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /^部分與整體/ })).toBeVisible();
     await page.getByRole("link", { name: "資訊與 AI" }).click();
     await expect(page).toHaveURL(/[?&]d=it-ai(?:&|$)/);
-    await expect(diagram.getByRole("link", { name: /一步一步的指令/ })).toBeVisible();
+    await expect(diagram.getByRole("link", { name: /^一步一步的指令/ })).toBeVisible();
     await expect(diagram.locator("table")).toHaveCount(0);
   });
 
@@ -49,17 +49,17 @@ test.describe("學門總圖", () => {
     await page.goto("/?d=philosophy");
     await expect(page.getByRole("link", { name: "哲學與思考方法" })).toHaveAttribute("aria-current", "page");
     await expect(page.getByRole("heading", { name: "哲學與思考方法的學段總圖" })).toBeVisible();
-    await expect(page.getByTestId("home-diagram").getByRole("link", { name: /好問題從/ })).toBeVisible();
+    await expect(page.getByTestId("home-diagram").getByRole("link", { name: /^好問題從/ })).toBeVisible();
     await expect(page.getByTestId("home-diagram").locator("table")).toHaveCount(0);
 
     await page.goto("/?d=pm-leadership");
     await expect(page.getByRole("link", { name: "專案管理與領導" })).toHaveAttribute("aria-current", "page");
-    await expect(page.getByTestId("home-diagram").getByRole("link", { name: /WBS 與三點估算/ })).toBeVisible();
+    await expect(page.getByTestId("home-diagram").getByRole("link", { name: /^WBS 與三點估算/ })).toBeVisible();
   });
 
   test("點圓點會打開說明，文字用原文", async ({ page }) => {
     await page.goto("/?d=pm-leadership");
-    await page.getByTestId("home-diagram").getByRole("link", { name: /WBS 與三點估算/ }).click();
+    await page.getByTestId("home-diagram").getByRole("link", { name: /^WBS 與三點估算/ }).click();
     await expect(page).toHaveURL(/[?&]kp=pm\.estimate(?:%40|@)sh/);
     const detail = page.locator("[data-testid='node-detail']:visible");
     await expect(detail.getByRole("heading", { name: "WBS 與三點估算" })).toBeVisible();
@@ -106,38 +106,59 @@ test.describe("學門總圖", () => {
         await expect(diagram.getByTestId("stage-label").first()).toBeVisible();
         await expect(diagram.locator(".hv2-wires")).toBeVisible();
         const hits = await diagram.evaluate((root) => {
-          const labels = [...root.querySelectorAll("[data-testid='stage-label']")].map((el) => {
-            const box = el.getBoundingClientRect();
-            return { left: box.left, top: box.top, right: box.right, bottom: box.bottom, text: el.textContent ?? "" };
-          });
+          const boxesOf = (selector: string) =>
+            [...root.querySelectorAll(selector)].map((el) => {
+              const box = el.getBoundingClientRect();
+              return { left: box.left, top: box.top, right: box.right, bottom: box.bottom, text: (el.textContent ?? "").slice(0, 24) };
+            });
+          const labels = boxesOf("[data-testid='stage-label']");
+          const texts = boxesOf(".hv2-node .hv2-lb");
+          const columns = [...root.querySelectorAll("[data-testid='stage-label-column']")].map((el) => el.getBoundingClientRect());
+          const dots = [...root.querySelectorAll(".hv2-node .hv2-fx")].map((el) => el.getBoundingClientRect());
+          const rootBox = root.getBoundingClientRect();
+          const rail = columns.length > 0 && columns.every((box) => box.width < rootBox.width * 0.6);
+          const edge = rail ? Math.max(...columns.map((box) => box.right)) : null;
+          const inside = (x: number, y: number, box: { left: number; top: number; right: number; bottom: number }) =>
+            x >= box.left && x <= box.right && y >= box.top && y <= box.bottom;
           const found: string[] = [];
+          const leftOfColumn: number[] = [];
+          const arrivals: boolean[] = dots.slice(1).map(() => false);
+          const note = (x: number, y: number) => {
+            if (edge !== null && x < edge - 0.5) leftOfColumn.push(Math.round(x - edge));
+            for (const column of columns) if (inside(x, y, column)) found.push("column");
+            for (const label of labels) if (inside(x, y, label)) found.push(label.text);
+            for (const text of texts) if (inside(x, y, text)) found.push(text.text);
+            dots.slice(1).forEach((dot, index) => {
+              const cx = dot.left + dot.width / 2;
+              const cy = dot.top + dot.height / 2;
+              if (Math.abs(x - cx) <= 8 && y < cy - 10 && y > cy - 36) arrivals[index] = true;
+            });
+          };
           for (const path of root.querySelectorAll(".hv2-wires path")) {
             if (path.closest("defs") || !(path instanceof SVGPathElement)) continue;
             const matrix = path.getScreenCTM();
             if (!matrix) continue;
+            const bbox = path.getBBox();
+            const left = new DOMPoint(bbox.x, bbox.y).matrixTransform(matrix);
+            if (edge !== null && left.x < edge - 0.5) leftOfColumn.push(Math.round(left.x - edge));
             const length = path.getTotalLength();
-            const step = Math.max(3, length / 300);
+            const step = Math.max(3, length / 240);
             for (let distance = 0; distance <= length; distance += step) {
               const point = path.getPointAtLength(distance);
               const screen = new DOMPoint(point.x, point.y).matrixTransform(matrix);
-              for (const label of labels) {
-                if (screen.x >= label.left && screen.x <= label.right && screen.y >= label.top && screen.y <= label.bottom) {
-                  found.push(label.text);
-                }
-              }
+              note(screen.x, screen.y);
             }
           }
           for (const dot of root.querySelectorAll(".hv2-wires circle")) {
             const box = dot.getBoundingClientRect();
-            const x = box.left + box.width / 2;
-            const y = box.top + box.height / 2;
-            for (const label of labels) {
-              if (x >= label.left && x <= label.right && y >= label.top && y <= label.bottom) found.push(label.text);
-            }
+            note(box.left + box.width / 2, box.top + box.height / 2);
+            if (edge !== null && box.left < edge - 0.5) leftOfColumn.push(Math.round(box.left - edge));
           }
-          return found;
+          return { found, leftOfColumn, arrivals };
         });
-        expect(hits, `${id} @ ${width}`).toEqual([]);
+        expect(hits.found, `${id} @ ${width} wire over text or label column`).toEqual([]);
+        expect(hits.leftOfColumn, `${id} @ ${width} wires left of label column`).toEqual([]);
+        expect(hits.arrivals, `${id} @ ${width} spine reaches the next node`).not.toContain(false);
       }
     }
   });
@@ -147,7 +168,7 @@ test.describe("學門總圖", () => {
     await page.goto("/?d=pm-leadership");
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);
-    await page.getByTestId("home-diagram").getByRole("link", { name: /大事拆成小事/ }).click();
+    await page.getByTestId("home-diagram").getByRole("link", { name: /^大事拆成小事/ }).click();
     const detail = page.locator("[data-testid='node-detail']:visible");
     await expect(detail).toContainText("一件大事看起來很難");
     await expect(detail).toContainText("想一想：一件事要拆到多小，才知道明天就能開始做？");
