@@ -144,10 +144,14 @@ test("主線只把相鄰的點往下連，跳過的先學不畫成一排垂直�
   assert.equal(paths.length, 3);
   assert.equal(joints.length, 0);
   assert.equal(paths.some((path) => path.d.includes(" H ")), false);
-  assert.equal(paths[0].kind, "ext");
+  assert.equal(paths[0].kind, "link");
+  assert.equal(paths[0].head, false);
   assert.equal(paths[0].tone, "dim");
   assert.equal(paths[1].kind, "pre");
+  assert.equal(paths[1].head, true);
   assert.equal(paths[1].tone, "hi");
+  assert.equal(paths[2].kind, "pre");
+  assert.equal(paths[2].head, true);
   assert.equal(paths[2].tone, "hi");
   const blocked = routeWires(nodes, edges, null, { avoid: [{ left: 160, top: 150, right: 200, bottom: 230 }] });
   assert.equal(blocked.paths.length, 2);
@@ -163,6 +167,50 @@ test("主線只把相鄰的點往下連，跳過的先學不畫成一排垂直�
   );
   assert.equal(split.paths.length, 2);
   assert.equal(split.paths[0].head, false);
-  assert.equal(split.paths[1].head, true);
+  assert.equal(split.paths[1].head, false);
+  assert.equal(split.paths[1].kind, "link");
+  const claimed = routeWires(
+    [
+      { id: "a", x: 180, y: 40 },
+      { id: "b", x: 180, y: 300 },
+    ],
+    [{ from: "a", to: "b", kind: "pre" }],
+    null,
+    { avoid: [{ left: 0, top: 140, right: 400, bottom: 180 }] },
+  );
+  assert.equal(claimed.paths[0].head, false);
+  assert.equal(claimed.paths[1].head, true);
+  assert.equal(claimed.paths[1].kind, "pre");
   assert.ok(split.paths.every((path) => !path.d.includes(" H ")));
+});
+
+test("先學的點都排在依賴它的點上面", () => {
+  const model = buildHomeDiagram(loadCatalog());
+  const stageRank: Record<string, number> = { es: 0, jh: 1, sh: 2, uni: 3 };
+  for (const diagram of model.diagrams) {
+    const index = new Map(diagram.nodes.map((node, position) => [node.id, position]));
+    let previousRank = -1;
+    for (const node of diagram.nodes) {
+      const rank = stageRank[node.stageId] ?? 0;
+      assert.ok(rank >= previousRank, `${diagram.id} ${node.id} 學段往回`);
+      previousRank = rank;
+    }
+    for (const edge of diagram.edges) {
+      if (edge.kind !== "pre") continue;
+      const from = index.get(edge.from);
+      const to = index.get(edge.to);
+      assert.ok(from !== undefined && to !== undefined, `${diagram.id} ${edge.from}->${edge.to}`);
+      assert.ok(from < to, `${diagram.id} ${edge.from} 應該在 ${edge.to} 上面`);
+    }
+  }
+  const math = model.diagrams.find((item) => item.id === "math");
+  assert.ok(math);
+  const at = (stage: string) => math.nodes.filter((node) => node.stageId === stage).map((node) => node.title);
+  const elementary = at("es");
+  const junior = at("jh");
+  assert.ok(elementary.indexOf("數感：大概有多少？") < elementary.indexOf("分數：把一個東西平分"));
+  assert.ok(elementary.indexOf("數感：大概有多少？") < elementary.indexOf("規律與關係"));
+  assert.ok(elementary.indexOf("數感：大概有多少？") < elementary.indexOf("測量與單位"));
+  assert.ok(junior.indexOf("用字母代表數：方程式") < junior.indexOf("坐標與直線"));
+  assert.ok(junior.indexOf("坐標與直線") < junior.indexOf("二次函數與拋物線"));
 });

@@ -16,9 +16,10 @@ export type WireTone = "norm" | "hi" | "dim";
 
 export interface WirePath {
   d: string;
-  kind: "pre" | "ext";
+  /** pre 是上面那個點真的列在先學裡。link 只是把主線接下去，不表示先學。 */
+  kind: "pre" | "link";
   tone: WireTone;
-  /** 這段接到下一個圓點時才加箭頭。在學段名稱前停住的那截不加。 */
+  /** 先學、而且這段接到下一個圓點，才加箭頭。 */
   head?: boolean;
 }
 
@@ -72,7 +73,11 @@ export function routeWires(
 ): { paths: WirePath[]; joints: WireJoint[] } {
   const avoid = options.avoid ?? [];
   const linked = new Map<string, WireEdge["kind"]>();
-  for (const edge of edges) linked.set(`${edge.from}->${edge.to}`, edge.kind);
+  for (const edge of edges) {
+    const key = `${edge.from}->${edge.to}`;
+    if (linked.get(key) === "pre") continue;
+    linked.set(key, edge.kind);
+  }
   const paths: WirePath[] = [];
   for (let index = 0; index < nodes.length - 1; index += 1) {
     const from = nodes[index];
@@ -85,18 +90,15 @@ export function routeWires(
     const cuts = avoid
       .filter((box) => x >= box.left && x <= box.right && Math.max(start, end) > box.top && Math.min(start, end) < box.bottom)
       .map((box) => ({ top: box.top - 6, bottom: box.bottom + 6 }));
-    const forward = linked.get(`${from.id}->${to.id}`);
-    const backward = linked.get(`${to.id}->${from.id}`);
-    const hasPre = forward === "pre" || backward === "pre";
-    const hasExt = forward === "ext" || backward === "ext";
-    const kind = hasExt && !hasPre ? "ext" : "pre";
+    const isPre = linked.get(`${from.id}->${to.id}`) === "pre";
     const tone = toneFor(from.id, to.id, selectedId);
     for (const span of openSpans(start, end, cuts)) {
+      const reaches = Math.abs(span.to - to.y) <= RADIUS + 2;
       paths.push({
         d: `M ${x} ${Math.round(span.from)} V ${Math.round(span.to)}`,
-        kind,
+        kind: isPre ? "pre" : "link",
         tone,
-        head: Math.abs(span.to - to.y) <= RADIUS + 2,
+        head: isPre && reaches,
       });
     }
   }

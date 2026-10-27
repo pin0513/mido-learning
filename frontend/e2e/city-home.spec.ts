@@ -163,6 +163,42 @@ test.describe("學門總圖", () => {
     }
   });
 
+  test("先學的點畫在依賴它的點上面", async ({ page }) => {
+    for (const width of [1280, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const id of ["pm-leadership", "philosophy", "math", "it-ai"]) {
+        await page.goto(`/?d=${id}`);
+        const diagram = page.getByTestId("stage-diagram");
+        await expect(diagram.getByTestId("stage-label").first()).toBeVisible();
+        const legend = page.locator("[aria-label='圖例']");
+        await expect(legend).toContainText("先學");
+        await expect(legend).not.toContainText("可以延伸");
+        const order = await diagram.evaluate((root) => {
+          const nodes = [...root.querySelectorAll(".hv2-node")];
+          const topOf = new Map<string, number>();
+          for (const node of nodes) {
+            const anchor = node.querySelector("[data-anchor]")?.getAttribute("data-anchor");
+            if (anchor) topOf.set(anchor, node.getBoundingClientRect().top);
+          }
+          const failures: string[] = [];
+          for (const node of nodes) {
+            const anchor = node.querySelector("[data-anchor]")?.getAttribute("data-anchor");
+            const prereqs = (node.getAttribute("data-prereq-ids") ?? "").split(" ").filter(Boolean);
+            for (const prereq of prereqs) {
+              const above = topOf.get(prereq);
+              const here = anchor ? topOf.get(anchor) : undefined;
+              if (above === undefined || here === undefined || above >= here - 8) failures.push(`${prereq} -> ${anchor}`);
+            }
+          }
+          const dashed = [...root.querySelectorAll(".hv2-wires path")].filter((path) => path.getAttribute("stroke-dasharray")).length;
+          return { failures, dashed };
+        });
+        expect(order.failures, `${id} @ ${width}`).toEqual([]);
+        expect(order.dashed, `${id} @ ${width} dashed wire`).toBe(0);
+      }
+    }
+  });
+
   test("手機點圓點，說明在圖裡面展開", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/?d=pm-leadership");

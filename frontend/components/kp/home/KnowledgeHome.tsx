@@ -167,8 +167,7 @@ function WireLayer({ prefix, paths, joints, ghost }: { prefix: string; paths: Wi
           fill="none"
           stroke={TONE[path.tone]}
           strokeWidth="2.5"
-          strokeDasharray={path.kind === "ext" ? "7 6" : undefined}
-          markerEnd={path.head === false ? undefined : `url(#${prefix}-${path.tone})`}
+          markerEnd={path.head ? `url(#${prefix}-${path.tone})` : undefined}
         />
       ))}
       {joints.map((joint, index) => (
@@ -292,6 +291,7 @@ function StageDiagram({
                     href={`/?d=${diagram.id}&kp=${encodeURIComponent(node.id)}`}
                     className={`hv2-node${selected?.id === node.id ? " is-on" : ""}${selected && selected.id !== node.id ? " is-dim" : ""}`}
                     aria-current={selected?.id === node.id ? "page" : undefined}
+                    data-prereq-ids={node.prerequisites.map((item) => item.id).join(" ")}
                   >
                     <span className="hv2-fx" data-anchor={node.id} />
                     <span className="hv2-lb">
@@ -487,10 +487,15 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
                 <h2 id="stage-map-title">{discipline ? <Glyph name={discipline.glyph} size={20} color="#e4571e" /> : null} {discipline?.title}的學段總圖</h2>
                 <p>{diagram && diagram.nodes.length > 0 ? "最上面是國小，越往下越進階。點一個圓點看它在學什麼。" : "這個學門的知識點還在整理。"}</p>
               </div>
-              {diagram && diagram.edges.length > 0 ? (
+              {diagram && diagram.edges.some((edge) => edge.kind === "pre") ? (
                 <div className="hv2-leg" aria-label="圖例">
-                  <span><svg width="30" height="10" aria-hidden="true"><path d="M1 5 H29" stroke="#3a3834" strokeWidth="2.5" /></svg>先學</span>
-                  <span><svg width="30" height="10" aria-hidden="true"><path d="M1 5 H29" stroke="#3a3834" strokeWidth="2.5" strokeDasharray="6 5" /></svg>可以延伸</span>
+                  <span>
+                    <svg width="16" height="22" aria-hidden="true">
+                      <path d="M8 1 V13" stroke="#3a3834" strokeWidth="2.5" fill="none" />
+                      <path d="M3 11 L8 17 L13 11" stroke="#3a3834" strokeWidth="2" fill="none" />
+                    </svg>
+                    先學
+                  </span>
                 </div>
               ) : null}
             </div>
