@@ -14,7 +14,7 @@
   --pipe: #3a3834;
   --accent: #e4571e;
   --accent-ink: #b8420f;
-  --spine: 30%;
+  --spine: max(30%, 250px);
   box-sizing: border-box;
   min-height: 100vh;
   background: var(--ground);
@@ -121,12 +121,33 @@
 .kp-root .hv2-diagram { position: relative; z-index: 0; container-type: inline-size; }
 .kp-root .hv2-zone {
   position: relative;
+  display: flex;
+  flex-direction: column;
   background: var(--room);
   border-radius: 14px;
-  min-height: 132px;
+  min-height: 0;
   margin-bottom: 12px;
 }
 .kp-root .hv2-zone:last-child { margin-bottom: 0; }
+.kp-root .hv2-head {
+  position: relative;
+  z-index: 3;
+  padding: 12px 18px 8px;
+  background: var(--room);
+  border-radius: 14px 14px 0 0;
+}
+.kp-root .hv2-head .hv2-zl {
+  position: static;
+  display: inline-block;
+  left: auto;
+  top: auto;
+  max-width: 100%;
+}
+.kp-root .hv2-band {
+  position: relative;
+  flex: 1;
+  min-height: 104px;
+}
 .kp-root .hv2-zl {
   position: absolute;
   z-index: 2;
@@ -374,7 +395,7 @@
 .kp-root .hv2-more a:hover { color: var(--accent-ink); }
 
 @media (max-width: 600px) {
-  .kp-root .hv2 { --spine: 48px; font-size: 16px; }
+  .kp-root .hv2 { --spine: 132px; font-size: 16px; }
   .kp-root .hv2-wrap { width: auto; margin: 0 16px; }
   .kp-root .hv2-top { height: 58px; }
   .kp-root .hv2-navlink { display: none; }
@@ -402,14 +423,15 @@
   .kp-root .hv2-ph h2 { font-size: 21px; }
   .kp-root .hv2-ph p { font-size: 15px; }
   .kp-root .hv2-leg { flex-direction: row; gap: 14px; margin-top: 10px; font-size: 13px; }
-  .kp-root .hv2-zone { min-height: 156px; }
-  .kp-root .hv2-zl { font-size: 17px; left: 72px; top: 10px; }
+  .kp-root .hv2-zone { min-height: 0; }
+  .kp-root .hv2-head { padding: 10px 12px 6px; }
+  .kp-root .hv2-band { min-height: 120px; }
+  .kp-root .hv2-zl { font-size: 17px; }
   .kp-root .hv2-zl small { display: inline; margin-left: 6px; font-size: 13px; }
-  .kp-root .hv2-node { top: 78px; transform: translate(-15px, -15px); align-items: flex-start; }
+  .kp-root .hv2-node { align-items: flex-start; }
   .kp-root .hv2-lb b { font-size: 17px; }
   .kp-root .hv2-lb span { font-size: 14px; line-height: 1.5; }
-  .kp-root .hv2-ghost { top: 86px; }
-  .kp-root .hv2-inline { display: block; }
+  .kp-root .hv2-inline { display: block; margin: 8px 8px 12px; }
   .kp-root .hv2-only-narrow { display: inline; }
   .kp-root .hv2-tband .hv2-zl { display: none; }
   .kp-root .hv2-side-det { display: none; }

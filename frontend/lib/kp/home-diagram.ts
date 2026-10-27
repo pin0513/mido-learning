@@ -190,7 +190,30 @@ function edgesFor(points: KnowledgePoint[]): HomeEdge[] {
       add(point.id, id, "ext");
     }
   }
-  return edges;
+  return edges.filter((edge) => edge.kind === "pre" || !solidReachable(edges, edge.from, edge.to));
+}
+
+/** 沿實線往下走得到，虛線就可以拿掉。實線本身不動。 */
+function solidReachable(edges: HomeEdge[], from: string, to: string): boolean {
+  const next = new Map<string, string[]>();
+  for (const edge of edges) {
+    if (edge.kind !== "pre") continue;
+    const list = next.get(edge.from) ?? [];
+    list.push(edge.to);
+    next.set(edge.from, list);
+  }
+  const seen = new Set<string>();
+  const stack = [from];
+  while (stack.length > 0) {
+    const current = stack.pop() as string;
+    for (const id of next.get(current) ?? []) {
+      if (id === to) return true;
+      if (seen.has(id)) continue;
+      seen.add(id);
+      stack.push(id);
+    }
+  }
+  return false;
 }
 
 function nodeHref(folder: string, id: string): string {
