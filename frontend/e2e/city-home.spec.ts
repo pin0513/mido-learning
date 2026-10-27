@@ -199,6 +199,36 @@ test.describe("學門總圖", () => {
     }
   });
 
+  test("沒開許願開關時，頁面上沒有浮動許願按鈕", async ({ page }) => {
+    test.skip(process.env.WISH_FAB_ENABLED === "true", "這支測的是開關沒開");
+    const discipline = (name: string) => page.getByTestId("discipline-switch").getByRole("link", { name, exact: true });
+    const pages = [
+      { path: "/", ready: page.getByRole("heading", { level: 1, name: "先選學門，再從上往下看" }) },
+      { path: "/?d=pm-leadership", ready: discipline("專案管理與領導") },
+      { path: "/?d=philosophy", ready: discipline("哲學與思考方法") },
+      { path: "/?d=math", ready: discipline("數學") },
+      { path: "/?d=it-ai", ready: discipline("資訊與 AI") },
+      { path: "/kp", ready: page.getByRole("heading", { level: 1, name: "知識地圖" }) },
+      { path: "/kp/map", ready: page.getByRole("heading", { level: 1, name: "知識地圖" }) },
+    ];
+    for (const width of [390, 1280]) {
+      await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
+      for (const entry of pages) {
+        const wishFlag = page.waitForResponse((response) => response.url().includes("/api/wish-fab") && response.request().method() === "GET");
+        await page.goto(entry.path);
+        const flag = await wishFlag;
+        expect(flag.ok(), entry.path).toBe(true);
+        expect((await flag.json()).enabled, entry.path).toBe(false);
+        await expect(entry.ready, entry.path).toBeVisible();
+        await expect(page.getByRole("button", { name: "開啟學習願望聊天" }), entry.path).toHaveCount(0);
+        await expect(page.getByRole("button", { name: "關閉聊天" }), entry.path).toHaveCount(0);
+        await expect(page.getByText("許個學習願望吧！", { exact: true }), entry.path).toHaveCount(0);
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        expect(overflow, `${entry.path} @ ${width}`).toBeLessThanOrEqual(1);
+      }
+    }
+  });
+
   test("手機點圓點，說明在圖裡面展開", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/?d=pm-leadership");
