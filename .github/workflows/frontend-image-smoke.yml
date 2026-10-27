@@ -113,3 +113,75 @@ jobs:
           done
           check "/kp" /tmp/kp.html
           check "/kp/map" /tmp/kp-map.html
+          if grep -F "溝通與解決問題" /tmp/home.html >/dev/null; then
+            echo "homepage shows soft-skills while the flag is unset"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/sk-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/sk.voice/es)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/sk.voice/es returned ${code}, expected 404"
+            exit 1
+          fi
+          if curl -sf http://127.0.0.1:3000/sitemap.xml | grep -F "/kp/sk." >/dev/null; then
+            echo "sitemap lists sk while the flag is unset"
+            exit 1
+          fi
+
+      - name: Run image with soft-skills flag
+        run: |
+          set -euo pipefail
+          docker run -d --name kp-image-soft -p 3001:3000 \
+            -e KP_ENABLED=true \
+            -e KP_HOME_ENABLED=true \
+            -e KP_SOFTSKILLS_ENABLED=true \
+            mido-frontend-smoke
+          cleanup() {
+            status=$?
+            if [ "$status" -ne 0 ]; then
+              echo "----- soft-skills container logs -----"
+              docker logs kp-image-soft >&2 || true
+            fi
+            docker rm -f kp-image-soft >/dev/null 2>&1 || true
+            exit "$status"
+          }
+          trap cleanup EXIT
+          ready=0
+          for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+            if curl -sf http://127.0.0.1:3001/api/kp-launch | grep -q '"home":true'; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "soft-skills image did not become ready"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/sk-on.html -w '%{http_code}' "http://127.0.0.1:3001/?d=soft-skills&b=talk")"
+          if [ "$code" != "200" ]; then
+            echo "GET soft-skills home returned ${code}"
+            exit 1
+          fi
+          for name in "溝通與解決問題" "口語表達" "說話讓人聽得清楚"; do
+            if ! grep -F "$name" /tmp/sk-on.html >/dev/null; then
+              echo "soft-skills homepage missing ${name}"
+              exit 1
+            fi
+          done
+          if grep -F "說出感覺：我覺得" /tmp/sk-on.html >/dev/null; then
+            echo "soft-skills homepage leaked a draft title"
+            exit 1
+          fi
+          if grep -F "城市" /tmp/sk-on.html >/dev/null; then
+            echo "soft-skills homepage contains 城市"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/sk-point.html -w '%{http_code}' http://127.0.0.1:3001/kp/sk.voice/es)"
+          if [ "$code" != "200" ]; then
+            echo "GET /kp/sk.voice/es returned ${code}"
+            exit 1
+          fi
+          if ! curl -sf http://127.0.0.1:3001/sitemap.xml | grep -F "/kp/sk.voice/es" >/dev/null; then
+            echo "sitemap missing published soft-skills point"
+            exit 1
+          fi

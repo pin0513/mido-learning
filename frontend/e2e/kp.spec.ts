@@ -80,6 +80,7 @@ test.describe("知識地圖", () => {
     expect(index.status()).toBe(200);
     const rows = (await index.json()) as { id: string; title: string; stage: string; url: string }[];
     expect(rows).toHaveLength(100);
+    expect(rows.some((row) => row.id.startsWith("sk."))).toBe(false);
     expect(rows[0]).toEqual(expect.objectContaining({ id: expect.any(String), title: expect.any(String), stage: expect.any(String), url: expect.stringContaining("https://learn.paulfun.net/kp/") }));
 
     const sitemap = await request.get("/sitemap.xml");
@@ -87,6 +88,8 @@ test.describe("知識地圖", () => {
     expect(xml).toContain("/kp/layer/essence");
     expect(xml).toContain("/kp/pm.breakdown/es");
     expect(xml).not.toContain("/kp/pm.goal/es");
+    expect(xml).not.toContain("/kp/sk.");
+    expect(xml).not.toContain("/kp/discipline/soft-skills");
     expect(xml).not.toContain("/login");
     expect(xml).not.toContain("/dashboard");
   });

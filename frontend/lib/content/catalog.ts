@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { includeDraftKnowledgePoints } from "../kp/flags";
+import { includeDraftKnowledgePoints, isSoftSkillsEnabled } from "../kp/flags";
 import { loadContent } from "./load";
 import type {
   ContentIndexes,
@@ -150,6 +150,25 @@ export function visibleCatalog(catalog: ContentCatalog, includeDrafts = includeD
 
 export function disciplineRoots(catalog: ContentCatalog) {
   return catalog.taxonomy.roots.filter((root) => root.contentFolder && root.idPrefix);
+}
+
+/** 旗標關掉時，清單頁不帶溝通與解決問題。知識點頁本身仍可建置，由 middleware 擋。 */
+export function launchedCatalog(catalog: ContentCatalog): ContentCatalog {
+  if (isSoftSkillsEnabled()) return catalog;
+  const points = catalog.points.filter((point) => point.folder !== "soft-skills");
+  const visibleIds = new Set(points.map((point) => point.id));
+  const paths = catalog.paths
+    .filter((path) => path.disciplineFolder !== "soft-skills")
+    .map((path) => ({
+      ...path,
+      knowledgePointIds: path.knowledgePointIds.filter((id) => visibleIds.has(id)),
+    }));
+  return {
+    taxonomy: catalog.taxonomy,
+    points,
+    paths,
+    indexes: buildIndexes(catalog.taxonomy, points, paths),
+  };
 }
 
 export function disciplineTitle(catalog: ContentCatalog, folder: string): string {

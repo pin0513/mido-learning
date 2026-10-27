@@ -1,0 +1,60 @@
+id: sk.speech@jh
+concept: sk.speech
+title: 三分鐘說服：主張、理由、例子
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（主張—理由—例證），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.audience@jh
+- ph.argument@jh
+links:
+  why: []
+  how: []
+  related:
+  - ph.fallacy@jh
+  deeper:
+  - sk.present@sh
+link_notes: 框架：主張—理由—例證。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 扮演反方，列出可能的反對意見
+  human_experience:
+  - 在家人面前說出自己真正想要的
+idea: 說服不是比誰大聲。先清楚說出主張，再給理由和例子，最後回應對方可能的擔心。理由要讓對方在乎，不只是你在乎。
+guiding_questions:
+- 想說服爸媽讓你晚一點睡，你最有力的理由是什麼？
+scenario: 親子共學：家庭提案日：孩子提一個想做的事，大人提一個想改的家規，雙方都照「主張、理由、例子」說，再投票。
+goal: 用一個主張、兩三個理由和具體例子，在三分鐘內說服家人。
+review: 孩子做 3 分鐘家庭提案（例如假日行程），家長用檢核表勾：主張一句話說清楚、至少 2 個理由、每個理由有例子、回應了 1 個反對意見、沒有超時。
+formats:
+  slides: []
+  exercise: 目標：用一個主張、兩三個理由和具體例子，在三分鐘內說服家人。　檢核：孩子做 3 分鐘家庭提案（例如假日行程），家長用檢核表勾：主張一句話說清楚、至少 2 個理由、每個理由有例子、回應了 1 個反對意見、沒有超時。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

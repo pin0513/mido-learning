@@ -1,0 +1,62 @@
+id: sk.design@sh
+concept: sk.design
+title: 設計思考：從同理到原型
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 科技
+  - 綜合活動
+  core_competencies:
+  - A2
+  - A3
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（設計思考五步驟），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.interview@sh
+- sk.pdca@jh
+links:
+  why: []
+  how: []
+  related:
+  - pm.agile@sh
+  deeper:
+  - sk.a3@uni
+link_notes: 框架：設計思考五步驟。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 跨域思考
+  - 提問
+ai:
+  delegable:
+  - 發想點子、快速做出草圖
+  human_experience:
+  - 面對使用者，觀察他卡在哪裡
+idea: 設計思考常分五步：同理（訪談使用者）、定義（寫出「誰需要什麼，因為什麼」）、發想（先求多再求好）、原型（用紙、紙箱快速做出來）、測試（看使用者卡在哪裡）。重點是早一點讓真的人試，錯了就改。
+guiding_questions:
+- 還沒做出成品，可以先讓人試用嗎？
+scenario: 親子共學：親子一起改善家裡一個不好用的地方（例如玄關鞋櫃），孩子訪談家人、大人陪著做紙箱原型。
+goal: 走一輪設計思考：同理、定義、發想、原型、測試，做出可以給人試用的原型。
+review: 為家裡或學校一個真實問題做紙原型，找 2 位使用者測試，交一頁紀錄：問題定義句、10 個以上的點子、測試時觀察到的 3 件事、改了什麼。
+formats:
+  slides: []
+  exercise: 目標：走一輪設計思考：同理、定義、發想、原型、測試，做出可以給人試用的原型。　檢核：為家裡或學校一個真實問題做紙原型，找 2 位使用者測試，交一頁紀錄：問題定義句、10 個以上的點子、測試時觀察到的 3 件事、改了什麼。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

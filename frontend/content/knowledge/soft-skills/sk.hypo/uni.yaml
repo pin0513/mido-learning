@@ -1,0 +1,54 @@
+id: sk.hypo@uni
+concept: sk.hypo
+title: 假說驅動：先猜答案，再用資料檢驗
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 草稿：大學不對應 108 課綱，以學門路徑對應。
+- 引用的框架只寫名稱（假說驅動解題、假說樹），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.rootcause@sh
+- ph.bias@sh
+links:
+  why:
+  - ph.science@sh
+  how: []
+  related:
+  - ph.philsci@uni
+  deeper: []
+link_notes: 框架：假說驅動解題、假說樹。跨學門先學：哲學「認知偏誤與思考盲點」。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 查證
+  - 用數據說明
+  - 建模
+ai:
+  delegable:
+  - 整理資料、找反例
+  human_experience:
+  - 提出假說，願意被推翻
+idea: 問題很大、時間有限時，可以先根據經驗提出假說（答案可能是……），列出它要成立需要哪些證據，再優先收集最能推翻它的資料。要刻意找反例，避免只看支持自己的證據。
+guiding_questions:
+- 還沒收集資料就先猜答案，不會有偏見嗎？
+scenario: 親子共學：大人把自己工作上的一個問題寫成假說樹，請孩子專門找「什麼證據會推翻它」。
+goal: 面對複雜問題，先寫出可檢驗的假說與要收的證據，再用資料修正。
+review: 選一個真實問題（社團人數下降、產品回購率低），交一頁：問題陳述、假說樹、每個假說要收的資料與「什麼結果會推翻它」；兩週後更新哪些假說被推翻。
+formats:
+  slides: []
+  exercise: 目標：面對複雜問題，先寫出可檢驗的假說與要收的證據，再用資料修正。　檢核：選一個真實問題（社團人數下降、產品回購率低），交一頁：問題陳述、假說樹、每個假說要收的資料與「什麼結果會推翻它」；兩週後更新哪些假說被推翻。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

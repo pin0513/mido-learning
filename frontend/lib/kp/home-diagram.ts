@@ -1,5 +1,6 @@
 import { disciplineRoots, disciplineTitle, type ContentCatalog } from "../content/catalog";
 import type { KnowledgePoint, StageInfo } from "../content/types";
+import { isSoftSkillsEnabled } from "./flags";
 import { publicDisciplineIds } from "./home-public";
 import { knowledgePointPath } from "./routes";
 
@@ -10,7 +11,7 @@ import { knowledgePointPath } from "./routes";
  * 沒有畫進圖的對象，跨學門只留「準備中」，不帶標題。
  */
 
-export type DisciplineGlyph = "square" | "circle" | "triangle" | "diamond";
+export type DisciplineGlyph = "square" | "circle" | "triangle" | "diamond" | "pentagon" | "bubble";
 
 export interface HomeDiscipline {
   id: string;
@@ -34,6 +35,13 @@ export interface HomeLink {
   href: string;
 }
 
+export interface HomePrior {
+  id: string;
+  /** 已發布才帶標題。還沒發布只寫「準備中」，不帶草稿標題。 */
+  label: string;
+  href: string | null;
+}
+
 export interface HomeNode {
   id: string;
   title: string;
@@ -45,6 +53,8 @@ export interface HomeNode {
   /** 已發布才有閱讀頁。草稿頁不產生，所以這裡是 null。 */
   pageHref: string | null;
   prerequisites: HomeLink[];
+  /** 不畫成箭頭的先學。一個一行。空陣列時畫面沿用 prerequisites。 */
+  priors: HomePrior[];
   next: HomeLink | null;
   also: string[];
 }
@@ -55,8 +65,17 @@ export interface HomeEdge {
   kind: "pre" | "ext";
 }
 
+export interface HomeBranch {
+  id: string;
+  title: string;
+  blurb: string;
+  ready: boolean;
+  task: HomeTask | null;
+}
+
 export interface HomeDiagram {
   id: string;
+  branchId: string | null;
   nodes: HomeNode[];
   edges: HomeEdge[];
 }
@@ -101,6 +120,7 @@ export interface HomeModel {
   defaultDisciplineId: string;
   stages: HomeStage[];
   diagrams: HomeDiagram[];
+  branches: HomeBranch[];
   task: HomeTask | null;
 }
 
@@ -111,11 +131,22 @@ const PROFILE: Record<string, { shortTitle: string; mention: string; glyph: Disc
   philosophy: { shortTitle: "哲學思考", mention: "哲學", glyph: "circle" },
   math: { shortTitle: "數學", mention: "數學", glyph: "triangle" },
   "it-ai": { shortTitle: "資訊與AI", mention: "資訊與 AI", glyph: "diamond" },
+  "soft-skills": { shortTitle: "溝通解題", mention: "溝通", glyph: "pentagon" },
 };
 
 const OPEN_PATH_ID = "pm.estimate";
 /** 這張圖已經上線，不把同資料夾的草稿加進去。 */
-const PUBLISHED_DIAGRAMS = new Set(["pm-leadership"]);
+const PUBLISHED_DIAGRAMS = new Set(["pm-leadership", "soft-skills"]);
+
+const SOFT_BRANCHES: { id: string; title: string; blurb: string; short: string; pathName: string }[] = [
+  { id: "talk", title: "口語表達", blurb: "上台、簡報、開會", short: "口語", pathName: "口語表達" },
+  { id: "emp", title: "同理與溝通", blurb: "感受、同理、化解衝突", short: "同理", pathName: "同理與溝通" },
+  { id: "solve", title: "解決問題", blurb: "定義、找原因、改進", short: "解題", pathName: "解決問題" },
+];
+
+function branchOf(point: KnowledgePoint): (typeof SOFT_BRANCHES)[number] | undefined {
+  return SOFT_BRANCHES.find((branch) => branch.pathName === point.disciplinePath[1]);
+}
 
 function profileOf(folder: string, title: string): { shortTitle: string; mention: string; glyph: DisciplineGlyph } {
   return PROFILE[folder] ?? { shortTitle: title, mention: title, glyph: "circle" };
@@ -179,10 +210,30 @@ function topoWithin(group: KnowledgePoint[], fileOrder: Map<string, number>): Kn
   return sorted;
 }
 
+/** 大綱表格順序。同一個學段裡沒有先學關係時，用這個當次序，不跟檔名字母走。 */
+const SOFT_ORDER = [
+  "sk.voice@es", "sk.point@es", "sk.showtell@es",
+  "sk.audience@jh", "sk.speech@jh", "sk.discuss@jh",
+  "sk.consensus@sh", "sk.present@sh", "sk.qa@sh",
+  "sk.persuade@uni", "sk.facilitate@uni",
+  "sk.feelings@es", "sk.listen@es", "sk.otherside@es",
+  "sk.empmap@jh", "sk.imsg@jh", "sk.nvc@jh",
+  "sk.hardtalk@sh", "sk.interview@sh", "sk.feedback@sh",
+  "sk.coach@uni", "sk.mediate@uni",
+  "sk.problem@es", "sk.why5@es", "sk.polya@es",
+  "sk.pdca@jh", "sk.issuetree@jh", "sk.fishbone@jh",
+  "sk.rootcause@sh", "sk.decide@sh", "sk.design@sh",
+  "sk.a3@uni", "sk.hypo@uni",
+];
+
 function diagramPoints(catalog: ContentCatalog, folder: string, publicIds: readonly string[]): KnowledgePoint[] {
   if (!publicIds.includes(folder)) return [];
   const points = catalog.points.filter((point) => point.folder === folder);
   const shown = PUBLISHED_DIAGRAMS.has(folder) ? points.filter((point) => point.status === "published") : points;
+  if (folder === "soft-skills") {
+    const rank = new Map(SOFT_ORDER.map((id, index) => [id, index]));
+    shown.sort((a, b) => (rank.get(a.id) ?? 999) - (rank.get(b.id) ?? 999) || a.id.localeCompare(b.id));
+  }
   return sortPoints(catalog, shown);
 }
 
@@ -292,20 +343,150 @@ function crossesFor(catalog: ContentCatalog, point: KnowledgePoint, stepIndex: n
   return rows;
 }
 
-export function buildHomeDiagram(catalog: ContentCatalog, publicIds: readonly string[] = publicDisciplineIds()): HomeModel {
+function priorLabel(catalog: ContentCatalog, source: KnowledgePoint, targetId: string, onDiagram: Set<string>): HomePrior {
+  const target = catalog.indexes.byId.get(targetId);
+  if (!target || target.status !== "published") {
+    let suffix = "";
+    if (target && target.folder === source.folder) {
+      const branch = branchOf(target);
+      if (branch && branch.id !== branchOf(source)?.id) suffix = `（${branch.short}）`;
+    } else if (target) {
+      suffix = `（${profileOf(target.folder, disciplineTitle(catalog, target.folder)).mention}）`;
+    }
+    return { id: targetId, label: `準備中${suffix}`, href: null };
+  }
+  const branch = branchOf(target);
+  const mention = profileOf(target.folder, disciplineTitle(catalog, target.folder)).mention;
+  let label = target.title;
+  if (target.folder === source.folder && branch && branch.id !== branchOf(source)?.id) label = `${target.title}（${branch.short}）`;
+  else if (target.folder !== source.folder) label = `${target.title}（${mention}）`;
+  const href = target.folder === "soft-skills" && branch
+    ? `/?d=soft-skills&b=${branch.id}&kp=${encodeURIComponent(target.id)}`
+    : onDiagram.has(target.id)
+      ? nodeHref(target.folder, target.id)
+      : knowledgePointPath(target.concept, target.stage);
+  return { id: target.id, label, href };
+}
+
+function adjacentEdges(points: KnowledgePoint[]): HomeEdge[] {
+  const edges: HomeEdge[] = [];
+  for (let index = 1; index < points.length; index += 1) {
+    const previous = points[index - 1];
+    const point = points[index];
+    if (point.prerequisites.includes(previous.id)) edges.push({ from: previous.id, to: point.id, kind: "pre" });
+  }
+  return edges;
+}
+
+function nodesFor(catalog: ContentCatalog, points: KnowledgePoint[]): HomeNode[] {
+  const byId = new Map(points.map((point) => [point.id, point]));
+  return points.map((point) => {
+    const stage = catalog.taxonomy.stages.get(point.stage);
+    const prerequisites = point.prerequisites
+      .map((id) => byId.get(id))
+      .filter((item): item is KnowledgePoint => Boolean(item))
+      .map((item) => toLink(catalog, item));
+    const deeper = point.links.deeper
+      .map((id) => byId.get(id))
+      .find((item): item is KnowledgePoint => Boolean(item));
+    return {
+      id: point.id,
+      title: point.title,
+      question: point.guidingQuestions[0] ?? "",
+      idea: point.idea,
+      stageId: point.stage,
+      stageName: stage?.name ?? point.stage,
+      grades: gradesOf(stage),
+      pageHref: point.status === "published" ? knowledgePointPath(point.concept, point.stage) : null,
+      prerequisites,
+      priors: [],
+      next: deeper ? toLink(catalog, deeper) : null,
+      also: mentionsFor(catalog, point),
+    };
+  });
+}
+
+function taskFor(
+  catalog: ContentCatalog,
+  pathId: string,
+  onDiagram: Set<string>,
+  hideUnpublishedTitles: boolean,
+): HomeTask | null {
+  const path = catalog.indexes.pathsById.get(pathId);
+  if (!path) return null;
+  const stops = path.knowledgePointIds
+    .map((id) => catalog.indexes.byId.get(id))
+    .filter((point): point is KnowledgePoint => point?.status === "published");
+  if (stops.length === 0) return null;
+  const discipline = profileOf(path.disciplineFolder, path.disciplineTitle);
+  const steps: TaskStep[] = stops.map((point, index) => {
+    const stage = catalog.taxonomy.stages.get(point.stage);
+    const crosses = crossesFor(catalog, point, index + 1, onDiagram).map((cross) => {
+      if (!hideUnpublishedTitles || cross.title == null) return cross;
+      const targetId = cross.href?.match(/kp=([^&]+)/)?.[1];
+      const decoded = targetId ? decodeURIComponent(targetId) : "";
+      const target = catalog.indexes.byId.get(decoded);
+      if (target && target.status !== "published") {
+        return { ...cross, label: `${cross.mention} · 準備中`, title: null, href: null };
+      }
+      return cross;
+    });
+    return {
+      id: point.id,
+      index: index + 1,
+      title: point.title,
+      stageName: stage?.name ?? point.stage,
+      grades: gradesOf(stage),
+      href: knowledgePointPath(point.concept, point.stage),
+      disciplineTitle: path.disciplineTitle,
+      glyph: discipline.glyph,
+      crosses,
+    };
+  });
+  const uses: HomeTask["uses"] = [];
+  for (const step of steps) {
+    for (const cross of step.crosses) {
+      if (!uses.some((item) => item.mention === cross.mention)) uses.push({ mention: cross.mention, glyph: cross.glyph });
+    }
+  }
+  const first = steps[0];
+  const last = steps[steps.length - 1];
+  return {
+    id: path.id,
+    title: path.title,
+    disciplineId: path.disciplineFolder,
+    summary: `一條路，${steps.length} 步，從${first.stageName}走到${last.stageName}。`,
+    intro: `從${first.stageName}一路往下走 ${steps.length} 步。左右的虛線，接到這一步會用到的其他學門。`,
+    steps,
+    uses,
+    startHref: first.href,
+    startCaption: `${first.title} · ${first.stageName}，孩子可以先做`,
+  };
+}
+
+export function buildHomeDiagram(
+  catalog: ContentCatalog,
+  publicIds: readonly string[] = publicDisciplineIds(),
+  softSkills = isSoftSkillsEnabled(),
+): HomeModel {
   const stages: HomeStage[] = catalog.taxonomy.stageList.map((stage) => ({
     id: stage.id,
     name: stage.name,
     grades: gradesOf(stage),
   }));
-  const roots = [...disciplineRoots(catalog)].sort((a, b) => {
-    const left = ORDER.indexOf(a.contentFolder ?? "");
-    const right = ORDER.indexOf(b.contentFolder ?? "");
-    return (left === -1 ? 99 : left) - (right === -1 ? 99 : right);
-  });
+  const listed = softSkills
+    ? [...new Set([...publicIds.filter((id) => id !== "language"), "soft-skills"])]
+    : publicIds.filter((id) => id !== "soft-skills" && id !== "language");
+  const roots = [...disciplineRoots(catalog)]
+    .filter((root) => softSkills || root.contentFolder !== "soft-skills")
+    .sort((a, b) => {
+      const left = ORDER.indexOf(a.contentFolder ?? "");
+      const right = ORDER.indexOf(b.contentFolder ?? "");
+      return (left === -1 ? 99 : left) - (right === -1 ? 99 : right);
+    });
   const pointsByDiscipline = new Map(roots.map((root) => {
     const id = root.contentFolder ?? root.id;
-    return [id, diagramPoints(catalog, id, publicIds)] as const;
+    return [id, diagramPoints(catalog, id, listed)] as const;
   }));
   const disciplines: HomeDiscipline[] = roots.map((root) => {
     const id = root.contentFolder ?? root.id;
@@ -320,92 +501,87 @@ export function buildHomeDiagram(catalog: ContentCatalog, publicIds: readonly st
       ready: (pointsByDiscipline.get(id)?.length ?? 0) > 0,
     };
   });
-
-  const diagrams: HomeDiagram[] = disciplines.map((discipline) => {
-    const points = pointsByDiscipline.get(discipline.id) ?? [];
-    const byId = new Map(points.map((point) => [point.id, point]));
-    const nodes: HomeNode[] = points.map((point) => {
-      const stage = catalog.taxonomy.stages.get(point.stage);
-      const prerequisites = point.prerequisites
-        .map((id) => byId.get(id))
-        .filter((item): item is KnowledgePoint => Boolean(item))
-        .map((item) => toLink(catalog, item));
-      const deeper = point.links.deeper
-        .map((id) => byId.get(id))
-        .find((item): item is KnowledgePoint => Boolean(item));
-      return {
-        id: point.id,
-        title: point.title,
-        question: point.guidingQuestions[0] ?? "",
-        idea: point.idea,
-        stageId: point.stage,
-        stageName: stage?.name ?? point.stage,
-        grades: gradesOf(stage),
-        pageHref: point.status === "published" ? knowledgePointPath(point.concept, point.stage) : null,
-        prerequisites,
-        next: deeper ? toLink(catalog, deeper) : null,
-        also: mentionsFor(catalog, point),
-      };
+  if (softSkills) {
+    const at = disciplines.findIndex((item) => item.id === "soft-skills");
+    disciplines.splice(at === -1 ? disciplines.length : at, 0, {
+      id: "language",
+      title: "語文",
+      shortTitle: "語文",
+      mention: "語文",
+      glyph: "bubble",
+      ready: false,
     });
-    return { id: discipline.id, nodes, edges: edgesFor(points) };
-  });
+  }
+
+  const softPoints = pointsByDiscipline.get("soft-skills") ?? [];
+  const diagrams: HomeDiagram[] = [];
+  for (const discipline of disciplines) {
+    if (discipline.id === "language") {
+      diagrams.push({ id: "language", branchId: null, nodes: [], edges: [] });
+      continue;
+    }
+    if (discipline.id === "soft-skills") {
+      for (const branch of SOFT_BRANCHES) {
+        const points = softPoints.filter((point) => branchOf(point)?.id === branch.id);
+        diagrams.push({
+          id: "soft-skills",
+          branchId: branch.id,
+          nodes: nodesFor(catalog, points),
+          edges: adjacentEdges(points),
+        });
+      }
+      continue;
+    }
+    const points = pointsByDiscipline.get(discipline.id) ?? [];
+    diagrams.push({ id: discipline.id, branchId: null, nodes: nodesFor(catalog, points), edges: edgesFor(points) });
+  }
   const onDiagram = new Set(diagrams.flatMap((diagram) => diagram.nodes.map((node) => node.id)));
+  for (const diagram of diagrams) {
+    if (diagram.id !== "soft-skills") continue;
+    const points = softPoints.filter((point) => branchOf(point)?.id === diagram.branchId);
+    diagram.nodes.forEach((node, index) => {
+      const point = points[index];
+      if (!point) return;
+      const previousId = index > 0 ? points[index - 1]?.id : null;
+      const skip = previousId && point.prerequisites.includes(previousId) ? previousId : null;
+      node.priors = point.prerequisites
+        .filter((id) => id !== skip)
+        .map((id) => priorLabel(catalog, point, id, onDiagram));
+    });
+  }
+  const branches: HomeBranch[] = softSkills
+    ? SOFT_BRANCHES.map((branch) => {
+        const diagram = diagrams.find((item) => item.id === "soft-skills" && item.branchId === branch.id);
+        const ready = (diagram?.nodes.length ?? 0) > 0;
+        return {
+          id: branch.id,
+          title: branch.title,
+          blurb: branch.blurb,
+          ready,
+          task: ready ? taskFor(catalog, branch.id === "talk" ? "sk.talk" : "", onDiagram, true) : null,
+        };
+      })
+    : [];
 
   const path = catalog.indexes.pathsById.get(OPEN_PATH_ID);
   const defaultDisciplineId = disciplines.some((item) => item.id === path?.disciplineFolder)
     ? path?.disciplineFolder ?? disciplines[0]?.id ?? ""
     : disciplines.find((item) => item.ready)?.id ?? disciplines[0]?.id ?? "";
 
-  let task: HomeTask | null = null;
-  if (path) {
+  const task = path ? taskFor(catalog, path.id, onDiagram, false) : null;
+  if (task && path) {
     const stops = path.knowledgePointIds
       .map((id) => catalog.indexes.byId.get(id))
       .filter((point): point is KnowledgePoint => point?.status === "published");
-    if (stops.length > 0) {
-      const discipline = profileOf(path.disciplineFolder, path.disciplineTitle);
-      const steps: TaskStep[] = stops.map((point, index) => {
-        const stage = catalog.taxonomy.stages.get(point.stage);
-        return {
-          id: point.id,
-          index: index + 1,
-          title: point.title,
-          stageName: stage?.name ?? point.stage,
-          grades: gradesOf(stage),
-          href: knowledgePointPath(point.concept, point.stage),
-          disciplineTitle: path.disciplineTitle,
-          glyph: discipline.glyph,
-          crosses: crossesFor(catalog, point, index + 1, onDiagram),
-        };
-      });
-      const uses: HomeTask["uses"] = [];
-      for (const step of steps) {
-        for (const cross of step.crosses) {
-          if (!uses.some((item) => item.mention === cross.mention)) uses.push({ mention: cross.mention, glyph: cross.glyph });
-        }
-      }
-      const first = steps[0];
-      const last = steps[steps.length - 1];
-      task = {
-        id: path.id,
-        title: path.title,
-        disciplineId: path.disciplineFolder,
-        summary: `一條路，${steps.length} 步，從${first.stageName}走到${last.stageName}。`,
-        intro: `從${first.stageName}一路往下走 ${steps.length} 步。左右的虛線，接到這一步會用到的其他學門。`,
-        steps,
-        uses,
-        startHref: first.href,
-        startCaption: `${first.title} · ${first.stageName}，孩子可以先做`,
-      };
-      const onPath = new Map(stops.map((point, index) => [point.id, stops[index + 1]]));
-      for (const diagram of diagrams) {
-        if (diagram.id !== path.disciplineFolder) continue;
-        for (const node of diagram.nodes) {
-          const following = onPath.get(node.id);
-          if (following) node.next = toLink(catalog, following);
-        }
+    const onPath = new Map(stops.map((point, index) => [point.id, stops[index + 1]]));
+    for (const diagram of diagrams) {
+      if (diagram.id !== path.disciplineFolder) continue;
+      for (const node of diagram.nodes) {
+        const following = onPath.get(node.id);
+        if (following) node.next = toLink(catalog, following);
       }
     }
   }
 
-  return { disciplines, defaultDisciplineId, stages, diagrams, task };
+  return { disciplines, defaultDisciplineId, stages, diagrams, branches, task };
 }

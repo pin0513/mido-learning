@@ -1,0 +1,60 @@
+id: sk.issuetree@jh
+concept: sk.issuetree
+title: 問題樹：大問題拆成小問題
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 綜合活動
+  - 科技
+  core_competencies:
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（問題樹、MECE），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.problem@es
+- pm.breakdown@es
+links:
+  why: []
+  how: []
+  related:
+  - it.pattern@es
+  deeper: []
+link_notes: 框架：問題樹、MECE。跨學門先學：專案管理「大事拆成小事」。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 建模
+  - 跨域思考
+ai:
+  delegable:
+  - 檢查有沒有漏掉的分支
+  human_experience:
+  - 決定哪個分支最值得先做
+idea: 問題樹把大問題一層層拆開，直到每個小問題都知道怎麼回答。拆的時候檢查同一層：有沒有重疊（不重複）、有沒有漏掉（不遺漏），這個原則常叫 MECE。
+guiding_questions:
+- 「怎麼存到買腳踏車的錢」可以先拆成哪兩大塊？
+scenario: 親子共學：規劃家庭旅行時，大人畫第一層（交通、住宿、玩什麼、預算），孩子負責往下拆一個分支。
+goal: 把一個大問題拆成問題樹，同一層不重複、不遺漏。
+review: 孩子把一個目標（存錢買東西、提高某一科成績）拆成至少 3 層的問題樹；家長檢查同一層沒有重疊，每個最底層的小問題都能寫出一個行動。
+formats:
+  slides: []
+  exercise: 目標：把一個大問題拆成問題樹，同一層不重複、不遺漏。　檢核：孩子把一個目標（存錢買東西、提高某一科成績）拆成至少 3 層的問題樹；家長檢查同一層沒有重疊，每個最底層的小問題都能寫出一個行動。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

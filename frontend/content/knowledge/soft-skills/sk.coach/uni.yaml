@@ -1,0 +1,54 @@
+id: sk.coach@uni
+concept: sk.coach
+title: 教練式對話：用提問陪對方找答案
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 草稿：大學不對應 108 課綱，以學門路徑對應。
+- 引用的框架只寫名稱（GROW 教練模式），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.interview@sh
+- sk.feedback@sh
+links:
+  why: []
+  how: []
+  related:
+  - pm.style@sh
+  - pm.org@uni
+  deeper: []
+link_notes: 框架：GROW 教練模式。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+  - 領導
+  - 提問
+ai:
+  delegable:
+  - 提供可以問的問題清單
+  human_experience:
+  - 忍住不給答案，陪對方想
+idea: 教練式對話常用 GROW 四步：目標（你想要什麼）、現況（現在怎樣）、選項（有哪些做法）、行動（你要先做哪一步）。多問少給答案，對方自己想出來的行動，比較會真的去做。
+guiding_questions:
+- 朋友來問你意見，直接給建議和多問幾個問題，哪個對他比較有用？
+scenario: 親子共學：孩子遇到煩惱時，大人只用 GROW 四類問題陪他談，忍住不給答案；之後換孩子陪大人談。
+goal: 用目標、現況、選項、行動四類問題陪一個人談，讓下一步由他自己決定。
+review: 用 GROW 陪一位朋友或同事談 20 分鐘他想解決的事；錄音中你的提問多於建議，事後請對方評「下一步是我自己想出來的」1–5 分。
+formats:
+  slides: []
+  exercise: 目標：用目標、現況、選項、行動四類問題陪一個人談，讓下一步由他自己決定。　檢核：用 GROW 陪一位朋友或同事談 20 分鐘他想解決的事；錄音中你的提問多於建議，事後請對方評「下一步是我自己想出來的」1–5 分。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

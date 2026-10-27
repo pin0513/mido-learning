@@ -519,3 +519,53 @@
   .kp-root .hv2-xcol.related { margin-right: 0; justify-self: stretch; width: 100%; }
   .kp-root .hv2-xcard { width: 100%; }
 }
+
+.kp-root .hv2-seg.ss-seg6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.kp-root .ss-seg6 .hv2-sg { gap: 10px; padding: 8px 6px; white-space: nowrap; }
+.kp-root .ss-seg6 .hv2-sg small { margin-left: -2px; }
+.kp-root .ss-btog {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  background: #e6e3dc;
+  border-radius: 16px;
+  padding: 4px;
+  margin: 0 0 20px;
+}
+.kp-root .ss-bt {
+  min-height: 56px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  color: var(--ink);
+  text-align: center;
+}
+.kp-root .ss-bt b { font-size: 17px; line-height: 1.3; font-weight: 700; white-space: nowrap; }
+.kp-root .ss-bt small { font-size: 13px; line-height: 1.35; color: var(--muted); font-weight: 500; white-space: nowrap; }
+.kp-root a.ss-bt:hover { background: rgba(255, 255, 255, 0.45); }
+.kp-root .ss-bt[aria-pressed="true"] { background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 14px rgba(30, 28, 24, 0.08); }
+.kp-root .ss-bt[aria-pressed="true"] small { color: var(--accent-ink); }
+.kp-root a.hv2-fx { text-decoration: none; }
+.kp-root .hv2-lb > a { color: inherit; text-decoration: none; }
+.kp-root .hv2-lb > a:hover { color: inherit; }
+.kp-root .hv2-prior.ss-prior { display: flex; align-items: flex-start; }
+.kp-root .hv2-lb .ss-prior span { font-size: 13px; font-weight: 600; color: var(--ink-2); margin: 0; line-height: 1.4; display: block; }
+.kp-root .hv2-lb .ss-tseg,
+.kp-root .hv2-lb .ss-prior .ss-tseg { display: inline-block; font: inherit; color: inherit; margin: 0; line-height: inherit; text-wrap: pretty; }
+.kp-root .ss-pk { flex: none; }
+.kp-root .ss-pl { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.kp-root .ss-pl a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
+.kp-root .ss-pl a:hover { color: var(--ink); }
+
+@media (max-width: 600px) {
+  .kp-root .hv2-seg.ss-seg6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .kp-root .ss-seg6 .hv2-sg { min-height: 62px; }
+  .kp-root .ss-seg6 .hv2-sg small { display: block; }
+  .kp-root .ss-btog { margin: 4px 0 16px; }
+  .kp-root .ss-bt { min-height: 48px; padding: 6px 4px; }
+  .kp-root .ss-bt b { font-size: 15px; }
+  .kp-root .ss-bt small { display: none; }
+}

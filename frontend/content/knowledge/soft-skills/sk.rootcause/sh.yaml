@@ -1,0 +1,62 @@
+id: sk.rootcause@sh
+concept: sk.rootcause
+title: 用資料找真正原因
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 解決問題
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 數學
+  - 綜合活動
+  core_competencies:
+  - A2
+  - B2
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（柏拉圖分析、80/20 經驗法則），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.fishbone@jh
+- ma.data@es
+links:
+  why: []
+  how: []
+  related:
+  - ma.stats@sh
+  deeper:
+  - sk.hypo@uni
+link_notes: 框架：柏拉圖分析、80/20 經驗法則。跨學門先學：數學「整理資料與統計圖」。
+competency:
+  specialist:
+  - 問題解決
+  generalist:
+  - 用數據說明
+  - 查證
+ai:
+  delegable:
+  - 資料整理與畫圖
+  human_experience:
+  - 決定要記錄什麼，親自做實驗
+idea: 想到的原因要用資料確認。把每次發生的情況記下來、分類計數，畫成柏拉圖（由多到少排列），常會發現少數原因造成大部分的問題（80/20 是經驗法則，不是定律）。再對最主要的原因做小實驗。
+guiding_questions:
+- 抱怨最多的原因，一定是影響最大的原因嗎？
+scenario: 親子共學：大人也記一週「工作被打斷的原因」，和孩子的分心紀錄一起畫柏拉圖比較。
+goal: 收集資料、畫柏拉圖找出最主要的原因，再用小實驗驗證。
+review: 收集一週資料（例如每天分心的原因與次數）畫柏拉圖，指出前兩名原因，設計一週的小實驗並報告結果；家長檢查資料是當下記錄，不是事後回想。
+formats:
+  slides: []
+  exercise: 目標：收集資料、畫柏拉圖找出最主要的原因，再用小實驗驗證。　檢核：收集一週資料（例如每天分心的原因與次數）畫柏拉圖，指出前兩名原因，設計一週的小實驗並報告結果；家長檢查資料是當下記錄，不是事後回想。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

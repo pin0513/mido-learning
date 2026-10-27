@@ -1,0 +1,60 @@
+id: sk.discuss@jh
+concept: sk.discuss
+title: 小組討論：接住別人的話
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  - 綜合活動
+  core_competencies:
+  - B1
+  - C2
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+prerequisites:
+- sk.listen@es
+links:
+  why: []
+  how: []
+  related:
+  - pm.team@jh
+  deeper:
+  - sk.consensus@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 團隊合作
+ai:
+  delegable:
+  - 會後整理大家的論點
+  human_experience:
+  - 在討論現場等別人說完、接住他的話
+idea: 好的討論像接力：先說「我聽到你說……」，確認沒聽錯，再說「我想補充……」或「我有不同看法，因為……」。也要讓還沒說話的人有機會。
+guiding_questions:
+- 別人說完，你是接著他的話說，還是說你原本想說的？
+scenario: 親子共學：家庭會議輪流當「接話員」：每個人發言前，要先用一句話說出上一個人的重點。
+goal: 討論時先複述別人的重點，再補充或提出不同意見，不打斷、不搶話。
+review: 一次 15 分鐘家庭會議，家長記錄孩子用了幾次「我聽到你說……」（目標至少 2 次），並確認沒有打斷別人。
+formats:
+  slides: []
+  exercise: 目標：討論時先複述別人的重點，再補充或提出不同意見，不打斷、不搶話。　檢核：一次 15 分鐘家庭會議，家長記錄孩子用了幾次「我聽到你說……」（目標至少 2 次），並確認沒有打斷別人。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

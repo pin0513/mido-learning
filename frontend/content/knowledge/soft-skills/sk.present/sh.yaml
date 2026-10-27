@@ -1,0 +1,60 @@
+id: sk.present@sh
+concept: sk.present
+title: 簡報：上台把一件事講清楚
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - B2
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（結論先行、一張一個重點），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 與國文（實驗）zh.explain@sh「說明文與簡報」重疊：國文管投影片的文字，這一點管上台說；國文上線後改寫進 links.related。
+prerequisites:
+- sk.speech@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.persuade@uni
+link_notes: 框架：結論先行、一張一個重點。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 用數據說明
+ai:
+  delegable:
+  - 整理資料、建議圖表
+  human_experience:
+  - 決定最重要的一句話，現場看著聽眾說
+idea: 簡報是幫聽眾理解一件事或做一個決定。開場先說結論，接著三個重點各配一個例子或數字，最後再說一次結論。投影片是給聽眾看的提示，不是講稿。
+guiding_questions:
+- 台下的人開始滑手機，是哪一張投影片出了問題？
+scenario: 親子共學：孩子用 5 分鐘簡報自主學習成果，大人用 5 分鐘簡報自己的工作；互相只給一個讚美、一個建議。
+goal: 做 5 分鐘簡報：一開始就說結論，一張投影片一個重點，準時結束。
+review: 錄 5 分鐘簡報，家長勾：第一分鐘內說出結論、每張投影片一個重點、沒有照念投影片、時間誤差 30 秒內；再請一位聽眾寫下「記得的一句話」，看是不是你的結論。
+formats:
+  slides: []
+  exercise: 目標：做 5 分鐘簡報：一開始就說結論，一張投影片一個重點，準時結束。　檢核：錄 5 分鐘簡報，家長勾：第一分鐘內說出結論、每張投影片一個重點、沒有照念投影片、時間誤差 30 秒內；再請一位聽眾寫下「記得的一句話」，看是不是你的結論。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,56 @@
+id: sk.qa@sh
+concept: sk.qa
+title: 問答：聽懂問題再回答
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+prerequisites:
+- sk.present@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 查證
+ai:
+  delegable:
+  - 預測觀眾可能的問題
+  human_experience:
+  - 現場聽懂提問背後的擔心
+idea: 問答常比簡報更重要。先複述或確認問題，再用一兩句回答重點；不知道就說「這點我還沒查證，會後補給你」。被質疑時，先找出對方擔心的是什麼。
+guiding_questions:
+- 被問到不會的問題，你會硬掰還是怎麼說？
+scenario: 親子共學：大人的工作報告也請孩子當「刁難觀眾」問 3 題，換大人練習。
+goal: 被提問時先確認問題，簡短回答；不知道就誠實說，並約好補充。
+review: 簡報後家長問 3 題（一題刁難、一題不在內容裡），孩子每題都先確認問題、30 秒內答完重點；不會的題目沒有亂答。
+formats:
+  slides: []
+  exercise: 目標：被提問時先確認問題，簡短回答；不知道就誠實說，並約好補充。　檢核：簡報後家長問 3 題（一題刁難、一題不在內容裡），孩子每題都先確認問題、30 秒內答完重點；不會的題目沒有亂答。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

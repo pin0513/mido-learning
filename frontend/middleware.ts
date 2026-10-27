@@ -21,6 +21,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const enabled = process.env.KP_ENABLED === "true";
   const home = enabled && process.env.KP_HOME_ENABLED === "true";
+  const softSkills = enabled && process.env.KP_SOFTSKILLS_ENABLED === "true";
   if (pathname === "/" || pathname === "/city-home") {
     if (!home) return pathname === "/city-home" ? notFound() : NextResponse.next();
     if (pathname === "/") {
@@ -32,7 +33,15 @@ export function middleware(request: NextRequest) {
   }
 
   if (!enabled) return notFound();
+  if (!softSkills && isSoftSkillsPath(pathname)) return notFound();
   return NextResponse.next();
+}
+
+function isSoftSkillsPath(pathname: string): boolean {
+  return pathname === "/kp/discipline/soft-skills"
+    || pathname.startsWith("/kp/path/sk.")
+    || pathname.startsWith("/kp/sk.")
+    || pathname.startsWith("/kp/sk/");
 }
 
 export const config = {

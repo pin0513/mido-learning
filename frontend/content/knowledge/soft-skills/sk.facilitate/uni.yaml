@@ -1,0 +1,54 @@
+id: sk.facilitate@uni
+concept: sk.facilitate
+title: 主持立場不同的會議
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 草稿：大學不對應 108 課綱，以學門路徑對應。
+- 引用的框架只寫名稱（會議引導、利益與立場），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.consensus@sh
+- sk.hardtalk@sh
+- pm.conflict@sh
+links:
+  why: []
+  how: []
+  related:
+  - pm.org@uni
+  deeper: []
+link_notes: 框架：會議引導、利益與立場。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 領導
+  - 團隊合作
+ai:
+  delegable:
+  - 會議紀錄、整理各方論點
+  human_experience:
+  - 在衝突現場維持公平，承受壓力
+idea: 立場對立時，主持人先維持規則與公平，讓每一方說出背後在乎的事，把「立場」轉成「大家要一起解決的問題」。收斂不了時，就先決定下一步，例如補資料或組小組研議。
+guiding_questions:
+- 兩派吵起來時，主持人該先處理事情還是情緒？
+scenario: 親子共學：家族聚會要決定一件有爭議的事時，由大人主持、孩子記錄，會後一起檢討哪一句話讓氣氛轉好。
+goal: 主持一場有對立意見的會議，讓每一方都覺得被聽到，並收斂出下一步。
+review: 主持一次真實會議（社團、系學會、工作），會後發匿名問卷「我的意見有被聽到」1–5 分，平均 4 分以上，且紀錄裡有決議或明確的下一步。
+formats:
+  slides: []
+  exercise: 目標：主持一場有對立意見的會議，讓每一方都覺得被聽到，並收斂出下一步。　檢核：主持一次真實會議（社團、系學會、工作），會後發匿名問卷「我的意見有被聽到」1–5 分，平均 4 分以上，且紀錄裡有決議或明確的下一步。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

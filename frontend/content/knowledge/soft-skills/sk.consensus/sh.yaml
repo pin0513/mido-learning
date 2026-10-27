@@ -1,0 +1,64 @@
+id: sk.consensus@sh
+concept: sk.consensus
+title: 會議引導：發散、收斂、達成共識
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 綜合活動
+  - 語文
+  core_competencies:
+  - C2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（會議引導（發散／收斂）、五指表態），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 與 pm.team@jh 劃界：會議的流程與分工留在專案管理，這一點管引導與達成共識。
+prerequisites:
+- sk.discuss@jh
+- pm.team@jh
+links:
+  why: []
+  how: []
+  related:
+  - pm.stakeholder@sh
+  deeper:
+  - sk.facilitate@uni
+link_notes: 框架：會議引導（發散／收斂）、五指表態。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 團隊合作
+  - 領導
+ai:
+  delegable:
+  - 把便利貼上的想法分類
+  human_experience:
+  - 讀出會議氣氛，讓沉默的人開口
+idea: 會議引導常分兩段：發散時不批評，把想法都寫出來；收斂時先訂選擇標準，再分類、比較、合併。共識不是每個人最喜歡，而是每個人都能接受、願意支持，可以用五指表態（拳頭到五指）檢查。
+guiding_questions:
+- 投票決定，輸的那一方會願意一起做嗎？
+scenario: 親子共學：換孩子當家庭會議主持人，大人當成員；大人故意提一個很不一樣的意見，看主持人怎麼收。
+goal: 主持一場會議：先讓想法都出來，再訂標準收斂，最後用表態確認共識。
+review: 孩子主持 20 分鐘家庭會議決定一件事（週末行程、零用錢規則），交出一張紀錄：決議、負責人、期限；最後每人五指表態，三指以下的人有被問到原因。
+formats:
+  slides: []
+  exercise: 目標：主持一場會議：先讓想法都出來，再訂標準收斂，最後用表態確認共識。　檢核：孩子主持 20 分鐘家庭會議決定一件事（週末行程、零用錢規則），交出一張紀錄：決議、負責人、期限；最後每人五指表態，三指以下的人有被問到原因。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

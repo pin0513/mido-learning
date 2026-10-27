@@ -452,6 +452,9 @@ function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: V
       }
     }
 
+    const title = String(parsed.value.title ?? "");
+    if (title.includes(":")) errors.push(`${rel}: 標題請用全形冒號（：）`);
+
     const status = parsed.value.status;
     const knowledgeStatus: KnowledgeStatus =
       status === "published" || status === "review" || status === "draft" ? status : "draft";
@@ -468,7 +471,7 @@ function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: V
       file: rel,
       id,
       concept,
-      title: String(parsed.value.title ?? ""),
+      title,
       status: knowledgeStatus,
       version: String(parsed.value.version ?? ""),
       disciplinePath: pathSegments,
@@ -488,6 +491,8 @@ function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: V
       delegable: asStringArray(ai.delegable) ?? [],
       humanExperience: asStringArray(ai.human_experience) ?? [],
       idea: String(parsed.value.idea ?? ""),
+      goal: optionalString(parsed.value.goal),
+      review: optionalString(parsed.value.review),
       guidingQuestions: asStringArray(parsed.value.guiding_questions) ?? [],
       scenario: String(parsed.value.scenario ?? ""),
       slides,

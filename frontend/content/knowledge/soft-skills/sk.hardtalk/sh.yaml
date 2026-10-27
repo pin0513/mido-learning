@@ -1,0 +1,59 @@
+id: sk.hardtalk@sh
+concept: sk.hardtalk
+title: 困難對話：先處理情緒，再處理事情
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - C2
+  - A1
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（非暴力溝通、困難對話），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.nvc@jh
+links:
+  why: []
+  how: []
+  related:
+  - pm.conflict@sh
+  deeper:
+  - sk.mediate@uni
+link_notes: 框架：非暴力溝通、困難對話。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 陪你演練對方可能的反應
+  human_experience:
+  - 真的去談，承擔對話的結果
+idea: 困難對話會卡住，常是因為情緒還沒被接住。先說出你看到的對方感受，再講事實；用非暴力溝通的四步提出請求，也先想好對方說不的時候怎麼辦。
+guiding_questions:
+- 要跟老師爭取延後交作業，第一句話要說什麼？
+scenario: 親子共學：大人分享一次自己工作上的困難對話，孩子幫忙找出「哪一句是評價、哪一句是事實」。
+goal: 準備並進行一次困難對話：先承認對方的感受，再談事實和請求。
+review: 家長扮演對方演練一次（例如向教練說想退出校隊），家長勾：開頭承認對方感受、事實與評價分開、有具體請求、被拒絕時沒有翻臉；演練後再真的去談。
+formats:
+  slides: []
+  exercise: 目標：準備並進行一次困難對話：先承認對方的感受，再談事實和請求。　檢核：家長扮演對方演練一次（例如向教練說想退出校隊），家長勾：開頭承認對方感受、事實與評價分開、有具體請求、被拒絕時沒有翻臉；演練後再真的去談。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

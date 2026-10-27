@@ -1,0 +1,60 @@
+id: sk.empmap@jh
+concept: sk.empmap
+title: 同理心地圖：說、想、做、感受
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - C2
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（同理心地圖（設計思考）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.otherside@es
+links:
+  why: []
+  how: []
+  related:
+  - pm.stakeholder@sh
+  deeper:
+  - sk.interview@sh
+link_notes: 框架：同理心地圖（設計思考）。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+  - 提問
+ai:
+  delegable:
+  - 整理觀察紀錄
+  human_experience:
+  - 去問本人、確認自己有沒有猜錯
+idea: 同理心地圖把一個人分成四格：說了什麼、做了什麼（看得到），可能在想什麼、可能有什麼感受（要推測）。看得到的寫事實，推測的要標出來，之後再去問本人確認。
+guiding_questions:
+- 一個人說「沒關係」的時候，心裡想的也是沒關係嗎？
+scenario: 親子共學：親子互畫：孩子畫爸媽的一天，爸媽畫孩子的一天，交換後只說「哪一格最像、哪一格猜錯」。
+goal: 為一個真實的人畫同理心地圖，分開寫出他說的、做的、想的和感受。
+review: 為一位家人畫同理心地圖（例如每天準備晚餐的爸爸），請本人在每格打勾或打叉「像不像我」；至少 3 格打勾，打叉的格子寫下自己猜錯的原因。
+formats:
+  slides: []
+  exercise: 目標：為一個真實的人畫同理心地圖，分開寫出他說的、做的、想的和感受。　檢核：為一位家人畫同理心地圖（例如每天準備晚餐的爸爸），請本人在每格打勾或打叉「像不像我」；至少 3 格打勾，打叉的格子寫下自己猜錯的原因。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

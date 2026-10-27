@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { LayerStageMatrix } from "@/components/kp/LayerStageMatrix";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
 import {
-  disciplineRoots,
   disciplineTitle,
+  launchedCatalog,
   loadCatalog,
   stageName,
   visibleCatalog,
 } from "@/lib/content";
+import { isSoftSkillsEnabled } from "@/lib/kp/flags";
 import { KP_SITE_ORIGIN, competencyPath, disciplinePath, learningPathPath, stagePath } from "@/lib/kp/routes";
 
 const shell = "mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6";
@@ -27,10 +29,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function KnowledgeMapPage() {
+export default async function KnowledgeMapPage() {
+  await headers();
   const all = loadCatalog();
-  const visible = visibleCatalog(all);
-  const roots = disciplineRoots(all);
+  const visible = launchedCatalog(visibleCatalog(all));
+  const roots = all.taxonomy.roots
+    .filter((root) => root.contentFolder && root.idPrefix)
+    .filter((root) => isSoftSkillsEnabled() || root.contentFolder !== "soft-skills");
   if (roots.length === 0) notFound();
 
   const countCell = (layerId: string, stageId: string) =>

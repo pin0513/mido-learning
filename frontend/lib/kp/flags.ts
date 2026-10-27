@@ -20,6 +20,11 @@
  *   `loadCatalog` 會把該知識點的 slides 換成這一個 componentId。
  *   只在 build / dev 讀取。正式 image 與正式 Cloud Run 都不要設。
  *
+ * KP_SOFTSKILLS_ENABLED：首頁是否放出「溝通與解決問題」與「語文」。
+ *   每次請求讀取，不加 NEXT_PUBLIC_。未設定或不是 "true" 就是關。
+ *   只有 KP_ENABLED 也是 "true" 時才算打開。關掉不用重新 build，重啟行程即可。
+ *   關的時候學門切換維持原來的四格，/kp/sk.* 與 /kp/discipline/soft-skills 是 404，sitemap 不列 sk。
+ *
  * WISH_FAB_ENABLED：右下角學習願望浮動按鈕（氣泡與聊天視窗一起）。
  *   未設定或不是 "true" 就是關。不要加 NEXT_PUBLIC_，避免在 build 時寫死。
  *   頁面載入後問 /api/wish-fab，所以靜態頁重啟行程就會跟著開或關。
@@ -32,6 +37,10 @@ export function isKpEnabled(): boolean {
 
 export function isKpHomeEnabled(): boolean {
   return isKpEnabled() && process.env.KP_HOME_ENABLED === "true";
+}
+
+export function isSoftSkillsEnabled(): boolean {
+  return isKpEnabled() && process.env.KP_SOFTSKILLS_ENABLED === "true";
 }
 
 export function includeDraftKnowledgePoints(): boolean {

@@ -30,7 +30,8 @@
 | 變數 | 何時讀 | 預設 | 作用 |
 | --- | --- | --- | --- |
 | `KP_ENABLED` | 每次請求（middleware、`/api/kp-launch`、sitemap） | 關 | `/kp` 上線開關。關的時候 `/kp` 全部 404，導覽列沒有「知識地圖」。改值要重啟行程，**不用重新 build**。Cloud Run 用同一張 image 開新 revision 即可。 |
-| `KP_HOME_ENABLED` | 每次請求（middleware、`/api/kp-launch` 的 `home`） | 關 | 首頁開關，跟上面分開。關的時候 `/` 是原本的靜態首頁，`/city-home` 404。開的時候 middleware 把 `/` 改寫到 `/city-home`（網址仍是 `/`）。同樣不用重新 build，要重啟行程。城市裡的知識點連結仍要 `KP_ENABLED` 才開得了。 |
+| `KP_HOME_ENABLED` | 每次請求（middleware、`/api/kp-launch` 的 `home`） | 關 | 首頁開關，跟上面分開。關的時候 `/` 是原本的靜態首頁，`/city-home` 404。開的時候 middleware 把 `/` 改寫到 `/city-home`（網址仍是 `/`）。同樣不用重新 build，要重啟行程。知識點連結仍要 `KP_ENABLED` 才開得了。 |
+| `KP_SOFTSKILLS_ENABLED` | 每次請求（middleware、首頁、sitemap） | 關 | 打開「溝通與解決問題」與「語文」。只有 `KP_ENABLED` 也是 true 才算開。關的時候學門切換維持四格，`/kp/sk.*` 是 404，sitemap 不列 `sk`。不用重新 build。 |
 | `KP_INCLUDE_DRAFTS` | `next build` / `next dev` | 關（只生成 `published`） | 草稿與 `review` 要不要變成頁面。正式站預設不生成。改值必須重新 build。 |
 
 正式站目前發布的是主線 `pm.estimate`（拆解與估算）的四站：`pm.breakdown@es` 大事拆成小事、`pm.triangle@jh` 時間、金錢、品質的取捨、`pm.estimate@sh` WBS 與三點估算、`pm.evm@uni` 實獲值管理。其餘維持草稿，正式 image 看不到。CI 與預覽把 `KP_INCLUDE_DRAFTS=true`，城市圖才會有全部建築。

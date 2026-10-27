@@ -1,0 +1,61 @@
+id: sk.nvc@jh
+concept: sk.nvc
+title: 非暴力溝通：觀察、感受、需要、請求
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - C2
+  - C1
+  issues:
+  - 品德教育
+  - 人權教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（非暴力溝通（NVC）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.imsg@jh
+- ph.fact@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.hardtalk@sh
+link_notes: 框架：非暴力溝通（NVC）。跨學門先學：哲學「事實還是意見？」。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 檢查句子裡的評價字
+  human_experience:
+  - 說出自己真正的需要
+idea: 非暴力溝通（盧森堡提出）分四步：觀察（像攝影機一樣描述）、感受、需要（我在乎的是什麼）、請求（具體、做得到、對方可以拒絕）。最難的是第一步：把評價拿掉。
+guiding_questions:
+- 「你很懶」是觀察還是評價？
+scenario: 親子共學：大人先示範：把最近一次對孩子發脾氣的事，用四句話重說一次給孩子聽。
+goal: 用四個步驟說出一次衝突：不加評價的觀察、感受、背後的需要、具體的請求。
+review: 寫下一次真實衝突的四句話，家長檢查：觀察句裡沒有「都、總是、很懶」這類評價字；請求是具體行動，而且對方可以說不。
+formats:
+  slides: []
+  exercise: 目標：用四個步驟說出一次衝突：不加評價的觀察、感受、背後的需要、具體的請求。　檢核：寫下一次真實衝突的四句話，家長檢查：觀察句裡沒有「都、總是、很懶」這類評價字；請求是具體行動，而且對方可以說不。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

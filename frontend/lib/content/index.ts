@@ -4,6 +4,7 @@ export {
   competencyName,
   disciplineRoots,
   disciplineTitle,
+  launchedCatalog,
   layerName,
   loadCatalog,
   stageName,

@@ -1,0 +1,60 @@
+id: sk.feedback@sh
+concept: sk.feedback
+title: 給回饋，也收回饋
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - C2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（SBI 回饋模式），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 與國文（實驗）zh.editing@uni「改稿與編輯」交界：國文管文字修改，這一點管人與人之間怎麼給、怎麼收回饋；國文上線後互列 related。
+prerequisites:
+- sk.imsg@jh
+links:
+  why: []
+  how: []
+  related:
+  - pm.retro@es
+  deeper: []
+link_notes: 框架：SBI 回饋模式。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+  - 團隊合作
+ai:
+  delegable:
+  - 把回饋草稿改得更具體
+  human_experience:
+  - 當面說、當面收，不辯解
+idea: 好的回饋具體到對方能照做：在什麼情境、看到什麼行為、造成什麼影響（SBI 模式）。收回饋時不急著解釋，先說謝謝並複述，之後再決定要採用哪些。
+guiding_questions:
+- 「做得很好」和「先講結論，我馬上就懂了」，哪一句比較有用？
+scenario: 親子共學：每週一次家庭回饋時間：每人給另一人一則 SBI，大人先收、先示範不辯解。
+goal: 用「情境、行為、影響」給具體回饋；收到回饋時先謝謝、複述，再決定怎麼用。
+review: 孩子和家長互給一則 SBI 回饋（一則讚美、一則建議），家長檢查三段都有；收回饋的一方先謝謝並複述，沒有辯解。
+formats:
+  slides: []
+  exercise: 目標：用「情境、行為、影響」給具體回饋；收到回饋時先謝謝、複述，再決定怎麼用。　檢核：孩子和家長互給一則 SBI 回饋（一則讚美、一則建議），家長檢查三段都有；收回饋的一方先謝謝並複述，沒有辯解。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

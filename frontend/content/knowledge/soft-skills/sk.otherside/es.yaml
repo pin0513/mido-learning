@@ -1,0 +1,61 @@
+id: sk.otherside@es
+concept: sk.otherside
+title: 換個位置想
+status: draft
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 同理與溝通
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - C2
+  - C1
+  issues:
+  - 品德教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（觀點取替），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.feelings@es
+- sk.listen@es
+links:
+  why: []
+  how: []
+  related:
+  - ph.fair@es
+  deeper:
+  - sk.empmap@jh
+link_notes: 框架：觀點取替。
+competency:
+  specialist:
+  - 同理溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 提供不同角色的觀點當參考
+  human_experience:
+  - 真心想像別人的處境
+idea: 同一件事，站的位置不同，看到的就不同。想像自己是對方：他看到什麼？他在擔心什麼？這不代表要同意他，而是先懂他。
+guiding_questions:
+- 你覺得好玩的玩笑，被開玩笑的人也覺得好玩嗎？
+scenario: 親子共學：看卡通或繪本時暫停，問：「如果你是壞人那一邊，你會怎麼想？」大人也回答一次。
+goal: 說出故事裡另一個角色看到什麼、想什麼、覺得怎麼樣。
+review: 讀完一本繪本，孩子挑一個跟自己想法不同的角色，說出他的「看到、想到、感覺」三句；家長確認三句都是那個角色的角度。
+formats:
+  slides: []
+  exercise: 目標：說出故事裡另一個角色看到什麼、想什麼、覺得怎麼樣。　檢核：讀完一本繪本，孩子挑一個跟自己想法不同的角色，說出他的「看到、想到、感覺」三句；家長確認三句都是那個角色的角度。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

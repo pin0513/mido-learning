@@ -1,0 +1,59 @@
+id: sk.showtell@es
+concept: sk.showtell
+title: 一分鐘分享：開頭、經過、結尾
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues:
+  - 家庭教育
+to_verify: true
+verify_notes:
+- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 引用的框架只寫名稱（Show and Tell），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- sk.voice@es
+- sk.point@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.speech@jh
+link_notes: 框架：Show and Tell。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 幫忙想三個觀眾可能會問的問題
+  human_experience:
+  - 現場看著家人說、回答真的提問
+idea: 分享要有順序：開頭說這是什麼，經過說它的故事，結尾說你為什麼喜歡。說完留時間讓大家問問題。
+guiding_questions:
+- 你最想拿哪一樣東西跟大家分享？第一句要說什麼？
+scenario: 親子共學：週末「家庭分享會」：每人帶一樣東西，大人分享自己小時候的一樣物品。
+goal: 拿一樣東西，用開頭、經過、結尾說一分鐘給全家聽，再回答一個問題。
+review: 家長計時 1 分鐘（前後差 15 秒內都算），勾選：有開頭、有經過、有結尾、結束後回答了 1 個問題。
+formats:
+  slides: []
+  exercise: 目標：拿一樣東西，用開頭、經過、結尾說一分鐘給全家聽，再回答一個問題。　檢核：家長計時 1 分鐘（前後差 15 秒內都算），勾選：有開頭、有經過、有結尾、結束後回答了 1 個問題。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'
