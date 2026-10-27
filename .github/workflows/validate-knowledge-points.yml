@@ -159,6 +159,8 @@ jobs:
       - name: Knowledge map e2e
         env:
           KP_ENABLED: "true"
+          # index、學段、層級、核心素養改為每次請求重算。這一步要看得到草稿，所以把 build 時的開關再打開。
+          KP_INCLUDE_DRAFTS: "true"
           E2E_BASE_URL: http://127.0.0.1:3000
         run: |
           pnpm exec next start -p 3000 > /tmp/next-on.log 2>&1 &
