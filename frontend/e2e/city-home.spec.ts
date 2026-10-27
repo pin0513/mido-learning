@@ -199,6 +199,84 @@ test.describe("學門總圖", () => {
     }
   });
 
+  test("學習願望按鈕不蓋住圖上的文字", async ({ page }) => {
+    const overlaps = () =>
+      page.evaluate(() => {
+        const visible = (el: Element) => {
+          const style = getComputedStyle(el);
+          if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) === 0) return null;
+          const box = el.getBoundingClientRect();
+          if (box.width < 1 || box.height < 1 || box.bottom <= 0 || box.top >= window.innerHeight) return null;
+          return box;
+        };
+        const shell = document.querySelector(".wish-scroll");
+        const view = shell?.getBoundingClientRect() ?? new DOMRect(0, 0, window.innerWidth, window.innerHeight);
+        const widgets = [...document.querySelectorAll("[data-testid='wish-fab'], [data-testid='wish-bubble']")]
+          .map(visible)
+          .filter((box): box is DOMRect => Boolean(box));
+        const texts = [...document.querySelectorAll(".hv2-node .hv2-lb, .hv2-side .hv2-card, .hv2-side-det")].flatMap((el) => {
+          const box = el.getBoundingClientRect();
+          const top = Math.max(box.top, view.top);
+          const bottom = Math.min(box.bottom, view.bottom);
+          const left = Math.max(box.left, view.left);
+          const right = Math.min(box.right, view.right);
+          if (bottom - top < 2 || right - left < 2) return [];
+          return [{ top, bottom, left, right, text: (el.textContent ?? "").replace(/\s+/g, " ").trim().slice(0, 24) }];
+        });
+        const hits: string[] = [];
+        for (const widget of widgets) {
+          for (const text of texts) {
+            const hit =
+              widget.left < text.right - 1 &&
+              widget.right > text.left + 1 &&
+              widget.top < text.bottom - 1 &&
+              widget.bottom > text.top + 1;
+            if (hit) hits.push(text.text || "text");
+          }
+        }
+        return hits;
+      });
+
+    for (const width of [390, 1280]) {
+      await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
+      await page.goto("/?d=math");
+      const diagram = page.getByTestId("stage-diagram");
+      await expect(diagram.getByTestId("stage-label").first()).toBeVisible();
+      const bubble = page.getByTestId("wish-bubble");
+      const fab = page.getByTestId("wish-fab");
+      await expect(fab).toHaveAttribute("aria-label", "開啟學習願望聊天");
+      const size = await fab.boundingBox();
+      expect(size?.width ?? 0).toBeGreaterThanOrEqual(44);
+      expect(size?.height ?? 0).toBeGreaterThanOrEqual(44);
+      if (width === 390) await expect(bubble).toBeHidden();
+      else await expect(bubble).toBeVisible();
+      const gap = await page.evaluate(() => {
+        const shell = document.querySelector(".wish-scroll")?.getBoundingClientRect();
+        const boxes = [...document.querySelectorAll("[data-testid='wish-fab'], [data-testid='wish-bubble']")]
+          .filter((el) => getComputedStyle(el).display !== "none" && getComputedStyle(el).visibility !== "hidden")
+          .map((el) => el.getBoundingClientRect());
+        if (!shell || boxes.length === 0) return -1;
+        return Math.min(...boxes.map((box) => box.top)) - shell.bottom;
+      });
+      expect(gap, `${width} content ends above the widget`).toBeGreaterThanOrEqual(0);
+
+      expect(await overlaps(), `${width} top`).toEqual([]);
+      const nodes = diagram.locator(".hv2-node");
+      const count = await nodes.count();
+      await nodes.nth(Math.floor(count / 2)).scrollIntoViewIfNeeded();
+      await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      expect(await overlaps(), `${width} mid`).toEqual([]);
+
+      await page.evaluate(() => {
+        const shell = document.querySelector(".wish-scroll");
+        if (shell) shell.scrollTo({ top: shell.scrollHeight, behavior: "instant" });
+        else window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" });
+      });
+      await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      expect(await overlaps(), `${width} bottom`).toEqual([]);
+    }
+  });
+
   test("手機點圓點，說明在圖裡面展開", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/?d=pm-leadership");

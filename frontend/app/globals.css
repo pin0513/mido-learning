@@ -44,6 +44,31 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* 學習願望按鈕留在畫面底部的空白帶，內容在它上方捲動，不會壓到文字。 */
+html:has(.wish-scroll),
+body:has(.wish-scroll) {
+  height: 100%;
+  overflow: hidden;
+}
+.wish-scroll {
+  /* 蓋過公開頁外框的 min-h-screen，否則較小的 max-height 不會生效。 */
+  min-height: 0;
+  height: calc(100dvh - 8.5rem - env(safe-area-inset-bottom, 0px));
+  max-height: calc(100dvh - 8.5rem - env(safe-area-inset-bottom, 0px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+body:has(.kp-root.wish-scroll) {
+  background: #f5f4f0;
+}
+@media (max-width: 767px) {
+  .wish-scroll {
+    height: calc(100dvh - 5.75rem - env(safe-area-inset-bottom, 0px));
+    max-height: calc(100dvh - 5.75rem - env(safe-area-inset-bottom, 0px));
+  }
+}
+
 /* Placeholder 顏色統一設定（更深色，提升可讀性） */
 input::placeholder,
 textarea::placeholder {

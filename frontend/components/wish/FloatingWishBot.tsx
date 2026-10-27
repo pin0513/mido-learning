@@ -45,6 +45,13 @@ export function FloatingWishBot() {
     return () => window.removeEventListener("mido-open-wish", open);
   }, []);
 
+  useEffect(() => {
+    const shell = document.querySelector(".kp-root") ?? document.querySelector("[data-public-shell]");
+    if (!(shell instanceof HTMLElement)) return;
+    shell.classList.add("wish-scroll");
+    return () => shell.classList.remove("wish-scroll");
+  }, []);
+
   const addMessage = (type: 'bot' | 'user', content: string) => {
     setMessages((prev) => [...prev, { id: crypto.randomUUID(), type, content }]);
   };
@@ -152,10 +159,10 @@ export function FloatingWishBot() {
 
   return (
     <>
-      {/* Floating Button */}
       <button
+        data-testid="wish-fab"
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all duration-300 ${
+        className={`fixed right-[max(1.5rem,env(safe-area-inset-right,0px))] bottom-[max(1.5rem,env(safe-area-inset-bottom,0px))] z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all duration-300 ${
           isOpen
             ? 'bg-gray-600 hover:bg-gray-700'
             : 'bg-violet-600 hover:bg-violet-700 hover:scale-110'
@@ -171,9 +178,9 @@ export function FloatingWishBot() {
         )}
       </button>
 
-      {/* Badge */}
+      {/* 窄螢幕不顯示氣泡，避免蓋住內文。桌面維持原樣。 */}
       {!isOpen && (
-        <div className="fixed bottom-[88px] right-6 z-50 animate-bounce">
+        <div data-testid="wish-bubble" className="fixed bottom-[max(5.5rem,calc(env(safe-area-inset-bottom,0px)+4rem))] right-[max(1.5rem,env(safe-area-inset-right,0px))] z-50 hidden animate-bounce md:block">
           <div className="rounded-lg bg-violet-600 px-3 py-1 text-xs font-medium text-white shadow-lg">
             許個學習願望吧！
           </div>
@@ -183,7 +190,7 @@ export function FloatingWishBot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-80 overflow-hidden rounded-2xl bg-white shadow-2xl sm:w-96">
+        <div className="fixed right-[max(1.5rem,env(safe-area-inset-right,0px))] bottom-[max(6rem,calc(env(safe-area-inset-bottom,0px)+4.5rem))] z-50 w-80 max-w-[calc(100vw-3rem)] overflow-hidden rounded-2xl bg-white shadow-2xl sm:w-96">
           {/* Header */}
           <div className="bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-3">
             <div className="flex items-center gap-3">

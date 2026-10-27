@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col" data-public-shell>
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
