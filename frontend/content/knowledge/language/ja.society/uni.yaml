@@ -1,0 +1,52 @@
+id: ja.society@uni
+concept: ja.society
+title: 讀懂日本：社會與流行文化
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 基準標籤：JLPT N2–N1・聽解。
+prerequisites:
+- lg.culture@uni
+- ja.listen@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 跨文化溝通
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 解釋文化背景
+  human_experience:
+  - 和日本朋友交流時體會差異
+idea: 日語裡很多說法和社會習慣綁在一起，例如「空気を読む」（察言觀色）。看懂文化脈絡，才聽得懂沒說出口的話。
+guiding_questions:
+- 日劇裡的「客氣」，背後是什麼社會習慣？
+scenario: 親子共學：看一集日劇，記下三個「話沒說完」的場景，討論角色真正想表達什麼。
+goal: 從新聞、綜藝或動畫看懂日本社會的習慣與價值觀。
+review: 選一部日劇或一則新聞，寫出 2 個「台灣不會這樣做」的地方並查證背景；家人看得出查證來源。
+formats:
+  slides: []
+  exercise: 目標：從新聞、綜藝或動畫看懂日本社會的習慣與價值觀。　檢核：選一部日劇或一則新聞，寫出 2 個「台灣不會這樣做」的地方並查證背景；家人看得出查證來源。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

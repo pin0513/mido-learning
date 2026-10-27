@@ -1,0 +1,57 @@
+id: zh.feeling@sh
+concept: zh.feeling
+title: 情意題：寫真實經驗
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（學測國寫情意題），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- zh.material@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：學測國寫情意題。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 提問幫你回想細節
+  human_experience:
+  - 挑出真實發生、願意寫出來的經驗
+idea: 學測情意題要「具體寫出個人的生活經驗」並「真誠抒發」。評分原則裡，B 等常是「想法較為粗淺，或僅泛論」。
+guiding_questions:
+- 寫家人時，哪個只有你家才有的細節，能讓人相信？
+scenario: 親子共學：寫一段 300 字「只有我家才有」的場景，家長讀完說出最記得的一個細節。
+goal: 學測國寫情意題：寫出具體的個人經驗與真誠的感受。
+review: 孩子寫一段 300 字「只有我家才有」的場景，家長讀完說得出一個最記得的細節，且找不到放進任何文章都通的套話。
+formats:
+  slides: []
+  exercise: 目標：學測國寫情意題：寫出具體的個人經驗與真誠的感受。　檢核：孩子寫一段 300 字「只有我家才有」的場景，家長讀完說得出一個最記得的細節，且找不到放進任何文章都通的套話。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

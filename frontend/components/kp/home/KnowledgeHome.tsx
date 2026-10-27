@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState, type ComponentProps } from "react";
 import Link from "next/link";
 import { recordPageView } from "@/lib/api/analytics";
-import type { DisciplineGlyph, HomeDiagram, HomeModel, HomeNode, HomeTask, TaskCross } from "@/lib/kp/home-diagram";
+import type { DisciplineGlyph, HomeBranch, HomeDiagram, HomeModel, HomeNode, HomeTask, TaskCross } from "@/lib/kp/home-diagram";
 import { readHomeState, type HomeState } from "@/lib/kp/home-state";
 import { routeWires, type WireBox, type WireJoint, type WirePath } from "@/lib/kp/home-wires";
 import "./home-v2.css";
@@ -11,6 +11,11 @@ import "./home-v2.css";
 const TONE = { norm: "#3a3834", hi: "#e4571e", dim: "#cfcbc3" } as const;
 const PARENT_TIP = "國小的點，孩子可以自己先看；高中、大學的點，適合大人陪著讀，或自己先讀。";
 const SOFT_TIP = "每個點都附一個看得到的檢核，例如錄一分鐘影片、數幾次「我聽到你說」。國小的點適合全家一起做，大人也輪一次；高中、大學的點，大人可以自己先讀。";
+const ZH_TIP = "每個點都附一個看得到的檢核，例如抽一段標點、寫出生字或造句。上台說話和簡報放在「溝通與解決問題」，這裡專心把文字寫對、寫清楚。";
+const EN_TIP = "英文每一步都標出對照的檢定或讀本程度，檢核盡量用官方練習題，分數只當官方公布的數字；學段對應是建議，每個孩子的快慢本來就不同。";
+const JA_TIP = "日文對照的是 JLPT 級數，不寫分數。檢核用家裡做得到的事，例如念出假名、說一句招呼。學段對應是建議，每個孩子的快慢本來就不同。";
+const EN_NOTE = "學段和全民英檢、多益、托福、美國年級的對應，是本站的學習建議，不是官方換算。";
+const JA_NOTE = "學段和 JLPT 級數的對應，是本站的學習建議，不是官方換算。";
 const GoContext = createContext<(href: string) => void>(() => {});
 
 function QueryLink({ href, onClick, ...rest }: ComponentProps<typeof Link>) {
@@ -335,9 +340,13 @@ function StageDiagram({
         const nodes = diagram.nodes.filter((node) => node.stageId === stage.id);
         const open = selected?.stageId === stage.id;
         return (
-          <div className={open ? "hv2-zone is-open" : "hv2-zone"} key={stage.id}>
+          <div className={`${open ? "hv2-zone is-open" : "hv2-zone"}${diagram.id === "language" ? " yw-zone" : ""}`} key={stage.id}>
             <div className="hv2-labelcol" data-testid="stage-label-column" data-anchor={`col-${stage.id}`}>
-              <div className="hv2-zl" data-testid="stage-label" data-anchor={`label-${stage.id}`}>{stage.name}<small>{stage.grades}</small></div>
+              <div className="hv2-zl" data-testid="stage-label" data-anchor={`label-${stage.id}`}>
+                {stage.name}
+                <small>{diagram.stageNotes?.[stage.id]?.grades ?? stage.grades}</small>
+                {diagram.stageNotes?.[stage.id]?.lines.map((line) => <small className="yw-cap" key={line}>{line}</small>)}
+              </div>
             </div>
             <div className="hv2-band">
               {nodes.length === 0 ? <span className="hv2-ghost" /> : null}
@@ -366,6 +375,7 @@ function StageDiagram({
                 ) : null;
                 const title = (
                   <>
+                    {node.badge ? <small className="yw-share">{node.badge}</small> : null}
                     <b>{segmented ? <Segments text={node.title} mode="title" /> : node.title}</b>
                     {node.question ? <span>{segmented ? <Segments text={node.question} mode="question" /> : node.question}</span> : null}
                   </>
@@ -542,16 +552,90 @@ function Shell({ current, children }: { current: "map" | "task"; children: React
   );
 }
 
+function languageIntro(branch: HomeBranch | undefined): string {
+  if (branch?.language === "ja") return "外語分成英文、日文。日文有假名與讀寫、會話與敬語兩條線，一次看一條。";
+  if (branch?.language === "en") return "外語分成英文、日文。英文有聽說、讀寫、檢定與方法三條線，一次看一條。";
+  return "國文分成六條線，一次看一條。最上面是國小，越往下越進階。";
+}
+
+function LanguageControls({ branches, branch }: { branches: HomeBranch[]; branch: HomeBranch | undefined }) {
+  const group = branch?.group === "fl" ? "fl" : "zh";
+  const language = branch?.language === "ja" ? "ja" : "en";
+  const lines = branches.filter((item) => item.group === group && (group === "zh" || item.language === language));
+  const choice = (href: string, label: string, pressed: boolean, testId?: string) => (
+    <QueryLink href={href} className="yw-choice" aria-pressed={pressed} aria-current={pressed ? "page" : undefined} data-testid={testId}>
+      {label}
+    </QueryLink>
+  );
+  return (
+    <>
+      <div className="yw-scope" data-testid="language-rows">
+        <div className="yw-main" role="group" aria-label="國文或外語" data-testid="language-group">
+          {choice("/?d=language&b=basic", "國文", group === "zh")}
+          {choice("/?d=language&b=en-talk", "外語", group === "fl")}
+        </div>
+        {group === "fl" ? (
+          <div className="yw-sub" role="group" aria-label="英文或日文" data-testid="language-sub">
+            {choice("/?d=language&b=en-talk", "英文", language === "en")}
+            {choice("/?d=language&b=ja-read", "日文", language === "ja")}
+          </div>
+        ) : null}
+      </div>
+      <div className={`yw-lines cols-${group === "zh" ? 6 : language === "en" ? 3 : 2}`} role="group" aria-label="選擇線" data-testid="branch-switch">
+        {lines.map((item) => (
+          <QueryLink
+            key={item.id}
+            href={`/?d=language&b=${item.id}`}
+            className="yw-bt"
+            aria-pressed={item.id === branch?.id}
+            aria-current={item.id === branch?.id ? "page" : undefined}
+          >
+            <b><span className="yw-desk">{item.title}</span><span className="yw-mob">{item.short}</span></b>
+            <small>{item.blurb}</small>
+          </QueryLink>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function MilestoneCard() {
+  return (
+    <div className="hv2-card yw-mile" data-testid="milestone-card">
+      <h3>英文的里程碑</h3>
+      <ul>
+        <li><b>國小</b>英語初階的準備　CEFR A1</li>
+        <li><b>國中</b>全民英檢初級　CEFR A2</li>
+        <li><b>高中</b>全民英檢中級　CEFR B1</li>
+        <li><b>大學</b>多益、托福　CEFR B2–C1</li>
+      </ul>
+      <p>{EN_NOTE}</p>
+    </div>
+  );
+}
+
 function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
   const discipline = model.disciplines.find((item) => item.id === state.disciplineId) ?? model.disciplines[0];
   const diagram = model.diagrams.find((item) => item.id === discipline?.id && item.branchId === state.branchId) ?? model.diagrams[0];
   const selected = diagram?.nodes.find((node) => node.id === state.nodeId) ?? null;
   const ready = model.disciplines.find((item) => item.ready);
   const homeHref = state.branchId ? `/?d=${discipline?.id ?? ""}&b=${state.branchId}` : `/?d=${discipline?.id ?? ""}`;
-  const branch = model.branches.find((item) => item.id === state.branchId);
-  const task = discipline?.id === "soft-skills" ? branch?.task ?? null : model.task;
-  const segmented = discipline?.id === "soft-skills";
+  const disciplineBranches = model.branches.filter((item) => item.disciplineId === discipline?.id);
+  const branch = disciplineBranches.find((item) => item.id === state.branchId);
+  const soft = discipline?.id === "soft-skills";
+  const language = discipline?.id === "language";
+  const task = soft || language ? branch?.task ?? null : model.task;
+  const segmented = soft || language;
   const wideSwitch = model.disciplines.length > 4;
+  const intro = language
+    ? languageIntro(branch)
+    : soft
+      ? "分成三條線，一次看一條。最上面是國小，越往下越進階。"
+      : diagram && diagram.nodes.length > 0
+        ? "最上面是國小，越往下越進階。點一個圓點看它在學什麼。"
+        : "這個學門的知識點還在整理。";
+  const note = language && branch?.language === "en" ? EN_NOTE : language && branch?.language === "ja" ? JA_NOTE : "";
+  const tip = language ? (branch?.language === "ja" ? JA_TIP : branch?.language === "en" ? EN_TIP : ZH_TIP) : soft ? SOFT_TIP : PARENT_TIP;
 
   return (
     <Shell current="map">
@@ -564,28 +648,42 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
       </section>
       <div className="hv2-wrap">
         <div className={wideSwitch ? "hv2-seg ss-seg6" : "hv2-seg"} role="group" aria-label="選擇學門" data-testid="discipline-switch">
-          {model.disciplines.map((item) => (
-            <QueryLink
-              key={item.id}
-              href={`/?d=${item.id}`}
-              className="hv2-sg"
-              aria-pressed={item.id === discipline?.id}
-              aria-current={item.id === discipline?.id ? "page" : undefined}
-              aria-label={item.ready ? item.title : `${item.title}，準備中`}
-            >
-              <Glyph name={item.glyph} size={20} color={item.id === discipline?.id ? "#e4571e" : "#1d1c1a"} />
-              <span className="hv2-full">{item.title}</span>
-              <span className="hv2-short">{item.shortTitle}</span>
-              {item.ready ? null : <small>準備中</small>}
-            </QueryLink>
-          ))}
+          {model.disciplines.map((item) => {
+            const body = (
+              <>
+                <Glyph name={item.glyph} size={20} color={item.id === discipline?.id ? "#e4571e" : "#1d1c1a"} />
+                <span className="hv2-full">{item.title}</span>
+                <span className="hv2-short">{item.shortTitle}</span>
+                {item.ready ? null : <small>準備中</small>}
+              </>
+            );
+            if (item.id === "language" && !item.ready) {
+              return (
+                <span key={item.id} className="hv2-sg" aria-disabled="true" aria-label={`${item.title}，準備中`}>
+                  {body}
+                </span>
+              );
+            }
+            return (
+              <QueryLink
+                key={item.id}
+                href={item.id === "language" ? "/?d=language&b=basic" : `/?d=${item.id}`}
+                className="hv2-sg"
+                aria-pressed={item.id === discipline?.id}
+                aria-current={item.id === discipline?.id ? "page" : undefined}
+                aria-label={item.ready ? item.title : `${item.title}，準備中`}
+              >
+                {body}
+              </QueryLink>
+            );
+          })}
         </div>
         <div className="hv2-cols">
           <section className="hv2-panel" aria-labelledby="stage-map-title">
             <div className="hv2-ph">
               <div>
                 <h2 id="stage-map-title">{discipline ? <Glyph name={discipline.glyph} size={20} color="#e4571e" /> : null} {discipline?.title}的學段總圖</h2>
-                <p>{segmented ? "分成三條線，一次看一條。最上面是國小，越往下越進階。" : diagram && diagram.nodes.length > 0 ? "最上面是國小，越往下越進階。點一個圓點看它在學什麼。" : "這個學門的知識點還在整理。"}</p>
+                <p>{intro}</p>
               </div>
               {diagram && diagram.edges.some((edge) => edge.kind === "pre") ? (
                 <div className="hv2-leg" aria-label="圖例">
@@ -599,9 +697,11 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
                 </div>
               ) : null}
             </div>
-            {segmented && model.branches.length > 0 ? (
+            {language ? <LanguageControls branches={disciplineBranches} branch={branch} /> : null}
+            {note ? <p className="yw-note" role="note" data-testid="mapping-note">{note}</p> : null}
+            {soft && disciplineBranches.length > 0 ? (
               <div className="ss-btog" role="group" aria-label="選擇線" data-testid="branch-switch">
-                {model.branches.map((item) => {
+                {disciplineBranches.map((item) => {
                   const body = (
                     <>
                       <b>{item.title}</b>
@@ -660,8 +760,9 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
                 <TaskCard task={task} />
               </div>
             ) : null}
+            {language && branch?.id === "en-bench" && !selected ? <MilestoneCard /> : null}
             {selected ? null : (
-              <div className="hv2-tip"><b>給家長</b>{segmented ? SOFT_TIP : PARENT_TIP}</div>
+              <div className="hv2-tip"><b>給家長</b>{tip}</div>
             )}
           </aside>
         </div>

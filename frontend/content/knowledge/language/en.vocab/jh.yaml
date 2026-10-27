@@ -1,0 +1,62 @@
+id: en.vocab@jh
+concept: en.vocab
+title: 字根字首：猜出單字的意思
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：會考 1,200 字。
+- 會考英語的字彙範圍是課綱附錄五基本 1,200 字（心測中心測驗內容說明）。
+prerequisites:
+- lg.review@jh
+- en.sight@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 字彙
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 列出同字根的字、解釋字源
+  human_experience:
+  - 用新字造自己的句子
+idea: 很多英文單字是拼出來的：字首 + 字根 + 字尾。認得常見的零件，就能猜出生字，也記得更久。
+guiding_questions:
+- unhappy 和 replay 裡的 un-、re-，是什麼意思？
+scenario: 親子共學：寫下 5 個 un- 開頭和 5 個 re- 開頭的字，先猜意思再查字典，看猜對幾個。
+goal: 用常見字首、字根、字尾猜出生字的意思，累積會考基本字彙。
+review: 家長挑 10 個含 un-、re-、-ful、-less 的生字，孩子先猜意思再查字典，猜對 7 個以上。
+formats:
+  slides: []
+  exercise: 目標：用常見字首、字根、字尾猜出生字的意思，累積會考基本字彙。　檢核：家長挑 10 個含 un-、re-、-ful、-less 的生字，孩子先猜意思再查字典，猜對 7 個以上。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

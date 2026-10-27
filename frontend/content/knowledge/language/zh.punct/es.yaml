@@ -1,0 +1,56 @@
+id: zh.punct@es
+concept: zh.punct
+title: 標點符號：逗號、句號、問號
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.punct2@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 找出可能漏掉的標點
+  human_experience:
+  - 唸出來，聽哪裡該停
+idea: 一個意思說完用句號，還沒說完用逗號；問句用問號，感嘆用驚嘆號；說出口的話用引號「」，引號前常用冒號。
+guiding_questions:
+- 「我昨天去公園，看到很多花，很漂亮，然後回家。」哪裡該換成句號？
+scenario: 親子共學：複習版：把一段沒有標點的文字唸給對方聽，聽的人在停頓處拍手，再一起補上標點。大人可以用自己最近傳的一則長訊息來試。
+goal: 一段話裡的逗號、句號、問號用得對，說完一個意思就用句號。
+review: 家長給一段 60 字左右、拿掉標點的文字，孩子補上標點後唸出來；句號位置與家長的版本差不到 1 處。
+formats:
+  slides: []
+  exercise: 目標：一段話裡的逗號、句號、問號用得對，說完一個意思就用句號。　檢核：家長給一段 60 字左右、拿掉標點的文字，孩子補上標點後唸出來；句號位置與家長的版本差不到 1 處。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

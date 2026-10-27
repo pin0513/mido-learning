@@ -1,0 +1,57 @@
+id: zh.material@jh
+concept: zh.material
+title: 選材：一件小事撐起主旨
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.prompt@jh
+- zh.observe@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 列出可能的材料方向
+  human_experience:
+  - 選出真的發生過、自己有感的那件事
+idea: 六級分要「適切地統整、運用材料，並能進一步闡述說明以凸顯主旨」。挑一件最有感的事，寫出細節和你的想法。
+guiding_questions:
+- 寫「改變」，說五件事，還是把一件事說深？
+scenario: 親子共學：同一題列出 5 個材料，親子各投一票「最只有你寫得出來」的那個，再說為什麼。
+goal: 為題目選一件最有感的小事，寫出細節與自己的想法來撐起主旨。
+review: 同一題孩子列 5 個材料，選 1 個寫成 300 字段落；家長讀完能說出一個「只有你寫得出來」的細節。
+formats:
+  slides: []
+  exercise: 目標：為題目選一件最有感的小事，寫出細節與自己的想法來撐起主旨。　檢核：同一題孩子列 5 個材料，選 1 個寫成 300 字段落；家長讀完能說出一個「只有你寫得出來」的細節。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

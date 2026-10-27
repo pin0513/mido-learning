@@ -1,0 +1,51 @@
+id: ja.authentic@uni
+concept: ja.authentic
+title: 讀原文：新聞、小說與論文
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 基準標籤：JLPT N2–N1・讀解。
+prerequisites:
+- ja.jlpt@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 查證
+ai:
+  delegable:
+  - 標讀音、摘要內容
+  human_experience:
+  - 判斷內容觀點與可信度
+idea: 讀日文原文要會猜：從漢字推意思、從前後文推讀音。先從新聞標題和短篇小說開始，慢慢讀長文。
+guiding_questions:
+- 沒有標讀音的漢字，你怎麼猜出讀音和意思？
+scenario: 親子共學：每天讀一則 NHK 新聞標題，猜意思後再對照內文，一個月後比較讀懂的比例。
+goal: 讀日文新聞、小說或論文原文，說出重點與作者立場。
+review: 選一篇日文新聞，用三句中文說出發生什麼、誰說了什麼、作者怎麼看；家人對照翻譯確認。
+formats:
+  slides: []
+  exercise: 目標：讀日文新聞、小說或論文原文，說出重點與作者立場。　檢核：選一篇日文新聞，用三句中文說出發生什麼、誰說了什麼、作者怎麼看；家人對照翻譯確認。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

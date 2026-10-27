@@ -1,0 +1,61 @@
+id: ja.read@sh
+concept: ja.read
+title: 讀短文與漫畫
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - B3
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N4–N3・讀解。
+prerequisites:
+- ja.kanji@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - ja.authentic@uni
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 媒體素養
+ai:
+  delegable:
+  - 標出讀音、解釋句子
+  human_experience:
+  - 自己讀懂情節和語氣
+idea: 讀日文要同時處理假名和漢字。從有圖的漫畫和短文開始，用漢字猜意思、用假名讀出聲。
+guiding_questions:
+- 漫畫對話框裡的日文，跟課本裡的有什麼不同？
+scenario: 親子共學：選一頁喜歡的日文漫畫，把對話框翻成中文，和官方中文版比較。
+goal: 讀懂一頁漫畫或 300 字短文，說出主要內容。
+review: 孩子讀一頁日語漫畫或短文，用中文說出發生什麼事；家長對照翻譯版，主要事件都說對。
+formats:
+  slides: []
+  exercise: 目標：讀懂一頁漫畫或 300 字短文，說出主要內容。　檢核：孩子讀一頁日語漫畫或短文，用中文說出發生什麼事；家長對照翻譯版，主要事件都說對。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

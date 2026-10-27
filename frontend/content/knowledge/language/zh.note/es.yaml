@@ -1,0 +1,57 @@
+id: zh.note@es
+concept: zh.note
+title: 留言條與卡片
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 應用文案
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues:
+  - 家庭教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.headline@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 應用文寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 提供卡片格式範例
+  human_experience:
+  - 想清楚對方會擔心什麼
+idea: 寫給別人看的字，要先想讀的人需要知道什麼：誰、什麼事、什麼時候、在哪裡，最後署名。
+guiding_questions:
+- 留言給媽媽說去同學家，要寫哪些事她才不擔心？
+scenario: 親子共學：孩子寫一張真的要用的留言條或感謝卡，家長只看「讀完知不知道該怎麼做」。
+goal: 寫一張讓讀的人知道該怎麼做的留言條或卡片：誰、什麼事、時間、地點、署名。
+review: 孩子寫一張真的要用的留言條，家長只讀一次就知道要做什麼，五項都齊才打勾。
+formats:
+  slides: []
+  exercise: 目標：寫一張讓讀的人知道該怎麼做的留言條或卡片：誰、什麼事、時間、地點、署名。　檢核：孩子寫一張真的要用的留言條，家長只讀一次就知道要做什麼，五項都齊才打勾。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

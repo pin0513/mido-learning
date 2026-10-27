@@ -1,0 +1,60 @@
+id: ja.desu@jh
+concept: ja.desu
+title: 基本句型：〜は〜です
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N5。
+prerequisites:
+- ja.hello@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - ja.casual@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文法句構
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 產生同句型例句、檢查語序
+  human_experience:
+  - 說出關於自己生活的句子
+idea: 日文的語序是「主題 → 內容 → 動詞」。「わたしは学生です」先說主題，最後才說「是」。
+guiding_questions:
+- 日文的動詞為什麼放在句子最後面？
+scenario: 親子共學：用「〜は〜です」介紹家裡每個人：「父は先生です」，貼在家人的照片下面。
+goal: 用「〜は〜です」「〜ではありません」介紹人和東西。
+review: 孩子用這兩個句型各說 3 句介紹家人或物品，家長對照課本句型，6 句都正確。
+formats:
+  slides: []
+  exercise: 目標：用「〜は〜です」「〜ではありません」介紹人和東西。　檢核：孩子用這兩個句型各說 3 句介紹家人或物品，家長對照課本句型，6 句都正確。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,64 @@
+id: en.listen2@sh
+concept: en.listen2
+title: 聽廣播、氣象與說明
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢中級・聽力。
+- 引用的框架只寫名稱（全民英檢中級聽力：看圖辨義、問答、簡短對話、簡短談話，共 35 題約 30 分鐘（LTTC）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- en.listening@jh
+- en.gept1@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：全民英檢中級聽力：看圖辨義、問答、簡短對話、簡短談話，共 35 題約 30 分鐘（LTTC）。
+competency:
+  specialist:
+  - 聽力
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 產生不同口音與速度的聽力材料
+  human_experience:
+  - 在真實廣播裡聽懂並反應
+idea: 全民英檢中級的聽力，要能聽懂一般會話，並大致聽懂公共場所廣播、氣象報告及廣告，工作上能聽懂簡易的產品介紹與操作說明。先預讀選項猜要聽什麼，再抓數字、地點與轉折詞。
+guiding_questions:
+- 機場廣播只播一次，你要抓哪三個字？
+scenario: 親子共學：一起聽一段英文氣象預報，孩子記下溫度與降雨，大人記下地點，再對答案。
+goal: 聽懂公共場所廣播、氣象報告、廣告與簡易操作說明，達到全民英檢中級聽力的程度。
+review: 家長從全民英檢中級官方練習選一回聽力（看圖辨義、問答、簡短對話、簡短談話，每題只播一遍），孩子答對 7 成以上，並說出一則廣播裡的時間與地點。
+formats:
+  slides: []
+  exercise: 目標：聽懂公共場所廣播、氣象報告、廣告與簡易操作說明，達到全民英檢中級聽力的程度。　檢核：家長從全民英檢中級官方練習選一回聽力（看圖辨義、問答、簡短對話、簡短談話，每題只播一遍），孩子答對 7 成以上，並說出一則廣播裡的時間與地點。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

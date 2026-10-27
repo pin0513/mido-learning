@@ -1,0 +1,61 @@
+id: en.sentence@es
+concept: en.sentence
+title: 簡單句型：I like… / Can you…?
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：初級的準備。
+prerequisites:
+- en.greet@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.para@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文法句構
+  - 口說
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 產生同一句型的不同例句
+  human_experience:
+  - 自己想出想說的句子
+idea: 句子像積木：固定的句型加上可以替換的字。學會一個句型，換字就能說出很多句子。
+guiding_questions:
+- 換掉一個字，句子的意思會怎麼變？
+scenario: 親子共學：做一張句型卡「I like ___.」「Can you ___?」，全家輪流抽單字卡填空，說出最好笑的一句。
+goal: 用固定句型（I like… / Can you…?）換字說出自己的句子。
+review: 家長給 3 個句型，孩子每個句型各說 3 句不同的句子，9 句裡至少 7 句文法正確。
+formats:
+  slides: []
+  exercise: 目標：用固定句型（I like… / Can you…?）換字說出自己的句子。　檢核：家長給 3 個句型，孩子每個句型各說 3 句不同的句子，9 句裡至少 7 句文法正確。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

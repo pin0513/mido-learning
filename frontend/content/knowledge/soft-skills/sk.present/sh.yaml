@@ -22,13 +22,14 @@ to_verify: true
 verify_notes:
 - 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
 - 引用的框架只寫名稱（結論先行、一張一個重點），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 與國文（實驗）zh.explain@sh「說明文與簡報」重疊：國文管投影片的文字，這一點管上台說；國文上線後改寫進 links.related。
+- 與國文 zh.explain@sh「說明文與簡報」交界：國文管投影片的文字，這一點管上台說，互列 related。
 prerequisites:
 - sk.speech@jh
 links:
   why: []
   how: []
-  related: []
+  related:
+  - zh.explain@sh
   deeper:
   - sk.persuade@uni
 link_notes: 框架：結論先行、一張一個重點。

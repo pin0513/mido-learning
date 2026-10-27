@@ -1,0 +1,61 @@
+id: zh.retrieve@es
+concept: zh.retrieve
+title: 找答案：從文章裡擷取訊息
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（108 國語文學習表現類別 5「閱讀」；PIRLS 閱讀歷程（提取）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.viewpoint@jh
+link_notes: 框架：108 國語文學習表現類別 5「閱讀」；PIRLS 閱讀歷程（提取）。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 提問
+  - 查證
+ai:
+  delegable:
+  - 依文章出擷取題
+  human_experience:
+  - 自己回到文章找到那一句
+idea: 閱讀的第一步是擷取：答案寫在文章裡，要找到那一句。先看題目要找什麼，再回文章圈出關鍵字。會考國文的「提取訊息」、學測國綜的「訊息的檢索與擷取」，都從這一步開始。
+guiding_questions:
+- 題目問「小明為什麼遲到」，答案一定寫在文章裡嗎？
+scenario: 親子共學：親子共讀一則兒童新聞，互相出題「答案在哪一句」，找到就用螢光筆畫起來。
+goal: 讀完一篇短文，能找出題目問的人、事、時、地，並指出答案在第幾段。
+review: 家長挑一篇 300 字課外短文，出 4 題「誰、什麼、什麼時候、在哪裡」，孩子作答並用手指出原文出處，4 題都找得到。
+formats:
+  slides: []
+  exercise: 目標：讀完一篇短文，能找出題目問的人、事、時、地，並指出答案在第幾段。　檢核：家長挑一篇 300 字課外短文，出 4 題「誰、什麼、什麼時候、在哪裡」，孩子作答並用手指出原文出處，4 題都找得到。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

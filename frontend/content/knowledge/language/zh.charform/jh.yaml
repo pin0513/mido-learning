@@ -1,0 +1,61 @@
+id: zh.charform@jh
+concept: zh.charform
+title: 字音字形：形近字、多音字與六書
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（會考國文「常用字的形音義」、學測國綜 A1、造字原則（六書）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- 多音字讀音以教育部《國語辭典》與《一字多音審訂表》為準，教材舉例前請核對。
+prerequisites:
+- zh.wrongchar@es
+- zh.words@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：會考國文「常用字的形音義」、學測國綜 A1、造字原則（六書）。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 查證
+ai:
+  delegable:
+  - 整理形近字與多音字清單
+  human_experience:
+  - 自己從詞義判斷讀音並造詞
+idea: 會考國文考「常用字的形音義」，學測國綜考「字形、字音、字義的辨識與應用」。多音字靠詞義判斷讀音；形近字看部首與筆畫差在哪；六書（象形、指事、會意、形聲、轉注、假借）裡最多的是形聲字，形旁表意、聲旁表音。
+guiding_questions:
+- 「便宜」的「便」和「方便」的「便」，念法一樣嗎？
+scenario: 親子共學：全家各寫下自己最常念錯的兩個多音詞，貼在冰箱上，一週內每念對一次畫一筆。
+goal: 辨認形近字、音近字和多音字，用六書說出一個字為什麼這樣寫。
+review: 家長從課本挑 10 組形近或多音字（例如「戍／戌」「便宜／方便」），孩子寫出讀音並各造一個詞，答對 8 組以上；再挑 2 個形聲字說出形旁和聲旁。
+formats:
+  slides: []
+  exercise: 目標：辨認形近字、音近字和多音字，用六書說出一個字為什麼這樣寫。　檢核：家長從課本挑 10 組形近或多音字（例如「戍／戌」「便宜／方便」），孩子寫出讀音並各造一個詞，答對 8 組以上；再挑 2 個形聲字說出形旁和聲旁。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

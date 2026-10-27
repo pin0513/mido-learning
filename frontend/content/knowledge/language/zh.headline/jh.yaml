@@ -1,0 +1,60 @@
+id: zh.headline@jh
+concept: zh.headline
+title: 標題與文案：吸睛但不誇大
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 應用文案
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - B2
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.poster@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.social@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 應用文寫作
+  generalist:
+  - 媒體素養
+  - 溝通
+ai:
+  delegable:
+  - 產生多個標題草案
+  human_experience:
+  - 判斷哪個標題誠實又準確
+idea: 標題常用提問、懸念、諧音吸引目光，但誇大的標題會讓讀者失去信任。好標題是準確地點出內容。
+guiding_questions:
+- 一個標題讓你點進去，內容卻不是那樣，你會怎麼想？
+scenario: 親子共學：蒐集 5 個你點過的標題，標出用了什麼手法，再替其中一則寫一個不誇大的版本。
+goal: 寫出準確又吸引人的標題，不誇大、不騙點擊。
+review: 孩子替 3 則新聞各寫一個標題，家長讀內文後判斷標題沒有誇大或誤導，3 則都過。
+formats:
+  slides: []
+  exercise: 目標：寫出準確又吸引人的標題，不誇大、不騙點擊。　檢核：孩子替 3 則新聞各寫一個標題，家長讀內文後判斷標題沒有誇大或誤導，3 則都過。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { canonicalLanguageBranch } from "@/lib/kp/home-state";
 
 /**
  * KP_ENABLED 與 KP_HOME_ENABLED 都在每次請求讀取，不是 NEXT_PUBLIC_，所以不會在 build 時寫死。
@@ -22,8 +23,17 @@ export function middleware(request: NextRequest) {
   const enabled = process.env.KP_ENABLED === "true";
   const home = enabled && process.env.KP_HOME_ENABLED === "true";
   const softSkills = enabled && process.env.KP_SOFTSKILLS_ENABLED === "true";
+  const yuwen = enabled && process.env.KP_YUWEN_ENABLED === "true";
   if (pathname === "/" || pathname === "/city-home") {
     if (!home) return pathname === "/city-home" ? notFound() : NextResponse.next();
+    const branch = request.nextUrl.searchParams.get("b");
+    const canonical = request.nextUrl.searchParams.get("d") === "language" ? canonicalLanguageBranch(branch) : null;
+    if (yuwen && canonical && canonical !== branch) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/";
+      url.searchParams.set("b", canonical);
+      return NextResponse.redirect(url, 308);
+    }
     if (pathname === "/") {
       const url = request.nextUrl.clone();
       url.pathname = "/city-home";
@@ -34,6 +44,7 @@ export function middleware(request: NextRequest) {
 
   if (!enabled) return notFound();
   if (!softSkills && isSoftSkillsPath(pathname)) return notFound();
+  if (!yuwen && isLanguagePath(pathname)) return notFound();
   return NextResponse.next();
 }
 
@@ -42,6 +53,22 @@ function isSoftSkillsPath(pathname: string): boolean {
     || pathname.startsWith("/kp/path/sk.")
     || pathname.startsWith("/kp/sk.")
     || pathname.startsWith("/kp/sk/");
+}
+
+function isLanguagePath(pathname: string): boolean {
+  return pathname === "/kp/discipline/language"
+    || pathname.startsWith("/kp/path/zh.")
+    || pathname.startsWith("/kp/path/en.")
+    || pathname.startsWith("/kp/path/ja.")
+    || pathname.startsWith("/kp/path/lg.")
+    || pathname.startsWith("/kp/zh.")
+    || pathname.startsWith("/kp/zh/")
+    || pathname.startsWith("/kp/en.")
+    || pathname.startsWith("/kp/en/")
+    || pathname.startsWith("/kp/ja.")
+    || pathname.startsWith("/kp/ja/")
+    || pathname.startsWith("/kp/lg.")
+    || pathname.startsWith("/kp/lg/");
 }
 
 export const config = {

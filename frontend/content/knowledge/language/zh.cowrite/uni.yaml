@@ -1,0 +1,52 @@
+id: zh.cowrite@uni
+concept: zh.cowrite
+title: 人機共寫：我想、AI 陪練、我定稿
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - AI 協作寫作
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+prerequisites:
+- zh.aitells@sh
+- zh.feeling@sh
+links:
+  why: []
+  how: []
+  related:
+  - it.hcai@uni
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - AI 協作寫作
+  generalist:
+  - 溝通
+  - 查證
+ai:
+  delegable:
+  - 提問、找漏洞、提供反方觀點
+  human_experience:
+  - 決定主旨、選材與最後每一句話
+idea: 先自己決定主旨與材料，請 AI 提問、挑錯、給反方；草稿與定稿由你寫。最後刪掉 AI 腔，補上親身細節。
+guiding_questions:
+- 一篇文章裡，哪些決定一定要你來做？
+scenario: 親子共學：用一篇真的要交的文章走一次流程，保留每一步的紀錄，最後標出哪些句子受過 AI 影響。
+goal: 人機共寫：主旨與選材自己決定，AI 只負責提問、挑錯、給反方。
+review: 交一份過程紀錄（自己的大綱、AI 提問、修改紀錄、定稿），並在定稿上標出受 AI 影響的句子；家人看紀錄就能說出哪些決定是你做的。
+formats:
+  slides: []
+  exercise: 目標：人機共寫：主旨與選材自己決定，AI 只負責提問、挑錯、給反方。　檢核：交一份過程紀錄（自己的大綱、AI 提問、修改紀錄、定稿），並在定稿上標出受 AI 影響的句子；家人看紀錄就能說出哪些決定是你做的。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

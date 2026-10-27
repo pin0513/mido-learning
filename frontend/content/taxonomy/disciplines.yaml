@@ -178,12 +178,36 @@ disciplines:
   - id: language
     name: 語文
     layer: foundation
-    summary: 文字與語言本身。國文與外語還沒有知識點。
+    id_prefix: lg            # 英日共用的點（學語言的方法）
+    content_folder: language # 國文、英文、日文、共用的點都放在 content/knowledge/language/
+    summary: 用哪種語言、文字怎麼寫才對。國文與外語（英文、日文）。口語表達、簡報、會議與同理溝通在「溝通與解決問題」。
     children:
       - id: chinese
         name: 國文
+        id_prefix: zh
+        children:
+          - { id: zh-basic, name: 基礎功 }
+          - { id: zh-reading, name: 閱讀理解 }
+          - { id: zh-classic, name: 文言與古典 }
+          - { id: zh-writing, name: 作文與表達 }
+          - { id: zh-practical, name: 應用文案 }
+          - { id: zh-ai, name: AI 協作寫作 }
       - id: foreign
         name: 外語
+        children:
+          - id: english
+            name: 英文
+            id_prefix: en
+            children:
+              - { id: en-talk, name: 英文聽說 }
+              - { id: en-read, name: 英文讀寫 }
+              - { id: en-bench, name: 英文檢定與方法 }
+          - id: japanese
+            name: 日文
+            id_prefix: ja
+            children:
+              - { id: ja-read, name: 日文讀寫 }
+              - { id: ja-talk, name: 日文會話 }
 
   - id: society
     name: 社會

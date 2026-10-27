@@ -1,0 +1,62 @@
+id: ja.casual@sh
+concept: ja.casual
+title: 常體與敬體：對誰說什麼話
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C3
+  issues:
+  - 多元文化教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N4–N3。
+prerequisites:
+- ja.adj@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - ja.keigo@uni
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文法句構
+  - 跨文化溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 轉換常體與敬體
+  human_experience:
+  - 判斷眼前的人該用哪一種
+idea: 日文的句尾會依照對象改變：對長輩和陌生人用です・ます（敬體），對朋友用常體。選錯會顯得太冷淡或太沒禮貌。
+guiding_questions:
+- 跟朋友和跟老師說話，日文為什麼要換說法？
+scenario: 親子共學：把同一句「明天要去嗎？」寫成對朋友和對老師兩種版本，再角色扮演一次。
+goal: 分清常體和敬體，知道對朋友和對老師說法不同。
+review: 家長給 5 句敬體，孩子改成對朋友說的常體，再說出各適合對誰說；5 句都對。
+formats:
+  slides: []
+  exercise: 目標：分清常體和敬體，知道對朋友和對老師說法不同。　檢核：家長給 5 句敬體，孩子改成對朋友說的常體，再說出各適合對誰說；5 句都對。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

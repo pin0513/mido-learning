@@ -91,8 +91,14 @@ test.describe("溝通與解決問題", () => {
       expect(indexRows.some((row) => row.id === "sk.voice@es")).toBe(true);
 
       await page.goto("/?d=soft-skills&b=talk", { waitUntil: "networkidle" });
-      const slots = page.getByTestId("discipline-switch").locator("a");
+      const slots = page.getByTestId("discipline-switch").locator(".hv2-sg");
       await expect(slots).toHaveCount(6);
+      const links = page.getByTestId("discipline-switch").locator("a");
+      await expect(links).toHaveCount(5);
+      const languageSlot = page.getByTestId("discipline-switch").locator(".hv2-sg", { hasText: "語文" });
+      await expect(languageSlot).toHaveCount(1);
+      expect(await languageSlot.evaluate((node) => node.tagName)).toBe("SPAN");
+      await expect(languageSlot).toContainText("準備中");
       const rows = await slots.evaluateAll((nodes) => {
         const tops = nodes.map((node) => Math.round(node.getBoundingClientRect().top));
         return [...new Set(tops)];

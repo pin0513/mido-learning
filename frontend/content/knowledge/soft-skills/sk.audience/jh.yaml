@@ -22,13 +22,14 @@ to_verify: true
 verify_notes:
 - 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
 - 引用的框架只寫名稱（拉斯威爾 5W 傳播模式），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 與國文（實驗）zh.audience@uni「寫給不同讀者」交界：國文管文字怎麼改寫，這一點管口語傳播的對象意識；國文上線後由 zh.audience 以本點為 why。
+- 與國文 zh.audience@uni「寫給不同讀者」交界：國文管文字怎麼改寫，這一點管口語傳播的對象意識；zh.audience 以本點為 why。
 prerequisites:
 - sk.showtell@es
 links:
   why: []
   how: []
-  related: []
+  related:
+  - zh.audience@uni
   deeper: []
 link_notes: 框架：拉斯威爾 5W 傳播模式。
 competency:

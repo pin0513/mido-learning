@@ -1,0 +1,60 @@
+id: zh.proofread@sh
+concept: zh.proofread
+title: 自我校對：交卷前 5 分鐘
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.punct2@jh
+- zh.sickline@jh
+- zh.charform@jh
+links:
+  why: []
+  how: []
+  related:
+  - zh.wrongchar@es
+  deeper:
+  - zh.editing@uni
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 查證
+ai:
+  delegable:
+  - 依清單掃描錯字與標點
+  human_experience:
+  - 決定先修哪裡、改到什麼程度
+idea: 校對要有固定順序：先看有沒有漏答題目要求，再看病句，最後掃錯字與標點。學測國寫的評分原則寫明標點與錯別字「斟酌扣分」。
+guiding_questions:
+- 交卷前只剩 5 分鐘，先檢查錯字、標點，還是病句？
+scenario: 親子共學：複習版：做一張自己的 5 項校對清單，拿一篇限時寫完的短文，計時 5 分鐘照清單改。
+goal: 交卷前 5 分鐘照固定清單校對：題目要求、病句、錯字、標點。
+review: 孩子限時寫完 400 字短文，用自己的 5 項清單計時 5 分鐘校對；家長再看一次，殘留的錯字與標點錯誤不超過 2 處。
+formats:
+  slides: []
+  exercise: 目標：交卷前 5 分鐘照固定清單校對：題目要求、病句、錯字、標點。　檢核：孩子限時寫完 400 字短文，用自己的 5 項清單計時 5 分鐘校對；家長再看一次，殘留的錯字與標點錯誤不超過 2 處。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

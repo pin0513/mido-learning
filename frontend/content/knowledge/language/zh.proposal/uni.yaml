@@ -1,0 +1,50 @@
+id: zh.proposal@uni
+concept: zh.proposal
+title: 企劃書：讓人願意說好
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 應用文案
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+prerequisites:
+- zh.explain@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 應用文寫作
+  generalist:
+  - 溝通
+  - 專案管理
+ai:
+  delegable:
+  - 整理格式與預算表
+  human_experience:
+  - 判斷提案真正的價值與風險
+idea: 企劃書先寫結論：要做什麼、為什麼值得做、要多少資源、怎麼知道成功。細節放後面。
+guiding_questions:
+- 審核的人最想先知道什麼：做什麼、為什麼、花多少？
+scenario: 親子共學：為一個家庭或社團活動寫一頁企劃，請家長當審核者，只看第一段就決定要不要往下讀。
+goal: 寫一頁企劃書：做什麼、為什麼、要多少資源、怎麼算成功。
+review: 家長當審核者只讀第一段，就能說出要做什麼、要多少錢或時間；四項齊全才打勾。
+formats:
+  slides: []
+  exercise: 目標：寫一頁企劃書：做什麼、為什麼、要多少資源、怎麼算成功。　檢核：家長當審核者只讀第一段，就能說出要做什麼、要多少錢或時間；四項齊全才打勾。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

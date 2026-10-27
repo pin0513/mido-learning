@@ -1,0 +1,62 @@
+id: en.essay@sh
+concept: en.essay
+title: 英文作文：段落組織與連接詞
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢中級・作文。
+- 引用的框架只寫名稱（全民英檢中級英文作文約 120 字（LTTC）；學測英文作文至少 120 字（大考中心）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- en.para@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.acwrite@uni
+link_notes: 框架：全民英檢中級英文作文約 120 字（LTTC）；學測英文作文至少 120 字（大考中心）。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 檢查段落結構與連接詞
+  human_experience:
+  - 決定論點和例子
+idea: 一篇英文作文是好幾段的組合：每段一個重點，用 However、Therefore、For example 這類連接詞，把段落之間的關係說清楚。
+guiding_questions:
+- However 和 Therefore 放錯，文章會怎樣？
+scenario: 親子共學：把一篇英文短文的段落剪開打亂，再靠連接詞排回原本的順序。
+goal: 寫一篇約 120 字的英文作文：段落清楚，用連接詞交代關係。
+review: 孩子 25 分鐘內寫一篇 120 字以上的作文（全民英檢中級與學測英文作文的長度），家長用學測評分的四項（內容、組織、文法句構、字彙拼字）各給 1–5 分，各項都在 3 分以上。
+formats:
+  slides: []
+  exercise: 目標：寫一篇約 120 字的英文作文：段落清楚，用連接詞交代關係。　檢核：孩子 25 分鐘內寫一篇 120 字以上的作文（全民英檢中級與學測英文作文的長度），家長用學測評分的四項（內容、組織、文法句構、字彙拼字）各給 1–5 分，各項都在 3 分以上。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

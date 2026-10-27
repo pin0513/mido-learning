@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { includeDraftKnowledgePoints, isSoftSkillsEnabled } from "../kp/flags";
+import { includeDraftKnowledgePoints, isSoftSkillsEnabled, isYuwenEnabled } from "../kp/flags";
 import { loadContent } from "./load";
 import type {
   ContentIndexes,
@@ -152,13 +152,22 @@ export function disciplineRoots(catalog: ContentCatalog) {
   return catalog.taxonomy.roots.filter((root) => root.contentFolder && root.idPrefix);
 }
 
-/** 旗標關掉時，清單頁不帶溝通與解決問題。知識點頁本身仍可建置，由 middleware 擋。 */
+/** 還沒打開的學門不進清單、索引與 sitemap 的動態頁。知識點頁本身仍可建置，由 middleware 擋。 */
+export function isFolderLaunched(folderId: string): boolean {
+  if (folderId === "soft-skills") return isSoftSkillsEnabled();
+  if (folderId === "language") return isYuwenEnabled();
+  return true;
+}
+
 export function launchedCatalog(catalog: ContentCatalog): ContentCatalog {
-  if (isSoftSkillsEnabled()) return catalog;
-  const points = catalog.points.filter((point) => point.folder !== "soft-skills");
+  const hidden = new Set<string>();
+  if (!isSoftSkillsEnabled()) hidden.add("soft-skills");
+  if (!isYuwenEnabled()) hidden.add("language");
+  if (hidden.size === 0) return catalog;
+  const points = catalog.points.filter((point) => !hidden.has(point.folder));
   const visibleIds = new Set(points.map((point) => point.id));
   const paths = catalog.paths
-    .filter((path) => path.disciplineFolder !== "soft-skills")
+    .filter((path) => !hidden.has(path.disciplineFolder))
     .map((path) => ({
       ...path,
       knowledgePointIds: path.knowledgePointIds.filter((id) => visibleIds.has(id)),

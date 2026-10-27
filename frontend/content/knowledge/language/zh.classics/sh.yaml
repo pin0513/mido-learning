@@ -1,0 +1,61 @@
+id: zh.classics@sh
+concept: zh.classics
+title: 精讀一篇古文：從注釋到賞析
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 文言與古典
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 多元文化教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（高中國語文必修文言比例、推薦選文；學測國綜文言比例），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.syntax@jh
+- zh.verse@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：高中國語文必修文言比例、推薦選文；學測國綜文言比例。
+competency:
+  specialist:
+  - 文言與古典
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 提供注釋與翻譯參考
+  human_experience:
+  - 自己逐句翻並寫出感受
+idea: 高中必修的文言選文比例為 3 年平均 35%–45%，學測國綜也照這個比例命題。自學一篇古文：先看題解知道背景，讀注釋解決字詞，逐句翻譯，最後問「作者想說什麼、怎麼寫的」。
+guiding_questions:
+- 沒有老師講解，你能自己讀懂一篇古文嗎？
+scenario: 親子共學：大人和孩子選同一篇古文，各自做五欄筆記，對照哪一句翻得不一樣。
+goal: 用題解、作者、注釋、翻譯、賞析五步，自己讀懂一篇沒教過的古文。
+review: 孩子挑一篇課本沒教的古文（例如推薦選文以外的短篇），交一頁五欄筆記；家長抽 3 句請孩子翻成白話，都通順。
+formats:
+  slides: []
+  exercise: 目標：用題解、作者、注釋、翻譯、賞析五步，自己讀懂一篇沒教過的古文。　檢核：孩子挑一篇課本沒教的古文（例如推薦選文以外的短篇），交一頁五欄筆記；家長抽 3 句請孩子翻成白話，都通順。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

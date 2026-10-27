@@ -1,0 +1,63 @@
+id: ja.listen@sh
+concept: ja.listen
+title: 聽懂生活日語：車站與商店
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C3
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N4–N3・聽解。
+prerequisites:
+- lg.ai@sh
+- ja.intro@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - ja.society@uni
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 聽力
+  - 口說
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 產生情境對話、陪練
+  human_experience:
+  - 在真實場景聽懂並回應
+idea: 生活日語有很多固定說法：まもなく、ご注意ください、いらっしゃいませ。先熟悉場景裡一定會出現的句子。
+guiding_questions:
+- 車站廣播講得很快，你要抓哪幾個字？
+scenario: 親子共學：聽一段日本車站廣播，寫下列車要開往哪裡、幾號月台；再用 AI 扮演店員練習結帳。
+goal: 聽懂車站廣播與店員的常用句，並回應。
+review: 聽 3 段車站或商店的日語錄音，孩子寫出每段的關鍵資訊（月台、時間、價格）；家長對照逐字稿至少 2 段正確。
+formats:
+  slides: []
+  exercise: 目標：聽懂車站廣播與店員的常用句，並回應。　檢核：聽 3 段車站或商店的日語錄音，孩子寫出每段的關鍵資訊（月台、時間、價格）；家長對照逐字稿至少 2 段正確。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

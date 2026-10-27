@@ -1,0 +1,64 @@
+id: en.translate@sh
+concept: en.translate
+title: 中譯英：翻出意思，不逐字換
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C3
+  issues:
+  - 多元文化教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢中級・中譯英。
+- 引用的框架只寫名稱（全民英檢中級寫作：中譯英 40%、英文作文 60%（LTTC）；學測英文非選擇題中譯英），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- en.essay@sh
+- en.grammar@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：全民英檢中級寫作：中譯英 40%、英文作文 60%（LTTC）；學測英文非選擇題中譯英。
+competency:
+  specialist:
+  - 翻譯
+  - 寫作
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 給出多種翻譯版本
+  human_experience:
+  - 判斷哪一版最貼近原本的意思和語氣
+idea: 翻譯不是一個字換一個字。中文和英文的語序、省略和習慣說法都不同，要翻出意思和語氣。
+guiding_questions:
+- 「吃飽沒？」為什麼不能直接翻成英文？
+scenario: 親子共學：挑三句台灣日常問候，先直譯，再改成英文母語者真的會說的話，比較兩版。
+goal: 把一段中文翻成通順、達意、前後連貫的英文，不逐字硬翻。
+review: 家長從全民英檢中級或學測歷屆試題挑一段中譯英，孩子翻譯後家長對照官方參考答案，每句的主要意思都翻出來、時態一致。
+formats:
+  slides: []
+  exercise: 目標：把一段中文翻成通順、達意、前後連貫的英文，不逐字硬翻。　檢核：家長從全民英檢中級或學測歷屆試題挑一段中譯英，孩子翻譯後家長對照官方參考答案，每句的主要意思都翻出來、時態一致。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

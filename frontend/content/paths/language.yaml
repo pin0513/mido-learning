@@ -1,0 +1,114 @@
+# 主線是知識點 id 的有序清單。語文（國文＋外語）108 點與 14 條主線在第一個 PR 一起發布（KP_YUWEN_ENABLED 關閉時不顯示）。
+id: language
+title: 語文
+paths:
+  - id: zh.basics
+    title: 標點到校稿
+    knowledge_points:
+      - zh.punct@es
+      - zh.punct2@jh
+      - zh.proofread@sh
+      - zh.editing@uni
+    colearn: 每週挑一則家庭群組訊息，孩子補標點、大人校錯字，一起看改前改後。
+  - id: zh.reading
+    title: 從找答案到讀懂立場
+    knowledge_points:
+      - zh.retrieve@es
+      - zh.viewpoint@jh
+      - zh.evaluate@sh
+      - zh.digest@uni
+    colearn: 親子讀同一則新聞，孩子找人事時地，大人說作者立場，最後互評「證據夠不夠」。
+  - id: zh.classic
+    title: 從古詩到經典
+    knowledge_points:
+      - zh.poem@es
+      - zh.wenyan@jh
+      - zh.classics@sh
+    colearn: 每月背一首詩：孩子朗讀，大人說一個這首詩讓你想起的生活片段。
+  - id: zh.compose
+    title: 從一句話到一篇評論
+    knowledge_points:
+      - zh.sentence@es
+      - zh.prompt@jh
+      - zh.reason@sh
+      - zh.essay@uni
+    colearn: 孩子寫一段、大人寫一篇，交換用同一張四向度表互評。
+  - id: zh.practical
+    title: 寫給要做事的人
+    knowledge_points:
+      - zh.note@es
+      - zh.headline@jh
+      - zh.social@sh
+      - zh.audience@uni
+    colearn: 家裡的公告由孩子寫：留言條、冰箱海報、家庭群組貼文，大人看一次就知道要做什麼才算過。
+  - id: zh.aivoice
+    title: 和 AI 一起寫，仍是自己的字
+    knowledge_points:
+      - zh.thinkfirst@es
+      - zh.aicoach@jh
+      - zh.aitells@sh
+      - zh.cowrite@uni
+    colearn: 親子各用 AI 改一篇作品，互相檢查過程紀錄：哪些決定是自己做的。
+  - id: en.bench
+    title: 從英檢到托福
+    knowledge_points:
+      - en.sight@es
+      - en.gept1@jh
+      - en.gept2@sh
+      - en.toefl@uni
+    colearn: 全家設一個「英檢日」：孩子做全民英檢模擬題，大人做多益或托福練習題，一起對照 CEFR 表。
+  - id: en.readus
+    title: 讀美國孩子讀的書
+    knowledge_points:
+      - en.sight@es
+      - en.chapter@jh
+      - en.middle@sh
+      - en.academic@uni
+    colearn: 親子共讀：孩子讀分級讀本或章節書，大人讀英文文章，每週互相用中文說一個故事。
+  - id: en.speak
+    title: 從打招呼到看圖說話
+    knowledge_points:
+      - en.greet@es
+      - en.convo@jh
+      - en.present@sh
+      - en.emi@uni
+    colearn: 晚餐的英文五分鐘：孩子回答三個問題，大人看一張照片說 90 秒。
+  - id: en.write
+    title: 從一句到一篇
+    knowledge_points:
+      - en.sentence@es
+      - en.para@jh
+      - en.essay@sh
+      - en.acwrite@uni
+    colearn: 每週一張英文明信片或便條，孩子寫、大人回，年底集成一本。
+  - id: ja.script
+    title: 從假名到原文
+    knowledge_points:
+      - ja.hira@es
+      - ja.kanji@jh
+      - ja.read@sh
+      - ja.authentic@uni
+    colearn: 家裡日本零食的包裝輪流念：孩子念假名，大人猜漢字意思。
+  - id: ja.talk
+    title: 從招呼到生活對話
+    knowledge_points:
+      - ja.hello@es
+      - ja.intro@jh
+      - ja.listen@sh
+      - ja.society@uni
+    colearn: 每週一句日語招呼語，用在真的見面時。
+  - id: ja.polite
+    title: 對誰說什麼話
+    knowledge_points:
+      - ja.desu@jh
+      - ja.casual@sh
+      - ja.keigo@uni
+    colearn: 同一句話全家各說一個版本：對朋友、對老師、對客戶。
+  - id: lg.method
+    title: 學語言的方法
+    knowledge_points:
+      - lg.listen@es
+      - lg.review@jh
+      - lg.ai@sh
+      - lg.culture@uni
+    colearn: 親子各學一個外語，共用一份間隔複習表，每週互考五張字卡。

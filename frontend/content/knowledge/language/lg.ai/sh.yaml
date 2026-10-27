@@ -1,0 +1,62 @@
+id: lg.ai@sh
+concept: lg.ai
+title: 用 AI 當語言陪練
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A1
+  - B2
+  issues:
+  - 資訊教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- lg.review@jh
+links:
+  why: []
+  how: []
+  related:
+  - it.llm@sh
+  - ph.aijudge@sh
+  deeper:
+  - lg.culture@uni
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 語言學習策略
+  - 口說
+  generalist:
+  - 查證
+  - 媒體素養
+ai:
+  delegable:
+  - 陪練對話、指出文法錯誤、給替代說法
+  human_experience:
+  - 判斷 AI 的修改合不合語境，並自己開口說出來
+idea: AI 可以陪你對話、改錯、解釋文法，但它也會說錯。要自己先寫、先說，再看 AI 怎麼改，並查證它的說法。
+guiding_questions:
+- AI 幫你改好的句子，算是你會了嗎？
+scenario: 親子共學：先自己寫三句英文或日文自我介紹，再請 AI 改；把每個修改分成「我同意」「我要查證」兩類。
+goal: 用 AI 當語言陪練：請它扮演角色、指出錯誤，並查證它說的對不對。
+review: 孩子和 AI 用外語對話 10 分鐘，存下 AI 指出的 3 個錯誤，各用字典或文法書查證；家長看到 3 筆查證紀錄。
+formats:
+  slides: []
+  exercise: 目標：用 AI 當語言陪練：請它扮演角色、指出錯誤，並查證它說的對不對。　檢核：孩子和 AI 用外語對話 10 分鐘，存下 AI 指出的 3 個錯誤，各用字典或文法書查證；家長看到 3 筆查證紀錄。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

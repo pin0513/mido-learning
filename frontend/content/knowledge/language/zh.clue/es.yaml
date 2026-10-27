@@ -1,0 +1,61 @@
+id: zh.clue@es
+concept: zh.clue
+title: 讀出沒寫的：從線索推論
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（PIRLS 閱讀歷程（推論）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.mainidea@es
+links:
+  why:
+  - ph.reason@es
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：PIRLS 閱讀歷程（推論）。跨學門連結：哲學「說出理由：「因為……所以……」」。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 提供推論題與參考答案
+  human_experience:
+  - 說出自己的推論與依據
+idea: 作者常不直接說，而是寫動作、表情、對話讓讀者推。推論要有證據：說出「因為文中寫了……，所以我猜……」，猜錯了就回去找線索。
+guiding_questions:
+- 文章沒寫「他很緊張」，你怎麼知道他很緊張？
+scenario: 親子共學：看一張家庭照片或一頁漫畫，大家說出「我猜……，因為……」，沒有證據的猜測不算分。
+goal: 從文中線索推論沒有直接寫出來的事，並說出是哪一句讓你這樣想。
+review: 家長出 3 題推論題（例如「角色當時心情如何」），孩子每題都說出依據的那一句；理由對得上原文的至少 2 題。
+formats:
+  slides: []
+  exercise: 目標：從文中線索推論沒有直接寫出來的事，並說出是哪一句讓你這樣想。　檢核：家長出 3 題推論題（例如「角色當時心情如何」），孩子每題都說出依據的那一句；理由對得上原文的至少 2 題。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

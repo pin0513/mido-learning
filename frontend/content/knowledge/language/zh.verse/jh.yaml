@@ -1,0 +1,61 @@
+id: zh.verse@jh
+concept: zh.verse
+title: 近體詩與詞：對仗、格律與長短句
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 文言與古典
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B3
+  - C3
+  issues:
+  - 多元文化教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（國語文領綱國中材料「古典詩詞曲選」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- 平仄規則教材只做入門說明，不要求學生辨平仄；以課本範圍為準。
+prerequisites:
+- zh.poem@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：國語文領綱國中材料「古典詩詞曲選」。
+competency:
+  specialist:
+  - 文言與古典
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 整理格律規則與例子
+  human_experience:
+  - 朗讀體會節奏與情感
+idea: 唐代近體詩有固定字數、押韻與平仄；律詩八句，中間兩聯要對仗。詞依詞牌填寫，句子長短不一，原本是可以唱的歌詞。國中材料包含古典詩詞曲選。
+guiding_questions:
+- 為什麼有的詩每句一樣長，有的「詞」長短不齊？
+scenario: 親子共學：全家各挑一首詞找出詞牌名，搜尋同詞牌的另一首，比較句子長短是不是一樣。
+goal: 分辨古體詩、近體詩與詞，說出律詩的對仗與詞的長短句。
+review: 家長給一首律詩和一首詞，孩子說出各是什麼體裁、標出律詩中間兩聯的對仗，並說出詞牌名；三項都對。
+formats:
+  slides: []
+  exercise: 目標：分辨古體詩、近體詩與詞，說出律詩的對仗與詞的長短句。　檢核：家長給一首律詩和一首詞，孩子說出各是什麼體裁、標出律詩中間兩聯的對仗，並說出詞牌名；三項都對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

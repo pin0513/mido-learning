@@ -1,0 +1,56 @@
+id: zh.poster@es
+concept: zh.poster
+title: 一張海報說一件事
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 應用文案
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.note@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 應用文寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 排版與配色建議
+  human_experience:
+  - 決定哪一件事最重要
+idea: 海報和公告只能有一個重點。最大的字放最重要的事，時間地點寫清楚，不重要的刪掉。
+guiding_questions:
+- 路過的人只看 3 秒，海報上最大的字要寫什麼？
+scenario: 親子共學：替家裡的跳蚤市場或班級活動做一張 A4 海報，請家人站遠遠看 3 秒，說出記得什麼。
+goal: 做一張只說一件事的海報：最大的字是最重要的事，時間地點清楚。
+review: 家人站遠看 3 秒，能說出活動名稱、時間、地點三件事中的至少兩件。
+formats:
+  slides: []
+  exercise: 目標：做一張只說一件事的海報：最大的字是最重要的事，時間地點清楚。　檢核：家人站遠看 3 秒，能說出活動名稱、時間、地點三件事中的至少兩件。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

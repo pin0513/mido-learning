@@ -1,0 +1,52 @@
+id: zh.editing@uni
+concept: zh.editing
+title: 替別人校稿：清楚又不傷人
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 與「溝通與解決問題」sk.feedback@sh 交界：本點管文字修改的層次與順序，給回饋的方式由 sk.feedback 負責，互列 related。
+prerequisites:
+- zh.proofread@sh
+links:
+  why: []
+  how: []
+  related:
+  - sk.feedback@sh
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 溝通
+  - 團隊合作
+ai:
+  delegable:
+  - 逐字標出錯字與標點
+  human_experience:
+  - 判斷哪三個修改最重要，用對方聽得進去的方式說
+idea: 校稿分兩層：內容（主旨、結構）先講，文字（錯字、標點、病句）後講。先說一個具體優點，再給最多三個最重要的修改。
+guiding_questions:
+- 幫朋友改稿，先說錯字，還是先說哪裡寫得好？
+scenario: 親子共學：親子互換作品校稿：大人改孩子的作文、孩子改大人的訊息或報告，各給一個優點、三個建議。
+goal: 替別人校稿：先內容後文字，給一個優點和最多三個修改。
+review: 親子互改一篇作品，校稿單上有 1 個具體優點、最多 3 個最重要的修改；被改的人說出至少 2 個建議「聽得進去」。
+formats:
+  slides: []
+  exercise: 目標：替別人校稿：先內容後文字，給一個優點和最多三個修改。　檢核：親子互改一篇作品，校稿單上有 1 個具體優點、最多 3 個最重要的修改；被改的人說出至少 2 個建議「聽得進去」。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

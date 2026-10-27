@@ -1,0 +1,68 @@
+id: en.gept2@sh
+concept: en.gept2
+title: 全民英檢中級：知道自己在哪一級
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文檢定與方法
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A1
+  - A3
+  issues:
+  - 生涯規劃教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢中級（CEFR B1）。
+- 引用的框架只寫名稱（全民英檢中級（LTTC，CEFR B1）；CEFR），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- 通過標準與題型取自 LTTC 全民英檢網中級測驗介紹 https://www.gept.org.tw/Exam_intro/t02_introduction.asp（2026-10-27 讀取）；GEPT 與 CEFR 的對應取自 LTTC 報名手冊 https://www.gept.org.tw/info/registration_guide.pdf。
+prerequisites:
+- en.listen2@sh
+- en.middle@sh
+- en.translate@sh
+- en.present@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.toefl@uni
+link_notes: 框架：全民英檢中級（LTTC，CEFR B1）；CEFR。
+competency:
+  specialist:
+  - 語言學習策略
+  generalist:
+  - 用數據說明
+ai:
+  delegable:
+  - 依題型出練習、分析弱點
+  human_experience:
+  - 設定目標並持續練
+idea: 全民英檢中級對應 CEFR B1：能閱讀短文、故事、信件、廣告與說明書，能介紹自己的生活與經歷並對一般話題陳述看法，能寫簡單的書信與心得。CEFR 把語言能力分成 A1 到 C2 六級，用「能做到什麼」描述；檢定是一把尺，重點是看出下一步要練什麼。
+guiding_questions:
+- 「英文不錯」到底是多好？有沒有一把尺可以量？
+scenario: 親子共學：對照全民英檢中級的「聽說讀寫能力說明」，親子各自勾出做得到的項目，找出下一個目標。
+goal: 四項一起準備：通過全民英檢中級，知道自己在 CEFR 的哪一級。
+review: 做一回完整的全民英檢中級官方模擬題並對照官方通過標準：聽力與閱讀總分 160 分以上，且單項不低於 72 分（各滿分 120）；寫作 80 分、口說 80 分以上。家長看成績或模擬分數打勾。
+formats:
+  slides: []
+  exercise: 目標：四項一起準備：通過全民英檢中級，知道自己在 CEFR 的哪一級。　檢核：做一回完整的全民英檢中級官方模擬題並對照官方通過標準：聽力與閱讀總分 160 分以上，且單項不低於 72 分（各滿分 120）；寫作 80 分、口說 80 分以上。家長看成績或模擬分數打勾。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

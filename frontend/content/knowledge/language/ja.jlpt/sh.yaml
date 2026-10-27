@@ -1,0 +1,63 @@
+id: ja.jlpt@sh
+concept: ja.jlpt
+title: JLPT 與學習目標
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A1
+  - A3
+  issues:
+  - 生涯規劃教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N4–N3。
+- JLPT 各級認定標準與分數請以日本國際交流基金與日本國際教育支援協會的官方網站為準；本稿未讀取官方頁面，不寫分數。
+- TODO：之後讀取 JLPT 官方頁面，只補上讀到的分數與通過標準，並寫上出處與讀取日期；在那之前不寫任何分數。
+prerequisites:
+- ja.read@sh
+- ja.listen@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 語言學習策略
+  generalist:
+  - 用數據說明
+ai:
+  delegable:
+  - 依級數出題、分析弱點
+  human_experience:
+  - 設定目標並持續練
+idea: 日本語能力試驗（JLPT）從 N5 到 N1 分五級。它是一把尺，幫你看出自己會什麼、下一步要補什麼。
+guiding_questions:
+- N5 和 N3 差在哪？一年後你想到哪一級？
+scenario: 親子共學：做一份 N5 模擬題，對照結果訂出接下來三個月每週要練的內容。
+goal: 對照 JLPT 各級的能力說明，選一級當目標並做一回官方練習題。
+review: 孩子讀 JLPT 官方的各級認定標準，選出目標級數（例如 N4 或 N3），做一回官方練習題並寫下最弱的一項；家長看練習結果打勾。
+formats:
+  slides: []
+  exercise: 目標：對照 JLPT 各級的能力說明，選一級當目標並做一回官方練習題。　檢核：孩子讀 JLPT 官方的各級認定標準，選出目標級數（例如 N4 或 N3），做一回官方練習題並寫下最弱的一項；家長看練習結果打勾。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

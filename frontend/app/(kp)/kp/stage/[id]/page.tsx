@@ -4,8 +4,7 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AxisBrowser } from "@/components/kp/AxisBrowser";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
-import { filterOptions, launchedCatalog, loadCatalog, stageName, toCards, visibleCatalog } from "@/lib/content";
-import { isSoftSkillsEnabled } from "@/lib/kp/flags";
+import { filterOptions, isFolderLaunched, launchedCatalog, loadCatalog, stageName, toCards, visibleCatalog } from "@/lib/content";
 import { KP_SITE_ORIGIN, stagePath } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
@@ -33,7 +32,7 @@ export default async function StagePage({ params }: { params: Promise<{ id: stri
   const visible = launchedCatalog(visibleCatalog(all));
   const points = visible.indexes.byStage.get(id) ?? [];
   const options = filterOptions(all);
-  if (!isSoftSkillsEnabled()) options.folders = options.folders.filter((folder) => folder.id !== "soft-skills");
+  options.folders = options.folders.filter((folder) => isFolderLaunched(folder.id));
   return (
     <div className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6">
       <nav aria-label="麵包屑" className="text-sm">

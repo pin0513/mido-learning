@@ -1,0 +1,58 @@
+id: lg.listen@es
+concept: lg.listen
+title: 先聽再說：模仿的力量
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A1
+  - B1
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - lg.review@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 語言學習策略
+  - 聽力
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 放慢速度念給你聽、重複播放
+  human_experience:
+  - 自己開口模仿，聽出自己和原音哪裡不一樣
+idea: 學一種語言，先大量聽、跟著念，耳朵熟了，嘴巴才跟得上。先求敢說，不求一次說對。
+guiding_questions:
+- 小嬰兒沒學過文法，為什麼也學會說話？
+scenario: 親子共學：全家選一首英文和一首日文兒歌，每天聽三次，第三天開始一起跟唱，錄下來和第一天比較。
+goal: 先大量聽、跟著模仿，再開口說。
+review: 一週內每天聽 10 分鐘外語兒歌或故事並跟著念；週末孩子模仿一段 30 秒的錄音，家長聽得出語調和節奏相近。
+formats:
+  slides: []
+  exercise: 目標：先大量聽、跟著模仿，再開口說。　檢核：一週內每天聽 10 分鐘外語兒歌或故事並跟著念；週末孩子模仿一段 30 秒的錄音，家長聽得出語調和節奏相近。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,63 @@
+id: ja.kanji@jh
+concept: ja.kanji
+title: 漢字的日本讀法
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C3
+  issues:
+  - 多元文化教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N5–N4。
+prerequisites:
+- lg.review@jh
+- ja.count@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - ja.read@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文字系統
+  - 字彙
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 解釋漢字的音讀與訓讀
+  human_experience:
+  - 用自己的方式整理易混淆的字
+idea: 日文也用漢字，但讀音和意思不一定和中文一樣。看得懂漢字是台灣學習者的優勢，也要小心「長得一樣、意思不同」的字。
+guiding_questions:
+- 「手紙」在日文是什麼意思？跟中文一樣嗎？
+scenario: 親子共學：收集 10 個日文漢字詞（例如手紙、大丈夫、勉強），先用中文猜意思，再查答案。
+goal: 用中文漢字的知識猜日文漢字的意思，記住音讀與訓讀的差別。
+review: 家長給 10 個日文漢字詞（包括「手紙」這類意思跟中文不同的字），孩子先猜再查，並說出 2 個猜錯的原因。
+formats:
+  slides: []
+  exercise: 目標：用中文漢字的知識猜日文漢字的意思，記住音讀與訓讀的差別。　檢核：家長給 10 個日文漢字詞（包括「手紙」這類意思跟中文不同的字），孩子先猜再查，並說出 2 個猜錯的原因。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

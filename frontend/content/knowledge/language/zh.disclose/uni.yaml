@@ -1,0 +1,49 @@
+id: zh.disclose@uni
+concept: zh.disclose
+title: 揭露與誠信：用了 AI 怎麼說
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - AI 協作寫作
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+prerequisites:
+- zh.factcheck@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - AI 協作寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 草擬揭露聲明
+  human_experience:
+  - 依規定誠實說明並負責
+idea: 各學校、期刊、公司對 AI 使用的規定不同。先查規定，再清楚說明 AI 幫了哪些忙、哪些是你自己的。
+guiding_questions:
+- 有人問「這是你寫的嗎？」，你怎麼回答才誠實？
+scenario: 親子共學：找你學校或常投稿平台的 AI 使用規定，替自己一篇作品寫一段兩三句的使用說明。
+goal: 依學校或平台規定，寫出一段誠實的 AI 使用說明。
+review: 找到自己學校或投稿平台的 AI 使用規定原文，替一件作品寫 2–3 句說明；家人對照規定確認沒有遺漏。
+formats:
+  slides: []
+  exercise: 目標：依學校或平台規定，寫出一段誠實的 AI 使用說明。　檢核：找到自己學校或投稿平台的 AI 使用規定原文，替一件作品寫 2–3 句說明；家人對照規定確認沒有遺漏。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,57 @@
+id: en.toeic@uni
+concept: en.toeic
+title: 多益聽讀：職場英文量一量
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文檢定與方法
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：多益聽讀 B1→B2。
+- 引用的框架只寫名稱（TOEIC Listening and Reading（ETS）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- CEFR 對應分數取自 ETS《TOEIC Listening and Reading Score User Guide》https://www.ets.org/pdfs/toeic/toeic-listening-reading-score-user-guide.pdf（2026-10-27 讀取）；ETS 說明這些是建議的最低分數，不建議當硬性切分點。
+prerequisites:
+- en.gept2@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：TOEIC Listening and Reading（ETS）。
+competency:
+  specialist:
+  - 語言學習策略
+  - 聽力
+  - 閱讀理解
+  generalist:
+  - 用數據說明
+ai:
+  delegable:
+  - 依題型出練習、分析錯題
+  human_experience:
+  - 把分數連到自己的工作與學習目標
+idea: 多益（TOEIC）由 ETS 出題，聽讀測驗用職場與日常情境量英文能力，兩項各 5–495 分。ETS 把分數對照 CEFR，但提醒這些是參考門檻，不是硬性的切分點。多益測的是職場溝通，不是學術英文；要申請國外大學，下一步是托福。
+guiding_questions:
+- 履歷上的多益分數，代表你在工作上能做什麼？
+scenario: 親子共學：大人和大學生各做一回模擬題，對照 CEFR 表，各寫下三個月後的目標分數與每週練習計畫。
+goal: 用多益聽讀測驗量出職場英文的程度，並對照 CEFR 訂出下一步。
+review: 做一回官方多益聽讀模擬題，記下聽力與閱讀分數（各 5–495），對照 ETS 公布的 CEFR 最低分數：聽力 275、閱讀 275 是 B1；聽力 400、閱讀 385 是 B2。家人看分數與對照表打勾。
+formats:
+  slides: []
+  exercise: 目標：用多益聽讀測驗量出職場英文的程度，並對照 CEFR 訂出下一步。　檢核：做一回官方多益聽讀模擬題，記下聽力與閱讀分數（各 5–495），對照 ETS 公布的 CEFR 最低分數：聽力 275、閱讀 275 是 B1；聽力 400、閱讀 385 是 B2。家人看分數與對照表打勾。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

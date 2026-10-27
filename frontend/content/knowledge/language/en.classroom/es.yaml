@@ -1,0 +1,59 @@
+id: en.classroom@es
+concept: en.classroom
+title: 聽指令做動作
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：初級的準備。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 聽力
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 念指令、調整速度
+  human_experience:
+  - 邊聽邊動，練出不用翻譯的反應
+idea: 聽外語時，從語氣、動作和幾個關鍵字就能猜出意思。先抓大意，不用每個字都懂。
+guiding_questions:
+- 不懂每個字，也能聽懂老師要你做什麼嗎？
+scenario: 親子共學：玩「Simon says」：Stand up、Touch your nose、Turn around，大人說、孩子做，再交換。
+goal: 聽懂教室與生活裡的簡短英文指令並做出動作。
+review: 家長用英文說 10 個指令（Stand up、Open your book……），孩子不看翻譯直接做，至少 8 個做對。
+formats:
+  slides: []
+  exercise: 目標：聽懂教室與生活裡的簡短英文指令並做出動作。　檢核：家長用英文說 10 個指令（Stand up、Open your book……），孩子不看翻譯直接做，至少 8 個做對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

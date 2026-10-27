@@ -1,0 +1,50 @@
+id: zh.cite@uni
+concept: zh.cite
+title: 引用格式：引號、書名號與出處
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+prerequisites:
+- zh.letterfmt@sh
+links:
+  why: []
+  how: []
+  related:
+  - zh.disclose@uni
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 查證
+ai:
+  delegable:
+  - 依格式整理參考文獻
+  human_experience:
+  - 確認引用的原文與出處真的存在
+idea: 直接引用用引號並寫出處，書名用《》、篇名用〈〉。換句話說也要註明來源。各領域引用格式不同，先看投稿或課程規定。
+guiding_questions:
+- 引用別人的一句話，要怎麼標才不算抄？
+scenario: 親子共學：複習版：拿你最近寫的報告或文章，把每一句不是你想的話找出來，標上引號或出處。
+goal: 引用時用對引號、書名號與篇名號，每一句別人的話都標出處。
+review: 拿最近一份報告，把不是自己想的句子全部找出來，每處都有引號或出處；請家人隨機抽 3 處，都能找到原始來源。
+formats:
+  slides: []
+  exercise: 目標：引用時用對引號、書名號與篇名號，每一句別人的話都標出處。　檢核：拿最近一份報告，把不是自己想的句子全部找出來，每處都有引號或出處；請家人隨機抽 3 處，都能找到原始來源。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

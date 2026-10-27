@@ -1,0 +1,55 @@
+id: en.work@uni
+concept: en.work
+title: 職場英文：Email 與會議用語
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：多益情境。
+prerequisites:
+- en.toeic@uni
+links:
+  why: []
+  how: []
+  related:
+  - pm.team@jh
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  - 跨文化溝通
+  generalist:
+  - 溝通
+  - 團隊合作
+ai:
+  delegable:
+  - 起草信件、調整語氣
+  human_experience:
+  - 確認內容正確，為承諾負責
+idea: 職場英文講求清楚和禮貌：主旨一眼看懂、第一段說目的、最後寫下一步。會議裡要會確認、摘要和提出不同意見。
+guiding_questions:
+- 一封寫給陌生客戶的 email，語氣要怎麼拿捏？
+scenario: 親子共學：寫一封英文 email 邀請一位講者來學校分享：主旨、目的、時間地點、請對方回覆的期限。
+goal: 寫一封清楚有禮的職場英文 email，並在會議裡用英文確認、摘要、提出不同意見。
+review: 寫一封英文 email 邀請講者：主旨、目的、時間地點、回覆期限都有；家人只讀主旨與第一句就知道要做什麼。另錄 1 分鐘會議摘要，說出 3 個決定與下一步。
+formats:
+  slides: []
+  exercise: 目標：寫一封清楚有禮的職場英文 email，並在會議裡用英文確認、摘要、提出不同意見。　檢核：寫一封英文 email 邀請講者：主旨、目的、時間地點、回覆期限都有；家人只讀主旨與第一句就知道要做什麼。另錄 1 分鐘會議摘要，說出 3 個決定與下一步。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

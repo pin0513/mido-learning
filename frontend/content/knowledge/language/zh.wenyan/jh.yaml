@@ -1,0 +1,62 @@
+id: zh.wenyan@jh
+concept: zh.wenyan
+title: 文言文入門：之、其、而、以、於
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 文言與古典
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 多元文化教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（會考國文「詞語的理解與使用（含常用文言文詞義）」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- 國中文言選文比例 7 年級 10–20%、8 年級 20–30%、9 年級 25–35%（國語文領綱），請以領綱原文核對。
+prerequisites:
+- zh.words@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.classics@sh
+link_notes: 框架：會考國文「詞語的理解與使用（含常用文言文詞義）」。
+competency:
+  specialist:
+  - 文言與古典
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 逐字解釋虛詞用法
+  human_experience:
+  - 自己判斷這一句裡是哪一種意思
+idea: 文言文常用少數虛詞串起句子。「之」可以是「的」、代名詞或「往」；「而」表示順接或轉折；「以」是用、因為；「於」是在、比。先認得這幾個字，文言句子就讀得懂一半。會考國文「詞語的理解與使用」包含常用文言詞義。
+guiding_questions:
+- 「學而時習之」裡的「而」和「之」，各是什麼意思？
+scenario: 親子共學：把一段文言課文的虛詞用螢光筆圈起來，親子各翻一句白話，對照誰翻得最貼近。
+goal: 讀懂常見文言虛詞「之、其、而、以、於」在句中的意思。
+review: 家長從課本挑 10 句含這 5 個虛詞的文言句，孩子說出每個虛詞的意思（例如「之」是的、他、往），答對 8 句以上。
+formats:
+  slides: []
+  exercise: 目標：讀懂常見文言虛詞「之、其、而、以、於」在句中的意思。　檢核：家長從課本挑 10 句含這 5 個虛詞的文言句，孩子說出每個虛詞的意思（例如「之」是的、他、往），答對 8 句以上。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

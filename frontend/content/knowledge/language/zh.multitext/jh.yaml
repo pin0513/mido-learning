@@ -1,0 +1,63 @@
+id: zh.multitext@jh
+concept: zh.multitext
+title: 圖表與多文本：把資料兜起來
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  - 數學
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（會考國文「文本的統整與應用」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.retrieve@es
+links:
+  why:
+  - ma.data@es
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：會考國文「文本的統整與應用」。跨學門連結：數學「整理資料與統計圖」。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 用數據說明
+  - 查證
+ai:
+  delegable:
+  - 整理圖表重點
+  human_experience:
+  - 比對資料矛盾並下結論
+idea: 會考國文考「文本的統整與應用」，學測國綜也有圖表與多文本題。先各自讀懂，再找共同點與矛盾，最後用自己的話統整。讀圖先看標題、單位與時間。
+guiding_questions:
+- 一張圖和一篇文章說法不一樣，你相信哪一個？
+scenario: 親子共學：找一則有圖表的新聞，孩子先讀圖說一句，大人讀文說一句，再一起寫出合起來的結論。
+goal: 讀懂圖表，把兩篇以上的資料放在一起比較、統整出結論。
+review: 家長給一張統計圖和一篇相關短文，孩子寫 3 句：圖說了什麼、文說了什麼、兩者合起來的結論；家長核對數字讀得對。
+formats:
+  slides: []
+  exercise: 目標：讀懂圖表，把兩篇以上的資料放在一起比較、統整出結論。　檢核：家長給一張統計圖和一篇相關短文，孩子寫 3 句：圖說了什麼、文說了什麼、兩者合起來的結論；家長核對數字讀得對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

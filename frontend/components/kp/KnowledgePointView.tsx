@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { competencyName, disciplineTitle, layerName, stageName } from "@/lib/content";
-import { isSoftSkillsEnabled } from "@/lib/kp/flags";
+import { isFolderLaunched } from "@/lib/content";
 import { competencyPath, disciplinePath, knowledgePointPath, learningPathPath, stagePath } from "@/lib/kp/routes";
 import { ColearnCard } from "./ColearnCard";
 import { Estimator } from "./Estimator";
@@ -62,7 +62,11 @@ export function KnowledgePointView({
   all: ContentCatalog;
   visible: ContentCatalog;
 }) {
-  const visibleIds = new Set(visible.points.map((item) => item.id));
+  const visibleIds = new Set(
+    visible.points
+      .filter((item) => isFolderLaunched(item.folder) || item.folder === point.folder)
+      .map((item) => item.id),
+  );
   const stage = stageName(all, point.stage);
   const layer = layerName(all, point.layer);
   const folderName = disciplineTitle(all, point.folder);
@@ -70,7 +74,7 @@ export function KnowledgePointView({
   const requiredBy = (visible.indexes.requiredBy.get(point.id) ?? [])
     .map((id) => visible.indexes.byId.get(id))
     .filter((item): item is KnowledgePoint => Boolean(item))
-    .filter((item) => isSoftSkillsEnabled() || point.folder === "soft-skills" || item.folder !== "soft-skills");
+    .filter((item) => isFolderLaunched(item.folder) || item.folder === point.folder);
   const colearnPaths = all.paths.filter((path) => path.colearn && path.knowledgePointIds.includes(point.id));
   const showCurriculum = point.stage !== "uni" && point.curriculum108;
 

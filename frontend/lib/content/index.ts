@@ -4,6 +4,7 @@ export {
   competencyName,
   disciplineRoots,
   disciplineTitle,
+  isFolderLaunched,
   launchedCatalog,
   layerName,
   loadCatalog,

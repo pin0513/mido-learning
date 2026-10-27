@@ -1,0 +1,52 @@
+id: zh.digest@uni
+concept: zh.digest
+title: 讀長文與學術文章：寫出摘要
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.evaluate@sh
+- zh.mixed@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 查證
+  - 跨域思考
+ai:
+  delegable:
+  - 產生初步摘要
+  human_experience:
+  - 核對摘要沒有扭曲原意
+idea: 學術文章有固定結構。先讀摘要與結論決定要不要細讀，再找研究問題、方法、主要發現與限制。摘要用自己的話，不加入自己的評論。
+guiding_questions:
+- 一篇 30 頁的報告，你能用 200 字說清楚嗎？
+scenario: 親子共學：大人選一篇工作上要讀的報告、孩子選一篇課堂文章，各寫 200 字摘要，交換讀並各提一個問題。
+goal: 讀一篇學術或專業長文，寫出 200 字摘要：問題、方法、發現、限制。
+review: 選一篇中文期刊論文或研究報告，寫 200 字摘要；家人只讀摘要就能說出作者的主要發現與一個限制。
+formats:
+  slides: []
+  exercise: 目標：讀一篇學術或專業長文，寫出 200 字摘要：問題、方法、發現、限制。　檢核：選一篇中文期刊論文或研究報告，寫 200 字摘要；家人只讀摘要就能說出作者的主要發現與一個限制。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

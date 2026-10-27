@@ -1,0 +1,62 @@
+id: en.listening@jh
+concept: en.listening
+title: 聽懂對話與廣播
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A1
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢初級・聽力。
+- 引用的框架只寫名稱（全民英檢初級聽力：看圖辨義、問答、簡短對話、短文聽解，共 30 題約 20 分鐘（LTTC）；會考英語聽力），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- en.classroom@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：全民英檢初級聽力：看圖辨義、問答、簡短對話、短文聽解，共 30 題約 20 分鐘（LTTC）；會考英語聽力。
+competency:
+  specialist:
+  - 聽力
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 產生不同速度和口音的聽力材料
+  human_experience:
+  - 在真實情境裡聽懂並做出反應
+idea: 聽力的關鍵是不要卡住：抓人、事、時、地這些關鍵字，漏掉的字靠上下文補。
+guiding_questions:
+- 聽不懂一個字時，你會停下來還是繼續聽？
+scenario: 親子共學：聽一段機場或車站的英文廣播，只寫下時間、地點、班次三件事，再對答案。
+goal: 聽懂日常對話與簡短廣播裡的人、事、時、地，達到全民英檢初級聽力的程度。
+review: 家長從全民英檢初級官方練習題選一回聽力（看圖辨義、問答、簡短對話、短文聽解，每題只播一遍），孩子作答，答對 7 成以上；或做一回會考英語聽力歷屆試題。
+formats:
+  slides: []
+  exercise: 目標：聽懂日常對話與簡短廣播裡的人、事、時、地，達到全民英檢初級聽力的程度。　檢核：家長從全民英檢初級官方練習題選一回聽力（看圖辨義、問答、簡短對話、短文聽解，每題只播一遍），孩子作答，答對 7 成以上；或做一回會考英語聽力歷屆試題。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

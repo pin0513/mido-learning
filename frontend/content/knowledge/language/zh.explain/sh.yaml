@@ -1,0 +1,59 @@
+id: zh.explain@sh
+concept: zh.explain
+title: 說明文與投影片文字
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 應用文案
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 與「溝通與解決問題」sk.present@sh 交界：本點只管文字（說明文、投影片標題與內文），上台講述由 sk.present 負責，互列 related。
+prerequisites:
+- zh.structure@jh
+links:
+  why: []
+  how: []
+  related:
+  - sk.present@sh
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 應用文寫作
+  generalist:
+  - 溝通
+  - 用數據說明
+ai:
+  delegable:
+  - 整理資料、建議圖表
+  human_experience:
+  - 決定最重要的一句話
+idea: 說明文和投影片的文字，是讓不懂的人看懂：先寫結論，再分點說明，每張投影片的標題就是一句完整的重點，用例子取代術語。怎麼上台講，交給「溝通與解決問題」的簡報。
+guiding_questions:
+- 如果聽眾只記得一句話，你希望是哪一句？
+scenario: 親子共學：把自主學習成果做成 5 張投影片，先寫每張的一句話標題，再補內容。
+goal: 寫說明文和投影片文字：先寫結論，一張一個重點，用例子取代術語。
+review: 孩子做 5 張投影片，先只交 5 句標題；家長只看標題就能說出整份的結論。
+formats:
+  slides: []
+  exercise: 目標：寫說明文和投影片文字：先寫結論，一張一個重點，用例子取代術語。　檢核：孩子做 5 張投影片，先只交 5 句標題；家長只看標題就能說出整份的結論。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

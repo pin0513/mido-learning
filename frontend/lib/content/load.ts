@@ -221,13 +221,13 @@ function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
     const contentFolder = typeof raw.content_folder === "string" ? raw.content_folder : undefined;
     if (isRoot && (idPrefix || contentFolder)) {
       if (!idPrefix || !contentFolder) errors.push(`taxonomy/disciplines.yaml: ${raw.name} 的 id_prefix 與 content_folder 必須同時存在`);
-      if (idPrefix && prefixes.has(idPrefix)) errors.push(`taxonomy/disciplines.yaml: id 前綴重複（${idPrefix}）`);
       if (contentFolder && folders.has(contentFolder)) errors.push(`taxonomy/disciplines.yaml: 資料夾名稱重複（${contentFolder}）`);
-      if (idPrefix) prefixes.add(idPrefix);
       if (contentFolder) folders.add(contentFolder);
     }
-    if (!isRoot && (idPrefix || contentFolder)) {
-      errors.push(`taxonomy/disciplines.yaml: 只有最上層學門可以設定 id 前綴（${raw.name}）`);
+    if (idPrefix && prefixes.has(idPrefix)) errors.push(`taxonomy/disciplines.yaml: id 前綴重複（${idPrefix}）`);
+    if (idPrefix) prefixes.add(idPrefix);
+    if (!isRoot && contentFolder) {
+      errors.push(`taxonomy/disciplines.yaml: 只有最上層學門可以設定內容資料夾（${raw.name}）`);
     }
     const children: DisciplineNode[] = [];
     if (Array.isArray(raw.children)) {
@@ -294,19 +294,21 @@ function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
   };
 }
 
-function resolvePath(roots: DisciplineNode[], segments: string[]): { node: DisciplineNode; root: DisciplineNode } | null {
+function resolvePath(roots: DisciplineNode[], segments: string[]): { node: DisciplineNode; root: DisciplineNode; idPrefix?: string } | null {
   let level = roots;
   let root: DisciplineNode | null = null;
   let current: DisciplineNode | null = null;
+  let idPrefix: string | undefined;
   for (const segment of segments) {
     const found = level.find((node) => node.name === segment);
     if (!found) return null;
     if (!root) root = found;
+    if (found.idPrefix) idPrefix = found.idPrefix;
     current = found;
     level = found.children;
   }
   if (!current || !root) return null;
-  return { node: current, root };
+  return { node: current, root, idPrefix };
 }
 
 function optionalString(value: unknown): string | undefined {
@@ -382,8 +384,8 @@ function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: V
         if (folder !== resolved.root.contentFolder) {
           errors.push(`${rel}: 應放在 knowledge/${resolved.root.contentFolder}/`);
         }
-        if (!id.startsWith(`${resolved.root.idPrefix}.`)) {
-          errors.push(`${rel}: id 前綴應為 ${resolved.root.idPrefix}`);
+        if (!id.startsWith(`${resolved.idPrefix}.`)) {
+          errors.push(`${rel}: id 前綴應為 ${resolved.idPrefix}`);
         }
       }
     }

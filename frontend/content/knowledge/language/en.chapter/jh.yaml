@@ -1,0 +1,66 @@
+id: en.chapter@jh
+concept: en.chapter
+title: 讀美國小學讀本：章節書與知識短文
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：美國 3–5 年級讀本。
+- 引用的框架只寫名稱（Common Core ELA（文學與資訊文本）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- 「美國 3–5 年級讀本」是程度描述，請用出版社標示的年級或閱讀級數選書；本站不指定書目。
+prerequisites:
+- en.reading@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.middle@sh
+link_notes: 框架：Common Core ELA（文學與資訊文本）。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 解釋生字、出閱讀理解題
+  human_experience:
+  - 自己讀完整本書並說出感受
+idea: 美國小學到了三到五年級，開始讀分章的小說（chapter books），也讀科學、歷史的知識短文。美國的共同核心州立標準（Common Core ELA）把文學與資訊文本並列。台灣國中生讀這個程度的書，生字多但句子短，最適合大量閱讀。
+guiding_questions:
+- 美國小學生讀的英文書，你讀得懂幾成？
+scenario: 親子共學：親子共讀一本章節書，每天一章，孩子讀給大人聽，大人負責問「接下來會怎樣」。
+goal: 讀完一本美國小學三到五年級程度的分章小說，和一篇同程度的知識短文。
+review: 孩子讀完一本 3–5 年級程度的章節書，每章寫一句英文摘要；家長抽 2 章請孩子用中文說出發生了什麼，再讀一篇同程度的科學或歷史短文，說出 3 個事實。
+formats:
+  slides: []
+  exercise: 目標：讀完一本美國小學三到五年級程度的分章小說，和一篇同程度的知識短文。　檢核：孩子讀完一本 3–5 年級程度的章節書，每章寫一句英文摘要；家長抽 2 章請孩子用中文說出發生了什麼，再讀一篇同程度的科學或歷史短文，說出 3 個事實。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

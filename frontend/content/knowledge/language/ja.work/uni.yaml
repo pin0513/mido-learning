@@ -1,0 +1,54 @@
+id: ja.work@uni
+concept: ja.work
+title: 職場日語：信件與報連相
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 基準標籤：JLPT N2–N1。
+prerequisites:
+- ja.keigo@uni
+links:
+  why: []
+  how: []
+  related:
+  - pm.team@jh
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  - 跨文化溝通
+  generalist:
+  - 溝通
+  - 團隊合作
+ai:
+  delegable:
+  - 起草信件、檢查敬語
+  human_experience:
+  - 為內容和承諾負責
+idea: 日本職場重視「報告・連絡・相談」（報連相）：主動回報進度、通知變動、提早商量。日文商業信件也有固定格式。
+guiding_questions:
+- 日本公司常說「報連相」，和團隊溝通有什麼關係？
+scenario: 親子共學：寫一封日文信，向老師報告專題進度：目前完成什麼、遇到什麼問題、想商量什麼。
+goal: 寫職場日語信件，並用「報告、連絡、相談」的習慣和同事溝通。
+review: 寫一封日語商務信件（開頭寒暄、主旨、請求、結尾），家人對照範本確認五個部分都有。
+formats:
+  slides: []
+  exercise: 目標：寫職場日語信件，並用「報告、連絡、相談」的習慣和同事溝通。　檢核：寫一封日語商務信件（開頭寒暄、主旨、請求、結尾），家人對照範本確認五個部分都有。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

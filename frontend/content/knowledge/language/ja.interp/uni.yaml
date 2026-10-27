@@ -1,0 +1,51 @@
+id: ja.interp@uni
+concept: ja.interp
+title: 日中翻譯與口譯入門
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 基準標籤：JLPT N1。
+prerequisites:
+- ja.authentic@uni
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 翻譯
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 給出初稿翻譯
+  human_experience:
+  - 判斷語氣與文化，修成自然的中文
+idea: 日翻中常見的難題：主詞常被省略、敬語在中文沒有對應、語尾的語氣很難翻。好的翻譯要先懂，再重寫。
+guiding_questions:
+- 好的翻譯是逐字照翻，還是讓讀者有一樣的感受？
+scenario: 親子共學：拿一段動畫台詞，各自翻成中文字幕，比較誰的版本最自然、最不失原味。
+goal: 日中互譯一段文字，翻出意思與語氣，不逐字換。
+review: 翻譯一段 200 字日文新聞成中文，家人對照官方中文版或可信翻譯，主要意思都翻對、語氣得體。
+formats:
+  slides: []
+  exercise: 目標：日中互譯一段文字，翻出意思與語氣，不逐字換。　檢核：翻譯一段 200 字日文新聞成中文，家人對照官方中文版或可信翻譯，主要意思都翻對、語氣得體。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

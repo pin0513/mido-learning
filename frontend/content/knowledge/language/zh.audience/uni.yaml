@@ -1,0 +1,53 @@
+id: zh.audience@uni
+concept: zh.audience
+title: 同一件事，寫給三種人
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 應用文案
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 與「溝通與解決問題」sk.audience@jh 交界：「說給誰聽」的對象意識由 sk.audience 負責，列為本點的 why；本點管文字怎麼改寫。
+prerequisites:
+- zh.social@sh
+- zh.letterfmt@sh
+links:
+  why:
+  - sk.audience@jh
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。跨學門連結：溝通解題「說給誰聽：傳播的五個問題」。
+competency:
+  specialist:
+  - 應用文寫作
+  generalist:
+  - 溝通
+  - 媒體素養
+ai:
+  delegable:
+  - 依對象產生改寫草稿
+  human_experience:
+  - 確認每個版本的事實正確、語氣得體
+idea: 對象決定用詞、長度和格式。正式信件、新聞稿、社群貼文各有慣例，事實要一致，語氣可以不同。
+guiding_questions:
+- 同一個活動，寫給主管、家長和同學，哪裡要改？
+scenario: 親子共學：同一則活動消息，寫成一封正式邀請信、一則新聞稿和一則社群貼文，比較三者的差別。
+goal: 同一件事改寫給三種讀者，事實一致、語氣與格式各自得體。
+review: 寫一封正式信、一則新聞稿、一則貼文報同一件事，家人比對三版的時間、地點、數字完全一致，且說得出每版是寫給誰。
+formats:
+  slides: []
+  exercise: 目標：同一件事改寫給三種讀者，事實一致、語氣與格式各自得體。　檢核：寫一封正式信、一則新聞稿、一則貼文報同一件事，家人比對三版的時間、地點、數字完全一致，且說得出每版是寫給誰。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,53 @@
+id: en.acwrite@uni
+concept: en.acwrite
+title: 學術寫作與引用
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：托福・寫作。
+prerequisites:
+- en.academic@uni
+- en.essay@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 查證
+ai:
+  delegable:
+  - 檢查引用格式、建議改寫
+  human_experience:
+  - 自己寫出論點，對內容負責
+idea: 學術寫作要清楚標出哪些是別人的想法：引用、改寫、附上來源。這是對知識的誠實，也讓讀者能查證。
+guiding_questions:
+- 引用別人的話和抄襲，差在哪裡？
+scenario: 親子共學：把一段英文資料用三種方式放進自己的報告：直接引用、改寫、摘要，並各附上來源。
+goal: 用英文寫學術段落：分清直接引用、改寫、摘要，並附上來源。
+review: 把一段英文資料用三種方式放進自己的報告（引用、改寫、摘要），各附來源；家人比對改寫版與原文，沒有連續 5 個字以上照抄。
+formats:
+  slides: []
+  exercise: 目標：用英文寫學術段落：分清直接引用、改寫、摘要，並附上來源。　檢核：把一段英文資料用三種方式放進自己的報告（引用、改寫、摘要），各附來源；家人比對改寫版與原文，沒有連續 5 個字以上照抄。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'
