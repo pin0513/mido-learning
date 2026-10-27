@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AxisBrowser } from "@/components/kp/AxisBrowser";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
-import { filterOptions, layerName, loadCatalog, toCards, visibleCatalog } from "@/lib/content";
+import { filterOptions, launchedCatalog, layerName, loadCatalog, toCards, visibleCatalog } from "@/lib/content";
+import { isSoftSkillsEnabled } from "@/lib/kp/flags";
 import { KP_SITE_ORIGIN } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
@@ -23,12 +25,14 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 }
 
 export default async function LayerPage({ params }: { params: Promise<{ id: string }> }) {
+  await headers();
   const { id } = await params;
   const all = loadCatalog();
   const layer = all.taxonomy.layerList.find((item) => item.id === id);
   if (!layer) notFound();
-  const points = visibleCatalog(all).indexes.byLayer.get(id) ?? [];
+  const points = launchedCatalog(visibleCatalog(all)).indexes.byLayer.get(id) ?? [];
   const options = filterOptions(all);
+  if (!isSoftSkillsEnabled()) options.folders = options.folders.filter((folder) => folder.id !== "soft-skills");
   return (
     <div className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6">
       <nav aria-label="麵包屑" className="text-sm">

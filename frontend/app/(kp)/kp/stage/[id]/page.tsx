@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AxisBrowser } from "@/components/kp/AxisBrowser";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
-import { filterOptions, loadCatalog, stageName, toCards, visibleCatalog } from "@/lib/content";
+import { filterOptions, launchedCatalog, loadCatalog, stageName, toCards, visibleCatalog } from "@/lib/content";
+import { isSoftSkillsEnabled } from "@/lib/kp/flags";
 import { KP_SITE_ORIGIN, stagePath } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
@@ -23,13 +25,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 }
 
 export default async function StagePage({ params }: { params: Promise<{ id: string }> }) {
+  await headers();
   const { id } = await params;
   const all = loadCatalog();
   const stage = all.taxonomy.stages.get(id);
   if (!stage) notFound();
-  const visible = visibleCatalog(all);
+  const visible = launchedCatalog(visibleCatalog(all));
   const points = visible.indexes.byStage.get(id) ?? [];
   const options = filterOptions(all);
+  if (!isSoftSkillsEnabled()) options.folders = options.folders.filter((folder) => folder.id !== "soft-skills");
   return (
     <div className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6">
       <nav aria-label="麵包屑" className="text-sm">

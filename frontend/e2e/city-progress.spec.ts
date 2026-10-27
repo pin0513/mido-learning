@@ -8,7 +8,7 @@ test.describe("學習城市的主線與進度", () => {
   test("沒選主線時不畫路線，選了拆解與估算就依序標四站", async ({ page }) => {
     await page.goto("/kp/map");
     await expect(page.getByTestId("city-route")).toHaveCount(0);
-    await expect(page.getByTestId("city-path").locator("option")).toHaveCount(2);
+    await expect(page.getByTestId("city-path").locator("option")).toHaveCount(3);
     await page.getByTestId("city-path").selectOption({ label: "拆解與估算（有家庭時間）" });
     await expect(page.getByTestId("city-route")).toHaveCount(1);
     await expect(page.getByTestId("city-stop")).toHaveCount(4);

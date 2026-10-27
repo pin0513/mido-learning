@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AxisBrowser } from "@/components/kp/AxisBrowser";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
-import { filterOptions, loadCatalog, toCards, visibleCatalog } from "@/lib/content";
+import { filterOptions, launchedCatalog, loadCatalog, toCards, visibleCatalog } from "@/lib/content";
+import { isSoftSkillsEnabled } from "@/lib/kp/flags";
 import { KP_SITE_ORIGIN, competencyPath } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
@@ -24,12 +26,14 @@ export async function generateMetadata({ params }: { params: Promise<{ code: str
 }
 
 export default async function CompetencyPage({ params }: { params: Promise<{ code: string }> }) {
+  await headers();
   const { code } = await params;
   const all = loadCatalog();
   const item = all.taxonomy.coreCompetencies.find((entry) => entry.code === code);
   if (!item) notFound();
-  const points = visibleCatalog(all).indexes.byCompetency.get(code) ?? [];
+  const points = launchedCatalog(visibleCatalog(all)).indexes.byCompetency.get(code) ?? [];
   const options = filterOptions(all);
+  if (!isSoftSkillsEnabled()) options.folders = options.folders.filter((folder) => folder.id !== "soft-skills");
   const empty =
     points.length === 0
       ? `目前沒有知識點把 ${item.code} ${item.name} 標成核心素養。代碼只收到 A1–C3，之後補上就會出現在這裡。`
