@@ -199,158 +199,29 @@ test.describe("學門總圖", () => {
     }
   });
 
-  test("學習願望按鈕不改版面，捲動時讓路", async ({ page }) => {
-    const layout = () =>
-      page.evaluate(() => {
-        const box = (selector: string) => {
-          const el = document.querySelector(selector);
-          if (!el) return null;
-          const rect = el.getBoundingClientRect();
-          return { width: rect.width, right: rect.right, left: rect.left };
-        };
-        const foot = document.querySelector(".hv2-footline");
-        const footBox = foot?.getBoundingClientRect();
-        const clipped: string[] = [];
-        if (foot && footBox) {
-          for (const circle of foot.querySelectorAll("circle")) {
-            const rect = circle.getBoundingClientRect();
-            if (rect.width < 1) continue;
-            const hits = rect.right > footBox.left + 0.5 && rect.left < footBox.right - 0.5;
-            const inside = rect.left >= footBox.left - 0.5 && rect.right <= footBox.right + 0.5;
-            if (hits && !inside) clipped.push(`${Math.round(rect.left)}-${Math.round(rect.right)}`);
-          }
-        }
-        return {
-          panel: box(".hv2-panel"),
-          side: box(".hv2-side"),
-          wrap: box(".hv2-cols"),
-          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-          clipped,
-        };
-      });
-
-    const overlaps = () =>
-      page.evaluate(() => {
-        const shown = (el: Element) => {
-          const style = getComputedStyle(el);
-          if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.5) return null;
-          const box = el.getBoundingClientRect();
-          if (box.width < 1 || box.height < 1 || box.bottom <= 0 || box.top >= window.innerHeight) return null;
-          return box;
-        };
-        const widgets = [...document.querySelectorAll("[data-testid='wish-fab'], [data-testid='wish-bubble']")]
-          .map(shown)
-          .filter((box): box is DOMRect => Boolean(box));
-        const texts = [...document.querySelectorAll(".hv2-node .hv2-lb, .hv2-side .hv2-card, .hv2-side .hv2-tip, .hv2-side-det, .hv2-more a")].flatMap((el) => {
-          const box = el.getBoundingClientRect();
-          const top = Math.max(box.top, 0);
-          const bottom = Math.min(box.bottom, window.innerHeight);
-          const left = Math.max(box.left, 0);
-          const right = Math.min(box.right, window.innerWidth);
-          if (bottom - top < 2 || right - left < 2) return [];
-          return [{ top, bottom, left, right, text: (el.textContent ?? "").replace(/\s+/g, " ").trim().slice(0, 24) }];
-        });
-        const hits: string[] = [];
-        for (const widget of widgets) {
-          for (const text of texts) {
-            const hit =
-              widget.left < text.right - 1 &&
-              widget.right > text.left + 1 &&
-              widget.top < text.bottom - 1 &&
-              widget.bottom > text.top + 1;
-            if (hit) hits.push(text.text || "text");
-          }
-        }
-        return hits;
-      });
-
-    const scrollBy = (top: number) => page.evaluate((y) => window.scrollBy({ top: y, behavior: "instant" }), top);
-    const scrollToBottom = () => page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }));
-
-    for (const width of [390, 768, 1024, 1280]) {
+  test("沒開許願開關時，頁面上沒有浮動許願按鈕", async ({ page }) => {
+    test.skip(process.env.WISH_FAB_ENABLED === "true", "這支測的是開關沒開");
+    const discipline = (name: string) => page.getByTestId("discipline-switch").getByRole("link", { name, exact: true });
+    const pages = [
+      { path: "/", ready: page.getByRole("heading", { level: 1, name: "先選學門，再從上往下看" }) },
+      { path: "/?d=pm-leadership", ready: discipline("專案管理與領導") },
+      { path: "/?d=philosophy", ready: discipline("哲學與思考方法") },
+      { path: "/?d=math", ready: discipline("數學") },
+      { path: "/?d=it-ai", ready: discipline("資訊與 AI") },
+      { path: "/kp", ready: page.getByRole("heading", { level: 1, name: "知識地圖" }) },
+      { path: "/kp/map", ready: page.getByRole("heading", { level: 1, name: "知識地圖" }) },
+    ];
+    for (const width of [390, 1280]) {
       await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
-      await page.goto("/?d=math");
-      await expect(page.getByTestId("stage-label").first()).toBeVisible();
-      const boxes = await layout();
-      const wrap = width <= 600 ? width - 32 : Math.min(1200, width - 40);
-      const side = width <= 600 ? wrap : 360;
-      const panel = width <= 600 ? wrap : wrap - 24 - 360;
-      expect(Math.abs((boxes.wrap?.width ?? 0) - wrap), `${width} columns`).toBeLessThanOrEqual(1);
-      expect(Math.abs((boxes.panel?.width ?? 0) - panel), `${width} diagram card`).toBeLessThanOrEqual(1);
-      expect(Math.abs((boxes.side?.width ?? 0) - side), `${width} side column`).toBeLessThanOrEqual(1);
-      expect(boxes.overflow, `${width} horizontal scroll`).toBeLessThanOrEqual(1);
-      expect(boxes.clipped, `${width} footer decoration`).toEqual([]);
-      if (width === 390) {
-        const titleLines = await page.evaluate(() => {
-          const title = [...document.querySelectorAll(".hv2-lb b")].find((node) => (node.textContent ?? "").includes("從平均變化率到瞬間變化率"));
-          if (!title) return 0;
-          const range = document.createRange();
-          range.selectNodeContents(title);
-          return range.getClientRects().length;
-        });
-        expect(titleLines, "390 title stays one line").toBe(1);
+      for (const entry of pages) {
+        await page.goto(entry.path);
+        await expect(entry.ready, entry.path).toBeVisible();
+        await expect(page.getByRole("button", { name: "開啟學習願望聊天" }), entry.path).toHaveCount(0);
+        await expect(page.getByRole("button", { name: "關閉聊天" }), entry.path).toHaveCount(0);
+        await expect(page.getByText("許個學習願望吧！", { exact: true }), entry.path).toHaveCount(0);
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        expect(overflow, `${entry.path} @ ${width}`).toBeLessThanOrEqual(1);
       }
-    }
-
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/?d=math");
-    const bubble = page.getByTestId("wish-bubble");
-    const fab = page.getByTestId("wish-fab");
-    await expect(bubble).toBeHidden();
-    await expect(fab).toHaveAttribute("aria-label", "開啟學習願望聊天");
-    await expect(fab).toHaveAttribute("data-tucked", "false");
-    const size = await fab.boundingBox();
-    expect(size?.width ?? 0).toBeGreaterThanOrEqual(44);
-    expect(size?.height ?? 0).toBeGreaterThanOrEqual(44);
-
-    await scrollBy(640);
-    await expect(fab).toHaveAttribute("data-tucked", "true");
-    await expect(fab).toHaveCSS("opacity", "0");
-    expect(await overlaps(), "390 tucked").toEqual([]);
-    await scrollBy(-80);
-    await expect(fab).toHaveAttribute("data-tucked", "false");
-
-    await scrollToBottom();
-    await expect(fab).toHaveAttribute("data-tucked", "false");
-    const footerClear = await page.evaluate(() => {
-      const button = document.querySelector("[data-testid='wish-fab']")?.getBoundingClientRect();
-      const links = [...document.querySelectorAll(".hv2-more a")].map((el) => el.getBoundingClientRect());
-      if (!button || links.length === 0) return false;
-      return links.every((link) => link.bottom <= button.top + 1);
-    });
-    expect(footerClear, "390 footer links above the button").toBe(true);
-    expect(await overlaps(), "390 bottom").toEqual([]);
-
-    for (const width of [768, 1024, 1280]) {
-      await page.setViewportSize({ width, height: 900 });
-      await page.goto("/?d=math");
-      await expect(page.getByTestId("stage-label").first()).toBeVisible();
-      await expect(bubble).toBeHidden();
-      await expect(fab).toHaveAttribute("data-tucked", "false");
-      const diagramClear = await page.evaluate(() => {
-        const button = document.querySelector("[data-testid='wish-fab']")?.getBoundingClientRect();
-        if (!button) return false;
-        return [...document.querySelectorAll(".hv2-node .hv2-lb")].every((el) => {
-          const box = el.getBoundingClientRect();
-          const top = Math.max(box.top, 0);
-          const bottom = Math.min(box.bottom, window.innerHeight);
-          if (bottom - top < 2) return true;
-          return button.left >= box.right - 1 || button.top >= bottom - 1;
-        });
-      });
-      expect(diagramClear, `${width} top diagram clear of the button`).toBe(true);
-      await scrollBy(120);
-      await expect(fab).toHaveAttribute("data-tucked", "true");
-      await expect(fab).toHaveCSS("opacity", "0");
-      expect(await overlaps(), `${width} scroll down`).toEqual([]);
-      const nodes = page.getByTestId("stage-diagram").locator(".hv2-node");
-      await nodes.nth(Math.floor(await nodes.count() / 2)).scrollIntoViewIfNeeded();
-      await expect(fab).toHaveAttribute("data-tucked", "true");
-      await expect(fab).toHaveCSS("opacity", "0");
-      expect(await overlaps(), `${width} mid`).toEqual([]);
-      await scrollToBottom();
-      await expect(fab).toHaveAttribute("data-tucked", "false");
-      expect(await overlaps(), `${width} bottom`).toEqual([]);
     }
   });
 

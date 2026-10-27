@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FloatingWishBot } from '@/components/wish';
+import { isWishFabEnabled } from '@/lib/kp/flags';
 
 export const metadata: Metadata = {
   title: 'Mido Learning - AI 驅動的學習實驗室',
@@ -15,11 +16,11 @@ export const metadata: Metadata = {
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col" data-public-shell>
+    <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
-      <FloatingWishBot />
+      {isWishFabEnabled() ? <FloatingWishBot /> : null}
     </div>
   );
 }

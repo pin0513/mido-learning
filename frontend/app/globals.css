@@ -44,18 +44,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* 頁尾多留一截，捲到底時最後一行會停在學習願望按鈕上面。視窗本身照常捲動。 */
-.kp-root,
-[data-public-shell] {
-  padding-bottom: calc(8.5rem + env(safe-area-inset-bottom, 0px));
-}
-@media (max-width: 767px) {
-  .kp-root,
-  [data-public-shell] {
-    padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
-  }
-}
-
 /* Placeholder 顏色統一設定（更深色，提升可讀性） */
 input::placeholder,
 textarea::placeholder {

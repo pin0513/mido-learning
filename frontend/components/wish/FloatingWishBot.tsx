@@ -37,51 +37,12 @@ export function FloatingWishBot() {
   const [step, setStep] = useState<ChatStep>('greeting');
   const [wishContent, setWishContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [tucked, setTucked] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const tuckedRef = useRef(false);
-  const openRef = useRef(false);
-  openRef.current = isOpen;
 
   useEffect(() => {
     const open = () => setIsOpen(true);
     window.addEventListener("mido-open-wish", open);
     return () => window.removeEventListener("mido-open-wish", open);
-  }, []);
-
-  useEffect(() => {
-    let lastY = window.scrollY;
-    let frame = 0;
-
-    const setTuckedIf = (next: boolean) => {
-      if (tuckedRef.current === next) return;
-      tuckedRef.current = next;
-      setTucked(next);
-    };
-
-    const update = () => {
-      frame = 0;
-      const y = window.scrollY;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const nearTop = y < 48;
-      const atBottom = max - y < 48;
-      if (nearTop || atBottom || openRef.current) setTuckedIf(false);
-      else if (y > lastY + 6) setTuckedIf(true);
-      else if (y < lastY - 6) setTuckedIf(false);
-      lastY = y;
-    };
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = requestAnimationFrame(update);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-    };
   }, []);
 
   const addMessage = (type: 'bot' | 'user', content: string) => {
@@ -191,18 +152,14 @@ export function FloatingWishBot() {
 
   return (
     <>
+      {/* Floating Button */}
       <button
-        data-testid="wish-fab"
-        data-tucked={tucked ? "true" : "false"}
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed right-[max(1.5rem,env(safe-area-inset-right,0px))] bottom-[max(1.5rem,env(safe-area-inset-bottom,0px))] z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all duration-300 motion-reduce:transition-none ${
-          tucked ? "pointer-events-none translate-y-[calc(100%+2rem)] opacity-0" : "translate-y-0 opacity-100"
-        } ${
+        className={`fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all duration-300 ${
           isOpen
             ? 'bg-gray-600 hover:bg-gray-700'
             : 'bg-violet-600 hover:bg-violet-700 hover:scale-110'
         }`}
-        aria-hidden={tucked}
         aria-label={isOpen ? '關閉聊天' : '開啟學習願望聊天'}
       >
         {isOpen ? (
@@ -214,12 +171,9 @@ export function FloatingWishBot() {
         )}
       </button>
 
-      {/* 氣泡會壓到右欄卡片，各寬度都只留圓按鈕。 */}
+      {/* Badge */}
       {!isOpen && (
-        <div
-          data-testid="wish-bubble"
-          className="fixed bottom-[max(5.5rem,calc(env(safe-area-inset-bottom,0px)+4rem))] right-[max(1.5rem,env(safe-area-inset-right,0px))] z-50 hidden"
-        >
+        <div className="fixed bottom-[88px] right-6 z-50 animate-bounce">
           <div className="rounded-lg bg-violet-600 px-3 py-1 text-xs font-medium text-white shadow-lg">
             許個學習願望吧！
           </div>
@@ -229,7 +183,7 @@ export function FloatingWishBot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed right-[max(1.5rem,env(safe-area-inset-right,0px))] bottom-[max(6rem,calc(env(safe-area-inset-bottom,0px)+4.5rem))] z-50 w-80 max-w-[calc(100vw-3rem)] overflow-hidden rounded-2xl bg-white shadow-2xl sm:w-96">
+        <div className="fixed bottom-24 right-6 z-50 w-80 overflow-hidden rounded-2xl bg-white shadow-2xl sm:w-96">
           {/* Header */}
           <div className="bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-3">
             <div className="flex items-center gap-3">
