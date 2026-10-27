@@ -1,4 +1,4 @@
-/** 學段總圖的直角線路。實線是先學，虛線是可以延伸。 */
+/** 學段總圖的主線。每一點只連到下一點，往下走，不再在左邊排一排垂直線。 */
 
 export interface WireNode {
   id: string;
@@ -16,8 +16,11 @@ export type WireTone = "norm" | "hi" | "dim";
 
 export interface WirePath {
   d: string;
-  kind: "pre" | "ext";
+  /** pre 是上面那個點真的列在先學裡。link 只是把主線接下去，不表示先學。 */
+  kind: "pre" | "link";
   tone: WireTone;
+  /** 先學、而且這段接到下一個圓點，才加箭頭。 */
+  head?: boolean;
 }
 
 export interface WireJoint {
@@ -34,227 +37,70 @@ export interface WireBox {
 }
 
 export interface WireOptions {
-  /** 學段名稱的範圍。線路可以穿過學段之間的空隙，但不能壓到這些盒子。 */
-  obstacles?: WireBox[];
-  /** 平行的垂直線至少隔開這麼多。390 寬時用 7。 */
-  minGap?: number;
-}
-
-interface Point {
-  x: number;
-  y: number;
+  /** 直線若會穿過這些範圍（學段名稱、展開的說明）就這一段不畫。 */
+  avoid?: WireBox[];
 }
 
 const RADIUS = 16;
-const LEFT_LIMIT = 10;
 
-function toneFor(edge: WireEdge, selectedId: string | null): WireTone {
+function toneFor(fromId: string, toId: string, selectedId: string | null): WireTone {
   if (!selectedId) return "norm";
-  return edge.from === selectedId || edge.to === selectedId ? "hi" : "dim";
+  return fromId === selectedId || toId === selectedId ? "hi" : "dim";
 }
 
-/** 兩點之間的直線會不會穿過別的圓點。穿過就改走旁邊的直角。 */
-function blocked(nodes: WireNode[], x: number, y1: number, y2: number, skip: Set<string>): boolean {
-  const top = Math.min(y1, y2) + RADIUS;
-  const bot = Math.max(y1, y2) - RADIUS;
-  if (bot - top < 4) return false;
-  return nodes.some((node) => !skip.has(node.id) && Math.abs(node.x - x) < 12 && node.y > top && node.y < bot);
-}
-
-function rangesOverlap(y0: number, y1: number, top: number, bottom: number): boolean {
-  return Math.max(y0, y1) > top && Math.min(y0, y1) < bottom;
-}
-
-function assignLanes(spans: { top: number; bot: number }[]): number[] {
-  const order = spans.map((span, index) => ({ ...span, index })).sort((a, b) => a.top - b.top || a.bot - b.bot);
-  const active: { bot: number; lane: number }[] = [];
-  const lanes = new Array<number>(spans.length).fill(0);
-  for (const span of order) {
-    for (let index = active.length - 1; index >= 0; index -= 1) {
-      if (active[index].bot < span.top - 8) active.splice(index, 1);
-    }
-    const used = new Set(active.map((item) => item.lane));
-    let lane = 0;
-    while (used.has(lane)) lane += 1;
-    lanes[span.index] = lane;
-    active.push({ bot: span.bot, lane });
+function openSpans(start: number, end: number, cuts: { top: number; bottom: number }[]): { from: number; to: number }[] {
+  const dir = end >= start ? 1 : -1;
+  const spans: { from: number; to: number }[] = [];
+  let cursor = start;
+  const ordered = [...cuts].sort((a, b) => dir * (a.top - b.top));
+  for (const cut of ordered) {
+    const near = dir > 0 ? cut.top : cut.bottom;
+    const far = dir > 0 ? cut.bottom : cut.top;
+    if (dir * (far - cursor) <= 0 || dir * (near - end) >= 0) continue;
+    if (dir * (near - cursor) >= 8) spans.push({ from: cursor, to: near });
+    if (dir * (far - cursor) > 0) cursor = far;
   }
-  return lanes;
+  if (dir * (end - cursor) >= 8) spans.push({ from: cursor, to: end });
+  return spans;
 }
 
-function pointsToPath(points: Point[]): string {
-  const compact: Point[] = [];
-  for (const point of points) {
-    const prev = compact[compact.length - 1];
-    if (prev && prev.x === point.x && prev.y === point.y) continue;
-    compact.push(point);
-  }
-  let d = `M ${compact[0].x} ${compact[0].y}`;
-  for (let index = 1; index < compact.length; index += 1) {
-    const prev = compact[index - 1];
-    const point = compact[index];
-    if (point.y === prev.y) d += ` H ${point.x}`;
-    else if (point.x === prev.x) d += ` V ${point.y}`;
-    else d += ` L ${point.x} ${point.y}`;
-  }
-  return d;
-}
-
-function hitsBox(x: number, y0: number, y1: number, box: WireBox): boolean {
-  return x >= box.left && x <= box.right && rangesOverlap(y0, y1, box.top, box.bottom);
-}
-
-function walkVertical(
-  x: number,
-  y0: number,
-  y1: number,
-  obstacles: WireBox[],
-  minGap: number,
-  lanes: Map<string, number>,
-  labelRight: number,
-): Point[] {
-  const dir = y1 >= y0 ? 1 : -1;
-  const pad = 6;
-  const hits = obstacles
-    .map((box, index) => ({ ...box, index }))
-    .filter((box) => hitsBox(x, y0, y1, box))
-    .sort((a, b) => dir * (a.top - b.top));
-  const points: Point[] = [{ x, y: y0 }];
-  for (const box of hits) {
-    const entry = dir > 0 ? Math.max(Math.min(y0, y1), box.top - pad) : Math.min(Math.max(y0, y1), box.bottom + pad);
-    const exit = dir > 0 ? Math.min(Math.max(y0, y1), box.bottom + pad) : Math.max(Math.min(y0, y1), box.top - pad);
-    if (dir * (exit - entry) <= 0) continue;
-    const lane = lanes.get(`${box.index}:${x}`) ?? 0;
-    const clear = Math.round(labelRight + 8 + lane * minGap);
-    if (clear === x) continue;
-    points.push({ x, y: entry });
-    points.push({ x: clear, y: entry });
-    points.push({ x: clear, y: exit });
-    points.push({ x, y: exit });
-  }
-  points.push({ x, y: y1 });
-  return points;
-}
-
-function dodgePolyline(
-  points: Point[],
-  obstacles: WireBox[],
-  minGap: number,
-  lanes: Map<string, number>,
-  labelRight: number,
-): Point[] {
-  if (obstacles.length === 0 || points.length === 0) return points;
-  const out: Point[] = [points[0]];
-  for (let index = 1; index < points.length; index += 1) {
-    const from = out[out.length - 1];
-    const to = points[index];
-    if (from.x !== to.x) {
-      out.push(to);
-      continue;
-    }
-    const walked = walkVertical(from.x, from.y, to.y, obstacles, minGap, lanes, labelRight);
-    out.pop();
-    out.push(...walked);
-  }
-  return out;
-}
-
+/** 依畫面上的順序，把相鄰兩點連成一條往下的線。跳過中間的先學不在這裡畫。 */
 export function routeWires(
   nodes: WireNode[],
   edges: WireEdge[],
   selectedId: string | null,
   options: WireOptions = {},
 ): { paths: WirePath[]; joints: WireJoint[] } {
-  const byId = new Map(nodes.map((node) => [node.id, node]));
-  const minGap = options.minGap ?? 7;
-  const obstacles = options.obstacles ?? [];
-  const raw: { points: Point[]; kind: WireEdge["kind"]; tone: WireTone; elbow: boolean }[] = [];
-  const elbowSpans: { top: number; bot: number }[] = [];
-
+  const avoid = options.avoid ?? [];
+  const linked = new Map<string, WireEdge["kind"]>();
   for (const edge of edges) {
-    const from = byId.get(edge.from);
-    const to = byId.get(edge.to);
-    if (!from || !to) continue;
-    const tone = toneFor(edge, selectedId);
-    const sameColumn = Math.abs(from.x - to.x) < 8;
-    const skip = new Set([from.id, to.id]);
-    if (sameColumn && !blocked(nodes, from.x, from.y, to.y, skip)) {
-      const dir = to.y >= from.y ? 1 : -1;
-      raw.push({
-        points: [
-          { x: from.x, y: from.y + dir * RADIUS },
-          { x: from.x, y: to.y - dir * RADIUS },
-        ],
-        kind: edge.kind,
-        tone,
-        elbow: false,
-      });
-      continue;
-    }
-    elbowSpans.push({ top: Math.min(from.y, to.y), bot: Math.max(from.y, to.y) });
-    raw.push({
-      points: [
-        { x: from.x - RADIUS, y: from.y },
-        { x: 0, y: from.y },
-        { x: 0, y: to.y },
-        { x: to.x - RADIUS, y: to.y },
-      ],
-      kind: edge.kind,
-      tone,
-      elbow: true,
-    });
+    const key = `${edge.from}->${edge.to}`;
+    if (linked.get(key) === "pre") continue;
+    linked.set(key, edge.kind);
   }
-
-  const lanes = assignLanes(elbowSpans);
-  const laneCount = lanes.reduce((max, lane) => Math.max(max, lane + 1), 0);
-  const nodeLeft = nodes.reduce((min, node) => Math.min(min, node.x), Number.POSITIVE_INFINITY);
-  const rightLimit = Number.isFinite(nodeLeft) ? nodeLeft - RADIUS - 8 : LEFT_LIMIT;
-  let gap = minGap;
-  if (laneCount > 1) {
-    const room = rightLimit - LEFT_LIMIT;
-    const fit = Math.floor(room / (laneCount - 1));
-    gap = Math.max(minGap, Math.min(18, fit));
-  }
-  const xForLane = (lane: number) => Math.round(rightLimit - lane * gap);
-
-  let elbowIndex = 0;
-  for (const item of raw) {
-    if (!item.elbow) continue;
-    const x = xForLane(lanes[elbowIndex] ?? 0);
-    elbowIndex += 1;
-    item.points[1].x = x;
-    item.points[2].x = x;
-  }
-
-  const crossings: { box: number; x: number }[] = [];
-  for (const item of raw) {
-    for (let index = 1; index < item.points.length; index += 1) {
-      const from = item.points[index - 1];
-      const to = item.points[index];
-      if (from.x !== to.x) continue;
-      obstacles.forEach((box, boxIndex) => {
-        if (hitsBox(from.x, from.y, to.y, box)) crossings.push({ box: boxIndex, x: from.x });
-      });
-    }
-  }
-  const dodgeLanes = new Map<string, number>();
-  for (const boxIndex of new Set(crossings.map((item) => item.box))) {
-    const xs = [...new Set(crossings.filter((item) => item.box === boxIndex).map((item) => item.x))].sort((a, b) => a - b);
-    xs.forEach((x, lane) => dodgeLanes.set(`${boxIndex}:${x}`, lane));
-  }
-  const labelRight = obstacles.reduce((max, box) => Math.max(max, box.right), 0);
-
   const paths: WirePath[] = [];
-  const joints: WireJoint[] = [];
-  for (const item of raw) {
-    const points = dodgePolyline(item.points, obstacles, minGap, dodgeLanes, labelRight);
-    paths.push({ d: pointsToPath(points), kind: item.kind, tone: item.tone });
-    if (!item.elbow) continue;
-    for (const point of [item.points[1], item.points[2]]) {
-      const covered = obstacles.some((box) => point.x >= box.left && point.x <= box.right && point.y >= box.top && point.y <= box.bottom);
-      if (!covered) joints.push({ x: point.x, y: point.y, tone: item.tone });
+  for (let index = 0; index < nodes.length - 1; index += 1) {
+    const from = nodes[index];
+    const to = nodes[index + 1];
+    const dir = to.y >= from.y ? 1 : -1;
+    const start = from.y + dir * RADIUS;
+    const end = to.y - dir * RADIUS;
+    if (dir * (end - start) < 8) continue;
+    const x = Math.round((from.x + to.x) / 2);
+    const cuts = avoid
+      .filter((box) => x >= box.left && x <= box.right && Math.max(start, end) > box.top && Math.min(start, end) < box.bottom)
+      .map((box) => ({ top: box.top - 6, bottom: box.bottom + 6 }));
+    const isPre = linked.get(`${from.id}->${to.id}`) === "pre";
+    const tone = toneFor(from.id, to.id, selectedId);
+    for (const span of openSpans(start, end, cuts)) {
+      const reaches = Math.abs(span.to - to.y) <= RADIUS + 2;
+      paths.push({
+        d: `M ${x} ${Math.round(span.from)} V ${Math.round(span.to)}`,
+        kind: isPre ? "pre" : "link",
+        tone,
+        head: isPre && reaches,
+      });
     }
   }
-
-  return { paths, joints };
+  return { paths, joints: [] };
 }

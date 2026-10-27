@@ -28,6 +28,7 @@ export interface HomeStage {
 }
 
 export interface HomeLink {
+  id: string;
   title: string;
   stageName: string;
   href: string;
@@ -127,12 +128,55 @@ function gradesOf(stage: StageInfo | undefined): string {
   return first === last ? `${first} 年級` : `${first}–${last} 年級`;
 }
 
+/** 學段由上往下。同一個學段裡，先學排在前面；沒有先學關係時維持檔案順序。 */
 function sortPoints(catalog: ContentCatalog, points: KnowledgePoint[]): KnowledgePoint[] {
-  return [...points].sort((a, b) => {
-    const stageDelta = (catalog.taxonomy.stages.get(a.stage)?.rank ?? 0) - (catalog.taxonomy.stages.get(b.stage)?.rank ?? 0);
-    if (stageDelta !== 0) return stageDelta;
-    return a.title.localeCompare(b.title, "zh-Hant");
-  });
+  const fileOrder = new Map(points.map((point, index) => [point.id, index]));
+  const stages = [...new Set(points.map((point) => point.stage))].sort(
+    (a, b) => (catalog.taxonomy.stages.get(a)?.rank ?? 0) - (catalog.taxonomy.stages.get(b)?.rank ?? 0),
+  );
+  const sorted: KnowledgePoint[] = [];
+  for (const stage of stages) {
+    sorted.push(...topoWithin(points.filter((point) => point.stage === stage), fileOrder));
+  }
+  return sorted;
+}
+
+function topoWithin(group: KnowledgePoint[], fileOrder: Map<string, number>): KnowledgePoint[] {
+  const ids = new Set(group.map((point) => point.id));
+  const byId = new Map(group.map((point) => [point.id, point]));
+  const incoming = new Map(group.map((point) => [point.id, 0]));
+  const outgoing = new Map<string, string[]>();
+  for (const point of group) {
+    for (const id of new Set(point.prerequisites)) {
+      if (!ids.has(id)) continue;
+      incoming.set(point.id, (incoming.get(point.id) ?? 0) + 1);
+      const list = outgoing.get(id) ?? [];
+      list.push(point.id);
+      outgoing.set(id, list);
+    }
+  }
+  const compare = (a: string, b: string) => (fileOrder.get(a) ?? 0) - (fileOrder.get(b) ?? 0);
+  const ready = group.map((point) => point.id).filter((id) => incoming.get(id) === 0).sort(compare);
+  const sorted: KnowledgePoint[] = [];
+  const seen = new Set<string>();
+  while (ready.length > 0) {
+    const id = ready.shift() as string;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    const point = byId.get(id);
+    if (point) sorted.push(point);
+    for (const child of outgoing.get(id) ?? []) {
+      incoming.set(child, (incoming.get(child) ?? 1) - 1);
+      if (incoming.get(child) === 0) {
+        ready.push(child);
+        ready.sort(compare);
+      }
+    }
+  }
+  for (const point of group) {
+    if (!seen.has(point.id)) sorted.push(point);
+  }
+  return sorted;
 }
 
 function diagramPoints(catalog: ContentCatalog, folder: string, publicIds: readonly string[]): KnowledgePoint[] {
@@ -145,6 +189,7 @@ function diagramPoints(catalog: ContentCatalog, folder: string, publicIds: reado
 function toLink(catalog: ContentCatalog, point: KnowledgePoint): HomeLink {
   const stage = catalog.taxonomy.stages.get(point.stage);
   return {
+    id: point.id,
     title: point.title,
     stageName: stage?.name ?? point.stage,
     href: knowledgePointPath(point.concept, point.stage),

@@ -167,8 +167,7 @@ function WireLayer({ prefix, paths, joints, ghost }: { prefix: string; paths: Wi
           fill="none"
           stroke={TONE[path.tone]}
           strokeWidth="2.5"
-          strokeDasharray={path.kind === "ext" ? "7 6" : undefined}
-          markerEnd={`url(#${prefix}-${path.tone})`}
+          markerEnd={path.head ? `url(#${prefix}-${path.tone})` : undefined}
         />
       ))}
       {joints.map((joint, index) => (
@@ -259,21 +258,15 @@ function StageDiagram({
     const box = boxes[node.id];
     return box ? [{ id: node.id, x: box.x, y: box.y }] : [];
   });
-  const obstacles: WireBox[] = model.stages.flatMap((stage) => {
-    const box = boxes[`label-${stage.id}`];
+  const avoid: WireBox[] = model.stages.flatMap((stage) => {
+    const box = boxes[`col-${stage.id}`];
     return box ? [{ left: box.left, top: box.top, right: box.right, bottom: box.bottom }] : [];
   });
-  const routed = routeWires(placed, diagram.edges, selected?.id ?? null, { obstacles, minGap: 7 });
-  const ghosts = model.stages.flatMap((stage) => {
-    const box = boxes[`ghost-${stage.id}`];
-    return box ? [box] : [];
-  });
-  let ghost = "";
-  if (diagram.nodes.length === 0 && ghosts.length >= 2) {
-    const ordered = [...ghosts].sort((a, b) => a.y - b.y);
-    ghost = ordered.slice(0, -1).map((box, index) => `M ${box.x} ${box.y + 14} V ${ordered[index + 1].y - 14}`).join(" ");
-  }
+  const detail = boxes.detail;
+  if (detail && detail.bottom - detail.top > 8) avoid.push(detail);
+  const routed = routeWires(placed, diagram.edges, selected?.id ?? null, { avoid });
   const homeHref = `/?d=${diagram.id}`;
+  const previousOf = new Map(diagram.nodes.slice(1).map((node, index) => [node.id, diagram.nodes[index]]));
 
   return (
     <div className="hv2-diagram" ref={root} data-testid="stage-diagram">
@@ -282,33 +275,43 @@ function StageDiagram({
         const open = selected?.stageId === stage.id;
         return (
           <div className={open ? "hv2-zone is-open" : "hv2-zone"} key={stage.id}>
-            <div className="hv2-head">
+            <div className="hv2-labelcol" data-testid="stage-label-column" data-anchor={`col-${stage.id}`}>
               <div className="hv2-zl" data-testid="stage-label" data-anchor={`label-${stage.id}`}>{stage.name}<small>{stage.grades}</small></div>
             </div>
-            <div className="hv2-band" style={nodes.length > 1 ? { minHeight: nodes.length * 120 } : undefined}>
-              {nodes.length === 0 ? <span className="hv2-ghost" data-anchor={`ghost-${stage.id}`} /> : null}
-              {nodes.map((node, index) => (
-                <QueryLink
-                  key={node.id}
-                  href={`/?d=${diagram.id}&kp=${encodeURIComponent(node.id)}`}
-                  className={`hv2-node${selected?.id === node.id ? " is-on" : ""}${selected && selected.id !== node.id ? " is-dim" : ""}`}
-                  style={nodes.length > 1 ? { top: `${((index + 1) / (nodes.length + 1)) * 100}%` } : undefined}
-                  aria-current={selected?.id === node.id ? "page" : undefined}
-                >
-                  <span className="hv2-fx" data-anchor={node.id} />
-                  <span className="hv2-lb"><b>{node.title}</b>{node.question ? <span>{node.question}</span> : null}</span>
-                </QueryLink>
-              ))}
+            <div className="hv2-band">
+              {nodes.length === 0 ? <span className="hv2-ghost" /> : null}
+              {nodes.map((node) => {
+                const previous = previousOf.get(node.id);
+                const learned = node.prerequisites
+                  .filter((item) => !previous || item.title !== previous.title || item.stageName !== previous.stageName)
+                  .map((item) => item.title);
+                return (
+                  <QueryLink
+                    key={node.id}
+                    href={`/?d=${diagram.id}&kp=${encodeURIComponent(node.id)}`}
+                    className={`hv2-node${selected?.id === node.id ? " is-on" : ""}${selected && selected.id !== node.id ? " is-dim" : ""}`}
+                    aria-current={selected?.id === node.id ? "page" : undefined}
+                    data-prereq-ids={node.prerequisites.map((item) => item.id).join(" ")}
+                  >
+                    <span className="hv2-fx" data-anchor={node.id} />
+                    <span className="hv2-lb">
+                      <b>{node.title}</b>
+                      {node.question ? <span>{node.question}</span> : null}
+                      {learned.length > 0 ? <small className="hv2-prior">先學：{learned.join("、")}</small> : null}
+                    </span>
+                  </QueryLink>
+                );
+              })}
             </div>
             {open && selected ? (
-              <div className="hv2-inline">
+              <div className="hv2-inline" data-anchor="detail">
                 <NodeDetail node={selected} model={model} homeHref={homeHref} />
               </div>
             ) : null}
           </div>
         );
       })}
-      <WireLayer prefix={`stage-${diagram.id}`} paths={routed.paths} joints={routed.joints} ghost={ghost} />
+      <WireLayer prefix={`stage-${diagram.id}`} paths={routed.paths} joints={routed.joints} />
       {diagram.nodes.length === 0 ? (
         <div className="hv2-msg" role="status">
           <h3>{disciplineTitle}正在準備中</h3>
@@ -484,10 +487,15 @@ function MapScreen({ model, state }: { model: HomeModel; state: HomeState }) {
                 <h2 id="stage-map-title">{discipline ? <Glyph name={discipline.glyph} size={20} color="#e4571e" /> : null} {discipline?.title}的學段總圖</h2>
                 <p>{diagram && diagram.nodes.length > 0 ? "最上面是國小，越往下越進階。點一個圓點看它在學什麼。" : "這個學門的知識點還在整理。"}</p>
               </div>
-              {diagram && diagram.edges.length > 0 ? (
+              {diagram && diagram.edges.some((edge) => edge.kind === "pre") ? (
                 <div className="hv2-leg" aria-label="圖例">
-                  <span><svg width="30" height="10" aria-hidden="true"><path d="M1 5 H29" stroke="#3a3834" strokeWidth="2.5" /></svg>先學</span>
-                  <span><svg width="30" height="10" aria-hidden="true"><path d="M1 5 H29" stroke="#3a3834" strokeWidth="2.5" strokeDasharray="6 5" /></svg>可以延伸</span>
+                  <span>
+                    <svg width="16" height="22" aria-hidden="true">
+                      <path d="M8 1 V13" stroke="#3a3834" strokeWidth="2.5" fill="none" />
+                      <path d="M3 11 L8 17 L13 11" stroke="#3a3834" strokeWidth="2" fill="none" />
+                    </svg>
+                    先學
+                  </span>
                 </div>
               ) : null}
             </div>
