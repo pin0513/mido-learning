@@ -97,6 +97,51 @@ test.describe("學門總圖", () => {
     }
   });
 
+  test("學段名稱不會被線路蓋住", async ({ page }) => {
+    for (const width of [1280, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const id of ["pm-leadership", "philosophy", "math", "it-ai"]) {
+        await page.goto(`/?d=${id}`);
+        const diagram = page.getByTestId("stage-diagram");
+        await expect(diagram.getByTestId("stage-label").first()).toBeVisible();
+        await expect(diagram.locator(".hv2-wires")).toBeVisible();
+        const hits = await diagram.evaluate((root) => {
+          const labels = [...root.querySelectorAll("[data-testid='stage-label']")].map((el) => {
+            const box = el.getBoundingClientRect();
+            return { left: box.left, top: box.top, right: box.right, bottom: box.bottom, text: el.textContent ?? "" };
+          });
+          const found: string[] = [];
+          for (const path of root.querySelectorAll(".hv2-wires path")) {
+            if (path.closest("defs") || !(path instanceof SVGPathElement)) continue;
+            const matrix = path.getScreenCTM();
+            if (!matrix) continue;
+            const length = path.getTotalLength();
+            const step = Math.max(3, length / 300);
+            for (let distance = 0; distance <= length; distance += step) {
+              const point = path.getPointAtLength(distance);
+              const screen = new DOMPoint(point.x, point.y).matrixTransform(matrix);
+              for (const label of labels) {
+                if (screen.x >= label.left && screen.x <= label.right && screen.y >= label.top && screen.y <= label.bottom) {
+                  found.push(label.text);
+                }
+              }
+            }
+          }
+          for (const dot of root.querySelectorAll(".hv2-wires circle")) {
+            const box = dot.getBoundingClientRect();
+            const x = box.left + box.width / 2;
+            const y = box.top + box.height / 2;
+            for (const label of labels) {
+              if (x >= label.left && x <= label.right && y >= label.top && y <= label.bottom) found.push(label.text);
+            }
+          }
+          return found;
+        });
+        expect(hits, `${id} @ ${width}`).toEqual([]);
+      }
+    }
+  });
+
   test("手機點圓點，說明在圖裡面展開", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/?d=pm-leadership");

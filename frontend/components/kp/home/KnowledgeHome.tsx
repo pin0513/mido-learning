@@ -5,7 +5,7 @@ import Link from "next/link";
 import { recordPageView } from "@/lib/api/analytics";
 import type { DisciplineGlyph, HomeDiagram, HomeModel, HomeNode, HomeTask, TaskCross } from "@/lib/kp/home-diagram";
 import { readHomeState, type HomeState } from "@/lib/kp/home-state";
-import { routeWires, type WireJoint, type WirePath } from "@/lib/kp/home-wires";
+import { routeWires, type WireBox, type WireJoint, type WirePath } from "@/lib/kp/home-wires";
 import "./home-v2.css";
 
 const TONE = { norm: "#3a3834", hi: "#e4571e", dim: "#cfcbc3" } as const;
@@ -259,7 +259,11 @@ function StageDiagram({
     const box = boxes[node.id];
     return box ? [{ id: node.id, x: box.x, y: box.y }] : [];
   });
-  const routed = routeWires(placed, diagram.edges, selected?.id ?? null);
+  const obstacles: WireBox[] = model.stages.flatMap((stage) => {
+    const box = boxes[`label-${stage.id}`];
+    return box ? [{ left: box.left, top: box.top, right: box.right, bottom: box.bottom }] : [];
+  });
+  const routed = routeWires(placed, diagram.edges, selected?.id ?? null, { obstacles, minGap: 7 });
   const ghosts = model.stages.flatMap((stage) => {
     const box = boxes[`ghost-${stage.id}`];
     return box ? [box] : [];
@@ -277,21 +281,25 @@ function StageDiagram({
         const nodes = diagram.nodes.filter((node) => node.stageId === stage.id);
         const open = selected?.stageId === stage.id;
         return (
-          <div className={open ? "hv2-zone is-open" : "hv2-zone"} key={stage.id} style={nodes.length > 1 ? { minHeight: nodes.length * 120 } : undefined}>
-            <div className="hv2-zl">{stage.name}<small>{stage.grades}</small></div>
-            {nodes.length === 0 ? <span className="hv2-ghost" data-anchor={`ghost-${stage.id}`} /> : null}
-            {nodes.map((node, index) => (
-              <QueryLink
-                key={node.id}
-                href={`/?d=${diagram.id}&kp=${encodeURIComponent(node.id)}`}
-                className={`hv2-node${selected?.id === node.id ? " is-on" : ""}${selected && selected.id !== node.id ? " is-dim" : ""}`}
-                style={nodes.length > 1 ? { top: `${((index + 1) / (nodes.length + 1)) * 100}%` } : undefined}
-                aria-current={selected?.id === node.id ? "page" : undefined}
-              >
-                <span className="hv2-fx" data-anchor={node.id} />
-                <span className="hv2-lb"><b>{node.title}</b>{node.question ? <span>{node.question}</span> : null}</span>
-              </QueryLink>
-            ))}
+          <div className={open ? "hv2-zone is-open" : "hv2-zone"} key={stage.id}>
+            <div className="hv2-head">
+              <div className="hv2-zl" data-testid="stage-label" data-anchor={`label-${stage.id}`}>{stage.name}<small>{stage.grades}</small></div>
+            </div>
+            <div className="hv2-band" style={nodes.length > 1 ? { minHeight: nodes.length * 120 } : undefined}>
+              {nodes.length === 0 ? <span className="hv2-ghost" data-anchor={`ghost-${stage.id}`} /> : null}
+              {nodes.map((node, index) => (
+                <QueryLink
+                  key={node.id}
+                  href={`/?d=${diagram.id}&kp=${encodeURIComponent(node.id)}`}
+                  className={`hv2-node${selected?.id === node.id ? " is-on" : ""}${selected && selected.id !== node.id ? " is-dim" : ""}`}
+                  style={nodes.length > 1 ? { top: `${((index + 1) / (nodes.length + 1)) * 100}%` } : undefined}
+                  aria-current={selected?.id === node.id ? "page" : undefined}
+                >
+                  <span className="hv2-fx" data-anchor={node.id} />
+                  <span className="hv2-lb"><b>{node.title}</b>{node.question ? <span>{node.question}</span> : null}</span>
+                </QueryLink>
+              ))}
+            </div>
             {open && selected ? (
               <div className="hv2-inline">
                 <NodeDetail node={selected} model={model} homeHref={homeHref} />

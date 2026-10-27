@@ -109,6 +109,24 @@ test("目前任務連到已畫出來的跨學門，沒畫的不帶標題", () =>
   assert.equal(blob.includes("示意"), false);
 });
 
+test("虛線只拿掉實線已經到得了的，實線保持原樣", () => {
+  const model = buildHomeDiagram(loadCatalog());
+  const count = (id: string, kind: "pre" | "ext") =>
+    model.diagrams.find((item) => item.id === id)?.edges.filter((edge) => edge.kind === kind).length ?? -1;
+  assert.equal(count("pm-leadership", "pre"), 3);
+  assert.equal(count("pm-leadership", "ext"), 1);
+  assert.equal(count("philosophy", "pre"), 32);
+  assert.equal(count("philosophy", "ext"), 1);
+  assert.equal(count("math", "pre"), 38);
+  assert.equal(count("math", "ext"), 2);
+  assert.equal(count("it-ai", "pre"), 37);
+  assert.equal(count("it-ai", "ext"), 2);
+  const math = model.diagrams.find((item) => item.id === "math");
+  assert.ok(math);
+  assert.equal(math.edges.some((edge) => edge.kind === "ext" && edge.from === "ma.number@es" && edge.to === "ma.quadratic@jh"), false);
+  assert.equal(math.edges.some((edge) => edge.kind === "pre" && edge.from === "ma.pattern@es"), true);
+});
+
 test("跳過中間學段的先學走直角，轉角有接點", () => {
   const nodes = [
     { id: "pm.breakdown@es", x: 232, y: 59 },
@@ -130,4 +148,47 @@ test("跳過中間學段的先學走直角，轉角有接點", () => {
   assert.equal(joints.length, 2);
   assert.equal(paths.filter((path) => path.kind === "ext")[0].tone, "dim");
   assert.equal(paths.filter((path) => !path.d.includes(" H ")).length, 3);
+});
+
+test("平行的垂直線至少隔 7px，而且避開學段名稱", () => {
+  const nodes = [0, 1, 2, 3, 4, 5].map((index) => ({ id: `n${index}`, x: 140, y: 40 + index * 90 }));
+  const edges = [
+    { from: "n0", to: "n2", kind: "pre" as const },
+    { from: "n0", to: "n3", kind: "pre" as const },
+    { from: "n1", to: "n4", kind: "pre" as const },
+    { from: "n1", to: "n5", kind: "pre" as const },
+  ];
+  const obstacle = { left: 16, top: 150, right: 120, bottom: 190 };
+  const { paths } = routeWires(nodes, edges, null, { obstacles: [obstacle], minGap: 7 });
+  const verticals = new Set<number>();
+  for (const path of paths) {
+    const tokens = path.d.split(/\s+/);
+    let x = 0;
+    let y = 0;
+    for (let index = 0; index < tokens.length; index += 1) {
+      const token = tokens[index];
+      if (token === "M") {
+        x = Number(tokens[index + 1]);
+        y = Number(tokens[index + 2]);
+        index += 2;
+      } else if (token === "H") {
+        x = Number(tokens[index + 1]);
+        index += 1;
+      } else if (token === "V") {
+        const next = Number(tokens[index + 1]);
+        if (Math.abs(next - y) > 24) verticals.add(x);
+        const top = Math.min(y, next);
+        const bot = Math.max(y, next);
+        const overlaps = x >= obstacle.left && x <= obstacle.right && bot > obstacle.top && top < obstacle.bottom;
+        assert.equal(overlaps, false, path.d);
+        y = next;
+        index += 1;
+      }
+    }
+  }
+  const xs = [...verticals].sort((a, b) => a - b);
+  assert.ok(xs.length >= 2);
+  for (let index = 1; index < xs.length; index += 1) {
+    assert.ok(xs[index] - xs[index - 1] >= 7, xs.join(","));
+  }
 });
