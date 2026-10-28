@@ -1,8 +1,14 @@
+# B4 提案：zh.sickline@jh
+# - 四種病句的分類是本站整理（沒有找到課綱或會考把病句分成這四類的條文），idea 標明。
+# - 「大約……左右」的贅字有辭典依據：「左右」本身就「表示約略之數」（《重編國語辭典修訂本》）。
+# - 連結會考寫作評分規準四級分「有時會出現冗詞贅句」、三級分「冗詞贅句過多」（逐字）。
+# - 補 grades、6-Ⅳ-2、Ac-Ⅳ-3 與 Why/How/What；「至少 4 句」標示意。
+# - 複審修正：四種病句都補上例子（新增「語序」）；搭配不當改用不改原意的例子；標籤統一為「本站整理」。
 id: zh.sickline@jh
 concept: zh.sickline
 title: 病句：主語、贅字、語序、搭配
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +18,25 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 6-IV-2
+  contents:
+  - Ac-IV-3
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 會考寫作評分規準的「冗詞贅句」描述逐字引自心測中心評分規準一覽表；「左右」釋義依《重編國語辭典修訂本》（ID 139423）。
+- 四種病句的分類與「縮句法」是本站整理的入門方法；語序、搭配不當的例句也是本站整理。
 prerequisites:
 - zh.words@jh
 links:
@@ -28,7 +44,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：國語文領綱 6-Ⅳ-2（修改潤飾）、Ac-Ⅳ-3（文句表達的邏輯與意義）；國中教育會考寫作評分規準「遣詞造句」。
 competency:
   specialist:
   - 基礎語文
@@ -39,18 +55,122 @@ ai:
   - 找出疑似病句
   human_experience:
   - 唸出來判斷通不通，自己改
-idea: 常見病句有四種：少了主語（透過……使我……）、贅字（大約……左右）、語序顛倒、搭配不當（提高……問題）。改法是把句子縮成「誰＋做什麼」，再看哪裡不通。
+idea: 常見病句可以先分四種（本站整理）：少了主語（透過……使我……）、贅字（大約……左右）、語序顛倒（讀了三遍很仔細）、搭配不當（穿著……帽子）。改法是把句子縮成「誰＋做什麼」，再看哪裡不通。會考寫作評分規準四級分的描述就有「有時會出現冗詞贅句」。
 guiding_questions:
 - 「透過這次活動，使我學到很多。」少了什麼？
 scenario: 親子共學：複習版：從新聞或公告裡找 3 個病句，親子各改一版，比較誰改得最短又最清楚。
 goal: 找出並改好四種常見病句：缺主語、贅字、語序、搭配不當。
-review: 家長從新聞或公告挑 5 句病句，孩子各改一版並說出是哪一種毛病，改得通順且不改原意的至少 4 句。
+review: 家長從新聞或公告挑 5 句病句，孩子各改一版並說出是哪一種毛病，改得通順且不改原意的至少 4 句（示意）。
 formats:
   slides: []
-  exercise: 目標：找出並改好四種常見病句：缺主語、贅字、語序、搭配不當。　檢核：家長從新聞或公告挑 5 句病句，孩子各改一版並說出是哪一種毛病，改得通順且不改原意的至少 4 句。
+  exercise: 目標：找出並改好四種常見病句：缺主語、贅字、語序、搭配不當。　檢核：家長從新聞或公告挑 5 句病句，孩子各改一版並說出是哪一種毛病，改得通順且不改原意的至少 4 句（示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 病句會讓讀者卡住
+  body:
+  - 國語文課綱的學習內容有「文句表達的邏輯與意義」；寫作要經過「修改潤飾」。
+  - 會考寫作評分規準的「遣詞造句」向度，六級分是「能精確使用語詞，並有效運用各種句型使文句流暢」，四級分是「能正確使用語詞，文意表達尚稱清楚，但有時會出現冗詞贅句；句型較無變化」。
+  qa:
+    question: 「透過這次活動，使我學到很多。」少了什麼？
+    answer: 少了主語。「透過這次活動」只是說明方式，後面「使我學到很多」沒有說是「誰」使我學到。可以改成「這次活動使我學到很多。」或「透過這次活動，我學到很多。」（本站整理）
+    source: kuoyu
+  items_title: 國中課綱怎麼說
+  items:
+  - title: 文句的邏輯與意義
+    text: 國語文 Ac-Ⅳ-3：文句表達的邏輯與意義。
+    code: Ac-IV-3
+  - title: 修改潤飾
+    text: 國語文 6-Ⅳ-2：依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。
+    code: 6-IV-2
+  sources:
+  - kuoyu
+  - cap-rubric
+how:
+  heading: 縮成「誰＋做什麼」
+  body:
+  - 把修飾語先拿掉，只留下「誰＋做什麼（＋什麼）」，再一個一個加回去，看哪裡不通（本站整理的方法）。改完唸一遍，確認沒有改掉原來的意思。
+  items:
+  - title: 缺主語
+    text: 說明方式的片語後面，要有「誰」做這件事。
+    example: 透過這次活動，我學到很多。
+  - title: 贅字
+    text: 「左右」已經表示約略之數，前面不必再加「大約」。
+    example: 大約三十人左右 → 三十人左右
+  - title: 語序
+    text: 修飾語要放在被修飾的詞旁邊（本站整理）。
+    example: 這本書我讀了三遍很仔細 → 這本書我很仔細地讀了三遍
+  - title: 搭配不當
+    text: 動詞和後面的詞要配得上（本站整理）。
+    example: 穿著紅上衣和帽子 → 穿著紅上衣、戴著帽子
+  checklist_title: 改一句病句：
+  checklist:
+  - 拿掉修飾語
+  - 找出誰做什麼
+  - 加回去檢查
+  - 唸一遍
+  activity_figure: how-flow
+  sources:
+  - rev-zuoyou
+what:
+  heading: 冗詞贅句：大約與左右
+  figures:
+  - what-compare
+  notes:
+  - 四種病句的分類是本站整理，方便入門；實際的句子可能同時有好幾種毛病。
+  - 「至少 4 句」是示意的檢核標準。
+  sources:
+  - rev-zuoyou
+  - cap-rubric
+figures:
+- id: how-flow
+  type: flow
+  alt: 改病句：孩子拿掉修飾語，找出誰做什麼，再把修飾語加回去，最後唸給家長聽
+  steps:
+  - actor: 孩子
+    text: 拿掉修飾語
+  - actor: 孩子
+    text: 找出誰做什麼
+  - actor: 孩子
+    text: 加回去檢查
+  - actor: 一起
+    text: 唸一遍
+- id: what-compare
+  type: compare
+  alt: 大約三十人左右重複表示約略，改成三十人左右
+  source: rev-zuoyou
+  relation: versus
+  items:
+  - term: 大約…左右
+    note: 重複表示約略之數
+  - term: …左右
+    note: 「左右」已表示約略之數
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：6-Ⅳ-2「依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。」（p.12）；Ac-Ⅳ-3「文句表達的邏輯與意義。」（p.15）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）
+- id: cap-rubric
+  title: 國中教育會考 寫作測驗評分規準
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/exam3-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 遣詞造句：六級分「能精確使用語詞，並有效運用各種句型使文句流暢。」四級分「能正確使用語詞，文意表達尚稱清楚，但有時會出現冗詞贅句；句型較無變化。」三級分「用字遣詞不太恰當，或出現錯誤；或冗詞贅句過多。」
+- id: rev-zuoyou
+  title: 重編國語辭典修訂本「左右」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=139423
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「上下、光景。多放在數量詞後，表示約略之數。」

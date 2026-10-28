@@ -1,8 +1,13 @@
+# B4 提案：zh.prompt@jh
+# - 引用錯誤：guiding question 引 115 年會考題目漏了「事物」兩字（原題「你想賦予什麼事物新面貌？又會怎麼做？」），改成逐字。
+# - 補上心測中心對引導寫作的說明：「引導訊息的作用有二：一為解釋題意，幫助審題、取材，避免誤解；一為提供情境、資訊，指示寫作任務。」
+# - 「5 分鐘」標示意；把題目拆成問題清單是本站建議。補 grades、6-Ⅳ-2 與 Why/How/What。
+# - 複審建議：what.notes 的出處寫準（寫作測驗問與答 Q2；評分規準一覽表也列在零級分），補評分規準一覽表當來源；115 年題本註明由試題頁連結開啟。
 id: zh.prompt@jh
 concept: zh.prompt
 title: 審題：看懂題目在問什麼
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +17,23 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 6-IV-2
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 115 年會考寫作題目依試題本逐字核對（心測中心 115 年寫作試題頁連結的題本）；引導寫作說明依心測中心寫作測驗問與答 Q1、Q2。
+- 「5 分鐘」是示意；拆題清單是本站建議的方法。
 prerequisites:
 - zh.story@es
 links:
@@ -29,7 +42,7 @@ links:
   related: []
   deeper:
   - zh.reason@sh
-link_notes: 框架：—。
+link_notes: 框架：國中教育會考寫作測驗「引導寫作」（問與答 Q1）；國語文領綱 6-Ⅳ-2（審題、立意、取材……）。
 competency:
   specialist:
   - 寫作
@@ -40,18 +53,131 @@ ai:
   - 把題幹拆成問題清單讓你核對
   human_experience:
   - 判斷自己真正想寫的切入點
-idea: 引導寫作的題幹會給情境與任務。先把題目拆成幾個要回答的問題，每一個都要在文章裡找得到。
+idea: 會考寫作採「引導寫作」：心測中心說，引導訊息一方面「解釋題意，幫助審題、取材，避免誤解」，一方面「提供情境、資訊，指示寫作任務」。先把題目拆成幾個要回答的問題，每一個都要在文章裡找得到（本站建議）。
 guiding_questions:
-- 「賦予什麼新面貌？又會怎麼做？」要回答幾件事？
-scenario: 親子共學：拿近三年會考題目，各用 5 分鐘只做審題：列出要回答的問題，不寫文章。
+- 「你想賦予什麼事物新面貌？又會怎麼做？」要回答幾件事？
+scenario: 親子共學：拿近三年會考題目，各用 5 分鐘（示意）只做審題：列出要回答的問題，不寫文章。
 goal: 把引導寫作的題目拆成要回答的問題清單，寫完逐項打勾。
-review: 拿一題會考寫作歷屆題目，孩子 5 分鐘內列出題目要回答的問題；家長對照題幹，沒有漏掉任何一問。
+review: 拿一題會考寫作歷屆題目，孩子在 5 分鐘內（示意）列出題目要回答的問題；家長對照題幹，沒有漏掉任何一問。
 formats:
   slides: []
-  exercise: 目標：把引導寫作的題目拆成要回答的問題清單，寫完逐項打勾。　檢核：拿一題會考寫作歷屆題目，孩子 5 分鐘內列出題目要回答的問題；家長對照題幹，沒有漏掉任何一問。
+  exercise: 目標：把引導寫作的題目拆成要回答的問題清單，寫完逐項打勾。　檢核：拿一題會考寫作歷屆題目，孩子在 5 分鐘內（示意）列出題目要回答的問題；家長對照題幹，沒有漏掉任何一問。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 審題錯，整篇就偏
+  body:
+  - 會考寫作的命題依據是國語文課綱第四學習階段，重要能力的第一項是「能正確審題依據題目或寫作任務，統整閱讀內容、配合語言情境，適當轉化材料以表情達意。」
+  - 評分規準的零級分包括「完全離題」；審題是寫作的第一步，課綱也把「審題」列在寫作步驟的最前面。
+  qa:
+    question: 「你想賦予什麼事物新面貌？又會怎麼做？」要回答幾件事？
+    answer: 至少三件：一、你選了什麼事物（賦予什麼事物新面貌）；二、你會怎麼做；三、題目最後要求「請結合你的經驗或見聞，寫下對此的感受、想法」。題目還寫了「不必訂題」，所以不用自己寫題目。
+    source: cap-115w
+  items_title: 國中課綱怎麼說
+  items:
+  - title: 從審題開始寫
+    text: 國語文 6-Ⅳ-2：依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。
+    code: 6-IV-2
+  sources:
+  - cap-wcontent
+  - cap-writing
+  - kuoyu
+  - cap-115w
+how:
+  heading: 把題目拆成問題清單
+  body:
+  - 把題幹裡的每個問號、每個「請……」都抄成一個問題，再看「※」的注意事項。寫完文章，逐項打勾，確認每個問題都在文章裡找得到（本站建議）。
+  items:
+  - title: 圈問號
+    text: 每個問號都是一件要回答的事。
+    example: 賦予什麼事物新面貌？又會怎麼做？
+  - title: 圈「請……」
+    text: 題目要你做的事。
+    example: 請結合你的經驗或見聞，寫下對此的感受、想法。
+  - title: 看※注意事項
+    text: 例如不必訂題、不可洩漏私人身分、不可使用詩歌體。
+  checklist_title: 寫之前：
+  checklist:
+  - 圈出問號
+  - 圈出請什麼
+  - 看注意事項
+  - 列成清單
+  activity_figure: how-flow
+  sources:
+  - cap-115w
+what:
+  heading: 引導訊息的兩個作用
+  figures:
+  - what-compare
+  notes:
+  - 「使用詩歌體」在會考寫作會得零級分（寫作測驗問與答 Q2；評分規準一覽表也列在零級分）。
+  - 「5 分鐘」是示意的練習時間。
+  sources:
+  - cap-writing
+  - cap-rubric
+figures:
+- id: how-flow
+  type: flow
+  alt: 審題：孩子圈出問號和請什麼，看注意事項，列成問題清單，寫完逐項打勾
+  steps:
+  - actor: 孩子
+    text: 圈出問號
+  - actor: 孩子
+    text: 看注意事項
+  - actor: 孩子
+    text: 列問題清單
+  - actor: 孩子
+    text: 寫完打勾
+- id: what-compare
+  type: compare
+  alt: 引導訊息一是解釋題意，二是指示寫作任務
+  source: cap-writing
+  relation: versus
+  items:
+  - term: 解釋題意
+    note: 幫助審題、取材，避免誤解
+  - term: 指示任務
+    note: 提供情境、資訊，指示寫作任務
+sources:
+- id: cap-writing
+  title: 國中教育會考 寫作測驗問答
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test5-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: Q1：「教育會考寫作測驗採「引導寫作」……引導訊息的作用有二：一為解釋題意，幫助審題、取材，避免誤解；一為提供情境、資訊，指示寫作任務。」Q2：零級分「針對完全離題、只訂題目、僅抄寫題目或題幹內容、使用詩歌體，以及空白卷等考生」
+- id: cap-115w
+  title: 115 年國中教育會考 寫作測驗試題本（由心測中心 115 年寫作試題頁連結）
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/exam/115/115writing.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 題本由該頁連結開啟；試題本第 3 頁：「在日常生活中，有些事物只要加入巧思、翻新樣式、結合新元素……就可以呈現不同的面貌、開展出其他的用途。你想賦予什麼事物新面貌？又會怎麼做？請結合你的經驗或見聞，寫下對此的感受、想法。」「※不必訂題」「※不可在文中洩漏私人身分」「※不可使用詩歌體」
+- id: cap-wcontent
+  title: 國中教育會考 寫作測驗考試內容
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test4-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 命題以國語文課綱「第四學習階段之「學習表現／學習內容」為命題依據」；重要寫作能力表現「能正確審題依據題目或寫作任務，統整閱讀內容、配合語言情境，適當轉化材料以表情達意。」
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：6-Ⅳ-2「依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。」（p.12）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）
+- id: cap-rubric
+  title: 國中教育會考 寫作測驗評分規準
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/exam3-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 零級分：「完全離題、只訂題目、僅抄寫題目或題幹內容、使用詩歌體、空白卷。」

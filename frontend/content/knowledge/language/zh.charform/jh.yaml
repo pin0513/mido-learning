@@ -1,8 +1,14 @@
+# B4 提案：zh.charform@jh
+# - 嚴重度中：原文把「六書（象形、指事、會意、形聲、轉注、假借）」當國中範圍；國語文領綱國中只列「基本的造字原則：象形、指事、會意、形聲」（Ab-Ⅳ-3，p.14），會考也只寫「認識基本的造字原則」。改成四種，轉注、假借移到附註（學測國綜才寫「六書基本原則」）。
+# - 原文「六書裡最多的是形聲字」本批沒有開到可核對的官方來源（《重編國語辭典修訂本》「形聲」條沒有這句），刪除。
+# - 「便宜／方便」補上辭典讀音：「便宜」表物價低廉念 ㄆㄧㄢˊ ˙ㄧ，但「便宜行事」念 ㄅㄧㄢˋ ㄧˊ；會考字音依《國語一字多音審訂表》88 年版（心測中心問與答）。
+# - 補 grades、4-Ⅳ-1～3、Ab-Ⅳ-1、Ab-Ⅳ-3 與 Why/How/What；「8 組」標示意。
+# - 複審建議：what.notes 補國語文領綱第五學習階段 Ab-Ⅴ-1「六書的基本原則。」（p.14，逐字），說明完整六書在高中。
 id: zh.charform@jh
 concept: zh.charform
 title: 字音字形：形近字、多音字與六書
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +18,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -19,12 +29,20 @@ curriculum_108:
   - A2
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 4-IV-1
+  - 4-IV-2
+  - 4-IV-3
+  contents:
+  - Ab-IV-1
+  - Ab-IV-3
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 引用的框架只寫名稱（會考國文「常用字的形音義」、學測國綜 A1、造字原則（六書）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 會考國文考試內容（一）（三）逐字引自心測中心國文科考試內容頁；字音依據引自心測中心國文科問與答 Q1（《國語一字多音審訂表》88 年 3 月公告版）。
+- 「便宜」「方便」「戍」「戌」「形聲」的讀音與釋義已在教育部《重編國語辭典修訂本》《國語小字典》逐條核對（2026-10-28 讀取）。
+- 原文「六書裡最多的是形聲字」沒有找到可核對的官方來源，已刪除；「答對 8 組」是示意。
 - 本點為這次補強新增，內容尚未經老師審閱。
-- 多音字讀音以教育部《國語辭典》與《一字多音審訂表》為準，教材舉例前請核對。
 prerequisites:
 - zh.wrongchar@es
 - zh.words@jh
@@ -33,7 +51,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：會考國文「常用字的形音義」、學測國綜 A1、造字原則（六書）。
+link_notes: 框架：國中教育會考國文「常用字的形音義」「基本的語文常識」；國語文領綱 4-Ⅳ-1～3、Ab-Ⅳ-1、Ab-Ⅳ-3（基本造字原則：象形、指事、會意、形聲）。
 competency:
   specialist:
   - 基礎語文
@@ -44,18 +62,177 @@ ai:
   - 整理形近字與多音字清單
   human_experience:
   - 自己從詞義判斷讀音並造詞
-idea: 會考國文考「常用字的形音義」，學測國綜考「字形、字音、字義的辨識與應用」。多音字靠詞義判斷讀音；形近字看部首與筆畫差在哪；六書（象形、指事、會意、形聲、轉注、假借）裡最多的是形聲字，形旁表意、聲旁表音。
+idea: 會考國文考「常用字的形音義」，也考「認識基本的造字原則」。多音字要看詞義判斷讀音，再查教育部辭典確認；形近字把兩個字並排，看部件和筆畫差在哪。國中課綱的基本造字原則是象形、指事、會意、形聲；形聲字由表義的意符和表音的音符組成。
 guiding_questions:
 - 「便宜」的「便」和「方便」的「便」，念法一樣嗎？
 scenario: 親子共學：全家各寫下自己最常念錯的兩個多音詞，貼在冰箱上，一週內每念對一次畫一筆。
-goal: 辨認形近字、音近字和多音字，用六書說出一個字為什麼這樣寫。
-review: 家長從課本挑 10 組形近或多音字（例如「戍／戌」「便宜／方便」），孩子寫出讀音並各造一個詞，答對 8 組以上；再挑 2 個形聲字說出形旁和聲旁。
+goal: 辨認形近字、音近字和多音字，用象形、指事、會意、形聲說出一個字的造字原則。
+review: 家長從課本挑 10 組形近或多音字（例如「戍／戌」「便宜／方便」），孩子寫出讀音並各造一個詞，再查教育部辭典核對，答對 8 組以上（示意）；再挑 2 個形聲字說出意符和音符。
 formats:
   slides: []
-  exercise: 目標：辨認形近字、音近字和多音字，用六書說出一個字為什麼這樣寫。　檢核：家長從課本挑 10 組形近或多音字（例如「戍／戌」「便宜／方便」），孩子寫出讀音並各造一個詞，答對 8 組以上；再挑 2 個形聲字說出形旁和聲旁。
+  exercise: 目標：辨認形近字、音近字和多音字，用象形、指事、會意、形聲說出一個字的造字原則。　檢核：家長從課本挑 10 組形近或多音字（例如「戍／戌」「便宜／方便」），孩子寫出讀音並各造一個詞，再查教育部辭典核對，答對 8 組以上（示意）；再挑 2 個形聲字說出意符和音符。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 字對了，意思才對
+  body:
+  - 國中教育會考（簡稱會考）國文的第一項考試內容是「常用字的形音義：認識國字至少4,500字，使用3,500字。」第三項「基本的語文常識」也包括「認識基本的造字原則」。
+  - 國語文課綱要國中生「能運用字典或辭典了解一字多音及一字多義的現象」。同一個字換了詞，讀音和意思都可能跟著變。
+  qa:
+    question: 「便宜」的「便」和「方便」的「便」，念法一樣嗎？
+    answer: 不一樣。「方便」的「便」念 ㄅㄧㄢˋ；「便宜」當「物價低廉」講時念 ㄆㄧㄢˊ ˙ㄧ。可是同樣寫成「便宜」，在「便宜行事」裡是「方便合宜」的意思，念 ㄅㄧㄢˋ ㄧˊ。所以多音字要看詞義判斷，再查辭典確認。
+    source: rev-pianyi
+  items_title: 國中課綱的字音字形目標
+  items:
+  - title: 認識與使用的字量
+    text: 國語文 4-Ⅳ-1：認識國字至少 4,500 字，使用 3,500 字。
+    code: 4-IV-1
+  - title: 認識造字原則
+    text: 國語文 4-Ⅳ-2：認識造字的原則，輔助識字，了解文字的形、音、義。
+    code: 4-IV-2
+  - title: 一字多音、一字多義
+    text: 國語文 4-Ⅳ-3：能運用字典或辭典了解一字多音及一字多義的現象。
+    code: 4-IV-3
+  - title: 四種基本造字原則
+    text: 國語文 Ab-Ⅳ-3：基本的造字原則：象形、指事、會意、形聲。
+    code: Ab-IV-3
+  sources:
+  - cap-guowen
+  - kuoyu
+  - rev-pianyi
+  - mini-bian
+how:
+  heading: 先想詞義，再查辭典
+  body:
+  - 遇到多音字，先想這個詞是什麼意思，再查教育部《重編國語辭典修訂本》。心測中心說明，會考的國字字音以教育部公告的《國語一字多音審訂表》88 年 3 月版為據。形近字則把兩個字並排，圈出不一樣的部件。
+  items:
+  - title: 形近字並排比
+    text: 戍：以兵卒防守邊疆；戌：地支的第十一位（《重編國語辭典修訂本》）。
+    example: 戍守（ㄕㄨˋ）／戌時（ㄒㄩ）
+  - title: 找意符和音符
+    text: 辭典說形聲字「意符表形，音符表聲」：江、河「從水取義，以工、可分標其聲」。
+    example: 江、河
+  - title: 多音字看詞義
+    text: 同一個字，詞義不同，讀音就可能不同。
+    example: 方便（ㄅㄧㄢˋ）／便宜（ㄆㄧㄢˊ）
+  checklist_title: 每查一組字：
+  checklist:
+  - 先想詞義
+  - 查教育部辭典
+  - 圈出不同部件
+  - 造一個詞
+  activity_figure: how-flow
+  sources:
+  - cap-guowen-qa
+  - rev-shu
+  - rev-xu
+  - rev-xingsheng
+what:
+  heading: 形近字：戍與戌
+  figures:
+  - what-compare
+  notes:
+  - 傳統的「六書」還有轉注、假借。國中課綱只列象形、指事、會意、形聲四種基本造字原則（Ab-Ⅳ-3）；完整的六書在高中：國語文課綱第五學習階段的學習內容是「六書的基本原則」（Ab-Ⅴ-1），大學入學考試中心的學測國文說明也寫到「六書基本原則」。
+  - 「答對 8 組」是示意的檢核標準。
+  sources:
+  - rev-shu
+  - rev-xu
+  - kuoyu
+  - ceec
+figures:
+- id: how-flow
+  type: flow
+  alt: 查多音字的步驟：孩子讀出詞語，想詞義，一起查辭典，孩子再造一個詞
+  steps:
+  - actor: 孩子
+    text: 讀出詞語
+  - actor: 孩子
+    text: 想詞義
+  - actor: 一起
+    text: 查教育部辭典
+  - actor: 孩子
+    text: 造一個詞
+- id: what-compare
+  type: compare
+  alt: 戍念ㄕㄨˋ，是以兵卒防守邊疆；戌念ㄒㄩ，是地支的第十一位，兩字不同
+  source: rev-shu
+  relation: not_equal
+  items:
+  - term: 戍
+    reading: ㄕㄨˋ
+    note: 以兵卒防守邊疆，如戍守
+  - term: 戌
+    reading: ㄒㄩ
+    note: 地支的第十一位
+  caption: 「戌」的讀音與釋義見《重編國語辭典修訂本》「戌」條。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：4-Ⅳ-1「認識國字至少 4,500 字，使用 3,500 字。」（p.9）；4-Ⅳ-2「認識造字的原則，輔助識字，了解文字的形、音、義。」（p.9）；4-Ⅳ-3「能運用字典或辭典了解一字多音及一字多義的現象。」（p.9）；Ab-Ⅳ-1「4,000 個常用字的字形、字音和字義。」（p.14）；Ab-Ⅳ-3「基本的造字原則：象形、指事、會意、形聲。」（p.14）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）；第五學習階段學習內容 Ab-Ⅴ-1「六書的基本原則。」（p.14）
+- id: cap-guowen
+  title: 國中教育會考 國文科考試內容
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test4-2.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 考試內容「（一）常用字的形音義：認識國字至少4,500字，使用3,500字。」「（三）基本的語文常識：理解基本的語法，使用標點符號，認識基本的造字原則，認識各種書體，欣賞名家碑帖等。」
+- id: cap-guowen-qa
+  title: 國中教育會考 國文科問與答
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test5-2.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: Q1：「國民小學及國民中學教科圖書審定辦法」明訂國字字音應以教育部公告之《國語一字多音審訂表》為依據……目前的國字字音係以88年3月公告的版本為據。
+- id: rev-pianyi
+  title: 重編國語辭典修訂本「便宜」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=18983
+  accessed: '2026-10-28'
+  kind: reference
+  supports: ㈠ ㄆㄧㄢˊ ˙ㄧ「物價低廉。」㈡ ㄅㄧㄢˋ ㄧˊ「方便合宜。如：「便宜行事」。」
+- id: mini-bian
+  title: 國語小字典「便」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E4%BE%BF
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「便」讀 ㄅㄧㄢˋ 時有「順利、沒阻礙的。如：「交通方便」」之義；讀 ㄆㄧㄢˊ 時有「便宜：①物價低廉……」
+- id: rev-xingsheng
+  title: 重編國語辭典修訂本「形聲」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=110679
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「六書中的形聲字。由音符與意符組合而成，意符表形，音符表聲。如江、河二字，從水取義，以工、可分標其聲。」
+- id: rev-shu
+  title: 重編國語辭典修訂本「戍」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=9109
+  accessed: '2026-10-28'
+  kind: reference
+  supports: ㄕㄨˋ「以兵卒防守邊疆。如：「戍守」。」
+- id: rev-xu
+  title: 重編國語辭典修訂本「戌」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=7281
+  accessed: '2026-10-28'
+  kind: reference
+  supports: ㄒㄩ「地支的第十一位。」
+- id: ceec
+  title: 學科能力測驗 國文考科考試說明－111 學年度起適用－
+  publisher: 財團法人大學入學考試中心基金會
+  url: https://www.ceec.edu.tw/files/file_pool/1/0N118339019965852517/111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%B5%B7%E9%81%A9%E7%94%A8%E5%AD%B8%E6%B8%AC%E5%9C%8B%E6%96%87%E8%80%83%E7%A7%91%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E%28%E5%AE%9A%E7%A8%BF%29.pdf
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 學測國綜測驗內容（一）「字詞、語法知識：字形、字音、字義、六書基本原則、語詞意義與結構、詞性、句型等。」（貳、測驗內容；屬第五學習階段的高中考試，只作為「完整六書在高中」的對照）

@@ -286,6 +286,72 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 11
+    4-IV-1:
+      stage: 4
+      text: 認識國字至少 4,500 字，使用 3,500 字。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 9
+    4-IV-2:
+      stage: 4
+      text: 認識造字的原則，輔助識字，了解文字的形、音、義。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 9
+    4-IV-3:
+      stage: 4
+      text: 能運用字典或辭典了解一字多音及一字多義的現象。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 9
+    5-IV-1:
+      stage: 4
+      text: 比較不同標點符號的表達效果，流暢朗讀各類文本，並表現情感的起伏變化。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    5-IV-2:
+      stage: 4
+      text: 理解各類文本的句子、段落與主要概念，指出寫作的目的與觀點。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    5-IV-3:
+      stage: 4
+      text: 理解各類文本內容、形式和寫作特色。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    5-IV-4:
+      stage: 4
+      text: 應用閱讀策略增進學習效能，整合跨領域知識轉化為解決問題的能力。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    6-IV-1:
+      stage: 4
+      text: 善用標點符號，增進情感表達及說服力。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 12
+    6-IV-2:
+      stage: 4
+      text: 依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 12
+    6-IV-4:
+      stage: 4
+      text: 依據需求書寫各類文本。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 12
+    6-IV-6:
+      stage: 4
+      text: 運用資訊科技編輯作品，發表個人見解、分享寫作樂趣。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 12
   contents:
     Aa-I-1:
       stage: 1
@@ -440,6 +506,108 @@
     Be-III-1:
       stage: 3
       text: 在生活應用方面，以說明書、廣告、標語、告示、公約等格式與寫作方法為主。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 18
+    Ab-IV-1:
+      stage: 4
+      text: 4,000 個常用字的字形、字音和字義。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ab-IV-3:
+      stage: 4
+      text: 基本的造字原則：象形、指事、會意、形聲。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ab-IV-4:
+      stage: 4
+      text: 6,500 個常用語詞的認念。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ab-IV-5:
+      stage: 4
+      text: 5,000 個常用語詞的使用。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ab-IV-6:
+      stage: 4
+      text: 常用文言文的詞義及語詞結構。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ab-IV-7:
+      stage: 4
+      text: 常用文言文的字詞、虛字、古今義變。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ac-IV-1:
+      stage: 4
+      text: 標點符號在文本中的不同效果。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ac-IV-2:
+      stage: 4
+      text: 敘事、有無、判斷、表態等句型。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ac-IV-3:
+      stage: 4
+      text: 文句表達的邏輯與意義。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ad-IV-1:
+      stage: 4
+      text: 篇章的主旨、結構、寓意與分析。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ad-IV-3:
+      stage: 4
+      text: 韻文：如古體詩、樂府詩、近體詩、詞、曲等。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ba-IV-1:
+      stage: 4
+      text: 順敘、倒敘、插敘與補敘法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Bb-IV-4:
+      stage: 4
+      text: 直接抒情。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Bb-IV-5:
+      stage: 4
+      text: 藉由敘述事件與描寫景物間接抒情。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Bc-IV-1:
+      stage: 4
+      text: 具邏輯、客觀、理性的說明，如科學知識、產品、環境、制度等說明。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Bc-IV-3:
+      stage: 4
+      text: 數據、圖表、圖片、工具列等輔助說明。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Be-IV-1:
+      stage: 4
+      text: 在生活應用方面，以自傳、簡報、新聞稿等格式與寫作方法為主。
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 18

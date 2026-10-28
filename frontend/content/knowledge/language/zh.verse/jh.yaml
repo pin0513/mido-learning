@@ -1,8 +1,14 @@
+# B4 提案：zh.verse@jh（逐條對照《重編國語辭典修訂本》「近體詩」「律詩」「詞牌」「長短句」「對仗」與《國語小字典》「詞」）
+# - 原文「律詩八句，中間兩聯要對仗」與辭典「三四、五六兩句要對仗」一致，改成逐字。
+# - 原文「詞……原本是可以唱的歌詞」本批沒有開到可核對的來源，刪除；改用辭典「詞牌：詞調的名稱」與小字典「由古之樂府演變而來」。
+# - 「國中材料包含古典詩詞曲選」已在國語文領綱 p.22 核對，改成逐字。
+# - 平仄只做入門說明、不要求辨平仄，標為本站建議；補 grades、Ad-Ⅳ-3、5-Ⅳ-3 與 Why/How/What。
+# - 複審修正：goal 有「古體詩」，補《重編國語辭典修訂本》「古體詩」（ID 70987）的說明；why.qa「句數和每句字數都固定」改成辭典的說法。
 id: zh.verse@jh
 concept: zh.verse
 title: 近體詩與詞：對仗、格律與長短句
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +18,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -20,10 +30,16 @@ curriculum_108:
   - C3
   issues:
   - 多元文化教育
-to_verify: true
+  performances:
+  - 5-IV-3
+  contents:
+  - Ad-IV-3
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 引用的框架只寫名稱（國語文領綱國中材料「古典詩詞曲選」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 近體詩、律詩、對仗、詞牌、長短句、古體詩依《重編國語辭典修訂本》（ID 94639、67667、48195、140475、123580、70987；古體詩 2026-10-29 讀取），「詞」依《國語小字典》，2026-10-28 讀取。
+- 國中選材「古典詩詞曲選（含本土素材）」依國語文領綱 p.22 逐字核對。
+- 原文「詞原本是可以唱的歌詞」沒有開到可核對的來源，已刪除。平仄不要求學生辨認，是本站建議。
 - 本點為這次補強新增，內容尚未經老師審閱。
 - 平仄規則教材只做入門說明，不要求學生辨平仄；以課本範圍為準。
 prerequisites:
@@ -33,7 +49,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：國語文領綱國中材料「古典詩詞曲選」。
+link_notes: 框架：國語文領綱 Ad-Ⅳ-3（韻文：古體詩、樂府詩、近體詩、詞、曲）、教材編選「古典詩詞曲選」；教育部《重編國語辭典修訂本》。
 competency:
   specialist:
   - 文言與古典
@@ -44,18 +60,161 @@ ai:
   - 整理格律規則與例子
   human_experience:
   - 朗讀體會節奏與情感
-idea: 唐代近體詩有固定字數、押韻與平仄；律詩八句，中間兩聯要對仗。詞依詞牌填寫，句子長短不一，原本是可以唱的歌詞。國中材料包含古典詩詞曲選。
+idea: 近體詩約形成於唐代，「聲韻有定則，且除排律外，句數都有限制」；古體詩則「句數無限制，用韻無定則，不拘平仄對偶」。律詩每首八句，二、四、六、八句押韻，三四、五六兩句要對仗。詞的句法多長短不一，所以又叫「長短句」；詞牌是「詞調的名稱」，例如水調歌頭、菩薩蠻。國中選材包含「古典詩詞曲選」。
 guiding_questions:
 - 為什麼有的詩每句一樣長，有的「詞」長短不齊？
 scenario: 親子共學：全家各挑一首詞找出詞牌名，搜尋同詞牌的另一首，比較句子長短是不是一樣。
 goal: 分辨古體詩、近體詩與詞，說出律詩的對仗與詞的長短句。
-review: 家長給一首律詩和一首詞，孩子說出各是什麼體裁、標出律詩中間兩聯的對仗，並說出詞牌名；三項都對。
+review: 家長給一首律詩和一首詞，孩子說出各是什麼體裁、標出律詩第三四句和第五六句的對仗，並說出詞牌名；三項都對。
 formats:
   slides: []
-  exercise: 目標：分辨古體詩、近體詩與詞，說出律詩的對仗與詞的長短句。　檢核：家長給一首律詩和一首詞，孩子說出各是什麼體裁、標出律詩中間兩聯的對仗，並說出詞牌名；三項都對。
+  exercise: 目標：分辨古體詩、近體詩與詞，說出律詩的對仗與詞的長短句。　檢核：家長給一首律詩和一首詞，孩子說出各是什麼體裁、標出律詩第三四句和第五六句的對仗，並說出詞牌名；三項都對。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 國中要讀的韻文
+  body:
+  - 國語文課綱的國中學習內容列出「韻文：如古體詩、樂府詩、近體詩、詞、曲等。」教材編選也說國中選材「應包含古今散文、古典詩詞曲選（含本土素材）、現代詩選、文化經典選讀及語文基礎常識等。」
+  - 認得體裁的規則，就知道為什麼這裡要對仗、為什麼那裡句子忽長忽短。
+  qa:
+    question: 為什麼有的詩每句一樣長，有的「詞」長短不齊？
+    answer: 近體詩的聲韻有定則，除排律外句數都有限制；律詩每首八句，分五言律詩、七言律詩兩種，所以每句一樣長。詞要依詞牌（詞調的名稱）來寫，「詞因句法多長短不一，故又稱為「長短句」」。
+    source: rev-changduan
+  items_title: 國中課綱怎麼說
+  items:
+  - title: 國中要讀的韻文
+    text: 國語文 Ad-Ⅳ-3：韻文：如古體詩、樂府詩、近體詩、詞、曲等。
+    code: Ad-IV-3
+  - title: 理解形式和寫作特色
+    text: 國語文 5-Ⅳ-3：理解各類文本內容、形式和寫作特色。
+    code: 5-IV-3
+  sources:
+  - kuoyu
+  - rev-jinti
+  - rev-changduan
+how:
+  heading: 數句數，找對仗
+  body:
+  - 拿到一首作品，先數句數和每句字數：八句、每句五字或七字，可能是律詩；句子長短不一、有詞牌名，是詞；句數不固定、不一定對仗的，可能是古體詩。律詩再找第三四句、第五六句，看詞性和意思是不是兩兩相對。平仄只要知道有規則，國中不必自己辨認（本站建議）。
+  items:
+  - title: 律詩
+    text: 每首八句，二、四、六、八句押韻，三四、五六兩句對仗。
+  - title: 對仗
+    text: 詩文中句子的對偶。
+  - title: 詞牌
+    text: 詞調的名稱，例如水調歌頭、菩薩蠻。
+  - title: 詞
+    text: 句法多長短不一，又稱「詩餘」「長短句」。
+  checklist_title: 判斷一首作品：
+  checklist:
+  - 數句數
+  - 數每句字數
+  - 找詞牌名
+  - 找對仗
+  activity_figure: how-flow
+  sources:
+  - rev-lvshi
+  - rev-duizhang
+  - rev-cipai
+  - mini-ci
+  - rev-guti
+what:
+  heading: 律詩和詞，哪裡不一樣
+  figures:
+  - what-compare
+  notes:
+  - 《國語小字典》說詞「興起於唐代，在宋代最為興盛。由古之樂府演變而來，其後又遞變而為曲。」
+  - 《重編國語辭典修訂本》說古體詩「相對於近體詩而言。每句有四言、五言、六言、七言等，句數無限制，用韻無定則，不拘平仄對偶。」
+  - 平仄只做入門介紹，不要求國中生辨平仄（本站建議）。
+  sources:
+  - mini-ci
+  - rev-lvshi
+  - rev-guti
+figures:
+- id: how-flow
+  type: flow
+  alt: 判斷體裁：孩子數句數與字數，找詞牌名，律詩再找對仗，最後和家長對答案
+  steps:
+  - actor: 孩子
+    text: 數句數字數
+  - actor: 孩子
+    text: 找詞牌名
+  - actor: 孩子
+    text: 找對仗
+  - actor: 一起
+    text: 對答案
+- id: what-compare
+  type: compare
+  alt: 律詩每首八句、三四五六句對仗；詞依詞牌、句子長短不一
+  source: rev-lvshi
+  relation: versus
+  items:
+  - term: 律詩
+    note: 每首八句，三四、五六兩句要對仗
+  - term: 詞
+    note: 依詞牌，句法多長短不一
+  caption: 律詩依《重編國語辭典修訂本》「律詩」，詞依「長短句」「詞牌」。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：5-Ⅳ-3「理解各類文本內容、形式和寫作特色。」（p.11）；Ad-Ⅳ-3「韻文：如古體詩、樂府詩、近體詩、詞、曲等。」（p.15）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）；教材編選第四學習階段「2.選材應包含古今散文、古典詩詞曲選（含本土素材）、現代詩選、文化經典選讀及語文基礎常識等。」（p.22）
+- id: rev-jinti
+  title: 重編國語辭典修訂本「近體詩」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=94639
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「包括絕句、律詩、排律等形式，約形成於唐代，相對於古體詩而言。聲韻有定則，且除排律外，句數都有限制。也稱為「今體詩」。」
+- id: rev-lvshi
+  title: 重編國語辭典修訂本「律詩」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=67667
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「一種近體詩。形成於唐初，每首八句，二、四、六、八句要押韻，三四、五六兩句要對仗，每句有一定的平仄。可分為五言律詩、七言律詩兩種。」
+- id: rev-duizhang
+  title: 重編國語辭典修訂本「對仗」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=48195
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「詩文中句子的對偶。」
+- id: rev-cipai
+  title: 重編國語辭典修訂本「詞牌」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=140475
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「詞調的名稱。如水調歌頭、菩薩蠻等。也稱為「詞牌子」。」
+- id: rev-guti
+  title: 重編國語辭典修訂本「古體詩」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=70987
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「詩歌的一種型體。相對於近體詩而言。每句有四言、五言、六言、七言等，句數無限制，用韻無定則，不拘平仄對偶。簡稱為「古詩」。」
+- id: rev-changduan
+  title: 重編國語辭典修訂本「長短句」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=123580
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「詞因句法多長短不一，故又稱為「長短句」。」
+- id: mini-ci
+  title: 國語小字典「詞」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E8%A9%9E
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「一種格律文學。興起於唐代，在宋代最為興盛。由古之樂府演變而來，其後又遞變而為曲。句法多長短不一。或稱為「詩餘」、「長短句」。」

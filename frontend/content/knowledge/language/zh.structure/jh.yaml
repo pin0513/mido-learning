@@ -1,8 +1,12 @@
+# B4 提案：zh.structure@jh
+# - 六級分「結構完整，脈絡分明，內容前後連貫」與會考評分規準一致；補五級分「偶有轉折不流暢之處」、四級分「偶有不連貫、轉折不清之處」（逐字）。
+# - 「每段一個任務」「轉折句」是本站建議的寫法，標明；補 grades、6-Ⅳ-2、Ad-Ⅳ-1 與 Why/How/What。
+# - 複審修正：例句的標籤統一為「本站整理」，段落排法的標籤統一為「本站建議」。
 id: zh.structure@jh
 concept: zh.structure
 title: 段落與轉折
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +16,25 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 6-IV-2
+  contents:
+  - Ad-IV-1
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 結構組織各級分描述逐字引自心測中心寫作測驗評分規準一覽表；「能適當地組織材料、安排段落，並組織成篇」引自寫作測驗考試內容。
+- 「每段一個任務」與大綱檢查法是本站建議。
 prerequisites:
 - zh.material@jh
 links:
@@ -28,7 +42,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：國中教育會考寫作評分規準「結構組織」；國語文領綱 6-Ⅳ-2、Ad-Ⅳ-1。
 competency:
   specialist:
   - 寫作
@@ -39,7 +53,7 @@ ai:
   - 標出段落之間跳得太快的地方
   human_experience:
   - 決定文章的順序與重心
-idea: 六級分是「結構完整，脈絡分明，內容前後連貫」。每段有一個任務，段與段之間用轉折句接起來。
+idea: 會考寫作六級分的結構組織是「文章結構完整，脈絡分明，內容前後連貫」；五級分「偶有轉折不流暢之處」。每段有一個任務，段與段之間用轉折句接起來（本站建議）。
 guiding_questions:
 - 從「事情經過」跳到「我學到什麼」，中間少了什麼？
 scenario: 親子共學：把一篇文章每段濃縮成一句話，排成大綱，看看哪兩段之間接不起來。
@@ -53,4 +67,103 @@ audience:
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 接得起來，才讀得下去
+  body:
+  - 會考寫作考試內容列出的重要能力包括「能適當地組織材料、安排段落，並組織成篇。」評分規準的「結構組織」：六級分「文章結構完整，脈絡分明，內容前後連貫」，五級分「文章結構完整，但偶有轉折不流暢之處」，四級分「文章結構大致完整，但偶有不連貫、轉折不清之處」。
+  - 國語文課綱的國中學習內容也有「篇章的主旨、結構、寓意與分析」。
+  qa:
+    question: 從「事情經過」跳到「我學到什麼」，中間少了什麼？
+    answer: 少了轉折：說明這件事是怎麼讓你想到後面的道理，例如「那天回家的路上，我一直想著……」。規準把「轉折不流暢」「轉折不清」寫在五級分、四級分的描述裡，接好了，才會「內容前後連貫」（例句是本站整理）。
+    source: cap-rubric
+  items_title: 國中課綱怎麼說
+  items:
+  - title: 組織成結構完整的文章
+    text: 國語文 6-Ⅳ-2：依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。
+    code: 6-IV-2
+  - title: 篇章的主旨與結構
+    text: 國語文 Ad-Ⅳ-1：篇章的主旨、結構、寓意與分析。
+    code: Ad-IV-1
+  sources:
+  - cap-wcontent
+  - cap-rubric
+  - kuoyu
+how:
+  heading: 每段一句話排大綱
+  body:
+  - 寫完後，把每段濃縮成一句話排成大綱，從頭讀一遍：哪兩句之間跳太快，就在那兩段之間補一句轉折（本站建議）。
+  items:
+  - title: 每段一個任務
+    text: 例如：開頭點題、經過、轉折、體悟（本站建議）。
+  - title: 濃縮成一句
+    text: 每段只留一句話，排成大綱。
+  - title: 補轉折句
+    text: 說明前一段怎麼帶到下一段。
+  checklist_title: 檢查結構：
+  checklist:
+  - 每段一句
+  - 排成大綱
+  - 找跳太快處
+  - 補轉折句
+  activity_figure: how-flow
+  sources:
+  - cap-rubric
+what:
+  heading: 結構組織：六、五、四級分
+  figures:
+  - what-compare
+  notes:
+  - 段落安排沒有固定的段數規定；「開頭、經過、轉折、體悟」只是本站建議的排法。
+  sources:
+  - cap-rubric
+figures:
+- id: how-flow
+  type: flow
+  alt: 檢查結構：孩子把每段濃縮成一句，排成大綱，家長順著讀，找出接不起來的地方再補轉折
+  steps:
+  - actor: 孩子
+    text: 每段一句
+  - actor: 孩子
+    text: 排成大綱
+  - actor: 家長
+    text: 順著讀
+  - actor: 孩子
+    text: 補轉折句
+- id: what-compare
+  type: compare
+  alt: 結構組織：六級分脈絡分明前後連貫，五級分偶有轉折不流暢，四級分偶有不連貫
+  source: cap-rubric
+  relation: versus
+  items:
+  - term: 六級分
+    note: 文章結構完整，脈絡分明，內容前後連貫
+  - term: 五級分
+    note: 文章結構完整，但偶有轉折不流暢之處
+  - term: 四級分
+    note: 文章結構大致完整，但偶有不連貫、轉折不清之處
+sources:
+- id: cap-rubric
+  title: 國中教育會考 寫作測驗評分規準
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/exam3-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 結構組織：六級分「文章結構完整，脈絡分明，內容前後連貫。」五級分「文章結構完整，但偶有轉折不流暢之處。」四級分「文章結構大致完整，但偶有不連貫、轉折不清之處。」
+- id: cap-wcontent
+  title: 國中教育會考 寫作測驗考試內容
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test4-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 重要寫作能力表現「能適當地組織材料、安排段落，並組織成篇。」
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：6-Ⅳ-2「依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。」（p.12）；Ad-Ⅳ-1「篇章的主旨、結構、寓意與分析。」（p.15）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）
