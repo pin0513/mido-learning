@@ -13,7 +13,7 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   { path: "/kp/pm.breakdown/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/ph.reason/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/sk.voice/es", layer: "本質", verify: false, converted: true },
-  { path: "/kp/en.abc/es", layer: "基礎", verify: true },
+  { path: "/kp/en.abc/es", layer: "基礎", verify: false, converted: true },
   { path: "/kp/ma.number/es", layer: "本質", verify: true },
   { path: "/kp/it.blocks/es", layer: "基礎", verify: true },
 ];
@@ -58,7 +58,8 @@ test.describe("黃金圈詳細頁", () => {
         else await expect(root).toContainText("內容補強中");
         await expect(root).toContainText(item.layer);
         await expect(root.locator("dt", { hasText: "難度" })).toHaveCount(0);
-        await expect(root).not.toContainText("在家");
+        const visible = await root.innerText();
+        expect(visible.replaceAll("在家長", "")).not.toContain("在家");
         if (item.verify) await expect(root.locator(".v2-status", { hasText: "待核對" })).toBeVisible();
         else await expect(root.locator(".v2-status", { hasText: "待核對" })).toHaveCount(0);
         const headings = await page.getByTestId("v2-aside").locator("h2").allTextContents();

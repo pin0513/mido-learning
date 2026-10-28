@@ -1,8 +1,14 @@
+# B7 提案：en.gept1@jh
+# - 補 grades 與 Why/How/What、兩張圖；全民英檢沒有對應的課綱代碼。學習時間的「國中七至九年級（第四學習階段）」引英語文領綱的編碼說明與時間分配。
+# - 錯誤修正：原檢核說「做一回官方模擬題並對照官方通過標準…家長看成績單或模擬分數打勾」。官方說明聽讀成績是量尺分數，答對題數要經統計程序轉換，練習題的答對題數不能直接換成 160／72 分。改成練習題只看答對題數找弱點，正式成績單才對照通過標準。
+# - 通過標準、題數、聽讀通過才能加考說寫、初級聽讀對應 CEFR A2，都依 LTTC 官網逐字核對並補上出處 id；CEFR A2 的描述依歐洲理事會原文。
+# - AI 依教育部學生版注意事項。
+# - 標題修正：原標題「聽說讀寫一起過」，但官方規定聽讀通過後才能加考說寫，改成「全民英檢初級：先過聽讀，再考說寫」。
 id: en.gept1@jh
 concept: en.gept1
-title: 全民英檢初級：聽說讀寫一起過
+title: 全民英檢初級：先過聽讀，再考說寫
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +19,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -21,14 +31,13 @@ curriculum_108:
   - A3
   issues:
   - 生涯規劃教育
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：全民英檢是檢定，沒有對應的課綱代碼；LTTC 說明測驗內容「同步參考國內英語課程綱要及國際語言分級架構」。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：全民英檢初級（CEFR A2）。
-- 引用的框架只寫名稱（全民英檢初級（LTTC，CEFR A2）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 本點為這次補強新增，內容尚未經老師審閱。
-- 通過標準、題數與時間取自 LTTC 全民英檢網初級測驗介紹 https://www.gept.org.tw/exam_intro/t01_introduction.asp（2026-10-27 讀取）；報名前以官網最新公告為準。
+- 通過標準、題數與時間取自 LTTC 全民英檢網初級測驗介紹（2026-10-29 讀取）；報名前以官網最新公告為準。
+- 錯誤修正：聽讀成績是量尺分數，練習題的答對題數不能直接換算成通過標準的分數。
 prerequisites:
 - en.listening@jh
 - en.reading@jh
@@ -40,7 +49,7 @@ links:
   related: []
   deeper:
   - en.gept2@sh
-link_notes: 框架：全民英檢初級（LTTC，CEFR A2）。
+link_notes: 框架：全民英檢初級（LTTC，初級聽讀對照 CEFR A2）。
 competency:
   specialist:
   - 語言學習策略
@@ -48,21 +57,165 @@ competency:
   - 用數據說明
 ai:
   delegable:
-  - 依題型出練習、分析弱點
+  - 依題型出練習、整理錯題（依教育部學生版注意事項）
   human_experience:
   - 在時間壓力下作答，面對考官開口
-idea: 全民英檢（GEPT）由語言訓練測驗中心（LTTC）辦理，初級對應 CEFR A2：能聽懂價格、時間、地點，讀懂路標、菜單、時刻表，能簡單自我介紹、寫明信片與便條。聽讀通過後才能加考說寫，四項都過才是完整的初級。
+idea: 全民英檢（GEPT）由語言訓練測驗中心（LTTC）辦理。LTTC 寫明「初級聽讀（CEFR A2）」；說寫另外對照，LTTC 對照表上初級說寫是 A2+。LTTC 的初級能力敘述是：能聽懂價格、時間、地點，看懂路標、菜單、時刻表，能簡單自我介紹、寫明信片與便條。聽讀通過後才能加考說寫，四項都過才拿到聽讀說寫四項合格證書。
 guiding_questions:
 - 初級聽讀過了，寫作和口說也過得了嗎？
-scenario: 親子共學：全家訂一個「英檢日」：孩子做模擬題，大人計時並當口說考官，結束後一起對照通過標準。
-goal: 四項一起準備：通過全民英檢初級聽讀，再加考寫作與口說。
-review: 做一回完整的全民英檢初級官方模擬題並對照官方通過標準：聽力與閱讀總分 160 分以上，且單項不低於 72 分（各滿分 120）；寫作 70 分、口說 80 分以上。家長看成績單或模擬分數打勾。
+scenario: 親子共學：全家訂一個英檢日：孩子做官方練習題，大人計時並當口說考官，結束後一起整理錯題。
+goal: 先過聽讀，再準備說寫：通過全民英檢初級聽讀，再加考寫作與口說。
+review: 孩子做一回全民英檢初級官方練習題，記下各部分答對題數、找出最弱的一項；正式成績對照官方通過標準：聽力與閱讀總和 160 分以上，且任一項不低於 72 分（各滿分 120），寫作 70 分、口說 80 分（各滿分 100）。家長看正式成績單打勾。
 formats:
   slides: []
-  exercise: 目標：四項一起準備：通過全民英檢初級聽讀，再加考寫作與口說。　檢核：做一回完整的全民英檢初級官方模擬題並對照官方通過標準：聽力與閱讀總分 160 分以上，且單項不低於 72 分（各滿分 120）；寫作 70 分、口說 80 分以上。家長看成績單或模擬分數打勾。
+  exercise: 目標：先過聽讀，再準備說寫：通過全民英檢初級聽讀，再加考寫作與口說。　檢核：孩子做一回全民英檢初級官方練習題，記下各部分答對題數、找出最弱的一項；正式成績對照官方通過標準：聽力與閱讀總和 160 分以上，且任一項不低於 72 分（各滿分 120），寫作 70 分、口說 80 分（各滿分 100）。家長看正式成績單打勾。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: english
+why:
+  heading: 用國內檢定確認四項能力
+  body:
+  - 全民英檢是專為國人設計的分級檢定，LTTC 說測驗內容「同步參考國內英語課程綱要及國際語言分級架構」，並以初級聽讀（CEFR A2）為多數考生第一次參加的標準化英語測驗。歐洲理事會的 CEFR 把 A2 描述為能理解和自己最切身相關的句子和常用語，例如個人和家庭基本資料、購物、當地地理。
+  qa:
+    question: 初級聽讀過了，寫作和口說也過得了嗎？
+    answer: 不一定，要另外準備。LTTC 規定聽讀達標才可以加考說寫；說寫是人工評分，題型是單句寫作、段落寫作、複誦、朗讀和回答問題。
+    source: gept-elementary
+  items_title: 全民英檢初級四項能力
+  items:
+  - title: 聽
+    text: 能聽懂與日常生活相關的淺易談話，包括價格、時間及地點等。
+  - title: 讀
+    text: 能閱讀路標、交通標誌、招牌、簡單菜單、時刻表及賀卡等。
+  - title: 說
+    text: 能朗讀簡易文章、簡單地自我介紹，能以簡易英語對答。
+  - title: 寫
+    text: 能寫簡單的句子及段落，如寫明信片、便條、賀卡及填表格等。
+  checklist_title: 開始前先確認
+  checklist:
+  - 讀過四項敘述
+  - 看過官方練習題
+  notes:
+  - 四項能力依 LTTC 初級檢測程度；學段與檢定的對應是本站建議，不是官方換算。
+  sources:
+  - gept-elementary
+  - gept-faq
+  - cefr-global
+how:
+  heading: 先過聽讀，再準備說寫
+  body:
+  - 初級分兩階段：聽讀達到通過標準，才可以加考該級數的說寫。本站建議：先用官方練習題熟悉題型，找出最弱的一項多練；聽讀考過後再加練寫作和口說。
+  items_title: 初級題型與時間（官方）
+  items:
+  - title: 聽力
+    text: 30 題，約 20 分鐘；看圖辨義、問答、簡短對話、短文聽解。
+  - title: 閱讀
+    text: 30 題，35 分鐘；詞彙、段落填空、閱讀理解。
+  - title: 寫作
+    text: 16 題，40 分鐘；單句寫作與段落寫作。
+  - title: 口說
+    text: 18 題，約 10 分鐘；複誦、朗讀、回答問題。
+  checklist_title: 準備進度
+  checklist:
+  - 做過聽讀練習
+  - 找出弱項
+  - 練過說寫題型
+  activity_figure: gept1-flow
+  notes:
+  - 準備順序是本站建議；題數與時間依 LTTC 官網。
+  sources:
+  - gept-elementary
+what:
+  heading: 看懂初級的通過標準
+  body:
+  - 聽力和閱讀是量尺分數，各滿分 120：兩項總和達 160 分，且任一項不低於 72 分才算通過。答對題數要經統計程序轉換成量尺分數，所以練習題的答對題數不能直接換算。寫作通過標準 70 分、口說 80 分（各滿分 100）。聽讀說寫都通過，LTTC 會發聽讀說寫四項合格證書。
+  items_title: 學完能做到
+  items:
+  - title: 說出通過標準
+    text: 聽讀 160 分且單項不低於 72 分。
+  - title: 知道考試順序
+    text: 聽讀過了才能加考說寫。
+  - title: 找出弱項
+    text: 用練習題找出最弱的一項。
+  checklist_title: 家長檢核
+  checklist:
+  - 知道通過標準
+  - 知道考試順序
+  - 看正式成績單
+  figures:
+  - gept1-compare
+  notes:
+  - 報名前以 LTTC 官網最新公告為準。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去。
+  sources:
+  - gept-elementary
+  - gept-faq
+  - genai-student
+figures:
+- id: gept1-flow
+  type: flow
+  alt: 全民英檢初級流程：考聽讀、達到通過標準、加考說寫、四項都過拿四項合格證書。
+  steps:
+  - actor: 考生
+    text: 考聽力閱讀
+  - actor: 考生
+    text: 聽讀達標
+  - actor: 考生
+    text: 加考說寫
+  - actor: 考生
+    text: 說寫也通過
+  - actor: LTTC
+    text: 發四項證書
+  source: gept-faq
+- id: gept1-compare
+  type: compare
+  alt: 比較練習題答對題數和正式量尺分數：兩者不能直接換算。
+  source: gept-elementary
+  relation: not_equal
+  items:
+  - term: 答對題數
+    note: 練習題用來找弱點
+  - term: 量尺分數
+    note: 正式成績，對照 160／72
+  caption: 答對題數要經統計程序轉換成量尺分數（LTTC）。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: gept-elementary
+  title: 初級測驗（認識GEPT＞各級介紹）
+  publisher: 財團法人語言訓練測驗中心（LTTC）GEPT全民英檢網
+  url: https://www.gept.org.tw/exam_intro/t01_introduction.asp
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 初級能力敘述（聽、讀、說、寫）；測驗項目：聽力 30題、約20分鐘；閱讀 30題、35分鐘；寫作 16題、40分鐘；口說 18題、約10分鐘；滿分聽力 120、閱讀 120、寫作 100、口說 100；通過標準「兩項測驗成績總和達160分，且其中任一項成績不低於72分」、寫作 70分、口說 80分；註 1「已達聽讀測驗通過標準，可加考該級數之說寫測驗」；「成績以量尺分數計分，滿分120分。考生的答對題數透過統計程序轉換為量尺分數」
+- id: gept-faq
+  title: 常見問題（測驗設計、聽讀與說寫分開施測、CEFR 對照）
+  publisher: 財團法人語言訓練測驗中心（LTTC）GEPT全民英檢網
+  url: https://www.gept.org.tw/FAQ/FAQ_Show2.asp?FAQClassID=30
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 「測驗內容同步參考國內英語課程綱要及國際語言分級架構」；「以初級聽讀（CEFR A2）為例，這是多數考生第一次參加的標準化英語測驗」；「考生只要通過『聽讀測驗』，就可以申請『聽讀合格證書』，也可加考『說寫測驗』。聽讀及說寫測驗皆通過者，GEPT將免費發給該級數『聽讀說寫四項合格證書』」；CEFR 對照表：接收技能（聽力/閱讀）初級 A2，產出技能（寫作/口說）初級 A2+
+- id: cefr-global
+  title: 'Global scale - Table 1 (CEFR 3.3): Common Reference levels'
+  publisher: Council of Europe（歐洲理事會）
+  url: https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Table 1 A2：「Can understand sentences and frequently used expressions related to areas of most immediate relevance (e.g. very basic personal and family information, shopping, local geography, employment).」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」

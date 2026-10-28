@@ -1,8 +1,13 @@
+# B7 提案：en.convo@jh
+# - 補 grades、英語文 B-Ⅳ-3、B-Ⅳ-5、B-Ⅳ-7 與 Why/How/What、兩張圖。7-Ⅳ-3、2-Ⅳ-13 與第二外國語文同號，只在內文引用。
+# - 全民英檢初級口說「回答問題」共 7 題、每題回答時間 15 秒、題目播二次，依 LTTC 官網逐字核對；檢核改成家長每題說兩次，與官方一致。
+# - 「修補」改用領綱用語「請求重述」；AI 扮演店員改為依教育部學生版注意事項，用教育用工具（酷英平臺 CoolE Bot）且家長陪伴。
+# - 檢核的「至少 5 題」標示意。
 id: en.convo@jh
 concept: en.convo
 title: 日常對話：問路、點餐
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +18,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -21,12 +30,17 @@ curriculum_108:
   - C2
   issues:
   - 國際教育
-to_verify: true
+  contents:
+  - B-IV-3
+  - B-IV-5
+  - B-IV-7
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源），並確認列入的代碼不與其他領綱同號。
+- 英語文 7-Ⅳ-3（與第二外國語文同號）、2-Ⅳ-13（與第二外國語文同號）：代碼表以代碼為鍵，列入會互撞，所以只在內文引用、不列入 curriculum_108。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：全民英檢初級・口說。
-- 引用的框架只寫名稱（全民英檢初級口說：複誦、朗讀句子與短文、回答問題（LTTC）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 全民英檢初級口說題型（複誦、朗讀句子與短文、回答問題）與「回答問題」共 7 題、每題回答時間 15 秒，依 LTTC 官網逐字核對。
 prerequisites:
 - en.listening@jh
 links:
@@ -35,7 +49,7 @@ links:
   related: []
   deeper:
   - en.present@sh
-link_notes: 框架：全民英檢初級口說：複誦、朗讀句子與短文、回答問題（LTTC）。
+link_notes: 框架：全民英檢初級口說：複誦、朗讀句子與短文、回答問題（LTTC）；英語文領綱 B-Ⅳ-3、B-Ⅳ-5、B-Ⅳ-7；7-Ⅳ-3、2-Ⅳ-13 與第二外國語文同號，只在內文引用。
 competency:
   specialist:
   - 口說
@@ -45,21 +59,160 @@ competency:
   - 團隊合作
 ai:
   delegable:
-  - 扮演店員或路人陪你練
+  - 在家長陪伴下用教育用 AI 工具（例如 CoolE Bot）扮演店員或路人
   human_experience:
-  - 面對真人時不害怕，敢開口修補
-idea: 真實對話會卡住，重點是會「修補」：Sorry? Could you say that again? 會請對方慢一點、換個說法，就能把話說下去。
+  - 面對真人時不害怕，敢開口請對方再說一次
+idea: 真實對話會卡住，重點是會請對方再說一次（領綱稱為請求重述）：Sorry? Could you say that again? 會請對方慢一點、換個說法，再加上手勢和表情，就能把話說下去。
 guiding_questions:
 - 店員說太快，你要怎麼請他再說一次？
 scenario: 親子共學：在家開一間「英文早餐店」，孩子當店員、大人當客人，故意點很複雜的餐，練習請對方再說一次。
 goal: 在問路、點餐、購物對話裡聽懂並回答，聽不懂時會請對方再說一次。
-review: 家長扮演店員或路人用英文問 7 個問題（全民英檢初級口說「回答問題」的形式，每題 15 秒內回答），孩子每題都有回應，至少 5 題切題。
+review: 家長扮演店員或路人用英文問 7 個問題（全民英檢初級口說「回答問題」的形式：每題說兩次，孩子在 15 秒內回答），孩子每題都有回應，至少 5 題切題（5 題是示意）。
 formats:
   slides: []
-  exercise: 目標：在問路、點餐、購物對話裡聽懂並回答，聽不懂時會請對方再說一次。　檢核：家長扮演店員或路人用英文問 7 個問題（全民英檢初級口說「回答問題」的形式，每題 15 秒內回答），孩子每題都有回應，至少 5 題切題。
+  exercise: 目標：在問路、點餐、購物對話裡聽懂並回答，聽不懂時會請對方再說一次。　檢核：家長扮演店員或路人用英文問 7 個問題（全民英檢初級口說「回答問題」的形式：每題說兩次，孩子在 15 秒內回答），孩子每題都有回應，至少 5 題切題（5 題是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: english
+why:
+  heading: 聽不懂也能把話說下去
+  body:
+  - 英語文領綱第四學習階段的學習內容包括「語言與非語言的溝通策略（如請求重述、手勢、表情等）」、「人、事、時、地、物的描述及問答」和「角色扮演」。全民英檢初級的口說能力是「對熟悉的話題能以簡易英語對答，如問候、購物、問路等」。實施要點也提醒，練習時要「鼓勵學生放鬆心情大膽嘗試及不畏犯錯」（p.31）。
+  qa:
+    question: 店員說太快，你要怎麼請他再說一次？
+    answer: 說 Sorry? Could you say that again? 或 Could you speak slowly, please? 這就是領綱說的請求重述。
+    source: english
+  items_title: 英語文領綱的學習重點
+  items:
+  - title: 溝通策略
+    text: 英語文 B-Ⅳ-3：語言與非語言的溝通策略（如請求重述、手勢、表情等）。
+    code: B-IV-3
+  - title: 描述及問答
+    text: 英語文 B-Ⅳ-5：人、事、時、地、物的描述及問答。
+    code: B-IV-5
+  - title: 角色扮演
+    text: 英語文 B-Ⅳ-7：角色扮演。
+    code: B-IV-7
+  checklist_title: 開始前先確認
+  checklist:
+  - 會說數字和價錢
+  - 會說左右前後
+  notes:
+  - 英語文 7-Ⅳ-3「利用語言及非語言溝通策略（如請求重述、手勢、表情等）提升溝通效能。」與第二外國語文同號，只在內文引用。
+  sources:
+  - english
+  - gept-elementary
+how:
+  heading: 角色扮演，練請求重述
+  body:
+  - 本站建議：在家開一間英文早餐店，孩子當店員、大人當客人；大人故意點很複雜的餐，孩子練習請對方再說一次、確認點了什麼。熟了再換成問路、購物。
+  items_title: 本站建議的練法
+  items:
+  - title: 請對方再說、說慢
+    text: Sorry? Could you say that again? / Could you speak slowly, please?
+  - title: 確認內容
+    text: So you want a sandwich and milk?
+  - title: 問路
+    text: How can I get to the station?
+  - title: 購物
+    text: How much is it? / I'll take this one.
+  checklist_title: 每次練完勾一下
+  checklist:
+  - 請對方重說
+  - 確認了內容
+  - 完成對話
+  activity_figure: convo-flow
+  notes:
+  - 句子與練法是本站建議。
+  sources:
+  - english
+what:
+  heading: 點餐、問路、購物都能應對
+  body:
+  - 學完後，孩子能在問路、點餐、購物的對話裡聽懂並回答，聽不懂時會請對方再說一次，也能用手勢和表情幫忙。全民英檢初級口說的「回答問題」共 7 題，題目播出二次，每題回答時間 15 秒，可以用來檢核。
+  items_title: 學完能做到
+  items:
+  - title: 聽懂並回答
+    text: 點餐、問路、購物都能回應。
+  - title: 請求重述
+    text: 聽不懂時請對方再說一次。
+  - title: 15 秒內回答
+    text: 照全民英檢初級的形式回答。
+  checklist_title: 家長檢核
+  checklist:
+  - 每題有回應
+  - 會請求重述
+  - 回答切題
+  figures:
+  - convo-compare
+  notes:
+  - 國中對應全民英檢初級是本站建議，不是官方換算。
+  - 「至少 5 題切題」是示意；7 題、15 秒是官方形式。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去。
+  - 教育部國教署的酷英平臺有 CoolE Bot 情境式英語聊天機器人，可以用來練對話；在家使用要家長陪伴。
+  sources:
+  - gept-elementary
+  - genai-student
+  - moe-coolebot
+figures:
+- id: convo-flow
+  type: flow
+  alt: 點餐對話流程：客人點餐、店員聽不懂時請求重述、確認內容、完成點餐。
+  steps:
+  - actor: 客人
+    text: 點一份餐
+  - actor: 店員
+    text: 請對方再說
+  - actor: 客人
+    text: 說慢一點
+  - actor: 店員
+    text: 確認點了什麼
+  - actor: 客人
+    text: 說 Yes
+  source: english
+- id: convo-compare
+  type: compare
+  alt: 比較聽不懂時的兩種反應：停住不說，和請對方再說一次。
+  source: english
+  relation: not_equal
+  items:
+  - term: 停住
+    note: 對話就斷了
+  - term: 請求重述
+    note: Sorry? 對話可以繼續
+  caption: 請求重述是英語文領綱 B-Ⅳ-3 列的溝通策略。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：B-Ⅳ-3「語言與非語言的溝通策略（如請求重述、手勢、表情等）。」（p.18）；B-Ⅳ-5「人、事、時、地、物的描述及問答。」（p.19）；B-Ⅳ-7「角色扮演。」（p.19）；7-Ⅳ-3「利用語言及非語言溝通策略（如請求重述、手勢、表情等）提升溝通效能。」（p.15，與第二外國語文同號，只在內文引用）；教學原則「鼓勵學生放鬆心情大膽嘗試及不畏犯錯」（p.31）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: gept-elementary
+  title: 初級測驗（認識GEPT＞各級介紹）
+  publisher: 財團法人語言訓練測驗中心（LTTC）GEPT全民英檢網
+  url: https://www.gept.org.tw/exam_intro/t01_introduction.asp
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 初級能力敘述．說：「能朗讀簡易文章、簡單地自我介紹，對熟悉的話題能以簡易英語對答，如問候、購物、問路等」；口說題型：複誦、朗讀句子與短文、回答問題；回答問題「共7題。題目經由耳機播出，每題播出二次，不印在試卷上。聽到題目後，請馬上回答，每題回答時間15秒」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」
+- id: moe-coolebot
+  title: 酷英平臺應用AI技術　打造豐富多元的英語學習資源
+  publisher: 教育部國民及學前教育署（112 年 11 月 26 日新聞稿，教育部網站）
+  url: https://www.edu.tw/News_Content.aspx?n=9E7AC85F1954DDA8&s=F064A9C80421F778&sms=169B8E91BB75571F
+  accessed: '2026-10-29'
+  kind: government
+  supports: 新聞稿（上版日期 112-11-26）：教育部國教署與國立臺灣師範大學合作建置「英語線上學習平臺（酷英平臺）」（https://www.coolenglish.edu.tw/）；「國教署說明，英語口說方面，『CoolE Bot情境式英語聊天機器人』運用Open AI語言模型搭配語音辨識及合成技術，以多種情境引導使用者進行英語對話」。

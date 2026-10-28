@@ -1,8 +1,13 @@
+# B7 提案：en.abc@es
+# - 補 grades（三、四年級）與 Why/How/What、兩張圖；目標改成領綱用語「印刷體大小寫」（國小只須學印刷體，p.27）。
+# - 字母相關代碼（1-Ⅱ-1、2-Ⅱ-1、3-Ⅱ-1、4-Ⅱ-1、Aa-Ⅱ-1、Aa-Ⅱ-2、Ab-Ⅱ-4）全都和其他領綱同號，代碼表以代碼為鍵會互撞，所以只在內文引用，不列入 curriculum_108。
+# - 字母名和字母音的區分改以美國共同核心標準 RF.K.3a、RF.K.3b 為出處；注音只能近似英語發音，已註明。
+# - 檢核的 10 個、9 個標示意；AI 只由大人操作，依教育部學生版注意事項。
 id: en.abc@es
 concept: en.abc
 title: 字母與字母的聲音
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,24 +18,29 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
-- 基準標籤：初級的準備。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源）；相關代碼都與其他領綱同號，只在內文引用。
+- 英語文 1-Ⅱ-1（與國語文等其他領綱同號）、2-Ⅱ-1（與國語文等其他領綱同號）、3-Ⅱ-1（與國語文等其他領綱同號）、4-Ⅱ-1（與國語文等其他領綱同號）、Aa-Ⅱ-1（與國語文等其他領綱同號）、Aa-Ⅱ-2（與健康與體育、原住民族語文（107 年版）、原住民族語文（111 年版）、新住民語文、社會、綜合活動、閩南語文（107 年版）、閩南語文（111 年版）同號）、Ab-Ⅱ-4（與國語文同號）：代碼表以代碼為鍵，列入會互撞，所以只在內文引用、不列入 curriculum_108。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
+- 基準標籤：美國小學讀本・Phonics（字母與字母音）。
+- 字母名與字母音的說法依美國共同核心標準 RF.K.1d、RF.K.3a、RF.K.3b（PDF p.15–16）逐字核對；用注音「欸」「ㄚ」描述只是近似（本站整理）。
 prerequisites: []
 links:
   why: []
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：美國共同核心標準 RF.K.1d、RF.K.3a、RF.K.3b；英語文領綱第二學習階段字母相關條目（1-Ⅱ-1、2-Ⅱ-1、3-Ⅱ-1、Aa-Ⅱ-1，與其他領綱同號，只在內文引用）。
 competency:
   specialist:
   - 發音與拼讀
@@ -38,21 +48,155 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 念出字母名和字母音
+  - 播放字母名和字母音的示範音檔（由大人操作）
   human_experience:
-  - 自己摸索嘴型，聽出差別
-idea: 每個字母有名字，也有它在單字裡發出的聲音。名字和聲音分開記，後面拼讀才會順。
+  - 自己開口念、自己找開頭字
+idea: 每個字母有名字（b 念 /biː/），也有它在單字裡發出的聲音（ball 開頭的 /b/）。名字和聲音分開記，後面拼讀才會順。
 guiding_questions:
 - 為什麼 A 有時候念「欸」，有時候念「ㄚ」？
 scenario: 親子共學：做 26 張字母卡，正面寫字母，背面畫一個開頭是這個聲音的東西，例如 b 是 ball。
-goal: 認得 26 個字母的大小寫，分得清字母名和字母在單字裡的聲音。
-review: 家長隨機指 10 個字母，孩子說出名字和聲音（例如 b 念 /b/），再說一個這個聲音開頭的字；至少 9 個全對。
+goal: 認得 26 個印刷體大小寫字母，分得清字母名和字母在單字裡的聲音。
+review: 家長隨機指 10 個字母，孩子說出名字和聲音（例如 b 念 /b/），再說一個這個聲音開頭的字；至少 9 個全對（10 個、9 個是示意）。
 formats:
   slides: []
-  exercise: 目標：認得 26 個字母的大小寫，分得清字母名和字母在單字裡的聲音。　檢核：家長隨機指 10 個字母，孩子說出名字和聲音（例如 b 念 /b/），再說一個這個聲音開頭的字；至少 9 個全對。
+  exercise: 目標：認得 26 個印刷體大小寫字母，分得清字母名和字母在單字裡的聲音。　檢核：家長隨機指 10 個字母，孩子說出名字和聲音（例如 b 念 /b/），再說一個這個聲音開頭的字；至少 9 個全對（10 個、9 個是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國小三、四年級（第二學習階段）
+  source: english
+why:
+  heading: 字母有名字，也有聲音
+  body:
+  - 英語文領綱第二學習階段把「能聽辨 26 個字母」「能說出 26 個字母」「能辨識 26 個印刷體大小寫字母」列為學習表現，學習內容也把「字母名稱」和字母拼讀規則分開列；國小「只須學會印刷體的辨識與書寫」（p.27）。美國共同核心標準也要幼兒園學生說出每個子音最常見的聲音，並把五個主要母音的長音、短音和常見拼法連起來。所以字母要學兩件事：名字和聲音。
+  qa:
+    question: 為什麼 A 有時候念「欸」，有時候念「ㄚ」？
+    answer: 念「欸」比較接近 A 的字母名；A 的長音和字母名念法相同（本站整理）。在 cat 這類字裡，A 發的是短音。共同核心標準 RF.K.3b 要學生把母音的長音和短音都和拼法連起來。注音只能近似英語發音（本站整理）。
+    source: ccss-ela
+  items_title: 英語文領綱的相關條目（只在內文引用）
+  items:
+  - title: 聽辨字母
+    text: 英語文 1-Ⅱ-1：能聽辨 26 個字母。
+  - title: 說出字母
+    text: 英語文 2-Ⅱ-1：能說出 26 個字母。
+  - title: 辨識大小寫
+    text: 英語文 3-Ⅱ-1：能辨識 26 個印刷體大小寫字母。
+  - title: 字母名稱
+    text: 英語文 Aa-Ⅱ-1：字母名稱。
+  checklist_title: 開始前先確認
+  checklist:
+  - 知道字母有名字
+  - 知道字母有聲音
+  - 準備 26 張字母卡
+  notes:
+  - 這些條目與其他領綱同號，只在內文引用，不列入代碼欄位。
+  - 注音只能近似英語發音（本站整理）。
+  sources:
+  - english
+  - ccss-ela
+how:
+  heading: 名字和聲音分開練
+  body:
+  - 本站建議：先用字母卡練大小寫配對，再練「字母名、字母音、開頭字」三步。子音先練最常見的一個聲音；母音（a、e、i、o、u）先練短音，再認識長音。
+  items_title: 本站建議的練法
+  items:
+  - title: 大小寫配對
+    text: 把大寫卡和小寫卡配成一對，例如 B 配 b。
+  - title: 先名字再聲音
+    text: 指著字母先說名字，再說它在單字裡的聲音。
+  - title: 找開頭字
+    text: 說一個用這個聲音開頭的字，例如 b 是 ball。
+  - title: 母音兩種音
+    text: a 在 cat 裡是短音；長音和字母名念法相同（本站整理）。
+  checklist_title: 每天練完勾一下
+  checklist:
+  - 大小寫配對
+  - 說出名字
+  - 說出聲音
+  - 說一個開頭字
+  activity_figure: abc-flow
+  notes:
+  - 練法是本站建議；聲音和拼法的對應以共同核心標準 RF.K.3 為準。
+  sources:
+  - ccss-ela
+  - english
+what:
+  heading: 字母名和字母音不一樣
+  body:
+  - 字母卡背面畫的是開頭聲音，不是字母名：b 的名字念 /biː/，在 ball 裡發 /b/。孩子能分清這兩種念法，下一步自然發音（en.phonics）才拼得起來。
+  items_title: 學完能做到
+  items:
+  - title: 認得大小寫
+    text: 26 個印刷體大小寫字母都認得。
+  - title: 分清名字和聲音
+    text: 說得出字母名，也說得出字母音。
+  - title: 說出開頭字
+    text: 每個字母說得出一個用它的聲音開頭的字。
+  checklist_title: 家長檢核
+  checklist:
+  - 大小寫都認得
+  - 名字聲音分清
+  - 說得出開頭字
+  figures:
+  - abc-compare
+  notes:
+  - 檢核用的 10 個、9 個是示意，家長可依孩子程度調整。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  - 國小書寫也只要求印刷體（英語文 4-Ⅱ-1「能書寫 26 個印刷體大小寫字母」，p.12）。
+  sources:
+  - english
+  - ccss-ela
+  - genai-student
+figures:
+- id: abc-flow
+  type: flow
+  alt: 字母卡練習流程：家長指字母，孩子說名字、說聲音、說開頭字，家長記對錯。
+  steps:
+  - actor: 家長
+    text: 指一張字母卡
+  - actor: 孩子
+    text: 說出字母名
+  - actor: 孩子
+    text: 說出字母音
+  - actor: 孩子
+    text: 說一個開頭字
+  - actor: 家長
+    text: 記下對錯
+  source: ccss-ela
+- id: abc-compare
+  type: compare
+  alt: 比較字母名和字母音：以 b 為例，名字念 /biː/，在 ball 裡發 /b/。
+  source: ccss-ela
+  relation: not_equal
+  items:
+  - term: 字母名
+    note: b 的名字念 /biː/
+  - term: 字母音
+    note: b 在 ball 裡發 /b/
+  caption: 字母名和字母音是兩件事（例子為本站整理）。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：1-Ⅱ-1「能聽辨 26 個字母。」（p.8）；2-Ⅱ-1「能說出 26 個字母。」（p.10）；3-Ⅱ-1「能辨識 26 個印刷體大小寫字母。」（p.11）；4-Ⅱ-1「能書寫 26 個印刷體大小寫字母。」（p.12）；Aa-Ⅱ-1「字母名稱。」（p.17）；Aa-Ⅱ-2「印刷體大小寫字母的辨識及書寫。」（p.17）；Ab-Ⅱ-4「所學的字母拼讀規則（含看字讀音、聽音拼字）。」（p.17）；教材編選（1）「國民小學教育階段只須學會印刷體的辨識與書寫」（p.27）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: ccss-ela
+  title: Common Core State Standards for English Language Arts & Literacy in History/Social Studies, Science, and Technical Subjects
+  publisher: National Governors Association Center for Best Practices、Council of Chief State School Officers（Common Core State Standards Initiative）
+  url: https://corestandards.org/wp-content/uploads/2023/09/ELA_Standards1.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 'Reading Standards: Foundational Skills（PDF p.15–16）：RF.K.1d「Recognize and name all upper- and lowercase letters of the alphabet.」；RF.K.3a「Demonstrate basic knowledge of one-to-one letter-sound correspondences by producing the primary sound or many of the most frequent sounds for each consonant.」；RF.K.3b「Associate the long and short sounds with common spellings (graphemes) for the five major vowels.」'
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」

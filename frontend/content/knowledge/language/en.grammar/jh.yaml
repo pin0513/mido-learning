@@ -1,8 +1,13 @@
+# B7 提案：en.grammar@jh
+# - 補 grades 與 Why/How/What、兩張圖。Ad-Ⅳ-1「國中階段所學的文法句型」與國語文、第二外國語文等同號，只在內文引用；時式範圍依英語文領綱附錄六（國民中學英語文基礎文法句構參考表，pp.70–71）。
+# - 錯誤修正：原 idea「英文靠動詞本身」不完整：進行式要 be 動詞＋V-ing，完成式要 have＋過去分詞，未來式要 will 或 be going to。已改寫；中文「了、在、過」的對照標為本站整理。
+# - 目標只寫本點實際練到的四種時式（現在簡單式、現在進行式、過去簡單式、現在完成式；附錄六另列過去進行式、未來式）；現在完成式的用法依 Cambridge Dictionary 文法頁。
+# - 檢核數字標示意；AI 依教育部學生版注意事項。
 id: en.grammar@jh
 concept: en.grammar
 title: 時態：事情發生在什麼時候
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +18,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -20,11 +29,13 @@ curriculum_108:
   - B1
   - A2
   issues: []
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源）；相關代碼都與其他領綱同號，只在內文引用。
+- 英語文 Ad-Ⅳ-1（與國語文等其他領綱同號）：代碼表以代碼為鍵，列入會互撞，所以只在內文引用、不列入 curriculum_108。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：初級單句寫作。
+- 時式清單依英語文領綱附錄六（pp.70–71）逐字核對；現在完成式、現在進行式的構成與用法依 Cambridge Dictionary 文法頁（2026-10-29 重抓逐字核對）。
 prerequisites:
 - en.sentence@es
 links:
@@ -32,7 +43,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：英語文領綱附錄六「國民中學英語文基礎文法句構參考表」的時式；Ad-Ⅳ-1 與其他領綱同號，只在內文引用。
 competency:
   specialist:
   - 文法句構
@@ -40,21 +51,153 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 檢查時態、解釋為什麼
+  - 檢查時態、解釋為什麼（依教育部學生版注意事項）
   human_experience:
   - 用時態說自己的生活
-idea: 英文用動詞的變化說出時間：現在、過去、正在進行、已經完成。中文靠「了、在、過」，英文靠動詞本身。
+idea: 英文用動詞形式說出時間：過去式要改動詞（played、went）；依 Cambridge Dictionary 文法頁，現在進行式用 am、are、is 加動詞的 -ing 形式，現在完成式用 have/has 加動詞的 -ed 形式（不規則動詞要另外記過去分詞，例如 eaten，本站整理）；未來式用 will 或 be going to（英語文領綱附錄六）。中文常用「了、在、過」這類字表示（本站整理的對照），英文則要改動詞形式或加助動詞。
 guiding_questions:
 - 「我吃了」和「我正在吃」，英文怎麼分？
-scenario: 親子共學：拍家裡三個人正在做的事，用現在進行式寫說明；一小時後改成過去式再寫一次。
-goal: 用現在式、過去式、進行式、完成式說出事情發生的時間。
-review: 孩子用 4 種時態各寫 2 句關於自己的事，家長對照文法書確認 8 句裡至少 7 句正確。
+scenario: 親子共學：拍家裡三個人（示意）正在做的事，用現在進行式寫說明；一小時後（示意）改成過去式再寫一次。
+goal: 用四種常用時式（現在簡單式、現在進行式、過去簡單式、現在完成式）說出事情發生的時間。
+review: 孩子用現在簡單式、現在進行式、過去簡單式、現在完成式各寫 2 句關於自己的事，家長對照文法書確認 8 句裡至少 7 句正確（2 句、7 句是示意）。
 formats:
   slides: []
-  exercise: 目標：用現在式、過去式、進行式、完成式說出事情發生的時間。　檢核：孩子用 4 種時態各寫 2 句關於自己的事，家長對照文法書確認 8 句裡至少 7 句正確。
+  exercise: 目標：用四種常用時式（現在簡單式、現在進行式、過去簡單式、現在完成式）說出事情發生的時間。　檢核：孩子用現在簡單式、現在進行式、過去簡單式、現在完成式各寫 2 句關於自己的事，家長對照文法書確認 8 句裡至少 7 句正確（2 句、7 句是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: english
+why:
+  heading: 時式讓人知道什麼時候
+  body:
+  - 英語文領綱實施要點說，國中「尤其應該注重其中最基礎、核心的文法句構（參見附錄六），避免冷僻、抽象文法知識的灌輸」（p.28）。附錄六列出的時式有：現在式（簡單式、進行式、完成式）、過去式（簡單式、進行式）和未來式（will…; be going to）。
+  qa:
+    question: 「我吃了」和「我正在吃」，英文怎麼分？
+    answer: I ate. 是過去簡單式，說吃這件事在過去；I am eating. 是現在進行式，說現在正在吃。如果想說到現在為止已經吃過，用現在完成式 I have eaten.。
+    source: english
+  items_title: 附錄六列出的時式
+  items:
+  - title: 現在式
+    text: 簡單式、進行式、完成式（現在完成式）。
+  - title: 過去式
+    text: 簡單式（規則與不規則動詞）、進行式。
+  - title: 未來式
+    text: 簡單式（will…; be going to）。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會 be 動詞
+  - 會一般動詞
+  notes:
+  - 英語文 Ad-Ⅳ-1「國中階段所學的文法句型。」與其他領綱同號，只在內文引用。
+  sources:
+  - english
+how:
+  heading: 同一件事，換時式說
+  body:
+  - 本站建議：拿同一件事，用不同時式各說一次，比較動詞怎麼變。例如 I play basketball every day. / I am playing basketball now. / I played basketball yesterday. / I have played basketball for three years.
+  items_title: 本站建議的練法
+  items:
+  - title: 現在簡單式
+    text: I play every day.（習慣）
+  - title: 現在進行式
+    text: I am playing now.（正在做）
+  - title: 過去簡單式
+    text: I played yesterday.（過去）
+  - title: 現在完成式
+    text: I have played for three years.
+  checklist_title: 每次練完勾一下
+  checklist:
+  - 同一件事
+  - 換四種時式
+  - 動詞改對
+  activity_figure: grammar-flow
+  notes:
+  - 練法和例句是本站建議。附錄六還列了過去進行式和未來式，本點先練這四種（本站建議）。
+  sources:
+  - english
+what:
+  heading: 選對時式說自己的事
+  body:
+  - 學完後，孩子能依事情發生的時間選對時式，寫出關於自己的句子。Cambridge Dictionary 說明，現在完成式用來說發生在過去、但和現在有關的事，例如到現在為止的經驗。
+  items_title: 學完能做到
+  items:
+  - title: 選對時式
+    text: 依時間選現在式、過去式或現在完成式。
+  - title: 改對動詞
+    text: 過去式、V-ing、過去分詞寫對。
+  - title: 說自己的事
+    text: 用時式寫自己的生活。
+  checklist_title: 家長檢核
+  checklist:
+  - 時式選對
+  - 動詞改對
+  - 寫的是自己的事
+  figures:
+  - grammar-compare
+  notes:
+  - 檢核用的 2 句、7 句是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去。
+  sources:
+  - camb-pp
+  - camb-pc
+  - english
+  - genai-student
+figures:
+- id: grammar-flow
+  type: flow
+  alt: 時式練習流程：選一件事、用四種時式各說一次、比較動詞變化。
+  steps:
+  - actor: 孩子
+    text: 選一件事
+  - actor: 孩子
+    text: 換時式說
+  - actor: 孩子
+    text: 比較動詞
+  - actor: 家長
+    text: 對照文法書
+  source: english
+- id: grammar-compare
+  type: compare
+  alt: 比較過去簡單式和現在完成式：一個只說過去，一個連到現在。
+  source: camb-pp
+  relation: not_equal
+  items:
+  - term: 過去簡單式
+    note: I ate.：事情在過去
+  - term: 現在完成式
+    note: I have eaten.：和現在有關
+  caption: 現在完成式的用法依 Cambridge Dictionary 文法頁。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：Ad-Ⅳ-1「國中階段所學的文法句型。」（p.17）；實施要點（4）文法句構「國民中學教育階段尤其應該注重其中最基礎、核心的文法句構（參見附錄六），避免冷僻、抽象文法知識的灌輸」（p.28）；附錄六「國民中學英語文基礎文法句構參考表」時式：1.現在式（簡單式、進行式「現在進行式的基本句型：直述句、否定句、疑問句及答句」、完成式「現在完成式：直述句、否定句、疑問句及答句」），2.過去式（簡單式「規則動詞與不規則動詞的過去式」、進行式），3.未來式「簡單式 (will…; be going to)」（pp.70–71）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: camb-pp
+  title: Cambridge Dictionary Grammar「Present perfect simple (I have worked)」
+  publisher: Cambridge University Press & Assessment
+  url: https://dictionary.cambridge.org/grammar/british-grammar/present-perfect-simple-i-have-worked
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「We use have/has + the -ed form of the verb.」（Present perfect simple：form 段）；「We use the present perfect simple to refer to events in the past but which connect to the present.」；「We use the present perfect simple to talk about our experiences up to now.」
+- id: camb-pc
+  title: Cambridge Dictionary Grammar「Present continuous (I am working)」
+  publisher: Cambridge University Press & Assessment
+  url: https://dictionary.cambridge.org/grammar/british-grammar/present-continuous-i-am-working
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「We use am, are, is + the -ing form of the verb.」（Present continuous：form 段）；「We use the present continuous to talk about events which are in progress at the moment of speaking」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」
