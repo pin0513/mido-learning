@@ -86,8 +86,10 @@ test.describe("黃金圈詳細頁", () => {
               issues.push(`small ${target.tagName} ${Math.round(rect.width)}x${Math.round(rect.height)} ${label}`);
             }
           }
+          const snippet = (el: Element) => (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 24);
           const boxes = [...node.querySelectorAll("h1, h2, h3, p, li, dt, dd, figcaption, small")]
             .filter((target) => !target.closest("svg"))
+            .filter((target) => target.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true }))
             .map((target) => ({ target, rect: target.getBoundingClientRect() }))
             .filter((entry) => entry.rect.width > 1 && entry.rect.height > 1);
           for (let left = 0; left < boxes.length; left += 1) {
@@ -98,7 +100,7 @@ test.describe("黃金圈詳細頁", () => {
               const overlapX = Math.min(a.rect.right, b.rect.right) - Math.max(a.rect.left, b.rect.left);
               const overlapY = Math.min(a.rect.bottom, b.rect.bottom) - Math.max(a.rect.top, b.rect.top);
               if (overlapX > 4 && overlapY > 4) {
-                issues.push(`overlap ${a.target.tagName}/${b.target.tagName}`);
+                issues.push(`overlap ${a.target.tagName}/${b.target.tagName} ${snippet(a.target)} | ${snippet(b.target)}`);
                 if (issues.length > 6) return issues;
               }
             }

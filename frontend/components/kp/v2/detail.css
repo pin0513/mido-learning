@@ -386,6 +386,7 @@
 .kp-root .kp-detail details summary::-webkit-details-marker { display: none; }
 .kp-root .kp-detail details summary::before { content: "▸"; color: var(--accent-deep); }
 .kp-root .kp-detail details[open] summary::before { content: "▾"; }
+.kp-root .kp-detail details:not([open]) > :not(summary) { display: none; }
 .kp-root .kp-detail .v2-status {
   display: inline-block;
   flex: none;
@@ -445,7 +446,7 @@
   .kp-root .kp-detail .v2-chips li b { font-weight: 700; }
   .kp-root .kp-detail .v2-chips li:not(.v2-chip-wrap) { white-space: nowrap; }
   .kp-root .kp-detail .v2-chip-wrap { white-space: normal; }
-  .kp-root .kp-detail .v2-in-chips { display: none; }
+  .kp-root .kp-detail .v2-attrs > div.v2-in-chips { display: none; }
   .kp-root .kp-detail .v2-lead { margin: 16px 0; }
   .kp-root .kp-detail .v2-goal { flex-direction: column; gap: 2px; margin-bottom: 24px; }
   .kp-root .kp-detail .v2-gc {
