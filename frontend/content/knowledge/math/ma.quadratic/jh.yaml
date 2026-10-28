@@ -1,54 +1,198 @@
+# B11 提案：ma.quadratic@jh
+# - 補 grades（九年級）、est_time、goal、review、Why/How/What、兩張圖；status 改 published、to_verify 改 false。
+# - 課綱：數學學習內容 F-9-1 列入 curriculum_108；學習表現 f-IV-2 只在項目 code 引用。F-9-2 的官方原文用了數學斜體字元且跨頁，無法逐字放進代碼表，只在 verify_notes 說明。
+# - 錯誤修正：原 guiding question「為什麼球不會沿著直線飛？」要用物理回答，How 沒教，改成「y ＝ x² 的圖形為什麼左右對稱？」；拋物體的高度是時間的二次函數，依課程手冊 F-9-1 釋例。
+# - domains 刪除原有的「自然科學」：How 只用拋球當二次函數的例子，沒有教自然科學的內容（重力、運動）。
 id: ma.quadratic@jh
 concept: ma.quadratic
 title: 二次函數與拋物線
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 數學
-    - 代數與函數
+  - 數學
+  - 代數與函數
   layer: essence
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 9
 curriculum_108:
   domains:
-    - 數學
-    - 自然科學
+  - 數學
   core_competencies:
-    - A2
-    - B1
+  - A2
+  - B1
   issues: []
-to_verify: true
+  contents:
+  - F-9-1
+to_verify: false
 verify_notes:
-  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
-  - 畢氏定理、二次函數、機率、速率等單元的年級落點本檔只寫到階段，未標年級。
+- 原有待核對「課綱對應只到領域與核心素養（A1–C3）…」已刪除：本點已逐條對照數學領綱的學習表現與學習內容原文（頁碼見來源），列入的代碼不與其他領綱同號，也不在 main 的代碼表裡。
+- 數學學習表現（如 f-IV-2）的代碼是小寫字母加羅馬數字，schema 的 curriculum_108.performances 格式只接受數字開頭的代碼，所以學習表現只在項目的 code 引用（已加進代碼表），curriculum_108 只列學習內容。
+- 數學課程手冊頁碼是頁腳印的頁碼（＝PDF 頁 − 12）。
+- 核心素養依數學領綱 p.3–4 的數-J-A2、數-J-B1 原文挑選（表格欄位窄，文字已用頁面影像核對）。
+- 原有待核對「畢氏定理、二次函數、機率、速率等單元的年級落點本檔只寫到階段，未標年級。」已處理：stage.grades 依本點列入的數學學習內容代碼的年級（第 2 碼）填寫。
+- F-9-2（二次函數的圖形與極值）的官方原文含數學斜體字元並跨頁，未列入 curriculum_108 與代碼表；How 講的開口方向、對稱和最高點、最低點，只引用課程手冊 p.489 的「察覺圖形的對稱軸及最高點或最低點」。
+- 原 guiding question「為什麼球不會沿著直線飛？」已刪除（要用物理的重力解釋，How 沒教）。y ＝ x² 在 x ＝ −3…3 的值 9、4、1、0、1、4、9 已驗算。
+- 原稿 domains 的「自然科學」已刪除：How 只把拋出的球當成二次函數的生活例子（依課程手冊），沒有教自然科學領綱的內容（重力、運動）；自然科學只留在 link_notes 當延伸方向。
 prerequisites:
-  - ma.coord@jh
+- ma.coord@jh
 links:
   why: []
   how: []
   related: []
   deeper:
-    - ma.function@sh
-link_notes: 自然科學（運動）、體育（投籃）
+  - ma.function@sh
+link_notes: 自然科學（運動）、體育（投籃）；數學領綱 F-9-1、f-IV-2。
 competency:
   specialist:
-    - 函數
+  - 函數
   generalist:
-    - 建模
-    - 跨域思考
+  - 建模
+  - 跨域思考
 ai:
   delegable:
-    - 從資料點擬合出曲線
+  - 用繪圖軟體畫出圖形對照（先自己描點，本站建議）
   human_experience:
-    - 親自投籃、拍攝、描點
-idea: 有些變化不是直線，而是先升後降的曲線，例如丟出去的球。這條曲線叫拋物線。
+  - 親自描點、畫出曲線
+idea: 有些變化不是直線，而是彎的曲線。y ＝ x² 的圖形左右對稱、有最低點；拋出去的物體，高度隨時間的變化也是二次函數。
 guiding_questions:
-  - 為什麼球不會沿著直線飛？
-scenario: 拍下投籃的影片，在坐標紙上描出球的軌跡，找出最高點。
+- y ＝ x² 的圖形為什麼左右對稱？
+scenario: 列表描點畫出 y ＝ x² 和 y ＝ −x²，比較兩條曲線；再想想丟出去的球，高度怎麼隨時間變化（本站建議）。
 formats:
   slides: []
+  exercise: 目標：用描點畫出 y ＝ x² 和 y ＝ −x² 的圖形，說出開口方向、左右對稱和最低點或最高點，並舉出一個生活中的二次函數。　檢核：孩子列出 x 從 −3 到 3 的表，描點畫出 y ＝ x² 和 y ＝ −x²，說出開口方向和最低點、最高點，再說出正方形面積是邊長的二次函數；四件事都對（數字是示意）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 用描點畫出 y ＝ x² 和 y ＝ −x² 的圖形，說出開口方向、左右對稱和最低點或最高點，並舉出一個生活中的二次函數。
+review: 孩子列出 x 從 −3 到 3 的表，描點畫出 y ＝ x² 和 y ＝ −x²，說出開口方向和最低點、最高點，再說出正方形面積是邊長的二次函數；四件事都對（數字是示意）。
+est_time:
+  school: 國中九年級數學課
+  source: math108
+why:
+  heading: 不是直線的變化
+  body:
+  - 數學課程手冊說，從實際觀測的數據可以理解拋擲物體時，「因為受到地心引力的影響」，物體與地面的距離是時間的二次函數。
+  - 九年級要理解二次函數的意義並描繪它的圖形；手冊說描點畫圖後，要能「察覺圖形的對稱軸及最高點或最低點。必要時，可透過應用軟體繪圖展示。」
+  items_title: 數學領綱的學習重點
+  items:
+  - title: 二次函數的圖形
+    text: 數學 f-IV-2：理解二次函數的意義，並能描繪二次函數的圖形。
+    code: f-IV-2
+  - title: 二次函數的意義
+    text: 數學 F-9-1：二次函數的意義：二次函數的意義；具體情境中列出兩量的二次函數關係。
+    code: F-9-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 會描坐標點
+  - 會算負數平方
+  notes:
+  - 數學學習內容代碼中間的數字是年級，學習表現代碼中間的羅馬數字是學習階段（II 是國小中年級，IV 是國中）。
+  sources:
+  - math108
+  - math-handbook
+how:
+  heading: 描點畫出曲線
+  body:
+  - y ＝ x²：x 取 −3、−2、−1、0、1、2、3，y 是 9、4、1、0、1、4、9。描點後用平滑曲線連起來，開口向上、左右對稱，最低點是 (0, 0)。y ＝ −x² 的每個 y 都變成相反數，開口向下，最高點是 (0, 0)。
+  - 生活中的二次函數：邊長 x 公分的正方形，面積 y ＝ x² 平方公分。拋出去的球，高度是時間的二次函數（依課程手冊）；高度先升後降，最高的地方就是圖形的最高點（本站整理）。
+  qa:
+    question: y ＝ x² 的圖形為什麼左右對稱？
+    answer: 因為 x 和 −x 的平方一樣，例如 (−2)² ＝ 4 ＝ 2²，所以 x ＝ 2 和 x ＝ −2 的點一樣高，整個圖形對稱於 y 軸（說明是本站整理）。課程手冊說描點畫圖時，要能「察覺圖形的對稱軸及最高點或最低點」。
+    source: math-handbook
+  items_title: 畫二次函數
+  items:
+  - title: 列表
+    text: x 取 −3 到 3，算出 y。
+  - title: 描點連線
+    text: 用平滑曲線，不要連成折線。
+  - title: 看開口
+    text: y ＝ x² 向上，y ＝ −x² 向下。
+  - title: 找對稱和頂點
+    text: 對稱於 y 軸，頂點 (0, 0)。
+  checklist_title: 每次畫完勾一下
+  checklist:
+  - 表格算對
+  - 曲線平滑
+  - 說出開口
+  - 找到頂點
+  activity_figure: quadratic-flow
+  sources:
+  - math-handbook
+what:
+  heading: 畫得出，也說得出
+  body:
+  - 學完後，孩子能用描點畫出 y ＝ x² 和 y ＝ −x² 的圖形，說出開口方向、左右對稱和最低點或最高點，並舉出生活中的二次函數。
+  items_title: 學完能做到
+  items:
+  - title: 描點畫圖
+    text: 畫出兩條曲線。
+  - title: 說出特徵
+    text: 開口、對稱、頂點。
+  - title: 舉出例子
+    text: 正方形面積、拋出的球。
+  checklist_title: 家長檢核
+  checklist:
+  - 圖畫對
+  - 特徵說對
+  - 例子合理
+  figures:
+  - quadratic-compare
+  notes:
+  - 本頁的表格取值是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - math-handbook
+  - genai-student
+figures:
+- id: quadratic-flow
+  type: flow
+  alt: 畫圖流程：列表、描點、連成平滑曲線、看開口和對稱、舉生活例子。
+  steps:
+  - actor: 孩子
+    text: 列表算 y
+  - actor: 孩子
+    text: 描點
+  - actor: 孩子
+    text: 連成曲線
+  - actor: 孩子
+    text: 看開口和頂點
+  - actor: 孩子
+    text: 舉生活例子
+  caption: 流程是本站建議。
+- id: quadratic-compare
+  type: compare
+  alt: 比較 y ＝ x² 和 y ＝ −x²：一個開口向上、最低點 (0, 0)，一個開口向下、最高點 (0, 0)。
+  source: math-handbook
+  relation: versus
+  items:
+  - term: y ＝ x²
+    note: 開口向上，最低點 (0, 0)
+  - term: y ＝ −x²
+    note: 開口向下，最高點 (0, 0)
+  caption: 特徵的說法依課程手冊 p.489；圖形是本站整理。
+sources:
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：F-9-1「二次函數的意義：二次函數的意義；具體情境中列出兩量的二次函數關係。」（p.43）；f-IV-2「理解二次函數的意義，並能描繪二次函數的圖形。」（p.11）；數-J-A2「具備有理數、根式、坐標系之運作能力，並能以符號代表數或幾何物件，執行運算與推論，在生活情境或可理解的想像情境中，分析本質以解決問題。」（p.3–4）；數-J-B1「具備處理代數與幾何中數學關係的能力，並用以描述情境中的現象。能在經驗範圍內，以數學語言表述平面與空間的基本關係和性質。能以基本的統計量與機率，描述生活中不確定性的程度。」（p.4）；時間分配「國民中學七至九年級每週 4 堂課（180 分鐘）。」（p.3）；學習表現編碼「第 2 碼為『學習階段』別，依序為 I（國民小學低年級）、II（國民小學中年級）、III（國民小學高年級）、IV（國民中學）、V（普通型高級中等學校）。」（p.8）；學習內容編碼「第 2 碼為『年級階段』別，依年級區分，依序為 1 至 12 年級」（p.18）
+- id: math-handbook
+  title: 十二年國教課程綱要國民中小學暨普通型高中數學領域課程手冊（113年3月更新版）
+  publisher: 國家教育研究院
+  url: https://stv.naer.edu.tw/data/course_outline/%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F%E8%AA%B2%E7%A8%8B%E6%89%8B%E5%86%8A%EF%BC%88113%E5%B9%B43%E6%9C%88%E6%9B%B4%E6%96%B0%E7%89%88%EF%BC%89_0326.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: p.488「因為受到地心引力的影響」；p.489「察覺圖形的對稱軸及最高點或最低點。必要時，可透過應用軟體繪圖展示。」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
