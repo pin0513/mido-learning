@@ -77,10 +77,21 @@ function sameSet(actual: string[], expected: readonly string[]): boolean {
   return expected.every((item) => left.has(item));
 }
 
+const CODE_ROMAN = "IV|III|II|V|I";
+
+/** 從代碼推出學習階段。有羅馬數字用羅馬數字；數學的年級碼（D-10-2、D-11A-1、N-3-9）對到該年級所屬階段。 */
 function stageFromCode(code: string): number | null {
-  const match = /^[0-9A-Za-z]+-(I|II|III|IV|V)-[0-9]+$/.exec(code);
-  if (!match?.[1]) return null;
-  return ROMAN_STAGE[match[1]] ?? null;
+  const body = code.replace(/^[\u4e00-\u9fff] /, "");
+  const roman = new RegExp(`^(?:[0-9]{1,2}[a-z]?|[A-Za-z]{1,2})-(${CODE_ROMAN})-[0-9]{1,2}$`).exec(body);
+  if (roman?.[1]) return ROMAN_STAGE[roman[1]] ?? null;
+  const grade = /^[A-Z]-(?:([1-9]|1[0-2]))[A-Z]?-[0-9]{1,2}$/.exec(body);
+  if (!grade?.[1]) return null;
+  const year = Number(grade[1]);
+  if (year <= 2) return 1;
+  if (year <= 4) return 2;
+  if (year <= 6) return 3;
+  if (year <= 9) return 4;
+  return 5;
 }
 
 function excludedHost(url: string): string | null {

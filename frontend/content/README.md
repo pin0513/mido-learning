@@ -104,7 +104,7 @@ content/
 
 1. 在 `taxonomy/disciplines.yaml` 確認學科路徑。路徑用中文名稱，由上往下，例如 `[數學, 分析, 變化率]`。`layer` 要等於葉子的層級（沒寫的話沿用父節點）。
 2. 複製一份相近的 YAML，改 `id`、`concept`、`title`、內文。
-3. 國小、國中、高中要填 `curriculum_108`。領域用八大領域的名稱，核心素養**只能**是 A1、A2、A3、B1、B2、B3、C1、C2、C3。學習表現（`performances`）與學習內容（`contents`）只能填 `taxonomy/curriculum-108-codes.yaml` 裡已有的代碼。那份檔的每一筆都是官方課綱逐字複製，並附官方 PDF 網址與頁碼。不可自編、不可改寫。議題用 `curriculum-108.yaml` 裡的正式名稱（「生涯規劃」要寫成「生涯規劃教育」）。
+3. 國小、國中、高中要填 `curriculum_108`。領域用八大領域的名稱，核心素養**只能**是 A1、A2、A3、B1、B2、B3、C1、C2、C3。學習表現（`performances`）與學習內容（`contents`）只能填 `taxonomy/curriculum-108-codes.yaml` 裡已有的代碼。格式要是官方代碼：學習表現如 `2-II-4`、`1b-III-1`、`涯 3b-V-1`；學習內容如 `Aa-I-1`、`家 Ca-IV-1`、`n-III-1`、`D-10-2`、`D-11A-1`。羅馬數字用拉丁字母。家、公、涂這類科目前綴和代碼之間留一個空格。那份檔的每一筆都是官方課綱逐字複製，並附官方 PDF 網址與頁碼。不可自編、不可改寫。議題用 `curriculum-108.yaml` 裡的正式名稱（「生涯規劃」要寫成「生涯規劃教育」）。
 4. 大學不要出現 `curriculum_108`。
 5. 設計時還不確定、文件裡標了「需要核對」的，設 `to_verify: true`，並在 `verify_notes` 寫下要核對的句子。確定的就設 `false`，`verify_notes` 留空陣列。
 6. `formats.slides` 是既有教材的 componentId 陣列。還沒對到投影片就留 `[]`。不要填檔名。
