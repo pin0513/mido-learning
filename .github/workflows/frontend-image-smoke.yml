@@ -342,7 +342,8 @@ jobs:
             echo "v2 page missing 層級"
             exit 1
           fi
-          if grep -F "在家" /tmp/v2-body.html >/dev/null; then
+          # 領綱引文「在家長或學校老師…」含「在家」二字；先去掉再查，真正的「在家」仍會失敗。
+          if sed 's/在家長//g' /tmp/v2-body.html | grep -F "在家" >/dev/null; then
             echo "v2 page contains 在家"
             exit 1
           fi
