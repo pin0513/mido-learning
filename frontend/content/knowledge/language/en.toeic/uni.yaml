@@ -1,8 +1,17 @@
+# B8 提案：en.toeic@uni
+# - 補 Why/How/What 與兩張圖。題型、分數與 CEFR 對照依 ETS〈TOEIC Listening and Reading Test User Guide〉，並補上 ETS 說對照分數只是「guidelines」、不建議當成硬性門檻，也不是及格／不及格的考試。
+# - 檢核改成：官方模擬題分數只供參考，重點是按 Part 記錯題找弱點；家人看對照表打勾保留。
+# - 情境「三個月後」標示意；「多益之後可以考托福」改標本站建議並說明兩者用途不同；刪除過時的「尚未經老師審閱」；大學對應多益標為本站建議（顯示在 notes）。
+# - 第一輪獨立審查修正：流程圖 alt 原寫「再做一回」，和第 4 步「家人看對照表」不符，改成一致；goal 從「量出程度」改成看懂分數、找弱點、訂下一步；檢核改成模擬題有換算分數才記分數，否則記答對數。
+# - 第二輪獨立審查修正：（建議項）toeic-sug supports 補 5–495 原文、Part VII 改原文題型；How 的逐字稿改「有逐字稿時」。
+# - 第三輪獨立審查修正：goal／What「5–495、CEFR 對照」只在 idea／Why，How 第一段開頭補正式成績範圍與 ETS 的 CEFR 最低分（toeic-sug 已在 how.sources）；How items「聽力看逐字稿」補「有逐字稿時」；How checklist「記下分數」補「或答對數」。
+# - 第五輪獨立審查修正：What notes 的 AI 注意事項補「不代寫」（學術倫理電子報（二）著作權「還可能有代寫的學術倫理問題」；是電子報的提醒，不寫成硬規定），ethics-epaper13 supports 補（二）著作權整句（2026-10-29 重抓逐字核對）；How body 補 AI 使用說明（不貼機密、自己查證、自己寫、說明工具），how.sources 加 ethics-epaper13，讓 What 的注意事項在 How 有教到。
+# - 第六輪獨立審查修正：（阻擋 R-1）How 的 AI 段落改寫：刪掉和 What notes 重複的電子報引文、合併自我重複的「自己寫／不直接交出去」；不貼個資與未公開文件或機密資料（電子報（三））、輸出自己查證（（一））、內容自己寫（（二））歸給電子報，只有「依課程規定說明用了哪個工具」標本站建議。
 id: en.toeic@uni
 concept: en.toeic
 title: 多益聽讀：職場英文量一量
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,14 +22,12 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 大學不對應 108 課綱，以學門路徑對應；原有待核對已處理：依據改用 ETS、Council of Europe、大學寫作中心與教育部臺灣學術倫理教育資源中心等來源，不列 108 課綱代碼。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：多益聽讀 B1→B2。
-- 引用的框架只寫名稱（TOEIC Listening and Reading（ETS）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 本點為這次補強新增，內容尚未經老師審閱。
-- CEFR 對應分數取自 ETS《TOEIC Listening and Reading Score User Guide》https://www.ets.org/pdfs/toeic/toeic-listening-reading-score-user-guide.pdf（2026-10-27 讀取）；ETS 說明這些是建議的最低分數，不建議當硬性切分點。
+- 題型、題數、時間、分數與 CEFR 對照依 ETS〈TOEIC Listening and Reading Test User Guide〉逐字核對；職場情境依 ETS〈TOEIC Listening and Reading Test Examinee Handbook〉。
 prerequisites:
 - en.gept2@sh
 links:
@@ -28,7 +35,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：TOEIC Listening and Reading（ETS）。
+link_notes: 框架：ETS〈TOEIC Listening and Reading Test User Guide〉題型與 CEFR 對照；〈Examinee Handbook〉職場情境。
 competency:
   specialist:
   - 語言學習策略
@@ -38,20 +45,143 @@ competency:
   - 用數據說明
 ai:
   delegable:
-  - 依題型出練習、分析錯題
+  - 出練習題、解釋錯題（AI 給的分數不是 ETS 成績）
   human_experience:
-  - 把分數連到自己的工作與學習目標
-idea: 多益（TOEIC）由 ETS 出題，聽讀測驗用職場與日常情境量英文能力，兩項各 5–495 分。ETS 把分數對照 CEFR，但提醒這些是參考門檻，不是硬性的切分點。多益測的是職場溝通，不是學術英文；要申請國外大學，下一步是托福。
+  - 判斷自己工作真正需要哪些英文
+idea: 多益聽讀測驗由 ETS 舉辦，量的是在國際環境工作的人日常用到的英文。聽力、閱讀各 100 題、各 5–495 分，不分及格與否。ETS 公布 CEFR 對照分數，但說這些分數只是參考，不建議當成硬性門檻。
 guiding_questions:
 - 履歷上的多益分數，代表你在工作上能做什麼？
-scenario: 親子共學：大人和大學生各做一回模擬題，對照 CEFR 表，各寫下三個月後的目標分數與每週練習計畫。
-goal: 用多益聽讀測驗量出職場英文的程度，並對照 CEFR 訂出下一步。
-review: 做一回官方多益聽讀模擬題，記下聽力與閱讀分數（各 5–495），對照 ETS 公布的 CEFR 最低分數：聽力 275、閱讀 275 是 B1；聽力 400、閱讀 385 是 B2。家人看分數與對照表打勾。
+scenario: 親子共學：大人和大學生各做一回官方模擬題，按 Part 記下錯題，對照 CEFR 表，各寫下下一階段（例如三個月，示意）的目標與每週練習計畫。
+goal: 看懂多益聽讀分數與 ETS 的 CEFR 對照，用官方模擬題按 Part 找出弱點，訂出下一步。
+review: 做一回官方多益聽讀模擬題，模擬題有換算分數就記下聽力與閱讀分數（正式成績各 5–495），沒有就記答對數，並按 Part 記錯題；對照 ETS 公布的 CEFR 最低分數：聽力 275、閱讀 275 是 B1；聽力 400、閱讀 385 是 B2。家人看分數與對照表打勾。模擬分數只供參考，不是正式成績。
 formats:
   slides: []
-  exercise: 目標：用多益聽讀測驗量出職場英文的程度，並對照 CEFR 訂出下一步。　檢核：做一回官方多益聽讀模擬題，記下聽力與閱讀分數（各 5–495），對照 ETS 公布的 CEFR 最低分數：聽力 275、閱讀 275 是 B1；聽力 400、閱讀 385 是 B2。家人看分數與對照表打勾。
+  exercise: 目標：看懂多益聽讀分數與 ETS 的 CEFR 對照，用官方模擬題按 Part 找出弱點，訂出下一步。　檢核：做一回官方多益聽讀模擬題，模擬題有換算分數就記下聽力與閱讀分數（正式成績各 5–495），沒有就記答對數，並按 Part 記錯題；對照 ETS 公布的 CEFR 最低分數：聽力 275、閱讀 275 是 B1；聽力 400、閱讀 385 是 B2。家人看分數與對照表打勾。模擬分數只供參考，不是正式成績。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 分數代表能做什麼
+  body:
+  - ETS 說多益聽讀測驗「measures the everyday English skills of people working in an international environment」，而且「not the type of test that awards a pass or fail grade」。
+  - '職場情境包括「Offices: board meetings, committees, letters, memoranda, telephone, fax and e-mail messages」等。ETS 也提醒 CEFR 對照分數「they should be considered guidelines, as ETS does not recommend the use of rigid cut scores.」'
+  qa:
+    question: 履歷上的多益分數，代表你在工作上能做什麼？
+    answer: 可以對照 ETS 的 CEFR 表，例如聽力 400、閱讀 385 以上對應 B2；但 ETS 說這些只是參考，分數也只量聽和讀，不代表口說和寫作（本站整理）。
+    source: toeic-sug
+  items_title: 聽讀七個 Part（ETS）
+  items:
+  - title: Part 1–2
+    text: 看照片選描述、聽問句選回應。
+  - title: Part 3–4
+    text: 聽對話與短講，回答問題。
+  - title: Part 5–6
+    text: 句子與短文填空。
+  - title: Part 7
+    text: 單篇與多篇閱讀理解。
+  checklist_title: 開始前先確認
+  checklist:
+  - 用官方模擬題
+  - 準備錯題表
+  sources:
+  - toeic-sug
+  - toeic-handbook
+how:
+  heading: 按 Part 找弱點
+  body:
+  - 正式成績聽力、閱讀各 5–495 分；ETS 的 CEFR 最低分是聽力 275、閱讀 275 為 B1，聽力 400、閱讀 385 為 B2，ETS 說這些只是參考（guidelines）。聽力約 45 分鐘、閱讀 75 分鐘，共 200 題（ETS）。本站建議：做完模擬題不要只看總分，按 Part 記下錯題，看是哪一類題目錯最多，下週就先補那一類。
+  - 閱讀時間緊，可以練習先看題目再找答案；有逐字稿時，聽力錯題回頭看逐字稿，找出沒聽懂的字（本站建議）。
+  - 用 AI 幫忙時，照學術倫理電子報的提醒做：不貼個人資訊、未公開文件或機密資料，AI 的輸出自己查證，內容自己寫，不把 AI 生成的內容直接交出去。本站建議：交作業時依課程規定說明用了哪個工具、做了什麼。
+  items_title: 本站建議的練法
+  items:
+  - title: 做官方模擬題
+    text: 照正式時間做完。
+  - title: 按 Part 記錯題
+    text: 找出錯最多的一類。
+  - title: 先補弱項
+    text: 下週先練那一類。
+  - title: 聽力看逐字稿
+    text: 有逐字稿時，找出沒聽懂的字。
+  checklist_title: 每回模擬後
+  checklist:
+  - 記下分數或答對數
+  - 按 Part 記錯題
+  - 訂好下週重點
+  activity_figure: toeic-flow
+  sources:
+  - toeic-sug
+  - ethics-epaper13
+what:
+  heading: 看懂分數，訂出下一步
+  body:
+  - 學完後，能看懂多益聽讀分數與 ETS 的 CEFR 對照，並依錯題訂出下一步的練習重點。
+  items_title: 學完能做到
+  items:
+  - title: 看懂分數
+    text: 聽讀各 5–495，對照 CEFR。
+  - title: 找出弱點
+    text: 說出錯最多的 Part。
+  - title: 訂出計畫
+    text: 下一階段的目標與練法。
+  checklist_title: 家人檢核
+  checklist:
+  - 對照表打勾
+  - 有練習計畫
+  figures:
+  - toeic-compare
+  notes:
+  - 把大學階段對應多益、托福是本站建議，不是官方換算；檢定題型與分數依 ETS 官方說明。
+  - 多益聽讀量職場與日常的聽讀，托福量學術英文四項；想出國讀書再準備托福是本站建議。情境的三個月是示意。
+  - 模擬題分數只供參考，不是正式成績；AI 工具給的分數也不是 ETS 的成績。
+  - 用生成式 AI 時，不要把個人資訊、未公開文件、機密資料貼進去（教育部臺灣學術倫理教育資源中心 2023 年的電子報）；AI 的輸出要自己查證。這份 2023 年的電子報也說，學術界對使用生成式 AI 是否需要標註「尚無統一的規定」，建議先了解相關單位的政策；不要把 AI 生成的內容直接當成自己寫的交出去，電子報提醒，直接使用生成的內容而非親自撰寫，「還可能有代寫的學術倫理問題」；交作業時依課程規定說明用了哪個工具、做了什麼；AI 規定變化快，以學校和課程最新的規定為準（本站建議）。
+  sources:
+  - toeic-sug
+  - ethics-epaper13
+figures:
+- id: toeic-flow
+  type: flow
+  alt: 多益練習流程：做官方模擬題、按 Part 記錯題、先補弱項，家人看對照表。
+  steps:
+  - actor: 學生
+    text: 做模擬題
+  - actor: 學生
+    text: 按 Part 記錯
+  - actor: 學生
+    text: 先補弱項
+  - actor: 家人
+    text: 看對照表
+- id: toeic-compare
+  type: compare
+  alt: 比較多益聽力和閱讀對應 CEFR B2 的最低分數。
+  source: toeic-sug
+  relation: versus
+  items:
+  - term: 聽力 B2
+    note: 400 分以上
+  - term: 閱讀 B2
+    note: 385 分以上
+  caption: 依 ETS〈TOEIC Listening and Reading Test User Guide〉的 CEFR 對照表；ETS 說這些分數只是參考。
+sources:
+- id: toeic-sug
+  title: TOEIC Listening & Reading Test Score User Guide
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/pdfs/toeic/toeic-listening-reading-score-user-guide.pdf
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 「It measures the everyday English skills of people working in an international environment」；Listening 100 題約 45 分鐘（Part 1 Photographs 6、Part 2 Question–Response 25、Part 3 Conversations 39、Part 4 Talks 30），Reading 100 題 75 分鐘（Part 5 Incomplete Sentences 30、Part 6 Text Completion 16、Part VII（Single Passage 29、Multiple Passages 25））；「converted to a number on a scale of 5 to 495」；「not the type of test that awards a pass or fail grade」；CEFR 對照表 Listening B1 275、B2 400、C1 490，Reading B1 275、B2 385、C1 455*（表下另有星號說明）；「they should be considered guidelines, as ETS does not recommend the use of rigid cut scores.」
+- id: toeic-handbook
+  title: 'TOEIC Examinee Handbook: Listening & Reading'
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/content/dam/ets-org/pdfs/toeic/toeic-listening-reading-test-examinee-handbook.pdf
+  accessed: '2026-10-29'
+  kind: exam
+  supports: '「Offices: board meetings, committees, letters, memoranda, telephone, fax and e-mail messages」'
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」；（二）著作權：「由於生成式AI是將網路開放資料透過蒐集與彙整所生成的內容，研究者若直接將生成的內容拿來使用，而非親自撰寫或創作，除在法律上不享有著作權保障之外，還可能有代寫的學術倫理問題。」

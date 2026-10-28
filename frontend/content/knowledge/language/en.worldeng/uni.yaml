@@ -1,8 +1,17 @@
+# B8 提案：en.worldeng@uni
+# - 補 Why/How/What 與兩張圖。錯誤修正：原文說法沒有出處；改依 CEFR 補充版 Phonological control：以「聽得懂」（intelligibility）為主，而不是以接近某一種母語口音為目標。
+# - 補上檢定也收不同口音：ETS 多益改版說明加入多種口音，托福聽力會聽到北美、英國、紐西蘭、澳洲口音。
+# - 檢核的 5 段、2 句、4 段標示意；大學對應多益、托福標為本站建議（顯示在 notes）。
+# - 第一輪獨立審查修正：p.134 的描述標出是 B2；What 的「說得讓人懂」改成「知道說的目標」（How 只教聽）；情境改成介紹自己的興趣；notes 的對應說明改成本點實際用到的口音說明。
+# - 第三輪獨立審查修正：goal／What「以讓人聽懂為目標」只在 Why，How 新增第三段（cefr-cv 逐字，how.sources 補 cefr-cv）；情境「五個」補標示意（notes 同步）。
+# - 第四輪獨立審查修正：（建議項）How 第一段「托福聽力會聽到」改「可能會聽到」；cefr-cv supports 補 Why items 三個分量表的原文名稱（p.133）。
+# - 第五輪獨立審查修正：（建議項）cefr-cv supports 補 p.133「The focus is on how much effort is required from the interlocutor to decode the speaker's message.」（Why items、qa、比較圖的依據）；比較圖「不費力」改「少費力」，貼近原文。 What notes 的 AI 注意事項補「不代寫」（學術倫理電子報（二）著作權「還可能有代寫的學術倫理問題」；是電子報的提醒，不寫成硬規定），ethics-epaper13 supports 補（二）著作權整句（2026-10-29 重抓逐字核對）；How body 補 AI 使用說明（不貼機密、自己查證、自己寫、說明工具），how.sources 加 ethics-epaper13，讓 What 的注意事項在 How 有教到。
+# - 第六輪獨立審查修正：（阻擋 R-1）How 的 AI 段落改寫：刪掉和 What notes 重複的電子報引文、合併自我重複的「自己寫／不直接交出去」；不貼個資與未公開文件或機密資料（電子報（三））、輸出自己查證（（一））、內容自己寫（（二））歸給電子報，只有「依課程規定說明用了哪個工具」標本站建議。
 id: en.worldeng@uni
 concept: en.worldeng
 title: 世界英語：口音與溝通
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,11 +22,12 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 大學不對應 108 課綱，以學門路徑對應；原有待核對已處理：依據改用 ETS、Council of Europe、大學寫作中心與教育部臺灣學術倫理教育資源中心等來源，不列 108 課綱代碼。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：多益聽力（多種口音）。
+- 發音與口音說法依 CEFR 補充版 Phonological control（p.133–134）、多益口音依 ETS〈The Redesigned TOEIC Listening and Reading Test〉、托福口音依 ETS 聽力部分說明逐字核對。
 prerequisites:
 - lg.culture@uni
 - en.toeic@uni
@@ -26,7 +36,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：CEFR 補充版 Phonological control（intelligibility）；ETS 多益改版說明與托福聽力說明的多種口音。
 competency:
   specialist:
   - 聽力
@@ -35,20 +45,148 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 產生不同口音的聽力材料
+  - 找不同口音的英文影片、產生逐字稿（自己核對）
   human_experience:
   - 和不同國家的人真的對話
-idea: 全世界說英文的人，多數不是母語者。溝通的目標是讓人聽懂，不是模仿某一種口音；聽得懂不同口音，才走得出去。
+idea: 英文有很多口音，美國、英國、澳洲、印度、新加坡都不一樣。CEFR 補充版說，過去把口音當成發音不好、以母語者為目標，對發音教學有害；現在以讓人聽得懂為重點。多益和托福的聽力也收錄不同口音。
 guiding_questions:
 - 印度、新加坡、英國的英文，聽起來不一樣，哪一種才標準？
-scenario: 親子共學：聽五個不同國家的人用英文介紹自己的城鎮，記下最難懂和最好懂的，說說為什麼。
+scenario: 親子共學：聽五個不同國家的人用英文介紹自己的興趣，記下最難懂和最好懂的，說說為什麼。
 goal: 聽懂不同口音的英文，目標是讓人聽懂，不是模仿某一種口音。
-review: 聽 5 段不同國家講者的英文（例如美、英、澳、印度、新加坡），每段寫 2 句重點；家人對照逐字稿，至少 4 段的重點正確。
+review: 聽 5 段不同國家講者的英文（例如美、英、澳、印度、新加坡），每段寫 2 句重點；家人對照逐字稿，至少 4 段的重點正確（5 段、2 句、4 段是示意）。
 formats:
   slides: []
-  exercise: 目標：聽懂不同口音的英文，目標是讓人聽懂，不是模仿某一種口音。　檢核：聽 5 段不同國家講者的英文（例如美、英、澳、印度、新加坡），每段寫 2 句重點；家人對照逐字稿，至少 4 段的重點正確。
+  exercise: 目標：聽懂不同口音的英文，目標是讓人聽懂，不是模仿某一種口音。　檢核：聽 5 段不同國家講者的英文（例如美、英、澳、印度、新加坡），每段寫 2 句重點；家人對照逐字稿，至少 4 段的重點正確（5 段、2 句、4 段是示意）。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 聽得懂比口音重要
+  body:
+  - CEFR 補充版說「The focus on accent and on accuracy instead of on intelligibility has been detrimental to the development of the teaching of pronunciation.」新的量表裡「Intelligibility has been a key factor in discriminating between levels.」
+  - 量表的描述也承認口音會受母語影響，例如 B2 的描述「accent tends to be influenced by the other language(s) they speak, but has little or no effect on intelligibility.」
+  qa:
+    question: 印度、新加坡、英國的英文，聽起來不一樣，哪一種才標準？
+    answer: CEFR 補充版的發音量表不以某一種口音為標準，而是看對方要多費力才聽得懂你。所以重點是說得清楚、讓人聽懂，也要練習聽懂不同的口音（本站整理）。
+    source: cefr-cv
+  items_title: CEFR 補充版發音量表看三件事
+  items:
+  - title: 整體發音
+    text: 聽的人要多費力才懂。
+  - title: 發音清楚
+    text: 每個音發得清不清楚。
+  - title: 語調重音
+    text: 語調、重音和節奏。
+  checklist_title: 聽之前先想
+  checklist:
+  - 講者來自哪裡
+  - 要抓什麼重點
+  sources:
+  - cefr-cv
+how:
+  heading: 多聽不同口音
+  body:
+  - ETS 改版多益時說明，舊版聽力「included only standard American accents」，改版加入不同口音，因為考生「are likely to need to communicate with a variety of English speakers」；托福聽力可能會聽到北美、英國、紐西蘭、澳洲的口音。
+  - 本站建議：每週選一種口音聽，先不看字幕抓重點，再對照逐字稿找出沒聽懂的地方，記下這種口音的特色。
+  - 自己說英文時，目標是讓人聽得懂，不必模仿某一種口音：CEFR 補充版說，新的發音量表裡「Intelligibility has been a key factor in discriminating between levels.」用 AI 幫忙時，照學術倫理電子報的提醒做：不貼個人資訊、未公開文件或機密資料，AI 的輸出自己查證，內容自己寫，不把 AI 生成的內容直接交出去。本站建議：交作業時依課程規定說明用了哪個工具、做了什麼。
+  items_title: 本站建議的練法
+  items:
+  - title: 每週一種口音
+    text: 輪流聽不同國家的講者。
+  - title: 先不看字幕
+    text: 先抓重點。
+  - title: 對照逐字稿
+    text: 找出沒聽懂的地方。
+  - title: 記下特色
+    text: 例如哪些音不一樣。
+  checklist_title: 每週勾一下
+  checklist:
+  - 聽了一種口音
+  - 寫了重點
+  - 對了逐字稿
+  activity_figure: worldeng-flow
+  sources:
+  - toeic-redesign
+  - toefl-listening
+  - cefr-cv
+  - ethics-epaper13
+what:
+  heading: 聽懂不同口音的英文
+  body:
+  - 學完後，能聽懂幾種不同口音的英文並抓出重點，也知道說英文的目標是讓人聽懂，不必模仿某一種口音。
+  items_title: 學完能做到
+  items:
+  - title: 聽懂不同口音
+    text: 抓出各段重點。
+  - title: 說出差異
+    text: 說出聽到的口音特色。
+  - title: 知道說的目標
+    text: 以讓人聽懂為目標，不必模仿某一種口音。
+  checklist_title: 家人檢核
+  checklist:
+  - 重點大多正確
+  - 說得出口音特色
+  figures:
+  - worldeng-compare
+  notes:
+  - 把大學階段對應多益、托福是本站建議，不是官方換算；檢定收錄的口音依 ETS 說明。
+  - 情境的五個國家與檢核的 5 段、2 句、4 段是示意。
+  - 用生成式 AI 時，不要把個人資訊、未公開文件、機密資料貼進去（教育部臺灣學術倫理教育資源中心 2023 年的電子報）；AI 的輸出要自己查證。這份 2023 年的電子報也說，學術界對使用生成式 AI 是否需要標註「尚無統一的規定」，建議先了解相關單位的政策；不要把 AI 生成的內容直接當成自己寫的交出去，電子報提醒，直接使用生成的內容而非親自撰寫，「還可能有代寫的學術倫理問題」；交作業時依課程規定說明用了哪個工具、做了什麼；AI 規定變化快，以學校和課程最新的規定為準（本站建議）。
+  sources:
+  - toeic-redesign
+  - ethics-epaper13
+figures:
+- id: worldeng-flow
+  type: flow
+  alt: 口音練習流程：選一種口音、先聽抓重點、對照逐字稿、記下特色。
+  steps:
+  - actor: 學生
+    text: 選一種口音
+  - actor: 學生
+    text: 先聽抓重點
+  - actor: 學生
+    text: 對照逐字稿
+  - actor: 學生
+    text: 記下特色
+- id: worldeng-compare
+  type: compare
+  alt: 比較以口音為目標和以聽得懂為目標的發音學習。
+  source: cefr-cv
+  relation: not_equal
+  items:
+  - term: 以口音為目標
+    note: 模仿母語者口音
+  - term: 以聽得懂為目標
+    note: 讓對方少費力就懂
+  caption: 依 CEFR 補充版 Phonological control 的說明。
+sources:
+- id: cefr-cv
+  title: 'Common European Framework of Reference for Languages: Learning, teaching, assessment – Companion volume'
+  publisher: Council of Europe（2020 年 4 月，ISBN 978-92-871-8621-8）
+  url: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Phonological control（p.133）「The focus on accent and on accuracy instead of on intelligibility has been detrimental to the development of the teaching of pronunciation.」「Intelligibility has been a key factor in discriminating between levels.」；量表描述（p.134）B2「accent tends to be influenced by the other language(s) they speak, but has little or no effect on intelligibility.」；發音量表的三個分量表（p.133）「overall phonological control (replacing the existing scale)」「sound articulation」「prosodic features (intonation, stress and rhythm)」；p.133「The focus is on how much effort is required from the interlocutor to decode the speaker's message.」
+- id: toeic-redesign
+  title: Background and Goals of the TOEIC Listening and Reading Test Redesign Project（TOEIC Compendium TC-10-02）
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/Media/Research/pdf/TC-10-02.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「The Classic TOEIC Listening and Reading test included only standard American accents. The design team proposed varying the accents used in the listening section because the TOEIC test is a test of international English, and examinees are likely to need to communicate with a variety of English speakers.」
+- id: toefl-listening
+  title: TOEFL iBT Listening Section
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/toefl/test-takers/ibt/about/content/listening.html
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 「You may hear native-speaker English accents from North America, the U.K., New Zealand, or Australia, reflecting the variety of English used in academic environments.」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」；（二）著作權：「由於生成式AI是將網路開放資料透過蒐集與彙整所生成的內容，研究者若直接將生成的內容拿來使用，而非親自撰寫或創作，除在法律上不享有著作權保障之外，還可能有代寫的學術倫理問題。」

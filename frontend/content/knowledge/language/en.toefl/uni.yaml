@@ -1,8 +1,18 @@
+# B8 提案：en.toefl@uni
+# - 補 Why/How/What 與兩張圖。分數說明依 ETS〈TOEFL iBT Scores〉：各部分 1–6 分、總分是四部分平均並取到最近的半級；CEFR 對照 B2 是 4–4.5、C1 是 5–5.5。
+# - 錯誤修正：原 idea 說托福「測的是在大學裡用英文讀、聽、說、寫的能力」，但新版題型也有「Read in Daily Life」、校園生活對話與「Write an Email」；改依 ETS 題型表完整說明。
+# - 練習題分數只是參考：檢核改成用官方練習題找出最弱的一項、對照學校要求訂計畫；AI 評分不是 ETS 的成績（顯示在 notes）。
+# - 刪除過時的「尚未經老師審閱」；大學對應托福標為本站建議（顯示在 notes）。
+# - 第一輪獨立審查修正：先學列移除 en.toeic@uni、改列 related（多益是職場聽讀，不是托福的先備；驗證器規則：同一目標不可同時出現在兩個連結欄，related 不參與先學循環檢查）；goal 改成看懂分數、找弱項、訂計畫；檢核改成練習題有提供分數才記分數，否則記各部分答對率。
+# - 第三輪獨立審查修正：goal／What「CEFR 對照」「對照學校要求找差距」只在 Why，How 新增 1–6 分、四項平均取半級與 CEFR 對照一段（toefl-scale，表頭「Total and section scores (1-6)」補進 supports），本站建議段改成先查學校總分與各部分最低分、寫下差距；How items「找最弱一項」補沒有分數時比答對率；how.sources 補 toefl-scale。
+# - 第四輪獨立審查修正：（建議項）How 第一段「會聽到」改「可能會聽到」（ETS 原文 You may hear）；How 第二段補各部分與總分都以 0.5 為一級，toefl-scale supports 補「from 1 – 6 in increments of 0.5」。
+# - 第五輪獨立審查修正：（建議項）How 第一段「ETS 說全部考試「Please allow…」」改「ETS 提醒，整場考試「Please allow…」」；How 第三段錄音補「只留在自己的裝置、不上傳」（本站建議，比照 emi、work）。 What notes 的 AI 注意事項補「不代寫」（學術倫理電子報（二）著作權「還可能有代寫的學術倫理問題」；是電子報的提醒，不寫成硬規定），ethics-epaper13 supports 補（二）著作權整句（2026-10-29 重抓逐字核對）；How body 補 AI 使用說明（不貼機密、自己查證、自己寫、說明工具），how.sources 加 ethics-epaper13，讓 What 的注意事項在 How 有教到。
+# - 第六輪獨立審查修正：（阻擋 R-1）How 的 AI 段落改寫：刪掉和 What notes 重複的電子報引文、合併自我重複的「自己寫／不直接交出去」；不貼個資與未公開文件或機密資料（電子報（三））、輸出自己查證（（一））、內容自己寫（（二））歸給電子報，只有「依課程規定說明用了哪個工具」標本站建議。
 id: en.toefl@uni
 concept: en.toefl
 title: 托福 iBT：學術英文四項一起量
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,25 +23,23 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 大學不對應 108 課綱，以學門路徑對應；原有待核對已處理：依據改用 ETS、Council of Europe、大學寫作中心與教育部臺灣學術倫理教育資源中心等來源，不列 108 課綱代碼。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：托福 iBT B2→C1。
-- 引用的框架只寫名稱（TOEFL iBT（ETS），CEFR），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 本點為這次補強新增，內容尚未經老師審閱。
-- '1–6 分量尺與 CEFR 對照取自 ETS〈TOEFL Score Scale Update: A Guide for Institutions〉https://www.ets.org/toefl/institutions/ibt/score-scale-update.html（2026-10-27 讀取）；2026-01-21 前的 0–120 分成績，對照表也在同一頁。'
-- 先學列 en.toeic@uni 是依照本站的建議順序（先職場聽讀、再學術四項），不是考試的報名條件。
+- 原先學列的 en.toeic@uni 改列 related：多益量職場聽讀、托福量學術英文四項，兩者用途不同，多益不是托福的先備（本站建議）。
+- 計分與 CEFR 對照依 ETS〈TOEFL iBT Scores〉、題型與時間依 ETS〈TOEFL iBT Test Content〉、聽力口音依 ETS 聽力部分說明逐字核對（2026-10-29 讀取）。
 prerequisites:
-- en.toeic@uni
 - en.acwrite@uni
 - en.emi@uni
 links:
   why: []
   how: []
-  related: []
+  related:
+  - en.toeic@uni
   deeper: []
-link_notes: 框架：TOEFL iBT（ETS），CEFR。
+link_notes: 框架：ETS〈TOEFL iBT Scores〉1–6 分量尺與 CEFR 對照；ETS〈TOEFL iBT Test Content〉題型表。
 competency:
   specialist:
   - 語言學習策略
@@ -39,20 +47,159 @@ competency:
   - 用數據說明
 ai:
   delegable:
-  - 依題型出練習、評分口說與寫作草稿
+  - 出練習題、批改作文初稿（AI 給的分數不是 ETS 成績）
   human_experience:
-  - 設定申請目標並持續練
-idea: 托福 iBT 測的是在大學裡用英文讀、聽、說、寫的能力。2026 年 1 月起改成 1–6 分（每 0.5 一級），四項分數與總分用同一把尺對照 CEFR：4 分是 B2、5 分是 C1，總分是四項的平均。多益偏職場、托福偏學術；兩者都是量尺，重點是補上最弱的那一項。
+  - 在限時裡真的開口與下筆
+idea: 托福 iBT 由 ETS 舉辦，ETS 說它「measures all four academic English skills — reading, listening, speaking and writing — the way they are actually used in a classroom」。題型除了學術短文與課堂講課，也有日常閱讀、校園生活對話和寫 email。各部分 1–6 分，總分是四部分的平均。
 guiding_questions:
 - 申請國外大學說要「托福 4.5」，那是什麼程度？
 scenario: 親子共學：大學生挑一間想去的學校，查出它要求的托福分數，和家人一起訂出每週聽說讀寫各練什麼。
-goal: 用托福 iBT 量出學術英文四項能力，知道申請國外學校需要的程度。
-review: 做一回官方托福 iBT 練習題，記下四項分數（1–6 分，每 0.5 一級），對照 ETS 公布的 CEFR 對照：4 分是 B2、5 分是 C1；再查一間想申請的學校的最低要求，寫下差距與計畫。
+goal: 看懂托福 iBT 的四項分數與 CEFR 對照，用官方練習題找出最弱的一項，對照想申請學校的要求訂出計畫。
+review: 做一回官方托福 iBT 練習題；練習題有提供分數就記下四項分數（1–6 分，每 0.5 一級），沒有就記各部分答對率，找出最弱的一項；對照 ETS 公布的 CEFR 對照：4–4.5 是 B2、5–5.5 是 C1；再查一間想申請的學校的最低要求，寫下差距與每週練習計畫。練習分數只供參考，不是正式成績。
 formats:
   slides: []
-  exercise: 目標：用托福 iBT 量出學術英文四項能力，知道申請國外學校需要的程度。　檢核：做一回官方托福 iBT 練習題，記下四項分數（1–6 分，每 0.5 一級），對照 ETS 公布的 CEFR 對照：4 分是 B2、5 分是 C1；再查一間想申請的學校的最低要求，寫下差距與計畫。
+  exercise: 目標：看懂托福 iBT 的四項分數與 CEFR 對照，用官方練習題找出最弱的一項，對照想申請學校的要求訂出計畫。　檢核：做一回官方托福 iBT 練習題；練習題有提供分數就記下四項分數（1–6 分，每 0.5 一級），沒有就記各部分答對率，找出最弱的一項；對照 ETS 公布的 CEFR 對照：4–4.5 是 B2、5–5.5 是 C1；再查一間想申請的學校的最低要求，寫下差距與每週練習計畫。練習分數只供參考，不是正式成績。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 看懂學校要的分數
+  body:
+  - ETS 說明，托福 iBT 的總分「is the average of the four section scores, rounded to the nearest half band」，CEFR 對照表裡 B2 是 4–4.5、C1 是 5–5.5，而且「a score of 5 on any section aligns with C1」。
+  - 學校的要求可能只看總分，也可能規定各部分的最低分（本站整理），所以要同時看懂總分和四項分數。
+  qa:
+    question: 申請國外大學說要「托福 4.5」，那是什麼程度？
+    answer: 依 ETS 的 CEFR 對照，4–4.5 落在 B2。4.5 是四項平均後取到半級的總分，所以還要看學校有沒有規定各部分的最低分（本站整理）。
+    source: toefl-scale
+  items_title: 四個部分（ETS）
+  items:
+  - title: 閱讀
+    text: 補完單字、日常閱讀、學術短文。
+  - title: 聽力
+    text: 回應、對話、公告、學術講課。
+  - title: 寫作
+    text: 組句、寫 email、學術討論。
+  - title: 口說
+    text: 聽了複述、模擬面試。
+  checklist_title: 開始前先查
+  checklist:
+  - 學校的總分要求
+  - 各部分最低分
+  sources:
+  - toefl-about
+  - toefl-scale
+  - toefl-content
+how:
+  heading: 找出最弱的一項先補
+  body:
+  - ETS 提醒，整場考試「Please allow approximately two hours to complete the test. As the test adapts, test time and items may vary.」；聽力可能會聽到「native-speaker English accents from North America, the U.K., New Zealand, or Australia」。
+  - ETS 的新量尺是各部分與總分都 1–6 分、以 0.5 為一級（「from 1 – 6 in increments of 0.5」；表頭「Total and section scores (1-6)」），總分是四部分平均、取到最近的半級（rounded to the nearest half band）；CEFR 對照是 4–4.5 為 B2、5–5.5 為 C1。
+  - 本站建議：先查想申請學校的總分與各部分最低分，再做一回官方練習題找出最弱的一項，把每一項和學校要求的差距寫下來；每週輪流練四項、最弱的那項多練；寫作和口說錄下來或存檔（錄音只留在自己的裝置、不上傳），下次比較進步。用 AI 幫忙時，照學術倫理電子報的提醒做：不貼個人資訊、未公開文件或機密資料，AI 的輸出自己查證，內容自己寫，不把 AI 生成的內容直接交出去。本站建議：交作業時依課程規定說明用了哪個工具、做了什麼。
+  items_title: 本站建議的練法
+  items:
+  - title: 做官方練習題
+    text: 熟悉題型與時間。
+  - title: 找最弱一項
+    text: 比較四項分數，沒有分數就比答對率。
+  - title: 每週輪流練
+    text: 最弱的那項多練。
+  - title: 存檔比較
+    text: 作文和錄音留著比。
+  checklist_title: 每週勾一下
+  checklist:
+  - 四項都練了
+  - 最弱項多練
+  - 存了作品
+  activity_figure: toefl-flow
+  sources:
+  - toefl-content
+  - toefl-listening
+  - toefl-scale
+  - ethics-epaper13
+what:
+  heading: 訂出自己的托福計畫
+  body:
+  - 學完後，能看懂托福 iBT 的四項分數與 CEFR 對照，對照想申請學校的要求找出差距，並訂出每週練習計畫。
+  items_title: 學完能做到
+  items:
+  - title: 看懂分數
+    text: 說出 4.5、5 對應的 CEFR 程度。
+  - title: 找出差距
+    text: 對照學校的總分與各項要求。
+  - title: 訂出計畫
+    text: 每週練什麼、最弱項怎麼補。
+  checklist_title: 家人檢核
+  checklist:
+  - 寫下差距
+  - 有每週計畫
+  figures:
+  - toefl-compare
+  notes:
+  - 把大學階段對應多益、托福是本站建議，不是官方換算；檢定題型與分數依 ETS 官方說明。
+  - 官方練習題的分數只供參考，不是正式成績；AI 工具給的分數也不是 ETS 的成績。
+  - 用生成式 AI 時，不要把個人資訊、未公開文件、機密資料貼進去（教育部臺灣學術倫理教育資源中心 2023 年的電子報）；AI 的輸出要自己查證。這份 2023 年的電子報也說，學術界對使用生成式 AI 是否需要標註「尚無統一的規定」，建議先了解相關單位的政策；不要把 AI 生成的內容直接當成自己寫的交出去，電子報提醒，直接使用生成的內容而非親自撰寫，「還可能有代寫的學術倫理問題」；交作業時依課程規定說明用了哪個工具、做了什麼；AI 規定變化快，以學校和課程最新的規定為準（本站建議）。
+  sources:
+  - toefl-scale
+  - ethics-epaper13
+figures:
+- id: toefl-flow
+  type: flow
+  alt: 托福準備流程：查學校要求、做官方練習題、找出最弱一項、訂每週計畫。
+  steps:
+  - actor: 學生
+    text: 查學校要求
+  - actor: 學生
+    text: 做官方練習
+  - actor: 學生
+    text: 找最弱一項
+  - actor: 學生
+    text: 訂每週計畫
+- id: toefl-compare
+  type: compare
+  alt: 比較托福 iBT 分數 4–4.5 和 5–5.5 對應的 CEFR 程度。
+  source: toefl-scale
+  relation: versus
+  items:
+  - term: 4–4.5 分
+    note: 對應 CEFR B2
+  - term: 5–5.5 分
+    note: 對應 CEFR C1
+  caption: 依 ETS〈TOEFL iBT Scores〉的 CEFR 對照表。
+sources:
+- id: toefl-about
+  title: About the TOEFL iBT Test
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/toefl/test-takers/ibt/about.html
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 「measures all four academic English skills — reading, listening, speaking and writing — the way they are actually used in a classroom」
+- id: toefl-scale
+  title: 'TOEFL Score Scale Update: A Guide for Institutions'
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/toefl/institutions/ibt/score-scale-update.html
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 「from 1 – 6 in increments of 0.5」；表頭「Total and section scores (1-6)」；「A student's overall score is the average of the four section scores, rounded to the nearest half band」；CEFR 對照表 B2「4–4.5」、C1「5–5.5」；「a score of 5 on any section aligns with C1」
+- id: toefl-content
+  title: TOEFL iBT Test Content and Structure
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/toefl/test-takers/ibt/about/content.html
+  accessed: '2026-10-29'
+  kind: exam
+  supports: TOEFL iBT 各部分題型（Approx. Base Time）：Reading「Complete the Words」「Read in Daily Life」「Read an Academic Passage」（50 題、約 30 分）；Listening「Listen and Choose a Response」「Listen to a Conversation」「Listen to an Announcement」「Listen to an Academic Talk」（47 題、約 29 分）；Writing「Build a Sentence」「Write an Email」「Write for an Academic Discussion」（12 題、約 23 分）；Speaking「Listen and Repeat」「Take an Interview」（11 題、約 8 分）；「Please allow approximately two hours to complete the test. As the test adapts, test time and items may vary.」
+- id: toefl-listening
+  title: TOEFL iBT Listening Section
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/toefl/test-takers/ibt/about/content/listening.html
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 「You may hear native-speaker English accents from North America, the U.K., New Zealand, or Australia, reflecting the variety of English used in academic environments.」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」；（二）著作權：「由於生成式AI是將網路開放資料透過蒐集與彙整所生成的內容，研究者若直接將生成的內容拿來使用，而非親自撰寫或創作，除在法律上不享有著作權保障之外，還可能有代寫的學術倫理問題。」

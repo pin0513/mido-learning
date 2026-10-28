@@ -1,20 +1,5 @@
 # 只能刪，不能加。
 ids:
-  - en.academic@uni
-  - en.acwrite@uni
-  - en.emi@uni
-  - en.essay@sh
-  - en.gept2@sh
-  - en.listen2@sh
-  - en.media@sh
-  - en.middle@sh
-  - en.present@sh
-  - en.readstrat@sh
-  - en.toefl@uni
-  - en.toeic@uni
-  - en.translate@sh
-  - en.work@uni
-  - en.worldeng@uni
   - ja.adj@sh
   - ja.authentic@uni
   - ja.casual@sh

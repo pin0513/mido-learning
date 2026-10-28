@@ -1,8 +1,17 @@
+# B8 提案：en.academic@uni
+# - 補 Why/How/What 與兩張圖。論文結構改依 UNC 寫作中心〈Scientific Reports〉：Introduction、Methods、Results、Discussion（IMRAD），並註明「may take slightly different shapes depending on the discipline」，不說所有論文都一樣。
+# - 先讀哪幾段改依 Keshav 三遍讀法的第一遍（標題、摘要、引言、各節標題、結論）。
+# - 引導問題的「20 頁」、情境與檢核的「三句」是沒標示的示意數字，改成一般說法或標示意。
+# - 安全：AI 摘要論文——要讀全文核對、不貼未公開文件；大學對應托福標為本站建議（顯示在 notes）。
+# - 第一輪獨立審查修正：原 notes 引的學術寫作指南那句，是在講研究生「寫自己論文的摘要」，而且手冊註明不代表教育部立場，放在「讀別人論文」脈絡會誤導；改成本站建議＋學術倫理電子報（2023 年 8 月）「資訊驗證」原文，刪 ethics-guide 來源。本點沒有托福事實，刪 toefl-content 來源。idea 的「常再加上摘要」改成 UNC 原文的「有些會要求加上摘要」；goal、情境改成 How 教的第一遍讀法。
+# - 第三輪獨立審查修正：What「說出 IMRAD 各節在哪裡」只在 Why 教，How 新增第三段：讀各節標題時對照 IMRAD 找出四節、細讀時直接跳到方法或結果（本站建議，依 UNC）；how.sources 補 unc-scientific-reports；How checklist 補「找到 IMRAD 各節」。
+# - 第五輪獨立審查修正：What notes 的 AI 注意事項補「不代寫」（學術倫理電子報（二）著作權「還可能有代寫的學術倫理問題」；是電子報的提醒，不寫成硬規定），ethics-epaper13 supports 補（二）著作權整句（2026-10-29 重抓逐字核對）；How body 補 AI 使用說明（不貼機密、自己查證、自己寫、說明工具），how.sources 加 ethics-epaper13，讓 What 的注意事項在 How 有教到。
+# - 第六輪獨立審查修正：（阻擋 R-1）How 的 AI 段落改寫：刪掉和 What notes 重複的電子報引文、合併自我重複的「自己寫／不直接交出去」；不貼個資與未公開文件或機密資料（電子報（三））、輸出自己查證（（一））、內容自己寫（（二））歸給電子報，只有「依課程規定說明用了哪個工具」標本站建議。
 id: en.academic@uni
 concept: en.academic
 title: 學術英文：讀論文
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,11 +22,12 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 大學不對應 108 課綱，以學門路徑對應；原有待核對已處理：依據改用 ETS、Council of Europe、大學寫作中心與教育部臺灣學術倫理教育資源中心等來源，不列 108 課綱代碼。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：托福・閱讀。
+- IMRAD 結構依 UNC 寫作中心〈Scientific Reports〉、第一遍讀法依 S. Keshav〈How to Read a Paper〉、AI 輸出要親自驗證依教育部臺灣學術倫理教育資源中心學術倫理電子報第 13 期（2023 年 8 月）逐字核對。
 prerequisites:
 - en.media@sh
 - en.middle@sh
@@ -26,7 +36,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：UNC 寫作中心〈Scientific Reports〉（IMRAD）；S. Keshav 三遍讀法；教育部臺灣學術倫理教育資源中心學術倫理電子報第 13 期（資訊驗證）。
 competency:
   specialist:
   - 閱讀理解
@@ -34,20 +44,145 @@ competency:
   - 查證
 ai:
   delegable:
-  - 摘要論文、解釋術語
+  - 摘要論文、解釋術語（讀全文核對，不貼未公開文件）
   human_experience:
   - 判斷研究方法可不可信
-idea: 論文有固定的結構：摘要、引言、方法、結果、討論。先讀摘要和結論判斷要不要讀，再挑需要的部分細讀。
+idea: 很多實證研究論文用 IMRAD 結構：引言（Introduction）、方法（Methods）、結果（Results）、討論（Discussion）；不同學科會有些變化，有些會要求加上摘要。先讀標題、摘要、引言、各節標題和結論，決定要不要細讀，再挑需要的部分細讀。
 guiding_questions:
-- 一篇 20 頁的論文，要先讀哪幾段？
-scenario: 親子共學：找一篇和你興趣相關的英文論文，只讀摘要和結論，用三句中文說它發現了什麼。
-goal: 讀英文學術論文：先讀摘要和結論決定要不要細讀，再挑需要的部分。
-review: 選一篇和興趣相關的英文論文，用三句中文說出研究問題、方法、發現；家人對照摘要確認沒有說錯。
+- 一篇很長的英文論文，要先讀哪幾段？
+scenario: 親子共學：找一篇和你興趣相關的英文論文，先做第一遍讀法（標題、摘要、引言、各節標題、結論），用幾句中文說它發現了什麼（例如三句，示意）。
+goal: 讀英文學術論文：用第一遍讀法（標題、摘要、引言、各節標題、結論）決定要不要細讀，再挑需要的部分。
+review: 選一篇和興趣相關的英文論文，先做第一遍讀法，再用三句中文說出研究問題、方法、發現；家人對照摘要確認沒有說錯（三句是示意）。
 formats:
   slides: []
-  exercise: 目標：讀英文學術論文：先讀摘要和結論決定要不要細讀，再挑需要的部分。　檢核：選一篇和興趣相關的英文論文，用三句中文說出研究問題、方法、發現；家人對照摘要確認沒有說錯。
+  exercise: 目標：讀英文學術論文：用第一遍讀法（標題、摘要、引言、各節標題、結論）決定要不要細讀，再挑需要的部分。　檢核：選一篇和興趣相關的英文論文，先做第一遍讀法，再用三句中文說出研究問題、方法、發現；家人對照摘要確認沒有說錯（三句是示意）。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 論文有固定的路標
+  body:
+  - UNC 寫作中心說，研究報告的基本格式是 Introduction、Methods and Materials、Results、Discussion，「sometimes called 『IMRAD,』 may take slightly different shapes depending on the discipline or audience」。
+  - 每一節有自己的任務：Methods「details how you tested your hypothesis」，Results「provides raw (i.e., uninterpreted) data collected」，Discussion「considers whether the data you obtained support the hypothesis」。知道路標，就知道要找的資訊在哪裡。
+  qa:
+    question: 一篇很長的英文論文，要先讀哪幾段？
+    answer: 先做 Keshav 說的第一遍：「Carefully read the title, abstract, and introduction」、只讀各節標題、再「Read the conclusions」。讀完就能決定要不要繼續細讀。
+    source: keshav
+  items_title: IMRAD 各節的任務
+  items:
+  - title: 引言
+    text: 提出研究問題與假設，連到過去研究。
+  - title: 方法
+    text: 說明怎麼檢驗假設。
+  - title: 結果
+    text: 呈現收集到的資料。
+  - title: 討論
+    text: 判斷資料是否支持假設，談限制。
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好一篇論文
+  - 找到摘要和結論
+  sources:
+  - unc-scientific-reports
+  - keshav
+how:
+  heading: 先掃一遍，再決定細讀
+  body:
+  - Keshav 說，第一遍是「a quick scan to get a bird's-eye view of the paper」，也可以決定要不要再讀下去。
+  - 本站建議：第一遍讀完，用三個問題檢查自己：研究問題是什麼？用什麼方法？發現了什麼？
+  - 讀各節標題時，對照 UNC 寫作中心說的 IMRAD 四節（Introduction、Methods and Materials、Results、Discussion），找出引言、方法、結果、討論各在哪裡；UNC 也說這個格式「may take slightly different shapes depending on the discipline or audience」，所以標題不一定一模一樣。本站建議：需要細讀時，直接跳到方法（怎麼檢驗假設）或結果（收集到的資料）。用 AI 幫忙時，照學術倫理電子報的提醒做：不貼個人資訊、未公開文件或機密資料，AI 的輸出自己查證，內容自己寫，不把 AI 生成的內容直接交出去。本站建議：交作業時依課程規定說明用了哪個工具、做了什麼。
+  items_title: 第一遍讀法（Keshav）
+  items:
+  - title: 讀標題摘要引言
+    text: 仔細讀這三個部分。
+  - title: 讀各節標題
+    text: 其他內容先略過。
+  - title: 讀結論
+    text: 看作者的主要發現。
+  - title: 決定下一步
+    text: 要不要細讀方法與結果。
+  checklist_title: 讀完第一遍
+  checklist:
+  - 找到 IMRAD 各節
+  - 說得出研究問題
+  - 說得出方法
+  - 說得出發現
+  activity_figure: academic-flow
+  sources:
+  - keshav
+  - unc-scientific-reports
+  - ethics-epaper13
+what:
+  heading: 讀懂一篇論文的骨架
+  body:
+  - 學完後，能用第一遍讀法快速判斷一篇英文論文和自己有沒有關係，並說出它的研究問題、方法與發現。
+  items_title: 學完能做到
+  items:
+  - title: 找到路標
+    text: 說出 IMRAD 各節在哪裡。
+  - title: 快速判斷
+    text: 用第一遍決定要不要細讀。
+  - title: 說出重點
+    text: 研究問題、方法、發現。
+  checklist_title: 家人檢核
+  checklist:
+  - 三項都說得出
+  - 對照摘要沒說錯
+  figures:
+  - academic-compare
+  notes:
+  - 把大學階段對應多益、托福是本站建議，不是官方換算。
+  - 本站建議：用 AI 摘要別人的論文時，AI 的摘要只當導讀，要回到全文核對。教育部臺灣學術倫理教育資源中心 2023 年的電子報提醒，研究者使用生成式 AI 工具時「必須對於其產出之內容保持一定程度之質疑，並親自驗證相關內容的正確性與時效性」。
+  - 用生成式 AI 時，不要把個人資訊、未公開文件、機密資料貼進去（教育部臺灣學術倫理教育資源中心 2023 年的電子報）；AI 的輸出要自己查證。這份 2023 年的電子報也說，學術界對使用生成式 AI 是否需要標註「尚無統一的規定」，建議先了解相關單位的政策；不要把 AI 生成的內容直接當成自己寫的交出去，電子報提醒，直接使用生成的內容而非親自撰寫，「還可能有代寫的學術倫理問題」；交作業時依課程規定說明用了哪個工具、做了什麼；AI 規定變化快，以學校和課程最新的規定為準（本站建議）。
+  - 情境與檢核的三句是示意。
+  sources:
+  - ethics-epaper13
+figures:
+- id: academic-flow
+  type: flow
+  alt: Keshav 第一遍讀法：讀標題摘要引言、讀各節標題、讀結論、決定要不要細讀。
+  steps:
+  - actor: 讀者
+    text: 讀標題摘要
+  - actor: 讀者
+    text: 讀各節標題
+  - actor: 讀者
+    text: 讀結論
+  - actor: 讀者
+    text: 決定細讀
+  source: keshav
+- id: academic-compare
+  type: compare
+  alt: 比較論文的方法和結果：方法說怎麼做，結果呈現資料。
+  source: unc-scientific-reports
+  relation: not_equal
+  items:
+  - term: 方法
+    note: 說明怎麼檢驗假設
+  - term: 結果
+    note: 呈現收集到的資料
+  caption: 依 UNC 寫作中心〈Scientific Reports〉各節任務表。
+sources:
+- id: unc-scientific-reports
+  title: Scientific Reports（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/scientific-reports/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: '「Here is the basic format scientists have designed for research reports: Introduction Methods and Materials Results Discussion」；「This format, sometimes called 『IMRAD,』 may take slightly different shapes depending on the discipline or audience; some ask you to include an abstract」；表格：Methods「details how you tested your hypothesis」，Results「provides raw (i.e., uninterpreted) data collected」，Discussion「considers whether the data you obtained support the hypothesis」'
+- id: keshav
+  title: How to Read a Paper
+  publisher: S. Keshav，University of Waterloo（ACM SIGCOMM Computer Communication Review 發表之講義版，史丹佛大學 EE384M 課程網頁存放）
+  url: https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: The first pass：「The first pass is a quick scan to get a bird's-eye view of the paper. You can also decide whether you need to do any more passes.」步驟「Carefully read the title, abstract, and introduction」「Read the section and sub-section headings, but ignore everything else」「Read the conclusions」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」；（一）資訊驗證：「因此研究者在使用生成式AI工具時，必須對於其產出之內容保持一定程度之質疑，並親自驗證相關內容的正確性與時效性，以確保可信度。」；（二）著作權：「由於生成式AI是將網路開放資料透過蒐集與彙整所生成的內容，研究者若直接將生成的內容拿來使用，而非親自撰寫或創作，除在法律上不享有著作權保障之外，還可能有代寫的學術倫理問題。」

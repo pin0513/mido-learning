@@ -1,8 +1,18 @@
+# B8 提案：en.work@uni
+# - 補 Why/How/What 與兩張圖。email 與會議能力改依 CEFR 補充版 Correspondence、Formal discussion (meetings) 量表的描述（標出量表程度），職場情境依 ETS 多益考生手冊。
+# - 檢核的「1 分鐘」「3 個決定」標示意；email 結構與會議句型標本站建議。
+# - 安全：補「不要把公司或客戶的機密資料貼進 AI」（學術倫理電子報）；大學對應多益標為本站建議（顯示在 notes）。
+# - 第一輪獨立審查修正：引用的 CEFR 描述改成標出量表程度——對照 CEFR 補充版 PDF 頁面，Correspondence 兩句都在 B2（審查稿說其中一句是 C1，核對後是 B2），Formal discussion 兩句是 C1；註明是努力方向、不是最低要求；notes 刪掉不適用的題型分數說法；檢核補上會議角色扮演，對齊 How 的確認、摘要、委婉不同意。
+# - 第二輪獨立審查修正：idea 首句「職場英文最常用的是 email 和會議」無來源，改依 ETS 多益考生手冊的職場情境（e-mail、board meetings），「最常用」刪除，練這兩種標本站建議。
+# - 第三輪獨立審查修正：Why 標題「email 和會議天天用」是無來源的頻率說法，改「先練 email 和會議」；items_title「職場英文兩大場合」改「本點練的兩種場合」；What／檢核「下一步」How 沒教，How 第二段改成摘要決定與下一步（So we agreed to… / Next, X will…）。
+# - 第四輪獨立審查修正：比較圖「給陌生客戶」的「先自我介紹」How 沒教、和「第一句說目的」矛盾，改「較正式、有禮，第一句仍說目的」。
+# - 第五輪獨立審查修正：（建議項）檢核的 1 分鐘會議摘要補「錄音只留在自己的裝置、不上傳」（本站建議）。 What notes 的 AI 注意事項補「不代寫」（學術倫理電子報（二）著作權「還可能有代寫的學術倫理問題」；是電子報的提醒，不寫成硬規定），ethics-epaper13 supports 補（二）著作權整句（2026-10-29 重抓逐字核對）；How body 補 AI 使用說明（不貼機密、自己查證、自己寫、說明工具），how.sources 加 ethics-epaper13，讓 What 的注意事項在 How 有教到。
+# - 第六輪獨立審查修正：（阻擋 R-1）How 的 AI 段落改寫：刪掉和 What notes 重複的電子報引文、合併自我重複的「自己寫／不直接交出去」；不貼個資與未公開文件或機密資料（電子報（三））、輸出自己查證（（一））、內容自己寫（（二））歸給電子報，只有「依課程規定說明用了哪個工具」標本站建議。
 id: en.work@uni
 concept: en.work
 title: 職場英文：Email 與會議用語
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,11 +23,12 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 大學不對應 108 課綱，以學門路徑對應；原有待核對已處理：依據改用 ETS、Council of Europe、大學寫作中心與教育部臺灣學術倫理教育資源中心等來源，不列 108 課綱代碼。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：多益情境。
+- email 與會議描述依 CEFR 補充版（p.76、p.83）逐字核對，並標出量表程度（Correspondence B2、Formal discussion C1）；職場情境依 ETS〈TOEIC Listening and Reading Test Examinee Handbook〉。
 prerequisites:
 - en.toeic@uni
 links:
@@ -26,7 +37,7 @@ links:
   related:
   - pm.team@jh
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：CEFR 補充版 Correspondence、Formal discussion (meetings)；ETS 多益考生手冊的職場情境。
 competency:
   specialist:
   - 寫作
@@ -36,20 +47,137 @@ competency:
   - 團隊合作
 ai:
   delegable:
-  - 起草信件、調整語氣
+  - 潤飾 email 語氣、整理會議紀錄（不貼機密資料）
   human_experience:
-  - 確認內容正確，為承諾負責
-idea: 職場英文講求清楚和禮貌：主旨一眼看懂、第一段說目的、最後寫下一步。會議裡要會確認、摘要和提出不同意見。
+  - 在會議裡當場回應與表達不同意見
+idea: 多益考生手冊列的職場情境包括 e-mail 與會議（board meetings）；本點先練這兩種（本站建議）。CEFR 補充版描述的能力包括依情境用合適的正式程度寫 email（B2），以及在正式討論裡重述、評估別人的發言並委婉表達不同意見（C1）。本站建議：email 先寫目的，會議先確認、再摘要、最後提出不同意見。
 guiding_questions:
 - 一封寫給陌生客戶的 email，語氣要怎麼拿捏？
 scenario: 親子共學：寫一封英文 email 邀請一位講者來學校分享：主旨、目的、時間地點、請對方回覆的期限。
 goal: 寫一封清楚有禮的職場英文 email，並在會議裡用英文確認、摘要、提出不同意見。
-review: 寫一封英文 email 邀請講者：主旨、目的、時間地點、回覆期限都有；家人只讀主旨與第一句就知道要做什麼。另錄 1 分鐘會議摘要，說出 3 個決定與下一步。
+review: 寫一封英文 email 邀請講者：主旨、目的、時間地點、回覆期限都有；家人只讀主旨與第一句就知道要做什麼。再和家人角色扮演一場短會議：先確認聽懂家人的提議，再委婉提出不同意見，最後錄 1 分鐘會議摘要，說出 3 個決定與下一步（錄音只留在自己的裝置、不上傳，本站建議；1 分鐘、3 個決定是示意）。
 formats:
   slides: []
-  exercise: 目標：寫一封清楚有禮的職場英文 email，並在會議裡用英文確認、摘要、提出不同意見。　檢核：寫一封英文 email 邀請講者：主旨、目的、時間地點、回覆期限都有；家人只讀主旨與第一句就知道要做什麼。另錄 1 分鐘會議摘要，說出 3 個決定與下一步。
+  exercise: 目標：寫一封清楚有禮的職場英文 email，並在會議裡用英文確認、摘要、提出不同意見。　檢核：寫一封英文 email 邀請講者：主旨、目的、時間地點、回覆期限都有；家人只讀主旨與第一句就知道要做什麼。再和家人角色扮演一場短會議：先確認聽懂家人的提議，再委婉提出不同意見，最後錄 1 分鐘會議摘要，說出 3 個決定與下一步（錄音只留在自己的裝置、不上傳，本站建議；1 分鐘、3 個決定是示意）。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 先練 email 和會議
+  body:
+  - 'ETS 多益考生手冊列出的職場情境有「Offices: board meetings, committees, letters, memoranda, telephone, fax and e-mail messages」等。'
+  - CEFR 補充版的 Correspondence 量表 B2 有「Can compose formal e-mails/letters of invitation, thanks or apology using appropriate registers and conventions.」；Formal discussion 量表 C1 有「Can make critical remarks or express disagreement diplomatically.」這些描述是努力的方向，不是最低要求（本站整理）。
+  qa:
+    question: 一封寫給陌生客戶的 email，語氣要怎麼拿捏？
+    answer: 用比較正式、有禮的寫法，第一句就說明目的（本站建議）。CEFR 補充版 B2 的描述是「Can use formality and conventions appropriate to the context when writing personal and professional letters and e-mails.」
+    source: cefr-cv
+  items_title: 本點練的兩種場合
+  items:
+  - title: 寫 email
+    text: 依對象調整正式程度。
+  - title: 開會
+    text: 確認、摘要決定與下一步、委婉表達不同意見。
+  checklist_title: 寫之前先想
+  checklist:
+  - 寫給誰
+  - 要對方做什麼
+  sources:
+  - toeic-handbook
+  - cefr-cv
+how:
+  heading: 先講目的，再講細節
+  body:
+  - 本站建議 email 這樣寫：主旨寫清楚要做什麼；第一句說目的；接著時間、地點等細節；最後寫請對方回覆的期限並道謝。
+  - 會議裡，本站建議先確認聽懂（例如 So you mean…?），再摘要決定與下一步（So we agreed to… / Next, X will…），有不同意見時先肯定再說理由（I see your point, but…）。CEFR 補充版 C1 的描述是「Can restate, evaluate and challenge contributions from other participants about matters within their academic or professional competence.」
+  - 用 AI 幫忙時，照學術倫理電子報的提醒做：不貼個人資訊、未公開文件或機密資料，AI 的輸出自己查證，內容自己寫，不把 AI 生成的內容直接交出去。本站建議：交作業時依課程規定說明用了哪個工具、做了什麼。
+  items_title: 本站建議的 email 結構
+  items:
+  - title: 主旨
+    text: 一眼看出要做什麼。
+  - title: 第一句說目的
+    text: 邀請、詢問或確認。
+  - title: 細節
+    text: 時間、地點、需要的資料。
+  - title: 回覆期限
+    text: 請對方何時回覆。
+  checklist_title: 寄出前勾一下
+  checklist:
+  - 主旨清楚
+  - 第一句是目的
+  - 有回覆期限
+  activity_figure: work-flow
+  sources:
+  - cefr-cv
+  - ethics-epaper13
+what:
+  heading: 寫好 email，開好會
+  body:
+  - 學完後，能寫一封清楚有禮的職場英文 email，並在會議裡用英文確認、摘要決定、委婉提出不同意見。
+  items_title: 學完能做到
+  items:
+  - title: 清楚的 email
+    text: 主旨與第一句就看出目的。
+  - title: 會議摘要
+    text: 說出決定與下一步。
+  - title: 委婉不同意
+    text: 先肯定，再說理由。
+  checklist_title: 家人檢核
+  checklist:
+  - 一讀就懂目的
+  - 摘要有決定
+  figures:
+  - work-compare
+  notes:
+  - 把大學階段對應多益是本站建議，不是官方換算。
+  - 檢核的 1 分鐘、3 個決定是示意；引用的 CEFR 描述 Correspondence 是 B2、Formal discussion 是 C1。
+  - 用 AI 潤飾 email 或整理會議紀錄時，不要把公司、客戶的機密資料或他人個資貼進去。
+  - 用生成式 AI 時，不要把個人資訊、未公開文件、機密資料貼進去（教育部臺灣學術倫理教育資源中心 2023 年的電子報）；AI 的輸出要自己查證。這份 2023 年的電子報也說，學術界對使用生成式 AI 是否需要標註「尚無統一的規定」，建議先了解相關單位的政策；不要把 AI 生成的內容直接當成自己寫的交出去，電子報提醒，直接使用生成的內容而非親自撰寫，「還可能有代寫的學術倫理問題」；交作業時依課程規定說明用了哪個工具、做了什麼；AI 規定變化快，以學校和課程最新的規定為準（本站建議）。
+  sources:
+  - toeic-handbook
+  - ethics-epaper13
+figures:
+- id: work-flow
+  type: flow
+  alt: 會議英文三步：確認聽懂、摘要決定、委婉提出不同意見。
+  steps:
+  - actor: 與會者
+    text: 確認聽懂
+  - actor: 與會者
+    text: 摘要決定
+  - actor: 與會者
+    text: 委婉不同意
+- id: work-compare
+  type: compare
+  alt: 比較寫給同事和寫給陌生客戶的 email：對陌生客戶要更正式。
+  source: cefr-cv
+  relation: not_equal
+  items:
+  - term: 給同事
+    note: 可以較簡短直接
+  - term: 給陌生客戶
+    note: 較正式、有禮，第一句仍說目的
+  caption: CEFR 補充版描述依情境使用合適的正式程度；兩欄的寫法是本站整理。
+sources:
+- id: cefr-cv
+  title: 'Common European Framework of Reference for Languages: Learning, teaching, assessment – Companion volume'
+  publisher: Council of Europe（2020 年 4 月，ISBN 978-92-871-8621-8）
+  url: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Correspondence（p.83）B2「Can compose formal e-mails/letters of invitation, thanks or apology using appropriate registers and conventions.」「Can use formality and conventions appropriate to the context when writing personal and professional letters and e-mails.」；Formal discussion (meetings)（p.76）C1「Can restate, evaluate and challenge contributions from other participants about matters within their academic or professional competence.」「Can make critical remarks or express disagreement diplomatically.」
+- id: toeic-handbook
+  title: 'TOEIC Examinee Handbook: Listening & Reading'
+  publisher: ETS（Educational Testing Service）
+  url: https://www.ets.org/content/dam/ets-org/pdfs/toeic/toeic-listening-reading-test-examinee-handbook.pdf
+  accessed: '2026-10-29'
+  kind: exam
+  supports: '「Offices: board meetings, committees, letters, memoranda, telephone, fax and e-mail messages」'
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」；（二）著作權：「由於生成式AI是將網路開放資料透過蒐集與彙整所生成的內容，研究者若直接將生成的內容拿來使用，而非親自撰寫或創作，除在法律上不享有著作權保障之外，還可能有代寫的學術倫理問題。」

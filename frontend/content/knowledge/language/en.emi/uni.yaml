@@ -1,8 +1,16 @@
+# B8 提案：en.emi@uni
+# - 補 Why/How/What 與兩張圖。EMI 的意思改依教育部大專校院學生雙語化學習計畫：「以英語為知識傳遞的媒介，教授各專業領域知識」。
+# - 補教育部 2021 年新聞稿：CEFR B2 被視為修習全英語課程的基本能力；上課筆記、課堂討論改依 CEFR 補充版 Note-taking、Formal discussion 量表。
+# - 檢核的 10 個術語、3 句、1 分鐘標示意；課前、課中、課後的做法標本站建議；大學對應托福標為本站建議（顯示在 notes）。
+# - 第一輪獨立審查修正：items_title 改成「和 EMI 相關的 CEFR 描述（本站整理）」——CEFR 沒有「EMI 課需要的能力」這種說法；引用的描述標出量表程度（Note-taking B1、B2，Formal discussion B2，已對照 CEFR 補充版 PDF 頁面核對），補 B2 筆記描述；本點沒有托福事實，刪 toefl-content 來源；goal 與檢核補「提出一個問題」，對齊 How。
+# - 第二輪獨立審查修正：檢核要「錄 1 分鐘口頭摘要」，How 補「再看著重點用英文口頭說一遍（例如 1 分鐘，示意）」；「B1 起點、B2 目標」是建議，標籤改本站建議。
+# - 第五輪獨立審查修正：（建議項）檢核的 1 分鐘口頭摘要補「錄音只留在自己的裝置、不上傳」（本站建議）。 What notes 的 AI 注意事項補「不代寫」（學術倫理電子報（二）著作權「還可能有代寫的學術倫理問題」；是電子報的提醒，不寫成硬規定），ethics-epaper13 supports 補（二）著作權整句（2026-10-29 重抓逐字核對）；How body 補 AI 使用說明（不貼機密、自己查證、自己寫、說明工具），how.sources 加 ethics-epaper13，讓 What 的注意事項在 How 有教到。
+# - 第六輪獨立審查修正：（阻擋 R-1）How 的 AI 段落改寫：刪掉和 What notes 重複的電子報引文、合併自我重複的「自己寫／不直接交出去」；不貼個資與未公開文件或機密資料（電子報（三））、輸出自己查證（（一））、內容自己寫（（二））歸給電子報，只有「依課程規定說明用了哪個工具」標本站建議。
 id: en.emi@uni
 concept: en.emi
 title: 全英語授課與討論（EMI）
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,11 +21,12 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 大學不對應 108 課綱，以學門路徑對應；原有待核對已處理：依據改用 ETS、Council of Europe、大學寫作中心與教育部臺灣學術倫理教育資源中心等來源，不列 108 課綱代碼。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：托福・聽力與口說。
+- EMI 定義依教育部大專校院學生雙語化學習計畫網站、B2 與全英語課程的說法依教育部高教司 2021 年新聞稿、筆記與討論能力依 CEFR 補充版（p.76、p.105）逐字核對，程度依量表標示（Note-taking B1、B2；Formal discussion B2）。
 prerequisites:
 - en.worldeng@uni
 - en.academic@uni
@@ -27,7 +36,7 @@ links:
   related:
   - sk.discuss@jh
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：教育部大專校院學生雙語化學習計畫（EMI）；CEFR 補充版 Note-taking（lectures, seminars, meetings, etc.）、Formal discussion (meetings)。
 competency:
   specialist:
   - 聽力
@@ -36,20 +45,148 @@ competency:
   - 跨域思考
 ai:
   delegable:
-  - 整理術語表、做課程摘要
+  - 整理術語表、做課程摘要（不貼未公開的講義或個資）
   human_experience:
   - 在討論裡提出自己的看法
-idea: 大學的全英語授課（EMI）重點在學專業，不在英文本身：課前先讀術語、課中抓架構、課後用英文討論。
+idea: 大學的全英語授課（EMI）是「以英語為知識傳遞的媒介，教授各專業領域知識」，重點在學專業，不在英文本身。本站建議：課前先讀術語、課中抓架構做筆記、課後用英文摘要和討論。
 guiding_questions:
 - 用英文上專業課，聽不懂術語怎麼辦？
-scenario: 親子共學：挑一堂公開的英文大學課程影片，課前列 10 個術語，看完用英文寫三句重點。
-goal: 上全英語授課（EMI）：課前讀術語、課中抓架構、課後用英文討論。
-review: 看一堂公開的英文大學課程影片，課前列 10 個術語，看完用英文寫 3 句重點並錄 1 分鐘口頭摘要；家人對照影片確認重點正確。
+scenario: 親子共學：挑一堂公開的英文大學課程影片，課前列出術語（例如 10 個，示意），看完用英文寫三句重點（示意）。
+goal: 上全英語授課（EMI）：課前讀術語、課中抓架構，課後用英文寫重點並提出問題。
+review: 看一堂公開的英文大學課程影片，課前列 10 個術語，看完用英文寫 3 句重點、提出 1 個問題，並錄 1 分鐘口頭摘要；家人對照影片確認重點正確（錄音只留在自己的裝置、不上傳，本站建議；10 個、3 句、1 個、1 分鐘是示意）。
 formats:
   slides: []
-  exercise: 目標：上全英語授課（EMI）：課前讀術語、課中抓架構、課後用英文討論。　檢核：看一堂公開的英文大學課程影片，課前列 10 個術語，看完用英文寫 3 句重點並錄 1 分鐘口頭摘要；家人對照影片確認重點正確。
+  exercise: 目標：上全英語授課（EMI）：課前讀術語、課中抓架構，課後用英文寫重點並提出問題。　檢核：看一堂公開的英文大學課程影片，課前列 10 個術語，看完用英文寫 3 句重點、提出 1 個問題，並錄 1 分鐘口頭摘要；家人對照影片確認重點正確（錄音只留在自己的裝置、不上傳，本站建議；10 個、3 句、1 個、1 分鐘是示意）。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 用英文學專業
+  body:
+  - 教育部的雙語化學習計畫說明，大學要逐步推動「全英語授課」，「以英語為知識傳遞的媒介，教授各專業領域知識，包括經濟、工程、醫學、商學、人文等專業科目課程」。
+  - 教育部 2021 年的新聞稿提到，高三生約 21% 達到 CEFR B2 以上，「亦即有五分之一的高三學生具有修習全英語課程的基本能力」。
+  qa:
+    question: 用英文上專業課，聽不懂術語怎麼辦？
+    answer: 課前先把術語讀過、查好意思（本站建議），上課時就能把注意力放在架構上。CEFR 補充版 B1 的筆記描述，也以「the topic is within their field of interest」和講課「clear and well structured」為前提，熟悉主題能幫你跟上。
+    source: cefr-cv
+  items_title: 和 EMI 相關的 CEFR 描述（本站整理）
+  items:
+  - title: 上課做筆記（B1）
+    text: 主題熟悉、講課清楚時，記下之後自己用得上的筆記。
+  - title: 聽講記重點（B2）
+    text: 聽懂結構清楚的講課，記下覺得重要的點。
+  - title: 參與正式討論（B2）
+    text: 積極參與例行與非例行的正式討論。
+  checklist_title: 上課前先確認
+  checklist:
+  - 讀過術語
+  - 知道本週主題
+  sources:
+  - best-about
+  - moe-best
+  - cefr-cv
+how:
+  heading: 課前、課中、課後
+  body:
+  - 本站建議：課前讀講義或指定閱讀，列出術語和意思；課中記下老師的架構（第一、第二、結論）和舉例；課後用英文寫幾句重點，再看著重點用英文口頭說一遍（例如 1 分鐘，示意），在討論時至少提出一個問題或看法。
+  - CEFR 補充版 Note-taking 量表 B1 的描述是「Can take notes during a lecture which are precise enough for their own use at a later date, provided the topic is within their field of interest and the lecture is clear and well structured.」；B2 的描述是「Can understand a clearly structured lecture on a familiar subject, and can take notes on points which strike them as important, even though they tend to concentrate on the actual formulation and therefore to miss some information.」教育部新聞稿把 B2 視為修習全英語課程的基本能力（見 Why），所以可以把 B1 當起點、B2 當目標（本站建議）。
+  - 用 AI 幫忙時，照學術倫理電子報的提醒做：不貼個人資訊、未公開文件或機密資料，AI 的輸出自己查證，內容自己寫，不把 AI 生成的內容直接交出去。本站建議：交作業時依課程規定說明用了哪個工具、做了什麼。
+  items_title: 本站建議的做法
+  items:
+  - title: 課前列術語
+    text: 查好意思，帶進教室。
+  - title: 課中抓架構
+    text: 記下架構與舉例。
+  - title: 課後寫重點
+    text: 用英文寫幾句摘要，再說一遍。
+  - title: 討論提問
+    text: 至少提出一個問題或看法。
+  checklist_title: 每堂課後
+  checklist:
+  - 筆記有架構
+  - 寫了英文重點
+  - 提了一個問題
+  activity_figure: emi-flow
+  sources:
+  - cefr-cv
+  - ethics-epaper13
+what:
+  heading: 跟上全英語的專業課
+  body:
+  - 學完後，能在全英語授課的專業課裡跟上架構、做出自己用得上的筆記，並用英文摘要重點、參與討論。
+  items_title: 學完能做到
+  items:
+  - title: 跟上架構
+    text: 說出一堂課的主要段落。
+  - title: 做出筆記
+    text: 之後自己看得懂、用得上。
+  - title: 英文摘要
+    text: 說出重點並提出問題。
+  checklist_title: 家人檢核
+  checklist:
+  - 重點和影片一致
+  - 有提出問題
+  figures:
+  - emi-compare
+  notes:
+  - 把大學階段對應多益、托福是本站建議，不是官方換算。
+  - 檢核與情境的 10 個術語、3 句、1 個問題、1 分鐘是示意。
+  - 用生成式 AI 時，不要把個人資訊、未公開文件、機密資料貼進去（教育部臺灣學術倫理教育資源中心 2023 年的電子報）；AI 的輸出要自己查證。這份 2023 年的電子報也說，學術界對使用生成式 AI 是否需要標註「尚無統一的規定」，建議先了解相關單位的政策；不要把 AI 生成的內容直接當成自己寫的交出去，電子報提醒，直接使用生成的內容而非親自撰寫，「還可能有代寫的學術倫理問題」；交作業時依課程規定說明用了哪個工具、做了什麼；AI 規定變化快，以學校和課程最新的規定為準（本站建議）。
+  sources:
+  - best-about
+  - ethics-epaper13
+figures:
+- id: emi-flow
+  type: flow
+  alt: EMI 上課流程：課前讀術語、課中記架構、課後寫英文摘要、討論提問。
+  steps:
+  - actor: 學生
+    text: 課前讀術語
+  - actor: 學生
+    text: 課中記架構
+  - actor: 學生
+    text: 課後寫摘要
+  - actor: 學生
+    text: 討論提問
+- id: emi-compare
+  type: compare
+  alt: 比較英語課和 EMI 專業課：英語課學英文本身，EMI 用英文學專業。
+  source: best-about
+  relation: not_equal
+  items:
+  - term: 英語課
+    note: 學的是英文本身
+  - term: EMI 專業課
+    note: 用英文學專業知識
+  caption: EMI 的意思依教育部大專校院學生雙語化學習計畫網站；英語課的說明是本站整理。
+sources:
+- id: best-about
+  title: 關於雙語（大專校院學生雙語化學習計畫）
+  publisher: 教育部大專校院學生雙語化學習計畫網站（BEST）
+  url: https://best.twaea.org.tw/about.html
+  accessed: '2026-10-29'
+  kind: government
+  supports: 關於雙語：「協助大專校院逐步透過推動『全英語授課』(English as a Medium of Instruction， EMI)，以英語為知識傳遞的媒介，教授各專業領域知識，包括經濟、工程、醫學、商學、人文等專業科目課程」
+- id: moe-best
+  title: 高教雙語政策－推動大專校院學生雙語化學習計畫
+  publisher: 教育部高等教育司（上版日期 110-04-20）
+  url: https://www.edu.tw/News_Content.aspx?n=9E7AC85F1954DDA8&s=2BCAF7C42463717F&sms=169B8E91BB75571F
+  accessed: '2026-10-29'
+  kind: government
+  supports: 「推動全英語課程（或稱EMI課程，English-Medium-Instruction Courses）」；「目前我國高三生約 21%達到『歐洲語言學習、教學、評量共同參考架構』（CEFR）B2流利以上等級，亦即有五分之一的高三學生具有修習全英語課程的基本能力」
+- id: cefr-cv
+  title: 'Common European Framework of Reference for Languages: Learning, teaching, assessment – Companion volume'
+  publisher: Council of Europe（2020 年 4 月，ISBN 978-92-871-8621-8）
+  url: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Note-taking (lectures, seminars, meetings, etc.)（p.105）B1「Can take notes during a lecture which are precise enough for their own use at a later date, provided the topic is within their field of interest and the lecture is clear and well structured.」；B2「Can understand a clearly structured lecture on a familiar subject, and can take notes on points which strike them as important, even though they tend to concentrate on the actual formulation and therefore to miss some information.」；Formal discussion (meetings)（p.76）B2「Can participate actively in routine and non-routine formal discussion.」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」；（二）著作權：「由於生成式AI是將網路開放資料透過蒐集與彙整所生成的內容，研究者若直接將生成的內容拿來使用，而非親自撰寫或創作，除在法律上不享有著作權保障之外，還可能有代寫的學術倫理問題。」
