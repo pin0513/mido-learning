@@ -12,6 +12,8 @@ export interface StageInfo {
   id: string;
   name: string;
   grades: number[];
+  /** 108 課綱學習階段。國小 1–3、國中 4、高中 5。大學是空的。 */
+  learningStages: number[];
   curriculum108: boolean;
   rank: number;
 }
@@ -20,7 +22,52 @@ export interface StageInfo {
 export interface LayerInfo {
   id: string;
   name: string;
+  /** 簡稱。詳細頁的「層級」用這個字，這一輪還沒有接到畫面上。 */
+  shortName: string;
   role: string;
+}
+
+export interface CurriculumCode {
+  code: string;
+  stage: number;
+  text: string;
+  sourceUrl: string;
+  sourcePage: number;
+}
+
+export interface KnowledgeSource {
+  id?: string;
+  title: string;
+  publisher: string;
+  url: string;
+  accessed: string;
+  kind: string;
+  supports: string;
+}
+
+export interface CircleItem {
+  title: string;
+  text: string;
+  example?: string;
+  code?: string;
+}
+
+export interface CirclePart {
+  heading: string;
+  body: string[];
+  sources: string[];
+  items: CircleItem[];
+  checklist: string[];
+  figures: string[];
+  notes: string[];
+  activityFigure?: string;
+  qa?: { question: string; answer: string; source: string };
+}
+
+export interface KnowledgeFigure {
+  id: string;
+  type: string;
+  source?: string;
 }
 
 export interface CoreCompetencyInfo {
@@ -44,6 +91,7 @@ export interface Taxonomy {
   stageList: StageInfo[];
   layers: Set<string>;
   layerList: LayerInfo[];
+  curriculumCodes: Map<string, CurriculumCode>;
   domains: Set<string>;
   coreCodes: Set<string>;
   coreCompetencies: CoreCompetencyInfo[];
@@ -79,7 +127,16 @@ export interface KnowledgePoint {
     domains: string[];
     coreCompetencies: string[];
     issues: string[];
+    performances?: string[];
+    contents?: string[];
   };
+  estTime?: { school: string; source: string };
+  why?: CirclePart;
+  how?: CirclePart;
+  what?: CirclePart;
+  /** 只有 YAML 真的寫了才掛上，避免既有頁面的資料形狀被空陣列改掉。 */
+  figures?: KnowledgeFigure[];
+  sources?: KnowledgeSource[];
   toVerify: boolean;
   verifyNotes: string[];
   prerequisites: string[];

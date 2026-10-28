@@ -3,7 +3,7 @@
  * 這個檔案不 import server-only：驗證腳本用 tsx 直接跑，server-only 在 Node 會丟錯。
  * Next 的 server component 請改由 lib/content/index.ts 進入。
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import Ajv, { type AnySchema, type ErrorObject, type ValidateFunction } from "ajv";
 import { parse } from "yaml";
@@ -12,9 +12,13 @@ import {
   LAYER_IDS,
   STAGE_IDS,
   type AudienceId,
+  type CirclePart,
   type ContentModel,
   type CoreCompetencyInfo,
+  type CurriculumCode,
   type DisciplineNode,
+  type KnowledgeFigure,
+  type KnowledgeSource,
   type LayerInfo,
   type KnowledgeLinks,
   type KnowledgePoint,
@@ -48,6 +52,15 @@ const ISSUES = [
 ] as const;
 
 const AUDIENCE = new Set<string>(["kid", "adult", "family"]);
+const A_LEVEL_KINDS = new Set(["curriculum", "government", "exam"]);
+const CIRCLE_KEYS = ["why", "how", "what"] as const;
+const ROMAN_STAGE: Record<string, number> = { I: 1, II: 2, III: 3, IV: 4, V: 5 };
+
+/**
+ * 交接文件要求擋掉某些網域，但沒有列出網域。
+ * 先留空集合，之後補上域名就會生效，這一輪不自行假設要擋哪些站。
+ */
+export const EXCLUDED_DOMAINS = new Set<string>();
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -62,6 +75,178 @@ function sameSet(actual: string[], expected: readonly string[]): boolean {
   if (actual.length !== expected.length) return false;
   const left = new Set(actual);
   return expected.every((item) => left.has(item));
+}
+
+function stageFromCode(code: string): number | null {
+  const match = /^[0-9A-Za-z]+-(I|II|III|IV|V)-[0-9]+$/.exec(code);
+  if (!match?.[1]) return null;
+  return ROMAN_STAGE[match[1]] ?? null;
+}
+
+function excludedHost(url: string): string | null {
+  let host = "";
+  try {
+    host = new URL(url).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
+  for (const domain of EXCLUDED_DOMAINS) {
+    if (host === domain || host.endsWith(`.${domain}`)) return domain;
+  }
+  return null;
+}
+
+function loadIdList(contentDir: string, fileName: string, errors: string[]): Set<string> {
+  const file = join(contentDir, fileName);
+  if (!existsSync(file)) return new Set();
+  const parsed = readYamlFile(file);
+  if (parsed.error || !isRecord(parsed.value) || !Array.isArray(parsed.value.ids)) {
+    errors.push(`${fileName}: 必須是 ids 陣列`);
+    return new Set();
+  }
+  const ids = new Set<string>();
+  for (const id of parsed.value.ids) {
+    if (typeof id !== "string" || id.length === 0) {
+      errors.push(`${fileName}: ids 裡有空值`);
+      continue;
+    }
+    if (ids.has(id)) errors.push(`${fileName}: id 重複（${id}）`);
+    ids.add(id);
+  }
+  return ids;
+}
+
+function loadCurriculumCodes(contentDir: string, errors: string[]): Map<string, CurriculumCode> {
+  const map = new Map<string, CurriculumCode>();
+  const rel = "taxonomy/curriculum-108-codes.yaml";
+  const file = join(contentDir, rel);
+  if (!existsSync(file)) {
+    errors.push(`${rel}: 必須存在。學習表現與學習內容只能逐字複製官方原文`);
+    return map;
+  }
+  const parsed = readYamlFile(file);
+  if (parsed.error || !isRecord(parsed.value)) {
+    errors.push(`${rel}: 無法解析 YAML${parsed.error ? `（${parsed.error}）` : ""}`);
+    return map;
+  }
+  for (const [subject, body] of Object.entries(parsed.value)) {
+    if (!isRecord(body)) {
+      errors.push(`${rel}: ${subject} 必須是物件`);
+      continue;
+    }
+    for (const bucket of ["performances", "contents"] as const) {
+      const group = body[bucket];
+      if (group === undefined) continue;
+      if (!isRecord(group)) {
+        errors.push(`${rel}: ${subject} 的 ${bucket} 必須是物件`);
+        continue;
+      }
+      for (const [code, raw] of Object.entries(group)) {
+        if (!isRecord(raw) || typeof raw.text !== "string" || raw.text.length === 0) {
+          errors.push(`${rel}: ${code} 缺少逐字原文`);
+          continue;
+        }
+        const roman = stageFromCode(code);
+        if (typeof raw.stage !== "number" || roman === null || raw.stage !== roman) {
+          errors.push(`${rel}: ${code} 的 stage 必須等於代碼裡的學習階段`);
+          continue;
+        }
+        const source = raw.source;
+        if (
+          !isRecord(source) ||
+          typeof source.url !== "string" ||
+          !/^https?:\/\//.test(source.url) ||
+          typeof source.page !== "number" ||
+          !Number.isInteger(source.page) ||
+          source.page < 1
+        ) {
+          errors.push(`${rel}: ${code} 必須附上官方 PDF 網址與頁碼`);
+          continue;
+        }
+        if (map.has(code)) {
+          errors.push(`${rel}: 代碼重複（${code}）`);
+          continue;
+        }
+        map.set(code, { code, stage: raw.stage, text: raw.text, sourceUrl: source.url, sourcePage: source.page });
+      }
+    }
+  }
+  if (map.size === 0) errors.push(`${rel}: 沒有任何代碼`);
+  return map;
+}
+
+function readSources(value: unknown): KnowledgeSource[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const sources: KnowledgeSource[] = [];
+  for (const item of value) {
+    if (!isRecord(item) || typeof item.title !== "string") continue;
+    const source: KnowledgeSource = {
+      title: item.title,
+      publisher: typeof item.publisher === "string" ? item.publisher : "",
+      url: typeof item.url === "string" ? item.url : "",
+      accessed: typeof item.accessed === "string" ? item.accessed : "",
+      kind: typeof item.kind === "string" ? item.kind : "",
+      supports: typeof item.supports === "string" ? item.supports : "",
+    };
+    if (typeof item.id === "string") source.id = item.id;
+    sources.push(source);
+  }
+  return sources;
+}
+
+function readFigures(value: unknown): KnowledgeFigure[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const figures: KnowledgeFigure[] = [];
+  for (const item of value) {
+    if (!isRecord(item) || typeof item.id !== "string" || typeof item.type !== "string") continue;
+    const figure: KnowledgeFigure = { id: item.id, type: item.type };
+    if (typeof item.source === "string") figure.source = item.source;
+    figures.push(figure);
+  }
+  return figures;
+}
+
+function readCircle(value: unknown): CirclePart | undefined {
+  if (!isRecord(value) || typeof value.heading !== "string") return undefined;
+  const items: CirclePart["items"] = [];
+  if (Array.isArray(value.items)) {
+    for (const item of value.items) {
+      if (!isRecord(item) || typeof item.title !== "string" || typeof item.text !== "string") continue;
+      const parsed: CirclePart["items"][number] = { title: item.title, text: item.text };
+      if (typeof item.example === "string") parsed.example = item.example;
+      if (typeof item.code === "string") parsed.code = item.code;
+      items.push(parsed);
+    }
+  }
+  const circle: CirclePart = {
+    heading: value.heading,
+    body: asStringArray(value.body) ?? [],
+    sources: asStringArray(value.sources) ?? [],
+    items,
+    checklist: asStringArray(value.checklist) ?? [],
+    figures: asStringArray(value.figures) ?? [],
+    notes: asStringArray(value.notes) ?? [],
+  };
+  if (typeof value.activity_figure === "string") circle.activityFigure = value.activity_figure;
+  if (
+    isRecord(value.qa) &&
+    typeof value.qa.question === "string" &&
+    typeof value.qa.answer === "string" &&
+    typeof value.qa.source === "string"
+  ) {
+    circle.qa = { question: value.qa.question, answer: value.qa.answer, source: value.qa.source };
+  }
+  return circle;
+}
+
+function circleHasContent(raw: Record<string, unknown>): boolean {
+  return (
+    (Array.isArray(raw.body) && raw.body.length > 0) ||
+    (Array.isArray(raw.items) && raw.items.length > 0) ||
+    (Array.isArray(raw.checklist) && raw.checklist.length > 0) ||
+    (Array.isArray(raw.figures) && raw.figures.length > 0) ||
+    (Array.isArray(raw.notes) && raw.notes.length > 0)
+  );
 }
 
 function readYamlFile(file: string): { value?: unknown; error?: string } {
@@ -127,10 +312,14 @@ function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
     }
     stageIds.push(raw.id);
     const grades = Array.isArray(raw.grades) ? raw.grades.filter((grade): grade is number => typeof grade === "number") : [];
+    const learningStages = Array.isArray(raw.learning_stages)
+      ? raw.learning_stages.filter((stage): stage is number => typeof stage === "number")
+      : [];
     const info: StageInfo = {
       id: raw.id,
       name: raw.name,
       grades,
+      learningStages,
       curriculum108: raw.curriculum_108 === true,
       rank: stageIds.length - 1,
     };
@@ -246,9 +435,12 @@ function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
     for (const layer of disciplinesDoc.value.layers) {
       if (isRecord(layer) && typeof layer.id === "string") {
         layers.add(layer.id);
+        const shortName = typeof layer.short_name === "string" ? layer.short_name.trim() : "";
+        if (!shortName) errors.push(`taxonomy/disciplines.yaml: 層級 ${layer.id} 缺少 short_name`);
         layerList.push({
           id: layer.id,
           name: typeof layer.name === "string" ? layer.name : layer.id,
+          shortName,
           role: typeof layer.role === "string" ? layer.role : "",
         });
       }
@@ -276,12 +468,15 @@ function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
     if (!formatIds.has("slides")) errors.push("taxonomy/formats.yaml: 缺少 slides");
   }
 
+  const curriculumCodes = loadCurriculumCodes(contentDir, errors);
+
   if (errors.length > 0) return null;
   return {
     stages,
     stageList,
     layers,
     layerList,
+    curriculumCodes,
     domains: new Set(domainNames),
     coreCodes: new Set(coreCodes),
     coreCompetencies,
@@ -315,7 +510,159 @@ function optionalString(value: unknown): string | undefined {
   return typeof value === "string" && value.length > 0 ? value : undefined;
 }
 
-function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: ValidateFunction, errors: string[]): KnowledgePoint[] {
+function codeInBand(stageNumber: number, band: number[], allowLater: boolean): boolean {
+  if (band.length === 0) return false;
+  const min = Math.min(...band);
+  const max = Math.max(...band);
+  if (stageNumber < min) return false;
+  if (stageNumber > max) return allowLater;
+  return true;
+}
+
+function citeCode(
+  rel: string,
+  where: string,
+  code: string,
+  taxonomy: Taxonomy,
+  band: number[],
+  allowLater: boolean,
+  errors: string[],
+): void {
+  const entry = taxonomy.curriculumCodes.get(code);
+  if (!entry) {
+    errors.push(`${rel}: ${where} 的代碼「${code}」不在 curriculum-108-codes.yaml，不可自編`);
+    return;
+  }
+  if (!codeInBand(entry.stage, band, allowLater)) {
+    errors.push(`${rel}: ${where} 的代碼「${code}」學習階段 ${entry.stage} 不在這個學段`);
+  }
+}
+
+function checkDetail(
+  rel: string,
+  id: string,
+  raw: Record<string, unknown>,
+  stage: string,
+  strict: boolean,
+  guiding: string[],
+  taxonomy: Taxonomy,
+  sourcesBackfill: Set<string>,
+  circleBackfill: Set<string>,
+  errors: string[],
+  warnings: string[],
+): void {
+  const sources = readSources(raw.sources) ?? [];
+  const hasSources = sources.length > 0;
+  const sourceProblems: string[] = [];
+  if (!hasSources) {
+    sourceProblems.push(`${rel}: 缺少 sources`);
+  } else {
+    if (sources.length < 2) sourceProblems.push(`${rel}: 來源至少要 2 筆`);
+    if (sources.every((source) => source.kind === "aux")) sourceProblems.push(`${rel}: 來源不能全部是 aux`);
+    if ((stage === "es" || stage === "jh" || stage === "sh") && !sources.some((source) => A_LEVEL_KINDS.has(source.kind))) {
+      sourceProblems.push(`${rel}: 至少要有一筆 A 級來源（curriculum、government、exam）`);
+    }
+    const urls = new Set<string>();
+    for (const source of sources) {
+      if (urls.has(source.url)) sourceProblems.push(`${rel}: 來源網址重複（${source.url}）`);
+      urls.add(source.url);
+      const banned = excludedHost(source.url);
+      if (banned) sourceProblems.push(`${rel}: 來源網域在排除清單（${banned}）`);
+    }
+  }
+  if (sourcesBackfill.has(id) && sourceProblems.length === 0) {
+    errors.push(`${rel}: 已符合來源規則，請從 sources-backfill.yaml 移出 ${id}`);
+  } else if (sourceProblems.length > 0) {
+    const target = strict && !sourcesBackfill.has(id) ? errors : warnings;
+    target.push(...sourceProblems);
+  }
+
+  const seenSourceIds = new Set<string>();
+  for (const source of sources) {
+    if (!source.id) {
+      const message = `${rel}: 來源「${source.title}」缺少 id`;
+      (strict ? errors : warnings).push(message);
+      continue;
+    }
+    if (seenSourceIds.has(source.id)) errors.push(`${rel}: sources id 重複（${source.id}）`);
+    seenSourceIds.add(source.id);
+  }
+
+  const circleProblems: string[] = [];
+  for (const key of CIRCLE_KEYS) {
+    const circle = raw[key];
+    if (!isRecord(circle)) {
+      circleProblems.push(`${rel}: 缺少黃金圈的 ${key}`);
+      continue;
+    }
+    if (!circleHasContent(circle)) circleProblems.push(`${rel}: ${key} 的 body、items、checklist、figures、notes 至少要有一項`);
+  }
+  if (circleBackfill.has(id) && circleProblems.length === 0) {
+    errors.push(`${rel}: 已符合黃金圈規則，請從 golden-circle-backfill.yaml 移出 ${id}`);
+  } else if (circleProblems.length > 0) {
+    const target = strict && !circleBackfill.has(id) ? errors : warnings;
+    target.push(...circleProblems);
+  }
+
+  const figureIds = new Set<string>();
+  for (const figure of readFigures(raw.figures) ?? []) {
+    if (figureIds.has(figure.id)) errors.push(`${rel}: figures id 重複（${figure.id}）`);
+    figureIds.add(figure.id);
+    if (figure.source && !seenSourceIds.has(figure.source)) {
+      errors.push(`${rel}: figures.source 指向不存在的來源（${figure.source}）`);
+    }
+  }
+  if (isRecord(raw.est_time) && typeof raw.est_time.source === "string" && !seenSourceIds.has(raw.est_time.source)) {
+    errors.push(`${rel}: est_time.source 指向不存在的來源（${raw.est_time.source}）`);
+  }
+
+  const band = taxonomy.stages.get(stage)?.learningStages ?? [];
+  for (const key of CIRCLE_KEYS) {
+    const circle = raw[key];
+    if (!isRecord(circle)) continue;
+    for (const sourceId of asStringArray(circle.sources) ?? []) {
+      if (!seenSourceIds.has(sourceId)) errors.push(`${rel}: ${key}.sources 指向不存在的來源（${sourceId}）`);
+    }
+    if (isRecord(circle.qa)) {
+      if (typeof circle.qa.question === "string" && !guiding.includes(circle.qa.question)) {
+        errors.push(`${rel}: ${key}.qa.question 不在 guiding_questions`);
+      }
+      if (typeof circle.qa.source === "string" && !seenSourceIds.has(circle.qa.source)) {
+        errors.push(`${rel}: ${key}.qa.source 指向不存在的來源（${circle.qa.source}）`);
+      }
+    }
+    for (const figureId of asStringArray(circle.figures) ?? []) {
+      if (!figureIds.has(figureId)) errors.push(`${rel}: ${key}.figures 指向不存在的圖（${figureId}）`);
+    }
+    if (typeof circle.activity_figure === "string" && !figureIds.has(circle.activity_figure)) {
+      errors.push(`${rel}: ${key}.activity_figure 指向不存在的圖（${circle.activity_figure}）`);
+    }
+    if (Array.isArray(circle.items)) {
+      for (const item of circle.items) {
+        if (isRecord(item) && typeof item.code === "string") citeCode(rel, `${key}.items`, item.code, taxonomy, band, key === "why", errors);
+      }
+    }
+  }
+
+  if (isRecord(raw.curriculum_108)) {
+    for (const code of asStringArray(raw.curriculum_108.performances) ?? []) {
+      citeCode(rel, "performances", code, taxonomy, band, false, errors);
+    }
+    for (const code of asStringArray(raw.curriculum_108.contents) ?? []) {
+      citeCode(rel, "contents", code, taxonomy, band, false, errors);
+    }
+  }
+}
+
+function loadKnowledgePoints(
+  contentDir: string,
+  taxonomy: Taxonomy,
+  validate: ValidateFunction,
+  errors: string[],
+  warnings: string[],
+  sourcesBackfill: Set<string>,
+  circleBackfill: Set<string>,
+): KnowledgePoint[] {
   const knowledgeDir = join(contentDir, "knowledge");
   let files: string[] = [];
   try {
@@ -414,6 +761,10 @@ function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: V
         if (!taxonomy.issues.has(issue)) errors.push(`${rel}: 未知議題「${issue}」`);
       }
       curriculum108 = { domains, coreCompetencies: codes, issues: issueList };
+      const performances = asStringArray(parsed.value.curriculum_108.performances);
+      const contents = asStringArray(parsed.value.curriculum_108.contents);
+      if (performances) curriculum108.performances = performances;
+      if (contents) curriculum108.contents = contents;
     } else if (stageInfo?.curriculum108) {
       errors.push(`${rel}: ${stageInfo.name}必須填 curriculum_108`);
     }
@@ -468,8 +819,22 @@ function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: V
     const grades = Array.isArray(parsed.value.stage.grades)
       ? parsed.value.stage.grades.filter((grade): grade is number => typeof grade === "number")
       : [];
+    const guidingQuestions = asStringArray(parsed.value.guiding_questions) ?? [];
+    checkDetail(
+      rel,
+      id,
+      parsed.value,
+      stage,
+      knowledgeStatus === "review" || knowledgeStatus === "published",
+      guidingQuestions,
+      taxonomy,
+      sourcesBackfill,
+      circleBackfill,
+      errors,
+      warnings,
+    );
 
-    points.push({
+    const point: KnowledgePoint = {
       file: rel,
       id,
       concept,
@@ -495,7 +860,7 @@ function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: V
       idea: String(parsed.value.idea ?? ""),
       goal: optionalString(parsed.value.goal),
       review: optionalString(parsed.value.review),
-      guidingQuestions: asStringArray(parsed.value.guiding_questions) ?? [],
+      guidingQuestions,
       scenario: String(parsed.value.scenario ?? ""),
       slides,
       article: optionalString(formats.article),
@@ -506,7 +871,27 @@ function loadKnowledgePoints(contentDir: string, taxonomy: Taxonomy, validate: V
       audience,
       authors: asStringArray(parsed.value.authors) ?? [],
       updated: String(parsed.value.updated ?? ""),
-    });
+    };
+    if (isRecord(parsed.value.est_time) && typeof parsed.value.est_time.school === "string" && typeof parsed.value.est_time.source === "string") {
+      point.estTime = { school: parsed.value.est_time.school, source: parsed.value.est_time.source };
+    }
+    const why = readCircle(parsed.value.why);
+    const how = readCircle(parsed.value.how);
+    const what = readCircle(parsed.value.what);
+    if (why) point.why = why;
+    if (how) point.how = how;
+    if (what) point.what = what;
+    const figures = readFigures(parsed.value.figures);
+    const sourceList = readSources(parsed.value.sources);
+    if (figures) point.figures = figures;
+    if (sourceList) point.sources = sourceList;
+    points.push(point);
+  }
+  for (const listed of sourcesBackfill) {
+    if (!seen.has(listed)) errors.push(`sources-backfill.yaml: 未知的 id（${listed}）`);
+  }
+  for (const listed of circleBackfill) {
+    if (!seen.has(listed)) errors.push(`golden-circle-backfill.yaml: 未知的 id（${listed}）`);
   }
   return points;
 }
@@ -623,24 +1008,28 @@ function loadPaths(contentDir: string, taxonomy: Taxonomy, points: KnowledgePoin
   return loaded;
 }
 
-export function loadContent(contentDir: string): { errors: string[]; model: ContentModel | null } {
+export function loadContent(contentDir: string): { errors: string[]; warnings: string[]; model: ContentModel | null } {
   const errors: string[] = [];
+  const warnings: string[] = [];
   const taxonomy = loadTaxonomy(contentDir, errors);
-  if (!taxonomy) return { errors, model: null };
+  if (!taxonomy) return { errors, warnings, model: null };
   let validate: ValidateFunction;
   try {
     const ajv = new Ajv({ allErrors: true, strict: true });
     validate = ajv.compile(loadSchema(contentDir));
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    return { errors: [`schema/knowledge-point.schema.json: 無法編譯（${message}）`], model: null };
+    return { errors: [`schema/knowledge-point.schema.json: 無法編譯（${message}）`], warnings, model: null };
   }
-  const points = loadKnowledgePoints(contentDir, taxonomy, validate, errors);
+  const sourcesBackfill = loadIdList(contentDir, "sources-backfill.yaml", errors);
+  const circleBackfill = loadIdList(contentDir, "golden-circle-backfill.yaml", errors);
+  const points = loadKnowledgePoints(contentDir, taxonomy, validate, errors, warnings, sourcesBackfill, circleBackfill);
   checkReferences(points, errors);
   const paths = loadPaths(contentDir, taxonomy, points, errors);
-  return { errors, model: { taxonomy, points, paths } };
+  return { errors, warnings, model: { taxonomy, points, paths } };
 }
 
-export function validateContent(contentDir: string): string[] {
-  return loadContent(contentDir).errors;
+export function validateContent(contentDir: string): { errors: string[]; warnings: string[] } {
+  const { errors, warnings } = loadContent(contentDir);
+  return { errors, warnings };
 }

@@ -104,7 +104,7 @@ content/
 
 1. 在 `taxonomy/disciplines.yaml` 確認學科路徑。路徑用中文名稱，由上往下，例如 `[數學, 分析, 變化率]`。`layer` 要等於葉子的層級（沒寫的話沿用父節點）。
 2. 複製一份相近的 YAML，改 `id`、`concept`、`title`、內文。
-3. 國小、國中、高中要填 `curriculum_108`。領域用八大領域的名稱，核心素養**只能**是 A1、A2、A3、B1、B2、B3、C1、C2、C3。不要自編學習表現或學習內容代碼。議題用 `curriculum-108.yaml` 裡的正式名稱（「生涯規劃」要寫成「生涯規劃教育」）。
+3. 國小、國中、高中要填 `curriculum_108`。領域用八大領域的名稱，核心素養**只能**是 A1、A2、A3、B1、B2、B3、C1、C2、C3。學習表現（`performances`）與學習內容（`contents`）只能填 `taxonomy/curriculum-108-codes.yaml` 裡已有的代碼。那份檔的每一筆都是官方課綱逐字複製，並附官方 PDF 網址與頁碼。不可自編、不可改寫。議題用 `curriculum-108.yaml` 裡的正式名稱（「生涯規劃」要寫成「生涯規劃教育」）。
 4. 大學不要出現 `curriculum_108`。
 5. 設計時還不確定、文件裡標了「需要核對」的，設 `to_verify: true`，並在 `verify_notes` 寫下要核對的句子。確定的就設 `false`，`verify_notes` 留空陣列。
 6. `formats.slides` 是既有教材的 componentId 陣列。還沒對到投影片就留 `[]`。不要填檔名。
@@ -130,8 +130,10 @@ pnpm validate:content
 - 先備與連結沒有指向不存在的 id
 - 先備沒有循環
 - 主線的階段一路往後
+- review、published 要有至少兩筆來源，而且黃金圈 why、how、what 都要寫。`sources-backfill.yaml` 與 `golden-circle-backfill.yaml` 裡的 id 暫時只警告。這兩份清單只能刪、不能加；已經補齊的 id 必須移出清單
+- 內文與圖引用的來源 id、圖 id 必須對得上。課綱代碼必須在 codes 檔裡，而且學習階段要落在該知識點的學段
 
-同一支程式也會用暫時的壞樣本做自我測試（重複 id、斷掉的連結、循環、自編素養代碼等）。內容和自我測試都過了才算通過。
+只有警告時仍然算通過，警告會印出來。同一支程式也會用暫時的壞樣本做自我測試（重複 id、斷掉的連結、循環、自編素養代碼、缺來源、自編課綱代碼等）。內容和自我測試都過了才算通過。
 
 Pull request 若改到 `frontend/content/**`，GitHub Actions 的 “Validate knowledge points” 會跑這支指令。既有的部署 workflow 沒有改。
 

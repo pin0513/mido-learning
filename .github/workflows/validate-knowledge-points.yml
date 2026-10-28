@@ -105,6 +105,9 @@ jobs:
       - name: Validate knowledge points
         run: pnpm validate:content
 
+      - name: Backfill lists may only shrink
+        run: pnpm exec tsx scripts/check-backfill-shrink.ts
+
       - name: City map unit tests
         run: pnpm test:unit
 

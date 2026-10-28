@@ -110,13 +110,54 @@ function writeFixture(dir: string, es: string, jh: string, pathYaml: string): vo
   writeFileSync(join(dir, "paths", "philosophy.yaml"), pathYaml);
 }
 
+const TWO_SOURCES = `sources:
+  - id: kuoyu
+    title: 十二年國教課程綱要國民中小學暨普通型高級中等學校語文領域國語文
+    publisher: 國家教育研究院
+    url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+    accessed: "2026-10-28"
+    kind: curriculum
+    supports: 注音符號的學習表現
+  - id: note
+    title: 課堂筆記
+    publisher: 測試
+    url: https://example.com/note
+    accessed: "2026-10-28"
+    kind: textbook
+    supports: 補充例子
+`;
+
+const CIRCLE = (key: string, source: string) => `${key}:
+  heading: ${key === "why" ? "為什麼要學" : key === "how" ? "怎麼學會" : "學到什麼"}
+  body: ["這是自我測試用的一句話"]
+  sources: [${source}]
+`;
+
+const FULL_CIRCLES = `${CIRCLE("why", "kuoyu")}${CIRCLE("how", "note")}${CIRCLE("what", "kuoyu")}`;
+
+function published(yaml: string): string {
+  return yaml.replace("status: draft", "status: published");
+}
+
+function withBlock(yaml: string, block: string): string {
+  return yaml.replace("to_verify:", `${block}to_verify:`);
+}
+
 function runSelfTest(): string[] {
   const failures: string[] = [];
-  const check = (label: string, es: string, jh: string, pathYaml: string, accept: (errors: string[]) => boolean): void => {
+  const check = (
+    label: string,
+    es: string,
+    jh: string,
+    pathYaml: string,
+    accept: (errors: string[]) => boolean,
+    after?: (dir: string) => void,
+  ): void => {
     const dir = mkdtempSync(join(tmpdir(), "kp-validate-"));
     try {
       writeFixture(dir, es, jh, pathYaml);
-      const errors = validateContent(dir);
+      after?.(dir);
+      const { errors } = validateContent(dir);
       if (!accept(errors)) {
         failures.push(`自我測試失敗（${label}）：\n${errors.join("\n") || "(沒有錯誤)"}`);
       }
@@ -155,6 +196,59 @@ function runSelfTest(): string[] {
     VALID_PATH.replace("ph.next@jh", "ph.missing@jh"),
     includes("指向不存在的 id"),
   );
+  check("沒有 sources", published(VALID_ES), VALID_JH, VALID_PATH, includes("缺少 sources"));
+  check("只有 1 筆來源", withBlock(published(VALID_ES), TWO_SOURCES.replace(/  - id: note[\s\S]*$/, "")), VALID_JH, VALID_PATH, includes("來源至少要 2 筆"));
+  const auxSources = TWO_SOURCES.replaceAll("kind: curriculum", "kind: aux").replaceAll("kind: textbook", "kind: aux");
+  check("全部 aux", withBlock(published(VALID_ES), auxSources), VALID_JH, VALID_PATH, includes("來源不能全部是 aux"));
+  const textbookSources = TWO_SOURCES.replace("kind: curriculum", "kind: textbook");
+  check("國小沒有 A 級來源", withBlock(published(VALID_ES), textbookSources), VALID_JH, VALID_PATH, includes("A 級來源"));
+  check(
+    "圖 type 不存在",
+    withBlock(published(VALID_ES), `${TWO_SOURCES}figures:\n  - id: bad-fig\n    type: diagram\n    alt: 不存在的圖\n`),
+    VALID_JH,
+    VALID_PATH,
+    includes("oneOf"),
+  );
+  check(
+    "figure id 不存在",
+    withBlock(published(VALID_ES), `${TWO_SOURCES}${CIRCLE("why", "kuoyu").replace("sources: [kuoyu]", "figures: [missing]\n  sources: [kuoyu]")}`),
+    VALID_JH,
+    VALID_PATH,
+    includes("指向不存在的圖（missing）"),
+  );
+  check(
+    "source id 不存在",
+    withBlock(published(VALID_ES), `${TWO_SOURCES}${CIRCLE("why", "missing")}`),
+    VALID_JH,
+    VALID_PATH,
+    includes("指向不存在的來源（missing）"),
+  );
+  check(
+    "自編代碼",
+    published(VALID_ES).replace("issues: []", "issues: []\n  performances: [3-I-9]"),
+    VALID_JH,
+    VALID_PATH,
+    includes("不可自編"),
+  );
+  check(
+    "published 缺 what 而且不在清單",
+    withBlock(published(VALID_ES), `${TWO_SOURCES}${CIRCLE("why", "kuoyu")}${CIRCLE("how", "note")}`),
+    VALID_JH,
+    VALID_PATH,
+    includes("缺少黃金圈的 what"),
+  );
+  check(
+    "清單內的點已補齊",
+    withBlock(published(VALID_ES), `${TWO_SOURCES}${FULL_CIRCLES}`),
+    VALID_JH,
+    VALID_PATH,
+    (errors) => errors.some((error) => error.includes("請從 sources-backfill.yaml 移出")) && errors.some((error) => error.includes("請從 golden-circle-backfill.yaml 移出")),
+    (dir) => {
+      const list = "# 只能刪，不能加。\nids:\n  - ph.self@es\n";
+      writeFileSync(join(dir, "sources-backfill.yaml"), list);
+      writeFileSync(join(dir, "golden-circle-backfill.yaml"), list);
+    },
+  );
   return failures;
 }
 
@@ -170,9 +264,13 @@ function countBy(pointsDir: string): Map<string, number> {
 
 function main(): void {
   const selfTestErrors = runSelfTest();
-  const contentErrors = validateContent(CONTENT_DIR);
+  const { errors: contentErrors, warnings } = validateContent(CONTENT_DIR);
   if (selfTestErrors.length > 0) {
     console.error(selfTestErrors.join("\n\n"));
+  }
+  if (warnings.length > 0) {
+    console.log(warnings.join("\n"));
+    console.log(`\n${warnings.length} 個警告`);
   }
   if (contentErrors.length > 0) {
     console.error(contentErrors.join("\n"));
