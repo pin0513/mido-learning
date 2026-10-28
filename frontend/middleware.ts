@@ -42,9 +42,19 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // /kp-v2 不是公開網址。KP 開或關、詳細頁旗標開或關，直連都是 404。
+  // rewrite 不會再跑一次 middleware，所以從 /kp/概念/學段 改寫進來的請求不會被這行擋下。
+  if (pathname === "/kp-v2" || pathname.startsWith("/kp-v2/")) return notFound();
   if (!enabled) return notFound();
   if (!softSkills && isSoftSkillsPath(pathname)) return notFound();
   if (!yuwen && isLanguagePath(pathname)) return notFound();
+  const detailV2 = enabled && process.env.KP_DETAIL_V2_ENABLED === "true";
+  const detail = /^\/kp\/([a-z]{2,8}\.[a-z0-9]+)\/([a-z]{2,8})\/?$/.exec(pathname);
+  if (detailV2 && detail) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/kp-v2/${detail[1]}/${detail[2]}`;
+    return NextResponse.rewrite(url);
+  }
   return NextResponse.next();
 }
 
@@ -72,5 +82,5 @@ function isLanguagePath(pathname: string): boolean {
 }
 
 export const config = {
-  matcher: ["/", "/city-home", "/kp", "/kp/:path*"],
+  matcher: ["/", "/city-home", "/kp", "/kp/:path*", "/kp-v2", "/kp-v2/:path*"],
 };

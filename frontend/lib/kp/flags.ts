@@ -32,6 +32,11 @@
  *   關的時候「語文」維持準備中、沒有連結；/kp/zh.*、/kp/en.*、/kp/ja.*、/kp/lg.* 與
  *   /kp/discipline/language 是 404，sitemap 不列這些網址。/?d=language 回到預設學門。
  *
+ * KP_DETAIL_V2_ENABLED：知識點詳細頁是否改用黃金圈版面。
+ *   每次請求讀取，不加 NEXT_PUBLIC_。未設定或不是 "true" 就是關。
+ *   只有 KP_ENABLED 也是 "true" 時才算打開。關掉不用重新 build，重啟行程即可。
+ *   關的時候 /kp/概念/學段 維持原本的詳細頁。/kp-v2 不是公開網址，直連一律 404。
+ *
  * WISH_FAB_ENABLED：右下角學習願望浮動按鈕（氣泡與聊天視窗一起）。
  *   未設定或不是 "true" 就是關。不要加 NEXT_PUBLIC_，避免在 build 時寫死。
  *   頁面載入後問 /api/wish-fab，所以靜態頁重啟行程就會跟著開或關。
@@ -52,6 +57,10 @@ export function isSoftSkillsEnabled(): boolean {
 
 export function isYuwenEnabled(): boolean {
   return isKpEnabled() && process.env.KP_YUWEN_ENABLED === "true";
+}
+
+export function isKpDetailV2Enabled(): boolean {
+  return isKpEnabled() && process.env.KP_DETAIL_V2_ENABLED === "true";
 }
 
 export function includeDraftKnowledgePoints(): boolean {

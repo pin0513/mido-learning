@@ -1,0 +1,170 @@
+# 提案：zh.zhuyin@es 第一個完整轉成黃金圈的知識點。
+# 既有欄位不動（只補 stage.grades），新增 why / how / what / figures / sources /
+# curriculum_108.performances / curriculum_108.contents / est_time。
+# 標「審稿者確認」的地方，要走 #122 流程由審稿者獨立核對後才能上線。
+id: zh.zhuyin@es
+concept: zh.zhuyin
+title: 注音符號：拼出聲音和聲調
+status: published
+version: "0.2"
+discipline:
+  path: [語文, 國文, 基礎功]
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+  grades: [1]                     # 新補；依課綱「注音符號教學實施於第一學年前十週」
+curriculum_108:
+  domains: [語文]
+  core_competencies: [A2, B1]
+  issues: []
+  performances: [3-I-1, 3-I-3]    # 新欄位；審稿者確認
+  contents: [Aa-I-1, Aa-I-2, Aa-I-3]  # 新欄位；審稿者確認
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（108 國語文學習表現類別 3「標音符號與運用」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- 注音教學集中在一年級，年級落點與符號數量以課綱學習內容 Aa 標音符號核對。
+prerequisites: []
+links: {why: [], how: [], related: [], deeper: []}
+link_notes: 框架：108 國語文學習表現類別 3「標音符號與運用」。
+competency: {specialist: [基礎語文], generalist: [溝通]}
+ai:
+  delegable: [念出正確讀音給你對照]
+  human_experience: [自己拼出聲音、聽出聲調的差別]
+idea: 注音由聲符、韻符和聲調組成。一個字的讀音是「聲符＋（介音）＋韻符＋聲調」，聲調記號錯了，就是另一個字。會拼注音，查字典、讀生字都靠它。
+guiding_questions:
+- 「ㄅㄚˇ」和「ㄅㄚˋ」只差一個小記號，意思一樣嗎？
+scenario: 親子共學：玩「注音傳話」：大人寫一句注音給孩子拼讀出來，孩子再用注音回一句；最後一起對照國字。
+goal: 看注音拼出不會寫、不會念的字，也能用注音寫下一句話。
+review: 家長念 5 個沒教過的詞，孩子用注音寫下來（含聲調），再對照字典，至少 4 個全對。
+formats:
+  slides: []
+  exercise: 目標：看注音拼出不會寫、不會念的字，也能用注音寫下一句話。　檢核：家長念 5 個沒教過的詞，孩子用注音寫下來（含聲調），再對照字典，至少 4 個全對。
+audience: [kid, family]
+authors: [I-PING Huang]
+updated: "2026-10-28"
+
+# ---------- 新增 ----------
+est_time:
+  school: 一年級前十週            # 只寫有來源的學校進度；不放在家時間
+  source: kuoyu
+
+why:
+  heading: 看懂一個字怎麼念
+  body:
+  - 國字常常看不出怎麼念。注音把一個字的讀音拆開，一個聲音配一個符號，孩子看到符號，就能自己拼出讀音。
+  - 所以國小一年級開學的前十週，先學注音。一、二年級的課文，課綱也建議全文附上注音，孩子遇到還沒學過的字，也能自己讀下去。
+  figures: [why-compare]
+  qa:
+    question: 「ㄅㄚˇ」和「ㄅㄚˋ」只差一個小記號，意思一樣嗎？   # 必須等於 guiding_questions 其中一題
+    answer: 不一樣。聲符、韻符都相同，只換了聲調：ㄅㄚˇ 是「把」，ㄅㄚˋ 是「爸」。聲調也是讀音的一部分。
+    source: dict
+  items_title: 會拼注音以後，孩子可以
+  items:
+  - {title: 自己讀注音讀物, text: 學習閱讀，享受閱讀樂趣。, code: 3-I-4}
+  - {title: 用注音寫下想法, text: 還不會寫的字，先用注音記下來。, code: 3-I-3}
+  - {title: 查字典、找資料, text: 中年級起，用注音檢索資訊。, code: 3-II-2}
+  sources: [kuoyu, dict]
+
+how:
+  heading: 先直接拼，再拆開聽
+  body:
+  - 課綱建議用「直接拼讀法」：看到注音，直接念出整個字音，不要一個符號一個符號念；熟了以後，再用「反拼法」，把聽到的字音拆回符號來複習。
+  items:
+  - {title: 直接拼讀, example: ㄅㄚˋ → 爸, text: 看符號，一口氣念出字音。}
+  - {title: 反拼複習, example: 爸 → ㄅ ㄚ ˋ, text: 聽字音，拆回聲符、韻符、聲調。}
+  checklist_title: 練習時，大人留意這四件事：
+  checklist: [發音部位, 嘴巴開合, 嘴唇圓或展, 聲調高低]
+  activity_figure: how-flow        # 配在既有 scenario 下面
+  sources: [kuoyu]
+
+what:
+  heading: 37 個符號，拼成一個字
+  figures: [what-symbols, what-spelling, what-tones]
+  notes:
+  - 調號標在字音最後一個符號的右上角。
+  - 一聲的「ˉ」注音時省略不標。
+  - 輕聲的圓點「˙」：橫式寫在第一個符號前面，直式寫在字音上方。
+  - 「嗎」念輕聲是當問句的語尾，例如「好嗎」。
+  sources: [handbook, dict]
+
+figures:
+- id: why-compare
+  type: compare
+  alt: ㄅㄚˇ 是把，ㄅㄚˋ 是爸，只差一個聲調記號
+  source: dict
+  relation: not_equal
+  items:
+  - {term: 把, reading: ㄅㄚˇ, note: 上聲（三聲）}
+  - {term: 爸, reading: ㄅㄚˋ, note: 去聲（四聲）}
+- id: how-flow
+  type: flow
+  alt: 注音傳話四步驟：大人寫一句注音，孩子拼讀念出，孩子用注音回一句，一起對照國字
+  steps:
+  - {actor: 大人, text: 寫一句注音}
+  - {actor: 孩子, text: 拼讀念出來}
+  - {actor: 孩子, text: 用注音回一句}
+  - {actor: 一起, text: 對照國字}
+- id: what-symbols
+  type: symbol_grid
+  title: 37 個注音符號
+  caption: 21 個聲符，加上 16 個韻符。韻符裡的 ㄧ、ㄨ、ㄩ 也能夾在聲符和韻符中間，當作介符。
+  alt: 聲符 21 個、韻符 16 個，ㄧㄨㄩ 也當介符用
+  source: handbook
+  groups:
+  - {name: 聲符, symbols: [ㄅ, ㄆ, ㄇ, ㄈ, ㄉ, ㄊ, ㄋ, ㄌ, ㄍ, ㄎ, ㄏ, ㄐ, ㄑ, ㄒ, ㄓ, ㄔ, ㄕ, ㄖ, ㄗ, ㄘ, ㄙ]}
+  - {name: 韻符, symbols: [ㄧ, ㄨ, ㄩ, ㄚ, ㄛ, ㄜ, ㄝ, ㄞ, ㄟ, ㄠ, ㄡ, ㄢ, ㄣ, ㄤ, ㄥ, ㄦ]}
+  highlight: {symbols: [ㄧ, ㄨ, ㄩ], label: 也當介符用}
+- id: what-spelling
+  type: spelling
+  title: 拼讀：一個字音怎麼組成
+  caption: 不是每個字都用滿四格：「爸」沒有介符；「阿」（ㄚ）連聲符都沒有，手冊稱為零聲母。
+  alt: 二拼：ㄅ加ㄚ加去聲成為爸；三拼：ㄏ加ㄨ加ㄚ，一聲不標，成為花
+  source: dict
+  rows:
+  - {kind: 二拼, initial: ㄅ, medial: "", final: ㄚ, tone: ˋ, result: 爸}
+  - {kind: 三拼, initial: ㄏ, medial: ㄨ, final: ㄚ, tone: "", result: 花}
+- id: what-tones
+  type: tone_chart
+  title: 五種聲調
+  caption: 線條示意音高走向：高平、上升、先降後升、下降、輕短。
+  alt: 陰平、陽平、上聲、去聲、輕聲的調號與例字 媽麻馬罵嗎
+  source: handbook
+  tones:
+  - {name: 陰平, alias: 一聲, mark: ˉ, contour: high_level, example: 媽, reading: ㄇㄚ}
+  - {name: 陽平, alias: 二聲, mark: ˊ, contour: rising, example: 麻, reading: ㄇㄚˊ}
+  - {name: 上聲, alias: 三聲, mark: ˇ, contour: dipping, example: 馬, reading: ㄇㄚˇ}
+  - {name: 去聲, alias: 四聲, mark: ˋ, contour: falling, example: 罵, reading: ㄇㄚˋ}
+  - {name: 輕聲, alias: 輕短, mark: ˙, contour: neutral, example: 嗎, reading: ˙ㄇㄚ}
+
+sources:
+- id: handbook
+  title: 國語注音符號手冊
+  publisher: 教育部
+  url: https://language.moe.gov.tw/001/Upload/files/site_content/M0001/juyin/html_ch/index.html
+  accessed: "2026-10-28"
+  kind: government
+  supports: 聲符 21、韻符 16、介符 ㄧㄨㄩ；零聲母；五種聲調的調號與標法
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 學習表現 3-I-1～3-I-4、3-II-2；學習內容 Aa-I-1～Aa-I-3；實施要點：第一學年前十週、直接拼讀法與反拼法、發音部位等四項；第一、二學習階段課文可考慮全文附注音
+- id: dict
+  title: 重編國語辭典修訂本
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/
+  accessed: "2026-10-28"
+  kind: reference
+  supports: 例字讀音：把ㄅㄚˇ、爸ㄅㄚˋ、花ㄏㄨㄚ、阿ㄚ、媽ㄇㄚ、麻ㄇㄚˊ、馬ㄇㄚˇ、罵ㄇㄚˋ、嗎˙ㄇㄚ（語尾）
+- id: sinek
+  title: How great leaders inspire action
+  publisher: Simon Sinek，TED（2009）
+  url: https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
+  accessed: "2026-10-28"
+  kind: aux
+  supports: 頁面結構採用的黃金圈（Why → How → What），不支持教學內容

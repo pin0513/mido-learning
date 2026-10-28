@@ -22,7 +22,7 @@ export interface StageInfo {
 export interface LayerInfo {
   id: string;
   name: string;
-  /** 簡稱。詳細頁的「層級」用這個字，這一輪還沒有接到畫面上。 */
+  /** 簡稱。V2 詳細頁的「層級」顯示 shortName，沒有才退回 name。 */
   shortName: string;
   role: string;
 }
@@ -60,15 +60,77 @@ export interface CirclePart {
   checklist: string[];
   figures: string[];
   notes: string[];
+  itemsTitle?: string;
+  checklistTitle?: string;
   activityFigure?: string;
   qa?: { question: string; answer: string; source: string };
 }
 
-export interface KnowledgeFigure {
+interface FigureBase {
   id: string;
-  type: string;
+  alt: string;
+  title?: string;
+  caption?: string;
   source?: string;
 }
+
+export interface CompareFigure extends FigureBase {
+  type: "compare";
+  relation: "not_equal" | "equal" | "versus";
+  items: { term: string; reading?: string; note?: string }[];
+}
+
+export interface FlowFigure extends FigureBase {
+  type: "flow";
+  steps: { actor?: string; text: string }[];
+}
+
+export interface SpellingFigure extends FigureBase {
+  type: "spelling";
+  rows: {
+    kind: string;
+    initial: string;
+    medial: string;
+    final: string;
+    tone: "" | "ˊ" | "ˇ" | "ˋ" | "˙";
+    result: string;
+  }[];
+}
+
+export interface ToneChartFigure extends FigureBase {
+  type: "tone_chart";
+  tones: {
+    name: string;
+    alias?: string;
+    mark: "ˉ" | "ˊ" | "ˇ" | "ˋ" | "˙";
+    contour: "high_level" | "rising" | "dipping" | "falling" | "neutral";
+    example: string;
+    reading: string;
+  }[];
+}
+
+export interface SymbolGridFigure extends FigureBase {
+  type: "symbol_grid";
+  groups: { name: string; symbols: string[] }[];
+  highlight?: { symbols: string[]; label: string };
+}
+
+/** 驗證器仍要認得 id。畫面上不渲染。 */
+export interface UnknownFigure {
+  id: string;
+  type: "unknown";
+  rawType: string;
+  alt: string;
+  source?: string;
+}
+
+export type KnowledgeFigure =
+  | CompareFigure
+  | FlowFigure
+  | SpellingFigure
+  | ToneChartFigure
+  | SymbolGridFigure
+  | UnknownFigure;
 
 export interface CoreCompetencyInfo {
   code: string;

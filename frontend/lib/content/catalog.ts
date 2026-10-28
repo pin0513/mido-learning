@@ -197,3 +197,14 @@ export function competencyName(catalog: ContentCatalog, code: string): string {
 export function layerName(catalog: ContentCatalog, layerId: string): string {
   return catalog.taxonomy.layerList.find((layer) => layer.id === layerId)?.name ?? layerId;
 }
+
+/** V2 詳細頁的「層級」。有簡稱用簡稱，否則用全名。 */
+export function layerShortName(catalog: ContentCatalog, layerId: string): string {
+  const layer = catalog.taxonomy.layerList.find((item) => item.id === layerId);
+  return layer?.shortName || layer?.name || layerId;
+}
+
+/** 測試把暫存內容載進和正式頁相同的索引。不套用投影片假資料。 */
+export function catalogFromModel(model: ContentModel): ContentCatalog {
+  return modelToCatalog(model, false);
+}
