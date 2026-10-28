@@ -7,6 +7,7 @@ export {
   isFolderLaunched,
   launchedCatalog,
   layerName,
+  layerShortName,
   loadCatalog,
   stageName,
   visibleCatalog,

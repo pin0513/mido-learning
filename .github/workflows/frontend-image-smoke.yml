@@ -281,3 +281,116 @@ jobs:
             echo "sitemap missing a language point"
             exit 1
           fi
+
+      - name: Run image with detail v2 flag
+        run: |
+          set -euo pipefail
+          docker run -d --name kp-image-detail-v2 -p 3003:3000 \
+            -e KP_ENABLED=true \
+            -e KP_HOME_ENABLED=true \
+            -e KP_SOFTSKILLS_ENABLED=true \
+            -e KP_YUWEN_ENABLED=true \
+            -e KP_DETAIL_V2_ENABLED=true \
+            mido-frontend-smoke
+          cleanup() {
+            status=$?
+            if [ "$status" -ne 0 ]; then
+              echo "----- detail v2 container logs -----"
+              docker logs kp-image-detail-v2 >&2 || true
+            fi
+            docker rm -f kp-image-detail-v2 >/dev/null 2>&1 || true
+            exit "$status"
+          }
+          trap cleanup EXIT
+          ready=0
+          for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+            if curl -sf http://127.0.0.1:3003/api/kp-launch | grep -q '"home":true'; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "detail v2 image did not become ready"
+            exit 1
+          fi
+          check() {
+            local path="$1"
+            local code
+            code="$(curl -sS -o /tmp/v2-body.html -w '%{http_code}' "http://127.0.0.1:3003${path}")"
+            if [ "$code" != "200" ]; then
+              echo "GET ${path} returned ${code}"
+              exit 1
+            fi
+          }
+          check "/"
+          for discipline in pm-leadership philosophy math it-ai language soft-skills; do
+            check "/?d=${discipline}"
+          done
+          check "/kp"
+          check "/kp/map"
+          check "/kp/zh.zhuyin/es"
+          check "/kp/pm.breakdown/es"
+          check "/kp/ph.reason/es"
+          check "/kp/sk.voice/es"
+          check "/kp/en.abc/es"
+          if ! grep -F "kp-detail-v2" /tmp/v2-body.html >/dev/null; then
+            echo "flag on detail page did not render v2"
+            exit 1
+          fi
+          if ! grep -F "層級" /tmp/v2-body.html >/dev/null; then
+            echo "v2 page missing 層級"
+            exit 1
+          fi
+          if grep -F "在家" /tmp/v2-body.html >/dev/null; then
+            echo "v2 page contains 在家"
+            exit 1
+          fi
+          code="$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:3003/kp-v2/zh.zhuyin/es)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp-v2/zh.zhuyin/es returned ${code}, expected 404"
+            exit 1
+          fi
+          if curl -sf http://127.0.0.1:3003/sitemap.xml | grep -F "/kp-v2" >/dev/null; then
+            echo "sitemap lists /kp-v2"
+            exit 1
+          fi
+
+      - name: Run image with only the detail v2 flag
+        run: |
+          set -euo pipefail
+          docker run -d --name kp-image-detail-v2-alone -p 3004:3000 \
+            -e KP_DETAIL_V2_ENABLED=true \
+            mido-frontend-smoke
+          cleanup() {
+            status=$?
+            if [ "$status" -ne 0 ]; then
+              echo "----- detail v2 alone container logs -----"
+              docker logs kp-image-detail-v2-alone >&2 || true
+            fi
+            docker rm -f kp-image-detail-v2-alone >/dev/null 2>&1 || true
+            exit "$status"
+          }
+          trap cleanup EXIT
+          ready=0
+          for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+            if curl -sf -o /dev/null http://127.0.0.1:3004/; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "detail v2 alone image did not become ready"
+            exit 1
+          fi
+          code="$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:3004/kp/zh.zhuyin/es)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/zh.zhuyin/es returned ${code}, expected 404 when only KP_DETAIL_V2_ENABLED is set"
+            exit 1
+          fi
+          code="$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:3004/kp-v2/zh.zhuyin/es)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp-v2/zh.zhuyin/es returned ${code}, expected 404"
+            exit 1
+          fi
