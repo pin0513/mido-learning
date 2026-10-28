@@ -1,8 +1,12 @@
+# B5 提案：zh.evaluate@sh
+# - 「B4.形式的推究與分析」「B5.結合文學、文化知識的詮釋與鑑賞」與大考中心考試說明逐字相符，保留。
+# - 「以小見大、對比」是本站整理的手法例子，已標示；「150 字」標示意。
+# - 補 grades、5-Ⅴ-1、Ad-Ⅴ-1、Ba-Ⅴ-3 與 Why/How/What、兩張圖。
 id: zh.evaluate@sh
 concept: zh.evaluate
 title: 評鑑：形式、手法與好在哪裡
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +16,10 @@ discipline:
   crosscutting: []
 stage:
   level: sh
+  grades:
+  - 10
+  - 11
+  - 12
 curriculum_108:
   domains:
   - 語文
@@ -20,10 +28,16 @@ curriculum_108:
   - B3
   issues:
   - 閱讀素養教育
-to_verify: true
+  performances:
+  - 5-V-1
+  contents:
+  - Ad-V-1
+  - Ba-V-3
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 引用的框架只寫名稱（學測國綜測驗目標 B4、B5），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照國語文領綱第五學習階段原文（頁碼見來源）。
+- 學測國綜測驗目標 B4、B5 逐字依大考中心考試說明 p.Ⅰ-1。
+- 手法例子（以小見大、對比）和「手法、引文、效果、不足」四格是本站整理；「150 字」是示意。
 - 本點為這次補強新增，內容尚未經老師審閱。
 prerequisites:
 - zh.viewpoint@jh
@@ -34,7 +48,7 @@ links:
   related: []
   deeper:
   - zh.digest@uni
-link_notes: 框架：學測國綜測驗目標 B4、B5。
+link_notes: 框架：學測國綜測驗目標 B4、B5；國語文領綱 5-Ⅴ-1、Ad-Ⅴ-1、Ba-Ⅴ-3。
 competency:
   specialist:
   - 閱讀理解
@@ -45,18 +59,116 @@ ai:
   - 列出可能的寫作手法
   human_experience:
   - 用自己的閱讀感受下判斷
-idea: 學測國綜的測驗目標包含「形式的推究與分析」與「結合文學、文化知識的詮釋與鑑賞」。評鑑要具體：說出手法（例如以小見大、對比），引原文為證，再說效果與限制。
+idea: 學測國綜的測驗目標包含「形式的推究與分析」與「結合文學、文化知識的詮釋與鑑賞」。評鑑要具體：說出手法（例如以小見大、對比，本站整理的例子），引原文為證，再說效果與限制（本站建議）。
 guiding_questions:
 - 你說這篇「寫得好」，好在哪一句？
-scenario: 親子共學：全家各挑一篇最近讀過最喜歡的文章，用「手法、效果、引文」三格向家人推薦。
+scenario: 親子共學：全家各挑一篇最近讀過最喜歡的文章，用「手法、引文、效果、不足」四格向家人推薦。
 goal: 評鑑一篇文章：指出它用了什麼寫法、達到什麼效果、還有哪裡不足。
-review: 孩子寫 150 字短評，包含 1 個寫作手法、1 個效果、1 個不足並各引一句原文；家長確認三項都有引文。
+review: 孩子寫 150 字短評（150 字為示意），包含 1 個寫作手法、1 個效果、1 個不足並各引一句原文；家長確認三項都有引文。
 formats:
   slides: []
-  exercise: 目標：評鑑一篇文章：指出它用了什麼寫法、達到什麼效果、還有哪裡不足。　檢核：孩子寫 150 字短評，包含 1 個寫作手法、1 個效果、1 個不足並各引一句原文；家長確認三項都有引文。
+  exercise: 目標：評鑑一篇文章：指出它用了什麼寫法、達到什麼效果、還有哪裡不足。　檢核：孩子寫 150 字短評（150 字為示意），包含 1 個寫作手法、1 個效果、1 個不足並各引一句原文；家長確認三項都有引文。
 audience:
 - kid
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 高中十至十二年級（第五學習階段）
+  source: kuoyu
+why:
+  heading: 好在哪一句
+  body:
+  - 大考中心的學測國文考試說明，把「B4.形式的推究與分析」和「B5.結合文學、文化知識的詮釋與鑑賞」列為國綜「文本的理解與探究」的測驗目標。
+  - 國語文課綱要高中生「辨析文本的寫作主旨、風格、結構及寫作手法」，學習內容也包括「篇章的主旨、結構、寓意與評述」。
+  qa:
+    question: 你說這篇「寫得好」，好在哪一句？
+    answer: 要指出一句原文，說它用了什麼寫法、帶來什麼效果；只說「寫得好」「很感人」還不是評鑑（本站建議）。課綱的學習內容就把「評述」和主旨、結構、寓意並列。
+    source: kuoyu
+  items_title: 高中課綱的評鑑目標
+  items:
+  - title: 辨析寫作手法
+    text: 國語文 5-Ⅴ-1：辨析文本的寫作主旨、風格、結構及寫作手法。
+    code: 5-V-1
+  - title: 篇章的評述
+    text: 國語文 Ad-Ⅴ-1：篇章的主旨、結構、寓意與評述。
+    code: Ad-V-1
+  - title: 手法與美感
+    text: 國語文 Ba-Ⅴ-3：寫作手法與文學美感的呈現。
+    code: Ba-V-3
+  sources:
+  - ceec
+  - kuoyu
+how:
+  heading: 手法、引文、效果、不足
+  body:
+  - 評鑑一篇文章，填四格（本站整理）：用了什麼手法、哪一句是證據、帶來什麼效果、還有哪裡不足。
+  items_title: 評鑑四格（本站整理）
+  items:
+  - title: 手法
+    text: 說出寫法的名稱。
+    example: 以小見大、對比
+  - title: 引文
+    text: 引一句原文當證據。
+  - title: 效果
+    text: 這個寫法讓讀者感受到什麼？
+  - title: 不足
+    text: 哪裡可以寫得更好？也引一句。
+  checklist_title: 短評要有：
+  checklist:
+  - 一個手法
+  - 一個效果
+  - 一個不足
+  - 每項有引文
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 感想不等於評鑑
+  figures:
+  - what-compare
+  notes:
+  - 手法名稱和評鑑四格是本站整理；「150 字」是示意。
+  sources:
+  - ceec
+figures:
+- id: how-flow
+  type: flow
+  alt: 寫短評的步驟：孩子找手法、引原文、說效果、找不足，家長確認都有引文
+  steps:
+  - actor: 孩子
+    text: 找出手法
+  - actor: 孩子
+    text: 引一句原文
+  - actor: 孩子
+    text: 說效果
+  - actor: 孩子
+    text: 找不足
+  - actor: 家長
+    text: 確認引文
+- id: what-compare
+  type: compare
+  alt: 感想只說喜不喜歡；評鑑要推究形式並引原文說明效果
+  source: ceec
+  relation: not_equal
+  items:
+  - term: 感想
+    note: 「很感人」：只說喜不喜歡（本站整理）
+  - term: 評鑑
+    note: 學測 B4「形式的推究與分析」：手法、引文、效果
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 第五學習階段學習重點：5-Ⅴ-1「辨析文本的寫作主旨、風格、結構及寫作手法。」（p.11）；Ad-Ⅴ-1「篇章的主旨、結構、寓意與評述。」（p.15）；Ba-Ⅴ-3「寫作手法與文學美感的呈現。」（p.16）；教材編選「（三）第五學習階段（高級中等學校教育階段）」（p.22）
+- id: ceec
+  title: 學科能力測驗 國文考科考試說明－111 學年度起適用－
+  publisher: 財團法人大學入學考試中心基金會
+  url: https://www.ceec.edu.tw/files/file_pool/1/0N118339019965852517/111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%B5%B7%E9%81%A9%E7%94%A8%E5%AD%B8%E6%B8%AC%E5%9C%8B%E6%96%87%E8%80%83%E7%A7%91%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E%28%E5%AE%9A%E7%A8%BF%29.pdf
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 壹、測驗目標「二、文本的理解與探究…B4.形式的推究與分析 B5.結合文學、文化知識的詮釋與鑑賞」（p.Ⅰ-1）
