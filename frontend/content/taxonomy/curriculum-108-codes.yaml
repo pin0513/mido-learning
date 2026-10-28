@@ -1141,3 +1141,30 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
         page: 21
+# 提議加進 frontend/content/taxonomy/curriculum-108-codes.yaml 的條目（B9 用，以 main 3c4a673 為基準，B8 的英語文條目已在 main；這裡是新科目鍵，接在檔案最後）。
+# 這些是十二年國教第二外國語文領綱（國民中學暨普通型高級中等學校）的代碼。領綱 p.4「以Ⅳ代表一級、二級，以Ⅴ代表三級、四級」：Ⅳ 是語文程度級別，不是學習階段；國中由學校在彈性學習課程選開（p.2）。代碼鍵把 Ⅳ 寫成 IV，stage 依代碼的Ⅳ寫 4（驗證器以代碼的羅馬數字推階段）。
+# 文字從官方 PDF 逐字複製（pdftotext -layout，交錯欄位另用頁面影像核對）；頁碼是頁腳印的頁碼（＝PDF 頁 − 3）。6-IV-7 屬語文程度二級（p.7）；Bp-IV-1、Bp-IV-2 屬一級（p.14）。
+# Bp-IV-1 在 p.14 學習內容表寫「字詞歸類」（沒有句號；附錄一 p.24 寫「字詞歸類。」），這裡照 p.14。
+# 每個代碼都比對過全部 108 領綱（國語文、英語文、本土語文 107 與 111 版、臺灣手語、新住民語文、數學、社會、自然、藝術、綜合活動、科技、健體、全民國防、生活課程）都不同號（社會的 Bp 代碼帶公、地等字首）；也不在 main、B7、B8 的代碼表裡。
+# 與其他領綱同號的第二外國語文代碼（1-IV-4、2-IV-4、2-IV-5、2-IV-6、2-IV-9、5-IV-3、8-IV-2、Aa-IV-1、Ad-IV-1、Ad-IV-2、Bb-IV-1）不加，只在內文引用。
+語文/第二外國語文:
+  performances:
+    6-IV-7:
+      stage: 4
+      text: 能利用各種查詢工具，推測詞彙文脈意義，自主了解外語資訊。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 7
+  contents:
+    Bp-IV-1:
+      stage: 4
+      text: 字詞歸類
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 14
+    Bp-IV-2:
+      stage: 4
+      text: 猜測、推論。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 14
