@@ -1,8 +1,13 @@
+# B7 提案：en.phonics@es
+# - 補 grades（三至六年級）與 Why/How/What、兩張圖。字母拼讀相關代碼（5-Ⅱ-4、5-Ⅲ-9、Ab-Ⅱ-4）都與國語文同號，只在內文引用。
+# - 錯誤修正：原情境用 b、c、h、m 接 -at 找「不是字的組合」，但 bat、cat、hat、mat 都是單字，找不到；改成讓孩子用其他字母組出來再查字典。
+# - 原 idea「大多數字都適用」沒有出處，刪除；改用 Cambridge／Oxford 對 phonics 的釋義與共同核心標準 RF.K.2d、RF.1.3b、RF.1.3g。
+# - 檢核數字標示意；AI 只由大人操作。
 id: en.phonics@es
 concept: en.phonics
 title: 自然發音：看字讀出來
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +18,11 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 語文
@@ -21,19 +31,22 @@ curriculum_108:
   - A2
   issues:
   - 閱讀素養教育
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
-- 基準標籤：初級的準備。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源）；相關代碼都與其他領綱同號，只在內文引用。
+- 英語文 5-Ⅱ-4（與國語文同號）、5-Ⅲ-9（與國語文同號）、Ab-Ⅱ-4（與國語文同號）：代碼表以代碼為鍵，列入會互撞，所以只在內文引用、不列入 curriculum_108。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
+- 基準標籤：美國小學讀本・Phonics。
+- phonics 的釋義依 Cambridge Dictionary、Oxford Learner's Dictionaries；CVC 的說法依共同核心標準 RF.K.2d（PDF p.15），逐字核對。
 prerequisites:
 - en.abc@es
 links:
   why: []
   how: []
-  related: []
+  related:
+  - en.sight@es
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：美國共同核心標準 RF.K.2d、RF.1.3b、RF.1.3g；英語文領綱實施要點「字母拼讀規則」（p.27）；5-Ⅱ-4、5-Ⅲ-9、Ab-Ⅱ-4 與國語文同號，只在內文引用。
 competency:
   specialist:
   - 發音與拼讀
@@ -42,21 +55,161 @@ competency:
   - 提問
 ai:
   delegable:
-  - 檢查你念得對不對
+  - 播放單字示範發音，讓孩子比對（由大人操作）
   human_experience:
-  - 自己試著拼讀，錯了再修正
-idea: 把字母的聲音一個一個拼起來，就能念出沒學過的字。這套規則叫自然發音（phonics），有例外，但大多數字都適用。
+  - 自己試著拼讀生字
+idea: 英文字母和聲音大致有對應：b-a-t 一個一個念出聲音再連起來，就是 bat。這種看字讀音的方法叫自然發音（phonics）；也有拼法不規則的字，要另外認（見 en.sight）。
 guiding_questions:
 - 沒看過的字 bat、bed，你能不能猜出怎麼念？
-scenario: 親子共學：把 b、c、h、m 和 -at 組合起來念：bat、cat、hat、mat，看誰先找到一個真的不是字的組合。
+scenario: 親子共學：用字母卡拼 -at 家族（bat、cat、hat、mat），每換一個開頭字母就念一次；再換其他字母試試，組出念得出來的字後一起查字典，看是不是真的英文單字。
 goal: 用自然發音拼讀沒學過的短母音單字（CVC，例如 bat、bed、pig）。
-review: 家長寫 10 個孩子沒看過的 CVC 字，孩子不看提示念出來，至少 8 個念對。
+review: 家長寫 10 個沒學過的三個字母單字（像 bed、pig），孩子試著念出來，至少 8 個念對（10 個、8 個是示意）。
 formats:
   slides: []
-  exercise: 目標：用自然發音拼讀沒學過的短母音單字（CVC，例如 bat、bed、pig）。　檢核：家長寫 10 個孩子沒看過的 CVC 字，孩子不看提示念出來，至少 8 個念對。
+  exercise: 目標：用自然發音拼讀沒學過的短母音單字（CVC，例如 bat、bed、pig）。　檢核：家長寫 10 個沒學過的三個字母單字（像 bed、pig），孩子試著念出來，至少 8 個念對（10 個、8 個是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國小三至六年級（第二、三學習階段）
+  source: english
+why:
+  heading: 看到生字也念得出來
+  body:
+  - 英語文領綱實施要點說：「字母拼讀規則呈現語音和字母的對應關係，也是語音與文字的重要聯結，能幫助學生在語音、認字與拼字等方面的學習。」國小「應善用字母拼讀規則看字讀音與聽音拼字」（p.27）。Cambridge Dictionary 把 phonics 解釋為依字母所代表的聲音來教閱讀的方法。
+  qa:
+    question: 沒看過的字 bat、bed，你能不能猜出怎麼念？
+    answer: 可以。把 b、a、t 三個聲音一個一個念出來，再連起來念，就是 bat；bed 也一樣。這就是領綱說的看字讀音。
+    source: english
+  items_title: 領綱條目（只在內文引用）與定義
+  items:
+  - title: 拼讀讀出字詞
+    text: 英語文 5-Ⅱ-4：能運用所學的字母拼讀規則讀出英文字詞。
+  - title: 拼讀規則
+    text: 英語文 Ab-Ⅱ-4：所學的字母拼讀規則（含看字讀音、聽音拼字）。
+  - title: 什麼是 phonics
+    text: 依字母所代表的聲音來教閱讀的方法（Cambridge Dictionary）。
+  checklist_title: 開始前先確認
+  checklist:
+  - 認得 26 個字母
+  - 說得出字母音
+  notes:
+  - 這些條目與國語文同號，只在內文引用。
+  sources:
+  - english
+  - camb-phonics
+  - oxf-phonics
+how:
+  heading: 一個一個念，再連起來
+  body:
+  - 先從三個字母、中間是短母音的字開始，例如 bat、bed、pig（共同核心標準稱為 CVC，子音、母音、子音）。本站建議：每次只換一個字母，像 bat、cat、hat，孩子比較容易看出規律。
+  items_title: 本站建議的練法
+  items:
+  - title: 拆開念
+    text: b、a、t 三個聲音分開念。
+  - title: 連起來念
+    text: 把三個聲音連成 bat。
+  - title: 換開頭字母
+    text: bat 換成 cat、hat、mat。
+  - title: 換中間母音
+    text: bat 換成 bit、but。
+  checklist_title: 每次練完勾一下
+  checklist:
+  - 拆開念
+  - 連起來念
+  - 換字母再念
+  activity_figure: phonics-flow
+  notes:
+  - 練法是本站建議；CVC 一詞依共同核心標準 RF.K.2d。
+  sources:
+  - ccss-ela
+what:
+  heading: 規則字拼得出，例外字另外認
+  body:
+  - 共同核心標準要一年級學生「Decode regularly spelled one-syllable words」，也要認讀拼法不規則的字（irregularly spelled words）。所以學完拼讀後，大部分照規則拼的短字念得出來；拼法不規則的字，要另外一眼認得（見 en.sight）。
+  items_title: 學完能做到
+  items:
+  - title: 念出規則字
+    text: 沒學過的 CVC 字也念得出來。
+  - title: 認出字族
+    text: 看出 bat、cat、hat 是同一家。
+  - title: 知道有例外
+    text: 拼法不規則的字要另外認。
+  checklist_title: 家長檢核
+  checklist:
+  - 生字念得出
+  - 看得出字族
+  - 知道有例外
+  figures:
+  - phonics-compare
+  notes:
+  - 檢核用的 10 個、8 個是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - ccss-ela
+  - english
+  - genai-student
+figures:
+- id: phonics-flow
+  type: flow
+  alt: 拼讀流程：看字母、念出每個聲音、連起來念、確認意思。
+  steps:
+  - actor: 孩子
+    text: 看三個字母
+  - actor: 孩子
+    text: 念出每個聲音
+  - actor: 孩子
+    text: 連起來念
+  - actor: 家長
+    text: 播示範音比對
+  source: ccss-ela
+- id: phonics-compare
+  type: compare
+  alt: 比較規則字和不規則字：規則字可以拼讀，不規則字要另外認。
+  source: ccss-ela
+  relation: not_equal
+  items:
+  - term: 規則字
+    note: 例如 bat，照字母拼得出來
+  - term: 不規則字
+    note: 拼法不照規則，要另外認
+  caption: 依共同核心標準 RF.1.3b、RF.1.3g。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：5-Ⅱ-4「能運用所學的字母拼讀規則讀出英文字詞。」（p.12）；5-Ⅲ-9「能運用所學的字母拼讀規則讀出英文字詞。」（p.13）；Ab-Ⅱ-4「所學的字母拼讀規則（含看字讀音、聽音拼字）。」（p.17）；教材編選「字母拼讀規則呈現語音和字母的對應關係，也是語音與文字的重要聯結，能幫助學生在語音、認字與拼字等方面的學習。國民小學教育階段應善用字母拼讀規則看字讀音與聽音拼字」（p.27）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: camb-phonics
+  title: Cambridge Dictionary「phonics」
+  publisher: Cambridge University Press & Assessment
+  url: https://dictionary.cambridge.org/dictionary/english/phonics
+  accessed: '2026-10-29'
+  kind: reference
+  supports: phonics：「a method of teaching people to read, based on learning the sounds that letters represent」
+- id: oxf-phonics
+  title: Oxford Learner's Dictionaries「phonics」
+  publisher: Oxford University Press
+  url: https://www.oxfordlearnersdictionaries.com/definition/english/phonics
+  accessed: '2026-10-29'
+  kind: reference
+  supports: phonics：「a method of teaching people to read based on the sounds that letters represent」
+- id: ccss-ela
+  title: Common Core State Standards for English Language Arts & Literacy in History/Social Studies, Science, and Technical Subjects
+  publisher: National Governors Association Center for Best Practices、Council of Chief State School Officers（Common Core State Standards Initiative）
+  url: https://corestandards.org/wp-content/uploads/2023/09/ELA_Standards1.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 'Reading Standards: Foundational Skills（PDF p.15–16）：RF.K.2d「Isolate and pronounce the initial, medial vowel, and final sounds (phonemes) in three-phoneme (consonant-vowel-consonant, or CVC) words.」；RF.1.3b「Decode regularly spelled one-syllable words.」；RF.1.3g「Recognize and read grade-appropriate irregularly spelled words.」'
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」

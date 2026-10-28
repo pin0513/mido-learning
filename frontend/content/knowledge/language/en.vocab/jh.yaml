@@ -1,8 +1,14 @@
+# B7 提案：en.vocab@jh
+# - 補 grades、英語文 3-Ⅳ-12、9-Ⅳ-1 與 Why/How/What、兩張圖。Ac-Ⅳ-4（國中 1,200 字詞）與第二外國語文、閩南語文同號，只在內文引用。
+# - 會考 1,200 字依心測中心會考網站與英語文領綱（pp.27–28、附錄五表一）補上出處 id。
+# - un-、re-、-ful、-less 的意思依 Cambridge Dictionary 逐字核對；原 idea「字首 + 字根 + 字尾」的字根說法沒有出處，改成字首、字尾，並把「記得更久」刪除。
+# - 檢核數字標示意；AI 依教育部學生版注意事項。
+# - 標題與目標修正：原標題「字根字首」、目標「字首、字根、字尾」，本點只教字首與字尾，改成「字首字尾：猜出單字的意思」，目標刪去字根。
 id: en.vocab@jh
 concept: en.vocab
-title: 字根字首：猜出單字的意思
+title: 字首字尾：猜出單字的意思
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +19,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -20,12 +30,17 @@ curriculum_108:
   - A2
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 3-IV-12
+  - 9-IV-1
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源），並確認列入的代碼不與其他領綱同號。
+- 英語文 Ac-Ⅳ-4（與第二外國語文、閩南語文（107 年版）同號）：代碼表以代碼為鍵，列入會互撞，所以只在內文引用、不列入 curriculum_108。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：會考 1,200 字。
-- 會考英語的字彙範圍是課綱附錄五基本 1,200 字（心測中心測驗內容說明）。
+- 會考英語的字彙範圍是課綱附錄五基本 1,200 字（心測中心會考網站「詳見課程綱要附錄五：表一、基本1,200字」），已逐字核對。
+- un-、re-、-ful、-less 的釋義依 Cambridge Dictionary 逐字核對。
 prerequisites:
 - lg.review@jh
 - en.sight@es
@@ -34,7 +49,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：國中教育會考英語科字彙（課綱附錄五表一基本 1,200 字）；英語文領綱 3-Ⅳ-12、9-Ⅳ-1；Ac-Ⅳ-4 與其他領綱同號，只在內文引用。
 competency:
   specialist:
   - 字彙
@@ -42,21 +57,180 @@ competency:
   - 提問
 ai:
   delegable:
-  - 列出同字根的字、解釋字源
+  - 列出同字首、字尾的字（依教育部學生版注意事項）
   human_experience:
   - 用新字造自己的句子
-idea: 很多英文單字是拼出來的：字首 + 字根 + 字尾。認得常見的零件，就能猜出生字，也記得更久。
+idea: 很多英文單字是在一個字前後加上字首、字尾變出來的：un- 表示 not，re- 表示 do again，-less 表示 without。認得常見的字首、字尾，就能猜出生字的意思。
 guiding_questions:
 - unhappy 和 replay 裡的 un-、re-，是什麼意思？
-scenario: 親子共學：寫下 5 個 un- 開頭和 5 個 re- 開頭的字，先猜意思再查字典，看猜對幾個。
-goal: 用常見字首、字根、字尾猜出生字的意思，累積會考基本字彙。
-review: 家長挑 10 個含 un-、re-、-ful、-less 的生字，孩子先猜意思再查字典，猜對 7 個以上。
+scenario: 親子共學：寫下 5 個 un- 開頭和 5 個 re- 開頭的字，先猜意思再查字典，看猜對幾個（5 個是示意）。
+goal: 用常見字首、字尾猜出生字的意思，累積會考基本字彙。
+review: 家長挑 10 個含 un-、re-、-ful、-less 的生字，孩子先猜意思再查字典，猜對 7 個以上（10 個、7 個是示意）。
 formats:
   slides: []
-  exercise: 目標：用常見字首、字根、字尾猜出生字的意思，累積會考基本字彙。　檢核：家長挑 10 個含 un-、re-、-ful、-less 的生字，孩子先猜意思再查字典，猜對 7 個以上。
+  exercise: 目標：用常見字首、字尾猜出生字的意思，累積會考基本字彙。　檢核：家長挑 10 個含 un-、re-、-ful、-less 的生字，孩子先猜意思再查字典，猜對 7 個以上（10 個、7 個是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: english
+why:
+  heading: 國中要會 1,200 個字
+  body:
+  - 英語文領綱說，國小畢業「口語部分應至少會應用300個字詞，書寫部分則至少會拼寫其中180個字詞」；「國民中學畢業時，學生應至少學會1,200個字詞，並能應用於聽、說、讀、寫的日常溝通中」（pp.27–28）。國中教育會考英語科的字彙「詳見課程綱要附錄五：表一、基本1,200字」。領綱也要學生熟悉猜測字義等閱讀技巧。
+  qa:
+    question: unhappy 和 replay 裡的 un-、re-，是什麼意思？
+    answer: un- 加在字前面表示 not、lacking 或相反，所以 unhappy 是不快樂；re- 表示 do again，所以 replay 是再播一次。
+    source: camb-un
+  items_title: 英語文領綱的學習重點
+  items:
+  - title: 猜測字義
+    text: 英語文 3-Ⅳ-12：能熟悉重要的閱讀技巧，如擷取大意、猜測字義、推敲文意、預測後續文意及情節發展等。
+    code: 3-IV-12
+  - title: 合理猜測
+    text: 英語文 9-Ⅳ-1：能綜合相關資訊作合理的猜測。
+    code: 9-IV-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 會查英英字典
+  - 認得基本字
+  notes:
+  - 英語文 Ac-Ⅳ-4「國中階段所學字詞（能聽、讀、說、寫最基本的1,200字詞）。」與其他領綱同號，只在內文引用。
+  sources:
+  - english
+  - cap-english
+  - camb-un
+  - camb-re
+how:
+  heading: 拆開字首、字尾猜意思
+  body:
+  - 本站建議：看到生字先找有沒有認得的字首或字尾，拆掉後看剩下的字認不認得，再把意思拼起來猜，最後查字典確認。
+  items_title: 四個常見字首、字尾
+  items:
+  - title: un-
+    text: not、lacking、the opposite of：unhappy
+  - title: re-
+    text: do again：replay、rewrite
+  - title: -ful
+    text: having the stated quality to a high degree：careful
+  - title: -less
+    text: without：careless
+  checklist_title: 每猜一個勾一下
+  checklist:
+  - 找出字首字尾
+  - 認出剩下的字
+  - 查字典確認
+  activity_figure: vocab-flow
+  notes:
+  - 猜字步驟是本站建議；字首、字尾的意思依 Cambridge Dictionary。
+  sources:
+  - camb-un
+  - camb-re
+  - camb-ful
+  - camb-less
+what:
+  heading: 用字首、字尾猜生字
+  body:
+  - 學完後，孩子看到含 un-、re-、-ful、-less 的生字能猜出意思，再用新字造自己的句子；慢慢累積會考的基本 1,200 字。
+  items_title: 學完能做到
+  items:
+  - title: 認出字首字尾
+    text: un-、re-、-ful、-less 一眼認出。
+  - title: 猜出意思
+    text: 把字首、字尾和原字的意思拼起來。
+  - title: 造句
+    text: 用新字寫一句自己的話。
+  checklist_title: 家長檢核
+  checklist:
+  - 猜得出意思
+  - 查過字典
+  - 造了句子
+  figures:
+  - vocab-compare
+  notes:
+  - 檢核用的 10 個、7 個是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去。
+  sources:
+  - camb-ful
+  - camb-less
+  - cap-english
+  - genai-student
+figures:
+- id: vocab-flow
+  type: flow
+  alt: 猜字流程：找字首字尾、看剩下的字、拼出意思、查字典確認。
+  steps:
+  - actor: 孩子
+    text: 找字首字尾
+  - actor: 孩子
+    text: 看剩下的字
+  - actor: 孩子
+    text: 拼出意思
+  - actor: 孩子
+    text: 查字典確認
+  source: camb-un
+- id: vocab-compare
+  type: compare
+  alt: 比較 -ful 和 -less：careful 是很小心，careless 是不小心。
+  source: camb-less
+  relation: not_equal
+  items:
+  - term: careful
+    note: -ful：having the quality
+  - term: careless
+    note: -less：without
+  caption: 字尾的意思依 Cambridge Dictionary。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：3-Ⅳ-12「能熟悉重要的閱讀技巧，如擷取大意、猜測字義、推敲文意、預測後續文意及情節發展等。」（p.11）；9-Ⅳ-1「能綜合相關資訊作合理的猜測。」（p.16）；Ac-Ⅳ-4「國中階段所學字詞（能聽、讀、說、寫最基本的1,200字詞）。」（p.17，與其他領綱同號，只在內文引用）；教材編選「學生完成國民小學教育階段的英語文教育，口語部分應至少會應用300個字詞，書寫部分則至少會拼寫其中180個字詞。國民中學畢業時，學生應至少學會1,200個字詞，並能應用於聽、說、讀、寫的日常溝通中。」（pp.27–28）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: cap-english
+  title: 考試內容＞各科考試內容＞英語科
+  publisher: 國中教育會考（國立臺灣師範大學心理與教育測驗研究發展中心）
+  url: https://cap.rcpet.edu.tw/test4-3.html
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 一、考試內容（三）語言成分：「詳見課程綱要附錄五：表一、基本1,200字」；語法結構「詳見課程綱要附錄六：國民中學英語文基礎文法句構參考表」
+- id: camb-un
+  title: Cambridge Dictionary「un-」
+  publisher: Cambridge University Press & Assessment
+  url: https://dictionary.cambridge.org/dictionary/english/un
+  accessed: '2026-10-29'
+  kind: reference
+  supports: un-：「used to add the meaning 『not』, 『lacking』, or 『the opposite of』 before adjectives, adverbs, verbs, and nouns」
+- id: camb-re
+  title: Cambridge Dictionary「re-」
+  publisher: Cambridge University Press & Assessment
+  url: https://dictionary.cambridge.org/dictionary/english/re
+  accessed: '2026-10-29'
+  kind: reference
+  supports: re-：「used to add the meaning 『do again』, especially to verbs」
+- id: camb-ful
+  title: Cambridge Dictionary「-ful」
+  publisher: Cambridge University Press & Assessment
+  url: https://dictionary.cambridge.org/dictionary/english/ful
+  accessed: '2026-10-29'
+  kind: reference
+  supports: -ful：「having the stated quality to a high degree, or causing it」
+- id: camb-less
+  title: Cambridge Dictionary「-less」
+  publisher: Cambridge University Press & Assessment
+  url: https://dictionary.cambridge.org/dictionary/english/less
+  accessed: '2026-10-29'
+  kind: reference
+  supports: -less：「used to form adjectives meaning 『without (the thing mentioned)』」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」

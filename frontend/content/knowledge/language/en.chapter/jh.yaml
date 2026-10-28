@@ -1,8 +1,13 @@
+# B7 提案：en.chapter@jh
+# - 補 grades、英語文 3-Ⅳ-14、3-Ⅳ-16、5-Ⅳ-10、Ae-Ⅳ-6、Ae-Ⅳ-8 與 Why/How/What、兩張圖。
+# - chapter book 的意思改依 Cambridge Dictionary；共同核心標準把文學（stories, dramas, and poetry）和資訊文本（history/social studies, science, and technical texts）分列，3–5 年級各有文本難度帶（RL.3.10、RL.5.10、RI.3.10、RI.5.10），補上逐字出處，刪掉「待核對框架用語」。
+# - 原 idea「生字多但句子短，最適合大量閱讀」沒有出處，改成英語文領綱「廣泛閱讀」與實施要點「微量生字」的說法；年級程度標為本站建議。
+# - 檢核數字標示意；AI 依教育部學生版注意事項。
 id: en.chapter@jh
 concept: en.chapter
 title: 讀美國小學讀本：章節書與知識短文
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +18,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -22,14 +31,20 @@ curriculum_108:
   issues:
   - 閱讀素養教育
   - 國際教育
-to_verify: true
+  performances:
+  - 3-IV-14
+  - 3-IV-16
+  - 5-IV-10
+  contents:
+  - Ae-IV-6
+  - Ae-IV-8
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源），並確認列入的代碼不與其他領綱同號。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：美國 3–5 年級讀本。
-- 引用的框架只寫名稱（Common Core ELA（文學與資訊文本）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 本點為這次補強新增，內容尚未經老師審閱。
-- 「美國 3–5 年級讀本」是程度描述，請用出版社標示的年級或閱讀級數選書；本站不指定書目。
+- 共同核心標準 RL.3.10、RL.4.10、RL.5.10（PDF p.12）、RI.3.10、RI.4.10、RI.5.10（PDF p.14）與 Cambridge Dictionary「chapter book」逐字核對。
+- 「美國 3–5 年級讀本」是程度描述，請用出版社標示的年級或閱讀級數選書；這裡不指定書目。
 prerequisites:
 - en.reading@jh
 links:
@@ -38,7 +53,7 @@ links:
   related: []
   deeper:
   - en.middle@sh
-link_notes: 框架：Common Core ELA（文學與資訊文本）。
+link_notes: 框架：美國共同核心標準 RL.3.10、RL.4.10、RL.5.10、RI.3.10、RI.4.10、RI.5.10（文學與資訊文本）；英語文領綱 3-Ⅳ-14、3-Ⅳ-16、5-Ⅳ-10、Ae-Ⅳ-6、Ae-Ⅳ-8。
 competency:
   specialist:
   - 閱讀理解
@@ -46,21 +61,157 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 解釋生字、出閱讀理解題
+  - 解釋生字、出閱讀理解題（依教育部學生版注意事項）
   human_experience:
   - 自己讀完整本書並說出感受
-idea: 美國小學到了三到五年級，開始讀分章的小說（chapter books），也讀科學、歷史的知識短文。美國的共同核心州立標準（Common Core ELA）把文學與資訊文本並列。台灣國中生讀這個程度的書，生字多但句子短，最適合大量閱讀。
+idea: 美國共同核心標準（Common Core ELA）把文學（故事、戲劇、詩）和資訊文本（歷史、社會、科學、技術）分開列，三到五年級各有要讀懂的難度。分章的小說叫 chapter book：故事分成幾章，不像圖畫書那樣圖多字少。本站建議台灣國中生讀這個程度的書做廣泛閱讀。
 guiding_questions:
 - 美國小學生讀的英文書，你讀得懂幾成？
-scenario: 親子共學：親子共讀一本章節書，每天一章，孩子讀給大人聽，大人負責問「接下來會怎樣」。
+scenario: 親子共學：親子共讀一本章節書，每天一章（示意），孩子讀給大人聽，大人負責問「接下來會怎樣」。
 goal: 讀完一本美國小學三到五年級程度的分章小說，和一篇同程度的知識短文。
-review: 孩子讀完一本 3–5 年級程度的章節書，每章寫一句英文摘要；家長抽 2 章請孩子用中文說出發生了什麼，再讀一篇同程度的科學或歷史短文，說出 3 個事實。
+review: 孩子讀完一本 3–5 年級程度的章節書，每章寫一句英文摘要；家長抽 2 章請孩子用中文說出發生了什麼，再讀一篇同程度的科學或歷史短文，說出 3 個事實（2 章、3 個是示意）。
 formats:
   slides: []
-  exercise: 目標：讀完一本美國小學三到五年級程度的分章小說，和一篇同程度的知識短文。　檢核：孩子讀完一本 3–5 年級程度的章節書，每章寫一句英文摘要；家長抽 2 章請孩子用中文說出發生了什麼，再讀一篇同程度的科學或歷史短文，說出 3 個事實。
+  exercise: 目標：讀完一本美國小學三到五年級程度的分章小說，和一篇同程度的知識短文。　檢核：孩子讀完一本 3–5 年級程度的章節書，每章寫一句英文摘要；家長抽 2 章請孩子用中文說出發生了什麼，再讀一篇同程度的科學或歷史短文，說出 3 個事實（2 章、3 個是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: english
+why:
+  heading: 讀整本書，練廣泛閱讀
+  body:
+  - 英語文領綱第四學習階段要學生「能閱讀不同體裁、不同主題的簡易文章」，「能快速閱讀了解文章重點，並有效應用於廣泛閱讀中」，並能讀懂故事後「以簡短的句子說出或寫出其內容大意」。實施要點也鼓勵「適度選取稍微超出學生現有字彙量的文本」（p.32）。美國小學三到五年級的章節書和知識短文，正好是不同體裁、不同主題的練習材料。
+  qa:
+    question: 美國小學生讀的英文書，你讀得懂幾成？
+    answer: 試讀一章就知道：說得出誰、在哪裡、發生什麼事，就讀得懂大意。共同核心標準要美國四、五年級學生讀懂 4–5 年級難度帶的文學和資訊文本，台灣國中生可以從這個程度開始試（本站建議）。
+    source: ccss-ela
+  items_title: 英語文領綱的學習重點
+  items:
+  - title: 不同體裁
+    text: 英語文 3-Ⅳ-16：能閱讀不同體裁、不同主題的簡易文章。
+    code: 3-IV-16
+  - title: 廣泛閱讀
+    text: 英語文 3-Ⅳ-14：能快速閱讀了解文章重點，並有效應用於廣泛閱讀中。
+    code: 3-IV-14
+  - title: 說出大意
+    text: 英語文 5-Ⅳ-10：能讀懂簡易故事及短文，並能以簡短的句子說出或寫出其內容大意。
+    code: 5-IV-10
+  - title: 故事四要素
+    text: 英語文 Ae-Ⅳ-6：簡易故事的背景、人物、事件和結局。
+    code: Ae-IV-6
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好一本章節書
+  - 選好一篇知識文
+  sources:
+  - english
+  - ccss-ela
+how:
+  heading: 一天一章，一章一句
+  body:
+  - 本站建議：每天讀一章，讀完用一句英文寫這章發生什麼；遇到生字先猜，不必每個都查。知識短文則找出 3 個事實。故事要抓背景、人物、事件和結局（領綱 Ae-Ⅳ-6）。
+  items_title: 本站建議的讀法
+  items:
+  - title: 讀一章
+    text: 孩子讀給大人聽，或自己默讀。
+  - title: 寫一句摘要
+    text: 用一句英文寫這章發生什麼。
+  - title: 抓故事四要素
+    text: 背景、人物、事件、結局。
+  - title: 讀知識短文
+    text: 找出 3 個事實。
+  checklist_title: 每天讀完勾一下
+  checklist:
+  - 讀了一章
+  - 寫了一句摘要
+  - 猜了生字
+  activity_figure: chapter-flow
+  notes:
+  - 每天一章、一句摘要是本站建議；這裡不指定書目。
+  sources:
+  - english
+what:
+  heading: 讀完一本章節書和知識文
+  body:
+  - 學完後，孩子能自己讀完一本分章的小說，說出背景、人物、事件和結局，也能從一篇同程度的知識短文裡找出事實。
+  items_title: 學完能做到
+  items:
+  - title: 讀完整本
+    text: 讀完一本 3–5 年級程度的章節書。
+  - title: 寫出摘要
+    text: 每章用一句英文寫大意。
+  - title: 找出事實
+    text: 從知識短文找出事實。
+  checklist_title: 家長檢核
+  checklist:
+  - 每章有摘要
+  - 說得出情節
+  - 找得到事實
+  figures:
+  - chapter-compare
+  notes:
+  - 檢核用的 2 章、3 個事實是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去。
+  sources:
+  - english
+  - camb-chapterbook
+  - genai-student
+figures:
+- id: chapter-flow
+  type: flow
+  alt: 章節書閱讀流程：讀一章、猜生字、寫一句摘要、大人提問。
+  steps:
+  - actor: 孩子
+    text: 讀一章
+  - actor: 孩子
+    text: 先猜生字
+  - actor: 孩子
+    text: 寫一句摘要
+  - actor: 家長
+    text: 問接下來會怎樣
+  source: english
+- id: chapter-compare
+  type: compare
+  alt: 比較章節書和圖畫書：章節書分章、字多；圖畫書圖多、故事簡單。
+  source: camb-chapterbook
+  relation: not_equal
+  items:
+  - term: 章節書
+    note: 故事分成好幾章
+  - term: 圖畫書
+    note: 圖多、字少、故事簡單
+  caption: 依 Cambridge Dictionary 對 chapter book 的釋義。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：3-Ⅳ-14「能快速閱讀了解文章重點，並有效應用於廣泛閱讀中。」（p.11）；3-Ⅳ-16「能閱讀不同體裁、不同主題的簡易文章。」（p.11）；5-Ⅳ-10「能讀懂簡易故事及短文，並能以簡短的句子說出或寫出其內容大意。」（p.13）；Ae-Ⅳ-6「簡易故事的背景、人物、事件和結局。」（p.18）；Ae-Ⅳ-8「簡易故事及短文的大意。」（p.18）；教學要領（二）「閱讀教學應該突破字彙量的框架與箝制，適度選取稍微超出學生現有字彙量的文本」（p.32）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: ccss-ela
+  title: Common Core State Standards for English Language Arts & Literacy in History/Social Studies, Science, and Technical Subjects
+  publisher: National Governors Association Center for Best Practices、Council of Chief State School Officers（Common Core State Standards Initiative）
+  url: https://corestandards.org/wp-content/uploads/2023/09/ELA_Standards1.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: RL.3.10、RL.4.10、RL.5.10（PDF p.12）：「read and comprehend literature, including stories, dramas, and poetry」，3 年級為 the grades 2–3 text complexity band 高端、5 年級為 the grades 4–5 text complexity band 高端；RI.3.10、RI.4.10、RI.5.10（PDF p.14）：「read and comprehend informational texts, including history/social studies, science, and technical texts」；RL.4.10、RI.4.10 的 4 年級要求：「in the grades 4–5 text complexity band proficiently, with scaffolding as needed at the high end of the range」
+- id: camb-chapterbook
+  title: Cambridge Dictionary「chapter book」
+  publisher: Cambridge University Press & Assessment
+  url: https://dictionary.cambridge.org/dictionary/english/chapter-book
+  accessed: '2026-10-29'
+  kind: reference
+  supports: chapter book：「a book for children with a story that is divided into chapters (= separate parts, usually given a number or a title), rather than a book that has many pictures and a simple story told in few words」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」

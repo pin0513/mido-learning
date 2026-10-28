@@ -1,8 +1,12 @@
+# B7 提案：en.classroom@es
+# - 補 grades、英語文 1-Ⅱ-9、7-Ⅱ-2、B-Ⅱ-1 與 Why/How/What、兩張圖。「簡易的教室用語」（Ac-Ⅱ-1）與其他領綱同號，只在內文引用。
+# - Simon says 的規則依 Oxford Learner's Dictionaries 的釋義補上（只有聽到 Simon says 才做）；國小聽力教學「利用圖示、肢體動作等視覺輔助」引自領綱實施要點 p.31。
+# - 檢核數字標示意；AI 只由大人操作。
 id: en.classroom@es
 concept: en.classroom
 title: 聽指令做動作
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +17,9 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 語文
@@ -20,18 +27,25 @@ curriculum_108:
   - B1
   - A1
   issues: []
-to_verify: true
+  performances:
+  - 1-II-9
+  - 7-II-2
+  contents:
+  - B-II-1
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
-- 基準標籤：初級的準備。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源），並確認列入的代碼不與其他領綱同號。
+- 英語文 Ac-Ⅱ-1（與國語文等其他領綱同號）：代碼表以代碼為鍵，列入會互撞，所以只在內文引用、不列入 curriculum_108。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
+- 基準標籤：美國小學讀本・Classroom English。
+- Simon says 的遊戲規則依 Oxford Learner's Dictionaries 釋義逐字核對。
 prerequisites: []
 links:
   why: []
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：英語文領綱 1-Ⅱ-9、7-Ⅱ-2、B-Ⅱ-1；實施要點國小聽力教學「利用圖示、肢體動作等視覺輔助」（p.31）；Ac-Ⅱ-1「簡易的教室用語」與其他領綱同號，只在內文引用。
 competency:
   specialist:
   - 聽力
@@ -39,21 +53,151 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 念指令、調整速度
+  - 播放指令示範音檔、調整速度（由大人操作）
   human_experience:
-  - 邊聽邊動，練出不用翻譯的反應
-idea: 聽外語時，從語氣、動作和幾個關鍵字就能猜出意思。先抓大意，不用每個字都懂。
+  - 在真實的教室裡聽懂老師並做出反應
+idea: 聽外語時，從動作和幾個關鍵字就能猜出意思，說話的語氣也是線索（本站整理）。先抓大意，不用每個字都懂。
 guiding_questions:
 - 不懂每個字，也能聽懂老師要你做什麼嗎？
-scenario: 親子共學：玩「Simon says」：Stand up、Touch your nose、Turn around，大人說、孩子做，再交換。
+scenario: 親子共學：玩 Simon says。家長說 Simon says, stand up. 孩子才做；只說 Stand up. 就不能動。
 goal: 聽懂教室與生活裡的簡短英文指令並做出動作。
-review: 家長用英文說 10 個指令（Stand up、Open your book……），孩子不看翻譯直接做，至少 8 個做對。
+review: 家長隨機說 10 個指令（有的加 Simon says、有的不加），孩子做出正確動作或正確地不動，至少 8 個（10 個、8 個是示意）。
 formats:
   slides: []
-  exercise: 目標：聽懂教室與生活裡的簡短英文指令並做出動作。　檢核：家長用英文說 10 個指令（Stand up、Open your book……），孩子不看翻譯直接做，至少 8 個做對。
+  exercise: 目標：聽懂教室與生活裡的簡短英文指令並做出動作。　檢核：家長隨機說 10 個指令（有的加 Simon says、有的不加），孩子做出正確動作或正確地不動，至少 8 個（10 個、8 個是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國小三、四年級（第二學習階段）
+  source: english
+why:
+  heading: 先聽懂，才能跟上課
+  body:
+  - 英語文領綱第二學習階段要學生「能聽懂簡易的日常生活用語」，也要「能妥善運用情境中的非語言訊息以幫助學習」。實施要點提醒，國小聽力教學「宜注重語意理解」，並「利用圖示、肢體動作等視覺輔助，增進學生對語意的掌握」（p.31）。聽指令做動作，就是把聽到的話和動作連起來。
+  qa:
+    question: 不懂每個字，也能聽懂老師要你做什麼嗎？
+    answer: 可以。老師說 Open your books. 時，看老師的手勢和同學的動作，再抓住 open、books 這兩個關鍵字，就能猜出要打開課本。這正是領綱說的運用情境中的非語言訊息。
+    source: english
+  items_title: 英語文領綱的學習重點
+  items:
+  - title: 聽懂生活用語
+    text: 英語文 1-Ⅱ-9：能聽懂簡易的日常生活用語。
+    code: 1-II-9
+  - title: 看非語言訊息
+    text: 英語文 7-Ⅱ-2：能妥善運用情境中的非語言訊息以幫助學習。
+    code: 7-II-2
+  - title: 生活溝通
+    text: 英語文 B-Ⅱ-1：第二學習階段所學字詞及句型的生活溝通。
+    code: B-II-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 知道要先聽再做
+  - 看得到大人動作
+  notes:
+  - 英語文 Ac-Ⅱ-1「簡易的教室用語。」與其他領綱同號，只在內文引用。
+  sources:
+  - english
+how:
+  heading: 用 Simon says 練聽
+  body:
+  - Simon says 是一種兒童遊戲：只有指令前面說了 Simon says 才做。孩子必須仔細聽整句話，不能只看動作。本站建議：先用 Stand up、Sit down、Open your book 這類常用指令，熟了再加快速度。
+  items_title: 本站建議的玩法
+  items:
+  - title: 先示範動作
+    text: 大人一邊說一邊做，孩子跟著做。
+  - title: 加上規則
+    text: 只有聽到 Simon says 才做。
+  - title: 只說不做
+    text: 大人只說不做，孩子靠聽。
+  - title: 互換角色
+    text: 孩子當發令的人，練習說指令。
+  checklist_title: 每次玩完勾一下
+  checklist:
+  - 聽懂指令
+  - 分得出陷阱
+  - 能說出指令
+  activity_figure: classroom-flow
+  notes:
+  - 玩法與指令是本站建議；遊戲規則依 Oxford Learner's Dictionaries 釋義。
+  sources:
+  - oxf-simon
+  - english
+what:
+  heading: 聽到就能做出反應
+  body:
+  - 學完後，孩子聽到常用指令能直接做出動作，也分得出哪一句是陷阱。剛開始可以看大人的動作，慢慢改成只靠聽。
+  items_title: 學完能做到
+  items:
+  - title: 聽懂常用指令
+    text: Stand up、Sit down 等指令一聽就懂。
+  - title: 分辨陷阱
+    text: 沒有 Simon says 就不動。
+  - title: 說出指令
+    text: 能用英文對別人下指令。
+  checklist_title: 家長檢核
+  checklist:
+  - 指令做對
+  - 陷阱不上當
+  - 能說出指令
+  figures:
+  - classroom-compare
+  notes:
+  - 檢核用的 10 個、8 個是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - english
+  - oxf-simon
+  - genai-student
+figures:
+- id: classroom-flow
+  type: flow
+  alt: Simon says 流程：家長說指令，孩子判斷有沒有 Simon says，再決定做或不做。
+  steps:
+  - actor: 家長
+    text: 說一個指令
+  - actor: 孩子
+    text: 聽有沒有口令
+  - actor: 孩子
+    text: 有就做動作
+  - actor: 孩子
+    text: 沒有就不動
+  - actor: 家長
+    text: 記下對錯
+  source: oxf-simon
+- id: classroom-compare
+  type: compare
+  alt: 比較兩種指令：說了 Simon says 要做，只說指令不做。
+  source: oxf-simon
+  relation: not_equal
+  items:
+  - term: 有口令
+    note: Simon says, stand up. 要站起來
+  - term: 沒口令
+    note: Stand up. 不能動
+  caption: 規則依 Oxford Learner's Dictionaries 對 Simon says 的釋義。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：1-Ⅱ-9「能聽懂簡易的日常生活用語。」（p.9）；7-Ⅱ-2「能妥善運用情境中的非語言訊息以幫助學習。」（p.14）；B-Ⅱ-1「第二學習階段所學字詞及句型的生活溝通。」（p.18）；Ac-Ⅱ-1「簡易的教室用語。」（p.17，與其他領綱同號，只在內文引用）；教學要領（一）「國民小學教育階段的聽力教學宜注重語意理解，口說教學也以語意表達為主，並利用圖示、肢體動作等視覺輔助，增進學生對語意的掌握。」（p.31）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: oxf-simon
+  title: Oxford Learner's Dictionaries「Simon says」
+  publisher: Oxford University Press
+  url: https://www.oxfordlearnersdictionaries.com/definition/english/simon-says
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Simon says：「a children's game in which players should only do what a person says if he/she says 『Simon says…』 at the beginning of the instruction」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」

@@ -1,8 +1,13 @@
+# B7 提案：en.sight@es
+# - 補 grades（五、六年級）、英語文 3-Ⅲ-7、3-Ⅲ-9 與 Why/How/What、兩張圖。
+# - 錯誤修正：原 idea 說 the、is、said「不太照拼讀規則」沒有出處；改以共同核心標準 RF.K.3c 的常見字例子與 RF.1.3g「irregularly spelled words」說明。
+# - 「美國小學用分級讀本一級一級往上讀」沒有出處；改引英語文領綱教學資源「分級的英語文課外閱讀教材」（p.32），K–2 程度起步標為本站建議。
+# - 檢核門檻標示意；AI 只由大人操作。
 id: en.sight@es
 concept: en.sight
 title: 常見字與分級讀本
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +18,9 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 語文
@@ -21,11 +29,15 @@ curriculum_108:
   - A1
   issues:
   - 閱讀素養教育
-to_verify: true
+  performances:
+  - 3-III-7
+  - 3-III-9
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
-- 基準標籤：美國 K–2 讀本。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源），並確認列入的代碼不與其他領綱同號。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
+- 基準標籤：美國小學讀本・Sight words／Leveled readers。
+- 常見字例子依共同核心標準 RF.K.3c（PDF p.16）逐字核對；分級讀本依英語文領綱教學資源（四）（p.32）。
 prerequisites:
 - en.phonics@es
 links:
@@ -35,7 +47,7 @@ links:
   deeper:
   - en.gept1@jh
   - en.chapter@jh
-link_notes: 框架：—。
+link_notes: 框架：美國共同核心標準 RF.K.3c、RF.1.3g；英語文領綱 3-Ⅲ-7、3-Ⅲ-9 與教學資源「分級的英語文課外閱讀教材」。
 competency:
   specialist:
   - 閱讀理解
@@ -43,21 +55,146 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 朗讀繪本、標出常見字
+  - 朗讀繪本給孩子聽（由大人操作）
   human_experience:
-  - 和家人一起猜故事接下來會怎樣
-idea: 有些字出現得特別多，又不太照拼讀規則（the、is、said），一眼認得它們，讀繪本就快很多。美國小學用分級讀本（leveled readers）一級一級往上讀，台灣孩子也可以從幼兒園到二年級的程度開始。
+  - 自己選喜歡的書、讀完說感想
+idea: the、of、to、you、is 這類常見字（high-frequency words）在書裡一直出現，美國共同核心標準要幼兒園學生一眼認讀（read by sight）；其中有些拼法不規則，要整個字記（本站整理）。認得這些字，再搭配分級讀本，就能開始自己讀。
 guiding_questions:
 - 繪本裡一直出現的 the、is、can，為什麼要先認得？
 scenario: 親子共學：親子共讀一本英文繪本，每次看到 the、is、can 就拍一下手，讀完數一數各出現幾次。
 goal: 一眼認得常見字，讀完一本美國幼兒園到二年級（K–2）程度的分級讀本。
-review: 孩子自己朗讀一本 K–2 分級讀本給家長聽，卡住的字少於 1 頁 2 個，讀完能用中文說出故事發生了什麼。
+review: 孩子讀完一本程度相當的分級讀本，說出故事在講什麼；家長記下卡住的字，平均 1 頁少於 2 個（示意）。
 formats:
   slides: []
-  exercise: 目標：一眼認得常見字，讀完一本美國幼兒園到二年級（K–2）程度的分級讀本。　檢核：孩子自己朗讀一本 K–2 分級讀本給家長聽，卡住的字少於 1 頁 2 個，讀完能用中文說出故事發生了什麼。
+  exercise: 目標：一眼認得常見字，讀完一本美國幼兒園到二年級（K–2）程度的分級讀本。　檢核：孩子讀完一本程度相當的分級讀本，說出故事在講什麼；家長記下卡住的字，平均 1 頁少於 2 個（示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國小五、六年級（第三學習階段）
+  source: english
+why:
+  heading: 常見字一眼認，才讀得順
+  body:
+  - 英語文領綱第三學習階段要學生「能看懂繪本故事的主要內容」，並「能藉圖畫、標題、書名等作簡易的猜測」。實施要點建議「經由簡易有趣的故事及短文，讓學生在有意義的語意環境下學習識字」（p.31）。美國共同核心標準也要學生一眼認讀 the、of、to、you 這類常見字。
+  qa:
+    question: 繪本裡一直出現的 the、is、can，為什麼要先認得？
+    answer: 美國共同核心標準 RF.K.3c 要幼兒園學生「Read common high-frequency words by sight」，例如 the、of、to、you。這些常見字一眼認得，讀故事時注意力就能放在內容上（本站整理）。RF.1.3g 也要一年級學生認讀拼法不規則的字（irregularly spelled words）；這類字用拼讀不好念，整個字記比較快（本站整理）。
+    source: ccss-ela
+  items_title: 英語文領綱的學習重點
+  items:
+  - title: 看懂繪本
+    text: 英語文 3-Ⅲ-7：能看懂繪本故事的主要內容。
+    code: 3-III-7
+  - title: 藉圖猜測
+    text: 英語文 3-Ⅲ-9：能藉圖畫、標題、書名等作簡易的猜測。
+    code: 3-III-9
+  checklist_title: 開始前先確認
+  checklist:
+  - 會基本拼讀
+  - 找好一本讀本
+  sources:
+  - english
+  - ccss-ela
+how:
+  heading: 先認常見字，再讀分級書
+  body:
+  - 英語文領綱把「分級的英語文課外閱讀教材」列為教學資源（p.32）。本站建議：台灣孩子可以從美國 K–2 程度的分級讀本開始，讀之前先看圖和書名猜內容，讀的時候把卡住的字記下來。
+  items_title: 本站建議的讀法
+  items:
+  - title: 先看圖和書名
+    text: 猜猜故事會講什麼。
+  - title: 認常見字
+    text: the、of、to、you 一眼認出來。
+  - title: 記下卡住的字
+    text: 讀完再查、再念。
+  - title: 說出故事
+    text: 用中文或英文說故事大意。
+  checklist_title: 每讀一本勾一下
+  checklist:
+  - 先猜內容
+  - 記下生字
+  - 說出大意
+  activity_figure: sight-flow
+  notes:
+  - 從 K–2 程度開始是本站建議；這裡不指定書目。
+  sources:
+  - english
+  - ccss-ela
+what:
+  heading: 能自己讀完一本小書
+  body:
+  - 學完後，孩子一眼認得常見字，能自己讀完一本程度相當的分級讀本，並說出故事的主要內容。
+  items_title: 學完能做到
+  items:
+  - title: 認得常見字
+    text: 常見字不用拼就認得。
+  - title: 讀完一本書
+    text: 自己讀完程度相當的讀本。
+  - title: 說出主要內容
+    text: 說出故事在講什麼。
+  checklist_title: 家長檢核
+  checklist:
+  - 讀完一本
+  - 說出大意
+  - 卡住的字少
+  figures:
+  - sight-compare
+  notes:
+  - 「1 頁少於 2 個」是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - english
+  - genai-student
+figures:
+- id: sight-flow
+  type: flow
+  alt: 分級讀本閱讀流程：看圖猜內容、讀並記生字、說出故事大意。
+  steps:
+  - actor: 孩子
+    text: 看圖和書名
+  - actor: 孩子
+    text: 自己讀一遍
+  - actor: 孩子
+    text: 記下卡住的字
+  - actor: 孩子
+    text: 說出故事
+  - actor: 家長
+    text: 記下卡住幾個
+  source: english
+- id: sight-compare
+  type: compare
+  alt: 比較兩種認字方法：照規則拼讀，和一眼認出常見字。
+  source: ccss-ela
+  relation: not_equal
+  items:
+  - term: 拼讀
+    note: 照字母和聲音念出來
+  - term: 一眼認
+    note: 常見字整個字認得
+  caption: 依共同核心標準 RF.K.3c、RF.1.3g。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：3-Ⅲ-7「能看懂繪本故事的主要內容。」（p.11）；3-Ⅲ-9「能藉圖畫、標題、書名等作簡易的猜測。」（p.11）；教學要領（一）「儘量經由簡易有趣的故事及短文，讓學生在有意義的語意環境下學習識字」（p.31）；教學資源（四）「分級的英語文課外閱讀教材。」（p.32）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: ccss-ela
+  title: Common Core State Standards for English Language Arts & Literacy in History/Social Studies, Science, and Technical Subjects
+  publisher: National Governors Association Center for Best Practices、Council of Chief State School Officers（Common Core State Standards Initiative）
+  url: https://corestandards.org/wp-content/uploads/2023/09/ELA_Standards1.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 'Reading Standards: Foundational Skills（PDF p.16）：RF.K.3c「Read common high-frequency words by sight (e.g., the, of, to, you, she, my, is, are, do, does).」；RF.1.3g「Recognize and read grade-appropriate irregularly spelled words.」'
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」

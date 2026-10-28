@@ -894,3 +894,142 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
         page: 31
+
+# 英語文：十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文（國家教育研究院）。
+# 只收不與其他 108 領綱同號的代碼（代碼表以代碼為鍵）；文字逐字自官方 PDF，頁碼是 PDF 頁腳印的頁碼。
+# https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+語文/英語文:
+  performances:
+    1-II-9:
+      stage: 2
+      text: 能聽懂簡易的日常生活用語。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 9
+    1-II-10:
+      stage: 2
+      text: 能聽懂簡易句型的句子。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 9
+    1-IV-11:
+      stage: 4
+      text: 能聽懂公共場所廣播的內容，如捷運、車站、機場廣播。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 9
+    2-III-8:
+      stage: 3
+      text: 能作簡易的提問。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 10
+    2-III-9:
+      stage: 3
+      text: 能以正確的發音及適切的語調說出簡易句型的句子。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 10
+    3-III-7:
+      stage: 3
+      text: 能看懂繪本故事的主要內容。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 11
+    3-III-9:
+      stage: 3
+      text: 能藉圖畫、標題、書名等作簡易的猜測。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 11
+    3-IV-12:
+      stage: 4
+      text: 能熟悉重要的閱讀技巧，如擷取大意、猜測字義、推敲文意、預測後續文意及情節發展等。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 11
+    3-IV-14:
+      stage: 4
+      text: 能快速閱讀了解文章重點，並有效應用於廣泛閱讀中。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 11
+    3-IV-16:
+      stage: 4
+      text: 能閱讀不同體裁、不同主題的簡易文章。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 11
+    4-IV-8:
+      stage: 4
+      text: 能依提示書寫簡短的段落。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 12
+    5-IV-10:
+      stage: 4
+      text: 能讀懂簡易故事及短文，並能以簡短的句子說出或寫出其內容大意。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 13
+    7-II-2:
+      stage: 2
+      text: 能妥善運用情境中的非語言訊息以幫助學習。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 14
+    8-II-1:
+      stage: 2
+      text: 能了解國內外基本的招呼方式。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 15
+    9-IV-1:
+      stage: 4
+      text: 能綜合相關資訊作合理的猜測。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 16
+  contents:
+    Ae-IV-6:
+      stage: 4
+      text: 簡易故事的背景、人物、事件和結局。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 18
+    Ae-IV-8:
+      stage: 4
+      text: 簡易故事及短文的大意。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 18
+    B-II-1:
+      stage: 2
+      text: 第二學習階段所學字詞及句型的生活溝通。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 18
+    B-IV-3:
+      stage: 4
+      text: 語言與非語言的溝通策略（如請求重述、手勢、表情等）。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 18
+    B-IV-5:
+      stage: 4
+      text: 人、事、時、地、物的描述及問答。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 19
+    B-IV-7:
+      stage: 4
+      text: 角色扮演。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 19
+    C-II-1:
+      stage: 2
+      text: 國內（外）招呼方式。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 20

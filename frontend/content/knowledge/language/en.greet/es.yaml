@@ -1,8 +1,13 @@
+# B7 提案：en.greet@es
+# - 補 grades（三至六年級）、英語文 8-Ⅱ-1、2-Ⅲ-8、C-Ⅱ-1 與 Why/How/What、兩張圖。
+# - 全民英檢初級口說「簡單地自我介紹」逐字正確，補上出處 id。
+# - 安全：原本建議 AI「扮演對話的另一方」、檢核要錄自我介紹影片，但內容含名字和年齡。依教育部學生版注意事項，改成 AI 只由大人操作、不輸入孩子的個人資料；影片只留在家裡、不上傳。
+# - 檢核數字標示意。
 id: en.greet@es
 concept: en.greet
 title: 打招呼與自我介紹
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +18,11 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 語文
@@ -21,11 +31,18 @@ curriculum_108:
   - C2
   issues:
   - 國際教育
-to_verify: true
+  performances:
+  - 8-II-1
+  - 2-III-8
+  contents:
+  - C-II-1
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
-- 基準標籤：初級口說的起點。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照英語文領綱原文（頁碼見來源），並確認列入的代碼不與其他領綱同號。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
+- 基準標籤：全民英檢初級・口說（自我介紹）。
+- 全民英檢初級口說能力敘述「簡單地自我介紹」依 LTTC 官網逐字核對。
+- 安全：自我介紹含名字，屬個人資料；本點已改成不輸入 AI、影片不上傳（教育部學生版注意事項六（三））。
 prerequisites:
 - lg.listen@es
 links:
@@ -34,7 +51,7 @@ links:
   related: []
   deeper:
   - en.convo@jh
-link_notes: 框架：—。
+link_notes: 框架：全民英檢初級口說能力敘述（LTTC）；英語文領綱 8-Ⅱ-1、2-Ⅲ-8、C-Ⅱ-1。
 competency:
   specialist:
   - 口說
@@ -42,21 +59,153 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 示範發音、扮演對話的另一方
+  - 示範打招呼的發音（由大人操作，不輸入孩子的名字、照片）
   human_experience:
-  - 真的對一個人開口，看對方的反應
-idea: 用 Hello、My name is…、I like… 這幾句，就能和人開始聊天。說的時候看著對方、面帶微笑，也是溝通的一部分。
+  - 真的和人打招呼、看著對方說話
+idea: 用 Hello、I'm…、I like… 這幾句，就能和人開始聊天。說的時候看著對方、面帶微笑，也是溝通的一部分（本站建議）。
 guiding_questions:
 - 跟外國朋友見面，第一句話要說什麼？
-scenario: 親子共學：全家輪流當「新同學」，用三句英文介紹自己：名字、幾歲、喜歡什麼，再問對方一個問題。
+scenario: 親子共學：全家輪流當「新同學」，用三句英文打招呼、說名字、說一件喜歡的事，再問對方一個問題。
 goal: 用三句英文打招呼和自我介紹，並問對方一個問題。
-review: 錄一段 30 秒影片：打招呼、名字、喜歡的東西、問對方一個問題；家長確認四項都有且聽得懂。這也是全民英檢初級口說「簡單地自我介紹」的起點。
+review: 孩子對家人做 30 秒自我介紹（打招呼、名字、喜歡的東西），再問對方一個問題並聽懂回答；家長可錄影給孩子自己看，影片只留在家裡、不上傳（30 秒是示意）。
 formats:
   slides: []
-  exercise: 目標：用三句英文打招呼和自我介紹，並問對方一個問題。　檢核：錄一段 30 秒影片：打招呼、名字、喜歡的東西、問對方一個問題；家長確認四項都有且聽得懂。這也是全民英檢初級口說「簡單地自我介紹」的起點。
+  exercise: 目標：用三句英文打招呼和自我介紹，並問對方一個問題。　檢核：孩子對家人做 30 秒自我介紹（打招呼、名字、喜歡的東西），再問對方一個問題並聽懂回答；家長可錄影給孩子自己看，影片只留在家裡、不上傳（30 秒是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 國小三至六年級（第二、三學習階段）
+  source: english
+why:
+  heading: 打招呼是說英語的第一步
+  body:
+  - 英語文領綱第二學習階段要學生「能了解國內外基本的招呼方式」，第三學習階段要學生「能作簡易的提問」。全民英檢初級的口說能力也包括「簡單地自我介紹」。會打招呼、會介紹自己、會問對方一個問題，就能開始一段對話。
+  qa:
+    question: 跟外國朋友見面，第一句話要說什麼？
+    answer: 先打招呼（Hi! / Hello!），再說名字（I'm…），最後問對方一個問題（What's your name?）。全民英檢初級的口說能力就包括簡單地自我介紹。
+    source: gept-elementary
+  items_title: 英語文領綱的學習重點
+  items:
+  - title: 招呼方式
+    text: 英語文 8-Ⅱ-1：能了解國內外基本的招呼方式。
+    code: 8-II-1
+  - title: 國內外招呼
+    text: 英語文 C-Ⅱ-1：國內（外）招呼方式。
+    code: C-II-1
+  - title: 簡易提問
+    text: 英語文 2-Ⅲ-8：能作簡易的提問。
+    code: 2-III-8
+  checklist_title: 開始前先確認
+  checklist:
+  - 會說 Hi、Hello
+  - 會說自己的名字
+  notes:
+  - 2-Ⅲ-8 屬第三學習階段（國小五、六年級）；本站建議三、四年級先練打招呼。
+  sources:
+  - english
+  - gept-elementary
+how:
+  heading: 打招呼、介紹、再提問
+  body:
+  - 本站建議：把自我介紹拆成三步：打招呼、說名字和一件喜歡的事、問對方一個問題。先和家人練，熟了再和老師、同學練。
+  items_title: 本站建議的步驟
+  items:
+  - title: 打招呼
+    text: Hi! / Hello! / Good morning!
+  - title: 介紹自己
+    text: I'm… I like…
+  - title: 問對方
+    text: What's your name? / What do you like?
+  - title: 聽回答
+    text: 聽懂對方的回答，再說 Nice to meet you.
+  checklist_title: 每次練完勾一下
+  checklist:
+  - 打了招呼
+  - 說了名字
+  - 問了問題
+  - 聽懂回答
+  activity_figure: greet-flow
+  notes:
+  - 步驟與句子是本站建議。
+  sources:
+  - english
+what:
+  heading: 能和新朋友開口聊
+  body:
+  - 學完後，孩子能用英文打招呼、介紹自己，並問對方一個問題。自我介紹裡的名字是個人資料，只在家人、老師、同學面前說；不要輸入 AI，也不要把影片上傳。
+  items_title: 學完能做到
+  items:
+  - title: 打招呼
+    text: 用 Hi、Hello 或 Good morning 打招呼。
+  - title: 自我介紹
+    text: 說出名字和喜歡的東西。
+  - title: 提問
+    text: 問對方一個簡單的問題。
+  checklist_title: 家長檢核
+  checklist:
+  - 說了自我介紹
+  - 問了一個問題
+  - 影片沒有上傳
+  figures:
+  - greet-compare
+  notes:
+  - 檢核的 30 秒是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網E-BOT），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  - 不把孩子的名字、照片輸入 AI（教育部學生版注意事項六（三））。
+  sources:
+  - english
+  - gept-elementary
+  - genai-student
+figures:
+- id: greet-flow
+  type: flow
+  alt: 自我介紹流程：打招呼、說名字、說喜好、問對方、聽回答。
+  steps:
+  - actor: 孩子
+    text: 打招呼
+  - actor: 孩子
+    text: 說自己的名字
+  - actor: 孩子
+    text: 說一件喜歡的
+  - actor: 孩子
+    text: 問對方一題
+  - actor: 家人
+    text: 回答
+  source: gept-elementary
+- id: greet-compare
+  type: compare
+  alt: 比較說話的兩種對象：對家人可以說名字，對 AI 不輸入名字、照片這些個人資料。
+  source: genai-student
+  relation: not_equal
+  items:
+  - term: 對家人
+    note: 可以說名字
+  - term: 對 AI
+    note: 不輸入名字、照片
+  caption: 個人資料的規則依教育部學生版注意事項。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：8-Ⅱ-1「能了解國內外基本的招呼方式。」（p.15）；2-Ⅲ-8「能作簡易的提問。」（p.10）；C-Ⅱ-1「國內（外）招呼方式。」（p.20）；編碼說明「Ⅱ代表第二學習階段（國民小學 3-4 年級），Ⅲ代表第三學習階段（國民小學 5-6 年級），Ⅳ代表第四學習階段（國民中學 7-9 年級）」（p.8）；時間分配：英語文必修國小三、四年級每週 1 節，五、六年級每週 2 節，國中每週 3 節（p.4）
+- id: gept-elementary
+  title: 初級測驗（認識GEPT＞各級介紹）
+  publisher: 財團法人語言訓練測驗中心（LTTC）GEPT全民英檢網
+  url: https://www.gept.org.tw/exam_intro/t01_introduction.asp
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 初級能力敘述．說：「能朗讀簡易文章、簡單地自我介紹，對熟悉的話題能以簡易英語對答，如問候、購物、問路等」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」
