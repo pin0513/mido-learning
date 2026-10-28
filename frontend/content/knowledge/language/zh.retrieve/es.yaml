@@ -1,8 +1,13 @@
+# B3 提案：zh.retrieve@es
+# - idea 的「會考國文的「提取訊息」」不是會考原文，改為會考考試內容的原文「提取、統整文本訊息」；學測（學科能力測驗）國綜（國語文綜合能力測驗）「訊息的檢索與擷取」核對無誤（考試說明 p.Ⅰ-1）。
+# - 複審修正：「國文綜合能力測驗」改為正式名稱「國語文綜合能力測驗」；idea 定義「學測」「國綜」；PIRLS 中文名改用國家教育研究院文件的正式譯名「促進國際閱讀素養研究」。
+# - guiding question「答案一定寫在文章裡嗎？」的答案補上：「為什麼」有時要推論，連到 zh.clue@es。
+# - 補上 grades [1,2,3,4]、5-I-4、5-II-4；PIRLS 用 2021 架構原文。
 id: zh.retrieve@es
 concept: zh.retrieve
 title: 找答案：從文章裡擷取訊息
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +17,11 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 1
+  - 2
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 語文
@@ -20,11 +30,13 @@ curriculum_108:
   - B1
   issues:
   - 閱讀素養教育
-to_verify: true
+  performances:
+  - 5-I-4
+  - 5-II-4
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 引用的框架只寫名稱（108 國語文學習表現類別 5「閱讀」；PIRLS 閱讀歷程（提取）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 本點為這次補強新增，內容尚未經老師審閱。
+- 會考、學測用語已逐字核對（會考國文科考試內容頁；學測國文考科考試說明 p.Ⅰ-1）。「300 字」「4 題」是示意的練習份量。
+- PIRLS 中文名「促進國際閱讀素養研究」依國家教育研究院〈我國參加「IEA 促進國際閱讀素養研究 2026（PIRLS 2026）」國家調查執行團隊計畫徵求說明書〉p.1（來源 naer-pirls）。
 prerequisites: []
 links:
   why: []
@@ -32,7 +44,7 @@ links:
   related: []
   deeper:
   - zh.viewpoint@jh
-link_notes: 框架：108 國語文學習表現類別 5「閱讀」；PIRLS 閱讀歷程（提取）。
+link_notes: 框架：PIRLS（促進國際閱讀素養研究，Progress in International Reading Literacy Study；中文名見來源 naer-pirls）2021 閱讀理解歷程之一「Focus on and Retrieve Explicitly Stated Information」；108 國語文學習表現類別 5「閱讀」。
 competency:
   specialist:
   - 閱讀理解
@@ -44,18 +56,144 @@ ai:
   - 依文章出擷取題
   human_experience:
   - 自己回到文章找到那一句
-idea: 閱讀的第一步是擷取：答案寫在文章裡，要找到那一句。先看題目要找什麼，再回文章圈出關鍵字。會考國文的「提取訊息」、學測國綜的「訊息的檢索與擷取」，都從這一步開始。
+idea: 閱讀的第一步是擷取：有些答案就寫在文章裡，要找到那一句。先看題目要找什麼，再回文章圈出關鍵字。國中會考國文考「提取、統整文本訊息」，學測（學科能力測驗）的國綜（國語文綜合能力測驗）測驗目標有「訊息的檢索與擷取」，都要先會找到訊息。
 guiding_questions:
 - 題目問「小明為什麼遲到」，答案一定寫在文章裡嗎？
 scenario: 親子共學：親子共讀一則兒童新聞，互相出題「答案在哪一句」，找到就用螢光筆畫起來。
 goal: 讀完一篇短文，能找出題目問的人、事、時、地，並指出答案在第幾段。
-review: 家長挑一篇 300 字課外短文，出 4 題「誰、什麼、什麼時候、在哪裡」，孩子作答並用手指出原文出處，4 題都找得到。
+review: 家長挑一篇約 300 字（示意）的課外短文，出 4 題「誰、什麼、什麼時候、在哪裡」，孩子作答並用手指出原文出處，4 題都找得到。
 formats:
   slides: []
-  exercise: 目標：讀完一篇短文，能找出題目問的人、事、時、地，並指出答案在第幾段。　檢核：家長挑一篇 300 字課外短文，出 4 題「誰、什麼、什麼時候、在哪裡」，孩子作答並用手指出原文出處，4 題都找得到。
+  exercise: 目標：讀完一篇短文，能找出題目問的人、事、時、地，並指出答案在第幾段。　檢核：家長挑一篇約 300 字（示意）的課外短文，出 4 題「誰、什麼、什麼時候、在哪裡」，孩子作答並用手指出原文出處，4 題都找得到。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 答案常就寫在文章裡
+  body:
+  - PIRLS（促進國際閱讀素養研究）把四年級學生的閱讀理解分成四種歷程，第一種就是找出並提取文中明確寫出的訊息，例如找出故事發生的時間和地點。
+  - 課綱要一、二年級「了解文本中的重要訊息與觀點」，三、四年級「掌握句子和段落的意義與主要概念」。往上到國中會考、高中學測，也都考從文章裡找訊息。
+  qa:
+    question: 題目問「小明為什麼遲到」，答案一定寫在文章裡嗎？
+    answer: 不一定。如果文章寫了「小明因為鬧鐘沒響而遲到」，答案就在文中，找到那一句就好，這是「提取」。如果文章只寫「小明一路跑進教室，頭髮還翹著」，原因沒有寫出來，就要用線索推論。PIRLS 把「說出角色行動的原因」列在推論題裡。
+    source: pirls-infer
+  items_title: 從小學到高中都會用到
+  items:
+  - title: 一、二年級
+    text: 了解文本中的重要訊息與觀點。
+    code: 5-I-4
+  - title: 三、四年級
+    text: 掌握句子和段落的意義與主要概念。
+    code: 5-II-4
+  - title: 國中會考
+    text: 國文科：「提取、統整文本訊息，並轉化為解決問題的能力」。
+  - title: 高中學測
+    text: 國語文綜合能力測驗目標：「訊息的檢索與擷取」。
+  sources:
+  - pirls-retrieve
+  - naer-pirls
+  - kuoyu
+  - cap-guowen
+  - ceec
+how:
+  heading: 先看題目，再回文章找
+  body:
+  - 先讀題目，圈出要找的是誰、什麼事、什麼時候、在哪裡；再回到文章，找出有同樣詞語或意思相同的句子。PIRLS 說，如果題目和答案都用文中的原詞，或只換成同義詞，就屬於「提取」。
+  items:
+  - title: 圈題目關鍵字
+    example: 小明「幾點」到學校？
+    text: 先知道要找什麼。
+  - title: 回文章找同一個詞
+    example: 文中：小明七點半到學校。
+    text: 找原詞或同義詞。
+  - title: 說出在哪裡
+    example: 答案在第 2 段第 1 句
+    text: 指出原文出處。
+  checklist_title: 每一題都做到：
+  checklist:
+  - 圈出題目關鍵字
+  - 找到原文那一句
+  - 說出第幾段
+  - 答案不加自己想的
+  activity_figure: how-flow
+  sources:
+  - pirls-retrieve
+what:
+  heading: 寫在文中，還是要推
+  figures:
+  - what-compare
+  notes:
+  - PIRLS 的四種歷程：提取明確寫出的訊息、直接推論、詮釋整合、評估與批判（中文為本站翻譯）。
+  - PIRLS 舉的提取題例：找出故事的時間和地點、找詞語的定義、找出明確寫出的主旨句。
+  sources:
+  - pirls-retrieve
+  - pirls-infer
+figures:
+- id: how-flow
+  type: flow
+  alt: 找答案練習：大人出一題，孩子圈題目關鍵字，回文章畫線，一起對照答案
+  steps:
+  - actor: 大人
+    text: 出一題找答案
+  - actor: 孩子
+    text: 圈題目關鍵字
+  - actor: 孩子
+    text: 回文章畫線
+  - actor: 一起
+    text: 對照答案
+- id: what-compare
+  type: compare
+  alt: 答案寫在文中就用提取；沒寫出來要用線索推論
+  source: pirls-retrieve
+  relation: versus
+  items:
+  - term: 寫在文中
+    note: 找到那一句（提取）
+  - term: 沒寫出來
+    note: 用線索推論（見「讀出沒寫的」）
+sources:
+- id: naer-pirls
+  title: 我國參加「IEA 促進國際閱讀素養研究 2026（PIRLS 2026）」國家調查執行團隊計畫徵求說明書
+  publisher: 國家教育研究院
+  url: https://www.naer.edu.tw/upload/1/14/doc/4268/%E9%99%84%E4%BB%B6_PIRLS2026%E8%A8%88%E7%95%AB%E5%BE%B5%E6%B1%82%E8%AA%AA%E6%98%8E%E6%9B%B8.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: PIRLS 的正式中文名「IEA 促進國際閱讀素養研究」；IEA 譯名「國際教育成就評量學會」（p.1）
+- id: pirls-retrieve
+  title: 'PIRLS 2021 Assessment Frameworks: Focus on and Retrieve Explicitly Stated Information'
+  publisher: IEA（International Association for the Evaluation of Educational Achievement，國際教育成就評量學會）／TIMSS & PIRLS International Study Center, Boston College
+  url: https://pirls2021.org/frameworks/home/reading-assessment-framework/processes-of-comprehension/focus-on-and-retrieve-explicitly-stated-information/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: PIRLS 評量四年級讀者的四種理解歷程，第一種為 focus on and retrieve explicitly stated information；題目和答案用文中原詞或同義詞即歸為「Focus and Retrieve」；任務例包括「Identifying the setting of a story (e.g., time and place)」「Searching for definitions of words or phrases」「Finding the topic sentence or main idea (when explicitly stated)」
+- id: pirls-infer
+  title: 'PIRLS 2021 Assessment Frameworks: Make Straightforward Inferences'
+  publisher: IEA（International Association for the Evaluation of Educational Achievement，國際教育成就評量學會）／TIMSS & PIRLS International Study Center, Boston College
+  url: https://pirls2021.org/frameworks/home/reading-assessment-framework/processes-of-comprehension/make-straightforward-inferences/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 直接推論的任務例包括「Inferring that one event caused another event」「Giving the reason for a character's action」
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 5-I-4「了解文本中的重要訊息與觀點。」、5-II-4「掌握句子和段落的意義與主要概念。」（p.10）
+- id: cap-guowen
+  title: 國中教育會考 國文科考試內容
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test4-2.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 國文科考試內容（四）文本的統整與應用：「提取、統整文本訊息，並轉化為解決問題的能力。」
+- id: ceec
+  title: 學科能力測驗 國文考科考試說明－111 學年度起適用－
+  publisher: 財團法人大學入學考試中心基金會
+  url: https://www.ceec.edu.tw/files/file_pool/1/0N118339019965852517/111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%B5%B7%E9%81%A9%E7%94%A8%E5%AD%B8%E6%B8%AC%E5%9C%8B%E6%96%87%E8%80%83%E7%A7%91%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E%28%E5%AE%9A%E7%A8%BF%29.pdf
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 測驗目標（國文（一）：國語文綜合能力測驗，簡稱「國綜」）二、文本的理解與探究：「B1.訊息的檢索與擷取」（p.Ⅰ-1）

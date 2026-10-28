@@ -1,8 +1,12 @@
+# B3 提案：zh.dictionary@es
+# - 「鯨」的答案（魚部，部首外 8 畫）已用教育部《國語小字典》核對，正確。
+# - 「三分鐘」標為示意。scenario 原寫「教育部線上《國語辭典》」：《重編國語辭典》網站自己提醒中小學學習建議用《國語辭典簡編本》或《國語小字典》，改為《國語小字典》。
+# - 補上 grades [1,2,3,4]、4-I-3、4-II-3、Ab-I-4、Ab-II-10。
 id: zh.dictionary@es
 concept: zh.dictionary
 title: 查字典：部首與注音
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +16,11 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 1
+  - 2
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 語文
@@ -19,9 +28,15 @@ curriculum_108:
   - A2
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 4-I-3
+  - 4-II-3
+  contents:
+  - Ab-I-4
+  - Ab-II-10
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 「三分鐘」是示意的練習時間，不是課綱規定。「先猜左邊、上面或外框」是本站整理的找部首方法，不是每個字都適用。
 prerequisites:
 - zh.zhuyin@es
 links:
@@ -29,7 +44,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：108 國語文學習表現類別 4「識字與寫字」（4-I-3 學習查字典的方法）；教育部《國語小字典》的部首、注音索引。
 competency:
   specialist:
   - 基礎語文
@@ -44,15 +59,138 @@ ai:
 idea: 不會念的字用部首查：先找部首，再數部首以外的筆畫。會念不會寫的字用注音查。查到後順便看例詞，知道這個字怎麼用。
 guiding_questions:
 - 「鯨」不會念，用部首查，要先翻哪一部？
-scenario: 親子共學：複習版：家長和孩子比賽，各用紙本字典和教育部線上《國語辭典》查同三個字，比較兩種方法。
-goal: 不會念的字用部首查，會念不會寫的字用注音查，三分鐘內查到。
-review: 家長出 3 個生字（1 個只給字形、2 個只給讀音），孩子用紙本或線上字典各在 3 分鐘內查到，並說出一個例詞。
+scenario: 親子共學：複習版：家長和孩子比賽，一人用紙本字典、一人用教育部線上《國語小字典》，查同樣三個字，比較兩種方法。
+goal: 不會念的字用部首查，會念不會寫的字用注音查，約三分鐘內（示意）查到。
+review: 家長出 3 個生字（1 個只給字形、2 個只給讀音），孩子用紙本或線上字典，各在約 3 分鐘內（示意）查到，並說出一個例詞。
 formats:
   slides: []
-  exercise: 目標：不會念的字用部首查，會念不會寫的字用注音查，三分鐘內查到。　檢核：家長出 3 個生字（1 個只給字形、2 個只給讀音），孩子用紙本或線上字典各在 3 分鐘內查到，並說出一個例詞。
+  exercise: 目標：不會念的字用部首查，會念不會寫的字用注音查，約三分鐘內（示意）查到。　檢核：家長出 3 個生字（1 個只給字形、2 個只給讀音），孩子用紙本或線上字典，各在約 3 分鐘內（示意）查到，並說出一個例詞。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 不會念也查得到
+  body:
+  - 《重編國語辭典》說，部首是字典「按照字形結構，取形體偏旁相同者，分部排列，作為查字的依據」。所以不知道讀音，也能從字形找到這個字；知道讀音、不會寫，就用注音找。
+  - 課綱一、二年級要「學習查字典的方法」，三、四年級要「會利用書面或數位方式查字辭典，並能利用字辭典，分辨字詞義」。
+  figures:
+  - why-compare
+  qa:
+    question: 「鯨」不會念，用部首查，要先翻哪一部？
+    answer: 先翻「魚」部。《國語小字典》列出「鯨」的部首是魚，部首外筆畫 8 畫、總筆畫 19 畫，所以在魚部的 8 畫裡找；查到它念 ㄐㄧㄥ。
+    source: mini-jing
+  items_title: 課綱的查字典目標
+  items:
+  - title: 學查字典
+    text: 一、二年級：學習查字典的方法。
+    code: 4-I-3
+  - title: 部首的分類功能
+    text: 一、二年級學習內容：常用字部首的表義（分類）功能。
+    code: Ab-I-4
+  - title: 書面或數位查
+    text: 三、四年級：會利用書面或數位方式查字辭典，並能利用字辭典，分辨字詞義。
+    code: 4-II-3
+  - title: 字辭典的運用
+    text: 三、四年級學習內容：字辭典的運用。
+    code: Ab-II-10
+  sources:
+  - dict-bushou
+  - kuoyu
+how:
+  heading: 先猜部首，再數筆畫
+  body:
+  - 拿到不會念的字，先猜它的部首（常是左邊、上面或外框的部分，這是本站整理的猜法，不是每個字都適用），到部首索引找到那一部，再數部首以外的筆畫，在那一頁找。會念不會寫的字，就用注音索引照讀音找。
+  - 線上查字，教育部《重編國語辭典》網站提醒：中小學學習建議使用《國語辭典簡編本》或《國語小字典》。
+  items:
+  - title: 部首查
+    example: 鯨 → 魚部 → 部首外 8 畫
+    text: 不會念時用。
+  - title: 注音查
+    example: ㄐㄧㄥ → 鯨
+    text: 會念不會寫時用。
+  - title: 看例詞
+    example: 在：「我在聽音樂。」
+    text: 知道這個字怎麼用。
+  checklist_title: 查一個字的步驟：
+  checklist:
+  - 猜出部首
+  - 數其餘筆畫
+  - 找到讀音
+  - 讀一個例詞
+  activity_figure: how-flow
+  sources:
+  - mini-jing
+  - mini-zai
+  - dict-bushou
+what:
+  heading: 部首、筆畫、讀音
+  notes:
+  - 鯨：部首 魚，部首外筆畫 8 畫，總筆畫 19 畫，讀音 ㄐㄧㄥ（國語小字典）。
+  - 「魚」本身是 11 畫（國語小字典）；鯨的總筆畫 19＝部首 11 畫＋部首外 8 畫。
+  - 「三分鐘」是示意，熟練以後自然會變快。
+  sources:
+  - mini-jing
+  - mini-yu
+figures:
+- id: why-compare
+  type: compare
+  alt: 不會念的字用部首查，會念不會寫的字用注音查
+  source: mini-jing
+  relation: versus
+  items:
+  - term: 部首查
+    note: 看字形：先找部首，再數部首外筆畫
+  - term: 注音查
+    note: 知道讀音：照注音順序找
+  caption: 《國語小字典》網站提供部首索引、筆畫索引與注音索引。
+- id: how-flow
+  type: flow
+  alt: 查字典四步：猜部首，數其餘筆畫，翻到那一頁，讀例詞
+  steps:
+  - actor: 孩子
+    text: 猜部首
+  - actor: 孩子
+    text: 數其餘筆畫
+  - actor: 孩子
+    text: 翻到那一頁
+  - actor: 一起
+    text: 讀一個例詞
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 4-I-3「學習查字典的方法。」、4-II-3「會利用書面或數位方式查字辭典，並能利用字辭典，分辨字詞義。」（p.8）；學習內容 Ab-I-4「常用字部首的表義（分類）功能。」（p.13）、Ab-II-10「字辭典的運用。」（p.14）
+- id: mini-jing
+  title: 國語小字典「鯨」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E9%AF%A8
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「鯨」：注音 ㄐㄧㄥ，部首 魚，部首外筆畫 08，總筆畫數 19；網站提供部首索引、筆畫索引、注音索引
+- id: mini-yu
+  title: 國語小字典「魚」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E9%AD%9A
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「魚」：部首 魚，部首外筆畫 00，總筆畫數 11
+- id: mini-zai
+  title: 國語小字典「在」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E5%9C%A8
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「在」ㄗㄞˋ：副詞「表示動作正進行中。如：「正在」、「我在聽音樂。」」
+- id: dict-bushou
+  title: 重編國語辭典修訂本「部首」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=22312
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「部首」：字典、詞典按照字形結構，取形體偏旁相同者，分部排列，作為查字的依據；網站提示「中小學階段學習與一般民眾，建議使用《國語辭典簡編本》、《國語小字典》」

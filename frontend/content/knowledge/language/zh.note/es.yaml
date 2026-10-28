@@ -1,8 +1,13 @@
+# B3 提案：zh.note@es
+# - 「寫給誰、什麼事、時間、地點、署名」五項是本站整理的清單，課綱沒有列出，正文標為本站建議。
+# - guiding question 的答案補上安全提醒：出門前先得到家人同意，不是只留紙條。
+# - 補上 grades [1,2,3,4]、6-II-4、Be-I-2、Be-II-2；用《重編國語辭典》定義便條。
+# - 複審建議：idea、goal、qa、checklist、verify_notes 統一用「寫給誰」和「署名（誰留的）」兩項，不再單寫「誰」。
 id: zh.note@es
 concept: zh.note
 title: 留言條與卡片
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +17,11 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 1
+  - 2
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 語文
@@ -19,9 +29,14 @@ curriculum_108:
   - B1
   issues:
   - 家庭教育
-to_verify: true
+  performances:
+  - 6-II-4
+  contents:
+  - Be-I-2
+  - Be-II-2
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 「寫給誰、什麼事、時間、地點、署名（誰留的）」五項是本站整理的檢查清單；課綱只寫「書信、卡片、便條、啟事等慣用語彙及書寫格式」，沒有列出固定項目。
 prerequisites: []
 links:
   why: []
@@ -29,7 +44,7 @@ links:
   related: []
   deeper:
   - zh.headline@jh
-link_notes: 框架：—。
+link_notes: 框架：108 國語文學習內容 Be「應用文本」的人際溝通（Be-I-2 書信、卡片；Be-II-2 便條、啟事）。
 competency:
   specialist:
   - 應用文寫作
@@ -40,18 +55,107 @@ ai:
   - 提供卡片格式範例
   human_experience:
   - 想清楚對方會擔心什麼
-idea: 寫給別人看的字，要先想讀的人需要知道什麼：誰、什麼事、什麼時候、在哪裡，最後署名。
+idea: 寫給別人看的字，要先想讀的人需要知道什麼：寫給誰、什麼事、什麼時候、在哪裡，最後署名，讓人知道是誰留的（本站整理的五項）。
 guiding_questions:
 - 留言給媽媽說去同學家，要寫哪些事她才不擔心？
 scenario: 親子共學：孩子寫一張真的要用的留言條或感謝卡，家長只看「讀完知不知道該怎麼做」。
-goal: 寫一張讓讀的人知道該怎麼做的留言條或卡片：誰、什麼事、時間、地點、署名。
+goal: 寫一張讓讀的人知道該怎麼做的留言條或卡片：寫給誰、什麼事、時間、地點、署名（本站建議的五項）。
 review: 孩子寫一張真的要用的留言條，家長只讀一次就知道要做什麼，五項都齊才打勾。
 formats:
   slides: []
-  exercise: 目標：寫一張讓讀的人知道該怎麼做的留言條或卡片：誰、什麼事、時間、地點、署名。　檢核：孩子寫一張真的要用的留言條，家長只讀一次就知道要做什麼，五項都齊才打勾。
+  exercise: 目標：寫一張讓讀的人知道該怎麼做的留言條或卡片：寫給誰、什麼事、時間、地點、署名（本站建議的五項）。　檢核：孩子寫一張真的要用的留言條，家長只讀一次就知道要做什麼，五項都齊才打勾。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 讀的人不在你身邊
+  body:
+  - 《重編國語辭典》說，便條是「內容為簡單事項的非正式簡便紙條」。寫的人不在旁邊，讀的人沒辦法問，所以要一次寫清楚。
+  - 課綱一、二年級學「書信、卡片等慣用語彙及書寫格式」，三、四年級再加上「便條、啟事」。
+  qa:
+    question: 留言給媽媽說去同學家，要寫哪些事她才不擔心？
+    answer: 寫清楚：寫給誰（媽媽）、什麼事（去哪位同學家、在哪裡）、什麼時候回來、怎麼聯絡，最後署名（讓媽媽知道是誰留的）並寫下時間。媽媽讀一次就知道你在哪、何時回家。另外，出門前最好先得到家人同意，不是只留一張紙條（本站建議）。
+    source: dict-biantiao
+  items_title: 課綱的應用文學習
+  items:
+  - title: 書信、卡片
+    text: 一、二年級學習內容：在人際溝通方面，以書信、卡片等慣用語彙及書寫格式為主。
+    code: Be-I-2
+  - title: 便條、啟事
+    text: 三、四年級學習內容：在人際溝通方面，以書信、卡片、便條、啟事等慣用語彙及書寫格式為主。
+    code: Be-II-2
+  - title: 書寫應用作品
+    text: 三、四年級：書寫記敘、應用、說明事物的作品。
+    code: 6-II-4
+  sources:
+  - dict-biantiao
+  - kuoyu
+how:
+  heading: 先想讀的人要知道什麼
+  body:
+  - 寫之前先問：讀的人會擔心什麼、需要做什麼？把答案寫成短句，最後署名、寫上時間。寫完唸一遍，想像自己是讀的人，看看還缺什麼。（方法是本站建議。）
+  items:
+  - title: 留言條
+    example: 媽媽：我去小華家寫功課，五點前回家。小明 3:30
+    text: 例句是本站自編。
+  - title: 感謝卡
+    example: 小美：謝謝你借我雨傘，我才沒淋溼。
+    text: 說出謝什麼、為什麼。
+  checklist_title: 五項都寫了嗎：
+  checklist:
+  - 寫給誰
+  - 什麼事
+  - 時間
+  - 地點
+  - 署名（誰留的）
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 一張留言條的順序
+  figures:
+  - what-flow
+  notes:
+  - 五項清單是本站建議；格式細節以課本與老師教的為準。
+  sources:
+  - kuoyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 留言條練習：孩子想讀的人要知道什麼，寫成短句，署名寫時間，大人讀一次說出要做什麼
+  steps:
+  - actor: 孩子
+    text: 想讀的人要知道
+  - actor: 孩子
+    text: 寫成短句
+  - actor: 孩子
+    text: 署名寫時間
+  - actor: 大人
+    text: 讀一次說要做的
+- id: what-flow
+  type: flow
+  alt: 一張留言條由上到下：稱呼、內容、署名、時間
+  steps:
+  - text: 稱呼：媽媽
+  - text: 內容：去哪、何時回
+  - text: 署名：小明
+  - text: 時間：3:30
+  caption: 順序是本站整理的常見寫法。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 6-II-4「書寫記敘、應用、說明事物的作品。」（p.11）；學習內容 Be-I-2「在人際溝通方面，以書信、卡片等慣用語彙及書寫格式為主。」、Be-II-2「在人際溝通方面，以書信、卡片、便條、啟事等慣用語彙及書寫格式為主。」（p.17）
+- id: dict-biantiao
+  title: 重編國語辭典修訂本「便條」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=18931
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「便條」：內容為簡單事項的非正式簡便紙條

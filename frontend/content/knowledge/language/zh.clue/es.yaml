@@ -1,8 +1,13 @@
+# B3 提案：zh.clue@es
+# - link_notes 的 PIRLS 名稱補上原文「Make Straightforward Inferences」，並定義 PIRLS。
+# - 補上 5-I-7、5-II-8、5-III-8（國語文領綱 p.10）：一、二年級找「明示的因果關係」，五、六年級推論「隱含的因果訊息或觀點」。
+# - 本點內容與 PIRLS 原文一致，沒有發現事實錯誤；to_verify 改為 false。
+# - 複審修正：5-I-7、5-III-8 的項目文字改為課綱逐字全文；stage.grades 設為 [1,2,3,4,5,6]（代碼橫跨第一到第三學習階段）；PIRLS 中文名改用「促進國際閱讀素養研究」。
 id: zh.clue@es
 concept: zh.clue
 title: 讀出沒寫的：從線索推論
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +17,13 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 語文
@@ -20,11 +32,14 @@ curriculum_108:
   - B1
   issues:
   - 閱讀素養教育
-to_verify: true
+  performances:
+  - 5-I-7
+  - 5-II-8
+  - 5-III-8
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 引用的框架只寫名稱（PIRLS 閱讀歷程（推論）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 本點為這次補強新增，內容尚未經老師審閱。
+- 已核對 PIRLS 2021 架構「Make Straightforward Inferences」原文與國語文領綱 5-I-7、5-II-8、5-III-8。「3 題」「至少 2 題」是示意的練習份量。
+- PIRLS 中文名「促進國際閱讀素養研究」依國家教育研究院〈我國參加「IEA 促進國際閱讀素養研究 2026（PIRLS 2026）」國家調查執行團隊計畫徵求說明書〉p.1（來源 naer-pirls）。
 prerequisites:
 - zh.mainidea@es
 links:
@@ -33,7 +48,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：PIRLS 閱讀歷程（推論）。跨學門連結：哲學「說出理由：「因為……所以……」」。
+link_notes: 框架：PIRLS（促進國際閱讀素養研究，Progress in International Reading Literacy Study；中文名見來源 naer-pirls）2021 閱讀理解歷程「Make Straightforward Inferences」（直接推論）。跨學門連結：哲學「說出理由：「因為……所以……」」。
 competency:
   specialist:
   - 閱讀理解
@@ -58,4 +73,114 @@ audience:
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 作者不會什麼都說
+  body:
+  - PIRLS（促進國際閱讀素養研究）說，讀者在理解文章時，會推論文中沒有明白寫出的想法或訊息，例如推論一件事造成另一件事、說出角色這麼做的原因。
+  - 課綱一、二年級要「運用簡單的預測、推論等策略，找出句子和段落明示的因果關係」；五、六年級進一步「推論文本隱含的因果訊息或觀點」。
+  qa:
+    question: 文章沒寫「他很緊張」，你怎麼知道他很緊張？
+    answer: 看他的動作、表情和說的話。例如「他的手一直搓著衣角，說話結結巴巴」，這些線索加起來，可以推論他很緊張。PIRLS 也說，角色在故事中的行動，可能清楚指向他的某種特質；從線索推出沒寫的事，就是推論。
+    source: pirls-infer
+  items_title: 推論的三個台階
+  items:
+  - title: 找明示的因果
+    text: 一、二年級：運用簡單的預測、推論等策略，找出句子和段落明示的因果關係，理解文本內容。
+    code: 5-I-7
+  - title: 預測、推論、提問
+    text: 三、四年級：運用預測、推論、提問等策略，增進對文本的理解。
+    code: 5-II-8
+  - title: 推論隱含的訊息
+    text: 五、六年級：運用自我提問、推論等策略，推論文本隱含的因果訊息或觀點。
+    code: 5-III-8
+  sources:
+  - pirls-infer
+  - naer-pirls
+  - kuoyu
+how:
+  heading: 我猜……，因為……
+  body:
+  - 每一個推論都要配一句文中的證據：先說「我猜……」，再說「因為文中寫了……」。找不到證據，就回到文章再找；找到相反的證據，就改掉原來的猜測。
+  items:
+  - title: 從動作推
+    example: 「他把門用力一甩」→ 可能在生氣
+    text: 例句是本站自編。
+  - title: 從表情推
+    example: 「她眼眶紅紅的」→ 可能剛哭過
+    text: 表情常透露心情。
+  - title: 從對話推
+    example: 「隨便啦，都可以。」→ 可能不太想選
+    text: 說話的語氣也是線索。
+  checklist_title: 每一個推論都要有：
+  checklist:
+  - 說出我的推論
+  - 指出文中證據
+  - 證據對得上
+  - 找不到就再讀
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 推論＝線索＋理由
+  figures:
+  - what-compare
+  notes:
+  - 推論的答案不一定只有一個，但每個答案都要有文中的證據（本站建議）。
+  - PIRLS 的直接推論題例：推論一件事造成另一件事、說出角色行動的原因、描述兩個角色的關係。
+  - 對照：PIRLS 把答案就寫在文中的題目歸為「Focus on and Retrieve」（提取），例如找出故事的時間和地點。
+  sources:
+  - pirls-infer
+  - pirls-retrieve
+figures:
+- id: how-flow
+  type: flow
+  alt: 推論練習：大人出一題推論題，孩子說我猜，再指出依據的那一句，一起檢查對不對得上
+  steps:
+  - actor: 大人
+    text: 出一題推論題
+  - actor: 孩子
+    text: 說「我猜……」
+  - actor: 孩子
+    text: 指出依據那句
+  - actor: 一起
+    text: 檢查對不對得上
+- id: what-compare
+  type: compare
+  alt: 提取是答案寫在文中；推論是從線索推出沒寫的事
+  source: pirls-infer
+  relation: not_equal
+  items:
+  - term: 提取
+    note: 答案寫在文中，找到那一句
+  - term: 推論
+    note: 從線索推出文中沒寫的事
+sources:
+- id: naer-pirls
+  title: 我國參加「IEA 促進國際閱讀素養研究 2026（PIRLS 2026）」國家調查執行團隊計畫徵求說明書
+  publisher: 國家教育研究院
+  url: https://www.naer.edu.tw/upload/1/14/doc/4268/%E9%99%84%E4%BB%B6_PIRLS2026%E8%A8%88%E7%95%AB%E5%BE%B5%E6%B1%82%E8%AA%AA%E6%98%8E%E6%9B%B8.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: PIRLS 的正式中文名「IEA 促進國際閱讀素養研究」；IEA 譯名「國際教育成就評量學會」（p.1）
+- id: pirls-infer
+  title: 'PIRLS 2021 Assessment Frameworks: Make Straightforward Inferences'
+  publisher: IEA（International Association for the Evaluation of Educational Achievement，國際教育成就評量學會）／TIMSS & PIRLS International Study Center, Boston College
+  url: https://pirls2021.org/frameworks/home/reading-assessment-framework/processes-of-comprehension/make-straightforward-inferences/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「As readers construct meaning from text, they make inferences about ideas or information not explicitly stated.」；角色在某處的行動「may clearly point to a particular character trait」；任務例「Inferring that one event caused another event」「Giving the reason for a character's action」「Describing the relationship between two characters」
+- id: pirls-retrieve
+  title: 'PIRLS 2021 Assessment Frameworks: Focus on and Retrieve Explicitly Stated Information'
+  publisher: IEA（International Association for the Evaluation of Educational Achievement，國際教育成就評量學會）／TIMSS & PIRLS International Study Center, Boston College
+  url: https://pirls2021.org/frameworks/home/reading-assessment-framework/processes-of-comprehension/focus-on-and-retrieve-explicitly-stated-information/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 題目和答案用文中原詞或同義詞即歸為「Focus and Retrieve」；任務例「Identifying the setting of a story (e.g., time and place)」
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 5-I-7「運用簡單的預測、推論等策略，找出句子和段落明示的因果關係，理解文本內容。」、5-II-8「運用預測、推論、提問等策略，增進對文本的理解。」、5-III-8「運用自我提問、推論等策略，推論文本隱含的因果訊息或觀點。」（p.10）

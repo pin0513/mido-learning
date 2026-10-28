@@ -1,8 +1,13 @@
+# B3 提案：zh.wrongchar@es
+# - 「他跑的很快」要寫「得」：依《國語小字典》，得「放在動詞或形容詞後面，表示程度、結果或狀態」，的沒有這個義項；答案正確，但改成引用字典的說法，不寫成絕對規則。
+# - 新增提醒：教育部辭典收「的」作副詞詞尾（「慢慢的走」），同「地」，不要把它判成錯字；學校老師若要求用「地」，以老師為準。
+# - 複審建議：《國語小字典》來源由首頁拆成「在」「再」「的」「得」四個單字查詢網址，方便讀者核對。
+# - 補上 grades [3,4]、4-II-4、Ab-II-3；「聲旁」是課綱實施要點的用語（p.48）。
 id: zh.wrongchar@es
 concept: zh.wrongchar
 title: 錯別字：在／再、的／得
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +17,22 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 4-II-4
+  contents:
+  - Ab-II-3
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 在、再、的、得的義項已用教育部《國語小字典》核對；「的」作副詞詞尾（同「地」）另見《重編國語辭典》。「10 句」「8 句」是示意的練習份量。
 prerequisites:
 - zh.dictionary@es
 links:
@@ -28,7 +40,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：108 國語文學習表現 4-II-4「能分辨形近、音近字詞，並正確使用」；學習內容 Ab-II-3（部首及部件的表音、表義功能）。
 competency:
   specialist:
   - 基礎語文
@@ -39,18 +51,162 @@ ai:
   - 標出可能的同音錯字
   human_experience:
   - 說出為什麼是這個字
-idea: 很多錯字是同音字：在（在哪裡）、再（再一次）；的（我的書）、得（跑得快）。形聲字看部首猜意思，看聲旁猜讀音，可以少寫錯。
+idea: 很多錯字是同音字：在（在家、我在聽音樂）、再（再一次、吃了飯再走）；的（我的書）、得（跑得快）。形聲字看部首猜意思，看聲旁猜讀音，可以少寫錯。
 guiding_questions:
 - 「我明天在來」和「他跑的很快」，各錯在哪裡？
 scenario: 親子共學：複習版：全家各寫下自己最常寫錯的 3 個字，貼在冰箱上一週，誰寫錯就畫一筆。
 goal: 分得清常見同音字（在／再、的／得），寫完會自己挑出來。
-review: 家長準備 10 句含「在、再、的、得」的句子（一半寫錯），孩子圈出錯字並說出理由，答對 8 句以上。
+review: 家長準備 10 句（示意）含「在、再、的、得」的句子（一半寫錯），孩子圈出錯字並說出理由，答對 8 句以上（示意）。
 formats:
   slides: []
-  exercise: 目標：分得清常見同音字（在／再、的／得），寫完會自己挑出來。　檢核：家長準備 10 句含「在、再、的、得」的句子（一半寫錯），孩子圈出錯字並說出理由，答對 8 句以上。
+  exercise: 目標：分得清常見同音字（在／再、的／得），寫完會自己挑出來。　檢核：家長準備 10 句（示意）含「在、再、的、得」的句子（一半寫錯），孩子圈出錯字並說出理由，答對 8 句以上（示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 寫對字，意思才對
+  body:
+  - 「在」和「再」都念 ㄗㄞˋ，「的」和「得」也都有輕聲 ˙ㄉㄜ 的念法，耳朵分不出來，只能靠意思分。寫錯了，句子的意思就變了。
+  - 課綱要三、四年級「能分辨形近、音近字詞，並正確使用」。國中教育會考的寫作評分也把「錯別字」列在評分向度裡。
+  figures:
+  - why-compare
+  qa:
+    question: 「我明天在來」和「他跑的很快」，各錯在哪裡？
+    answer: 「我明天在來」要寫「再」：《國語小字典》說再表示重複，或兩個動作的接續（如「吃了飯再走」）；在表示動作正在進行（如「我在聽音樂」）或時間、處所。「他跑的很快」要寫「得」：得「放在動詞或形容詞後面，表示程度、結果或狀態」，例如「飛得很高」。
+    source: mini-de2
+  items_title: 分辨同音字的線索
+  items:
+  - title: 看意思
+    text: 三、四年級：能分辨形近、音近字詞，並正確使用。
+    code: 4-II-4
+  - title: 看部首和部件
+    text: 三、四年級學習內容：常用字部首及部件的表音及表義功能。
+    code: Ab-II-3
+  sources:
+  - mini-zai
+  - mini-zai2
+  - mini-de2
+  - kuoyu
+  - cap-writing
+how:
+  heading: 說出為什麼是這個字
+  body:
+  - 寫完後挑出句子裡的在、再、的、得，各問一次：這裡是什麼意思？是「再一次、接著做」，就用再；是「正在、在哪裡」，就用在。動詞或形容詞後面接「很快、很高」這類程度，用得。
+  - 課綱建議三、四年級起用部件（部首、聲旁）歸類識字：部首常提示意思，聲旁常提示讀音。
+  items:
+  - title: 在／再
+    example: 我在家。／明天再來。
+    text: 在：正在、處所、時間；再：重複、接續。
+  - title: 的／得
+    example: 我的書。／跑得很快。
+    text: 得放在動詞或形容詞後面，表示程度。
+  - title: 的＝地也可以
+    example: 慢慢的走
+    text: 教育部辭典收「的」作副詞詞尾，同「地」，不算錯；學校老師若要求用「地」，以老師為準。
+  checklist_title: 寫完自己挑：
+  checklist:
+  - 圈出在和再
+  - 圈出的和得
+  - 說出是什麼意思
+  - 不確定就查字典
+  activity_figure: how-flow
+  sources:
+  - mini-zai
+  - mini-zai2
+  - mini-de2
+  - kuoyu
+  - dict-de
+what:
+  heading: 常見的兩組同音字
+  notes:
+  - 「的」用在名詞前表示所屬，如「我的書」；也可作副詞詞尾，如「慢慢的走」（國語小字典；《重編國語辭典》注明同「地」）。
+  - 「錯別字」是「錯字和別字」的合稱（重編國語辭典）；把在寫成再，屬於用錯了字。
+  sources:
+  - mini-de
+  - dict-de
+  - dict-cuobiezi
+figures:
+- id: why-compare
+  type: compare
+  alt: 在和再讀音相同，意思不同：在表示正在或處所，再表示重複或接續
+  source: mini-zai2
+  relation: not_equal
+  items:
+  - term: 在
+    reading: ㄗㄞˋ
+    note: 正在、處所，如「我在聽音樂」
+  - term: 再
+    reading: ㄗㄞˋ
+    note: 重複、接續，如「吃了飯再走」
+- id: how-flow
+  type: flow
+  alt: 挑錯字練習：家長出句子，孩子圈出在再的得，說出意思，查字典對照
+  steps:
+  - actor: 家長
+    text: 出十個句子
+  - actor: 孩子
+    text: 圈出在再的得
+  - actor: 孩子
+    text: 說出是什麼意思
+  - actor: 一起
+    text: 查字典對照
+sources:
+- id: mini-zai
+  title: 國語小字典「在」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E5%9C%A8
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「在」ㄗㄞˋ，副詞「表示動作正進行中。如：「我在聽音樂。」」、介詞表時間、處所
+- id: mini-zai2
+  title: 國語小字典「再」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E5%86%8D
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「再」ㄗㄞˋ，「重複」、「表示兩個動作的接續。如：「吃了飯再走。」」
+- id: mini-de
+  title: 國語小字典「的」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E7%9A%84
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「的」讀音含 ˙ㄉㄜ，「副詞詞尾。如：「慢慢的走」」
+- id: mini-de2
+  title: 國語小字典「得」
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/SearchIndex/searchResult?searchType=one&dictSearchField=%E5%BE%97
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「得」讀音含 ˙ㄉㄜ，「放在動詞或形容詞後面，表示程度、結果或狀態。如：「樂得很」、「飛得很高」」
+- id: dict-de
+  title: 重編國語辭典修訂本「的」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=1927
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「的」˙ㄉㄜ 結構助詞（4）「置於副詞後。同「地」。如：「慢慢的走」」；釋義中沒有置於動詞後表程度（同「得」）的義項
+- id: dict-cuobiezi
+  title: 重編國語辭典修訂本「錯別字」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=142373
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「錯別字」：錯字和別字
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 4-II-4「能分辨形近、音近字詞，並正確使用。」（p.8）；學習內容 Ab-II-3「常用字部首及部件的表音及表義功能。」（p.13）；實施要點識字：第二學習階段起「宜採部件（部首、聲旁）歸類，協助以部首以及聲旁識字」（p.48）
+- id: cap-writing
+  title: 國中教育會考 寫作測驗問答
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test5-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 寫作測驗評分規準的四個向度之一為「錯別字、格式與標點符號」

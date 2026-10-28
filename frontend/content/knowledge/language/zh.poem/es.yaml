@@ -1,8 +1,15 @@
+# B3 提案：zh.poem@es
+# - idea「四句叫絕句」以偏概全：《重編國語辭典》定義絕句是「一種近體詩。每首四句而合平仄格律的詩」，四句的詩不一定是絕句。已改寫。
+# - 「偶數句的最後一字常常押韻」保留「常常」，並補上《靜夜思》第一句的「光」也押韻。
+# - link_notes 原寫「108 國語文學習內容 Ad 篇章（韻文）」對不上國小：「韻文」是國中的 Ad-IV-3；國小是 Ad-III-4「古典詩文」。已更正。
+# - 《靜夜思》版本差異（宋刻本作「床前看月光」「舉頭望山月」）不影響押韻字；複審後因唯一出處是中國網站轉載的報紙文章，從 sources 與正文移除，只留在 verify_notes。
+# - 複審修正：idea「本站說明」改「本站整理」；首次出現「平仄」加註（依《重編國語辭典》「平仄」）；Ad-III-4 項目補上原文「古典詩文。」。
+# - 補上 grades [3,4,5,6]（課綱教材編選：第二、三階段古典詩文應含本土素材）、5-II-1、5-III-1、Ad-III-4。
 id: zh.poem@es
 concept: zh.poem
 title: 讀古詩：五言、七言與押韻
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +19,11 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 語文
@@ -20,11 +32,15 @@ curriculum_108:
   - B3
   issues:
   - 多元文化教育
-to_verify: true
+  performances:
+  - 5-II-1
+  - 5-III-1
+  contents:
+  - Ad-III-4
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 引用的框架只寫名稱（108 國語文學習內容 Ad 篇章（韻文）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 本點為這次補強新增，內容尚未經老師審閱。
+- 《靜夜思》採《唐詩三百首》通行文本。另有版本作「床前看月光」「舉頭望山月」：陳尚君〈唐詩名篇在歷史上的演進〉（光明日報 2023-08-26；復旦大學新聞文化網轉載 https://newsroom.fudan.edu.cn/_s3/2023/0828/c31a136030/page.psp）說現存最早的宋蜀刻本如此、「明月」版本首見於明代李攀龍《唐詩選》。這不是台灣學術或官方來源，也找不到可開啟核對的台灣來源，所以不列入 sources，正文不寫版本差異。兩種版本的韻腳字都是光、霜、鄉（本站比對）。
+- 朗讀、圈韻腳、畫畫面的步驟是本站建議。
 prerequisites: []
 links:
   why: []
@@ -32,7 +48,7 @@ links:
   related: []
   deeper:
   - zh.wenyan@jh
-link_notes: 框架：108 國語文學習內容 Ad 篇章（韻文）。
+link_notes: 框架：108 國語文學習內容 Ad-III-4「古典詩文」（國小）；原稿寫的「韻文」是國中的 Ad-IV-3「韻文：如古體詩、樂府詩、近體詩、詞、曲等」。學習表現 5-II-1、5-III-1（朗讀）。
 competency:
   specialist:
   - 文言與古典
@@ -43,18 +59,170 @@ ai:
   - 朗讀示範、解釋生詞
   human_experience:
   - 自己背誦並說出看到的畫面
-idea: 一句五個字叫五言、七個字叫七言；四句叫絕句。偶數句的最後一字常常押韻，念起來有節奏。先朗讀、再理解，畫面出來了，就記得住。
+idea: 一句五個字是五言，七個字是七言。絕句是每首四句、又合平仄（平聲和仄聲；仄指上、去、入三聲）格律的近體詩，所以四句的詩不一定是絕句。押韻是句尾用韻母相同或相近的字，念起來有節奏；常見在偶數句的最後一字押韻（本站整理，不是每首都這樣）。先朗讀、再理解，畫面出來了，就記得住。
 guiding_questions:
 - 「床前明月光」為什麼念起來特別順？
 scenario: 親子共學：全家輪流朗讀一首古詩，找出押韻的字，再一起畫出詩裡的畫面。
 goal: 朗讀並背出幾首五言、七言古詩，指出押韻的字。
-review: 孩子背誦 2 首課本或課外的五言、七言絕句，家長確認字句正確，孩子並圈出每首押韻的字。
+review: 孩子背誦 2 首（示意）課本或課外的五言、七言古詩，家長確認字句正確，孩子並圈出每首押韻的字。
 formats:
   slides: []
-  exercise: 目標：朗讀並背出幾首五言、七言古詩，指出押韻的字。　檢核：孩子背誦 2 首課本或課外的五言、七言絕句，家長確認字句正確，孩子並圈出每首押韻的字。
+  exercise: 目標：朗讀並背出幾首五言、七言古詩，指出押韻的字。　檢核：孩子背誦 2 首（示意）課本或課外的五言、七言古詩，家長確認字句正確，孩子並圈出每首押韻的字。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 念出節奏，記住畫面
+  body:
+  - 古詩字少，靠整齊的句子和押韻帶出節奏。《重編國語辭典》說，押韻是「詩詞歌賦中，某些句子的末字使用韻母相同或相近的字」。
+  - 課綱說國小教材「第二、三階段古典詩文應含本土素材」；三、四年級朗讀要「表現抑揚頓挫與情感」，五、六年級的學習內容有「古典詩文」。
+  figures:
+  - why-compare
+  qa:
+    question: 「床前明月光」為什麼念起來特別順？
+    answer: 一個原因是押韻：《靜夜思》第一、二、四句最後的「光」（ㄍㄨㄤ）、「霜」（ㄕㄨㄤ）、「鄉」（ㄒㄧㄤ）都收在 ㄤ，句尾的聲音互相呼應。另一個原因是每句都是五個字，節拍整齊。
+    source: dict-yayun
+  items_title: 課綱裡的古詩學習
+  items:
+  - title: 朗讀有抑揚頓挫
+    text: 三、四年級：以適切的速率朗讀文本，表現抑揚頓挫與情感。
+    code: 5-II-1
+  - title: 流暢朗讀
+    text: 五、六年級：流暢朗讀各類文本，並表現抑揚頓挫的變化。
+    code: 5-III-1
+  - title: 古典詩文
+    text: 五、六年級學習內容：古典詩文。
+    code: Ad-III-4
+  sources:
+  - dict-yayun
+  - kuoyu
+how:
+  heading: 先朗讀，再找韻腳
+  body:
+  - 先大聲朗讀幾遍，在節拍處稍微停一下；再把每句最後一個字圈起來，查注音，看哪些字韻母相同或相近；最後說出或畫出詩裡的畫面。（步驟是本站建議。）
+  items:
+  - title: 數字數
+    example: 床前明月光 → 五個字 → 五言
+    text: 每句幾個字，就是幾言。
+  - title: 圈韻腳
+    example: 光、霜、鄉
+    text: 查注音，都收在 ㄤ。
+  - title: 畫畫面
+    example: 月光照在床前，像地上的霜
+    text: 說出或畫出看到的景象。
+  checklist_title: 讀一首詩，做四件事：
+  checklist:
+  - 數每句字數
+  - 圈出句尾字
+  - 查注音比韻母
+  - 說出畫面
+  activity_figure: how-flow
+  sources:
+  - mini
+  - kuoyu
+what:
+  heading: 五言、七言、絕句
+  figures:
+  - what-compare
+  notes:
+  - 絕句不只是「四句」：《重編國語辭典》說絕句是「一種近體詩。每首四句而合平仄格律的詩」。
+  - 五言、七言也不只有絕句，還有古詩、律詩、排律等（重編國語辭典「五言詩」「七言詩」）。
+  - 押韻不一定只在偶數句：《靜夜思》第一句的「光」也押韻。
+  - 平仄是平聲和仄聲：平是四聲中的平聲，仄是上、去、入三聲；舊時寫韻文，平仄要相互交替，才合格律（重編國語辭典「平仄」）。
+  sources:
+  - dict-jueju
+  - dict-wuyan
+  - dict-qiyan
+  - dict-pingze
+figures:
+- id: why-compare
+  type: compare
+  alt: 光、霜、鄉三個韻腳字都收在ㄤ
+  source: mini
+  relation: equal
+  items:
+  - term: 光
+    reading: ㄍㄨㄤ
+    note: 第一句句尾
+  - term: 霜
+    reading: ㄕㄨㄤ
+    note: 第二句句尾
+  - term: 鄉
+    reading: ㄒㄧㄤ
+    note: 第四句句尾
+  title: 《靜夜思》的韻腳
+- id: how-flow
+  type: flow
+  alt: 讀古詩：一起輪流朗讀，孩子圈句尾字，查注音找韻，一起畫出畫面
+  steps:
+  - actor: 一起
+    text: 輪流朗讀
+  - actor: 孩子
+    text: 圈句尾字
+  - actor: 孩子
+    text: 查注音找韻
+  - actor: 一起
+    text: 畫出畫面
+- id: what-compare
+  type: compare
+  alt: 五言絕句每句五個字，七言絕句每句七個字，都是每首四句的近體詩
+  source: dict-jueju
+  relation: versus
+  items:
+  - term: 五言絕句
+    note: 每句五個字，每首四句
+  - term: 七言絕句
+    note: 每句七個字，每首四句
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 5-II-1「以適切的速率朗讀文本，表現抑揚頓挫與情感。」、5-III-1「流暢朗讀各類文本，並表現抑揚頓挫的變化。」（p.10）；學習內容 Ad-III-4「古典詩文。」、Ad-IV-3「韻文：如古體詩、樂府詩、近體詩、詞、曲等。」（p.15）；教材編選「第二、三階段古典詩文應含本土素材」（p.21）
+- id: dict-jueju
+  title: 重編國語辭典修訂本「絕句」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=97388
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「絕句」：一種近體詩。每首四句而合平仄格律的詩。分每句五個字的五言絕句，及每句七個字的七言絕句兩種
+- id: dict-yayun
+  title: 重編國語辭典修訂本「押韻」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=151883
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「押韻」：詩詞歌賦中，某些句子的末字使用韻母相同或相近的字
+- id: dict-wuyan
+  title: 重編國語辭典修訂本「五言詩」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=159652
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「五言詩」：每句五字的詩。有五言古詩、五言絕句、五言律詩、五言排律等
+- id: dict-qiyan
+  title: 重編國語辭典修訂本「七言詩」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=98216
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「七言詩」：每句七字……分七言古風、七言律詩、七言排律、七言絕句等
+- id: dict-pingze
+  title: 重編國語辭典修訂本「平仄」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=25978
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「平仄」：平，四聲中的平聲。仄，四聲中的上、去、入三聲。平仄指平聲和仄聲。舊時寫作韻文，用字須平仄相互交替，使其合於格律
+- id: mini
+  title: 國語小字典
+  publisher: 教育部
+  url: https://dict.mini.moe.edu.tw/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 讀音：光 ㄍㄨㄤ、霜 ㄕㄨㄤ、鄉 ㄒㄧㄤ（以 SearchIndex 單字查詢）
