@@ -1,8 +1,17 @@
+# B8 提案：en.gept2@sh
+# - 補 grades 與 Why/How/What、兩張圖。全民英檢是檢定，英語文領綱沒有對應條目，不列 curriculum_108 代碼。
+# - 錯誤修正（高）：原檢核要家長看「模擬分數」對照通過標準，但 LTTC 說明聽讀成績是由答對題數「透過統計程序轉換為量尺分數」，練習題答對數不能直接換算成 160／72 分；改成用練習題找弱點，通過與否以正式成績單為準。
+# - 錯誤修正：原 goal「四項一起準備」與官方流程不符——聽讀「兩項測驗成績總和達160分，且其中任一項成績不低於72分」才能加考說寫；改成先聽讀、後說寫。
+# - 刪除過時的「尚未經老師審閱」；CEFR 對照改依 LTTC 常見問題（聽讀通過 B1，說寫也通過 B1+）；高中對應中級標為本站建議（顯示在 notes）。
+# - 第一輪獨立審查修正：How 補上聽力四種、閱讀三種題型與題數（LTTC 逐字核對），讓檢核的「錯題依題型分類」有教到。
+# - 第二輪獨立審查修正：標題與 What 標題「知道自己在哪一級」超出 How（How 說練習題判斷不了級數），改為「全民英檢中級：題型、通過標準與下一步」「看懂標準，找出下一步」；How 補 LTTC 的 CEFR 對照句（how.sources 補 gept-faq）。
+# - 第五輪獨立審查修正：What notes 的 AI 注意事項 How 沒教，How body 補 AI 使用說明（年齡限制、教育用工具、家長陪伴、不輸入個資、查證、註明工具、不代寫；學生版六（四）逐字），how.sources 加 genai-student。
+# - 第六輪獨立審查修正：（建議項）酷英網工具名稱依國教署新聞稿與酷英網現行頁面改為「CoolE Bot」（How body 與 What notes 的內文；genai-student supports 的引文照學生版 PDF 原文「酷英網E-BOT」不改），新增來源 moe-coolebot（國教署 2023-11-26 即時新聞），列入 how.sources 與 what.sources。
 id: en.gept2@sh
 concept: en.gept2
-title: 全民英檢中級：知道自己在哪一級
+title: 全民英檢中級：題型、通過標準與下一步
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,6 +22,10 @@ discipline:
   crosscutting: []
 stage:
   level: sh
+  grades:
+  - 10
+  - 11
+  - 12
 curriculum_108:
   domains:
   - 語文
@@ -21,14 +34,13 @@ curriculum_108:
   - A3
   issues:
   - 生涯規劃教育
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 英語文領綱把高中十至十二年級定為第五學習階段，部定必修第十、十一年級每學期 4 學分；這一點不對應特定課綱條目。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：全民英檢是檢定，英語文領綱沒有對應的條目，不列 curriculum_108 代碼。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：全民英檢中級（CEFR B1）。
-- 引用的框架只寫名稱（全民英檢中級（LTTC，CEFR B1）；CEFR），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
-- 本點為這次補強新增，內容尚未經老師審閱。
-- 通過標準與題型取自 LTTC 全民英檢網中級測驗介紹 https://www.gept.org.tw/Exam_intro/t02_introduction.asp（2026-10-27 讀取）；GEPT 與 CEFR 的對應取自 LTTC 報名手冊 https://www.gept.org.tw/info/registration_guide.pdf。
+- 檢測程度、題型、通過標準與計分方式依 LTTC 全民英檢網中級測驗介紹逐字核對（2026-10-29 讀取）；CEFR 對照依 LTTC 常見問題；報名前以官網最新公告為準。
 prerequisites:
 - en.listen2@sh
 - en.middle@sh
@@ -40,7 +52,7 @@ links:
   related: []
   deeper:
   - en.toefl@uni
-link_notes: 框架：全民英檢中級（LTTC，CEFR B1）；CEFR。
+link_notes: 框架：全民英檢中級（LTTC）；GEPT 與 CEFR 對照（LTTC 常見問題）；CEFR 共同參考等級（Council of Europe）。
 competency:
   specialist:
   - 語言學習策略
@@ -48,21 +60,175 @@ competency:
   - 用數據說明
 ai:
   delegable:
-  - 依題型出練習、分析弱點
+  - 依題型出練習、分析弱點（依教育部學生版注意事項）
   human_experience:
   - 設定目標並持續練
-idea: 全民英檢中級對應 CEFR B1：能閱讀短文、故事、信件、廣告與說明書，能介紹自己的生活與經歷並對一般話題陳述看法，能寫簡單的書信與心得。CEFR 把語言能力分成 A1 到 C2 六級，用「能做到什麼」描述；檢定是一把尺，重點是看出下一步要練什麼。
+idea: 全民英檢中級的檢測程度是「具有使用簡單英語進行日常生活溝通的能力」：能閱讀短文、故事、私人信件、廣告與使用說明，能介紹自己的生活與經歷並對一般話題陳述看法，能寫簡單的書信、故事及心得。中級分兩階段：先考聽力與閱讀，通過後才能加考寫作與口說；LTTC 說明，聽讀通過對應 CEFR B1，說寫也通過的成績單會顯示 B1+。檢定是一把尺，重點是看出下一步要練什麼。
 guiding_questions:
 - 「英文不錯」到底是多好？有沒有一把尺可以量？
-scenario: 親子共學：對照全民英檢中級的「聽說讀寫能力說明」，親子各自勾出做得到的項目，找出下一個目標。
-goal: 四項一起準備：通過全民英檢中級，知道自己在 CEFR 的哪一級。
-review: 做一回完整的全民英檢中級官方模擬題並對照官方通過標準：聽力與閱讀總分 160 分以上，且單項不低於 72 分（各滿分 120）；寫作 80 分、口說 80 分以上。家長看成績或模擬分數打勾。
+scenario: 親子共學：對照全民英檢中級的聽、讀、說、寫能力說明，親子各自勾出做得到的項目，找出下一個目標。
+goal: 看懂全民英檢中級的題型與通過標準：先準備聽讀、通過後再加考說寫，並知道成績對應 CEFR 哪一級。
+review: 孩子做一回全民英檢中級官方練習題的聽力與閱讀，把錯題依題型分類，找出最弱的題型；再說出官方通過標準：聽讀兩項總和 160 分以上且單項不低於 72 分，才能加考寫作與口說（各 80 分通過）。練習題的答對數不是量尺分數，是否通過以正式成績單為準。
 formats:
   slides: []
-  exercise: 目標：四項一起準備：通過全民英檢中級，知道自己在 CEFR 的哪一級。　檢核：做一回完整的全民英檢中級官方模擬題並對照官方通過標準：聽力與閱讀總分 160 分以上，且單項不低於 72 分（各滿分 120）；寫作 80 分、口說 80 分以上。家長看成績或模擬分數打勾。
+  exercise: 目標：看懂全民英檢中級的題型與通過標準：先準備聽讀、通過後再加考說寫，並知道成績對應 CEFR 哪一級。　檢核：孩子做一回全民英檢中級官方練習題的聽力與閱讀，把錯題依題型分類，找出最弱的題型；再說出官方通過標準：聽讀兩項總和 160 分以上且單項不低於 72 分，才能加考寫作與口說（各 80 分通過）。練習題的答對數不是量尺分數，是否通過以正式成績單為準。
 audience:
 - kid
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 高中十至十二年級（第五學習階段）
+  source: english
+why:
+  heading: 用一把尺看自己在哪裡
+  body:
+  - CEFR 把語言能力分成 A1 到 C2 六級，用「能做到什麼」來描述；例如 B1 是「Can understand the main points of clear standard input on familiar matters regularly encountered in work, school, leisure, etc.」
+  - LTTC 說明，「許多大學以CEFR B1（中級）或B2（中高級）作為英語能力畢業標準」；通過全民英檢中級聽讀，成績單會列出 CEFR 級數。
+  qa:
+    question: 「英文不錯」到底是多好？有沒有一把尺可以量？
+    answer: 有。全民英檢中級用聽、說、讀、寫的能力說明告訴你通過者做得到什麼，例如「能閱讀短文、故事、私人信件、廣告、傳單、簡介及使用說明等」。對照這些說明，就知道自己是哪裡還不夠。
+    source: gept-intermediate
+  items_title: 中級通過者做得到（LTTC）
+  items:
+  - title: 聽
+    text: 能聽懂一般會話，大致聽懂公共場所廣播、氣象報告及廣告。
+  - title: 讀
+    text: 能閱讀短文、故事、私人信件、廣告與使用說明。
+  - title: 說
+    text: 能介紹自己的生活與經歷，對一般話題陳述看法。
+  - title: 寫
+    text: 能寫簡單的書信、故事及心得。
+  checklist_title: 先想一想
+  checklist:
+  - 哪一項最有把握
+  - 哪一項最弱
+  sources:
+  - cefr-cv
+  - gept-faq
+  - gept-intermediate
+how:
+  heading: 先過聽讀，再加考說寫
+  body:
+  - 官方題型：聽力 35 題約 30 分鐘，分看圖辨義 5 題、問答 10 題、簡短對話 10 題、簡短談話 10 題；閱讀 35 題 45 分鐘，分詞彙 10 題、段落填空 10 題、閱讀理解 15 題（LTTC 中級測驗介紹）。官方流程：聽讀「兩項測驗成績總和達160分，且其中任一項成績不低於72分」，才「可加考該級數之說寫測驗」。寫作、口說各 80 分通過。LTTC 說明，聽讀通過的成績單對應 CEFR B1，說寫也通過顯示 B1+。
+  - 本站建議：先用官方練習題找出最弱的題型，集中練習；聽讀穩定後，再練中譯英、英文作文、朗讀、回答問題與看圖敘述。練習題的答對數不能直接換算成量尺分數，LTTC 說明成績是「考生的答對題數透過統計程序轉換為量尺分數」。
+  - 用 AI 練習時，照教育部注意事項（學生版）做：先確認符合平臺的註冊年齡限制，優先用為教育目的設計的工具（例如酷英網的 CoolE Bot），在家使用請家長陪伴；不輸入自己或他人的個人資料；AI 的回答要查證，不直接採信；作業「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交」，也不能用 AI 抄襲、代寫或作弊。
+  items_title: 本站建議的準備順序
+  items:
+  - title: 對照能力說明
+    text: 勾出做得到與做不到的項目。
+  - title: 練聽讀題型
+    text: 錯題依題型分類，找最弱的一種。
+  - title: 聽讀通過後
+    text: 再加考寫作與口說。
+  - title: 看正式成績單
+    text: 通過與否以成績單為準。
+  checklist_title: 每次練習後
+  checklist:
+  - 錯題分類
+  - 找出最弱題型
+  - 訂下一步
+  activity_figure: gept2-flow
+  sources:
+  - gept-intermediate
+  - gept-faq
+  - genai-student
+  - moe-coolebot
+what:
+  heading: 看懂標準，找出下一步
+  body:
+  - 學完後，孩子說得出全民英檢中級聽讀與說寫的題型和通過標準，知道成績對應 CEFR 哪一級，也知道下一步要補哪一項。
+  items_title: 學完能做到
+  items:
+  - title: 說出通過標準
+    text: 聽讀總和 160、單項 72；說寫各 80。
+  - title: 說出 CEFR 對照
+    text: 聽讀通過 B1，說寫也通過 B1+。
+  - title: 找出弱項
+    text: 用錯題分類決定下一步。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出標準
+  - 錯題有分類
+  - 有下一步計畫
+  figures:
+  - gept2-compare
+  notes:
+  - 題型、時間與通過標準依 LTTC 官方說明；把高中對應全民英檢中級是本站建議，不是官方換算。
+  - 練習題只用來找弱點：LTTC 的成績是量尺分數，電腦化測驗模擬練習也註明「題數與計時非同正式測驗」，所以不能用練習題分數判斷是否通過。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具（例如酷英網的 CoolE Bot），「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - gept-intermediate
+  - gept-faq
+  - english
+  - genai-student
+  - moe-coolebot
+figures:
+- id: gept2-flow
+  type: flow
+  alt: 全民英檢中級的報考流程：先考聽讀，聽讀通過後加考說寫，四項都通過拿四項合格證書。
+  steps:
+  - actor: 考生
+    text: 報考聽讀
+  - actor: LTTC
+    text: 聽讀通過
+  - actor: 考生
+    text: 加考說寫
+  - actor: LTTC
+    text: 四項合格
+  source: gept-faq
+- id: gept2-compare
+  type: compare
+  alt: 比較全民英檢中級的聽讀測驗和說寫測驗：滿分與通過標準不同。
+  source: gept-intermediate
+  relation: versus
+  items:
+  - term: 聽讀測驗
+    note: 各 120 分；總和 160、單項不低於 72
+  - term: 說寫測驗
+    note: 各 100 分；各 80 分通過
+  caption: 依 LTTC 中級測驗介紹的測驗項目與通過標準。
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 編碼說明「Ⅴ代表第五學習階段（高級中等學校 10-12 年級）」、「星號（*）係指較高階的學習表現」（p.8）；時間分配「英語文部定必修第十、十一年級每學期4學分，第十二年級上學期2學分。」（p.4）
+- id: gept-intermediate
+  title: 中級測驗（認識GEPT＞各級介紹）
+  publisher: 財團法人語言訓練測驗中心（LTTC）GEPT全民英檢網
+  url: https://www.gept.org.tw/Exam_intro/t02_introduction.asp
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 通過標準：聽讀「兩項測驗成績總和達160分，且其中任一項成績不低於72分」，寫作、口說各 80分；註「已達聽讀測驗通過標準，可加考該級數之說寫測驗」；「考生的答對題數透過統計程序轉換為量尺分數」；電腦化測驗模擬練習「題數與計時非同正式測驗」；聽力題型：看圖辨義「共5題」、問答「共10題」、簡短對話「共10題」、簡短談話「共10題」；閱讀題型：詞彙「共10題，每題含一個空格」、段落填空「共10題，包括二個段落，每個段落各含5個空格」、閱讀理解「共15題，包括5個題組」；檢測程度「中級具有使用簡單英語進行日常生活溝通的能力。」；檢測程度・讀「在日常生活中，能閱讀短文、故事、私人信件、廣告、傳單、簡介及使用說明等。在工作時，能閱讀工作須知、公告、操作手冊、例行的文件、郵件等。」；寫「能寫簡單的書信、故事及心得等。」
+- id: gept-faq
+  title: 常見問題（測驗設計、聽讀與說寫分開施測、CEFR 對照）
+  publisher: 財團法人語言訓練測驗中心（LTTC）GEPT全民英檢網
+  url: https://www.gept.org.tw/FAQ/FAQ_Show2.asp?FAQClassID=30
+  accessed: '2026-10-29'
+  kind: exam
+  supports: 「聽讀測驗」和「說寫測驗」分開施測：「考生只要通過『聽讀測驗』，就可以申請『聽讀合格證書』，也可加考『說寫測驗』。聽讀及說寫測驗皆通過者，GEPT將免費發給該級數『聽讀說寫四項合格證書』」；「只要通過GEPT『聽讀測驗』，成績單列明考生達到的CEFR級數」；「許多大學以CEFR B1（中級）或B2（中高級）作為英語能力畢業標準」；「以中級為例，通過說寫的考生，成績單會顯示CEFR B1 + ，表示能力較一般B1程度更進階。」
+- id: cefr-cv
+  title: 'Common European Framework of Reference for Languages: Learning, teaching, assessment – Companion volume'
+  publisher: Council of Europe（2020 年 4 月，ISBN 978-92-871-8621-8）
+  url: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 'Appendix 1 Table 1 Common Reference Levels: global scale（p.175）B1「Can understand the main points of clear standard input on familiar matters regularly encountered in work, school, leisure, etc.」'
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
+- id: moe-coolebot
+  title: 酷英平臺應用AI技術 打造豐富多元的英語學習資源
+  publisher: 教育部國民及學前教育署（即時新聞，2023-11-26）
+  url: https://www.edu.tw/News_Content.aspx?n=9E7AC85F1954DDA8&s=F064A9C80421F778
+  accessed: '2026-10-29'
+  kind: government
+  supports: 酷英網（英語線上學習平臺）的英語聊天機器人名稱「CoolE Bot情境式英語聊天機器人」，運用 Open AI 語言模型搭配語音辨識及合成技術，以多種情境引導使用者進行英語對話。

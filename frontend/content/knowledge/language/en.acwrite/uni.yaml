@@ -1,8 +1,16 @@
+# B8 提案：en.acwrite@uni
+# - 補 Why/How/What 與兩張圖。引用、改寫、摘要的定義改依教育部臺灣學術倫理教育資源中心〈AI世代的學術寫作指南〉；抄襲定義補 UNC 寫作中心。
+# - 錯誤修正：原檢核「沒有連續 5 個字以上照抄」沒有出處；改依指南「應該要避免使用他人『一個分句』以上的文字段落，而且不僅要更換詞語，更要重新組織句子的結構」。
+# - 安全：AI 建議改寫——補不貼未公開文件、是否標註依課程與期刊政策（學術倫理電子報說「尚無統一的規定」，不寫成硬規定）；大學對應托福標為本站建議（顯示在 notes）。
+# - 第一輪獨立審查修正：本點沒有托福事實，刪 toefl-content 來源，notes 改用不提題型分數的對應說明；goal、情境改用指南的用語「引述、改寫、摘寫」；電子報標出 2023 年。
+# - 第二輪獨立審查修正：（建議項）手冊註明「僅代表作者觀點」，Why 改稱「資源中心出版的《AI世代的學術寫作指南》」不寫成官方規定；ai.delegable 補「只貼引用清單，不貼未公開全文」。
+# - 第五輪獨立審查修正：（建議項）What body「並正確附上來源」How 沒教引用格式，縮成「並附上來源」。 What notes 的 AI 注意事項補「不代寫」（學術倫理電子報（二）著作權「還可能有代寫的學術倫理問題」；是電子報的提醒，不寫成硬規定），ethics-epaper13 supports 補（二）著作權整句（2026-10-29 重抓逐字核對）；How body 補 AI 使用說明（不貼機密、自己查證、自己寫、說明工具），how.sources 加 ethics-epaper13，讓 What 的注意事項在 How 有教到。
+# - 第六輪獨立審查修正：（阻擋 R-1）How 的 AI 段落改寫：刪掉和 What notes 重複的電子報引文、合併自我重複的「自己寫／不直接交出去」；不貼個資與未公開文件或機密資料（電子報（三））、輸出自己查證（（一））、內容自己寫（（二））歸給電子報，只有「依課程規定說明用了哪個工具」標本站建議。
 id: en.acwrite@uni
 concept: en.acwrite
 title: 學術寫作與引用
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,11 +21,12 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
-- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 大學不對應 108 課綱，以學門路徑對應；原有待核對已處理：依據改用 ETS、Council of Europe、大學寫作中心與教育部臺灣學術倫理教育資源中心等來源，不列 108 課綱代碼。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站建議，不是官方換算。
 - 基準標籤：托福・寫作。
+- 引述、改寫、摘寫的定義與「一個分句」依教育部臺灣學術倫理教育資源中心寫作指南逐字核對；抄襲定義與筆記加引號依 UNC 寫作中心〈Plagiarism〉。
 prerequisites:
 - en.academic@uni
 - en.essay@sh
@@ -26,7 +35,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：教育部臺灣學術倫理教育資源中心〈AI世代的學術寫作指南〉（引述、改寫、摘寫）；UNC 寫作中心〈Plagiarism〉。
 competency:
   specialist:
   - 寫作
@@ -34,20 +43,139 @@ competency:
   - 查證
 ai:
   delegable:
-  - 檢查引用格式、建議改寫
+  - 檢查引用格式、指出可能漏標來源的地方（只貼引用清單，不貼未公開全文）
   human_experience:
   - 自己寫出論點，對內容負責
-idea: 學術寫作要清楚標出哪些是別人的想法：引用、改寫、附上來源。這是對知識的誠實，也讓讀者能查證。
+idea: 學術寫作要清楚標出哪些是別人的想法：直接引述加引號、改寫用自己的話並重組句子、摘寫濃縮重點，三種都要附上來源。這是對知識的誠實，也讓讀者能查證。
 guiding_questions:
 - 引用別人的話和抄襲，差在哪裡？
-scenario: 親子共學：把一段英文資料用三種方式放進自己的報告：直接引用、改寫、摘要，並各附上來源。
-goal: 用英文寫學術段落：分清直接引用、改寫、摘要，並附上來源。
-review: 把一段英文資料用三種方式放進自己的報告（引用、改寫、摘要），各附來源；家人比對改寫版與原文，沒有連續 5 個字以上照抄。
+scenario: 親子共學：把一段英文資料用三種方式放進自己的報告：引述、改寫、摘寫，並各附上來源。
+goal: 在英文報告裡分清引述、改寫、摘寫，三種都附上來源。
+review: 把一段英文資料用三種方式放進自己的報告（引述、改寫、摘寫），各附來源；家人比對改寫版與原文，確認沒有照抄原文一個分句以上的文字，句子結構也重新組織過。
 formats:
   slides: []
-  exercise: 目標：用英文寫學術段落：分清直接引用、改寫、摘要，並附上來源。　檢核：把一段英文資料用三種方式放進自己的報告（引用、改寫、摘要），各附來源；家人比對改寫版與原文，沒有連續 5 個字以上照抄。
+  exercise: 目標：在英文報告裡分清引述、改寫、摘寫，三種都附上來源。　檢核：把一段英文資料用三種方式放進自己的報告（引述、改寫、摘寫），各附來源；家人比對改寫版與原文，確認沒有照抄原文一個分句以上的文字，句子結構也重新組織過。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 標清楚哪些是別人的
+  body:
+  - UNC 寫作中心引用校規，把抄襲定義為「deliberate or reckless representation of another's words, thoughts, or ideas as one's own without attribution in connection with submission of academic work, whether graded or otherwise」。
+  - 教育部臺灣學術倫理教育資源中心出版的《AI世代的學術寫作指南》提醒，學術上的抄襲和《著作權法》侵權的判斷不同，「學術界對抄襲的認定比較廣義」；沒有妥善標明出處，就可能被認為是抄襲。
+  qa:
+    question: 引用別人的話和抄襲，差在哪裡？
+    answer: 差在有沒有標清楚。指南說直接引述「一字不漏的納入自己的學術寫作內容中」，而且「直接引述通常需要用引號標示」並提供來源；沒有標示、讓人以為是你自己的，就是抄襲。
+    source: ethics-guide
+  items_title: 三種寫作慣例（指南）
+  items:
+  - title: 引述
+    text: 一字不漏使用原文，加引號、附來源。
+  - title: 改寫
+    text: 用自己的話重述，篇幅和原文差不多。
+  - title: 摘寫
+    text: 用更簡潔的文字概括核心思想。
+  checklist_title: 動筆前先確認
+  checklist:
+  - 記下每筆來源
+  - 原文另外存好
+  sources:
+  - unc-plagiarism
+  - ethics-guide
+how:
+  heading: 筆記就分清楚
+  body:
+  - UNC 寫作中心建議做筆記時「be careful to use quotation marks to distinguish the exact words used by the author from your own words」，回頭寫報告才分得清哪些是原文。
+  - 改寫時，指南說「應該要避免使用他人『一個分句』以上的文字段落，而且不僅要更換詞語，更要重新組織句子的結構」。本站建議：改寫前先闔上原文，用自己的話寫，再回頭比對。
+  - 用 AI 幫忙時，照學術倫理電子報的提醒做：不貼個人資訊、未公開文件或機密資料，AI 的輸出自己查證，內容自己寫，不把 AI 生成的內容直接交出去。本站建議：交作業時依課程規定說明用了哪個工具、做了什麼。
+  items_title: 本站建議的步驟
+  items:
+  - title: 筆記加引號
+    text: 原文的句子一律加引號。
+  - title: 闔上原文改寫
+    text: 用自己的話寫，再比對。
+  - title: 摘寫重點
+    text: 只留核心論點。
+  - title: 附上來源
+    text: 三種方式都要附。
+  checklist_title: 交出前勾一下
+  checklist:
+  - 引述有引號
+  - 改寫重組句子
+  - 都有來源
+  activity_figure: acwrite-flow
+  sources:
+  - unc-plagiarism
+  - ethics-guide
+  - ethics-epaper13
+what:
+  heading: 引述、改寫、摘寫都會
+  body:
+  - 學完後，能把一段英文資料用引述、改寫、摘寫三種方式放進自己的報告，並附上來源。
+  items_title: 學完能做到
+  items:
+  - title: 引述
+    text: 加引號並附來源。
+  - title: 改寫
+    text: 重組句子，不照抄一個分句以上。
+  - title: 摘寫
+    text: 濃縮成核心論點並附來源。
+  checklist_title: 家人檢核
+  checklist:
+  - 三種都有來源
+  - 改寫沒有照抄
+  figures:
+  - acwrite-compare
+  notes:
+  - 把大學階段對應多益、托福是本站建議，不是官方換算。
+  - 用生成式 AI 時，不要把個人資訊、未公開文件、機密資料貼進去（教育部臺灣學術倫理教育資源中心 2023 年的電子報）；AI 的輸出要自己查證。這份 2023 年的電子報也說，學術界對使用生成式 AI 是否需要標註「尚無統一的規定」，建議先了解相關單位的政策；不要把 AI 生成的內容直接當成自己寫的交出去，電子報提醒，直接使用生成的內容而非親自撰寫，「還可能有代寫的學術倫理問題」；交作業時依課程規定說明用了哪個工具、做了什麼；AI 規定變化快，以學校和課程最新的規定為準（本站建議）。
+  sources:
+  - ethics-epaper13
+figures:
+- id: acwrite-flow
+  type: flow
+  alt: 引用流程：讀原文、筆記加引號、闔上原文改寫、附上來源。
+  steps:
+  - actor: 學生
+    text: 讀原文
+  - actor: 學生
+    text: 筆記加引號
+  - actor: 學生
+    text: 闔上原文寫
+  - actor: 學生
+    text: 附上來源
+- id: acwrite-compare
+  type: compare
+  alt: 比較引述和改寫：引述一字不漏加引號，改寫用自己的話並重組句子。
+  source: ethics-guide
+  relation: not_equal
+  items:
+  - term: 引述
+    note: 一字不漏，加引號
+  - term: 改寫
+    note: 自己的話，重組句子
+  caption: 依教育部臺灣學術倫理教育資源中心寫作指南的引述、改寫定義。
+sources:
+- id: ethics-guide
+  title: AI世代的學術寫作指南⸺給研究生的參考手冊（電子書）
+  publisher: 教育部臺灣學術倫理教育資源中心（手冊註明「本手冊內容僅代表作者觀點，不代表教育部立場」）
+  url: https://ethics.moe.edu.tw/files/resource/ebook/file/ebook_05.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 寫作慣例：一 引述「引述是一種完整使用他人原文資料的方法，也就是直接將他人的文字，一字不漏的納入自己的學術寫作內容中」，「直接引述通常需要用引號標示」；二 改寫「改寫是指用自己的話，重新闡述他人的觀點或資訊，但保持其原有的意義，篇幅也會和原本差不多」，「應該要避免使用他人『一個分句』以上的文字段落，而且不僅要更換詞語，更要重新組織句子的結構」；三 摘寫「摘寫是指將參考資料的核心思想或主要論點，用更簡潔的文字概括出來」；「學術界對抄襲的認定比較廣義」
+- id: unc-plagiarism
+  title: Plagiarism（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/plagiarism/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: What is plagiarism?：「deliberate or reckless representation of another's words, thoughts, or ideas as one's own without attribution in connection with submission of academic work, whether graded or otherwise」；筆記：「be careful to use quotation marks to distinguish the exact words used by the author from your own words」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」；（二）著作權：「由於生成式AI是將網路開放資料透過蒐集與彙整所生成的內容，研究者若直接將生成的內容拿來使用，而非親自撰寫或創作，除在法律上不享有著作權保障之外，還可能有代寫的學術倫理問題。」

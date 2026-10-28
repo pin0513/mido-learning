@@ -990,6 +990,66 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
         page: 16
+    2-V-10:
+      stage: 5
+      text: 能依主題說出語意連貫且條理分明的簡短演說、簡報或說明。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 10
+    3-V-10:
+      stage: 5
+      text: 能辨識故事的要素，如背景、人物、事件和結局。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 11
+    3-V-11:
+      stage: 5
+      text: 能閱讀不同體裁、不同主題的文章。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 11
+    6-V-7:
+      stage: 5
+      text: 能積極以英語文為工具，探索新知並關注國際議題。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 14
+    7-V-2:
+      stage: 5
+      text: 能利用工具書（如字典、百科全書）或其他線上資源，主動了解所接觸英文的內容。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 15
+    7-V-5:
+      stage: 5
+      text: 能利用文本的結構特色（如轉折語、陳述次序等），增進文意理解。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 15
+    7-V-6:
+      stage: 5
+      text: 能針對同一文本主題進行延伸閱讀或探索，以強化學習的深度與廣度。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 15
+    9-V-2:
+      stage: 5
+      text: 能根據上下文語境釐清兩個訊息間的關係。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 16
+    9-V-3:
+      stage: 5
+      text: 能依上下文分辨客觀事實與主觀意見。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 16
+    9-V-7:
+      stage: 5
+      text: 能評估不同資訊，提出合理的判斷或建議。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 16
   contents:
     Ae-IV-6:
       stage: 4
@@ -1033,3 +1093,51 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
         page: 20
+    Ae-V-9:
+      stage: 5
+      text: 不同體裁、不同主題之文章。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 18
+    Ae-V-11:
+      stage: 5
+      text: 故事的背景、人物、事件和結局。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 18
+    Ae-V-12:
+      stage: 5
+      text: 敘述者的觀點、態度、及寫作目的。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 18
+    B-V-4:
+      stage: 5
+      text: 圖片描述。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 19
+    B-V-8:
+      stage: 5
+      text: 短文、書信的內容及文本結構。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 19
+    B-V-11:
+      stage: 5
+      text: 日常對話、故事、廣播的要點。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 19
+    B-V-12:
+      stage: 5
+      text: 故事及短文的主旨或大意。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 19
+    D-V-7:
+      stage: 5
+      text: 不同資訊的評估，及合理判斷或建議的提供。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+        page: 21
