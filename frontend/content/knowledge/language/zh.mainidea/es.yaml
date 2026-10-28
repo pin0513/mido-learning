@@ -1,8 +1,12 @@
+# B3 提案：zh.mainidea@es
+# - 刪去 idea 的「主旨常出現在開頭或結尾」：沒有找到教育部、國教院或 PIRLS 的依據。改成「有時直接寫在文中，有時要自己歸納」（PIRLS 分別歸為提取與詮釋整合）。
+# - 補上 5-II-6、5-III-6、Ad-I-2、Ad-II-1、Ad-II-2；用《重編國語辭典》定義大意與主旨。
+# - 複審修正：5-II-6（運用）與 5-III-6（熟習）拆成兩項、各自逐字；Ad-II-1 加上「意義段」的白話解釋（本站整理）。因 items 上限 4 項，Ad-I-2 不放進 items，保留在 curriculum_108.contents 與 why 正文（「一、二年級學「篇章的大意」」）。PIRLS 中文名改用「促進國際閱讀素養研究」。
 id: zh.mainidea@es
 concept: zh.mainidea
 title: 段落大意與全文主旨
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -20,10 +24,18 @@ curriculum_108:
   - B1
   issues:
   - 閱讀素養教育
-to_verify: true
+  performances:
+  - 5-II-6
+  - 5-III-6
+  contents:
+  - Ad-I-2
+  - Ad-II-1
+  - Ad-II-2
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 本點為這次補強新增，內容尚未經老師審閱。
+- 原 idea「主旨常出現在開頭或結尾」找不到依據，已刪除。「4 段」「1 句」是示意的練習份量。
+- 「意義段」的白話解釋（把意思相關的幾個自然段合成一段來看）是本站整理，課綱只列「意義段。」沒有定義。
+- PIRLS 中文名「促進國際閱讀素養研究」依國家教育研究院〈我國參加「IEA 促進國際閱讀素養研究 2026（PIRLS 2026）」國家調查執行團隊計畫徵求說明書〉p.1（來源 naer-pirls）。
 prerequisites:
 - zh.retrieve@es
 links:
@@ -31,7 +43,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：108 國語文學習內容 Ad「篇章」（大意、意義段、主旨）；PIRLS（促進國際閱讀素養研究；中文名見來源 naer-pirls）2021 的「Interpret and Integrate」與「Focus and Retrieve」。
 competency:
   specialist:
   - 閱讀理解
@@ -42,18 +54,146 @@ ai:
   - 產生摘要供對照
   human_experience:
   - 自己濃縮成一句話
-idea: 每段先找「這段主要在說誰、說什麼」，再把各段串起來，就是全文主旨。主旨常出現在開頭或結尾，也可能要自己歸納。
+idea: 每段先找「這段主要在說誰、說什麼」，就是段落大意；把各段串起來，想想作者最想說的是什麼，就是全文主旨。主旨有時直接寫在文中，有時要自己歸納。
 guiding_questions:
 - 一篇文章刪到只剩一句話，你會留哪一句？
 scenario: 親子共學：讀完一本繪本或一篇故事，全家各寫一句「這本書在說什麼」，比比看誰最短又沒漏重點。
 goal: 用一句話說出每段在講什麼，再用一句話說出全文主旨。
-review: 孩子讀一篇 4 段的短文，寫出 4 句段落大意和 1 句主旨；家長讀原文後同意主旨句沒有漏掉重點。
+review: 孩子讀一篇 4 段（示意）的短文，寫出 4 句段落大意和 1 句主旨；家長讀原文後同意主旨句沒有漏掉重點。
 formats:
   slides: []
-  exercise: 目標：用一句話說出每段在講什麼，再用一句話說出全文主旨。　檢核：孩子讀一篇 4 段的短文，寫出 4 句段落大意和 1 句主旨；家長讀原文後同意主旨句沒有漏掉重點。
+  exercise: 目標：用一句話說出每段在講什麼，再用一句話說出全文主旨。　檢核：孩子讀一篇 4 段（示意）的短文，寫出 4 句段落大意和 1 句主旨；家長讀原文後同意主旨句沒有漏掉重點。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 從一段到一篇
+  body:
+  - 《重編國語辭典》說，大意是「大概、大要」，主旨是「主要的意旨」。段落大意說每段講什麼，主旨說全篇最想表達什麼。
+  - 課綱在一、二年級學「篇章的大意」，三、四年級學「意義段」（把意思相關的幾個自然段合成一段來看，本站整理）和「篇章的大意、主旨與簡單結構」，並要「運用適合學習階段的摘要策略，擷取大意」。
+  qa:
+    question: 一篇文章刪到只剩一句話，你會留哪一句？
+    answer: 留下最能說出「作者最想告訴我們什麼」的那一句。如果文中有這樣的句子，那就是寫出來的主旨；如果沒有，就要自己用一句話歸納。PIRLS 把「找出明確寫出的主旨句」算作提取，把「看出全文的整體訊息或主題」算作詮釋整合。
+    source: pirls-interpret
+  items_title: 課綱怎麼排
+  items:
+  - title: 意義段
+    text: 三、四年級學習內容：意義段（把意思相關的幾個自然段合成一段來看，本站整理）。
+    code: Ad-II-1
+  - title: 大意、主旨與結構
+    text: 三、四年級學習內容：篇章的大意、主旨與簡單結構。
+    code: Ad-II-2
+  - title: 摘要策略
+    text: 三、四年級：「運用適合學習階段的摘要策略，擷取大意。」
+    code: 5-II-6
+  - title: 熟習摘要
+    text: 五、六年級：「熟習適合學習階段的摘要策略，擷取大意。」
+    code: 5-III-6
+  sources:
+  - dict-dayi
+  - dict-zhuzhi
+  - kuoyu
+how:
+  heading: 一段一句，再串成一句
+  body:
+  - 先每段寫一句：這段主要在說誰、說什麼。再把幾句段落大意放在一起讀，問自己：作者最想告訴我什麼？寫成一句話，就是主旨。寫好後回去對照原文，看有沒有漏掉重要的事。（步驟是本站建議。）
+  items:
+  - title: 每段一句
+    example: 第 1 段：小明第一次自己搭公車。
+    text: 說出誰、什麼事。
+  - title: 串起來
+    example: 搭錯車 → 問司機 → 平安到站
+    text: 把各段大意排在一起看。
+  - title: 歸納主旨
+    example: 第一次自己做事雖然緊張，也讓人長大。
+    text: 例句是本站自編。
+  checklist_title: 寫完檢查：
+  checklist:
+  - 每段一句
+  - 有誰和什麼事
+  - 主旨只寫一句
+  - 回原文對照
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 大意和主旨不一樣
+  figures:
+  - what-compare
+  notes:
+  - 主旨有時直接寫在文中，有時要自己歸納；本站不主張主旨一定在開頭或結尾。
+  - 五、六年級的學習內容是「篇章的大意、主旨、結構與寓意」（Ad-III-2），會再往上加深。
+  sources:
+  - pirls-interpret
+  - pirls-retrieve
+  - naer-pirls
+  - kuoyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 摘要練習：孩子每段寫一句，串成一段，再濃縮成一句主旨，大人對照原文
+  steps:
+  - actor: 孩子
+    text: 每段寫一句
+  - actor: 孩子
+    text: 串成一段
+  - actor: 孩子
+    text: 濃縮成一句
+  - actor: 大人
+    text: 對照原文
+- id: what-compare
+  type: compare
+  alt: 段落大意說這一段講什麼；全文主旨說全篇最想表達什麼
+  source: dict-zhuzhi
+  relation: not_equal
+  items:
+  - term: 段落大意
+    note: 這一段講什麼（大意：大概、大要）
+  - term: 全文主旨
+    note: 全篇最想說什麼（主旨：主要的意旨）
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 5-II-6「運用適合學習階段的摘要策略，擷取大意。」、5-III-6「熟習適合學習階段的摘要策略，擷取大意。」（p.10）；學習內容 Ad-I-2「篇章的大意。」、Ad-II-1「意義段。」、Ad-II-2「篇章的大意、主旨與簡單結構。」、Ad-III-2「篇章的大意、主旨、結構與寓意。」（p.15）
+- id: dict-dayi
+  title: 重編國語辭典修訂本「大意」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=41817
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「大意」：大概、大要
+- id: dict-zhuzhi
+  title: 重編國語辭典修訂本「主旨」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=118394
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「主旨」：主要的意旨
+- id: naer-pirls
+  title: 我國參加「IEA 促進國際閱讀素養研究 2026（PIRLS 2026）」國家調查執行團隊計畫徵求說明書
+  publisher: 國家教育研究院
+  url: https://www.naer.edu.tw/upload/1/14/doc/4268/%E9%99%84%E4%BB%B6_PIRLS2026%E8%A8%88%E7%95%AB%E5%BE%B5%E6%B1%82%E8%AA%AA%E6%98%8E%E6%9B%B8.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: PIRLS 的正式中文名「IEA 促進國際閱讀素養研究」；IEA 譯名「國際教育成就評量學會」（p.1）
+- id: pirls-interpret
+  title: 'PIRLS 2021 Assessment Frameworks: Interpret and Integrate Ideas and Information'
+  publisher: IEA（International Association for the Evaluation of Educational Achievement，國際教育成就評量學會）／TIMSS & PIRLS International Study Center, Boston College
+  url: https://pirls2021.org/frameworks/home/reading-assessment-framework/processes-of-comprehension/interpret-and-integrate-ideas-and-information/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 詮釋整合的任務例包括「Discerning the overall message or theme of a text」；並說明經詮釋整合建構的意義「is likely to vary among readers」
+- id: pirls-retrieve
+  title: 'PIRLS 2021 Assessment Frameworks: Focus on and Retrieve Explicitly Stated Information'
+  publisher: IEA（International Association for the Evaluation of Educational Achievement，國際教育成就評量學會）／TIMSS & PIRLS International Study Center, Boston College
+  url: https://pirls2021.org/frameworks/home/reading-assessment-framework/processes-of-comprehension/focus-on-and-retrieve-explicitly-stated-information/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 提取的任務例包括「Finding the topic sentence or main idea (when explicitly stated)」

@@ -148,6 +148,144 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 10
+    4-I-3:
+      stage: 1
+      text: 學習查字典的方法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    4-II-3:
+      stage: 2
+      text: 會利用書面或數位方式查字辭典，並能利用字辭典，分辨字詞義。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    4-II-4:
+      stage: 2
+      text: 能分辨形近、音近字詞，並正確使用。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    5-I-2:
+      stage: 1
+      text: 認識常用標點符號。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-I-4:
+      stage: 1
+      text: 了解文本中的重要訊息與觀點。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-I-6:
+      stage: 1
+      text: 利用圖像、故事結構等策略，協助文本的理解與內容重述。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-I-7:
+      stage: 1
+      text: 運用簡單的預測、推論等策略，找出句子和段落明示的因果關係，理解文本內容。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-II-1:
+      stage: 2
+      text: 以適切的速率朗讀文本，表現抑揚頓挫與情感。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-II-2:
+      stage: 2
+      text: 理解各種標點符號的用法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-II-4:
+      stage: 2
+      text: 掌握句子和段落的意義與主要概念。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-II-6:
+      stage: 2
+      text: 運用適合學習階段的摘要策略，擷取大意。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-II-8:
+      stage: 2
+      text: 運用預測、推論、提問等策略，增進對文本的理解。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-III-1:
+      stage: 3
+      text: 流暢朗讀各類文本，並表現抑揚頓挫的變化。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-III-6:
+      stage: 3
+      text: 熟習適合學習階段的摘要策略，擷取大意。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-III-8:
+      stage: 3
+      text: 運用自我提問、推論等策略，推論文本隱含的因果訊息或觀點。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-III-12:
+      stage: 3
+      text: 運用圖書館(室)、科技與網路，進行資料蒐集、解讀與判斷，提升多元文本的閱讀和應用能力。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    6-I-1:
+      stage: 1
+      text: 根據表達需要，使用常用標點符號。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    6-I-2:
+      stage: 1
+      text: 透過閱讀及觀察，積累寫作材料。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    6-I-3:
+      stage: 1
+      text: 寫出語意完整的句子、主題明確的段落。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    6-II-1:
+      stage: 2
+      text: 根據表達需要，使用各種標點符號。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    6-II-2:
+      stage: 2
+      text: 培養感受力、想像力等寫作基本能力。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    6-II-3:
+      stage: 2
+      text: 學習審題、立意、選材、組織等寫作步驟。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    6-II-4:
+      stage: 2
+      text: 書寫記敘、應用、說明事物的作品。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
   contents:
     Aa-I-1:
       stage: 1
@@ -200,6 +338,108 @@
     Be-V-3:
       stage: 5
       text: 在學習應用方面，以簡報、讀書報告、演講稿、會議紀錄、劇本、小論文、計劃書、申請書等格式與寫作方法為主。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 18
+    Ab-I-4:
+      stage: 1
+      text: 常用字部首的表義（分類）功能。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 13
+    Ab-II-3:
+      stage: 2
+      text: 常用字部首及部件的表音及表義功能。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 13
+    Ab-II-10:
+      stage: 2
+      text: 字辭典的運用。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ac-I-1:
+      stage: 1
+      text: 常用標點符號。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ac-I-2:
+      stage: 1
+      text: 簡單的基本句型。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ac-II-1:
+      stage: 2
+      text: 各種標點符號的用法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ad-I-2:
+      stage: 1
+      text: 篇章的大意。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ad-II-1:
+      stage: 2
+      text: 意義段。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ad-II-2:
+      stage: 2
+      text: 篇章的大意、主旨與簡單結構。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ad-III-4:
+      stage: 3
+      text: 古典詩文。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ba-I-1:
+      stage: 1
+      text: 順敘法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Ba-II-1:
+      stage: 2
+      text: 記敘文本的結構。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Bb-I-3:
+      stage: 1
+      text: 對物或自然的感受。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Be-I-2:
+      stage: 1
+      text: 在人際溝通方面，以書信、卡片等慣用語彙及書寫格式為主。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Be-II-1:
+      stage: 2
+      text: 在生活應用方面，以日記、海報的格式與寫作方法為主。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Be-II-2:
+      stage: 2
+      text: 在人際溝通方面，以書信、卡片、便條、啟事等慣用語彙及書寫格式為主。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Be-III-1:
+      stage: 3
+      text: 在生活應用方面，以說明書、廣告、標語、告示、公約等格式與寫作方法為主。
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 18

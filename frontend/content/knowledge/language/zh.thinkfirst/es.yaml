@@ -1,8 +1,14 @@
+# B3 提案：zh.thinkfirst@es
+# - 依教育部〈中小學使用「生成式人工智慧」注意事項2.1〉補上依據：先自行閱讀與思考（學生版 p.3）、遵守平臺註冊年齡限制、非在校使用請家長陪伴（學生版 p.2）、不得把生成內容直接當原創作品繳交（p.3）、不可輸入個人資料（p.3）。
+# - main 的 scenario 已寫「全程家長陪同」「家長再幫忙問 AI」，方向正確；本提案把「家長操作」寫得更明確，並在正文補上年齡限制與不輸入個人資料的依據。
+# - 定義 AI（人工智慧，Artificial Intelligence）。補上 5-III-12（運用科技與網路，進行資料蒐集、解讀與判斷）與國-E-B2。
+# - 注意：教育部注意事項 PDF 所在網站 pads.moe.edu.tw 的 SSL 憑證鏈不完整，研究時以 curl -k 下載公開 PDF（見 research.md）。
+# - 複審修正：5-III-12 項目改為逐字全文；how 改寫為優先用教育部因材網生成式AI學習夥伴e度等教育用工具（家長版 p.3 原文）；「本站說明」改「本站整理」。
 id: zh.thinkfirst@es
 concept: zh.thinkfirst
 title: 先想再問
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -21,9 +27,11 @@ curriculum_108:
   issues:
   - 資訊教育
   - 家庭教育
-to_verify: true
+  performances:
+  - 5-III-12
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 依據為教育部〈中小學使用「生成式人工智慧」注意事項2.1〉學生版與教師、行政人員及家長版（115 年 2 月 11 日核定版）。比較「一處一樣、一處不一樣」是本站建議的練習。
 prerequisites: []
 links:
   why: []
@@ -31,7 +39,7 @@ links:
   related: []
   deeper:
   - zh.aicoach@jh
-link_notes: 框架：—。
+link_notes: 框架：教育部〈中小學使用「生成式人工智慧」注意事項2.1〉；國語文核心素養國-E-B2「培養審慎使用各類資訊的能力」。AI＝人工智慧（Artificial Intelligence）。
 competency:
   specialist:
   - AI 協作寫作
@@ -44,10 +52,10 @@ ai:
   human_experience:
   - 先說出自己的答案
   - 和大人一起判斷哪個比較好
-idea: 先把自己的想法說出來或寫下來，再和大人一起問 AI，比一比哪裡一樣、哪裡不一樣。AI 的話不能直接抄成自己的作業。
+idea: 先把自己的想法說出來或寫下來，再由大人操作、一起問 AI（人工智慧），比一比哪裡一樣、哪裡不一樣。教育部提醒：AI 是協助學習的工具，不能取代自己的思考；AI 的話不能直接抄成自己的作業。
 guiding_questions:
 - 問 AI 之前，你自己的答案是什麼？
-scenario: 親子共學：全程家長陪同：孩子先講「我覺得……」，家長再幫忙問 AI，一起找出 AI 說得不對或太籠統的地方。
+scenario: 親子共學：全程家長陪同：孩子先講「我覺得……」，家長操作、幫忙問 AI，一起找出 AI 說得不對或太籠統的地方。
 goal: 問 AI 之前先說出自己的答案，再和大人一起比較。
 review: 家長陪同時，孩子先講或寫「我覺得……」，再看 AI 的回答，說出一處一樣、一處不一樣。
 formats:
@@ -58,4 +66,109 @@ audience:
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 先有自己的想法
+  body:
+  - 教育部給學生的注意事項說，生成式人工智慧「是協助學習的工具，不能取代自己的思考與判斷，應先自行閱讀與思考，再視需要使用工具輔助」。
+  - 注意事項也提醒：使用工具要遵守各平臺的註冊年齡限制，不在學校使用時請家長陪伴；不可以直接把生成內容當作業或報告的答案。課綱也希望國小學生「培養審慎使用各類資訊的能力」。
+  qa:
+    question: 問 AI 之前，你自己的答案是什麼？
+    answer: 先說或寫下「我覺得……，因為……」。教育部的注意事項說，要「先自行閱讀與思考，再視需要使用工具輔助」。有了自己的答案，才比得出 AI 哪裡和你一樣、哪裡不一樣，也比較看得出 AI 哪裡說錯。
+    source: genai-student
+  items_title: 教育部注意事項的重點
+  items:
+  - title: 先自己想
+    text: 不能取代自己的思考與判斷，應先自行閱讀與思考（學生版 p.3）。
+  - title: 家長陪伴
+    text: 遵守平臺註冊年齡限制；非在校使用，請家長陪伴（學生版 p.2）。
+  - title: 不直接抄
+    text: 不得將生成內容直接當作自己原創作品繳交（學生版 p.3）。
+  - title: 判斷資訊
+    text: 五、六年級：運用圖書館(室)、科技與網路，進行資料蒐集、解讀與判斷，提升多元文本的閱讀和應用能力。
+    code: 5-III-12
+  sources:
+  - genai-student
+  - genai-parent
+  - kuoyu
+how:
+  heading: 說出來、問、比一比
+  body:
+  - 孩子先講或寫「我覺得……」；家長操作，優先用教育部因材網生成式AI學習夥伴e度等為教育目的設計的工具提問（家長版 p.3）；最後一起比：哪裡一樣、哪裡不一樣、哪裡說得太籠統或不對。提問時不輸入姓名、照片、住址、學號等個人資料。
+  items:
+  - title: 先說答案
+    example: 我覺得月亮會跟著我走，因為……
+    text: 說出想法和理由。
+  - title: 家長提問
+    example: 請用小學生聽得懂的話解釋……
+    text: 由家長操作，不輸入個人資料。
+  - title: 比一比
+    example: 一樣：……；不一樣：……
+    text: 各找出一處，再一起查證。
+  checklist_title: 每次問 AI 前後：
+  checklist:
+  - 先說我覺得
+  - 家長操作提問
+  - 不給個人資料
+  - 說一處一樣
+  - 說一處不一樣
+  activity_figure: how-flow
+  sources:
+  - genai-student
+  - genai-parent
+what:
+  heading: AI 是幫手，不是答案
+  figures:
+  - what-compare
+  notes:
+  - AI＝人工智慧（Artificial Intelligence）；生成式人工智慧是能依提問產生文字、圖片等內容的工具（本站整理）。
+  - 作業如果允許用 AI 協助構思或潤飾，要依規定註明用了什麼工具、做什麼用（學生版 p.3）。
+  - 教育部建議中小學生使用為教育目的設計的生成式 AI 服務，例如因材網的「e度」（家長版 p.3）。
+  sources:
+  - genai-student
+  - genai-parent
+figures:
+- id: how-flow
+  type: flow
+  alt: 先想再問：孩子說我覺得，家長操作提問，一起讀 AI 的回答，孩子說出一樣和不一樣的地方
+  steps:
+  - actor: 孩子
+    text: 說「我覺得」
+  - actor: 家長
+    text: 操作提問
+  - actor: 一起
+    text: 讀 AI 回答
+  - actor: 孩子
+    text: 說同與不同
+- id: what-compare
+  type: compare
+  alt: 自己的答案先有想法和理由；AI 的回答拿來比較和查證
+  source: genai-student
+  relation: versus
+  items:
+  - term: 我的答案
+    note: 先自行閱讀與思考，說出理由
+  - term: AI 的回答
+    note: 拿來比較、查證，不直接抄
+sources:
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-28'
+  kind: government
+  supports: 二：不可以直接將生成內容作為作業或報告的原始答案（p.1）；五：應遵守各平臺註冊年齡限制及相關規範，建議使用為教育目的設計的工具，非在校使用亦請家長陪伴使用（p.2）；六（一）「生成式人工智慧是協助學習的工具，不能取代自己的思考與判斷，應先自行閱讀與思考，再視需要使用工具輔助。」（p.3）；六（三）不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等輸入（p.3）；六（四）應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交（p.3）
+- id: genai-parent
+  title: 中小學使用「生成式人工智慧」注意事項2.1（教師、行政人員及家長版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_bb53904162cc806cc9a7523a8f73d86f.pdf&old=upload
+  accessed: '2026-10-28'
+  kind: government
+  supports: 七：教師、父母或監護人應提醒學生遵守各平臺註冊年齡限制；建議中小學生使用為教育目的而設計的服務，如教育部因材網生成式AI學習夥伴e度等，非在校使用亦請家長陪伴使用（p.3）
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 5-III-12「運用圖書館(室)、科技與網路，進行資料蒐集、解讀與判斷，提升多元文本的閱讀和應用能力。」（p.10）；核心素養國-E-B2「理解網際網路和資訊科技對學習的重要性，藉以擴展語文學習的範疇，並培養審慎使用各類資訊的能力。」（p.4）

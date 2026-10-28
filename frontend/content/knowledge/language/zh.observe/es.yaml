@@ -1,8 +1,13 @@
+# B3 提案：zh.observe@es
+# - 安全修正（R9）：原檢核要求散步後找到「嘗」的細節，可能讓孩子在戶外亂嘗東西。改成戶外只用看、聽、聞、摸（只摸大人同意的東西），「嘗」留到回家吃大人準備的食物時練習。
+# - 「10 分鐘」標為示意。
+# - 複審修正：core_competencies 加 B3（正文引用國-E-B3）；「摸、嘗」項目標題改為「摸（大人同意的）／嘗（在家）」；how 加上食物過敏與交通安全提醒（本站建議）。
+# - 補上 grades [1,2,3,4]、6-I-2、6-II-2、Bb-I-3；引用課綱實施要點寫作（1）與總綱 E-B3「促進多元感官的發展」。
 id: zh.observe@es
 concept: zh.observe
 title: 用五感找細節
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +17,26 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 1
+  - 2
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
+  - B3
   issues: []
-to_verify: true
+  performances:
+  - 6-I-2
+  - 6-II-2
+  contents:
+  - Bb-I-3
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 散步時間（約 10 分鐘）是示意。「嘗」只用大人準備、可以吃的食物，以及食物過敏先問大人、走人行道、過馬路牽著大人，都是本站的安全建議。
 prerequisites:
 - zh.sentence@es
 links:
@@ -28,7 +44,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：108 國語文實施要點寫作（1）「觀察周遭事物與活動，積累寫作材料」；國語文核心素養國-E-B3「運用多重感官感受文藝之美」。
 competency:
   specialist:
   - 寫作
@@ -40,18 +56,116 @@ ai:
   - 把孩子口述的觀察整理成清單
   human_experience:
   - 親自去看、去聽、去聞
-idea: 眼睛、耳朵、鼻子、手、嘴巴都能收集材料。寫作前先收集，文章才有只屬於你的東西。
+idea: 眼睛、耳朵、鼻子、手、嘴巴都能收集材料。寫作前先收集，文章才有只屬於你的東西。在外面只看、聽、聞、摸大人同意的東西，嘗味道留到回家吃大人準備的食物。
 guiding_questions:
 - 下雨天，除了「下雨了」，你還聽到、聞到什麼？
-scenario: 親子共學：在家附近走 10 分鐘，每人用五感各記 2 個細節，回家合寫一段。
-goal: 用五感各找至少一個細節，寫進一段描寫裡。
-review: 散步 10 分鐘後孩子寫一段描寫，家長在段落裡找到看、聽、聞、摸、嘗至少 4 種感官的細節。
+scenario: 親子共學：在家附近走一走（約 10 分鐘，示意），每人用看、聽、聞、摸各記 2 個細節；回家吃點心時再補上「嘗」，最後合寫一段。
+goal: 用五感各找至少一個細節，寫進一段描寫裡（嘗味道只用大人準備的食物）。
+review: 散步後加上回家的點心時間，孩子寫一段描寫，家長在段落裡找到看、聽、聞、摸、嘗至少 4 種（示意）感官的細節。
 formats:
   slides: []
-  exercise: 目標：用五感各找至少一個細節，寫進一段描寫裡。　檢核：散步 10 分鐘後孩子寫一段描寫，家長在段落裡找到看、聽、聞、摸、嘗至少 4 種感官的細節。
+  exercise: 目標：用五感各找至少一個細節，寫進一段描寫裡（嘗味道只用大人準備的食物）。　檢核：散步後加上回家的點心時間，孩子寫一段描寫，家長在段落裡找到看、聽、聞、摸、嘗至少 4 種（示意）感官的細節。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 材料從觀察來
+  body:
+  - 課綱說，寫作教學要「引導學生閱讀、觀察周遭事物與活動，積累寫作材料」，再培養想像力、感受力等寫作基本能力。
+  - 總綱也希望國小學生「促進多元感官的發展，培養生活環境中的美感體驗」。用五感找細節，就是在練習這件事。
+  qa:
+    question: 下雨天，除了「下雨了」，你還聽到、聞到什麼？
+    answer: 可能聽到雨打在雨傘或鐵皮屋頂上的聲音，聞到地面溼溼的味道。把這些寫進去，讀的人就像也站在雨裡。每個人找到的細節不一樣，這裡只是示例。
+    source: kuoyu
+  items_title: 課綱的寫作目標
+  items:
+  - title: 觀察積累材料
+    text: 一、二年級：透過閱讀及觀察，積累寫作材料。
+    code: 6-I-2
+  - title: 對物或自然的感受
+    text: 一、二年級學習內容：對物或自然的感受。
+    code: Bb-I-3
+  - title: 培養感受力
+    text: 三、四年級：培養感受力、想像力等寫作基本能力。
+    code: 6-II-2
+  sources:
+  - kuoyu
+  - zonggang
+how:
+  heading: 五種感官各記一個
+  body:
+  - 出門前先分工：誰負責看、誰負責聽、誰負責聞。看到的寫顏色和形狀，聽到的寫聲音，聞到的寫氣味。手只摸大人同意的東西；嘗味道不在戶外做，回家吃大人準備的食物時再練習（本站安全建議）。有食物過敏的孩子先問大人；散步走人行道，過馬路牽著大人（本站建議）。
+  items:
+  - title: 看
+    example: 紅色的郵筒
+    text: 顏色、形狀、大小。
+  - title: 聽
+    example: 機車噗噗的聲音
+    text: 聲音的大小、遠近。
+  - title: 聞
+    example: 麵包店的香味
+    text: 氣味。
+  - title: 摸（大人同意的）／嘗（在家）
+    example: 樹皮粗粗的；柳丁酸酸甜甜
+    text: 摸大人同意的東西；嘗只用大人準備的食物。
+  checklist_title: 記下每一種感官：
+  checklist:
+  - 看到的
+  - 聽到的
+  - 聞到的
+  - 摸到的
+  - 嘗到的（在家）
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 把細節寫進句子
+  figures:
+  - what-compare
+  notes:
+  - 散步時間是示意，走多久都可以，重點是記下細節。
+  - 國語文核心素養國-E-B3：「運用多重感官感受文藝之美，體驗生活中的美感事物，並發展藝文創作與欣賞的基本素養。」
+  sources:
+  - kuoyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 五感散步：出門前分工，各記兩個細節，回家由大人準備點心試吃，最後合寫一段
+  steps:
+  - actor: 一起
+    text: 出門前分工
+  - actor: 孩子
+    text: 各記兩個細節
+  - actor: 大人
+    text: 準備點心試吃
+  - actor: 一起
+    text: 合寫一段
+- id: what-compare
+  type: compare
+  alt: 只寫「下雨了」看不到細節；加上聲音和氣味，讀者才感受得到
+  source: kuoyu
+  relation: versus
+  items:
+  - term: 下雨了
+    note: 只說發生什麼
+  - term: 雨點打在傘上
+    note: 加上聽到、聞到的細節
+  caption: 例句是本站自編；觀察、積累寫作材料出自課綱。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 6-I-2「透過閱讀及觀察，積累寫作材料。」、6-II-2「培養感受力、想像力等寫作基本能力。」（p.11）；學習內容 Bb-I-3「對物或自然的感受。」（p.16）；核心素養國-E-B3「運用多重感官感受文藝之美，體驗生活中的美感事物，並發展藝文創作與欣賞的基本素養。」（p.4）；實施要點寫作（1）「寫作教學應引導學生閱讀、觀察周遭事物與活動，積累寫作材料，進而培養想像力、思維力、記憶力、感受力等寫作基本能力」（p.50）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 核心素養 E-B3「具備藝術創作與欣賞的基本素養，促進多元感官的發展，培養生活環境中的美感體驗。」（p.5）

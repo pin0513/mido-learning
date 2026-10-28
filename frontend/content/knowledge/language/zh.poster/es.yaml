@@ -1,8 +1,13 @@
+# B3 提案：zh.poster@es
+# - idea「海報和公告只能有一個重點」是沒有出處的絕對說法，改為本站建議「最好只放一個重點」。
+# - 「3 秒」「A4」標為示意；用《重編國語辭典》定義海報。
+# - 補上 grades [3,4,5,6]、6-II-4、Be-II-1、Be-III-1。
+# - 複審修正：例子日期改為「11 月 14 日（六）」（2026-11-14 是星期六；原寫的 11 月 15 日是星期日）。
 id: zh.poster@es
 concept: zh.poster
 title: 一張海報說一件事
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +17,25 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 6-II-4
+  contents:
+  - Be-II-1
+  - Be-III-1
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 「只放一個重點」「大字、中字、小字分層」是本站建議；「3 秒」「A4」是示意。
 prerequisites:
 - zh.note@es
 links:
@@ -28,7 +43,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：108 國語文學習內容 Be-II-1（日記、海報的格式與寫作方法）、Be-III-1（說明書、廣告、標語、告示、公約）。
 competency:
   specialist:
   - 應用文寫作
@@ -39,18 +54,115 @@ ai:
   - 排版與配色建議
   human_experience:
   - 決定哪一件事最重要
-idea: 海報和公告只能有一個重點。最大的字放最重要的事，時間地點寫清楚，不重要的刪掉。
+idea: 海報要讓路過的人一眼看懂，所以最好只放一個重點（本站建議）。最大的字放最重要的事，時間地點寫清楚，不重要的刪掉。
 guiding_questions:
 - 路過的人只看 3 秒，海報上最大的字要寫什麼？
-scenario: 親子共學：替家裡的跳蚤市場或班級活動做一張 A4 海報，請家人站遠遠看 3 秒，說出記得什麼。
-goal: 做一張只說一件事的海報：最大的字是最重要的事，時間地點清楚。
-review: 家人站遠看 3 秒，能說出活動名稱、時間、地點三件事中的至少兩件。
+scenario: 親子共學：替家裡的跳蚤市場或班級活動做一張 A4（示意）海報，請家人站遠遠看 3 秒（示意），說出記得什麼。
+goal: 做一張重點清楚的海報：最大的字是最重要的事，時間地點清楚。
+review: 家人站遠看 3 秒（示意），能說出活動名稱、時間、地點三件事中的至少兩件。
 formats:
   slides: []
-  exercise: 目標：做一張只說一件事的海報：最大的字是最重要的事，時間地點清楚。　檢核：家人站遠看 3 秒，能說出活動名稱、時間、地點三件事中的至少兩件。
+  exercise: 目標：做一張重點清楚的海報：最大的字是最重要的事，時間地點清楚。　檢核：家人站遠看 3 秒（示意），能說出活動名稱、時間、地點三件事中的至少兩件。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 海報要先被看見
+  body:
+  - 《重編國語辭典》說，海報是「將圖畫與文字適當的安排在一畫面上」，目的是「引起大家的注意，以收宣傳的效果」。看海報的人多半只是路過，所以重點要一眼看到。
+  - 課綱三、四年級學「日記、海報的格式與寫作方法」，五、六年級再學說明書、廣告、標語、告示、公約等。
+  qa:
+    question: 路過的人只看 3 秒，海報上最大的字要寫什麼？
+    answer: 寫你最想讓人記住的那件事，通常是活動名稱。「3 秒」是示意，意思是路人多半只會看一眼；海報的目的是「引起大家的注意」，所以最大的字要留給最重要的事，時間、地點用次大的字寫清楚。
+    source: dict-haibao
+  items_title: 課綱的應用文學習
+  items:
+  - title: 海報的格式
+    text: 三、四年級學習內容：在生活應用方面，以日記、海報的格式與寫作方法為主。
+    code: Be-II-1
+  - title: 書寫應用作品
+    text: 三、四年級：書寫記敘、應用、說明事物的作品。
+    code: 6-II-4
+  - title: 廣告、標語、告示
+    text: 五、六年級學習內容：在生活應用方面，以說明書、廣告、標語、告示、公約等格式與寫作方法為主。
+    code: Be-III-1
+  sources:
+  - dict-haibao
+  - kuoyu
+how:
+  heading: 先決定最重要的一件事
+  body:
+  - 先寫下所有想放的內容，再挑出一件最重要的事放最大；接著寫時間、地點；其他的能刪就刪。做好後請家人站遠一點看，說出記得什麼。（步驟是本站建議。）
+  items:
+  - title: 最大的字
+    example: 二手玩具交換日
+    text: 放最重要的一件事。
+  - title: 次大的字
+    example: 11 月 14 日（六）上午 10 點・社區活動中心
+    text: 時間、地點寫清楚（例子是本站自編）。
+  - title: 小字或刪掉
+    example: 其他說明
+    text: 不重要的能刪就刪。
+  checklist_title: 貼出去前檢查：
+  checklist:
+  - 只放一個重點
+  - 最大字最重要
+  - 有時間
+  - 有地點
+  - 站遠看得清
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 海報的三層字
+  figures:
+  - what-compare
+  notes:
+  - 大字、次大字、小字的分層是本站建議；「3 秒」「A4」是示意。
+  - 五、六年級會學廣告、標語、告示等更多格式（Be-III-1）。
+  sources:
+  - kuoyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 做海報：孩子列出想放的事，選一件最重要的，排大小位置，家人站遠看一眼
+  steps:
+  - actor: 孩子
+    text: 列出想放的事
+  - actor: 孩子
+    text: 選最重要一件
+  - actor: 孩子
+    text: 排字的大小
+  - actor: 家人
+    text: 站遠看一眼
+- id: what-compare
+  type: compare
+  alt: 大字放活動名稱，次大字放時間地點，小字放其他說明
+  source: dict-haibao
+  relation: versus
+  items:
+  - term: 大字
+    note: 最重要的事，如活動名稱
+  - term: 次大字
+    note: 時間、地點
+  - term: 小字
+    note: 其他說明，能刪就刪
+  caption: 分層是本站建議；海報要「引起大家的注意」出自《重編國語辭典》。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 6-II-4「書寫記敘、應用、說明事物的作品。」（p.11）；學習內容 Be-II-1「在生活應用方面，以日記、海報的格式與寫作方法為主。」（p.17）、Be-III-1「在生活應用方面，以說明書、廣告、標語、告示、公約等格式與寫作方法為主。」（p.18）
+- id: dict-haibao
+  title: 重編國語辭典修訂本「海報」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=80084
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「海報」：一種平面設計的廣告。將圖畫與文字適當的安排在一畫面上……引起大家的注意，以收宣傳的效果

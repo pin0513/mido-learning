@@ -1,8 +1,13 @@
+# B3 提案：zh.punct@es（逐條對照教育部《重訂標點符號手冊》修訂版）
+# - idea：「一個意思說完用句號」改依手冊「用於一個語義完整的句末」；逗號依手冊「隔開複句內各分句，或標示句子內語氣的停頓」。
+# - 補上 grades [1,2,3,4]、5-I-2、6-I-1、5-II-2、6-II-1、Ac-I-1、Ac-II-1（國語文領綱 p.10、11、14）。
+# - verify_notes 刪去和本點無關的英語文、第二外國語文課綱。
+# - guiding question 的答案註明斷句可能不只一種，檢核改成「最多差 1 處（示意），有爭議的地方查手冊」。
 id: zh.punct@es
 concept: zh.punct
 title: 標點符號：逗號、句號、問號
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +17,28 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 1
+  - 2
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 5-I-2
+  - 6-I-1
+  - 5-II-2
+  - 6-II-1
+  contents:
+  - Ac-I-1
+  - Ac-II-1
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 已依教育部《重訂標點符號手冊》修訂版核對句號、逗號、冒號、引號、問號、驚嘆號的說明（手冊 p.2、3、6、7、10、11）。「唸出來找停頓」是本站建議的練習方法，不是手冊或課綱的規定。
 prerequisites: []
 links:
   why: []
@@ -28,7 +46,7 @@ links:
   related: []
   deeper:
   - zh.punct2@jh
-link_notes: 框架：—。
+link_notes: 框架：教育部《重訂標點符號手冊》修訂版；108 國語文學習內容 Ac「文字篇章」的標點符號（Ac-I-1、Ac-II-1）。
 competency:
   specialist:
   - 基礎語文
@@ -39,18 +57,142 @@ ai:
   - 找出可能漏掉的標點
   human_experience:
   - 唸出來，聽哪裡該停
-idea: 一個意思說完用句號，還沒說完用逗號；問句用問號，感嘆用驚嘆號；說出口的話用引號「」，引號前常用冒號。
+idea: 句子的意思完整了，句末用句號；句子中間要停頓，或隔開幾個小句子，用逗號。問句後面用問號，感嘆或加重語氣用驚嘆號；說話或引用別人的話用引號「」，前面常用冒號。
 guiding_questions:
 - 「我昨天去公園，看到很多花，很漂亮，然後回家。」哪裡該換成句號？
 scenario: 親子共學：複習版：把一段沒有標點的文字唸給對方聽，聽的人在停頓處拍手，再一起補上標點。大人可以用自己最近傳的一則長訊息來試。
 goal: 一段話裡的逗號、句號、問號用得對，說完一個意思就用句號。
-review: 家長給一段 60 字左右、拿掉標點的文字，孩子補上標點後唸出來；句號位置與家長的版本差不到 1 處。
+review: 家長給一段約 60 字（示意）、拿掉標點的文字，孩子補上標點後唸出來；句號位置和家長的版本最多差 1 處（示意），有爭議的地方一起查手冊。
 formats:
   slides: []
-  exercise: 目標：一段話裡的逗號、句號、問號用得對，說完一個意思就用句號。　檢核：家長給一段 60 字左右、拿掉標點的文字，孩子補上標點後唸出來；句號位置與家長的版本差不到 1 處。
+  exercise: 目標：一段話裡的逗號、句號、問號用得對，說完一個意思就用句號。　檢核：家長給一段約 60 字（示意）、拿掉標點的文字，孩子補上標點後唸出來；句號位置和家長的版本最多差 1 處（示意），有爭議的地方一起查手冊。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 一到四年級（第一、二學習階段）
+  source: kuoyu
+why:
+  heading: 標點讓人讀對意思
+  body:
+  - 說話時，我們用停頓和語氣讓人聽懂；寫成文字，就要靠標點符號。教育部《重訂標點符號手冊》說，逗號「用於隔開複句內各分句，或標示句子內語氣的停頓」，句號「用於一個語義完整的句末」。
+  - 課綱要一、二年級「認識常用標點符號」，三、四年級「理解各種標點符號的用法」；寫作時則要「根據表達需要」使用標點。
+  figures:
+  - why-compare
+  qa:
+    question: 「我昨天去公園，看到很多花，很漂亮，然後回家。」哪裡該換成句號？
+    answer: 可以把「很漂亮」後面的逗號換成句號：「我昨天去公園，看到很多花，很漂亮。然後回家。」前半句說完了在公園看到的事，意思已經完整；手冊說句號用在「語義完整的句末」，逗號用來「隔開複句內各分句」。在哪裡斷句，要看你想把哪些事放在一起說，有時不只一種對的答案（本站整理）。
+    source: punct
+  items_title: 一到四年級，課綱要孩子
+  items:
+  - title: 認識常用標點
+    text: 一、二年級：認識常用標點符號。
+    code: 5-I-2
+  - title: 會用常用標點
+    text: 一、二年級：根據表達需要，使用常用標點符號。
+    code: 6-I-1
+  - title: 理解各種用法
+    text: 三、四年級：理解各種標點符號的用法。
+    code: 5-II-2
+  - title: 依需要使用
+    text: 三、四年級：根據表達需要，使用各種標點符號。
+    code: 6-II-1
+  sources:
+  - punct
+  - kuoyu
+how:
+  heading: 唸出來，聽哪裡要停
+  body:
+  - 先把句子唸出來：只是停頓、意思還沒說完，用逗號；意思說完整了，用句號。再聽語氣：問人用問號，感嘆或加重語氣用驚嘆號。唸出來找停頓是本站建議的方法，對不對還是以手冊的說明為準。
+  items:
+  - title: 問句用問號
+    example: 你吃飽了嗎？
+    text: 手冊：問號用於疑問句之後。
+  - title: 感嘆用驚嘆號
+    example: 這朵花好香啊！
+    text: 手冊：用於感嘆語氣及加重語氣的詞、語、句之後。
+  - title: 說話加引號
+    example: 我問他：「你有什麼意見？」
+    text: 冒號總起下文，引號標示說話；引文的句尾符號標在引號之內。
+  checklist_title: 寫完檢查五件事：
+  checklist:
+  - 意思完整用句號
+  - 停頓用逗號
+  - 問句用問號
+  - 感嘆用驚嘆號
+  - 說的話加引號
+  activity_figure: how-flow
+  sources:
+  - punct
+what:
+  heading: 國小先學的標點
+  figures:
+  - what-symbols
+  notes:
+  - 句號占一個字的位置，寫在格子正中（手冊 p.2）。
+  - 引號裡如果是完整的句子，句尾符號標在引號之內，例如：我問他：「你有什麼意見？」（手冊 p.7）
+  - 冒號也用在稱呼後面，例如「親愛的小朋友：」（手冊 p.6）。
+  - 手冊共列十五種標點符號（p.1）；三、四年級起學「各種標點符號的用法」（課綱 Ac-II-1）。
+  sources:
+  - punct
+  - kuoyu
+figures:
+- id: why-compare
+  type: compare
+  alt: 逗號用在句子中間的停頓，句號用在意思完整的句末
+  source: punct
+  relation: not_equal
+  items:
+  - term: 逗號，
+    note: 隔開分句，或句子裡語氣的停頓
+  - term: 句號。
+    note: 一個語義完整的句末
+- id: how-flow
+  type: flow
+  alt: 拍手找標點：大人唸一段沒有標點的文字，孩子在停頓處拍手，一起補上標點，再查手冊對照
+  steps:
+  - actor: 大人
+    text: 唸無標點文字
+  - actor: 孩子
+    text: 停頓處拍手
+  - actor: 一起
+    text: 補上標點
+  - actor: 一起
+    text: 查手冊對照
+- id: what-symbols
+  type: symbol_grid
+  title: 常用標點
+  alt: 句中停頓用逗號；句末用句號、問號、驚嘆號；引用說話用冒號和引號
+  caption: 分組是本站整理；各符號用法依手冊。
+  source: punct
+  groups:
+  - name: 句中停頓
+    symbols:
+    - ，
+  - name: 句末
+    symbols:
+    - 。
+    - ？
+    - ！
+  - name: 引用說話
+    symbols:
+    - ：
+    - 「」
+sources:
+- id: punct
+  title: 重訂標點符號手冊（修訂版）
+  publisher: 教育部（民國 97 年 12 月修訂）
+  url: https://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/Revised_Handbook_of_Punctuation.pdf
+  accessed: '2026-10-28'
+  kind: government
+  supports: 修訂說明列十五種符號（p.1）；句號「占一個字的位置，居正中」「用於一個語義完整的句末，不用於疑問句、感嘆句」（p.2）；逗號「用於隔開複句內各分句，或標示句子內語氣的停頓」（p.3）；冒號「用於總起下文，或舉例說明上文」，例「親愛的小朋友：」（p.6）；引號「用於標示說話、引語、特別指稱或強調的詞語」，「一般引文的句尾符號標在引號之內」，例「我問他：「你有什麼意見？」」（p.7）；問號「用於疑問句之後」（p.10）；驚嘆號「用於感嘆語氣及加重語氣的詞、語、句之後」（p.11）
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 5-I-2「認識常用標點符號。」、6-I-1「根據表達需要，使用常用標點符號。」、5-II-2「理解各種標點符號的用法。」、6-II-1「根據表達需要，使用各種標點符號。」（p.10–11）；學習內容 Ac-I-1「常用標點符號。」、Ac-II-1「各種標點符號的用法。」（p.14）

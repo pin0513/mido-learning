@@ -1,8 +1,12 @@
+# B3 提案：zh.sentence@es
+# - idea「標點符號幫讀的人換氣」改依手冊：逗號標示「語氣的停頓」、句號用在「語義完整的句末」。
+# - 「誰、做了什麼、怎麼樣」是本站整理的檢查法，課綱沒有列出，正文標為本站整理；goal、scenario、review 原寫「誰、在哪裡、做了什麼」，與 idea 不一致，統一成同一組。
+# - 補上 grades [1,2]、2-I-1、6-I-3、Ac-I-2。2-I-1 與 B2 相同（taxonomy 重複列出）。
 id: zh.sentence@es
 concept: zh.sentence
 title: 把話說完整
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +16,23 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 1
+  - 2
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 2-I-1
+  - 6-I-3
+  contents:
+  - Ac-I-2
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 「誰、做了什麼、怎麼樣」是本站整理的句子檢查法；課綱只寫「簡單的基本句型」「語意完整的句子」，沒有列出這三項。
 prerequisites:
 - zh.punct@es
 links:
@@ -29,7 +41,7 @@ links:
   related: []
   deeper:
   - zh.prompt@jh
-link_notes: 框架：—。
+link_notes: 框架：108 國語文學習表現 2-I-1（說出語意完整的話）、6-I-3（寫出語意完整的句子）；學習內容 Ac-I-2（簡單的基本句型）。
 competency:
   specialist:
   - 寫作
@@ -40,18 +52,113 @@ ai:
   - 找出錯字與漏掉的標點
   human_experience:
   - 自己說出想表達的那件事
-idea: 一句話要說清楚誰、做了什麼、怎麼樣；一段話只講一件事。標點符號幫讀的人換氣。
+idea: 一句話要讓人知道誰、做了什麼、怎麼樣（本站整理的檢查法）；一段話只講一件事。標點符號標出句子裡的停頓和語氣，幫讀的人讀懂。
 guiding_questions:
 - 「我很開心」和「我撿到一片紅葉子，好開心」，哪句看得到畫面？
-scenario: 親子共學：親子各說一件今天的小事，先說一句「很普通」的版本，再一起補上誰、在哪裡、做了什麼。
-goal: 寫出有誰、在哪裡、做了什麼的完整句子，一段只講一件事。
-review: 孩子寫 5 句今天的小事，家長逐句檢查「誰、在哪裡、做了什麼」三項都有，5 句全過才打勾。
+scenario: 親子共學：親子各說一件今天的小事，先說一句「很普通」的版本，再一起補上誰、做了什麼、怎麼樣。
+goal: 寫出有誰、做了什麼、怎麼樣的完整句子，一段只講一件事。
+review: 孩子寫 5 句（示意）今天的小事，家長逐句檢查「誰、做了什麼、怎麼樣」三項都有，5 句全過才打勾。
 formats:
   slides: []
-  exercise: 目標：寫出有誰、在哪裡、做了什麼的完整句子，一段只講一件事。　檢核：孩子寫 5 句今天的小事，家長逐句檢查「誰、在哪裡、做了什麼」三項都有，5 句全過才打勾。
+  exercise: 目標：寫出有誰、做了什麼、怎麼樣的完整句子，一段只講一件事。　檢核：孩子寫 5 句（示意）今天的小事，家長逐句檢查「誰、做了什麼、怎麼樣」三項都有，5 句全過才打勾。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 讓讀的人看到畫面
+  body:
+  - 只寫「我很開心」，讀的人不知道發生了什麼。補上誰、做了什麼，讀的人才看得到畫面，也知道為什麼開心。
+  - 課綱要一、二年級的孩子說話時「以正確發音流利的說出語意完整的話」，寫作時「寫出語意完整的句子、主題明確的段落」。
+  figures:
+  - why-compare
+  qa:
+    question: 「我很開心」和「我撿到一片紅葉子，好開心」，哪句看得到畫面？
+    answer: 第二句。它說出了發生什麼事（撿到一片紅葉子），讀的人才看得到畫面，也知道開心的原因。課綱要孩子寫出「語意完整的句子」，把事情說清楚就是第一步。
+    source: kuoyu
+  items_title: 一、二年級的目標
+  items:
+  - title: 說完整的話
+    text: 以正確發音流利的說出語意完整的話。
+    code: 2-I-1
+  - title: 寫完整的句子
+    text: 寫出語意完整的句子、主題明確的段落。
+    code: 6-I-3
+  - title: 學簡單句型
+    text: 學習內容：簡單的基本句型。
+    code: Ac-I-2
+  sources:
+  - kuoyu
+how:
+  heading: 先說，再補，再寫
+  body:
+  - 先用嘴巴說一件今天的小事，再一起補上缺的部分，最後寫下來。課綱說一、二年級的寫作「由口述作文開始引導」，先說再寫正是這個順序。
+  items:
+  - title: 誰
+    example: 我、弟弟、班上的小美
+    text: 這件事是誰做的（本站整理）。
+  - title: 做了什麼
+    example: 撿到一片紅葉子
+    text: 發生了什麼事。
+  - title: 怎麼樣
+    example: 好開心
+    text: 結果或感受。
+  checklist_title: 寫完一段，檢查：
+  checklist:
+  - 有誰
+  - 做了什麼
+  - 怎麼樣
+  - 一段一件事
+  - 句末有標點
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 句子和標點
+  notes:
+  - 逗號用來隔開句子裡的小句子，或標出語氣的停頓；一句話的意思完整了，就用句號（標點符號手冊 p.2、3）。
+  - 一段只講一件事：課綱的說法是「主題明確的段落」。
+  sources:
+  - punct
+  - kuoyu
+figures:
+- id: why-compare
+  type: compare
+  alt: 「我很開心」只有感受；「撿到紅葉子好開心」有事件也有感受
+  source: kuoyu
+  relation: versus
+  items:
+  - term: 我很開心
+    note: 只有感受，看不到發生什麼
+  - term: 撿到紅葉子好開心
+    note: 有事件也有感受
+  caption: 例句是本站自編；「語意完整的句子」出自課綱 6-I-3。
+- id: how-flow
+  type: flow
+  alt: 先說再寫：孩子說一件小事，一起補上缺的部分，孩子寫成一句話，大人唸給孩子聽
+  steps:
+  - actor: 孩子
+    text: 說一件小事
+  - actor: 一起
+    text: 補上缺的部分
+  - actor: 孩子
+    text: 寫成一句話
+  - actor: 大人
+    text: 唸給孩子聽
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 2-I-1「以正確發音流利的說出語意完整的話。」（p.7）、6-I-3「寫出語意完整的句子、主題明確的段落。」（p.11）；學習內容 Ac-I-2「簡單的基本句型。」（p.14）；實施要點寫作（2）「第一學習階段寫作，由口述作文開始引導」（p.50）
+- id: punct
+  title: 重訂標點符號手冊（修訂版）
+  publisher: 教育部（民國 97 年 12 月修訂）
+  url: https://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/Revised_Handbook_of_Punctuation.pdf
+  accessed: '2026-10-28'
+  kind: government
+  supports: 句號「用於一個語義完整的句末」（p.2）；逗號「用於隔開複句內各分句，或標示句子內語氣的停頓」（p.3）

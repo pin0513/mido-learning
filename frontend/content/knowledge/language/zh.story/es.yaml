@@ -1,8 +1,13 @@
+# B3 提案：zh.story@es
+# - 「開頭、經過、結尾」是本站整理的說法，課綱用的是「順敘法」與「記敘文本的結構」，正文已註明。
+# - 「300 字」標為示意。
+# - 補上 5-I-6、6-II-3、Ba-I-1、Ba-II-1；引用實施要點寫作（2）「由口述作文開始引導」。
+# - 複審修正：Ba-I-1 項目改為原文「順敘法」，「照事情發生的先後寫」標為本站整理；5-I-6 改為逐字原文。
 id: zh.story@es
 concept: zh.story
 title: 開頭、經過、結尾
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -18,9 +23,15 @@ curriculum_108:
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 5-I-6
+  - 6-II-3
+  contents:
+  - Ba-I-1
+  - Ba-II-1
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 「開頭、經過、結尾」是本站整理的說法；課綱的用語是「順敘法」（Ba-I-1）與「記敘文本的結構」（Ba-II-1）。「300 字」是示意。
 prerequisites:
 - zh.sentence@es
 links:
@@ -28,7 +39,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：108 國語文學習內容 Ba「記敘文本」（Ba-I-1 順敘法、Ba-II-1 記敘文本的結構）；學習表現 6-II-3（寫作步驟）。
 competency:
   specialist:
   - 寫作
@@ -39,18 +50,113 @@ ai:
   - 把段落順序打亂讓孩子重排
   human_experience:
   - 決定故事最後要停在哪裡
-idea: 一篇文章先交代發生什麼，再寫經過和轉變，最後收在一個想法或感受。
+idea: 一篇文章先交代發生什麼，再寫經過和轉變，最後收在一個想法或感受（開頭、經過、結尾是本站整理的說法）。
 guiding_questions:
 - 故事少了結尾，會讓人有什麼感覺？
 scenario: 親子共學：用三張便利貼寫開頭、經過、結尾，排一排，再試試把順序換掉會怎樣。
 goal: 寫一篇有開頭、經過、結尾的短文，結尾收在一個想法或感受。
-review: 孩子寫 300 字短文，家長能用一句話說出開頭、經過、結尾各在講什麼，且結尾有一句感受或想法。
+review: 孩子寫一篇約 300 字（示意）的短文，家長能用一句話說出開頭、經過、結尾各在講什麼，且結尾有一句感受或想法。
 formats:
   slides: []
-  exercise: 目標：寫一篇有開頭、經過、結尾的短文，結尾收在一個想法或感受。　檢核：孩子寫 300 字短文，家長能用一句話說出開頭、經過、結尾各在講什麼，且結尾有一句感受或想法。
+  exercise: 目標：寫一篇有開頭、經過、結尾的短文，結尾收在一個想法或感受。　檢核：孩子寫一篇約 300 字（示意）的短文，家長能用一句話說出開頭、經過、結尾各在講什麼，且結尾有一句感受或想法。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 有順序，讀的人才跟得上
+  body:
+  - 課綱一、二年級學「順敘法」，也就是照事情發生的先後來寫（本站整理）；三、四年級學「記敘文本的結構」，並練習「審題、立意、選材、組織等寫作步驟」。
+  - 閱讀時也一樣：一、二年級要「利用圖像、故事結構等策略，協助文本的理解與內容重述」。會看結構，寫的時候也比較知道怎麼排。
+  qa:
+    question: 故事少了結尾，會讓人有什麼感覺？
+    answer: 會覺得事情沒說完，不知道結果怎樣、作者想說什麼。結尾把事情收住，也讓讀的人知道你的感受或想法。會考寫作的評分向度裡也有「結構組織」，完整的開頭、經過、結尾就是結構的一部分（本站整理）。
+    source: cap-writing
+  items_title: 課綱的安排
+  items:
+  - title: 順敘法
+    text: 一、二年級學習內容：順敘法（照事情發生的先後寫，本站整理）。
+    code: Ba-I-1
+  - title: 用故事結構理解
+    text: 一、二年級：利用圖像、故事結構等策略，協助文本的理解與內容重述。
+    code: 5-I-6
+  - title: 記敘文本的結構
+    text: 三、四年級學習內容：記敘文本的結構。
+    code: Ba-II-1
+  - title: 寫作步驟
+    text: 三、四年級：學習審題、立意、選材、組織等寫作步驟。
+    code: 6-II-3
+  sources:
+  - kuoyu
+  - cap-writing
+how:
+  heading: 三張便利貼排順序
+  body:
+  - 先用三張便利貼各寫一句：開頭（發生什麼事）、經過（怎麼了、有什麼轉變）、結尾（結果和感受）。排好順序後，再擴寫成段落。課綱說一、二年級的寫作「由口述作文開始引導」，所以可以先說給家人聽，再寫下來。
+  items:
+  - title: 開頭
+    example: 星期六，我第一次自己去買早餐。
+    text: 發生什麼事（例句是本站自編）。
+  - title: 經過
+    example: 老闆沒聽清楚，我鼓起勇氣又說了一次。
+    text: 怎麼了、有什麼轉變。
+  - title: 結尾
+    example: 拿到蛋餅時，我覺得自己長大了。
+    text: 結果和感受。
+  checklist_title: 寫完檢查：
+  checklist:
+  - 開頭說發生什麼
+  - 經過有轉變
+  - 結尾有感受
+  - 順序不亂跳
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 開頭、經過、結尾
+  figures:
+  - what-flow
+  notes:
+  - 「開頭、經過、結尾」是本站整理的說法；課綱用的是「順敘法」與「記敘文本的結構」。三、四年級還會學「順敘與倒敘法」（Ba-II-2）。
+  - 「300 字」是示意的練習份量。
+  sources:
+  - kuoyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 寫故事：孩子先說一件事，寫三張便利貼，一起排順序，再擴寫成短文
+  steps:
+  - actor: 孩子
+    text: 說一件事
+  - actor: 孩子
+    text: 寫三張便利貼
+  - actor: 一起
+    text: 排順序
+  - actor: 孩子
+    text: 擴寫成短文
+- id: what-flow
+  type: flow
+  alt: 順敘：開頭寫發生什麼，經過寫怎麼轉變，結尾寫結果和感受
+  steps:
+  - text: 開頭：發生什麼
+  - text: 經過：怎麼轉變
+  - text: 結尾：結果感受
+  source: kuoyu
+  caption: 照事情發生的先後寫（本站整理），就是課綱說的順敘法。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 5-I-6「利用圖像、故事結構等策略，協助文本的理解與內容重述。」（p.10）、6-II-3「學習審題、立意、選材、組織等寫作步驟。」（p.11）；學習內容 Ba-I-1「順敘法。」、Ba-II-1「記敘文本的結構。」、Ba-II-2「順敘與倒敘法。」（p.16）；實施要點寫作（2）「第一學習階段寫作，由口述作文開始引導」（p.50）
+- id: cap-writing
+  title: 國中教育會考 寫作測驗問答
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test5-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 寫作測驗評分規準的四個向度包括「結構組織」
