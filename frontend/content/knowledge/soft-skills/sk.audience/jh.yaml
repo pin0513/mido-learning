@@ -2,7 +2,7 @@ id: sk.audience@jh
 concept: sk.audience
 title: 說給誰聽：傳播的五個問題
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -18,10 +18,11 @@ curriculum_108:
   - B1
   - B2
   issues: []
-to_verify: true
+  performances:
+  - 1-IV-2
+  - 2-IV-1
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（拉斯威爾 5W 傳播模式），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
 - 與國文 zh.audience@uni「寫給不同讀者」交界：國文管文字怎麼改寫，這一點管口語傳播的對象意識；zh.audience 以本點為 why。
 prerequisites:
 - sk.showtell@es
@@ -31,7 +32,7 @@ links:
   related:
   - zh.audience@uni
   deeper: []
-link_notes: 框架：拉斯威爾 5W 傳播模式。
+link_notes: 框架：拉斯威爾 5W 傳播模式（5W：Who、Says What、In Which Channel、To Whom、With What Effect）；互動模式的回饋。
 competency:
   specialist:
   - 口語表達
@@ -43,18 +44,121 @@ ai:
   - 把同一段話改寫成三種語氣當參考
   human_experience:
   - 觀察眼前的人有沒有聽懂，當場調整
-idea: 傳播學常用五個問題拆解一次溝通：誰說、說什麼、透過什麼管道、對誰說、產生什麼效果（拉斯威爾模式）。內容一樣，換了聽眾或管道，說法就要換；對方的反應就是回饋，要跟著調整。
+idea: 傳播學常用拉斯威爾（Lasswell）的五個問題拆解一次溝通：誰說、說什麼、透過什麼管道、對誰說、產生什麼效果。內容一樣，換了聽眾或管道，說法就要換。這五個問題裡沒有「回饋」；後來的互動模式才強調：看對方的反應，再跟著調整。
 guiding_questions:
 - 同一件事說給阿嬤聽和說給同學聽，哪裡要換？
 scenario: 親子共學：全家選一則新聞，各自用「傳給長輩群組」「跟同學聊」「上台報告」三種方式說，比一比哪裡變了。
 goal: 說話前先想清楚：誰說、說什麼、用什麼管道、對誰說、想要什麼效果。
-review: 把「段考成績」分別說給阿嬤、同學、老師聽（可錄音），家長用五個問題的表格比較三段，至少要有兩處用詞或順序不同。
+review: 把「段考成績」分別說給阿嬤、同學、老師聽（可錄音），家長用五個問題的表格比較三段，至少要有兩處（示意）用詞或順序不同。
 formats:
   slides: []
-  exercise: 目標：說話前先想清楚：誰說、說什麼、用什麼管道、對誰說、想要什麼效果。　檢核：把「段考成績」分別說給阿嬤、同學、老師聽（可錄音），家長用五個問題的表格比較三段，至少要有兩處用詞或順序不同。
+  exercise: 目標：說話前先想清楚：誰說、說什麼、用什麼管道、對誰說、想要什麼效果。　檢核：把「段考成績」分別說給阿嬤、同學、老師聽（可錄音），家長用五個問題的表格比較三段，至少要有兩處（示意）用詞或順序不同。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 同一件事，聽眾不同
+  body:
+  - 同一件事，說給阿嬤聽和說給同學聽，用詞、順序、要補充的背景都不一樣。國語文課綱要國中生「掌握生活情境，適切表情達意」，也要能「依據不同情境，分辨聲情意涵及表達技巧，適切回應」。
+  - 課綱的實施要點也提醒：要懂得「依目的、聽話對象和情境，適時調整說話的方式」。
+  qa:
+    question: 同一件事說給阿嬤聽和說給同學聽，哪裡要換？
+    answer: 對象（To Whom）換了，用詞和順序就要跟著換：對阿嬤少用流行語、多補背景；對同學可以直接說重點（本站舉例）。管道（In Which Channel）也會影響說法，例如傳到家族群組要寫短、寫清楚。
+    source: lasswell
+  items_title: 練好以後，可以
+  items:
+  - title: 看情境說話
+    text: 掌握生活情境，適切表情達意，分享自身經驗。
+    code: 2-IV-1
+  - title: 聽出語氣再回應
+    text: 依不同情境，分辨聲情意涵及表達技巧，適切回應。
+    code: 1-IV-2
+  sources:
+  - kuoyu
+how:
+  heading: 說之前，問五個問題
+  body:
+  - 拉斯威爾在 1948 年用五個問題描述一次傳播行為：誰（Who）、說什麼（Says What）、透過什麼管道（In Which Channel）、對誰說（To Whom）、產生什麼效果（With What Effect）。說話前，先把五格填好。
+  - 說的時候再看對方的反應：聽不懂、皺眉、追問，都是回饋。把回饋納入，是後來「互動模式」補上的觀點，不是拉斯威爾原本的五個問題。
+  figures:
+  - how-5w
+  activity_figure: how-flow
+  sources:
+  - lasswell
+  - macewan
+what:
+  heading: 五個問題與回饋
+  figures:
+  - what-compare
+  notes:
+  - 5W 是 Who、Says What、In Which Channel、To Whom、With What Effect 五個英文問題的簡稱。
+  - 傳遞模式把溝通看成單向送出訊息；互動模式則把對方的反應（回饋）也算進來，雙方輪流當說話者和聽話者。
+  sources:
+  - lasswell
+  - macewan
+figures:
+- id: how-5w
+  type: flow
+  title: 拉斯威爾的五個問題
+  alt: 五個問題依序是：誰、說什麼、什麼管道、對誰、什麼效果
+  source: lasswell
+  steps:
+  - actor: 誰
+    text: 誰在說
+  - actor: 說什麼
+    text: 內容是什麼
+  - actor: 管道
+    text: 當面、群組或上台
+  - actor: 對誰
+    text: 聽眾是誰
+  - actor: 效果
+    text: 想讓對方怎樣
+- id: how-flow
+  type: flow
+  alt: 一則新聞三種說法：全家選新聞，各自傳長輩群組、跟同學聊、上台報告，再比較
+  steps:
+  - actor: 全家
+    text: 選一則新聞
+  - actor: 每個人
+    text: 傳給長輩群組
+  - actor: 每個人
+    text: 跟同學聊
+  - actor: 每個人
+    text: 上台報告
+  - actor: 全家
+    text: 比一比哪裡變了
+- id: what-compare
+  type: compare
+  alt: 傳遞模式是單向送出訊息，互動模式加上回饋、雙方輪流說和聽
+  source: macewan
+  relation: versus
+  items:
+  - term: 傳遞模式
+    note: 單向：說的人送出訊息，聽的人接收
+  - term: 互動模式
+    note: 雙向：看對方的回饋，再調整說法
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 1-IV-2「依據不同情境，分辨聲情意涵及表達技巧，適切回應。」（p.7）、2-IV-1「掌握生活情境，適切表情達意，分享自身經驗。」（p.8）；實施要點口語表達：「指導學生懂得依目的、聽話對象和情境，適時調整說話的方式」（p.49）；國-J-B1、國-J-B2（p.4）
+- id: lasswell
+  title: The Structure and Function of Communication in Society（Lasswell, 1948；節錄重刊）
+  publisher: 'Harold D. Lasswell；原載 Bryson (ed.) The Communication of Ideas (1948)，重刊於 İletişim: kuram ve araştırma dergisi 第 24 期（2007），pp.215–228；網址是轉載於 pracownik.kul.pl（波蘭 KUL 大學教師頁）的教學用 PDF，Bryson 1948 原書頁碼未核對'
+  url: https://pracownik.kul.pl/files/37108/public/Lasswell.pdf
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 重刊 p.216：描述一次傳播行為的五個問題「Who / Says What / In Which Channel / To Whom / With What Effect?」，對應控制、內容、媒介、閱聽人、效果分析；公式本身沒有「回饋」一項
+- id: macewan
+  title: 1.2 The Communication Process（Professional Communication Skills for Health Studies）
+  publisher: MacEwan University 開放教科書
+  url: https://openbooks.macewan.ca/professionalcommunication/chapter/1-2-the-communication-process/
+  accessed: '2026-10-28'
+  kind: textbook
+  supports: 傳遞模式（transmission model）把傳播描述為線性、單向；互動模式（interaction model）納入回饋（feedback），參與者輪流當發送者與接收者（引 Schramm, 1997）

@@ -2,7 +2,7 @@ id: sk.qa@sh
 concept: sk.qa
 title: 問答：聽懂問題再回答
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -17,9 +17,11 @@ curriculum_108:
   core_competencies:
   - B1
   issues: []
-to_verify: true
-verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+  performances:
+  - 1-V-1
+  - 1-V-3
+to_verify: false
+verify_notes: []
 prerequisites:
 - sk.present@sh
 links:
@@ -27,7 +29,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：複述問題再回答（麻省理工學院 MIT 溝通實驗室 CommKit 的問答建議）。
 competency:
   specialist:
   - 口語表達
@@ -39,18 +41,116 @@ ai:
   - 預測觀眾可能的問題
   human_experience:
   - 現場聽懂提問背後的擔心
-idea: 問答常比簡報更重要。先複述或確認問題，再用一兩句回答重點；不知道就說「這點我還沒查證，會後補給你」。被質疑時，先找出對方擔心的是什麼。
+idea: 簡報後的問答，常是整場最有收穫的一段。先完整聽完問題、複述確認，再用一兩句回答重點；不知道就誠實說，不要硬掰；本站建議可以約好會後補充。被質疑時不要動氣，先問清楚對方不同意的是哪一部分。
 guiding_questions:
 - 被問到不會的問題，你會硬掰還是怎麼說？
 scenario: 親子共學：大人的工作報告也請孩子當「刁難觀眾」問 3 題，換大人練習。
 goal: 被提問時先確認問題，簡短回答；不知道就誠實說，並約好補充。
-review: 簡報後家長問 3 題（一題刁難、一題不在內容裡），孩子每題都先確認問題、30 秒內答完重點；不會的題目沒有亂答。
+review: 簡報後家長問 3 題（一題刁難、一題不在內容裡），孩子每題都先確認問題、30 秒內答完重點（示意）；不會的題目沒有亂答。
 formats:
   slides: []
-  exercise: 目標：被提問時先確認問題，簡短回答；不知道就誠實說，並約好補充。　檢核：簡報後家長問 3 題（一題刁難、一題不在內容裡），孩子每題都先確認問題、30 秒內答完重點；不會的題目沒有亂答。
+  exercise: 目標：被提問時先確認問題，簡短回答；不知道就誠實說，並約好補充。　檢核：簡報後家長問 3 題（一題刁難、一題不在內容裡），孩子每題都先確認問題、30 秒內答完重點（示意）；不會的題目沒有亂答。
 audience:
 - kid
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 問答是一段對話
+  body:
+  - 麻省理工學院（MIT）溝通實驗室提醒：簡報後要留時間給提問，這些討論常是整場最有收穫的一段。
+  - 高中國語文課綱也要學生「正確分析話語的訊息，並給予適切的回應」，並能「辨別聆聽內容的核心論點、議論立場及目的，並加以包容與尊重」。
+  qa:
+    question: 被問到不會的問題，你會硬掰還是怎麼說？
+    answer: 不要硬掰。MIT 的建議是只說真的事，不要編造；可以說「這點我還沒查證」，說明你會怎麼查，並在之後確認你的回答有沒有解決對方的問題。
+    source: mit-cee
+  items_title: 練好以後，可以
+  items:
+  - title: 聽懂再回應
+    text: 正確分析話語的訊息，並給予適切的回應。
+    code: 1-V-1
+  - title: 聽出立場
+    text: 辨別核心論點、議論立場及目的，包容與尊重。
+    code: 1-V-3
+  sources:
+  - mit-nse
+  - kuoyu
+how:
+  heading: 聽完、複述、再答
+  body:
+  - 麻省理工學院（MIT）溝通實驗室建議：聽完整個問題，再向提問的人複述一次。這樣可以確認你聽懂了、讓其他聽眾也聽到問題，也替自己爭取思考的時間；回答前先吸一口氣。
+  - 被質疑時，避免帶情緒或對抗的回應，先問清楚對方不同意的是哪一部分。
+  items:
+  - title: 聽完整個問題
+    example: 不在對方說到一半時搶答。
+    text: 先讓對方說完。
+  - title: 複述確認
+    example: 你是問：樣本只有 20 人夠不夠？
+    text: 確認聽懂，也讓大家聽到。
+  - title: 一兩句答重點
+    example: 不夠下定論，所以我只說是初步結果。
+    text: 先給答案，再補一句理由。
+  - title: 不會就誠實說
+    example: 這點我還沒查證，我會查課本和原始資料。
+    text: 不編造；本站建議約好補充。
+  activity_figure: how-flow
+  sources:
+  - mit-nse
+  - mit-cee
+what:
+  heading: 三種常見的問題
+  figures:
+  - what-compare
+  notes:
+  - MIT 土木與環境工程溝通實驗室的這篇建議，原本是寫給口試的研究生；放到高中簡報情境，是本站的改寫。
+  - 「30 秒內答完重點」是示意的練習標準。
+  sources:
+  - mit-cee
+figures:
+- id: how-flow
+  type: flow
+  alt: 刁難觀眾：孩子簡報後，家長問三題，孩子每題先複述再答，之後換大人練習
+  steps:
+  - actor: 孩子
+    text: 做完簡報
+  - actor: 家長
+    text: 問三個問題
+  - actor: 孩子
+    text: 複述再回答
+  - actor: 孩子
+    text: 換當刁難觀眾
+- id: what-compare
+  type: compare
+  alt: 麻省理工學院（MIT）溝通實驗室把問題分三類：請你澄清、請你解釋理由、請你推想延伸
+  source: mit-cee
+  relation: versus
+  items:
+  - term: 澄清
+    note: 聽眾沒聽懂或好奇你跳過的地方
+  - term: 解釋理由
+    note: 問你為什麼這樣做、怎麼確定
+  - term: 推想延伸
+    note: 把結果推到更大範圍或換方法會怎樣
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 1-Ⅴ-1「面對不同的聆聽情境及文化差異，正確分析話語的訊息，並給予適切的回應。」、1-Ⅴ-3「能辨別聆聽內容的核心論點、議論立場及目的，並加以包容與尊重。」（p.7）
+- id: mit-nse
+  title: Delivery and Q&A（CommKit）
+  publisher: MIT Department of Nuclear Science and Engineering Communication Lab
+  url: https://mitcommlab.mit.edu/nse/commkit/delivery-and-qa/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 3.3：聽完整個問題後複述給提問者，可確認理解、讓其他聽眾聽到、爭取思考時間；回答前先吸一口氣（Take a breath）；4：要留時間給提問，「These discussions are often the most valuable part of the presentation」
+- id: mit-cee
+  title: Handling the Q&A Session（CommKit，Matthew Goss）
+  publisher: MIT Civil and Environmental Engineering Communication Lab
+  url: https://mitcommlab.mit.edu/cee/commkit/handling-the-question-and-answer-session/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 問題分三類（Clarify、Justify/Explain、Extrapolate/Reach）；被質疑時「avoid an emotional or combative response」並問清楚對方不同意哪一部分；不知道答案時，可說明若有更多時間與資源會怎麼處理，並「stick with saying true things… don’t make stuff up」；「consider following up to see if your answer addressed their question」。情境是研究生口試

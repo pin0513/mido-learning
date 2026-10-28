@@ -1,8 +1,8 @@
 id: sk.persuade@uni
 concept: sk.persuade
-title: 說服與影響：信譽、情感、邏輯
+title: 說服與影響：可信度、情感、邏輯
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,10 +11,9 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 草稿：大學不對應 108 課綱，以學門路徑對應。
-- 引用的框架只寫名稱（亞里斯多德修辭三要素），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 大學不對應 108 課綱，以學門路徑對應。
 prerequisites:
 - sk.present@sh
 - sk.qa@sh
@@ -24,7 +23,7 @@ links:
   related:
   - pm.business@uni
   deeper: []
-link_notes: 框架：亞里斯多德修辭三要素。
+link_notes: 框架：亞里斯多德修辭學的三種說服方式（品格、情感、論證）。
 competency:
   specialist:
   - 口語表達
@@ -36,17 +35,111 @@ ai:
   - 檢查邏輯漏洞、整理證據
   human_experience:
   - 了解決策者的處境，承擔提案的責任
-idea: 亞里斯多德把說服分成三種：信譽（為什麼信你）、情感（對方在乎什麼）、邏輯（證據與推理）。只有邏輯常常不夠；先了解決策者的處境與顧慮，再設計提案。
+idea: 亞里斯多德把演說的說服方式分成三種：說話者的品格（這次說的話讓人覺得可信）、聽眾的情感（說的話讓聽眾產生某種心情）、論證本身（證據與推理）。他也提醒，面對某些聽眾，光有最精確的知識也不容易說服；先了解決策者的處境與顧慮，再設計提案。
 guiding_questions:
 - 數據都對，對方還是說不要，少了什麼？
 scenario: 親子共學：大人把下一個工作提案先講給家人聽，孩子負責找出「哪裡讓我想相信你」。
-goal: 對真正能做決定的人提案，兼顧信譽、情感和邏輯三種說服力。
-review: 對一位真正的決策者（主管、系上老師、社區里長）做 10 分鐘提案；事前寫下三種說服力各用在哪裡，事後請對方說出「最被說服的一點」和「最大的顧慮」。
+goal: 對真正能做決定的人提案，兼顧可信度、情感和邏輯三種說服力。
+review: 對一位真正的決策者（主管、系上老師、社區里長）做 10 分鐘（示意）提案；事前寫下三種說服力各用在哪裡，事後請對方說出「最被說服的一點」和「最大的顧慮」。
 formats:
   slides: []
-  exercise: 目標：對真正能做決定的人提案，兼顧信譽、情感和邏輯三種說服力。　檢核：對一位真正的決策者（主管、系上老師、社區里長）做 10 分鐘提案；事前寫下三種說服力各用在哪裡，事後請對方說出「最被說服的一點」和「最大的顧慮」。
+  exercise: 目標：對真正能做決定的人提案，兼顧可信度、情感和邏輯三種說服力。　檢核：對一位真正的決策者（主管、系上老師、社區里長）做 10 分鐘（示意）提案；事前寫下三種說服力各用在哪裡，事後請對方說出「最被說服的一點」和「最大的顧慮」。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 數據都對，為什麼還不夠
+  body:
+  - 亞里斯多德在《修辭學》第一卷說，面對某些聽眾，即使擁有最精確的知識，也不容易讓他們信服，因為以知識為基礎的論證需要教導，而有些人無法這樣被教導。
+  - 在第一卷第 2 章（MIT 譯本標為 Part 2），他把演說本身能提供的說服方式分成三種：靠說話者的品格、靠讓聽眾產生某種心情、靠演說本身的證明。本站建議：提案前三種都檢查一遍。
+  qa:
+    question: 數據都對，對方還是說不要，少了什麼？
+    answer: 可能少了另外兩種說服：對方是否覺得你可信（你這次說的話是否顯得有見識、正直、為他著想），以及提案有沒有讓他產生想支持的心情。另外，亞里斯多德在談政治演說與政體時也提到，人會被和自身利益有關的考量說服，所以也要說清楚這個提案對他有什麼好處。
+    source: sep-rhetoric
+  items_title: 三種說服方式
+  items:
+  - title: 品格（可信度）
+    text: 這次說的話，讓人覺得你可信。
+  - title: 情感
+    text: 讓聽眾產生某種心情。
+  - title: 論證（邏輯）
+    text: 用證據與推理證明。
+  sources:
+  - aristotle-rhetoric
+  - aristotle-perseus
+  - sep-rhetoric
+how:
+  heading: 先懂對方，再設計提案
+  body:
+  - 可信度要在這次提案裡建立：亞里斯多德說，品格的說服應該來自說話者這次說了什麼，不是開口前別人怎麼看他。史丹佛哲學百科整理，說話者要展現實踐智慧、德行和善意。
+  - 情感與論證則要配合對方：先問清楚決策者的處境與顧慮，再決定先說哪個證據、碰觸他在乎的哪件事。（本站建議）
+  items:
+  - title: 可信度
+    example: 說明你查了哪些資料、提案的限制在哪裡。
+    text: 展現見識、正直與善意。
+  - title: 情感
+    example: 先描述團隊不再加班後的輕鬆，讓人產生期待。
+    text: 讓聽眾產生想支持的心情。
+  - title: 論證
+    example: 三個月試行數據：準時率提高（數字示意）。
+    text: 證據與推理。
+  activity_figure: how-flow
+  sources:
+  - aristotle-rhetoric
+  - sep-rhetoric
+what:
+  heading: 可信度不等於名聲
+  figures:
+  - what-compare
+  notes:
+  - 本點用「可信度」翻譯第一種說服方式，避免讀成「開口前的名聲」；學界常用希臘文 ethos、pathos、logos 指這三種方式，《修辭學》英譯本原文寫的是 personal character、frame of mind、proof。
+  sources:
+  - aristotle-rhetoric
+  - sep-rhetoric
+figures:
+- id: how-flow
+  type: flow
+  alt: 家庭預演：大人先把工作提案講給家人聽，孩子找出讓他想相信的地方，大人再修改
+  steps:
+  - actor: 大人
+    text: 試講工作提案
+  - actor: 孩子
+    text: 找出想相信處
+  - actor: 孩子
+    text: 說最大的疑問
+  - actor: 大人
+    text: 修改後再講
+- id: what-compare
+  type: compare
+  alt: 可信度來自這次說的話，名聲是開口前別人的看法，兩者不同
+  source: aristotle-rhetoric
+  relation: not_equal
+  items:
+  - term: 可信度
+    note: 這次說的話讓人覺得你可信
+  - term: 名聲
+    note: 開口前別人怎麼看你
+sources:
+- id: aristotle-rhetoric
+  title: Rhetoric, Book I（Aristotle，W. Rhys Roberts 英譯）
+  publisher: The Internet Classics Archive，麻省理工學院（MIT）
+  url: https://classics.mit.edu/Aristotle/rhetoric.1.i.html
+  accessed: '2026-10-28'
+  kind: reference
+  supports: Part 2：演說提供的說服方式有三種，取決於說話者的品格、讓聽眾產生某種心情、以及演說本身的證明；品格的說服「should be achieved by what the speaker says, not by what people think of his character before he begins to speak」；「persuasion may come through the hearers, when the speech stirs their emotions」。Part 1：面對某些聽眾，即使擁有最精確的知識也不容易說服，此時要用大家都有的共同觀念（notions possessed by everybody）。Part 8：政治演說的脈絡下「all men are persuaded by considerations of their interest」（脈絡是談政體：their interest lies in the maintenance of the established order）
+- id: aristotle-perseus
+  title: Rhetoric 1.2（Aristotle，J. H. Freese 英譯，備援版本）
+  publisher: Perseus Digital Library，Tufts University
+  url: https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.01.0060%3Abook%3D1%3Achapter%3D2
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 1.2.3：「the proofs furnished by the speech are of three kinds」：說話者的品格、讓聽者產生某種心情、演說本身；1.2.4：可信度「must be due to the speech itself, not to any preconceived idea of the speaker's character」。與 MIT 版不同譯者，用來備援核對
+- id: sep-rhetoric
+  title: Aristotle’s Rhetoric（Stanford Encyclopedia of Philosophy）
+  publisher: Christof Rapp，Stanford Encyclopedia of Philosophy（2002 初版，2022 修訂）
+  url: https://plato.stanford.edu/entries/aristotle-rhetoric/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: §5 三種說服方式：說話者的品格、聽者的情感、論證本身；§5.1 演說要讓說話者顯得值得相信，說話者需要展現實踐智慧（phronêsis）、德行與善意（Rhet. II.1）

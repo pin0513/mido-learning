@@ -393,7 +393,7 @@ export function KnowledgePointView({
                     ) : (
                       "沒有"
                     )}
-                    {next && point.links.deeper.includes(next.id) ? <span> · 下一個深度</span> : null}
+                    {next && point.links.deeper.includes(next.id) ? <span className="whitespace-nowrap"> · 下一個深度</span> : null}
                   </p>
                 </li>
               );

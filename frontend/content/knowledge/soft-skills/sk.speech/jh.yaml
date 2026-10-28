@@ -2,7 +2,7 @@ id: sk.speech@jh
 concept: sk.speech
 title: 三分鐘說服：主張、理由、例子
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -16,12 +16,14 @@ curriculum_108:
   - 語文
   core_competencies:
   - B1
-  - A2
   issues: []
-to_verify: true
-verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（主張—理由—例證），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+  performances:
+  - 2-IV-3
+  - 2-IV-5
+  contents:
+  - Bd-IV-1
+to_verify: false
+verify_notes: []
 prerequisites:
 - sk.audience@jh
 - ph.argument@jh
@@ -32,7 +34,7 @@ links:
   - ph.fallacy@jh
   deeper:
   - sk.present@sh
-link_notes: 框架：主張—理由—例證。
+link_notes: 框架：主張—理由—例證（可對照圖爾敏論證模式的 claim、warrant、grounds、rebuttal）。
 competency:
   specialist:
   - 口語表達
@@ -43,7 +45,7 @@ ai:
   - 扮演反方，列出可能的反對意見
   human_experience:
   - 在家人面前說出自己真正想要的
-idea: 說服不是比誰大聲。先清楚說出主張，再給理由和例子，最後回應對方可能的擔心。理由要讓對方在乎，不只是你在乎。
+idea: 說服不是比誰大聲。先清楚說出主張，再給理由和例子，最後回應對方可能的擔心。理由要對方也在乎，不只是你在乎。
 guiding_questions:
 - 想說服爸媽讓你晚一點睡，你最有力的理由是什麼？
 scenario: 親子共學：家庭提案日：孩子提一個想做的事，大人提一個想改的家規，雙方都照「主張、理由、例子」說，再投票。
@@ -57,4 +59,104 @@ audience:
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 讓對方願意聽你的理由
+  body:
+  - 國中國語文課綱要學生「依理解的內容，明確表達意見，進行有條理的論辯，並注重言談禮貌」，也要能「視不同情境，進行報告、評論、演說及論辯」。學習內容則要學「以事實、理論為論據，達到說服、建構、批判等目的」。
+  - 所以說服靠的是有條理的理由和事實，不是音量；而且理由要配合聽的人，課綱說要「依目的、聽話對象和情境，適時調整說話的方式」。
+  qa:
+    question: 想說服爸媽讓你晚一點睡，你最有力的理由是什麼？
+    answer: 最有力的理由通常是爸媽也在乎的事，例如「我功課都寫完了，而且明天第二節才有考試，晚半小時睡還能睡滿八小時」，再拿出這週作息當例子。只說「我想玩」，是你在乎的理由。
+    source: kuoyu
+  items_title: 練好以後，可以
+  items:
+  - title: 有條理的論辯
+    text: 明確表達意見，有條理的論辯，注重言談禮貌。
+    code: 2-IV-3
+  - title: 看場合說服
+    text: 視不同情境，進行報告、評論、演說及論辯。
+    code: 2-IV-5
+  - title: 用事實當論據
+    text: 以事實、理論為論據，達到說服的目的。
+    code: Bd-IV-1
+  sources:
+  - kuoyu
+how:
+  heading: 主張、理由、例子、回應
+  body:
+  - 一句話說主張；每個理由配一個例子或事實；最後回應一個反對意見。論證學裡的圖爾敏模式也有類似的拆法：主張（claim）、證據（grounds）、連接兩者的理由（warrant），還有承認另一種合理看法的反駁（rebuttal）。這裡的對照是近似，不是一一相等。
+  items:
+  - title: 主張
+    example: 我想週五晚上晚半小時睡。
+    text: 一句話說清楚你要什麼。
+  - title: 理由
+    example: 隔天不用上學，睡眠時間還夠。
+    text: 說對方也在乎的原因。
+  - title: 例子／事實
+    example: 這週我每天十點前寫完功課。
+    text: 用具體的事撐住理由。
+  - title: 回應擔心
+    example: 如果週六爬不起來，下週就照舊。
+    text: 先說出對方可能的擔心，再回應。
+  activity_figure: how-flow
+  sources:
+  - purdue-toulmin
+  - kuoyu
+what:
+  heading: 三分鐘提案的骨架
+  figures:
+  - what-compare
+  checklist_title: 提案前，自己檢查：
+  checklist:
+  - 主張一句話
+  - 至少兩個理由
+  - 每個理由有例子
+  - 回應一個反對
+  - 沒有超時
+  notes:
+  - 三分鐘是本點練習用的示意長度，不是課綱規定。
+  sources:
+  - purdue-toulmin
+figures:
+- id: how-flow
+  type: flow
+  alt: 家庭提案日：孩子和大人各提一案，都照主張理由例子說，回應反對，再投票
+  steps:
+  - actor: 孩子
+    text: 提一件想做的事
+  - actor: 大人
+    text: 提一條想改的家規
+  - actor: 雙方
+    text: 主張理由例子
+  - actor: 雙方
+    text: 回應一個反對
+  - actor: 全家
+    text: 投票
+- id: what-compare
+  type: compare
+  alt: 本點的主張理由例子，對照圖爾敏的 claim、warrant、grounds
+  source: purdue-toulmin
+  relation: versus
+  items:
+  - term: 主張
+    note: claim：想讓對方接受的主張
+  - term: 例子／事實
+    note: grounds：支持主張的證據
+  - term: 理由
+    note: 近似 warrant：證據為什麼撐得住主張
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 2-IV-3「依理解的內容，明確表達意見，進行有條理的論辯，並注重言談禮貌。」、2-IV-5「視不同情境，進行報告、評論、演說及論辯。」（p.8）；學習內容 Bd-IV-1「以事實、理論為論據，達到說服、建構、批判等目的。」（p.17）；實施要點：「依目的、聽話對象和情境，適時調整說話的方式」（p.49）
+- id: purdue-toulmin
+  title: Toulmin Argument
+  publisher: Purdue University Online Writing Lab (OWL)
+  url: https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 圖爾敏方法把論證分成 claim、grounds、warrant、qualifier、rebuttal、backing；claim 是想證明的主張，grounds 是支持主張的證據與事實，warrant 是連接證據與主張的假設；rebuttal 是承認另一種合理觀點，有助建立可信度

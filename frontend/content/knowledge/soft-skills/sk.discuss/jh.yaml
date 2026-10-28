@@ -2,7 +2,7 @@ id: sk.discuss@jh
 concept: sk.discuss
 title: 小組討論：接住別人的話
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -19,9 +19,12 @@ curriculum_108:
   - B1
   - C2
   issues: []
-to_verify: true
-verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+  performances:
+  - 1-IV-1
+  - 2-IV-2
+  - 2b-IV-1
+to_verify: false
+verify_notes: []
 prerequisites:
 - sk.listen@es
 links:
@@ -31,7 +34,7 @@ links:
   - pm.team@jh
   deeper:
   - sk.consensus@sh
-link_notes: 框架：—。
+link_notes: 框架：複述後再回應（國語文聆聽與口語表達）；接話規則參考 IDEO.org 的腦力激盪規則「Build on the ideas of others」（原本用於腦力激盪）。
 competency:
   specialist:
   - 口語表達
@@ -48,13 +51,116 @@ guiding_questions:
 - 別人說完，你是接著他的話說，還是說你原本想說的？
 scenario: 親子共學：家庭會議輪流當「接話員」：每個人發言前，要先用一句話說出上一個人的重點。
 goal: 討論時先複述別人的重點，再補充或提出不同意見，不打斷、不搶話。
-review: 一次 15 分鐘家庭會議，家長記錄孩子用了幾次「我聽到你說……」（目標至少 2 次），並確認沒有打斷別人。
+review: 一次家庭會議，家長記錄孩子用了幾次「我聽到你說……」（目標至少 2 次，示意），並確認沒有打斷別人。
 formats:
   slides: []
-  exercise: 目標：討論時先複述別人的重點，再補充或提出不同意見，不打斷、不搶話。　檢核：一次 15 分鐘家庭會議，家長記錄孩子用了幾次「我聽到你說……」（目標至少 2 次），並確認沒有打斷別人。
+  exercise: 目標：討論時先複述別人的重點，再補充或提出不同意見，不打斷、不搶話。　檢核：一次家庭會議，家長記錄孩子用了幾次「我聽到你說……」（目標至少 2 次，示意），並確認沒有打斷別人。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 討論是接力，不是輪流演講
+  body:
+  - 每個人只說自己原本想說的，討論就變成輪流演講。國中國語文課綱要學生「以同理心，聆聽各項發言，並加以記錄、歸納」，也要「有效把握聽聞內容的邏輯，做出提問或回饋」。
+  - 綜合活動課綱也要國中生「參與各項團體活動，與他人有效溝通與合作」；輔導科的學習內容「團體溝通、互動與工作效能的提升」，包含學習團體集思廣益、溝通協商與形成共識。
+  qa:
+    question: 別人說完，你是接著他的話說，還是說你原本想說的？
+    answer: 先接住他的話：用一句話說出你聽到的重點，確認沒聽錯，再補充或提出不同看法。這樣大家的想法才會疊在一起，而不是各說各的。
+    source: kuoyu
+  items_title: 練好以後，可以
+  items:
+  - title: 聽完再整理
+    text: 以同理心聆聽各項發言，並加以記錄、歸納。
+    code: 1-IV-1
+  - title: 提問或回饋
+    text: 把握聽聞內容的邏輯，做出提問或回饋。
+    code: 2-IV-2
+  - title: 團體中合作
+    text: 參與團體活動，與他人有效溝通與合作。
+    code: 2b-IV-1
+  sources:
+  - kuoyu
+  - zonghe
+how:
+  heading: 先複述，再補充
+  body:
+  - 國語文課綱的實施要點說，聆聽後要「能複述重點，並能有條理的回答問題」，也要兼顧每個學生發言的均等機會。IDEO.org 的腦力激盪規則也建議「Build on the ideas of others」（接著別人的想法往下想，多說「而且」，少說「但是」），以及「One conversation at a time」（一次只有一個人說）（這些規則原本是腦力激盪用的）。
+  items:
+  - title: 複述
+    example: 我聽到你說，週末想去爬山。
+    text: 用一句話說出上一個人的重點。
+  - title: 確認
+    example: 我這樣理解對嗎？
+    text: 讓對方有機會更正。
+  - title: 補充或不同看法
+    example: 我想補充……／我有不同看法，因為……
+    text: 接著他的話往下說。
+  - title: 邀請沒說話的人
+    example: 妹妹還沒說，你覺得呢？
+    text: 讓每個人都有機會。
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+  - ideo-rules
+what:
+  heading: 接話的四個句子
+  figures:
+  - what-compare
+  checklist_title: 討論時，自己檢查：
+  checklist:
+  - 先複述重點
+  - 確認沒聽錯
+  - 再補充或反對
+  - 不打斷不搶話
+  - 邀請沒說話的人
+  sources:
+  - kuoyu
+  - ideo-rules
+figures:
+- id: how-flow
+  type: flow
+  alt: 接話員：上一個人說完，下一個人先複述重點，確認後再說自己的看法
+  steps:
+  - actor: 發言者
+    text: 說完自己的想法
+  - actor: 接話員
+    text: 複述上一句重點
+  - actor: 發言者
+    text: 確認或更正
+  - actor: 接話員
+    text: 補充或不同看法
+- id: what-compare
+  type: compare
+  alt: 各說各的和接住別人的話比較
+  source: ideo-rules
+  relation: versus
+  items:
+  - term: 各說各的
+    note: 沒聽完就說自己原本想說的
+  - term: 接住別人
+    note: 先複述，再用「而且……」往下接；要提不同看法時說出理由（本站建議）
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 1-IV-1「以同理心，聆聽各項發言，並加以記錄、歸納。」（p.7）、2-IV-2「有效把握聽聞內容的邏輯，做出提問或回饋。」（p.8）；實施要點聆聽（7）「聆聽後能複述重點，並能有條理的回答問題」、口語表達（3）「兼顧學生均等機會」（p.49）；國-J-B1「傾聽他人的需求、理解他人的觀點」、國-J-C2（p.4–5）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 2b-IV-1「參與各項團體活動，與他人有效溝通與合作，並負責完成分內工作。」（p.19）；輔導學習內容 輔 Dc-IV-2「團體溝通、互動與工作效能的提升。」補充說明「學習團體集思廣益，溝通協商以及形成團體共識的方法。」（p.94）；綜-J-C2（p.5）
+- id: ideo-rules
+  title: Brainstorm Rules（Design Kit）
+  publisher: IDEO.org
+  url: https://www.designkit.org/methods/brainstorm-rules.html
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 腦力激盪規則：Defer judgement、Encourage wild ideas、Build on the ideas of others（用 and 不用 but）、Stay focused on the topic、One conversation at a time、Be visual、Go for quantity

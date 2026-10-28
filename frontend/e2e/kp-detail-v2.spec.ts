@@ -9,10 +9,10 @@ import { expect, test } from "@playwright/test";
 const V2 = process.env.KP_DETAIL_V2_ENABLED === "true";
 
 const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean }[] = [
-  { path: "/kp/zh.zhuyin/es", layer: "基礎", verify: true },
+  { path: "/kp/zh.zhuyin/es", layer: "基礎", verify: true, converted: true },
   { path: "/kp/pm.breakdown/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/ph.reason/es", layer: "本質", verify: false, converted: true },
-  { path: "/kp/sk.voice/es", layer: "本質", verify: true },
+  { path: "/kp/sk.voice/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/en.abc/es", layer: "基礎", verify: true },
   { path: "/kp/ma.number/es", layer: "本質", verify: true },
   { path: "/kp/it.blocks/es", layer: "基礎", verify: true },

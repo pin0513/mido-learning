@@ -4,9 +4,69 @@
 # https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
 語文/國文:
   performances:
+    1-IV-1:
+      stage: 4
+      text: 以同理心，聆聽各項發言，並加以記錄、歸納。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    1-IV-2:
+      stage: 4
+      text: 依據不同情境，分辨聲情意涵及表達技巧，適切回應。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    1-V-1:
+      stage: 5
+      text: 面對不同的聆聽情境及文化差異，正確分析話語的訊息，並給予適切的回應。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    1-V-3:
+      stage: 5
+      text: 能辨別聆聽內容的核心論點、議論立場及目的，並加以包容與尊重。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    2-I-1:
+      stage: 1
+      text: 以正確發音流利的說出語意完整的話。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    2-I-3:
+      stage: 1
+      text: 與他人交談時，能適當的提問、合宜的回答，並分享想法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    2-II-1:
+      stage: 2
+      text: 用清晰語音、適當語速和音量說話。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    2-II-3:
+      stage: 2
+      text: 把握說話的重點與順序，對談時能做適當的回應。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
     2-II-4:
       stage: 2
       text: 樂於參加討論，提供個人的觀點和意見。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    2-III-4:
+      stage: 3
+      text: 運用語調、表情和肢體等變化輔助口語表達。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    2-III-5:
+      stage: 3
+      text: 把握說話內容的主題、重要細節與結構邏輯。
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 7
@@ -16,6 +76,36 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 7
+    2-IV-1:
+      stage: 4
+      text: 掌握生活情境，適切表情達意，分享自身經驗。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    2-IV-2:
+      stage: 4
+      text: 有效把握聽聞內容的邏輯，做出提問或回饋。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    2-IV-3:
+      stage: 4
+      text: 依理解的內容，明確表達意見，進行有條理的論辯，並注重言談禮貌。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    2-IV-5:
+      stage: 4
+      text: 視不同情境，進行報告、評論、演說及論辯。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    2-V-2:
+      stage: 5
+      text: 討論過程中，能適切陳述自身立場，歸納他人論點並給予回應，達成友善且平等的溝通。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
     3-I-1:
       stage: 1
       text: 正確認念、拼讀及書寫注音符號。
@@ -95,6 +185,24 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 13
+    Bc-V-3:
+      stage: 5
+      text: 數據、圖表、圖片、工具列等輔助說明。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Bd-IV-1:
+      stage: 4
+      text: 以事實、理論為論據，達到說服、建構、批判等目的。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Be-V-3:
+      stage: 5
+      text: 在學習應用方面，以簡報、讀書報告、演講稿、會議紀錄、劇本、小論文、計劃書、申請書等格式與寫作方法為主。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 18
 
 綜合活動:
   performances:

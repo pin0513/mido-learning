@@ -2,7 +2,7 @@ id: sk.showtell@es
 concept: sk.showtell
 title: 一分鐘分享：開頭、經過、結尾
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -18,10 +18,11 @@ curriculum_108:
   - B1
   issues:
   - 家庭教育
-to_verify: true
-verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（Show and Tell），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+  performances:
+  - 2-I-3
+  - 2-II-3
+to_verify: false
+verify_notes: []
 prerequisites:
 - sk.voice@es
 - sk.point@es
@@ -47,13 +48,94 @@ guiding_questions:
 - 你最想拿哪一樣東西跟大家分享？第一句要說什麼？
 scenario: 親子共學：週末「家庭分享會」：每人帶一樣東西，大人分享自己小時候的一樣物品。
 goal: 拿一樣東西，用開頭、經過、結尾說一分鐘給全家聽，再回答一個問題。
-review: 家長計時 1 分鐘（前後差 15 秒內都算），勾選：有開頭、有經過、有結尾、結束後回答了 1 個問題。
+review: 家長計時 1 分鐘（前後差 15 秒內都算，這是示意的標準），勾選：有開頭、有經過、有結尾、結束後回答了 1 個問題。
 formats:
   slides: []
-  exercise: 目標：拿一樣東西，用開頭、經過、結尾說一分鐘給全家聽，再回答一個問題。　檢核：家長計時 1 分鐘（前後差 15 秒內都算），勾選：有開頭、有經過、有結尾、結束後回答了 1 個問題。
+  exercise: 目標：拿一樣東西，用開頭、經過、結尾說一分鐘給全家聽，再回答一個問題。　檢核：家長計時 1 分鐘（前後差 15 秒內都算，這是示意的標準），勾選：有開頭、有經過、有結尾、結束後回答了 1 個問題。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 有順序，大家才聽得懂
+  body:
+  - Show and Tell（展示與分享）是給年紀小的孩子做的學校活動：孩子帶一樣東西到班上，向同學介紹它。
+  - 說的人把話照順序說，聽的人才跟得上；說完回答同學的提問，就是在練習課綱說的「與他人交談時，能適當的提問、合宜的回答，並分享想法」。
+  qa:
+    question: 你最想拿哪一樣東西跟大家分享？第一句要說什麼？
+    answer: 第一句先說「這是什麼」，例如「這是阿公送我的陀螺。」大家馬上知道你要介紹什麼，接著再說它的故事。（本站整理的開場方式）
+    source: kuoyu
+  items_title: 練好以後，孩子可以
+  items:
+  - title: 分享，也回答
+    text: 交談時適當的提問、合宜的回答，並分享想法。
+    code: 2-I-3
+  - title: 照順序說
+    text: 把握說話的重點與順序。
+    code: 2-II-3
+  sources:
+  - cambridge
+  - kuoyu
+how:
+  heading: 開頭、經過、結尾
+  body:
+  - 這裡用三段順序練習（本站整理的練習方式）：開頭說這是什麼，經過說它的故事，結尾說你為什麼喜歡。說完留時間讓大家問問題。
+  - 課綱也提醒老師培養孩子「發表的信心和儀態」，並讓每個孩子都有發言的機會；所以本站建議家庭分享會要輪流，大人也要上場。
+  items:
+  - title: 開頭：這是什麼
+    example: 這是阿公送我的陀螺。
+    text: 一句話讓大家知道主角。
+  - title: 經過：它的故事
+    example: 去年過年，阿公教我怎麼打。
+    text: 說一兩件和它有關的事。
+  - title: 結尾：為什麼喜歡
+    example: 它讓我想起阿公。
+    text: 說出你的感受。
+  - title: 回答一個問題
+    example: 「它可以轉多久？」
+    text: 聽完問題，再回答。
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+what:
+  heading: 一分鐘分享的樣子
+  checklist_title: 分享完，對照看看：
+  checklist:
+  - 有說這是什麼
+  - 有說它的故事
+  - 有說為什麼喜歡
+  - 回答了一個問題
+  notes:
+  - 一分鐘、前後差 15 秒都是示意的長度，可依孩子年紀調整。
+  sources:
+  - kuoyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 家庭分享會：每人帶一樣東西，照開頭經過結尾說，回答一個問題，再換人
+  steps:
+  - actor: 每個人
+    text: 帶一樣東西
+  - actor: 分享者
+    text: 開頭經過結尾
+  - actor: 家人
+    text: 問一個問題
+  - actor: 分享者
+    text: 回答後換人
+sources:
+- id: cambridge
+  title: show-and-tell（Cambridge Dictionary）
+  publisher: Cambridge University Press
+  url: https://dictionary.cambridge.org/dictionary/english/show-and-tell
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 定義：「a school activity for young children in which a child brings an object into the class and talks to the other children about it」
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 2-I-3「與他人交談時，能適當的提問、合宜的回答，並分享想法。」、2-II-3「把握說話的重點與順序，對談時能做適當的回應。」（p.7）；實施要點口語表達：「應培養學生發表的信心和儀態」、「兼顧學生均等機會」（p.49）

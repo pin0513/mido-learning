@@ -2,7 +2,7 @@ id: sk.point@es
 concept: sk.point
 title: 先說重點，再說原因
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -18,10 +18,11 @@ curriculum_108:
   - B1
   issues:
   - 家庭教育
-to_verify: true
-verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（結論先行），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+  performances:
+  - 2-II-3
+  - 2-III-5
+to_verify: false
+verify_notes: []
 prerequisites:
 - ph.reason@es
 links:
@@ -29,7 +30,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：結論先行。跨學門先學：哲學「說出理由：「因為……所以……」」。
+link_notes: 框架：結論先行（BLUF，bottom line up front）。跨學門先學：哲學「說出理由：「因為……所以……」」。
 competency:
   specialist:
   - 口語表達
@@ -40,7 +41,7 @@ ai:
   - 把一段長回答濃縮成一句重點
   human_experience:
   - 判斷對方最想先知道什麼
-idea: 聽的人最想先知道答案。先說重點（今天最開心的是……），再用「因為……」補原因，最後可以舉一個例子。
+idea: 很多時候，問問題的人想先聽到答案。先說重點（今天最開心的是……），再用「因為……」補原因，最後可以舉一個例子。
 guiding_questions:
 - 媽媽問「今天好玩嗎？」你第一句會說什麼？
 scenario: 親子共學：接送路上玩「一句話答案」：大人問，孩子先用一句話回答，再說原因；換孩子問大人。
@@ -54,4 +55,106 @@ audience:
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 先聽到答案，比較好懂
+  body:
+  - 國語文課綱要三、四年級的孩子「把握說話的重點與順序，對談時能做適當的回應」。本站的解讀：先說答案，對方就知道接下來的話在說什麼。
+  - 美國陸軍的公文寫作規定，要求把重點放在最前面，叫 BLUF（bottom line up front，結論先行）；美國政府的白話寫作指引也說，讀者想快點得到答案。這些是寫作規範，本站建議說話也這樣做。
+  qa:
+    question: 媽媽問「今天好玩嗎？」你第一句會說什麼？
+    answer: 先直接回答：「好玩！」或「普通。」再用「因為……」說原因，例如「因為下課我們玩了躲避球。」
+    source: digitalgov
+  items_title: 練好以後，孩子可以
+  items:
+  - title: 抓住重點和順序
+    text: 把握說話的重點與順序，對談時適當回應。
+    code: 2-II-3
+  - title: 說得有結構
+    text: 高年級再把握說話的主題、重要細節與結構邏輯。
+    code: 2-III-5
+  sources:
+  - kuoyu
+  - zonggang
+  - ar25-50
+  - digitalgov
+how:
+  heading: 答案、因為、例子
+  body:
+  - 第一句說答案；第二句用「因為……」補一兩個原因；有需要再舉一個例子。說完可以問對方：「你還想知道什麼？」
+  items:
+  - title: 第一句：答案
+    example: 今天最開心的是體育課。
+    text: 用一句話直接回答問題。
+  - title: 第二句：因為
+    example: 因為我們第一次跳箱。
+    text: 補一兩個原因。
+  - title: 第三句：例子
+    example: 我跳過了四層。
+    text: 需要時，舉一個具體的例子。
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+  - digitalgov
+what:
+  heading: 重點放在第一句
+  figures:
+  - what-compare
+  notes:
+  - BLUF 是 bottom line up front 的縮寫，意思是把結論放在最前面；美國陸軍的公文寫作規定就用了這個說法。
+  - 先說重點不是只說重點：答案後面仍要有原因，對方才知道你為什麼這樣說。
+  sources:
+  - ar25-50
+  - digitalgov
+figures:
+- id: how-flow
+  type: flow
+  alt: 一句話答案：大人問，孩子先一句話回答，再說因為，接著換孩子問大人
+  steps:
+  - actor: 大人
+    text: 問一個問題
+  - actor: 孩子
+    text: 一句話說答案
+  - actor: 孩子
+    text: 用因為補原因
+  - actor: 孩子
+    text: 換孩子問大人
+- id: what-compare
+  type: compare
+  alt: 先說經過和先說重點的比較：先說經過讓人等很久，先說重點讓人馬上知道答案
+  source: digitalgov
+  relation: versus
+  items:
+  - term: 先說經過
+    note: 早上……中午……最後才說好不好玩，聽的人要等很久
+  - term: 先說重點
+    note: 「好玩！因為……」第一句就有答案
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 2-II-3「把握說話的重點與順序，對談時能做適當的回應。」、2-III-5「把握說話內容的主題、重要細節與結構邏輯。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習階段：國民小學三、四年級為第二學習階段，五、六年級為第三學習階段（p.7）
+- id: ar25-50
+  title: 'Army Regulation 25-50: Preparing and Managing Correspondence'
+  publisher: Headquarters, Department of the Army（美國陸軍部）
+  url: https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN42124-AR_25-50-007-WEB-13.pdf
+  accessed: '2026-10-28'
+  kind: government
+  supports: p.7 第 1-38b 段：有效寫作的兩項基本要求包括「putting the main point at the beginning of the correspondence (bottom line up front)」與主動語態；1-39a「Focus on the main point」。這是公文寫作規定，不是口語研究
+- id: digitalgov
+  title: 'Plain language guide: Organize（Principles）'
+  publisher: U.S. General Services Administration, Digital.gov
+  url: https://digital.gov/guides/plain-language/principles/organize
+  accessed: '2026-10-28'
+  kind: government
+  supports: 「Start by stating your purpose and the bottom line」「Put the most important information at the beginning」；理由是讀者讀政府網站與文件是為了快點得到答案（寫作指引）
