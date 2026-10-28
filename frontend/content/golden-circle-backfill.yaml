@@ -1,14 +1,2 @@
 # 只能刪，不能加。
-ids:
-  - ja.adj@sh
-  - ja.authentic@uni
-  - ja.casual@sh
-  - ja.interp@uni
-  - ja.jlpt@sh
-  - ja.keigo@uni
-  - ja.listen@sh
-  - ja.read@sh
-  - ja.society@uni
-  - ja.verb@sh
-  - ja.work@uni
-  - ja.write@sh
+ids: []

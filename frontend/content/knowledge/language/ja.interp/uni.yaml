@@ -1,8 +1,12 @@
+# B10 提案：ja.interp@uni
+# - 補 Why/How/What、兩張圖；大學不列 108 課綱代碼。
+# - 錯誤修正：原標題「日中翻譯與口譯入門」承諾口譯，但能找到可引用的只有 CEFR 的筆譯與視譯（把書面文字當場口頭翻出）描述，改成「日中翻譯入門：筆譯與視譯」，並說明 CEFR 的描述不是專業口筆譯訓練；原 scenario 翻譯動畫台詞有著作權問題，改成自己寫的或老師提供的短文；日翻中的難題標本站整理；字數標示意。
+# - 安全：譯文自己先譯，AI 只對照檢查；不把公司、客戶的機密文件貼進 AI。
 id: ja.interp@uni
 concept: ja.interp
-title: 日中翻譯與口譯入門
+title: 日中翻譯入門：筆譯與視譯
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -13,10 +17,13 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 原有待核對「大學不對應 108 課綱，以學門路徑對應」已處理：大學不列 108 課綱代碼，依據改用Council of Europe CEFR Companion volume、JLPT 官網與教育部臺灣學術倫理教育資源中心等來源。
+- 日文以 JLPT 為主要基準；大學階段與 JLPT 級數的對應是本站建議，不是官方換算。
 - 基準標籤：JLPT N1。
+- CEFR Companion volume p.91、p.92、p.93、p.102 的英文引文與節標題依原文 PDF 逐字核對；日翻中的難題與練習步驟是本站整理或本站建議。
+- 安全：練習文字用自己寫的、老師提供的或有授權的文字，不把公司、客戶的機密文件貼進 AI（教育部臺灣學術倫理教育資源中心電子報（三））。
 prerequisites:
 - ja.authentic@uni
 links:
@@ -24,7 +31,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：CEFR Companion volume〈Translating a written text〉（mediation）；JLPT N1 認定の目安。
 competency:
   specialist:
   - 翻譯
@@ -32,20 +39,133 @@ competency:
   - 跨域思考
 ai:
   delegable:
-  - 給出初稿翻譯
+  - 對照檢查自己譯好的譯文（不貼機密或客戶文件）
   human_experience:
-  - 判斷語氣與文化，修成自然的中文
-idea: 日翻中常見的難題：主詞常被省略、敬語在中文沒有對應、語尾的語氣很難翻。好的翻譯要先懂，再重寫。
+  - 自己判斷語氣、決定怎麼譯
+idea: 日翻中常見的難題：主詞常被省略、敬語在中文沒有一對一的說法、句尾語氣很難翻（本站整理）。CEFR 把看著書面文字當場口頭翻出來（視譯）和筆譯都放在中介（mediation）裡；筆譯看譯文好不好懂、有沒有被原文結構牽著走、有沒有保留原文的語氣。
 guiding_questions:
 - 好的翻譯是逐字照翻，還是讓讀者有一樣的感受？
-scenario: 親子共學：拿一段動畫台詞，各自翻成中文字幕，比較誰的版本最自然、最不失原味。
-goal: 日中互譯一段文字，翻出意思與語氣，不逐字換。
-review: 翻譯一段 200 字日文新聞成中文，家人對照官方中文版或可信翻譯，主要意思都翻對、語氣得體。
+scenario: 親子共學：用自己寫的或老師提供的日文短文（約 200 字，字數是示意），一人筆譯成中文，一人看著原文當場口頭翻出來（視譯），再比較兩個版本哪裡被日文語序牽著走（本站建議）。
+goal: 把一段日文短文筆譯成自然的中文，並看著原文當場口頭翻出重點（視譯），不逐字照翻。
+review: 筆譯一段約 200 字的日文短文成中文，家人對照原文或可信的翻譯，主要意思都翻對、讀起來是自然的中文；再視譯同一段，說出重點（字數是示意）。
 formats:
   slides: []
-  exercise: 目標：日中互譯一段文字，翻出意思與語氣，不逐字換。　檢核：翻譯一段 200 字日文新聞成中文，家人對照官方中文版或可信翻譯，主要意思都翻對、語氣得體。
+  exercise: 目標：把一段日文短文筆譯成自然的中文，並看著原文當場口頭翻出重點（視譯），不逐字照翻。　檢核：筆譯一段約 200 字的日文短文成中文，家人對照原文或可信的翻譯，主要意思都翻對、讀起來是自然的中文；再視譯同一段，說出重點（字數是示意）。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 翻譯不是逐字換
+  body:
+  - CEFR Companion volume 對筆譯的觀察重點包括「comprehensibility of the translation」、原文的說法和結構是否「(over-)influence the translation」，以及「capturing nuances in the original」。
+  - CEFR 也說「Translation and interpretation competences and strategies are an entirely different field.」，它的描述「not intended to describe the competences of professional interpreters and translators」：本點是語言能力的入門練習，不是專業口筆譯訓練（本站整理）。
+  notes:
+  - 本站建議：把本點放在大學階段、對應 JLPT N1 是本站建議，不是官方換算。JLPT 官網寫 N1 是「幅広い場面で使われる日本語を理解することができる」。
+  sources:
+  - cefr-cv
+  - jlpt-levels
+how:
+  heading: 先懂再譯，譯完重讀
+  body:
+  - 筆譯（本站建議的三步）：①讀完整段，先懂意思再動筆；②補出省略的主詞，把敬語換成中文的禮貌說法（例如用您、請）；③放下原文讀一遍譯文，檢查是不是自然的中文，有沒有被日文語序牽著走。③做完之後才請 AI 對照，不讓 AI 先譯（本站建議）。
+  - 視譯：CEFR 說這是「the process of spontaneously giving an oral translation of a written text」，重點是「providing a rough, approximate translation」、「capturing the essential information」，程度高了再抓語氣。練習時先口頭說出大意，不求每個字都翻到（本站建議）。
+  qa:
+    question: 好的翻譯是逐字照翻，還是讓讀者有一樣的感受？
+    answer: 不是逐字照翻。CEFR 看筆譯時，會看原文的說法和結構是否「(over-)influence the translation」，相對於譯文「following relevant conventions in the target language」；也看能不能「capturing nuances in the original」。讓讀者讀起來自然、又保留語氣，是本站整理的目標。
+    source: cefr-cv
+  items_title: 本站建議的步驟
+  items:
+  - title: 先懂再譯
+    text: 讀完整段再動筆
+  - title: 補主詞
+    text: 中文常要把省略的主詞補回（本站整理）
+  - title: 換禮貌說法
+    text: 敬語換成您、請等（本站整理）
+  - title: 視譯抓重點
+    text: 先說大意，再抓語氣
+  checklist_title: 每次練完勾一下
+  checklist:
+  - 讀完才動筆
+  - 補了主詞
+  - 讀起來像中文
+  - 視譯說出重點
+  activity_figure: interp-flow
+  sources:
+  - cefr-cv
+what:
+  heading: 筆譯與視譯都翻出重點
+  body:
+  - 學完後，能把一段日文短文筆譯成自然的中文，並看著原文當場口頭翻出重點，不逐字照翻。
+  items_title: 學完能做到
+  items:
+  - title: 筆譯
+    text: 譯成自然的中文。
+  - title: 視譯
+    text: 當場口頭說出重點。
+  - title: 自己檢查
+    text: 放下原文重讀譯文。
+  checklist_title: 自我檢核
+  checklist:
+  - 意思翻對
+  - 中文自然
+  - 視譯說出重點
+  figures:
+  - interp-compare
+  notes:
+  - 情境與檢核的 200 字是示意。
+  - 用生成式 AI 時，不要把個人資訊、未公開文件、機密資料貼進去（教育部臺灣學術倫理教育資源中心 2023 年的電子報）；不上傳自己或別人的錄音（本站建議）；AI 的輸出要自己查證。同一份電子報也說，學術界對使用生成式 AI 是否需要標註「尚無統一的規定」，建議先了解相關單位的政策；交作業時依課程規定說明用了哪個工具、做了什麼；AI 規定變化快，以學校和課程最新的規定為準（本站建議）。作業要自己寫，不把 AI 生成的內容直接當成自己的作品（本站建議）；同一份電子報還說，直接使用生成內容「可能有代寫的學術倫理問題」。
+  sources:
+  - cefr-cv
+  - ethics-epaper13
+figures:
+- id: interp-flow
+  type: flow
+  alt: 翻譯流程：讀完原文、補主詞換敬語、寫成中文、放下原文重讀、視譯說重點。
+  steps:
+  - actor: 譯者
+    text: 讀完原文
+  - actor: 譯者
+    text: 補主詞換敬語
+  - actor: 譯者
+    text: 寫成中文
+  - actor: 譯者
+    text: 放下原文重讀
+  - actor: 譯者
+    text: 視譯說重點
+  caption: 流程是本站建議。
+- id: interp-compare
+  type: compare
+  alt: 比較筆譯和視譯：筆譯寫成文字、看譯文好不好懂；視譯看著原文當場口頭翻、先抓重點。
+  source: cefr-cv
+  relation: versus
+  items:
+  - term: 筆譯
+    note: 寫成文字，看譯文好不好懂
+  - term: 視譯
+    note: 看著原文當場口頭翻，先抓重點
+  caption: 依 CEFR Companion volume〈Translating a written text〉（p.102）。
+sources:
+- id: cefr-cv
+  title: 'Common European Framework of Reference for Languages: Learning, teaching, assessment – Companion volume'
+  publisher: Council of Europe（2020 年 4 月，ISBN 978-92-871-8621-8）
+  url: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+  accessed: '2026-10-29'
+  kind: reference
+  supports: p.91 節標題「3.4.1. Mediation activities」，p.92 小節標題「3.4.1.1. Mediating a text」（p.102 Translating a written text 屬於這一小節）；p.92「It is also important to underline that the illustrative descriptors offered in this section are not intended to describe the competences of professional interpreters and translators.」；p.93「Translation and interpretation competences and strategies are an entirely different field.」；p.102 Translating a written text in speech or sign「It is the process of spontaneously giving an oral translation of a written text, often a notice, letter, e-mail or other communication.」，key concepts「providing a rough, approximate translation」「capturing the essential information」「capturing nuances (higher levels)」；Translating a written text in writing key concepts「comprehensibility of the translation」「the extent to which the original formulations and structure (over-)influence the translation, as opposed to the text following relevant conventions in the target language」「capturing
+    nuances in the original」
+- id: jlpt-levels
+  title: N1～N5：認定の目安
+  publisher: 日本語能力試験 JLPT（国際交流基金・日本国際教育支援協会）
+  url: https://www.jlpt.jp/about/levelsummary.html
+  accessed: '2026-10-29'
+  kind: exam
+  supports: N1「幅広い場面で使われる日本語を理解することができる」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」；（二）著作權：「研究者若直接將生成的內容拿來使用，而非親自撰寫或創作，除在法律上不享有著作權保障之外，還可能有代寫的學術倫理問題。」
