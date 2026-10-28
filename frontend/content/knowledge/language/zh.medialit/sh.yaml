@@ -1,8 +1,12 @@
+# B5 提案：zh.medialit@sh
+# - 原文 idea 列五個問題、goal 和 review 只有四格；統一成四問（誰寫的、為了什麼、證據在哪、少了誰的聲音），並標為本站整理。
+# - 「媒體素養」框架改成引用教育部《數位時代媒體素養教育白皮書》（112 年 3 月）與國語文核心素養國 S-U-B2。
+# - 補 grades、5-Ⅴ-2、5-Ⅴ-3 與 Why/How/What、兩張圖。
 id: zh.medialit@sh
 concept: zh.medialit
 title: 媒體識讀：誰寫的、為什麼這樣寫
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +16,10 @@ discipline:
   crosscutting: []
 stage:
   level: sh
+  grades:
+  - 10
+  - 11
+  - 12
 curriculum_108:
   domains:
   - 語文
@@ -21,10 +29,14 @@ curriculum_108:
   issues:
   - 閱讀素養教育
   - 資訊教育
-to_verify: true
+  performances:
+  - 5-V-2
+  - 5-V-3
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 引用的框架只寫名稱（媒體素養），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照國語文領綱第五學習階段原文（頁碼見來源）。
+- 媒體素養框架逐字依教育部《數位時代媒體素養教育白皮書》（112 年 3 月）p.22、p.23、p.31；國 S-U-B2 逐字依國語文領綱 p.4。
+- 四格表的四個問題是本站整理。
 - 本點為這次補強新增，內容尚未經老師審閱。
 prerequisites:
 - zh.viewpoint@jh
@@ -35,7 +47,7 @@ links:
   related:
   - it.media@jh
   deeper: []
-link_notes: 框架：媒體素養。跨學門連結：哲學「證據與來源」。
+link_notes: 框架：教育部《數位時代媒體素養教育白皮書》（分析能力：分辨事實與意見、評估論據合理性）；國語文核心素養國 S-U-B2；領綱 5-Ⅴ-2、5-Ⅴ-3。跨學門連結：哲學「證據與來源」。
 competency:
   specialist:
   - 閱讀理解
@@ -47,7 +59,7 @@ ai:
   - 整理不同媒體的報導差異
   human_experience:
   - 判斷可信度並說出理由
-idea: 媒體文本都有作者和目的。讀的時候追問：誰產製、想讓誰看、用了哪些字和圖引導、證據是否可查、哪些人的觀點沒有出現。這是閱讀理解用在日常資訊上。
+idea: 媒體文本都有作者和目的。讀的時候追問四件事（本站整理）：誰寫的、為了什麼（包括用了哪些字和圖引導）、證據在哪、少了誰的聲音。教育部媒體素養白皮書把「分辨事實與意見之能力」「評估論據合理性之能力」列為分析能力。
 guiding_questions:
 - 同一件事，兩家媒體的標題為什麼差那麼多？
 scenario: 親子共學：挑同一事件的兩則報導，全家各負責一格四格表，最後一起決定哪一則比較可信、為什麼。
@@ -61,4 +73,97 @@ audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 高中十至十二年級（第五學習階段）
+  source: kuoyu
+why:
+  heading: 同一件事，標題不同
+  body:
+  - 國語文核心素養國 S-U-B2 要高中生「善用科技、資訊與各類媒體所提供的素材，進行閱讀思考，整合資訊，激發省思及批判媒體倫理與社會議題的能力」。
+  - 教育部媒體素養白皮書希望大眾「穿透媒體與資訊表象，深入媒體與資訊產製目的與可能影響」，並把「分析」能力寫成「運用思辨能力分析、評估媒體及資訊品質與內涵觀點」。
+  qa:
+    question: 同一件事，兩家媒體的標題為什麼差那麼多？
+    answer: 因為產製的人、目的和想給誰看不一樣，挑的字、圖和證據也就不同。白皮書要我們「深入媒體與資訊產製目的與可能影響」：先問誰寫的、為了什麼，再看證據，最後找一找哪些人的說法沒有出現。
+    source: moe-medialit
+  items_title: 高中課綱的閱讀目標
+  items:
+  - title: 歸納不同論點
+    text: 國語文 5-Ⅴ-2：歸納文本中不同論點，形成個人的觀點，發展系統性思考以建立論述體系。
+    code: 5-V-2
+  - title: 文本與社會議題
+    text: 國語文 5-Ⅴ-3：大量閱讀多元文本，探討文本如何反應文化與社會現象中的議題，以拓展閱讀視野與生命意境。
+    code: 5-V-3
+  sources:
+  - kuoyu
+  - moe-medialit
+how:
+  heading: 四格表：四個問題
+  body:
+  - 同一事件找兩則報導或貼文，每則填一張四格表，最後比較哪一則比較可信、為什麼。四個問題是本站整理。
+  items_title: 四格表（本站整理）
+  items:
+  - title: 誰寫的
+    text: 作者、媒體或帳號是誰？
+  - title: 為了什麼
+    text: 想讓誰看？用了哪些字和圖引導你？
+  - title: 證據在哪
+    text: 點開原始來源，看證據能不能查到。
+  - title: 少了誰的聲音
+    text: 哪些相關的人的說法沒有出現？
+  checklist_title: 每一則都要：
+  checklist:
+  - 找到作者
+  - 說出目的
+  - 點開證據
+  - 找缺席的人
+  activity_figure: how-flow
+  sources:
+  - moe-medialit
+what:
+  heading: 事實和意見要分開
+  figures:
+  - what-compare
+  notes:
+  - 白皮書的能力架構有 5 種能力：近用、分析、創造、反思、行動，並以批判性思考為核心（p.22）。本點練的是「分析」。
+  sources:
+  - moe-medialit
+figures:
+- id: how-flow
+  type: flow
+  alt: 四格表步驟：孩子找兩則報導，各填四格，點開證據，全家比較哪一則較可信
+  steps:
+  - actor: 孩子
+    text: 找兩則報導
+  - actor: 孩子
+    text: 填四格表
+  - actor: 孩子
+    text: 點開證據
+  - actor: 全家
+    text: 比較可信度
+- id: what-compare
+  type: compare
+  alt: 事實可以查證，意見是看法或評價，兩者不同
+  source: moe-medialit
+  relation: not_equal
+  items:
+  - term: 事實
+    note: 可以找到證據查證的內容
+  - term: 意見
+    note: 作者的看法或評價
+  caption: 白皮書把「分辨事實與意見之能力」列為分析能力（p.31）；兩欄的說明是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 第五學習階段學習重點：5-Ⅴ-2「歸納文本中不同論點，形成個人的觀點，發展系統性思考以建立論述體系。」（p.11）；5-Ⅴ-3「大量閱讀多元文本，探討文本如何反應文化與社會現象中的議題，以拓展閱讀視野與生命意境。」（p.11）；教材編選「（三）第五學習階段（高級中等學校教育階段）」（p.22）；核心素養國 S-U-B2「善用科技、資訊與各類媒體所提供的素材，進行閱讀思考，整合資訊，激發省思及批判媒體倫理與社會議題的能力。」（p.4）
+- id: moe-medialit
+  title: 面向未來關鍵能力－媒體素養：數位時代媒體素養教育白皮書
+  publisher: 教育部（中華民國 112 年 3 月編印）
+  url: https://ws.moe.edu.tw/001/Upload/3/relfile/6315/88728/acae722a-d0d8-4a48-b86f-a7962c905c77.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 貳、二、(一)能力架構「穿透媒體與資訊表象，深入媒體與資訊產製目的與可能影響」；「2.分析(Analysis)：運用思辨能力分析、評估媒體及資訊品質與內涵觀點」；5 種能力近用、分析、創造、反思、行動，「批判性思考(critical thinking)是上述 5 種能力之核心」（p.22）；附錄 分析能力「分辨事實與意見之能力」「評估論據合理性之能力」（p.31）

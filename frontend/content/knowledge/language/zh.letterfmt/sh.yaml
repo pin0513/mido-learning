@@ -1,8 +1,15 @@
+# B5 提案：zh.letterfmt@sh
+# - 情境不適合高中生（輕）：原文「寫一封 email 給老師或主管」，高中生沒有主管；改成寫給老師。
+# - 「提稱語」補上教育部《重編國語辭典修訂本》釋義與例子（鈞鑒、大鑒、青覽等）。
+# - 標題原為「書信與應用文格式」，但本點只教書信與電子郵件，改為「書信與電子郵件格式」，goal 同步。
+# - goal／review 原列「結尾敬辭」但本點沒有可核對的依據，改成稱謂、提稱語、主旨、署名、日期五項。
+# - 書信六部分的名稱（稱謂、提稱語、正文、結尾敬辭、署名、日期）標為本站整理；「結尾敬辭」在教育部辭典查無詞條，列為待核對。
+# - 補 grades、6-Ⅴ-1、Be-Ⅴ-2 與 Why/How/What、兩張圖。
 id: zh.letterfmt@sh
 concept: zh.letterfmt
-title: 書信與應用文格式
+title: 書信與電子郵件格式
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +19,26 @@ discipline:
   crosscutting: []
 stage:
   level: sh
+  grades:
+  - 10
+  - 11
+  - 12
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
+  performances:
+  - 6-V-1
+  contents:
+  - Be-V-2
 to_verify: true
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 原有待核對「課綱對應只到領域、核心素養與議題…」已刪除：本點已逐條對照國語文領綱第五學習階段原文（頁碼見來源）。
+- 「提稱語」的釋義與例子逐字依教育部《重編國語辭典修訂本》。
+- 待核對：書信六部分的名稱是本站整理；「結尾敬辭」在《重編國語辭典修訂本》查無詞條（2026-10-29 查詢），請國文老師以審定版教科書的應用文單元核對各部分的名稱與常用語。
+- 電子郵件主旨、第一句說目的的寫法是本站建議。
 prerequisites:
 - zh.format@es
 links:
@@ -28,7 +46,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：國語文領綱 6-Ⅴ-1、Be-Ⅴ-2（書信等慣用語彙與書寫格式）；教育部《重編國語辭典修訂本》「提稱語」。
 competency:
   specialist:
   - 基礎語文
@@ -39,18 +57,116 @@ ai:
   - 提供格式範本
   human_experience:
   - 決定語氣與稱呼是否得體
-idea: 書信有固定結構：稱謂、提稱語、正文、結尾敬辭、署名、日期；電子郵件還要有清楚的主旨。格式讓讀的人知道你尊重他，也找得到重點。
+idea: 書信有固定結構：稱謂、提稱語、正文、結尾敬辭、署名、日期（本站整理）；電子郵件還要有清楚的主旨（本站建議）。提稱語要「與稱謂配合，並按雙方的關係來措詞」。格式讓讀的人知道你尊重他，也找得到重點。
 guiding_questions:
 - 寫給校長的建議信，結尾只寫「謝謝」就夠了嗎？
-scenario: 親子共學：複習版：替一件真實的事寫一封 email 給老師或主管，請家人只看主旨和第一句，說出他知道要做什麼嗎。
-goal: 寫出格式正確的書信與 email：稱謂、主旨、結尾敬辭、署名、日期。
-review: 孩子寫一封真的要寄給老師的 email，家長只看主旨和第一句，就能說出要做什麼；格式五項都有才打勾。
+scenario: 親子共學：複習版：替一件真實的事寫一封 email 給老師，請家人只看主旨和第一句，說出他知道要做什麼嗎。
+goal: 寫出格式正確的書信與電子郵件：稱謂、提稱語、主旨、署名、日期。
+review: 孩子寫一封真的要寄給老師的 email，家長只看主旨和第一句，就能說出要做什麼；稱謂、提稱語、主旨、署名、日期五項都有才打勾。
 formats:
   slides: []
-  exercise: 目標：寫出格式正確的書信與 email：稱謂、主旨、結尾敬辭、署名、日期。　檢核：孩子寫一封真的要寄給老師的 email，家長只看主旨和第一句，就能說出要做什麼；格式五項都有才打勾。
+  exercise: 目標：寫出格式正確的書信與電子郵件：稱謂、提稱語、主旨、署名、日期。　檢核：孩子寫一封真的要寄給老師的 email，家長只看主旨和第一句，就能說出要做什麼；稱謂、提稱語、主旨、署名、日期五項都有才打勾。
 audience:
 - kid
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+est_time:
+  school: 高中十至十二年級（第五學習階段）
+  source: kuoyu
+why:
+  heading: 格式讓人讀到尊重和重點
+  body:
+  - 國語文課綱的高中學習內容包括「在人際溝通方面，以書信、便條、啟事、柬帖、對聯、題辭、慶賀文、祭弔文等慣用語彙與書寫格式為主」。
+  - 書信的用語要配合對象。教育部《重編國語辭典修訂本》說，提稱語是「請受信人察閱的語詞。用時應與稱謂配合，並按雙方的關係來措詞」。
+  qa:
+    question: 寫給校長的建議信，結尾只寫「謝謝」就夠了嗎？
+    answer: 不夠：正文最後一段先把請求再說一次，再道謝，例如「懇請校長撥冗考慮，謝謝您。」（示意），讓「謝謝」有具體的事可以謝；之後還要署名和日期，讓校長知道是誰、什麼時候寫的（本站建議）。開頭的稱謂和提稱語也要配合身分，例如辭典說對一般長輩用「鈞鑒、尊鑒」。傳統書信結尾的客套語怎麼寫，請以國文課本的應用文單元為準（待核對）。
+    source: rev-tichengyu
+  items_title: 高中課綱的應用文目標
+  items:
+  - title: 書信的慣用語彙與格式
+    text: 國語文 Be-Ⅴ-2：在人際溝通方面，以書信、便條、啟事、柬帖、對聯、題辭、慶賀文、祭弔文等慣用語彙與書寫格式為主。
+    code: Be-V-2
+  - title: 根據需求撰寫
+    text: 國語文 6-Ⅴ-1：深化寫作能力，根據生活的需求撰寫各類文本。
+    code: 6-V-1
+  sources:
+  - kuoyu
+  - rev-tichengyu
+how:
+  heading: 看對象，選用語
+  body:
+  - 先確定寫給誰、你們是什麼關係，再決定稱謂和提稱語；電子郵件先寫主旨，正文第一句就說目的（本站建議）。
+  items_title: 寫信的順序（本站整理）
+  items:
+  - title: 稱謂
+    text: 配合對方身分，例如「王老師」。
+  - title: 提稱語
+    text: 按雙方關係措詞。
+    example: 長輩：鈞鑒；平輩：大鑒
+  - title: 主旨與第一句
+    text: email 主旨說清楚事情，第一句說目的。
+  - title: 署名與日期
+    text: 寫清楚自己是誰、什麼時候寫的。
+  checklist_title: 寄出前：
+  checklist:
+  - 稱謂合身分
+  - 提稱語配合
+  - 主旨說清楚
+  - 第一句說目的
+  - 署名與日期
+  activity_figure: how-flow
+  sources:
+  - rev-tichengyu
+what:
+  heading: 提稱語看關係
+  figures:
+  - what-compare
+  notes:
+  - 書信六部分的名稱是本站整理；「結尾敬辭」等用語請以國文課本的應用文單元為準（待核對）。
+  sources:
+  - rev-tichengyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 寫 email 的步驟：孩子確定對象、選稱謂與提稱語、寫主旨與第一句、署名日期，家長看主旨說出要做什麼
+  steps:
+  - actor: 孩子
+    text: 確定對象
+  - actor: 孩子
+    text: 選稱謂用語
+  - actor: 孩子
+    text: 寫主旨
+  - actor: 孩子
+    text: 署名與日期
+  - actor: 家長
+    text: 看主旨說事
+- id: what-compare
+  type: compare
+  alt: 提稱語按關係不同：一般長輩用鈞鑒，平輩用大鑒，晚輩用青覽
+  source: rev-tichengyu
+  relation: not_equal
+  items:
+  - term: 鈞鑒
+    note: 對一般長輩
+  - term: 大鑒
+    note: 對平輩
+  - term: 青覽
+    note: 對晚輩
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 第五學習階段學習重點：6-Ⅴ-1「深化寫作能力，根據生活的需求撰寫各類文本。」（p.12）；Be-Ⅴ-2「在人際溝通方面，以書信、便條、啟事、柬帖、對聯、題辭、慶賀文、祭弔文等慣用語彙與書寫格式為主。」（p.18）；教材編選「（三）第五學習階段（高級中等學校教育階段）」（p.22）
+- id: rev-tichengyu
+  title: 重編國語辭典修訂本「提稱語」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/search.jsp?md=1&word=%E6%8F%90%E7%A8%B1%E8%AA%9E
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「請受信人察閱的語詞。用時應與稱謂配合，並按雙方的關係來措詞。如對祖父母、父母用膝下、膝前；對一般長輩用鈞鑒、尊鑒；對平輩用大鑒、惠鑒；對晚輩用青覽、收悉。」

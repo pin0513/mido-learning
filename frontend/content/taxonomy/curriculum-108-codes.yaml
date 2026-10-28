@@ -352,6 +352,66 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 12
+    5-V-1:
+      stage: 5
+      text: 辨析文本的寫作主旨、風格、結構及寫作手法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    5-V-2:
+      stage: 5
+      text: 歸納文本中不同論點，形成個人的觀點，發展系統性思考以建立論述體系。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    5-V-3:
+      stage: 5
+      text: 大量閱讀多元文本，探討文本如何反應文化與社會現象中的議題，以拓展閱讀視野與生命意境。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    5-V-4:
+      stage: 5
+      text: 廣泛運用工具書及資訊網絡蒐集、分析資料，提高綜合學習和應用能力。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    5-V-5:
+      stage: 5
+      text: 主動思考與探索文本的意涵，建立終身學習能力。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    5-V-6:
+      stage: 5
+      text: 在閱讀過程中認識多元價值、尊重多元文化，思考生活品質、人類發展及環境永續經營的意義與關係。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 11
+    6-V-1:
+      stage: 5
+      text: 深化寫作能力，根據生活的需求撰寫各類文本。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 12
+    6-V-3:
+      stage: 5
+      text: 熟練審題、立意、選材、組織等寫作步驟，寫出具說服力及感染力的文章。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 12
+    6-V-4:
+      stage: 5
+      text: 掌握各種文學表現手法，適切地敘寫，關懷當代議題，抒發個人情感，說明知識或議論事理。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 12
+    6-V-5:
+      stage: 5
+      text: 運用各種寫作技巧，反覆推敲、修改以深化作品的內涵層次，提升藝術價值。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 12
   contents:
     Aa-I-1:
       stage: 1
@@ -611,6 +671,96 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 18
+    Ab-V-2:
+      stage: 5
+      text: 文言文的詞義及語詞結構。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ab-V-3:
+      stage: 5
+      text: 文言文的字詞、虛字、古今義變。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 14
+    Ad-V-1:
+      stage: 5
+      text: 篇章的主旨、結構、寓意與評述。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ad-V-4:
+      stage: 5
+      text: 非韻文：如古文、古典小說、語錄體、寓言等。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 15
+    Ba-V-2:
+      stage: 5
+      text: 人、事、時、地、物的細部描寫。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Ba-V-3:
+      stage: 5
+      text: 寫作手法與文學美感的呈現。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Bb-V-1:
+      stage: 5
+      text: 自我及人際交流的感受。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Bb-V-4:
+      stage: 5
+      text: 藉由敘述事件與描寫景物間接抒情。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 16
+    Bc-V-1:
+      stage: 5
+      text: 具邏輯、客觀、理性、知識的說明，如人權公約、百科全書、制度演變等。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Bc-V-2:
+      stage: 5
+      text: 描述、列舉、因果、問題解決、比較、定義、引用、問答等寫作手法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Bd-V-1:
+      stage: 5
+      text: 以事實、理論為論據，達到說服、建構、批判等目的。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Bd-V-2:
+      stage: 5
+      text: 論證方式如歸納、演繹、因果論證等。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Be-V-2:
+      stage: 5
+      text: 在人際溝通方面，以書信、便條、啟事、柬帖、對聯、題辭、慶賀文、祭弔文等慣用語彙與書寫格式為主。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 18
+    Cb-V-1:
+      stage: 5
+      text: 各類文本中的親屬關係、道德倫理、儀式風俗、典章制度等文化內涵。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 19
+    Cc-V-1:
+      stage: 5
+      text: 各類文本中的藝術、信仰、思想等文化內涵。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 19
 
 綜合活動:
   performances:
