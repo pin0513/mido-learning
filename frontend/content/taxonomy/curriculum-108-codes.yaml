@@ -4,6 +4,18 @@
 # https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
 語文/國文:
   performances:
+    2-II-4:
+      stage: 2
+      text: 樂於參加討論，提供個人的觀點和意見。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    2-III-7:
+      stage: 3
+      text: 與他人溝通時能尊重不同意見。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
     3-I-1:
       stage: 1
       text: 正確認念、拼讀及書寫注音符號。
@@ -40,6 +52,12 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 8
+    5-II-7:
+      stage: 2
+      text: 就文本的觀點，找出支持的理由。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
   contents:
     Aa-I-1:
       stage: 1
@@ -77,3 +95,136 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 13
+
+綜合活動:
+  performances:
+    1b-III-1:
+      stage: 3
+      text: 規劃與執行學習計畫，培養自律與負責的態度。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 67
+    2b-III-1:
+      stage: 3
+      text: 參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 73
+    2b-IV-1:
+      stage: 4
+      text: 參與各項團體活動，與他人有效溝通與合作，並負責完成分內工作。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 19
+    2c-III-1:
+      stage: 3
+      text: 分析與判讀各類資源，規劃策略以解決日常生活的問題。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 75
+    2c-IV-1:
+      stage: 4
+      text: 善用各項資源，妥善計畫與執行個人生活中重要事務。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 20
+    2c-IV-2:
+      stage: 4
+      text: 有效蒐集、分析及開發各項資源，做出合宜的決定與運用。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 20
+    "家 3a-V-1":
+      stage: 5
+      text: 善用科技、資訊，管理個人與家庭重要事務。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 31
+    "涯 3b-V-1":
+      stage: 5
+      text: 善用學習方法與策略，進行有效學習，養成終身學習的習慣。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 29
+  contents:
+    Ab-III-1:
+      stage: 3
+      text: 學習計畫的規劃與執行。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 67
+    Bb-III-1:
+      stage: 3
+      text: 團體中的角色探索。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 73
+    Bb-III-2:
+      stage: 3
+      text: 團隊運作的問題與解決。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 73
+    Bb-III-3:
+      stage: 3
+      text: 團隊合作的技巧。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 73
+    Bc-III-3:
+      stage: 3
+      text: 運用各類資源解決問題的規劃。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 75
+    "家 Ca-IV-1":
+      stage: 4
+      text: 個人與家庭生活的金錢及時間管理。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 85
+    "家 Ca-V-1":
+      stage: 5
+      text: 時間、精力管理與生活品質。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 100
+    "童 Cb-IV-2":
+      stage: 4
+      text: 露營活動組織分工、計畫、執行、檢討與反思。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 88
+    "涯 Cb-V-1":
+      stage: 5
+      text: 自主學習的方法與策略。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 99
+    "涯 Cb-V-2":
+      stage: 5
+      text: 時間管理與壓力調適等。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 99
+
+社會:
+  contents:
+    "公 Bl-IV-1":
+      stage: 4
+      text: 個人與家庭為什麼需要做選擇？如何選擇？
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+        page: 31
+    "公 Bl-IV-2":
+      stage: 4
+      text: 如何計算某項選擇的機會成本？
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+        page: 31
+    "公 Bl-IV-3":
+      stage: 4
+      text: 如何使用機會成本的概念來解釋選擇行為？
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+        page: 31

@@ -2,45 +2,128 @@ id: pm.evm@uni
 concept: pm.evm
 title: 實獲值管理（EVM）
 status: published
-version: "0.1"
+version: "0.2"
 discipline:
-  path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  path: [管理, 專案管理與領導, 規劃]
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
 verify_notes: []
-prerequisites:
-  - pm.estimate@sh
-  - pm.schedule@uni
+prerequisites: [pm.estimate@sh, pm.schedule@uni]
 links:
   why: []
   how: []
-  related:
-    - ma.rate@sh
+  related: [ma.rate@sh]
   deeper: []
 link_notes: 數學（比率）、會計與財務
 competency:
-  specialist:
-    - 專案治理
-  generalist:
-    - 專案管理
-    - 溝通
+  specialist: [專案治理]
+  generalist: [專案管理, 溝通]
 ai:
-  delegable:
-    - 自動計算指標、產生報表
-  human_experience:
-    - 解讀數字背後的原因，決定怎麼行動
-idea: 用計畫價值（PV）、實獲值（EV）、實際成本（AC）三個數字，同時看進度與成本是否健康。成本績效 CPI=EV/AC，大於 1 代表每一元實際成本做出超過一元的實獲值。進度績效 SPI=EV/PV，大於 1 代表進度超前。以成本為基礎的 SPI 在專案尾聲會趨近 1，不能單靠它判斷收尾階段的進度。
+  delegable: [自動計算指標、產生報表]
+  human_experience: [解讀數字背後的原因，決定怎麼行動]
+idea: 用計畫價值（PV）、實獲值（EV）、實際成本（AC）三個數字，同時看進度與成本是否健康。成本績效 CPI=EV/AC，大於 1 代表每一元實際成本做出超過一元的實獲值。進度績效 SPI=EV/PV，大於 1 代表完成的工作（以預算計）比計畫多；但 SPI 不看要徑，要知道工期有沒有延誤，還得看時程網路。到了計畫結束、計畫的工作都做完時，EV 等於 PV，SPI 依定義就是 1，所以不能單靠它判斷收尾階段的進度。
 guiding_questions:
-  - CPI 很好但 SPI 很差，可能發生了什麼事？
-scenario: 拿一份專案期中資料，計算 CPI、SPI，並提出矯正行動。
+- CPI 很好但 SPI 很差，可能發生了什麼事？
+- 專案已經延誤，為什麼最後 SPI 還是 1？
+scenario: 拿一份專案期中示意資料，計算 CPI、SPI，先說出數字代表什麼，再對照要徑上的工作有沒有落後，最後提出矯正行動。
+goal: 會從 PV、EV、AC 算出 CPI、SPI，說得出它們代表什麼，也說得出 SPI 什麼時候不可靠。
+review: 給一組期中資料，算出 CPI、SPI、CV、SV；用一句話解釋每個數字，並指出還需要看哪份資料才能判斷工期。
 formats:
   slides: []
-authors:
-  - I-PING Huang
-updated: 2026-10-26
+authors: [I-PING Huang]
+updated: "2026-10-28"
+
+# ---------- 新增 ----------
+why:
+  heading: 只看花了多少錢，看不出進度
+  body:
+  - 只比較預算和實際花費，不知道錢換到了多少工作。EVM 多了一個數字：實獲值 EV，也就是到今天實際完成的工作，原本編了多少預算。
+  - 有了 EV，就能拆開兩個問題：錢花得值不值得（CPI = EV/AC），工作有沒有照計畫做出來（SPI = EV/PV）。
+  qa:
+    question: CPI 很好但 SPI 很差，可能發生了什麼事？
+    answer: 已經做的工作花得比預算省，但完成的工作量比計畫少。這不一定代表工期延誤，因為 SPI 不看要徑；要對照時程網路的要徑，才知道有沒有真的落後。
+    source: dau-spi
+  figures: [why-compare]
+  sources: [nasa-evm-card, dau-spi, sinek]
+
+how:
+  heading: 三個數字，算兩個比值
+  body:
+  - EV 要算得出來，工作得先拆好、每一項都有預算。NASA 的 WBS 手冊說，WBS 的目的就是把工作分成可管理的小塊，以利控管成本與時程。
+  items:
+  - {title: 定出 PV, text: 到今天，依計畫應完成的工作值多少預算。}
+  - {title: 量出 EV, text: 到今天，實際完成的工作值多少預算。}
+  - {title: 記下 AC, text: 為完成這些工作，實際花了多少。}
+  - {title: 算比值、看差額, text: CPI = EV/AC，SPI = EV/PV；CV = EV − AC，SV = EV − PV。, example: （示意）PV 100、EV 80、AC 70 → CPI ≈ 1.14，SPI = 0.80}
+  activity_figure: how-flow
+  sources: [nasa-wbs, nasa-evm-card]
+
+what:
+  heading: SPI 的兩個盲點
+  notes:
+  - SPI 不看要徑：DAU 說明，SPI 不好不一定代表工期延誤，要評估時程網路的要徑才能判斷。
+  - 尾聲會趨近 1：所有計畫工作做完時 EV 等於 PV，SPI 依定義就是 1；研究指出，這段不可靠的時間通常落在專案的最後三分之一。
+  - SV 是金額，不是天數。為了用時間看進度，Lipke 提出「賺得時程」（Earned Schedule）：ES 是目前做到的 EV，照計畫原本應該在第幾天達成；AT 是實際已經過了幾天。SPI(t) = ES / AT。
+  sources: [dau-spi, vv-2006]
+
+figures:
+- id: why-compare
+  type: compare
+  title: 期中示意：成本好、進度差
+  caption: 示意資料（單位：萬元），不是真實專案：PV 100、EV 80、AC 70。
+  alt: CPI 等於 80 除以 70 約 1.14，SPI 等於 80 除以 100 等於 0.80
+  source: nasa-evm-card
+  relation: versus
+  items:
+  - {term: CPI, reading: 約 1.14, note: EV 80 ÷ AC 70，大於 1 是好的}
+  - {term: SPI, reading: "0.80", note: EV 80 ÷ PV 100，小於 1 是不利，但不一定延誤}
+- id: how-flow
+  type: flow
+  alt: EVM 五步驟：定出 PV，量出 EV，記下 AC，算出 CPI 與 SPI，再對照要徑後決定行動
+  source: dau-spi
+  steps:
+  - {text: 定出 PV}
+  - {text: 量出 EV}
+  - {text: 記下 AC}
+  - {text: 算出 CPI、SPI}
+  - {text: 對照要徑再決定}
+
+sources:
+- id: nasa-evm-card
+  title: Performance Management Reference Card（Revised May 20, 2021）
+  publisher: NASA
+  url: https://www.nasa.gov/wp-content/uploads/2018/06/nasa_evm_reference_card.pdf
+  accessed: "2026-10-28"
+  kind: government
+  supports: PV=BCWS、EV=BCWP、AC=ACWP；CPI = BCWP/ACWP、SPI = BCWP/BCWS，大於 1.0 為有利；CPI 為每 1 元實際成本賺得多少計畫工作；CV = BCWP − ACWP、SV = BCWP − BCWS
+- id: dau-spi
+  title: "Acquipedia: Schedule Performance Index (SPI)"
+  publisher: Warfighting Acquisition University（WarU，原 Defense Acquisition University）
+  url: https://www.waru.edu/acquipedia-article/schedule-performance-index-spi
+  accessed: "2026-10-28"
+  kind: government
+  supports: SPI 大於 1.0 為有利；計畫工作全部完成時 BCWP 等於 BCWS，SPI 依定義為 1.0；SPI 與要徑時程無關，不利的 SPI 不一定代表延誤，延誤只能由網路時程的要徑判斷
+- id: vv-2006
+  title: "A comparison of different project duration forecasting methods using earned value metrics（International Journal of Project Management 24(4): 289–302，DOI 10.1016/j.ijproman.2005.10.004；Vlerick 工作論文版 2005/16）"
+  publisher: Stephan Vandevoorde、Mario Vanhoucke，Elsevier（2006）
+  url: https://public.vlerick.com/Publications/32498bd5-69a9-e011-8a89-005056a635ed.pdf
+  accessed: "2026-10-28"
+  kind: peer_reviewed
+  supports: SV 以金額而非時間表示；專案尾聲 SV 收斂到 0、SPI 收斂到 1，即使專案延誤；不可靠的期間通常在最後三分之一；Lipke（2003）的賺得時程：把目前的 EV 對回計畫 PV 曲線，換算到時間軸上得到 ES；AT 指實際經過的時間（Actual Time）；SV(t) = ES − AT、SPI(t) = ES / AT
+- id: nasa-wbs
+  title: NASA Work Breakdown Structure (WBS) Handbook, NASA/SP-2016-3404/REV1
+  publisher: NASA（2018 年 1 月）
+  url: https://ntrs.nasa.gov/api/citations/20180000844/downloads/20180000844.pdf
+  accessed: "2026-10-28"
+  kind: government
+  supports: WBS 把專案工作分成可管理的小塊，以利規劃與控管成本、時程與技術內容
+- id: sinek
+  title: How great leaders inspire action
+  publisher: Simon Sinek，TED（2009）
+  url: https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
+  accessed: "2026-10-28"
+  kind: aux
+  supports: 頁面結構採用的黃金圈（Why → How → What），不支持教學內容

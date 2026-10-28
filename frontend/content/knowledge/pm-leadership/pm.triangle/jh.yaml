@@ -2,56 +2,143 @@ id: pm.triangle@jh
 concept: pm.triangle
 title: 時間、金錢、品質的取捨
 status: published
-version: "0.1"
+version: "0.2"
 discipline:
-  path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  path: [管理, 專案管理與領導, 規劃]
   layer: essence
   crosscutting: []
 stage:
   level: jh
 curriculum_108:
-  domains:
-    - 綜合活動
-    - 數學
-  core_competencies:
-    - A2
-    - A3
-    - C2
+  domains: [社會, 綜合活動]
+  core_competencies: [A2, A3, C2]
   issues: []
-to_verify: true
-verify_notes:
-  - 數學領域，以及 A2、A3、C2 的對應，還沒有附上課綱來源。
-prerequisites:
-  - pm.project@jh
-  - pm.sequence@es
+  performances: [2b-IV-1, 2c-IV-1, 2c-IV-2]
+  contents: ["家 Ca-IV-1", "童 Cb-IV-2", "公 Bl-IV-1", "公 Bl-IV-2", "公 Bl-IV-3"]
+to_verify: false
+verify_notes: []
+prerequisites: [pm.project@jh, pm.sequence@es]
 links:
   why: []
   how: []
-  related:
-    - ma.algebra@jh
-  deeper:
-    - pm.estimate@sh
-link_notes: 數學（比例、一元一次方程式）、經濟（機會成本）
+  related: [ma.algebra@jh]
+  deeper: [pm.estimate@sh]
+link_notes: 數學（比例、一元一次方程式，試算成本時用到）、社會（公民：機會成本）
 competency:
-  specialist:
-    - 規劃
-  generalist:
-    - 專案管理
-    - 溝通
+  specialist: [規劃]
+  generalist: [專案管理, 溝通]
 ai:
-  delegable:
-    - 試算成本與可能的收入
-  human_experience:
-    - 在小組裡為取捨辯論並共同決定
-idea: 資源有限，想做得更好通常要更多時間或錢；三者必須一起考慮。做多少（範疇）也是一個變數。
+  delegable: [試算成本與可能的收入]
+  human_experience: [在小組裡為取捨辯論並共同決定]
+idea: 時間、金錢、品質常被叫做專案的「鐵三角」。資源有限時，動了其中一個，通常會牽動另一個：時間變短，常要多花錢；錢加不了，就只能少做一點，或降低品質。所以「做多少」（範疇）也是可以調的變數。
 guiding_questions:
-  - 如果預算砍一半，你會犧牲時間還是品質？為什麼？
-scenario: 園遊會攤位：在固定預算與兩週準備期內，比較三種菜單方案的取捨。
+- 如果預算砍一半，你會犧牲時間還是品質？為什麼？
+- 這個攤位怎樣才算「做得好」？誰說了算？
+- 多花一天準備，你放棄了什麼？
+scenario: 園遊會攤位：在固定預算與兩週準備期內，先在紙上比較三種菜單方案（例如現做、買半成品加工、只賣飲料），每組說出每個方案動到了時間、金錢、品質的哪一角，再決定要選哪一個、放棄了什麼。
+goal: 面對固定的預算和時間，說得出每個方案犧牲了什麼，並和組員一起做出決定。
+review: 小組交出一張表：三個方案各寫時間、金錢、品質的變化，以及最後選擇放棄了什麼；每位組員都說得出選這個方案的理由。
 formats:
   slides: []
-authors:
-  - I-PING Huang
-updated: 2026-10-26
+authors: [I-PING Huang]
+updated: "2026-10-28"
+
+# ---------- 新增 ----------
+why:
+  heading: 想要的總比資源多
+  body:
+  - 國中公民課會問：個人與家庭為什麼需要做選擇？因為資源有限，又有很多種用途。課綱也要學生學會計算一項選擇的機會成本，並用它來解釋人為什麼這樣選。
+  - 國中家政也要學生用合宜的方法，管理金錢、時間這些有限的資源。辦一個攤位也一樣：時間和錢都有限，還要顧好做出來的東西好不好。
+  - 國中核心素養要求理解情境、善用資源擬定計畫，並與人合作。
+  qa:
+    question: 如果預算砍一半，你會犧牲時間還是品質？為什麼？
+    answer: 兩種都可能，還有第三條路：少做一點。專案管理指南的說法是，時間縮短時常常要加錢；錢加不了，就可能要縮小範疇（少做一點），或降低品質。哪一個比較能接受，要看你們最在意什麼。
+    source: pmi-rahschulte
+  sources: [social, zonghe, zonggang, atkinson, pmi-rahschulte, sinek]
+
+how:
+  heading: 一次只動一角，看其他怎麼變
+  body:
+  - 專案管理指南說，這幾個因素只要改一個，很可能至少有另一個跟著受影響。所以比較方案時，固定預算和天數，一個一個看：這個方案，時間、金錢、品質哪一角變了？
+  items:
+  - {title: 先寫下限制, text: 預算多少、還有幾天，全組先講好。}
+  - {title: 列出三種方案, text: 例如現做、買半成品加工、只賣飲料。}
+  - {title: 每案標出動到哪一角, text: 省錢的方案，是花了更多時間，還是品質打了折？}
+  - {title: 寫下放棄了什麼, text: 選了一個方案，其他方案就做不了。}
+  activity_figure: how-flow
+  sources: [pmi-rahschulte, social]
+
+what:
+  heading: 鐵三角和它的限制
+  figures: [what-compare]
+  notes:
+  - 時間、成本、品質三項，常被叫做專案管理的「鐵三角」；研究者指出，近 50 年來它一直和「專案成不成功」綁在一起。
+  - 品質沒有標準答案。研究者提醒，品質是從不同人的看法裡浮現出來的；每個人最在意的也不一樣，所以先問清楚客人和組員在意什麼。
+  - 也有人把「範疇」（做多少）放進三角。專案管理指南最常列的限制就是成本、範疇、時間；這一頁用時間、金錢、品質，再把範疇當成可以調的第四個變數。
+  - 鐵三角不是成功的全部：時間和成本都是事前的估計，還要看大家是不是真的得到好處。
+  sources: [atkinson, pmi-rahschulte]
+
+figures:
+- id: what-compare
+  type: compare
+  alt: 專案的鐵三角：時間、金錢、品質，三者互相牽動
+  source: pmi-rahschulte
+  relation: versus
+  items:
+  - {term: 時間, note: 兩週準備期}
+  - {term: 金錢, note: 固定預算}
+  - {term: 品質, note: 客人和組員滿不滿意}
+- id: how-flow
+  type: flow
+  alt: 取捨五步驟：寫下限制，想出三種方案，比一比各動到哪一角，小組討論後決定，記下放棄了什麼
+  source: social
+  steps:
+  - {actor: 小組, text: 寫下預算與天數}
+  - {actor: 小組, text: 想出三種方案}
+  - {actor: 每個人, text: 比一比動到哪一角}
+  - {actor: 小組, text: 討論後決定}
+  - {actor: 小組, text: 記下放棄了什麼}
+
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 綜-J-A2、綜-J-A3、綜-J-C2；第四學習階段 2b-IV-1 與他人有效溝通與合作、2c-IV-1 妥善計畫與執行個人生活中重要事務、2c-IV-2 做出合宜的決定與運用；家 Ca-IV-1 個人與家庭生活的金錢及時間管理（補充說明：運用合宜的方法管理金錢、時間等資源）；童 Cb-IV-2 露營活動組織分工、計畫、執行、檢討與反思
+- id: social
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 國中公民 公 Bl-IV-1 個人與家庭為什麼需要做選擇？如何選擇？（說明：從資源有限且有多種用途的觀點，說明選擇的必要）；公 Bl-IV-2 如何計算某項選擇的機會成本？；公 Bl-IV-3 如何使用機會成本的概念來解釋選擇行為？
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱（111 學年度實施版）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/288/(111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%AF%A6%E6%96%BD)%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 國中核心素養 J-A2 理解情境全貌並做獨立思考與分析；J-A3 善用資源以擬定計畫，有效執行；J-C2 相互合作及與人和諧互動
+- id: atkinson
+  title: "Project management: cost, time and quality, two best guesses and a phenomenon, its time to accept other success criteria（International Journal of Project Management 17(6): 337–342，DOI 10.1016/S0263-7863(98)00069-6；公開全文副本）"
+  publisher: Roger Atkinson，Elsevier／IPMA（1999）
+  url: https://www.theisrm.org/documents/Atkinson%20(1999)%20Project%20Management%20-%20Cost,%20Time%20and%20Quality.pdf
+  accessed: "2026-10-28"
+  kind: peer_reviewed
+  supports: 成本、時間、品質被稱為 The Iron Triangle，長期用來衡量專案成功；時間與成本只是事前的最佳猜測；品質是來自不同人看法的浮現性質；主張加入受益者等其他成功標準（Square Route）
+- id: pmi-rahschulte
+  title: "Beyond the triple constraints: nine elements defining project success today（PMI Global Congress 2010 論文，引用 PMBOK Guide 第 4 版 p.6–7）"
+  publisher: Timothy J. Rahschulte、Kathy Milhauser，Project Management Institute（2010）
+  url: https://www.pmi.org/learning/library/triple-constraints-success-additional-factors-6591
+  accessed: "2026-10-28"
+  kind: reference
+  supports: PMBOK 第 4 版：任一因素改變，至少一個其他因素可能受影響；時程縮短常需增加預算；預算無法增加時，可縮小範疇或降低品質；利害關係人對哪個因素最重要看法不同；最常被提到的限制是成本、範疇、時間
+- id: sinek
+  title: How great leaders inspire action
+  publisher: Simon Sinek，TED（2009）
+  url: https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
+  accessed: "2026-10-28"
+  kind: aux
+  supports: 頁面結構採用的黃金圈（Why → How → What），不支持教學內容

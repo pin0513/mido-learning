@@ -2,51 +2,120 @@ id: ph.reason@es
 concept: ph.reason
 title: 說出理由：「因為……所以……」
 status: published
-version: "0.1"
+version: "0.2"
 discipline:
-  path:
-    - 哲學
-    - 思考方法
-    - 邏輯與論證
+  path: [哲學, 思考方法, 邏輯與論證]
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades: [3, 4, 5, 6]
 curriculum_108:
-  domains:
-    - 語文
-  core_competencies:
-    - A2
-    - B1
+  domains: [語文]
+  core_competencies: [A2, B1, C2]
   issues: []
+  performances: [2-II-4, 5-II-7, 2-III-7]
 to_verify: false
 verify_notes: []
-prerequisites:
-  - ph.question@es
+prerequisites: [ph.question@es]
 links:
   why: []
   how: []
   related: []
-  deeper:
-    - ph.argument@jh
+  deeper: [ph.argument@jh]
 link_notes: 語文（口語表達）
 competency:
-  specialist:
-    - 論證
-  generalist:
-    - 提問
-    - 溝通
+  specialist: [論證]
+  generalist: [提問, 溝通]
 ai:
-  delegable:
-    - 幫你想出更多支持或反對的理由
-  human_experience:
-    - 在別人反對時，好好說明而不是生氣
-idea: 說「我覺得」之後，再補一句「因為」。有理由的想法，別人才聽得懂，也才能討論。
+  delegable: [幫你想出更多支持或反對的理由]
+  human_experience: [在別人反對時，好好說明而不是生氣]
+idea: 說「我覺得」之後，再補一句「因為」。想法加上理由，別人才知道你為什麼這樣想，也才能回應你，或說出不一樣的理由。
 guiding_questions:
-  - 有沒有一個理由，讓你改變了原本的想法？
-scenario: 「小狗和金魚，誰比較適合當班寵？」每人說出主張和至少一個理由，再聽聽相反的理由。
+- 有沒有一個理由，讓你改變了原本的想法？
+- 「我覺得小狗比較好」和「我覺得小狗比較好，因為牠會陪我們玩」，哪一句讓人比較懂你？
+- 別人的理由和你不一樣時，你可以怎麼回應？
+scenario: 「小狗和金魚，誰比較適合當班寵？」只討論、不真的養。每人說出主張和至少一個理由，再聽聽相反的理由，最後說說有沒有哪個理由讓你想法變了。
+goal: 說出自己的想法時，能用「因為」補上至少一個理由，也能好好聽完相反的理由。
+review: 討論時，每個人都說出「我覺得……，因為……」，並且能複述一個和自己不同的理由。
 formats:
   slides: []
-authors:
-  - I-PING Huang
-updated: 2026-10-26
+authors: [I-PING Huang]
+updated: "2026-10-28"
+
+# ---------- 新增 ----------
+why:
+  heading: 有理由，別人才懂你
+  body:
+  - 國語課要學生樂於參加討論，提供自己的觀點和意見；讀文章時，也要找出支持作者觀點的理由。
+  - 課綱把「議論」說成用論點、論據來表達看法。論點就是你的想法，論據就是你的理由。也就是說，只說「我覺得」，只有想法；補上「因為」，才有理由。五、六年級起，國語課會開始讀議論文。
+  figures: [why-compare]
+  qa:
+    question: 「我覺得小狗比較好」和「我覺得小狗比較好，因為牠會陪我們玩」，哪一句讓人比較懂你？
+    answer: 第二句。它多了理由，別人知道你為什麼這樣想，也才能回應：同意這個理由，或說出另一個理由。
+    source: kuoyu
+  sources: [kuoyu, zonggang, sinek]
+
+how:
+  heading: 我覺得……，因為……
+  body:
+  - 國語課綱建議在課堂上用討論、問答、論辯等方式發表意見或看法。這個練習就是一場小討論。
+  items:
+  - {title: 先說主張, text: 我覺得……, example: 我覺得金魚比較適合當班寵。}
+  - {title: 再說理由, text: 因為……, example: 因為金魚不會吵到上課。}
+  - {title: 聽相反的理由, text: 聽完再回應，不打斷。}
+  - {title: 想一想有沒有改變, text: 哪個理由讓你想法變了？}
+  checklist_title: 說完檢查一下
+  checklist: [說出主張了嗎, 有說因為嗎, 理由對得上嗎, 聽完別人了嗎]
+  activity_figure: how-flow
+  sources: [kuoyu]
+
+what:
+  heading: 主張加理由
+  notes:
+  - 主張是「我覺得什麼」，理由是「為什麼」。國語課讀文章時，要找出「支持」觀點的理由，所以理由要能撐住主張。
+  - 和別人理由不同不是吵架。國語課綱要學生與他人溝通時尊重不同意見，並理解與包容不同意見。
+  - 上了國中，會進一步學習明確表達意見、進行有條理的論辯。
+  sources: [kuoyu]
+
+figures:
+- id: why-compare
+  type: compare
+  alt: 只有主張「我覺得小狗比較好」，和主張加理由「我覺得小狗比較好，因為牠會陪我們玩」的比較
+  source: kuoyu
+  relation: versus
+  items:
+  - {term: 只有主張, note: 我覺得小狗比較好。}
+  - {term: 主張加理由, note: 我覺得小狗比較好，因為牠會陪我們玩。}
+- id: how-flow
+  type: flow
+  alt: 說理由四步驟：我說出主張，我說出理由，同學說出相反的理由，我想一想有沒有改變
+  source: kuoyu
+  steps:
+  - {actor: 我, text: 說出主張}
+  - {actor: 我, text: 說出理由}
+  - {actor: 同學, text: 說出相反的理由}
+  - {actor: 我, text: 想想有沒有改變}
+
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/806/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1%28%E8%AA%9E%E6%96%87%E9%A0%98%E5%9F%9F%E2%94%80%E5%9C%8B%E8%AA%9E%E6%96%87%29.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 國-E-A2 初探邏輯思維；國-E-B1 體察他人的感受並給予適當的回應；國-E-C2 表達個人想法，理解與包容不同意見；2-II-4 樂於參加討論，提供個人的觀點和意見；5-II-7 就文本的觀點，找出支持的理由；2-III-7 與他人溝通時能尊重不同意見；2-IV-3 明確表達意見，進行有條理的論辯；議論文本的界義（以論點、論據、論證方式表達看法），第三學習階段起加入；實施要點：以討論、問答、論辯等方式發表意見或看法
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱（111 學年度實施版）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/288/(111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%AF%A6%E6%96%BD)%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 國小核心素養 E-A2 探索問題的思考能力；E-B1 聽、說、讀、寫、作的基本語文素養；E-C2 理解他人感受，樂於與人互動
+- id: sinek
+  title: How great leaders inspire action
+  publisher: Simon Sinek，TED（2009）
+  url: https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
+  accessed: "2026-10-28"
+  kind: aux
+  supports: 頁面結構採用的黃金圈（Why → How → What），不支持教學內容

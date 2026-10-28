@@ -37,10 +37,10 @@ function point(id: string): KnowledgePoint {
 test("注音音節和課綱代碼整段不斷行", () => {
   const html = renderToStaticMarkup(
     createElement(RichText, {
-      text: "例字把ㄅㄚˇ、爸ㄅㄚˋ、嗎˙ㄇㄚ。代碼 3-I-1～3-I-4、3-II-2、Aa-I-1，以及 3-I-1 ~ 3-I-4。見《重編國語辭典修訂本》。",
+      text: "例字把ㄅㄚˇ、爸ㄅㄚˋ、嗎˙ㄇㄚ。代碼 3-I-1～3-I-4、3-II-2、Aa-I-1、1b-III-1、家 Ca-IV-1、D-10-2、n-III-1、Bb-III-1～3，以及 3-I-1 ~ 3-I-4。見《重編國語辭典修訂本》。",
     }),
   );
-  for (const token of ["把ㄅㄚˇ", "爸ㄅㄚˋ", "嗎˙ㄇㄚ", "3-I-1～3-I-4", "3-II-2", "Aa-I-1", "3-I-1 ~ 3-I-4", "《重編國語辭典修訂本》"]) {
+  for (const token of ["把ㄅㄚˇ", "爸ㄅㄚˋ", "嗎˙ㄇㄚ", "3-I-1～3-I-4", "3-II-2", "Aa-I-1", "1b-III-1", "家 Ca-IV-1", "D-10-2", "n-III-1", "Bb-III-1～3", "3-I-1 ~ 3-I-4", "《重編國語辭典修訂本》"]) {
     assert.match(html, new RegExp(`<span class="v2-nw">[^<]*${token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^<]*</span>`));
   }
   assert.equal(html.includes("3-II-</span>"), false);
@@ -48,7 +48,7 @@ test("注音音節和課綱代碼整段不斷行", () => {
 });
 
 test("未轉換的點用既有欄位組三圈", () => {
-  const found = point("pm.breakdown@es");
+  const found = point("pm.retro@es");
   const built = buildCircles(found, shared);
   assert.equal(built.converted, false);
   assert.deepEqual(built.circles.map((circle) => circle.kind), ["why", "how", "what"]);
@@ -62,7 +62,7 @@ test("未轉換的點用既有欄位組三圈", () => {
 });
 
 test("只補一圈時，那一圈用新欄位，其餘沿用舊欄位", () => {
-  const found = point("pm.breakdown@es");
+  const found = point("pm.retro@es");
   const partial: KnowledgePoint = {
     ...found,
     why: {
@@ -85,7 +85,7 @@ test("只補一圈時，那一圈用新欄位，其餘沿用舊欄位", () => {
 });
 
 test("exercise 與目標、檢核相同時不重複，What 空了就放補強句", () => {
-  const found = point("pm.breakdown@es");
+  const found = point("pm.retro@es");
   const duplicated: KnowledgePoint = {
     ...found,
     goal: "會做",
