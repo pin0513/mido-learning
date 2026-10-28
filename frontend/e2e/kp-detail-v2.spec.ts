@@ -62,6 +62,49 @@ test.describe("黃金圈詳細頁", () => {
         else await expect(root.locator(".v2-status", { hasText: "待核對" })).toHaveCount(0);
         const headings = await page.getByTestId("v2-aside").locator("h2").allTextContents();
         expect(headings.at(-1)).toBe("審閱狀態");
+        const crumbGaps = await page.locator(".v2-crumbs").evaluate((nav) => {
+          const glyph = (el: Element, edge: "start" | "end") => {
+            const nodes: Text[] = [];
+            const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+            while (walker.nextNode()) {
+              if ((walker.currentNode.textContent || "").trim()) nodes.push(walker.currentNode as Text);
+            }
+            const node = edge === "end" ? nodes.at(-1) : nodes[0];
+            if (!node) return null;
+            const text = node.textContent || "";
+            let index = edge === "end" ? text.length - 1 : 0;
+            const step = edge === "end" ? -1 : 1;
+            while (index >= 0 && index < text.length && /\s/.test(text[index])) index += step;
+            const range = document.createRange();
+            range.setStart(node, index);
+            range.setEnd(node, index + 1);
+            const rect = range.getBoundingClientRect();
+            return { x: edge === "end" ? rect.right : rect.left, y: rect.top };
+          };
+          const bad: string[] = [];
+          for (const sep of nav.querySelectorAll(".v2-sep")) {
+            const prev = sep.previousElementSibling;
+            const next = sep.nextElementSibling;
+            if (!prev || !next) {
+              bad.push("neighbor");
+              continue;
+            }
+            const slashL = glyph(sep, "start");
+            const slashR = glyph(sep, "end");
+            const before = glyph(prev, "end");
+            const after = glyph(next, "start");
+            if (!slashL || !slashR || !before || !after) {
+              bad.push("glyph");
+              continue;
+            }
+            if (Math.abs(before.y - slashL.y) > 8 || Math.abs(after.y - slashL.y) > 8) continue;
+            const left = slashL.x - before.x;
+            const right = after.x - slashR.x;
+            if (Math.abs(left - right) > 1.5) bad.push(`${left.toFixed(1)}/${right.toFixed(1)}`);
+          }
+          return bad;
+        });
+        expect(crumbGaps).toEqual([]);
         if (width === 1280) {
           await expect(page.locator(".v2-chips")).toBeHidden();
           await expect(page.getByTestId("v2-aside").locator("dt", { hasText: "層級" })).toBeVisible();

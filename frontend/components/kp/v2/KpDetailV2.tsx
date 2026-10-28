@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Fragment } from "react";
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { buildCircles } from "@/lib/kp/circle";
 import { disciplinePath, stagePath } from "@/lib/kp/routes";
@@ -27,19 +28,19 @@ export function KpDetailV2({
   return (
     <article className="kp-detail" data-testid="kp-detail-v2" data-converted={built.converted ? "yes" : "no"}>
       <nav className="v2-crumbs" aria-label="麵包屑">
-        <Link className="v2-hit" href="/kp">知識地圖</Link>
+        <Link className="v2-hit v2-crumb" href="/kp">知識地圖</Link>
         {crumbs.map((segment, index) => (
-          <span key={`${segment}-${index}`}>
-            <span aria-hidden="true">/</span>
+          <Fragment key={`${segment}-${index}`}>
+            <span className="v2-sep" aria-hidden="true">/</span>
             {index === 0 ? (
-              <Link className="v2-hit" href={disciplinePath(point.folder)}>{segment}</Link>
+              <Link className="v2-hit v2-crumb" href={disciplinePath(point.folder)}>{segment}</Link>
             ) : (
-              <span>{segment}</span>
+              <span className="v2-crumb">{segment}</span>
             )}
-          </span>
+          </Fragment>
         ))}
-        <span aria-hidden="true">/</span>
-        <Link className="v2-hit" href={stagePath(point.stage)}>{facts.stage}</Link>
+        <span className="v2-sep" aria-hidden="true">/</span>
+        <Link className="v2-hit v2-crumb" href={stagePath(point.stage)}>{facts.stage}</Link>
       </nav>
 
       <div className="v2-layout">
