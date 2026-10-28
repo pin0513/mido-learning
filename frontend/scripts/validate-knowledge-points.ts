@@ -4,7 +4,7 @@
  *
  * 讀取與檢查看 lib/content/load.ts，和頁面共用同一份。
  */
-import { cpSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, cpSync, mkdtempSync, mkdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -229,6 +229,171 @@ function runSelfTest(): string[] {
     VALID_JH,
     VALID_PATH,
     includes("不可自編"),
+  );
+  check(
+    "既有國語文代碼",
+    VALID_ES.replace("issues: []", "issues: []\n  performances: [3-I-1]\n  contents: [Aa-I-1]"),
+    VALID_JH,
+    VALID_PATH,
+    (errors) => errors.length === 0,
+  );
+  const accepted = [
+    ["綜合活動學習表現", "performances", "1b-III-1"],
+    ["科目前綴學習表現", "performances", "涯 3b-V-1"],
+    ["家政學習內容", "contents", "家 Ca-IV-1"],
+    ["公民學習內容", "contents", "公 Bl-IV-2"],
+    ["涂科目前綴", "contents", "涂 Da-IV-1"],
+    ["高中數學代碼", "contents", "D-10-2"],
+    ["高中數學分流代碼", "contents", "D-11A-1"],
+    ["國中數學代碼", "contents", "n-III-1"],
+  ] as const;
+  for (const [label, field, code] of accepted) {
+    const quoted = code.includes(" ") ? `"${code}"` : code;
+    check(
+      `${label}格式可過但未收錄`,
+      VALID_ES.replace("issues: []", `issues: []\n  ${field}: [${quoted}]`),
+      VALID_JH,
+      VALID_PATH,
+      (errors) =>
+        errors.some((error) => error.includes(`「${code}」不在`)) &&
+        !errors.some((error) => error.includes("must match pattern")),
+    );
+  }
+  const rejected = [
+    ["多一個字母", "performances", "1bb-III-1"],
+    ["Unicode 羅馬數字", "performances", "2-Ⅱ-4"],
+    ["核心素養代碼", "performances", "綜-E-A2"],
+    ["前綴少空格", "contents", "家Ca-IV-1"],
+    ["年級超出 12", "contents", "D-13-1"],
+    ["小寫羅馬數字", "contents", "n-iii-1"],
+    ["代碼不完整", "contents", "D-10-"],
+  ] as const;
+  for (const [label, field, code] of rejected) {
+    check(
+      `${label}不是課綱代碼格式`,
+      VALID_ES.replace("issues: []", `issues: []\n  ${field}: [${code}]`),
+      VALID_JH,
+      VALID_PATH,
+      (errors) =>
+        errors.some((error) => error.includes("must match pattern")) &&
+        !errors.some((error) => error.includes("不可自編")),
+    );
+  }
+  const codeFixture = `
+格式測試:
+  performances:
+    1b-III-1:
+      stage: 3
+      text: 測試用學習表現。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 1
+    "涯 3b-V-1":
+      stage: 5
+      text: 測試用學習表現。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 2
+  contents:
+    n-III-1:
+      stage: 3
+      text: 測試用學習內容。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 3
+    N-3-9:
+      stage: 2
+      text: 測試用學習內容。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 4
+    "家 Ca-IV-1":
+      stage: 4
+      text: 測試用學習內容。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 5
+    "公 Bl-IV-2":
+      stage: 4
+      text: 測試用學習內容。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 6
+    "涂 Da-IV-1":
+      stage: 4
+      text: 測試用學習內容。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 7
+    D-10-2:
+      stage: 5
+      text: 測試用學習內容。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 8
+    D-11A-1:
+      stage: 5
+      text: 測試用學習內容。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 9
+`;
+  const addCodes = (dir: string) => {
+    appendFileSync(join(dir, "taxonomy", "curriculum-108-codes.yaml"), codeFixture);
+  };
+  check(
+    "國小新格式收錄後可過",
+    VALID_ES.replace("issues: []", "issues: []\n  performances: [1b-III-1]\n  contents: [n-III-1, N-3-9]"),
+    VALID_JH,
+    VALID_PATH,
+    (errors) => errors.length === 0,
+    addCodes,
+  );
+  check(
+    "國中科目前綴收錄後可過",
+    VALID_ES,
+    VALID_JH.replace("issues: []", 'issues: []\n  contents: ["家 Ca-IV-1", "公 Bl-IV-2", "涂 Da-IV-1"]'),
+    VALID_PATH,
+    (errors) => errors.length === 0,
+    addCodes,
+  );
+  check(
+    "高中數學與涯代碼收錄後可過",
+    VALID_ES.replace("deeper: [ph.next@jh]", "deeper: [ph.next@sh]"),
+    VALID_JH.replace("id: ph.next@jh", "id: ph.next@sh")
+      .replace("level: jh", "level: sh")
+      .replace("issues: []", 'issues: []\n  performances: ["涯 3b-V-1"]\n  contents: [D-10-2, D-11A-1]'),
+    VALID_PATH.replace("ph.next@jh", "ph.next@sh"),
+    (errors) => errors.length === 0,
+    (dir) => {
+      addCodes(dir);
+      renameSync(
+        join(dir, "knowledge", "philosophy", "ph.next", "jh.yaml"),
+        join(dir, "knowledge", "philosophy", "ph.next", "sh.yaml"),
+      );
+    },
+  );
+  check(
+    "代碼 stage 與階段不符",
+    VALID_ES.replace("issues: []", "issues: []\n  performances: [1b-III-1]"),
+    VALID_JH,
+    VALID_PATH,
+    includes("stage 必須等於"),
+    (dir) => {
+      appendFileSync(
+        join(dir, "taxonomy", "curriculum-108-codes.yaml"),
+        `
+格式測試:
+  performances:
+    1b-III-1:
+      stage: 1
+      text: 測試用學習表現。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 1
+`,
+      );
+    },
   );
   check(
     "published 缺 what 而且不在清單",

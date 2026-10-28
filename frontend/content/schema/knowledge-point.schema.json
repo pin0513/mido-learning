@@ -333,13 +333,13 @@
     "figureId": { "type": "string", "pattern": "^[a-z0-9-]{2,40}$" },
     "perfCode": {
       "type": "string",
-      "pattern": "^[0-9]{1,2}-(I|II|III|IV|V)-[0-9]{1,2}$",
-      "description": "學習表現代碼，羅馬數字用拉丁字母 I／V。必須存在於 taxonomy/curriculum-108-codes.yaml。"
+      "pattern": "^(?:[\\u4e00-\\u9fff] )?[0-9]{1,2}[a-z]?-(?:IV|III|II|V|I)-[0-9]{1,2}$",
+      "description": "學習表現代碼。例：2-II-4、1b-III-1、涯 3b-V-1。羅馬數字用拉丁字母。科目前綴與代碼之間一個空格。必須存在於 taxonomy/curriculum-108-codes.yaml。"
     },
     "contentCode": {
       "type": "string",
-      "pattern": "^[A-Z][a-z]?-(I|II|III|IV|V)-[0-9]{1,2}$",
-      "description": "學習內容代碼。必須存在於 taxonomy/curriculum-108-codes.yaml。"
+      "pattern": "^(?:[\\u4e00-\\u9fff] )?(?:[A-Za-z]{1,2}-(?:IV|III|II|V|I)-[0-9]{1,2}|[A-Z]-(?:[1-9]|1[0-2])[A-Z]?-[0-9]{1,2})$",
+      "description": "學習內容代碼。例：Aa-I-1、家 Ca-IV-1、公 Bl-IV-2、涂 Da-IV-1、n-III-1、D-10-2、D-11A-1。羅馬數字用拉丁字母。科目前綴與代碼之間一個空格。必須存在於 taxonomy/curriculum-108-codes.yaml。"
     },
     "circlePart": {
       "type": "object",
