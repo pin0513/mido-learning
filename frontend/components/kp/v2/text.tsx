@@ -10,6 +10,8 @@ const TOKEN = new RegExp(
   `《[^》]+》|${CODE}|[\\u4e00-\\u9fff]?˙?[\\u3105-\\u312f]+[ˉˊˇˋ]?`,
   "g",
 );
+/** 《重編國語辭典修訂本》這種短書名整段不拆。更長的書名要能換行，否則 390 寬會被英文書名撐出畫面。 */
+const BOOK_KEEP = 16;
 
 type Piece = { text: string; nowrap: boolean };
 
@@ -19,8 +21,10 @@ function piecesOf(text: string): Piece[] {
   for (const match of text.matchAll(TOKEN)) {
     const index = match.index ?? 0;
     if (index > last) pieces.push({ text: text.slice(last, index), nowrap: false });
-    pieces.push({ text: match[0], nowrap: true });
-    last = index + match[0].length;
+    const token = match[0];
+    const nowrap = !token.startsWith("《") || [...token].length <= BOOK_KEEP;
+    pieces.push({ text: token, nowrap });
+    last = index + token.length;
   }
   if (last < text.length) pieces.push({ text: text.slice(last), nowrap: false });
   return pieces;
@@ -50,7 +54,7 @@ function keepTail(pieces: Piece[]): Piece[] {
   return [...head, { text: tail.map((piece) => piece.text).join(""), nowrap: true }];
 }
 
-/** 書名號、注音、課綱代碼不斷行。 */
+/** 短書名、注音、課綱代碼不斷行。長書名照一般段落換行。 */
 export function RichText({ text }: { text: string }) {
   const pieces = keepTail(piecesOf(text));
   if (pieces.length === 1 && !pieces[0].nowrap) return pieces[0].text;

@@ -6,6 +6,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { Compare } from "../../components/kp/v2/figures/Compare";
 import { Spelling } from "../../components/kp/v2/figures/Spelling";
 import { ToneChart } from "../../components/kp/v2/figures/ToneChart";
 import { RichText } from "../../components/kp/v2/text";
@@ -45,6 +46,36 @@ test("注音音節和課綱代碼整段不斷行", () => {
   }
   assert.equal(html.includes("3-II-</span>"), false);
   assert.equal(html.includes("ㄅㄚ</span>"), false);
+});
+
+test("短書名不斷行，長書名可以換行", () => {
+  const kept = `《${"國".repeat(14)}》`;
+  const long = "《NASA Work Breakdown Structure (WBS) Handbook, NASA/SP-2016-3404/REV1》";
+  const html = renderToStaticMarkup(createElement(RichText, { text: `見${kept}。以及${long}。` }));
+  assert.match(html, new RegExp(`<span class="v2-nw">${kept}`));
+  assert.equal(html.includes(`<span class="v2-nw">${long}</span>`), false);
+  assert.equal(html.includes("NASA Work Breakdown Structure"), true);
+});
+
+test("比較圖的長註記折進卡片，兩欄也有窄螢幕版", () => {
+  const note = "我覺得小狗比較好，因為牠會陪我們玩，也不會吵到上課。";
+  const html = renderToStaticMarkup(
+    createElement(Compare, {
+      figure: {
+        id: "reason",
+        type: "compare",
+        alt: "主張和理由",
+        relation: "versus",
+        items: [
+          { term: "只有主張", note: "我覺得小狗比較好。" },
+          { term: "主張加理由", note },
+        ],
+      },
+    }),
+  );
+  assert.match(html, /v2-only-m/);
+  assert.equal(html.includes("我覺得小狗比較好"), true);
+  assert.equal(html.includes(`>${note}</text>`), false);
 });
 
 test("未轉換的點用既有欄位組三圈", () => {
