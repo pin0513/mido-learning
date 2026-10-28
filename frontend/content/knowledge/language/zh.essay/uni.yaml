@@ -1,8 +1,12 @@
+# B6 提案：zh.essay@uni
+# - 補依據：UNC 寫作中心〈Argument〉（主張加證據、預想反方、公平摘述反方、深入回應一兩個重要反方、各領域證據標準不同）。
+# - AI 列反方：補「AI 產出不能當證據來源」（ICMJE）、查證與不貼個資（學術倫理電子報）。
+# - 「1,500 字」「3 個問題」「回應 2 個」標示示意；補 Why/How/What 與兩張圖。
 id: zh.essay@uni
 concept: zh.essay
 title: 評論與論文：主張、證據、反方
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,9 +16,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 主張、證據與反方的寫法依 UNC 寫作中心〈Argument〉；「1,500 字」「3 個問題」「回應 2 個」是示意。
 prerequisites:
 - zh.reason@sh
 - zh.cite@uni
@@ -24,7 +29,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。跨學門連結：哲學「論證的結構：前提與結論」。
+link_notes: 框架：UNC 寫作中心〈Argument〉（主張、證據、反方）。跨學門連結：哲學「論證的結構：前提與結論」。
 competency:
   specialist:
   - 寫作
@@ -36,17 +41,122 @@ ai:
   - 列出可能的反方論點
   human_experience:
   - 決定立場並為證據負責
-idea: 大學寫作要有清楚主張、可查的證據，並主動回應反方。引用要標明出處，自己的話和別人的話分清楚。
+idea: 大學寫作要有清楚主張、可查的證據，並主動回應反方。引用要標明出處，自己的話和別人的話分清楚；AI 列出的反方只是線索，不能當作證據來源。
 guiding_questions:
 - 你最強的論點，最怕別人用什麼反駁？
-scenario: 親子共學：就一個公共議題寫 1,500 字評論，請家人扮演反方提三個問題，再改一版。
+scenario: 親子共學：就一個公共議題寫一篇約 1,500 字（示意）的評論，請家人扮演反方提三個問題（示意），再改一版。
 goal: 寫一篇有主張、可查證據、並回應反方的評論。
-review: 就公共議題寫 1,500 字評論，家人扮演反方提 3 個問題；改後的版本至少回應其中 2 個，所有證據都附出處。
+review: 就公共議題寫一篇約 1,500 字（示意）的評論，家人扮演反方提 3 個問題（示意）；改後的版本至少回應其中 2 個（示意），所有證據都附出處。
 formats:
   slides: []
-  exercise: 目標：寫一篇有主張、可查證據、並回應反方的評論。　檢核：就公共議題寫 1,500 字評論，家人扮演反方提 3 個問題；改後的版本至少回應其中 2 個，所有證據都附出處。
+  exercise: 目標：寫一篇有主張、可查證據、並回應反方的評論。　檢核：就公共議題寫一篇約 1,500 字（示意）的評論，家人扮演反方提 3 個問題（示意）；改後的版本至少回應其中 2 個（示意），所有證據都附出處。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 主張要有證據撐
+  body:
+  - UNC 寫作中心說明，學術寫作裡的論證通常是一個主要想法，也就是主張或論點，再加上支持它的證據；不同學科對可接受證據的要求也略有不同。
+  - 預想反方能讓論證更強：UNC 寫作中心建議先想想讀者會怎麼反駁，並且通常深入回應一兩個重要反方，比蜻蜓點水地帶過很多個更好。
+  qa:
+    question: 你最強的論點，最怕別人用什麼反駁？
+    answer: 先替反方想最有力的理由，並公平地寫出來；UNC 寫作中心提醒摘述反方時要「be charitable」。然後選一兩個最重要的反方深入回應，找證據說明你為什麼仍然成立，或修正你的主張。
+    source: unc-argument
+  items_title: 評論的三根柱子（本站整理）
+  items:
+  - title: 主張
+    text: 一句話說出你的立場。
+  - title: 證據
+    text: 可查證、附出處的資料或例子。
+  - title: 反方
+    text: 公平寫出最有力的反對理由，再回應。
+  sources:
+  - unc-argument
+how:
+  heading: 先找反方，再改一版
+  body:
+  - 找反方的方法，UNC 寫作中心建議可以和朋友或老師聊，也可以想像對方會怎麼回。回應時可以說明反方哪裡不成立、承認部分有理但結論不同，或因此調整自己的立場；如果反方改變了你的看法，就回頭修改原本的論證。
+  - 請 AI 列出可能的反方時，它只是幫你想到方向；ICMJE 指出，把 AI 產生的內容當成主要來源引用是不能接受的。每個反方與證據都要自己找原始資料查證，也不要把個人資料貼進對話框。
+  items_title: 回應反方的三種方式（本站整理）
+  items:
+  - title: 指出不成立
+    text: 說明反方的前提或證據哪裡有問題。
+  - title: 部分承認
+    text: 承認反方有道理，再說明為什麼結論仍成立。
+  - title: 修正主張
+    text: 反方改變了你的看法，就回頭改論證。
+  checklist_title: 改完一版後：
+  checklist:
+  - 主張一句話
+  - 證據附出處
+  - 回應了反方
+  - 反方說得公道
+  activity_figure: how-flow
+  sources:
+  - unc-argument
+  - icmje-ai
+  - ethics-epaper13
+what:
+  heading: 反方不等於稻草人
+  figures:
+  - what-compare
+  notes:
+  - 寫成學術論文時，教育部臺灣學術倫理教育資源中心的指南說明論文結構「大多可分為序論、文獻探討、研究方法與實施、研究發現與討論、結論與建議這五個部分」；實際格式依課程或期刊規定。
+  - 用 AI 輔助時，指南提醒「研究者應對自己的研究行為與產出負全部責任」，並建議適度公開使用情形。
+  - 三根柱子與回應方式的分類是本站整理；「1,500 字」「3 個問題」「回應 2 個」是示意。
+  sources:
+  - ethics-guide
+figures:
+- id: how-flow
+  type: flow
+  alt: 評論改稿的步驟：自己寫初稿，家人扮演反方提問，自己找證據回應，再改出第二版
+  steps:
+  - actor: 自己
+    text: 寫初稿
+  - actor: 家人
+    text: 扮反方提問
+  - actor: 自己
+    text: 找證據回應
+  - actor: 自己
+    text: 改出第二版
+- id: what-compare
+  type: compare
+  alt: 公平的反方寫出對方最有力的理由，稻草人只挑最弱的說法來打，兩者不同
+  source: unc-argument
+  relation: not_equal
+  items:
+  - term: 公平的反方
+    note: 寫出對方最有力的理由，再回應
+  - term: 稻草人
+    note: 只挑最弱、扭曲的說法來打
+sources:
+- id: unc-argument
+  title: Argument（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/argument/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「In academic writing, an argument is usually a main idea, often called a 『claim』 or 『thesis statement,』 backed up with evidence that supports the idea.」；「Every field has slightly different requirements for acceptable evidence」；Counterargument：「Talk with a friend or with your teacher.」；「When you are summarizing opposing arguments, be charitable.」；「It is usually better to consider one or two serious counterarguments in some depth, rather than to give a long but superficial list of many different counterarguments and replies.」；「If considering a counterargument changes your position, you will need to go back and revise your original argument accordingly.」
+- id: icmje-ai
+  title: Use of AI by Authors（Recommendations）
+  publisher: International Committee of Medical Journal Editors（ICMJE）
+  url: https://www.icmje.org/recommendations/browse/artificial-intelligence/ai-use-by-authors.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Referencing AI-generated material as the primary source is not acceptable.」
+- id: ethics-guide
+  title: AI世代的學術寫作指南⸺給研究生的參考手冊（電子書）
+  publisher: 教育部臺灣學術倫理教育資源中心（手冊註明「本手冊內容僅代表作者觀點，不代表教育部立場」）
+  url: https://ethics.moe.edu.tw/files/resource/ebook/file/ebook_05.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 貳 論文的結構：「大多可分為序論、文獻探討、研究方法與實施、研究發現與討論、結論與建議這五個部分」；參、四 運用生成式AI於學術與研究活動應注意事項：「研究者應對自己的研究行為與產出負全部責任」；「使用任何科技輔助軟體，都應留意相關的資訊安全及隱私問題」；「建議使用前仍應諮詢指導教授、參考相關機構的指引，並適度公開資訊，例如：在研究方法中聲明使用哪些AI工具以及如何使用」；「直接使用AI翻譯整篇論文或直接複製貼上生成資料，都不符合學術誠信的基本原則」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」

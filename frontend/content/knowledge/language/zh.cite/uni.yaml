@@ -1,8 +1,13 @@
+# B6 提案：zh.cite@uni
+# - 原文「書名用《》、篇名用〈〉」比教育部標點手冊說得更死：手冊乙式是「《 》多用於書名，〈 〉多用於篇名」，改成「多用於」。
+# - 補法律依據（著作權法第 52、64 條：合理引用也要明示出處）與學術倫理比法律更廣的說明；補引述、改寫、摘寫三種方式。
+# - AI 整理參考文獻：補「逐筆打開原始來源核對」（AI 可能編造引文）。
+# - 「隨機抽 3 處」標示示意；補 Why/How/What 與兩張圖。
 id: zh.cite@uni
 concept: zh.cite
 title: 引用格式：引號、書名號與出處
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,9 +17,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 標點規則逐字依教育部《重訂標點符號手冊（修訂版）》；引述、改寫、摘寫的定義逐字依教育部臺灣學術倫理教育資源中心《AI世代的學術寫作指南》；著作權法第 52、64 條依全國法規資料庫。
 prerequisites:
 - zh.letterfmt@sh
 links:
@@ -23,7 +29,7 @@ links:
   related:
   - zh.disclose@uni
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：教育部《重訂標點符號手冊（修訂版）》；著作權法第 52、64 條；APA Style 引文規則。
 competency:
   specialist:
   - 基礎語文
@@ -34,17 +40,141 @@ ai:
   - 依格式整理參考文獻
   human_experience:
   - 確認引用的原文與出處真的存在
-idea: 直接引用用引號並寫出處，書名用《》、篇名用〈〉。換句話說也要註明來源。各領域引用格式不同，先看投稿或課程規定。
+idea: 直接引用加引號並寫出處；書名號《 》多用於書名、〈 〉多用於篇名。用自己的話改寫、濃縮成摘要，也要註明來源。各領域引用格式不同（如 APA、MLA），先看課程或投稿規定。
 guiding_questions:
 - 引用別人的一句話，要怎麼標才不算抄？
-scenario: 親子共學：複習版：拿你最近寫的報告或文章，把每一句不是你想的話找出來，標上引號或出處。
-goal: 引用時用對引號、書名號與篇名號，每一句別人的話都標出處。
-review: 拿最近一份報告，把不是自己想的句子全部找出來，每處都有引號或出處；請家人隨機抽 3 處，都能找到原始來源。
+scenario: 親子共學：複習版：拿你最近寫的報告或文章，把每一句不是你想的話找出來，標上引號或出處；用 AI 整理參考文獻時，逐筆打開原始來源核對。
+goal: 引用時用對引號、書名號與篇名號，引述、改寫、摘寫都標出處。
+review: 拿最近一份報告，把不是自己想的句子全部找出來，每處都有引號或出處；請家人隨機抽 3 處（3 處為示意），都能找到原始來源。
 formats:
   slides: []
-  exercise: 目標：引用時用對引號、書名號與篇名號，每一句別人的話都標出處。　檢核：拿最近一份報告，把不是自己想的句子全部找出來，每處都有引號或出處；請家人隨機抽 3 處，都能找到原始來源。
+  exercise: 目標：引用時用對引號、書名號與篇名號，引述、改寫、摘寫都標出處。　檢核：拿最近一份報告，把不是自己想的句子全部找出來，每處都有引號或出處；請家人隨機抽 3 處（3 處為示意），都能找到原始來源。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 合理引用也要寫出處
+  body:
+  - 著作權法第 52 條允許「為報導、評論、教學、研究或其他正當目的之必要，在合理範圍內，得引用已公開發表之著作」，第 64 條接著要求依這些規定利用他人著作者「應明示其出處」。
+  - 學術寫作的要求比法律更廣。教育部臺灣學術倫理教育資源中心的寫作指南說明「學術倫理中的抄襲，範圍比著作權法要更廣泛」：別人的構想即使用自己的話重新表達，沒有適當引註，仍可能違反學術倫理。
+  qa:
+    question: 引用別人的一句話，要怎麼標才不算抄？
+    answer: 原句照抄就加引號，並在同一句寫出作者、年份和頁碼等出處；APA Style 要求直接引用時，在同一句附上完整引註與頁碼。只借用想法、用自己的話寫，也要註明來源。
+    source: apa-quotations
+  items_title: 用別人文字的三種方式
+  items:
+  - title: 引述
+    text: 原文照錄。指南：「直接引述通常需要用引號標示，或將引述的內容單獨成段，並提供完整資料來源」。
+  - title: 改寫
+    text: 「用自己的話，重新闡述他人的觀點或資訊，但保持其原有的意義」；指南也提醒，改寫時「應該要避免使用他人『一個分句』以上的文字段落」。
+  - title: 摘寫
+    text: 「將參考資料的核心思想或主要論點，用更簡潔的文字概括出來，篇幅一般會比原文簡短許多」。
+  sources:
+  - copyright-law
+  - ethics-guide
+  - apa-quotations
+how:
+  heading: 引號、書名號、出處
+  body:
+  - 標點依教育部《重訂標點符號手冊（修訂版）》：引號「用於標示說話、引語、特別指稱或強調的詞語」，「通常先用單引號，如果有需要，單引號內再用雙引號」；書名號乙式「《 》多用於書名，〈 〉多用於篇名」。
+  - 出處要讓讀者找得到：指南說，不管引述、改寫或摘寫，「研究者都應該讓讀者在文中或最後參考資料列表找到完整的書目資訊」。用 AI 整理參考文獻時，MLA 提醒要核對它列出的來源，UNC 寫作中心也提醒 AI 給的引文可能根本不存在；本站建議每一筆都打開原始來源核對。用了 AI 的地方，也依課程或指定格式說明用了哪個工具、做了什麼（本站建議）。
+  items_title: 標點小抄（本站整理）
+  items:
+  - title: 引號「」『』
+    text: 引語、特別指稱的詞；引號內再引用時改用『』。
+  - title: 書名號《 》
+    text: 多用於書名，例如《禮記》。
+  - title: 篇名號〈 〉
+    text: 多用於篇名，例如〈逍遙遊〉。
+  - title: 出處
+    text: 作者、年份、書名或篇名、頁碼，依課程指定的格式寫。
+  checklist_title: 交出前檢查：
+  checklist:
+  - 原句加引號了嗎
+  - 附上頁碼了嗎
+  - 改寫也標出處
+  - 出處查得到嗎
+  activity_figure: how-flow
+  sources:
+  - moe-punct
+  - ethics-guide
+  - mla-genai
+  - unc-ai
+what:
+  heading: 書名號與篇名號
+  figures:
+  - what-compare
+  notes:
+  - 各領域格式不同：指南列出 APA、MLA、IEEE 等常見格式與適用領域；以課程或投稿單位指定的格式為準。
+  - 標點小抄的分類是本站整理；「3 處」是示意。
+  sources:
+  - moe-punct
+  - ethics-guide
+figures:
+- id: how-flow
+  type: flow
+  alt: 引用自我檢查：自己找出別人的句子並標上引號或出處，家人隨機抽查，再一起打開原始來源核對
+  steps:
+  - actor: 自己
+    text: 找出別人的句
+  - actor: 自己
+    text: 標引號與出處
+  - actor: 家人
+    text: 隨機抽查
+  - actor: 一起
+    text: 打開原文核對
+- id: what-compare
+  type: compare
+  alt: 書名號《》多用於書名，篇名號〈〉多用於篇名，兩者不同
+  source: moe-punct
+  relation: not_equal
+  items:
+  - term: 《 》
+    note: 多用於書名，例：《四書集註》
+  - term: 〈 〉
+    note: 多用於篇名，例：〈逍遙遊〉
+sources:
+- id: copyright-law
+  title: 著作權法（全國法規資料庫）
+  publisher: 法務部全國法規資料庫（修正日期：民國 111 年 06 月 15 日）
+  url: https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=J0070017
+  accessed: '2026-10-29'
+  kind: government
+  supports: 第 52 條「為報導、評論、教學、研究或其他正當目的之必要，在合理範圍內，得引用已公開發表之著作。」；第 64 條「依第四十四條至第四十七條、第四十八條之一至第五十條、第五十二條、第五十三條、第五十五條、第五十七條、第五十八條、第六十條至第六十三條規定利用他人著作者，應明示其出處。」
+- id: moe-punct
+  title: 重訂標點符號手冊（修訂版）
+  publisher: 教育部（民國 97 年 12 月修訂）
+  url: https://language.moe.gov.tw/001/Upload/FILES/SITE_CONTENT/M0001/HAU/Revised_Handbook_of_Punctuation.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 引號：說明「用於標示說話、引語、特別指稱或強調的詞語」；位置「通常先用單引號，如果有需要，單引號內再用雙引號」（第 7 頁，共 21 頁）。書名號：乙式「《 》多用於書名，〈 〉多用於篇名」；說明「用於書名、篇名、歌曲名、影劇名、文件名、字畫名」；用法舉例《禮記》《四書集註》〈逍遙遊〉（第 14 頁）
+- id: ethics-guide
+  title: AI世代的學術寫作指南⸺給研究生的參考手冊（電子書）
+  publisher: 教育部臺灣學術倫理教育資源中心（手冊註明「本手冊內容僅代表作者觀點，不代表教育部立場」）
+  url: https://ethics.moe.edu.tw/files/resource/ebook/file/ebook_05.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 貳 常用的學術寫作技巧：引述「直接引述通常需要用引號標示，或將引述的內容單獨成段，並提供完整資料來源」；改寫「用自己的話，重新闡述他人的觀點或資訊，但保持其原有的意義」，「應該要避免使用他人『一個分句』以上的文字段落」；摘寫「將參考資料的核心思想或主要論點，用更簡潔的文字概括出來，篇幅一般會比原文簡短許多」；引用著作「不管是透過引述、改寫還是摘寫方式呈現原文，研究者都應該讓讀者在文中或最後參考資料列表找到完整的書目資訊」，並列 APA、MLA、IEEE 等格式；常見問題「學術倫理中的抄襲，範圍比著作權法要更廣泛」，「二者不是等號」
+- id: apa-quotations
+  title: Quotations（APA Style 7th ed. guidelines）
+  publisher: APA Style（American Psychological Association），Last updated July 2022
+  url: https://apastyle.apa.org/style-grammar-guidelines/citations/quotations
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「A direct quotation reproduces words verbatim from another work or from your own previously published work.」；「For a direct quotation, always include a full citation (parenthetical or narrative) in the same sentence as the quotation, including the page number (or other location information, e.g., paragraph number).」
+- id: mla-genai
+  title: How do I cite generative AI in MLA style?（Ask The MLA）
+  publisher: MLA Style Center（Modern Language Association）
+  url: https://style.mla.org/citing-generative-ai/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: You should：「take care to vet the secondary sources it cites」；也要「acknowledge all functional uses of the tool (like editing your prose or translating words) in a note, your text, or another suitable location」
+- id: unc-ai
+  title: Generative AI in Academic Writing（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/generative-ai-in-academic-writing/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Potential pitfalls：「Citations and quotes may be invented」；「While the citations may seem reasonable and look correctly formatted, they may, in fact, not exist or be incorrect.」；「Generative AI tools are not authoritative sources.」

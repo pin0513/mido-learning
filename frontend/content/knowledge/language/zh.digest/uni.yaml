@@ -1,8 +1,13 @@
+# B6 提案：zh.digest@uni
+# - 引導問題與 goal 的「30 頁」「200 字」是沒標示的示意數字；改成一般說法，字數標示示意並說明依課程或期刊規定。
+# - 補依據：Keshav 三遍讀法（先讀標題、摘要、引言、各節標題、結論）；UNC 寫作中心摘要原則（不評論、不加原文沒有的資訊）；學術倫理資源中心指南「摘寫」定義。
+# - 安全（中）：AI 產生初步摘要——補指南「將撰寫摘要的全部交給生成式AI並不可行」、讀全文補漏，以及不把未公開文件貼進 AI。
+# - 「限制」指作者自己寫出的限制（本站建議），避免和「不加評論」矛盾。補 Why/How/What 與兩張圖。
 id: zh.digest@uni
 concept: zh.digest
 title: 讀長文與學術文章：寫出摘要
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,19 +17,21 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
-- 本點為這次補強新增，內容尚未經老師審閱。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 三遍讀法依 S. Keshav〈How to Read a Paper〉；摘要原則依 UNC 寫作中心〈Abstracts〉與教育部臺灣學術倫理教育資源中心寫作指南；「約 200 字」是示意，實際字數依課程或期刊規定。
+- 本次改寫內容尚未經老師審閱。
 prerequisites:
 - zh.evaluate@sh
 - zh.mixed@sh
 links:
   why: []
   how: []
-  related: []
+  related:
+  - zh.disclose@uni
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：S. Keshav 三遍讀法；UNC 寫作中心〈Abstracts〉；教育部臺灣學術倫理教育資源中心寫作指南（摘寫、AI 輔助摘要）。
 competency:
   specialist:
   - 閱讀理解
@@ -36,17 +43,135 @@ ai:
   - 產生初步摘要
   human_experience:
   - 核對摘要沒有扭曲原意
-idea: 學術文章有固定結構。先讀摘要與結論決定要不要細讀，再找研究問題、方法、主要發現與限制。摘要用自己的話，不加入自己的評論。
+idea: 學術文章有固定結構。先讀標題、摘要、引言與結論，決定要不要細讀；再找研究問題、方法、主要發現與作者寫到的限制。摘要用自己的話，不加入原文沒有的資訊，也不加入自己的評論。
 guiding_questions:
-- 一篇 30 頁的報告，你能用 200 字說清楚嗎？
-scenario: 親子共學：大人選一篇工作上要讀的報告、孩子選一篇課堂文章，各寫 200 字摘要，交換讀並各提一個問題。
-goal: 讀一篇學術或專業長文，寫出 200 字摘要：問題、方法、發現、限制。
-review: 選一篇中文期刊論文或研究報告，寫 200 字摘要；家人只讀摘要就能說出作者的主要發現與一個限制。
+- 一篇很長的報告，你能用一段話說清楚嗎？
+scenario: 親子共學：大人選一篇工作上可公開的報告、孩子選一篇課堂文章，各寫一段約 200 字（示意）的摘要，交換讀並各提一個問題。
+goal: 讀一篇學術或專業長文，寫出一段摘要：問題、方法、發現、限制。
+review: 選一篇中文期刊論文或研究報告，寫一段約 200 字（示意）的摘要；家人只讀摘要，就能說出作者的主要發現與一個限制。
 formats:
   slides: []
-  exercise: 目標：讀一篇學術或專業長文，寫出 200 字摘要：問題、方法、發現、限制。　檢核：選一篇中文期刊論文或研究報告，寫 200 字摘要；家人只讀摘要就能說出作者的主要發現與一個限制。
+  exercise: 目標：讀一篇學術或專業長文，寫出一段摘要：問題、方法、發現、限制。　檢核：選一篇中文期刊論文或研究報告，寫一段約 200 字（示意）的摘要；家人只讀摘要，就能說出作者的主要發現與一個限制。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 摘要讓人決定要不要讀
+  body:
+  - UNC 寫作中心說明，摘要讓可能有興趣的讀者很快判斷長文值不值得花時間讀；摘要不是書評，也不評價原作。
+  - Keshav 提醒，多數審稿人和讀者只會讀一遍，所以摘要要簡潔而完整。教育部臺灣學術倫理教育資源中心的指南把摘寫定義為「將參考資料的核心思想或主要論點，用更簡潔的文字概括出來，篇幅一般會比原文簡短許多」。
+  qa:
+    question: 一篇很長的報告，你能用一段話說清楚嗎？
+    answer: 可以，先抓四件事：作者想回答什麼問題、用什麼方法、發現了什麼、作者自己說的限制是什麼。用自己的話各寫一兩句，不加原文沒有的資訊，也不加評論。
+    source: unc-abstracts
+  items_title: 摘要的四個元素（本站整理）
+  items:
+  - title: 問題
+    text: 作者想回答什麼。
+  - title: 方法
+    text: 用什麼資料、怎麼做。
+  - title: 發現
+    text: 最重要的結果。
+  - title: 限制
+    text: 作者自己寫出的研究限制，不是你的評論（本站建議）。
+  sources:
+  - unc-abstracts
+  - keshav
+  - ethics-guide
+how:
+  heading: 先略讀，再細讀，再摘寫
+  body:
+  - Keshav 的三遍讀法：第一遍只仔細讀標題、摘要和引言，看各節標題，再讀結論，然後決定要不要往下讀；第二遍更仔細讀，但先跳過證明之類的細節；第三遍才深入理解。
+  - 寫摘要時，UNC 寫作中心建議讀完全文後把它放到一邊，不看原文寫一段，再回頭核對；摘要別人的文章不能只靠剪貼原句，也不要加入原文沒有的資訊。
+  items_title: 三遍讀法（Keshav）
+  items:
+  - title: 第一遍
+    text: 標題、摘要、引言、各節標題、結論。
+  - title: 第二遍
+    text: 更仔細讀，先跳過證明之類的細節。
+  - title: 第三遍
+    text: 需要深入了解時才讀。
+  checklist_title: 摘要交出前：
+  checklist:
+  - 寫了問題
+  - 寫了方法
+  - 寫了發現
+  - 寫了限制
+  - 沒有加評論
+  activity_figure: how-flow
+  sources:
+  - keshav
+  - unc-abstracts
+what:
+  heading: 摘要不等於評論
+  figures:
+  - what-compare
+  notes:
+  - 用 AI 產生初步摘要時，UNC 寫作中心建議把它當成導讀，再讀全文，找出工具漏掉的重點；指南也說「將撰寫摘要的全部交給生成式AI並不可行」，「AI可以協助整理摘要，但所有的內容必須逐一經過研究者嚴謹的檢視與修訂」。交作業時用了 AI，依課程規定說明用了哪個工具、做了什麼（本站建議）。
+  - 未公開的報告、機密資料不要貼進生成式 AI；學術倫理電子報提醒「不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中」。
+  - 「約 200 字」是示意；四個元素的分法是本站整理，實際格式與字數依課程或期刊規定。
+  sources:
+  - unc-ai
+  - ethics-guide
+  - ethics-epaper13
+figures:
+- id: how-flow
+  type: flow
+  alt: 寫摘要的步驟：第一遍略讀、細讀找出四個元素、闔上原文寫摘要，家人只讀摘要說出發現與限制
+  steps:
+  - actor: 自己
+    text: 第一遍略讀
+  - actor: 自己
+    text: 細讀找四點
+  - actor: 自己
+    text: 闔上原文寫
+  - actor: 家人
+    text: 只讀摘要
+- id: what-compare
+  type: compare
+  alt: 摘要只描述原作，評論加入你的判斷，兩者不同
+  source: unc-abstracts
+  relation: not_equal
+  items:
+  - term: 摘要
+    note: 只描述原作：問題、方法、發現、限制
+  - term: 評論
+    note: 加入你的判斷與評價
+sources:
+- id: unc-abstracts
+  title: Abstracts（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/abstracts/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Abstracts allow readers who may be interested in a longer work to quickly decide whether it is worth their time to read it.」；「An abstract is not a review, nor does it evaluate the work being abstracted.」；How not to write an abstract：「Do not add information not contained in the original work.」；If you are abstracting someone else’s writing：「you cannot summarize key ideas just by cutting and pasting」；Don’t look back：「After reading the entire work, put it aside and write a paragraph about the work without referring to it.」
+- id: keshav
+  title: How to Read a Paper
+  publisher: S. Keshav，University of Waterloo（ACM SIGCOMM Computer Communication Review 發表之講義版，史丹佛大學 EE384M 課程網頁存放）
+  url: https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 2.1 第一遍：「1. Carefully read the title, abstract, and introduction」「2. Read the section and sub-section headings, but ignore everything else」「3. Read the conclusions」；「you can expect most reviewers (and readers) to make only one pass over it」，所以要「write concise and comprehensive abstracts」；2.2 第二遍「read the paper with greater care, but ignore details such as proofs」；「The third pass helps you understand the paper in depth.」
+- id: ethics-guide
+  title: AI世代的學術寫作指南⸺給研究生的參考手冊（電子書）
+  publisher: 教育部臺灣學術倫理教育資源中心（手冊註明「本手冊內容僅代表作者觀點，不代表教育部立場」）
+  url: https://ethics.moe.edu.tw/files/resource/ebook/file/ebook_05.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 貳、三 摘寫：「將參考資料的核心思想或主要論點，用更簡潔的文字概括出來，篇幅一般會比原文簡短許多」；常見問題：「將撰寫摘要的全部交給生成式AI並不可行」，「AI可以協助整理摘要，但所有的內容必須逐一經過研究者嚴謹的檢視與修訂」
+- id: unc-ai
+  title: Generative AI in Academic Writing（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/generative-ai-in-academic-writing/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Potential uses—Summarizing longer texts：「You can use the summary as a guide to orient you to the text. After reading the summary, you can read the full text to analyze how the author has shaped the argument, to get the important details, and to capture important points that the tool may have omitted from the summary.」；「Do not input anything you prefer not to have widely shared into an AI generator.」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」
