@@ -1155,6 +1155,90 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
         page: 7
+    2-V-16:
+      stage: 5
+      text: 能依人、事、地、物作適切的提問、描述或回答。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 7
+    8-V-10:
+      stage: 5
+      text: 能把各類訊息加以比較、歸類、排序。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 10
+    2-V-24:
+      stage: 5
+      text: 能依情境使用日常語句。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 9
+    6-V-16:
+      stage: 5
+      text: 能主動從網路搜尋所需資源，並與教師同學分享。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 10
+    1-V-16:
+      stage: 5
+      text: 能藉由多媒體，聽取所需的生活訊息。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 7
+    1-V-21:
+      stage: 5
+      text: 能聽懂公共場域的外語廣播內容。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 9
+    6-V-14:
+      stage: 5
+      text: 能運用反問策略，如請求說慢一點、重複說明或確認內容，協助理解對方語意。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 8
+    3-V-22:
+      stage: 5
+      text: 能閱讀不同體裁、不同主題的簡易文章。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 9
+    5-V-21:
+      stage: 5
+      text: 能讀懂繪本、漫畫，並以簡單句子描述大意。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 10
+    6-V-20:
+      stage: 5
+      text: 能熟悉各種閱讀技巧(如擷取大意、推敲文意、預測後續文意)。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 10
+    8-V-14:
+      stage: 5
+      text: 能將習得的原則類推並善加運用。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 10
+    2-V-15:
+      stage: 5
+      text: 能以簡易外語表達個人需求、意願和感受。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 7
+    4-V-12:
+      stage: 5
+      text: 能自由書寫日記。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 9
+    4-V-13:
+      stage: 5
+      text: 能依主題書寫簡易短文。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 9
   contents:
     Bp-IV-1:
       stage: 4
@@ -1168,3 +1252,27 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
         page: 14
+    Bo-V-28:
+      stage: 5
+      text: 禮儀規範。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 14
+    Bn-V-4:
+      stage: 5
+      text: 語言能力。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 14
+    Af-V-9:
+      stage: 5
+      text: 確認。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 12
+    Af-V-13:
+      stage: 5
+      text: 類推運用。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18521_6265663_59836.pdf
+        page: 12
