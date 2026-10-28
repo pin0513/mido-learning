@@ -1,0 +1,63 @@
+id: zh.reason@sh
+concept: zh.reason
+title: 知性題：讀材料、下判斷
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（學測國寫知性題），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- zh.prompt@jh
+- zh.structure@jh
+- zh.multitext@jh
+links:
+  why:
+  - ph.argument@jh
+  how: []
+  related: []
+  deeper:
+  - zh.essay@uni
+link_notes: 框架：學測國寫知性題。跨學門連結：哲學「論證的結構：前提與結論」。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+  - 跨域思考
+ai:
+  delegable:
+  - 摘要材料重點
+  human_experience:
+  - 形成自己的判斷並舉出親身見聞
+idea: 學測知性題要「正確解讀文字或圖表」，再「提出個人的見解與評斷」。先統整材料，再舉具體事例支持你的判斷。
+guiding_questions:
+- 「我覺得網路很方便」是看法還是論點？少了什麼？
+scenario: 親子共學：用一則新聞或圖表練 400 字內短評：一段說材料、一段下判斷、一段舉例與省思。
+goal: 學測國寫知性題：讀懂材料或圖表，提出自己的判斷並舉例支持。
+review: 用一則新聞或圖表寫 400 字短評，家長檢查三段：材料說了什麼、我的判斷、具體例子；判斷句能被原材料支持。
+formats:
+  slides: []
+  exercise: 目標：學測國寫知性題：讀懂材料或圖表，提出自己的判斷並舉例支持。　檢核：用一則新聞或圖表寫 400 字短評，家長檢查三段：材料說了什麼、我的判斷、具體例子；判斷句能被原材料支持。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

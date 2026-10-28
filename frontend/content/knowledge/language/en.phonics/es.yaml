@@ -1,0 +1,62 @@
+id: en.phonics@es
+concept: en.phonics
+title: 自然發音：看字讀出來
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A2
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：初級的準備。
+prerequisites:
+- en.abc@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 發音與拼讀
+  - 閱讀理解
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 檢查你念得對不對
+  human_experience:
+  - 自己試著拼讀，錯了再修正
+idea: 把字母的聲音一個一個拼起來，就能念出沒學過的字。這套規則叫自然發音（phonics），有例外，但大多數字都適用。
+guiding_questions:
+- 沒看過的字 bat、bed，你能不能猜出怎麼念？
+scenario: 親子共學：把 b、c、h、m 和 -at 組合起來念：bat、cat、hat、mat，看誰先找到一個真的不是字的組合。
+goal: 用自然發音拼讀沒學過的短母音單字（CVC，例如 bat、bed、pig）。
+review: 家長寫 10 個孩子沒看過的 CVC 字，孩子不看提示念出來，至少 8 個念對。
+formats:
+  slides: []
+  exercise: 目標：用自然發音拼讀沒學過的短母音單字（CVC，例如 bat、bed、pig）。　檢核：家長寫 10 個孩子沒看過的 CVC 字，孩子不看提示念出來，至少 8 個念對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

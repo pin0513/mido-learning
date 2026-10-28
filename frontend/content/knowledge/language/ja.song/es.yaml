@@ -1,0 +1,60 @@
+id: ja.song@es
+concept: ja.song
+title: 用歌謠和動畫聽日語
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B3
+  - C3
+  issues:
+  - 多元文化教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N5 的準備。
+prerequisites:
+- ja.hello@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 聽力
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 找適合的歌、顯示歌詞假名
+  human_experience:
+  - 跟著唱，感受節奏
+idea: 兒歌和動畫是最自然的日語輸入：重複多、有畫面。先享受聽，聽到熟悉的字就記下來。
+guiding_questions:
+- 你看過的日本卡通裡，有哪些字是你聽得懂的？
+scenario: 親子共學：選一首日文兒歌（例如「どんぐりころころ」），全家聽一週，比賽誰能跟唱最多句。
+goal: 跟著一首日語兒歌或動畫主題曲唱，聽出其中 5 個認得的字。
+review: 孩子跟唱一首日語歌，唱完寫出（或說出）聽到的 5 個字和意思；家長對照歌詞確認。
+formats:
+  slides: []
+  exercise: 目標：跟著一首日語兒歌或動畫主題曲唱，聽出其中 5 個認得的字。　檢核：孩子跟唱一首日語歌，唱完寫出（或說出）聽到的 5 個字和意思；家長對照歌詞確認。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

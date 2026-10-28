@@ -1,0 +1,58 @@
+id: en.abc@es
+concept: en.abc
+title: 字母與字母的聲音
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：初級的準備。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 發音與拼讀
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 念出字母名和字母音
+  human_experience:
+  - 自己摸索嘴型，聽出差別
+idea: 每個字母有名字，也有它在單字裡發出的聲音。名字和聲音分開記，後面拼讀才會順。
+guiding_questions:
+- 為什麼 A 有時候念「欸」，有時候念「ㄚ」？
+scenario: 親子共學：做 26 張字母卡，正面寫字母，背面畫一個開頭是這個聲音的東西，例如 b 是 ball。
+goal: 認得 26 個字母的大小寫，分得清字母名和字母在單字裡的聲音。
+review: 家長隨機指 10 個字母，孩子說出名字和聲音（例如 b 念 /b/），再說一個這個聲音開頭的字；至少 9 個全對。
+formats:
+  slides: []
+  exercise: 目標：認得 26 個字母的大小寫，分得清字母名和字母在單字裡的聲音。　檢核：家長隨機指 10 個字母，孩子說出名字和聲音（例如 b 念 /b/），再說一個這個聲音開頭的字；至少 9 個全對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

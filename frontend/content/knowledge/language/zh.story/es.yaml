@@ -1,0 +1,56 @@
+id: zh.story@es
+concept: zh.story
+title: 開頭、經過、結尾
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.sentence@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 把段落順序打亂讓孩子重排
+  human_experience:
+  - 決定故事最後要停在哪裡
+idea: 一篇文章先交代發生什麼，再寫經過和轉變，最後收在一個想法或感受。
+guiding_questions:
+- 故事少了結尾，會讓人有什麼感覺？
+scenario: 親子共學：用三張便利貼寫開頭、經過、結尾，排一排，再試試把順序換掉會怎樣。
+goal: 寫一篇有開頭、經過、結尾的短文，結尾收在一個想法或感受。
+review: 孩子寫 300 字短文，家長能用一句話說出開頭、經過、結尾各在講什麼，且結尾有一句感受或想法。
+formats:
+  slides: []
+  exercise: 目標：寫一篇有開頭、經過、結尾的短文，結尾收在一個想法或感受。　檢核：孩子寫 300 字短文，家長能用一句話說出開頭、經過、結尾各在講什麼，且結尾有一句感受或想法。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

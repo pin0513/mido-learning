@@ -1,0 +1,57 @@
+id: zh.sentence@es
+concept: zh.sentence
+title: 把話說完整
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.punct@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.prompt@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 找出錯字與漏掉的標點
+  human_experience:
+  - 自己說出想表達的那件事
+idea: 一句話要說清楚誰、做了什麼、怎麼樣；一段話只講一件事。標點符號幫讀的人換氣。
+guiding_questions:
+- 「我很開心」和「我撿到一片紅葉子，好開心」，哪句看得到畫面？
+scenario: 親子共學：親子各說一件今天的小事，先說一句「很普通」的版本，再一起補上誰、在哪裡、做了什麼。
+goal: 寫出有誰、在哪裡、做了什麼的完整句子，一段只講一件事。
+review: 孩子寫 5 句今天的小事，家長逐句檢查「誰、在哪裡、做了什麼」三項都有，5 句全過才打勾。
+formats:
+  slides: []
+  exercise: 目標：寫出有誰、在哪裡、做了什麼的完整句子，一段只講一件事。　檢核：孩子寫 5 句今天的小事，家長逐句檢查「誰、在哪裡、做了什麼」三項都有，5 句全過才打勾。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

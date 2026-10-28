@@ -1,0 +1,56 @@
+id: zh.letterfmt@sh
+concept: zh.letterfmt
+title: 書信與應用文格式
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.format@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 提供格式範本
+  human_experience:
+  - 決定語氣與稱呼是否得體
+idea: 書信有固定結構：稱謂、提稱語、正文、結尾敬辭、署名、日期；電子郵件還要有清楚的主旨。格式讓讀的人知道你尊重他，也找得到重點。
+guiding_questions:
+- 寫給校長的建議信，結尾只寫「謝謝」就夠了嗎？
+scenario: 親子共學：複習版：替一件真實的事寫一封 email 給老師或主管，請家人只看主旨和第一句，說出他知道要做什麼嗎。
+goal: 寫出格式正確的書信與 email：稱謂、主旨、結尾敬辭、署名、日期。
+review: 孩子寫一封真的要寄給老師的 email，家長只看主旨和第一句，就能說出要做什麼；格式五項都有才打勾。
+formats:
+  slides: []
+  exercise: 目標：寫出格式正確的書信與 email：稱謂、主旨、結尾敬辭、署名、日期。　檢核：孩子寫一封真的要寄給老師的 email，家長只看主旨和第一句，就能說出要做什麼；格式五項都有才打勾。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

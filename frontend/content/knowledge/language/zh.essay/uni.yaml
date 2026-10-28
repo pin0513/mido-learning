@@ -1,0 +1,52 @@
+id: zh.essay@uni
+concept: zh.essay
+title: 評論與論文：主張、證據、反方
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+prerequisites:
+- zh.reason@sh
+- zh.cite@uni
+links:
+  why:
+  - ph.argument@jh
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。跨學門連結：哲學「論證的結構：前提與結論」。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+  - 跨域思考
+ai:
+  delegable:
+  - 列出可能的反方論點
+  human_experience:
+  - 決定立場並為證據負責
+idea: 大學寫作要有清楚主張、可查的證據，並主動回應反方。引用要標明出處，自己的話和別人的話分清楚。
+guiding_questions:
+- 你最強的論點，最怕別人用什麼反駁？
+scenario: 親子共學：就一個公共議題寫 1,500 字評論，請家人扮演反方提三個問題，再改一版。
+goal: 寫一篇有主張、可查證據、並回應反方的評論。
+review: 就公共議題寫 1,500 字評論，家人扮演反方提 3 個問題；改後的版本至少回應其中 2 個，所有證據都附出處。
+formats:
+  slides: []
+  exercise: 目標：寫一篇有主張、可查證據、並回應反方的評論。　檢核：就公共議題寫 1,500 字評論，家人扮演反方提 3 個問題；改後的版本至少回應其中 2 個，所有證據都附出處。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

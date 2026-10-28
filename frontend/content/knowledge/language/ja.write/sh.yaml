@@ -1,0 +1,63 @@
+id: ja.write@sh
+concept: ja.write
+title: 寫日文短文：日記與明信片
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT 不考寫作。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- JLPT 的測驗科目不含寫作與口說；本點的檢核以家長對照字典為準。
+prerequisites:
+- ja.casual@sh
+- ja.kanji@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 檢查文法與用字錯誤
+  human_experience:
+  - 寫自己的生活與感受
+idea: 能說還要能寫。日記和明信片是最好的起點：今天做了什麼、感覺如何、問候對方。寫的時候注意假名與漢字的搭配、通篇敬體或常體一致。JLPT 不考寫作，這一點補上檢定沒量到的能力。
+guiding_questions:
+- 同一件事，寫給日本朋友和寫在日記裡，用字會一樣嗎？
+scenario: 親子共學：全家一起寫一張日語明信片寄給日本朋友或筆友，大人負責地址，孩子負責內容。
+goal: 用日語寫日記或明信片：5 句以上，假名與漢字寫對，敬體一致。
+review: 孩子寫一張 5 句以上的日語明信片給朋友，家長用字典或翻譯工具逐句對照，意思正確、通篇敬體或常體一致，錯字不超過 2 個。
+formats:
+  slides: []
+  exercise: 目標：用日語寫日記或明信片：5 句以上，假名與漢字寫對，敬體一致。　檢核：孩子寫一張 5 句以上的日語明信片給朋友，家長用字典或翻譯工具逐句對照，意思正確、通篇敬體或常體一致，錯字不超過 2 個。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

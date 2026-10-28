@@ -1,0 +1,57 @@
+id: zh.format@es
+concept: zh.format
+title: 稿紙格式：空格與換行
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.punct@es
+links:
+  why: []
+  how: []
+  related:
+  - zh.note@es
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 排版檢查
+  human_experience:
+  - 自己動手寫在稿紙上
+idea: 每段開頭空兩格；標點也占一格；句號、逗號等不放在一行的第一格，就寫在上一行最後一格裡。留言條和卡片也有固定的位置：稱呼、內容、署名、日期。
+guiding_questions:
+- 句號剛好落在新的一行第一格，要怎麼寫？
+scenario: 親子共學：複習版：拿一張 300 字稿紙抄一段課文，數數看有幾處標點差點落在行首，看你怎麼處理。
+goal: 在稿紙上寫一段話：段首空兩格，標點不落在行首。
+review: 抄寫 200 字課文到稿紙，家長檢查三件事：段首空兩格、每個標點都占一格、沒有標點在行首，全部做到才打勾。
+formats:
+  slides: []
+  exercise: 目標：在稿紙上寫一段話：段首空兩格，標點不落在行首。　檢核：抄寫 200 字課文到稿紙，家長檢查三件事：段首空兩格、每個標點都占一格、沒有標點在行首，全部做到才打勾。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

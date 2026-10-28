@@ -1,0 +1,57 @@
+id: zh.rhetoric@jh
+concept: zh.rhetoric
+title: 修辭入門：譬喻、轉化、排比、設問
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - B3
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.words@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 舉出各種修辭的例句
+  human_experience:
+  - 判斷這裡需不需要修辭
+idea: 譬喻是拿熟悉的東西比；轉化是把物當人寫；排比是三句以上同樣的句型；設問是自問自答。修辭要有理由才用，連續排比讀起來像口號，也是常見的 AI 腔。
+guiding_questions:
+- 「月亮害羞地躲進雲裡」，月亮真的會害羞嗎？
+scenario: 親子共學：複習版：在一篇文章裡找到排比，刪掉其中兩句，比較哪個版本比較有力。
+goal: 認出譬喻、轉化、排比、設問，並說出這裡用它的理由。
+review: 家長從課文挑 4 句，孩子說出各是哪一種修辭，再自己用其中兩種寫一句描寫家裡的東西，家長判斷用得自然。
+formats:
+  slides: []
+  exercise: 目標：認出譬喻、轉化、排比、設問，並說出這裡用它的理由。　檢核：家長從課文挑 4 句，孩子說出各是哪一種修辭，再自己用其中兩種寫一句描寫家裡的東西，家長判斷用得自然。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

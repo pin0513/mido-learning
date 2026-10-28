@@ -1,0 +1,62 @@
+id: en.para@jh
+concept: en.para
+title: 寫一段話：主題句與細節
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A3
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢初級・寫作。
+- 引用的框架只寫名稱（全民英檢初級寫作：單句寫作（句子改寫、合併、重組）50%、段落寫作（看圖表寫作）50%（LTTC）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- en.grammar@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.essay@sh
+link_notes: 框架：全民英檢初級寫作：單句寫作（句子改寫、合併、重組）50%、段落寫作（看圖表寫作）50%（LTTC）。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 指出文法錯誤、建議連接詞
+  human_experience:
+  - 決定自己要說的重點與細節
+idea: 一段英文通常先用一句話說重點（主題句），再用兩三句細節支持，最後收尾。
+guiding_questions:
+- 寫週末日記，第一句要先寫什麼？
+scenario: 親子共學：用 5 句英文寫「我的週末」：第一句說整體感覺，中間三句寫做了什麼，最後一句說下週想做什麼。
+goal: 寫出正確的單句（改寫、合併、重組），再寫一段有主題句與細節的短文。
+review: 家長從全民英檢初級官方寫作練習選 5 題單句寫作和 1 題看圖表寫段落，孩子 40 分鐘內完成；單句至少 4 題全對，段落回答了題目所有提問。
+formats:
+  slides: []
+  exercise: 目標：寫出正確的單句（改寫、合併、重組），再寫一段有主題句與細節的短文。　檢核：家長從全民英檢初級官方寫作練習選 5 題單句寫作和 1 題看圖表寫段落，孩子 40 分鐘內完成；單句至少 4 題全對，段落回答了題目所有提問。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

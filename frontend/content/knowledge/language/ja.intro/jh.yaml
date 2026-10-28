@@ -1,0 +1,61 @@
+id: ja.intro@jh
+concept: ja.intro
+title: 自我介紹與日常會話
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C2
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N5。
+prerequisites:
+- ja.particle@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - ja.listen@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 口說
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 扮演對方陪你練
+  human_experience:
+  - 面對真人開口
+idea: 一段日文自我介紹有固定的開頭和結尾：はじめまして……どうぞよろしく。中間放名字、學校、喜歡的事。
+guiding_questions:
+- 「はじめまして」之後，你想讓對方知道你的哪三件事？
+scenario: 親子共學：錄一段 30 秒的日文自我介紹影片，寄給一位會日文的親友或筆友，請對方回一句話。
+goal: 用日語自我介紹 1 分鐘，並回答對方 3 個簡單問題。
+review: 錄一段 1 分鐘日語自我介紹（名字、學校、興趣、喜歡的食物），再回答家長的 3 個問題；家長聽得懂、回答都切題。
+formats:
+  slides: []
+  exercise: 目標：用日語自我介紹 1 分鐘，並回答對方 3 個簡單問題。　檢核：錄一段 1 分鐘日語自我介紹（名字、學校、興趣、喜歡的食物），再回答家長的 3 個問題；家長聽得懂、回答都切題。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

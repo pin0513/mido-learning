@@ -4,8 +4,7 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AxisBrowser } from "@/components/kp/AxisBrowser";
 import { LicenseNotice } from "@/components/kp/LicenseNotice";
-import { filterOptions, launchedCatalog, loadCatalog, toCards, visibleCatalog } from "@/lib/content";
-import { isSoftSkillsEnabled } from "@/lib/kp/flags";
+import { filterOptions, isFolderLaunched, launchedCatalog, loadCatalog, toCards, visibleCatalog } from "@/lib/content";
 import { KP_SITE_ORIGIN, competencyPath } from "@/lib/kp/routes";
 
 export const dynamicParams = false;
@@ -33,7 +32,7 @@ export default async function CompetencyPage({ params }: { params: Promise<{ cod
   if (!item) notFound();
   const points = launchedCatalog(visibleCatalog(all)).indexes.byCompetency.get(code) ?? [];
   const options = filterOptions(all);
-  if (!isSoftSkillsEnabled()) options.folders = options.folders.filter((folder) => folder.id !== "soft-skills");
+  options.folders = options.folders.filter((folder) => isFolderLaunched(folder.id));
   const empty =
     points.length === 0
       ? `目前沒有知識點把 ${item.code} ${item.name} 標成核心素養。代碼只收到 A1–C3，之後補上就會出現在這裡。`

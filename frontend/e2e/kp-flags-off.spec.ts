@@ -31,4 +31,15 @@ test.describe("旗標關閉", () => {
     expect(response.status()).toBe(200);
     expect(await response.text()).not.toContain("/kp");
   });
+
+  test("語文知識點是 404，sitemap 沒有語文網址", async ({ request }) => {
+    const point = await request.get("/kp/zh.punct/es");
+    expect(point.status()).toBe(404);
+    expect(point.headers()["x-robots-tag"] ?? "").toContain("noindex");
+    const sitemap = await request.get("/sitemap.xml");
+    const xml = await sitemap.text();
+    for (const path of ["/kp/zh.", "/kp/en.", "/kp/ja.", "/kp/lg.", "/kp/discipline/language"]) {
+      expect(xml).not.toContain(path);
+    }
+  });
 });

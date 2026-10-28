@@ -1,0 +1,56 @@
+id: zh.sickline@jh
+concept: zh.sickline
+title: 病句：主語、贅字、語序、搭配
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.words@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 找出疑似病句
+  human_experience:
+  - 唸出來判斷通不通，自己改
+idea: 常見病句有四種：少了主語（透過……使我……）、贅字（大約……左右）、語序顛倒、搭配不當（提高……問題）。改法是把句子縮成「誰＋做什麼」，再看哪裡不通。
+guiding_questions:
+- 「透過這次活動，使我學到很多。」少了什麼？
+scenario: 親子共學：複習版：從新聞或公告裡找 3 個病句，親子各改一版，比較誰改得最短又最清楚。
+goal: 找出並改好四種常見病句：缺主語、贅字、語序、搭配不當。
+review: 家長從新聞或公告挑 5 句病句，孩子各改一版並說出是哪一種毛病，改得通順且不改原意的至少 4 句。
+formats:
+  slides: []
+  exercise: 目標：找出並改好四種常見病句：缺主語、贅字、語序、搭配不當。　檢核：家長從新聞或公告挑 5 句病句，孩子各改一版並說出是哪一種毛病，改得通順且不改原意的至少 4 句。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

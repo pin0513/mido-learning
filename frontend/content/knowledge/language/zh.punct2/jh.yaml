@@ -1,0 +1,57 @@
+id: zh.punct2@jh
+concept: zh.punct2
+title: 進階標點：頓號、分號、破折號
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.punct@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.proofread@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 標出一逗到底的段落
+  human_experience:
+  - 決定哪裡是一個完整的意思
+idea: 並列的詞用頓號；並列的句子用分號；破折號表示解釋或轉折；刪節號表示省略；書名號《》用於書名，篇名號〈〉用於篇名。最常見的毛病是「一逗到底」：整段只有逗號，最後一個句號。
+guiding_questions:
+- 「我買了蘋果，香蕉，橘子和葡萄。」哪幾個逗號該換成頓號？
+scenario: 親子共學：複習版：拿自己一篇舊作文，數一數句號有幾個；每 3 行少於 1 個句號，就找出可以斷開的地方。
+goal: 會用頓號、分號、破折號、引號、書名號與篇名號，不再一逗到底。
+review: 拿孩子一篇舊作文，數每 3 行的句號數；改寫後每 3 行至少 1 個句號，並至少正確用到頓號、書名號各一次，家長對照手冊核對。
+formats:
+  slides: []
+  exercise: 目標：會用頓號、分號、破折號、引號、書名號與篇名號，不再一逗到底。　檢核：拿孩子一篇舊作文，數每 3 行的句號數；改寫後每 3 行至少 1 個句號，並至少正確用到頓號、書名號各一次，家長對照手冊核對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

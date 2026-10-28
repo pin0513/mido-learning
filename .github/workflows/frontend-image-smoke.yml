@@ -117,6 +117,15 @@ jobs:
             echo "homepage shows soft-skills while the flag is unset"
             exit 1
           fi
+          code="$(curl -sS -o /tmp/zh-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/zh.punct/es)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/zh.punct/es returned ${code}, expected 404"
+            exit 1
+          fi
+          if curl -sf http://127.0.0.1:3000/sitemap.xml | grep -E '/kp/(zh|en|ja|lg)\.' >/dev/null; then
+            echo "sitemap lists language points while yuwen is unset"
+            exit 1
+          fi
           code="$(curl -sS -o /tmp/sk-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/sk.voice/es)"
           if [ "$code" != "404" ]; then
             echo "GET /kp/sk.voice/es returned ${code}, expected 404"
@@ -183,5 +192,92 @@ jobs:
           fi
           if ! curl -sf http://127.0.0.1:3001/sitemap.xml | grep -F "/kp/sk.voice/es" >/dev/null; then
             echo "sitemap missing published soft-skills point"
+            exit 1
+          fi
+          if ! grep -F "語文，準備中" /tmp/sk-on.html >/dev/null; then
+            echo "soft-skills homepage should keep 語文 as 準備中 while yuwen is unset"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/zh-soft.html -w '%{http_code}' http://127.0.0.1:3001/kp/zh.punct/es)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/zh.punct/es returned ${code}, expected 404 while yuwen is unset"
+            exit 1
+          fi
+
+      - name: Run image with yuwen flag
+        run: |
+          set -euo pipefail
+          docker run -d --name kp-image-yuwen -p 3002:3000 \
+            -e KP_ENABLED=true \
+            -e KP_HOME_ENABLED=true \
+            -e KP_SOFTSKILLS_ENABLED=true \
+            -e KP_YUWEN_ENABLED=true \
+            mido-frontend-smoke
+          cleanup() {
+            status=$?
+            if [ "$status" -ne 0 ]; then
+              echo "----- yuwen container logs -----"
+              docker logs kp-image-yuwen >&2 || true
+            fi
+            docker rm -f kp-image-yuwen >/dev/null 2>&1 || true
+            exit "$status"
+          }
+          trap cleanup EXIT
+          ready=0
+          for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+            if curl -sf http://127.0.0.1:3002/api/kp-launch | grep -q '"home":true'; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "yuwen image did not become ready"
+            exit 1
+          fi
+          check() {
+            local path="$1"
+            local code
+            code="$(curl -sS -o /tmp/yuwen-body.html -w '%{http_code}' "http://127.0.0.1:3002${path}")"
+            if [ "$code" != "200" ]; then
+              echo "GET ${path} returned ${code}"
+              exit 1
+            fi
+          }
+          check "/"
+          for branch in basic read classic write practical ai en-talk en-read en-bench ja-read ja-talk; do
+            check "/?d=language&b=${branch}"
+          done
+          code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:3002/?d=language&b=en")"
+          if [ "$code" != "308" ]; then
+            echo "GET b=en returned ${code}, expected 308"
+            exit 1
+          fi
+          code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:3002/?d=language&b=ja")"
+          if [ "$code" != "308" ]; then
+            echo "GET b=ja returned ${code}, expected 308"
+            exit 1
+          fi
+          check "/kp"
+          check "/kp/map"
+          check "/kp/zh.punct/es"
+          check "/kp/en.gept1/jh"
+          check "/kp/ja.hira/es"
+          check "/kp/lg.ai/sh"
+          check "/?d=soft-skills&b=talk"
+          if ! grep -F "不是官方換算" /tmp/yuwen-body.html >/dev/null; then
+            echo "soft-skills page was checked last; re-fetch en-talk for the mapping note"
+          fi
+          curl -sf "http://127.0.0.1:3002/?d=language&b=en-talk" -o /tmp/yuwen-en.html
+          if ! grep -F "不是官方換算" /tmp/yuwen-en.html >/dev/null; then
+            echo "en-talk missing the mapping note"
+            exit 1
+          fi
+          if grep -F "城市" /tmp/yuwen-en.html >/dev/null; then
+            echo "yuwen homepage contains 城市"
+            exit 1
+          fi
+          if ! curl -sf http://127.0.0.1:3002/sitemap.xml | grep -F "/kp/zh.punct/es" >/dev/null; then
+            echo "sitemap missing a language point"
             exit 1
           fi

@@ -1,0 +1,66 @@
+id: en.present@sh
+concept: en.present
+title: 英語口說：朗讀、回答與看圖敘述
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A3
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢中級・口說。
+- 引用的框架只寫名稱（全民英檢中級口說：朗讀短文、回答問題、看圖敘述（LTTC）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 與「溝通與解決問題」sk.present@sh 交界：上台結構與台風由 sk.present 負責；本點只管英文口說的語言能力，互列 related。
+prerequisites:
+- en.convo@jh
+- lg.ai@sh
+links:
+  why: []
+  how: []
+  related:
+  - sk.present@sh
+  deeper:
+  - en.emi@uni
+link_notes: 框架：全民英檢中級口說：朗讀短文、回答問題、看圖敘述（LTTC）。
+competency:
+  specialist:
+  - 口說
+  generalist:
+  - 溝通
+  - 領導
+ai:
+  delegable:
+  - 聽你的錄音給回饋、練問答
+  human_experience:
+  - 站在人前說，回答真正的問題
+idea: 全民英檢中級口說考朗讀短文、回答問題、看圖敘述。看圖時先說在哪裡、誰在做什麼，再說原因或感受。上台發表的結構與台風，交給「溝通與解決問題」的簡報；這一點專心把英文說清楚。
+guiding_questions:
+- 看一張圖用英文說 90 秒，你說得完嗎？
+scenario: 親子共學：選一個你在意的主題，準備 2 分鐘英文發表：錄影一次、看回放改一處，再錄第二次。
+goal: 朗讀短文、回答問題、看圖敘述，達到全民英檢中級口說的程度。
+review: 家長照全民英檢中級口說的形式考一次：朗讀 2 篇短文、回答 10 個問題（每題 15–30 秒）、看一張圖說 1 分半；錄音後對照官方評分說明，發音、內容、語法都在「大致清楚」以上。
+formats:
+  slides: []
+  exercise: 目標：朗讀短文、回答問題、看圖敘述，達到全民英檢中級口說的程度。　檢核：家長照全民英檢中級口說的形式考一次：朗讀 2 篇短文、回答 10 個問題（每題 15–30 秒）、看一張圖說 1 分半；錄音後對照官方評分說明，發音、內容、語法都在「大致清楚」以上。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

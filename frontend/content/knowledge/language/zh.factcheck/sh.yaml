@@ -1,0 +1,63 @@
+id: zh.factcheck@sh
+concept: zh.factcheck
+title: AI 給的資料要查證
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - AI 協作寫作
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  - 科技
+  core_competencies:
+  - A2
+  - B2
+  issues:
+  - 資訊教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.aicoach@jh
+- zh.medialit@sh
+links:
+  why:
+  - ph.aijudge@sh
+  how: []
+  related:
+  - ph.evidence@jh
+  deeper: []
+link_notes: 框架：—。跨學門連結：哲學「判斷 AI 的回答」。
+competency:
+  specialist:
+  - AI 協作寫作
+  generalist:
+  - 查證
+  - 媒體素養
+ai:
+  delegable:
+  - 提供可能的來源線索
+  human_experience:
+  - 打開原始來源親自核對
+idea: AI 會寫出看起來很真的錯誤引文、數字和出處。文章裡每個事實都要找到原始來源，查不到就刪掉。
+guiding_questions:
+- AI 給你一句名人名言，你怎麼知道他真的說過？
+scenario: 親子共學：請 AI 給你 5 句跟主題相關的名言或數據，逐一查證，標出真的、查不到的、錯的。
+goal: 文章裡每一個事實、數字與引文都找到原始來源，查不到就刪掉。
+review: 請 AI 給 5 則名言或數據，孩子逐一附上原始來源連結並標「真的、查不到、錯的」；家長抽點 2 個連結確認。
+formats:
+  slides: []
+  exercise: 目標：文章裡每一個事實、數字與引文都找到原始來源，查不到就刪掉。　檢核：請 AI 給 5 則名言或數據，孩子逐一附上原始來源連結並標「真的、查不到、錯的」；家長抽點 2 個連結確認。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

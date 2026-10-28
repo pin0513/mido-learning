@@ -1,0 +1,63 @@
+id: en.media@sh
+concept: en.media
+title: 讀英文新聞與真實素材
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B2
+  - C3
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢中級・閱讀。
+prerequisites:
+- en.readstrat@sh
+links:
+  why: []
+  how: []
+  related:
+  - zh.medialit@sh
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 媒體素養
+  - 查證
+ai:
+  delegable:
+  - 摘要新聞、解釋背景
+  human_experience:
+  - 比較來源、判斷報導角度
+idea: 真實素材（新聞、影片、說明書）不是為學生寫的，生字多、速度快。先挑自己有興趣的主題，從標題和圖表開始讀。
+guiding_questions:
+- 同一則新聞，英文報導和中文報導寫得一樣嗎？
+scenario: 親子共學：找同一則國際新聞的英文和中文報導，比較標題、第一句和引用的人有什麼不同。
+goal: 讀英文新聞、廣告、說明書等真實素材，比較英文與中文報導的角度。
+review: 找同一則國際新聞的英文與中文報導，孩子寫出兩則的標題、第一句與引用來源差在哪；家長點開兩則原文確認。
+formats:
+  slides: []
+  exercise: 目標：讀英文新聞、廣告、說明書等真實素材，比較英文與中文報導的角度。　檢核：找同一則國際新聞的英文與中文報導，孩子寫出兩則的標題、第一句與引用來源差在哪；家長點開兩則原文確認。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

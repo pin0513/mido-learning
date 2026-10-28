@@ -162,3 +162,48 @@ specialist:
   - id: problem_solving
     name: 問題解決
     disciplines: [soft-skills]
+  - id: basic_literacy
+    name: 基礎語文
+    disciplines: [language]
+  - id: reading_comprehension
+    name: 閱讀理解
+    disciplines: [language]
+  - id: classical_chinese
+    name: 文言與古典
+    disciplines: [language]
+  - id: writing
+    name: 寫作
+    disciplines: [language]
+  - id: practical_writing
+    name: 應用文寫作
+    disciplines: [language]
+  - id: ai_cowriting
+    name: AI 協作寫作
+    disciplines: [language]
+  - id: listening
+    name: 聽力
+    disciplines: [language]
+  - id: speaking_fl
+    name: 口說
+    disciplines: [language]
+  - id: phonics
+    name: 發音與拼讀
+    disciplines: [language]
+  - id: vocabulary
+    name: 字彙
+    disciplines: [language]
+  - id: grammar
+    name: 文法句構
+    disciplines: [language]
+  - id: writing_system
+    name: 文字系統
+    disciplines: [language]
+  - id: intercultural
+    name: 跨文化溝通
+    disciplines: [language]
+  - id: language_learning
+    name: 語言學習策略
+    disciplines: [language]
+  - id: translation
+    name: 翻譯
+    disciplines: [language]

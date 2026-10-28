@@ -1,0 +1,59 @@
+id: ja.particle@jh
+concept: ja.particle
+title: 助詞：は、が、を、に
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N5。
+prerequisites:
+- ja.desu@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文法句構
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 解釋助詞的差別
+  human_experience:
+  - 自己造句測試理解
+idea: 日文靠助詞標出每個詞的角色：誰做（が）、做什麼（を）、去哪裡（に）。助詞對了，語序稍微換也看得懂。
+guiding_questions:
+- 換一個小小的助詞，誰對誰做了什麼就變了？
+scenario: 親子共學：把一句話的助詞做成卡片蓋起來，猜猜哪個助詞放哪裡，再換一個看意思怎麼變。
+goal: 分清助詞は、が、を、に的基本用法，造出正確的句子。
+review: 家長給 8 個空格句，孩子填入正確的助詞並說出理由，至少 6 題對。
+formats:
+  slides: []
+  exercise: 目標：分清助詞は、が、を、に的基本用法，造出正確的句子。　檢核：家長給 8 個空格句，孩子填入正確的助詞並說出理由，至少 6 題對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

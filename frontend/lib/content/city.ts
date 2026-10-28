@@ -169,14 +169,14 @@ function crossesFolder(points: Map<string, KnowledgePoint>, source: KnowledgePoi
 export function buildCityMap(model: ContentModel): CityMapData {
   // 徑向圖維持四個學區。新學門的點不放進來，避免第五個扇形把既有座標擠開。
   const points = [...model.points]
-    .filter((point) => point.folder !== "soft-skills")
+    .filter((point) => point.folder !== "soft-skills" && point.folder !== "language")
     .sort((a, b) => a.id.localeCompare(b.id));
   const byId = new Map(points.map((point) => [point.id, point]));
   const stages = [...model.taxonomy.stageList].sort((a, b) => a.rank - b.rank).map((stage) => ({ id: stage.id, name: stage.name }));
   const layers = model.taxonomy.layerList.map((layer) => ({ id: layer.id, name: layer.name }));
   const layerName = new Map(layers.map((layer) => [layer.id, layer.name]));
 
-  const districtsSource = model.taxonomy.roots.filter((root) => root.contentFolder && root.contentFolder !== "soft-skills");
+  const districtsSource = model.taxonomy.roots.filter((root) => root.contentFolder && root.contentFolder !== "soft-skills" && root.contentFolder !== "language");
   const sector = 90;
   const districts: CityDistrict[] = districtsSource.map((root, index) => {
     const folder = root.contentFolder ?? root.id;
@@ -281,7 +281,7 @@ export function buildCityMap(model: ContentModel): CityMapData {
     "ai-applied": [100, 190],
   };
   const lots: CityLot[] = model.taxonomy.roots
-    .filter((root) => !root.contentFolder)
+    .filter((root) => !root.contentFolder || root.id === "language")
     .map((root) => ({
       id: root.id,
       name: root.name,
@@ -300,7 +300,7 @@ export function buildCityMap(model: ContentModel): CityMapData {
   }
 
   const landmarks: CityLandmark[] = [...model.paths]
-    .filter((path) => path.disciplineFolder !== "soft-skills")
+    .filter((path) => path.disciplineFolder !== "soft-skills" && path.disciplineFolder !== "language")
     .sort((a, b) => a.id.localeCompare(b.id))
     .map((path: LearningPath) => ({
       id: path.id,

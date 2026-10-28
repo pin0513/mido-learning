@@ -1,0 +1,53 @@
+id: en.academic@uni
+concept: en.academic
+title: 學術英文：讀論文
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：托福・閱讀。
+prerequisites:
+- en.media@sh
+- en.middle@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 查證
+ai:
+  delegable:
+  - 摘要論文、解釋術語
+  human_experience:
+  - 判斷研究方法可不可信
+idea: 論文有固定的結構：摘要、引言、方法、結果、討論。先讀摘要和結論判斷要不要讀，再挑需要的部分細讀。
+guiding_questions:
+- 一篇 20 頁的論文，要先讀哪幾段？
+scenario: 親子共學：找一篇和你興趣相關的英文論文，只讀摘要和結論，用三句中文說它發現了什麼。
+goal: 讀英文學術論文：先讀摘要和結論決定要不要細讀，再挑需要的部分。
+review: 選一篇和興趣相關的英文論文，用三句中文說出研究問題、方法、發現；家人對照摘要確認沒有說錯。
+formats:
+  slides: []
+  exercise: 目標：讀英文學術論文：先讀摘要和結論決定要不要細讀，再挑需要的部分。　檢核：選一篇和興趣相關的英文論文，用三句中文說出研究問題、方法、發現；家人對照摘要確認沒有說錯。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

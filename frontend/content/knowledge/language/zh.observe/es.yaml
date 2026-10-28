@@ -1,0 +1,57 @@
+id: zh.observe@es
+concept: zh.observe
+title: 用五感找細節
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.sentence@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+  - 提問
+ai:
+  delegable:
+  - 把孩子口述的觀察整理成清單
+  human_experience:
+  - 親自去看、去聽、去聞
+idea: 眼睛、耳朵、鼻子、手、嘴巴都能收集材料。寫作前先收集，文章才有只屬於你的東西。
+guiding_questions:
+- 下雨天，除了「下雨了」，你還聽到、聞到什麼？
+scenario: 親子共學：在家附近走 10 分鐘，每人用五感各記 2 個細節，回家合寫一段。
+goal: 用五感各找至少一個細節，寫進一段描寫裡。
+review: 散步 10 分鐘後孩子寫一段描寫，家長在段落裡找到看、聽、聞、摸、嘗至少 4 種感官的細節。
+formats:
+  slides: []
+  exercise: 目標：用五感各找至少一個細節，寫進一段描寫裡。　檢核：散步 10 分鐘後孩子寫一段描寫，家長在段落裡找到看、聽、聞、摸、嘗至少 4 種感官的細節。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

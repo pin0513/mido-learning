@@ -1,0 +1,55 @@
+id: en.emi@uni
+concept: en.emi
+title: 全英語授課與討論（EMI）
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：托福・聽力與口說。
+prerequisites:
+- en.worldeng@uni
+- en.academic@uni
+links:
+  why: []
+  how: []
+  related:
+  - sk.discuss@jh
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 聽力
+  - 口說
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 整理術語表、做課程摘要
+  human_experience:
+  - 在討論裡提出自己的看法
+idea: 大學的全英語授課（EMI）重點在學專業，不在英文本身：課前先讀術語、課中抓架構、課後用英文討論。
+guiding_questions:
+- 用英文上專業課，聽不懂術語怎麼辦？
+scenario: 親子共學：挑一堂公開的英文大學課程影片，課前列 10 個術語，看完用英文寫三句重點。
+goal: 上全英語授課（EMI）：課前讀術語、課中抓架構、課後用英文討論。
+review: 看一堂公開的英文大學課程影片，課前列 10 個術語，看完用英文寫 3 句重點並錄 1 分鐘口頭摘要；家人對照影片確認重點正確。
+formats:
+  slides: []
+  exercise: 目標：上全英語授課（EMI）：課前讀術語、課中抓架構、課後用英文討論。　檢核：看一堂公開的英文大學課程影片，課前列 10 個術語，看完用英文寫 3 句重點並錄 1 分鐘口頭摘要；家人對照影片確認重點正確。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

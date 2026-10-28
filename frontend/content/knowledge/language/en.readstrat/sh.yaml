@@ -1,0 +1,62 @@
+id: en.readstrat@sh
+concept: en.readstrat
+title: 閱讀策略：讀出言外之意
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：學測英文・閱讀測驗。
+prerequisites:
+- en.chapter@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 查證
+  - 提問
+ai:
+  delegable:
+  - 解釋難句、整理文章架構
+  human_experience:
+  - 自己判斷作者的立場與可信度
+idea: 讀長文要會推論：作者的立場、語氣、舉這個例子的目的。用略讀抓架構，再用細讀找證據。
+guiding_questions:
+- 作者沒直接寫出來的意思，你怎麼讀出來？
+scenario: 親子共學：讀一篇英文評論，用螢光筆畫出作者的立場句，再找兩句支持它的證據。
+goal: 讀長文時用略讀抓架構、細讀找證據，推論作者沒寫出來的立場。
+review: 孩子讀一篇 400 字英文評論，畫出作者立場句並找 2 句證據；再做一組學測英文閱讀測驗，答對 7 成以上。
+formats:
+  slides: []
+  exercise: 目標：讀長文時用略讀抓架構、細讀找證據，推論作者沒寫出來的立場。　檢核：孩子讀一篇 400 字英文評論，畫出作者立場句並找 2 句證據；再做一組學測英文閱讀測驗，答對 7 成以上。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

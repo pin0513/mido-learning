@@ -1,0 +1,63 @@
+id: zh.mixed@sh
+concept: zh.mixed
+title: 混合題：用自己的話寫出依據
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（學測國綜混合題），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- 混合題題型與作答規定以大考中心當年度考試說明與試題為準。
+prerequisites:
+- zh.multitext@jh
+- zh.viewpoint@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：學測國綜混合題。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 溝通
+  - 查證
+ai:
+  delegable:
+  - 檢查答案是否回應題目
+  human_experience:
+  - 用自己的話組織答案
+idea: 學測國綜有混合題，要求用文字回答。答題順序：先直接回答題目，再寫「依據文中……」，字數照規定，不抄整段。
+guiding_questions:
+- 選擇題選對了，寫成一句話的答案你也寫得出來嗎？
+scenario: 親子共學：大人和孩子各寫同一題的答案，交換看誰的「依據」比較清楚。
+goal: 寫混合題的非選答案：用自己的話作答，並引出文中依據。
+review: 家長從學測國綜歷屆試題挑 2 題非選擇題，孩子限時作答；對照官方參考答案，每題都有「答案＋依據」兩部分。
+formats:
+  slides: []
+  exercise: 目標：寫混合題的非選答案：用自己的話作答，並引出文中依據。　檢核：家長從學測國綜歷屆試題挑 2 題非選擇題，孩子限時作答；對照官方參考答案，每題都有「答案＋依據」兩部分。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

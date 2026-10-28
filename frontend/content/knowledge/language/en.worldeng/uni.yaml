@@ -1,0 +1,54 @@
+id: en.worldeng@uni
+concept: en.worldeng
+title: 世界英語：口音與溝通
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：多益聽力（多種口音）。
+prerequisites:
+- lg.culture@uni
+- en.toeic@uni
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 聽力
+  - 跨文化溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 產生不同口音的聽力材料
+  human_experience:
+  - 和不同國家的人真的對話
+idea: 全世界說英文的人，多數不是母語者。溝通的目標是讓人聽懂，不是模仿某一種口音；聽得懂不同口音，才走得出去。
+guiding_questions:
+- 印度、新加坡、英國的英文，聽起來不一樣，哪一種才標準？
+scenario: 親子共學：聽五個不同國家的人用英文介紹自己的城鎮，記下最難懂和最好懂的，說說為什麼。
+goal: 聽懂不同口音的英文，目標是讓人聽懂，不是模仿某一種口音。
+review: 聽 5 段不同國家講者的英文（例如美、英、澳、印度、新加坡），每段寫 2 句重點；家人對照逐字稿，至少 4 段的重點正確。
+formats:
+  slides: []
+  exercise: 目標：聽懂不同口音的英文，目標是讓人聽懂，不是模仿某一種口音。　檢核：聽 5 段不同國家講者的英文（例如美、英、澳、印度、新加坡），每段寫 2 句重點；家人對照逐字稿，至少 4 段的重點正確。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

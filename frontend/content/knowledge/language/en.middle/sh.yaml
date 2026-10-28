@@ -1,0 +1,66 @@
+id: en.middle@sh
+concept: en.middle
+title: 讀美國中學讀本：小說與說明文
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：美國 6–8 年級讀本。
+- 引用的框架只寫名稱（Common Core ELA（6–12 年級各科讀寫素養）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+- 「美國 6–8 年級讀本」是程度描述，請用出版社標示的年級或閱讀級數選書；本站不指定書目。
+prerequisites:
+- en.readstrat@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.academic@uni
+link_notes: 框架：Common Core ELA（6–12 年級各科讀寫素養）。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 查證
+ai:
+  delegable:
+  - 解釋難句與文化背景
+  human_experience:
+  - 讀完整本書並形成自己的看法
+idea: 美國的共同核心州立標準（Common Core ELA）從六年級開始，要求在歷史、科學等科目也讀資訊文本，重視細讀與「用證據支持主張」。台灣高中生讀美國中學程度的書，正好銜接全民英檢中級的閱讀：故事、信件、說明書與短文。
+guiding_questions:
+- 美國國中生讀的小說，跟你的課本差在哪裡？
+scenario: 親子共學：親子挑一本改編成電影的青少年小說，讀完再一起看電影，比較哪裡改了、為什麼。
+goal: 讀美國中學（6–8 年級）程度的青少年小說與說明文，找出主張與證據。
+review: 孩子讀完一本 6–8 年級程度的青少年小說，寫 120 字英文心得；再讀一篇同程度的說明文，畫出主張句和 2 個證據，家長確認證據真的支持主張。
+formats:
+  slides: []
+  exercise: 目標：讀美國中學（6–8 年級）程度的青少年小說與說明文，找出主張與證據。　檢核：孩子讀完一本 6–8 年級程度的青少年小說，寫 120 字英文心得；再讀一篇同程度的說明文，畫出主張句和 2 個證據，家長確認證據真的支持主張。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,59 @@
+id: zh.mainidea@es
+concept: zh.mainidea
+title: 段落大意與全文主旨
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.retrieve@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 產生摘要供對照
+  human_experience:
+  - 自己濃縮成一句話
+idea: 每段先找「這段主要在說誰、說什麼」，再把各段串起來，就是全文主旨。主旨常出現在開頭或結尾，也可能要自己歸納。
+guiding_questions:
+- 一篇文章刪到只剩一句話，你會留哪一句？
+scenario: 親子共學：讀完一本繪本或一篇故事，全家各寫一句「這本書在說什麼」，比比看誰最短又沒漏重點。
+goal: 用一句話說出每段在講什麼，再用一句話說出全文主旨。
+review: 孩子讀一篇 4 段的短文，寫出 4 句段落大意和 1 句主旨；家長讀原文後同意主旨句沒有漏掉重點。
+formats:
+  slides: []
+  exercise: 目標：用一句話說出每段在講什麼，再用一句話說出全文主旨。　檢核：孩子讀一篇 4 段的短文，寫出 4 句段落大意和 1 句主旨；家長讀原文後同意主旨句沒有漏掉重點。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

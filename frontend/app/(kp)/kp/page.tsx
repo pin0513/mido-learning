@@ -11,7 +11,7 @@ import {
   stageName,
   visibleCatalog,
 } from "@/lib/content";
-import { isSoftSkillsEnabled } from "@/lib/kp/flags";
+import { isFolderLaunched } from "@/lib/content";
 import { KP_SITE_ORIGIN, competencyPath, disciplinePath, learningPathPath, stagePath } from "@/lib/kp/routes";
 
 const shell = "mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6";
@@ -35,7 +35,7 @@ export default async function KnowledgeMapPage() {
   const visible = launchedCatalog(visibleCatalog(all));
   const roots = all.taxonomy.roots
     .filter((root) => root.contentFolder && root.idPrefix)
-    .filter((root) => isSoftSkillsEnabled() || root.contentFolder !== "soft-skills");
+    .filter((root) => isFolderLaunched(root.contentFolder ?? ""));
   if (roots.length === 0) notFound();
 
   const countCell = (layerId: string, stageId: string) =>

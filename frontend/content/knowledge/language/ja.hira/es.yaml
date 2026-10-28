@@ -1,0 +1,60 @@
+id: ja.hira@es
+concept: ja.hira
+title: 平假名五十音：あいうえお
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N5 的準備。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - ja.kanji@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文字系統
+  - 發音與拼讀
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 念出每個假名、出小測驗
+  human_experience:
+  - 自己動手寫，記住筆順
+idea: 日文的基本文字是平假名。五十音表橫看是同一個子音，直看是同一個母音，抓到規律就不用死背。
+guiding_questions:
+- あいうえお排成一張表，你能找到它的規律嗎？
+scenario: 親子共學：做一張空白五十音表，每天填一行，孩子念、大人寫，一個月填滿整張。
+goal: 認得並寫出 46 個平假名，念得出每個音。
+review: 家長隨機指 15 個平假名，孩子念出來，再聽家長念 5 個音寫出平假名；20 題至少 18 題對。
+formats:
+  slides: []
+  exercise: 目標：認得並寫出 46 個平假名，念得出每個音。　檢核：家長隨機指 15 個平假名，孩子念出來，再聽家長念 5 個音寫出平假名；20 題至少 18 題對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

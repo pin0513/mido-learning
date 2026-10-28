@@ -1,0 +1,58 @@
+id: zh.dictionary@es
+concept: zh.dictionary
+title: 查字典：部首與注音
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.zhuyin@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 提問
+  - 查證
+ai:
+  delegable:
+  - 線上字典快速查詢
+  human_experience:
+  - 先猜部首，再驗證自己猜得對不對
+idea: 不會念的字用部首查：先找部首，再數部首以外的筆畫。會念不會寫的字用注音查。查到後順便看例詞，知道這個字怎麼用。
+guiding_questions:
+- 「鯨」不會念，用部首查，要先翻哪一部？
+scenario: 親子共學：複習版：家長和孩子比賽，各用紙本字典和教育部線上《國語辭典》查同三個字，比較兩種方法。
+goal: 不會念的字用部首查，會念不會寫的字用注音查，三分鐘內查到。
+review: 家長出 3 個生字（1 個只給字形、2 個只給讀音），孩子用紙本或線上字典各在 3 分鐘內查到，並說出一個例詞。
+formats:
+  slides: []
+  exercise: 目標：不會念的字用部首查，會念不會寫的字用注音查，三分鐘內查到。　檢核：家長出 3 個生字（1 個只給字形、2 個只給讀音），孩子用紙本或線上字典各在 3 分鐘內查到，並說出一個例詞。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

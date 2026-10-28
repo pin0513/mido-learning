@@ -1,0 +1,49 @@
+id: zh.voice@uni
+concept: zh.voice
+title: 找到自己的聲音
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+prerequisites:
+- zh.feeling@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 分析你常用的詞與句長
+  human_experience:
+  - 決定什麼樣的聲音是自己
+idea: 聲音來自你的用詞、句子長短和節奏，以及你在意的事。長短句交錯、少用套語、寫你真的會說的話。
+guiding_questions:
+- 唸出來時，哪一句不像你會說的話？
+scenario: 親子共學：把一篇自己的文章唸出來錄音，圈出唸起來卡卡、不像自己的句子，改寫到唸得順。
+goal: 寫出唸起來像自己的文字：用詞、句長與節奏是自己的。
+review: 錄音朗讀自己的一篇文章，圈出唸起來卡卡的句子並改寫；家人聽改後版本，說得出哪裡「像你」。
+formats:
+  slides: []
+  exercise: 目標：寫出唸起來像自己的文字：用詞、句長與節奏是自己的。　檢核：錄音朗讀自己的一篇文章，圈出唸起來卡卡的句子並改寫；家人聽改後版本，說得出哪裡「像你」。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

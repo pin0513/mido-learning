@@ -1,0 +1,52 @@
+id: ja.keigo@uni
+concept: ja.keigo
+title: 敬語：尊敬語與謙讓語
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 基準標籤：JLPT N2。
+prerequisites:
+- ja.casual@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文法句構
+  - 跨文化溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 把句子改成敬語
+  human_experience:
+  - 在真實場合判斷分寸
+idea: 敬語分尊敬語（抬高對方）和謙讓語（降低自己）。「行く」對客人說「いらっしゃる」，說自己用「参る」。
+guiding_questions:
+- 為什麼對客人說話時，連「去」都要換一個字？
+scenario: 親子共學：把一段打工的日文對話（點餐、結帳）改成標準敬語，再對照真實店員的說法。
+goal: 分清尊敬語與謙讓語，在正式場合用對。
+review: 家長給 5 個情境（對客戶、對老師），學習者各說一句正確的敬語，並說出是尊敬語還是謙讓語；至少 4 句對。
+formats:
+  slides: []
+  exercise: 目標：分清尊敬語與謙讓語，在正式場合用對。　檢核：家長給 5 個情境（對客戶、對老師），學習者各說一句正確的敬語，並說出是尊敬語還是謙讓語；至少 4 句對。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

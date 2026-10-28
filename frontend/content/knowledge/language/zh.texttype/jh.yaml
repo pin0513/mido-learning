@@ -1,0 +1,60 @@
+id: zh.texttype@jh
+concept: zh.texttype
+title: 文本類型：記敘、抒情、說明、議論
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（108 國語文學習內容 B 文本表述（Ba 記敘、Bb 抒情、Bc 說明、Bd 議論、Be 應用）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.mainidea@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：108 國語文學習內容 B 文本表述（Ba 記敘、Bb 抒情、Bc 說明、Bd 議論、Be 應用）。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 媒體素養
+ai:
+  delegable:
+  - 把文章分類並說明特徵
+  human_experience:
+  - 自己判斷並說出證據
+idea: 108 國語文的學習內容把文本分成記敘、抒情、說明、議論與應用。記敘看事件經過，抒情看情感，說明看順序與方法，議論看論點與論據。先認出類型，就知道要找什麼。
+guiding_questions:
+- 同樣寫颱風，新聞報導和一首詩，讀法一樣嗎？
+scenario: 親子共學：一起翻當天報紙或網站，各找一篇記敘、說明、議論文，互相說出判斷的理由。
+goal: 分辨記敘、抒情、說明、議論四種文本，並說出各自怎麼讀。
+review: 家長給 4 段不同類型的短文，孩子判斷類型並各說一個證據（例如「有論點和例子，是議論」），4 段都對。
+formats:
+  slides: []
+  exercise: 目標：分辨記敘、抒情、說明、議論四種文本，並說出各自怎麼讀。　檢核：家長給 4 段不同類型的短文，孩子判斷類型並各說一個證據（例如「有論點和例子，是議論」），4 段都對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

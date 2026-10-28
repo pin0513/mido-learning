@@ -1,0 +1,56 @@
+id: zh.words@jh
+concept: zh.words
+title: 詞性與成語：用對地方
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.dictionary@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 查證
+ai:
+  delegable:
+  - 查成語出處與釋義
+  human_experience:
+  - 判斷這個詞放在這裡準不準
+idea: 同一個詞要放對位置：名詞、動詞、形容詞各有用法。成語先查清楚意思再用，例如「差強人意」是勉強讓人滿意，不是很好。
+guiding_questions:
+- 「他的演講差強人意，大家都很滿意。」哪裡怪怪的？
+scenario: 親子共學：複習版：每人找一個自己以前用錯的成語，用教育部《成語典》查原意，再各造一個正確的句子。
+goal: 分辨詞性，把成語用在對的情境；不確定就先查再用。
+review: 家長給 5 個常被用錯的成語（例如差強人意、首當其衝），孩子先各造一句，再查教育部《成語典》自己訂正，最後 5 句都用對。
+formats:
+  slides: []
+  exercise: 目標：分辨詞性，把成語用在對的情境；不確定就先查再用。　檢核：家長給 5 個常被用錯的成語（例如差強人意、首當其衝），孩子先各造一句，再查教育部《成語典》自己訂正，最後 5 句都用對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,59 @@
+id: zh.revise@jh
+concept: zh.revise
+title: 改稿：從 4 級分到 6 級分
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（會考寫作評分規準四向度），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- zh.structure@jh
+- zh.punct2@jh
+- zh.sickline@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：會考寫作評分規準四向度。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 找錯別字與標點錯誤
+  human_experience:
+  - 判斷哪個詞最精確、最像自己
+idea: 4 級分常見「冗詞贅句；句型較無變化」和一些錯別字。改稿就是刪贅字、換精確的詞、變化句型、檢查標點。
+guiding_questions:
+- 哪一句刪掉，文章反而更好？
+scenario: 親子共學：拿自己一篇舊作文，對照會考規準四向度，各找一個可以升級的地方，改完唸給家人聽。
+goal: 對照會考寫作四向度（立意取材、結構組織、遣詞造句、錯別字格式標點）改一篇舊作。
+review: 孩子在舊作文上用四種顏色各標一處要升級的地方並改寫；家長比較前後兩版，至少 3 處確實變好。
+formats:
+  slides: []
+  exercise: 目標：對照會考寫作四向度（立意取材、結構組織、遣詞造句、錯別字格式標點）改一篇舊作。　檢核：孩子在舊作文上用四種顏色各標一處要升級的地方並改寫；家長比較前後兩版，至少 3 處確實變好。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

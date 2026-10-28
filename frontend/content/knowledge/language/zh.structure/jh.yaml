@@ -1,0 +1,56 @@
+id: zh.structure@jh
+concept: zh.structure
+title: 段落與轉折
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.material@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 標出段落之間跳得太快的地方
+  human_experience:
+  - 決定文章的順序與重心
+idea: 六級分是「結構完整，脈絡分明，內容前後連貫」。每段有一個任務，段與段之間用轉折句接起來。
+guiding_questions:
+- 從「事情經過」跳到「我學到什麼」，中間少了什麼？
+scenario: 親子共學：把一篇文章每段濃縮成一句話，排成大綱，看看哪兩段之間接不起來。
+goal: 每段一個任務，段與段之間用轉折句接起來。
+review: 孩子把一篇自己的作文每段濃縮成一句做成大綱，家長讀大綱能順著讀下去，沒有兩段接不起來。
+formats:
+  slides: []
+  exercise: 目標：每段一個任務，段與段之間用轉折句接起來。　檢核：孩子把一篇自己的作文每段濃縮成一句做成大綱，家長讀大綱能順著讀下去，沒有兩段接不起來。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

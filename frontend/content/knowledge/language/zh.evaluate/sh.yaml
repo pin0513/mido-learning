@@ -1,0 +1,62 @@
+id: zh.evaluate@sh
+concept: zh.evaluate
+title: 評鑑：形式、手法與好在哪裡
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B3
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（學測國綜測驗目標 B4、B5），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.viewpoint@jh
+- zh.rhetoric@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.digest@uni
+link_notes: 框架：學測國綜測驗目標 B4、B5。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 列出可能的寫作手法
+  human_experience:
+  - 用自己的閱讀感受下判斷
+idea: 學測國綜的測驗目標包含「形式的推究與分析」與「結合文學、文化知識的詮釋與鑑賞」。評鑑要具體：說出手法（例如以小見大、對比），引原文為證，再說效果與限制。
+guiding_questions:
+- 你說這篇「寫得好」，好在哪一句？
+scenario: 親子共學：全家各挑一篇最近讀過最喜歡的文章，用「手法、效果、引文」三格向家人推薦。
+goal: 評鑑一篇文章：指出它用了什麼寫法、達到什麼效果、還有哪裡不足。
+review: 孩子寫 150 字短評，包含 1 個寫作手法、1 個效果、1 個不足並各引一句原文；家長確認三項都有引文。
+formats:
+  slides: []
+  exercise: 目標：評鑑一篇文章：指出它用了什麼寫法、達到什麼效果、還有哪裡不足。　檢核：孩子寫 150 字短評，包含 1 個寫作手法、1 個效果、1 個不足並各引一句原文；家長確認三項都有引文。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

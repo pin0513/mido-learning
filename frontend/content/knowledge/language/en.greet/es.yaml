@@ -1,0 +1,62 @@
+id: en.greet@es
+concept: en.greet
+title: 打招呼與自我介紹
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C2
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：初級口說的起點。
+prerequisites:
+- lg.listen@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.convo@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 口說
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 示範發音、扮演對話的另一方
+  human_experience:
+  - 真的對一個人開口，看對方的反應
+idea: 用 Hello、My name is…、I like… 這幾句，就能和人開始聊天。說的時候看著對方、面帶微笑，也是溝通的一部分。
+guiding_questions:
+- 跟外國朋友見面，第一句話要說什麼？
+scenario: 親子共學：全家輪流當「新同學」，用三句英文介紹自己：名字、幾歲、喜歡什麼，再問對方一個問題。
+goal: 用三句英文打招呼和自我介紹，並問對方一個問題。
+review: 錄一段 30 秒影片：打招呼、名字、喜歡的東西、問對方一個問題；家長確認四項都有且聽得懂。這也是全民英檢初級口說「簡單地自我介紹」的起點。
+formats:
+  slides: []
+  exercise: 目標：用三句英文打招呼和自我介紹，並問對方一個問題。　檢核：錄一段 30 秒影片：打招呼、名字、喜歡的東西、問對方一個問題；家長確認四項都有且聽得懂。這也是全民英檢初級口說「簡單地自我介紹」的起點。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

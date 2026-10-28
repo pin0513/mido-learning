@@ -1,0 +1,59 @@
+id: zh.social@sh
+concept: zh.social
+title: 社群文案：短、準、不誇大
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 應用文案
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - B2
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.headline@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.audience@uni
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 應用文寫作
+  generalist:
+  - 媒體素養
+  - 溝通
+ai:
+  delegable:
+  - 產生多種版本供比較
+  human_experience:
+  - 決定目的、語氣與界線
+idea: 社群文案先決定目的與對象，第一句就說重點，行動呼籲要具體。不誇大、不用別人的圖不標來源。
+guiding_questions:
+- 一則貼文要讓人按讚，還是讓人去做一件事？
+scenario: 親子共學：替社團或自主學習成果寫一則 100 字貼文，各寫「求讚」版和「找人參加」版，比較差別。
+goal: 寫社群文案：先決定目的與對象，第一句說重點，行動呼籲具體。
+review: 孩子寫同一活動的「求讚版」與「找人報名版」兩則 100 字貼文，家長能說出兩則的目的差別，且報名版有具體的時間與方法。
+formats:
+  slides: []
+  exercise: 目標：寫社群文案：先決定目的與對象，第一句說重點，行動呼籲具體。　檢核：孩子寫同一活動的「求讚版」與「找人報名版」兩則 100 字貼文，家長能說出兩則的目的差別，且報名版有具體的時間與方法。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,58 @@
+id: ja.kata@jh
+concept: ja.kata
+title: 片假名與外來語
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N5。
+prerequisites:
+- ja.hira@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文字系統
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 把片假名轉成羅馬拼音
+  human_experience:
+  - 自己念出來猜意思
+idea: 片假名多半用來寫外來語。很多字是英文改成日語的發音，念出來就能猜到意思。
+guiding_questions:
+- 「コーヒー」念起來像哪個英文字？
+scenario: 親子共學：在家找 10 樣日本商品的包裝，圈出片假名，念出來猜它原本是哪個英文字。
+goal: 讀寫片假名，認出外來語原本是哪個英文字。
+review: 家長給 10 個片假名外來語（例如 コンビニ、テレビ），孩子念出並猜出原本的英文，至少 8 個對。
+formats:
+  slides: []
+  exercise: 目標：讀寫片假名，認出外來語原本是哪個英文字。　檢核：家長給 10 個片假名外來語（例如 コンビニ、テレビ），孩子念出並猜出原本的英文，至少 8 個對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,64 @@
+id: zh.medialit@sh
+concept: zh.medialit
+title: 媒體識讀：誰寫的、為什麼這樣寫
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B2
+  - C1
+  issues:
+  - 閱讀素養教育
+  - 資訊教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（媒體素養），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.viewpoint@jh
+links:
+  why:
+  - ph.evidence@jh
+  how: []
+  related:
+  - it.media@jh
+  deeper: []
+link_notes: 框架：媒體素養。跨學門連結：哲學「證據與來源」。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 媒體素養
+  - 查證
+ai:
+  delegable:
+  - 整理不同媒體的報導差異
+  human_experience:
+  - 判斷可信度並說出理由
+idea: 媒體文本都有作者和目的。讀的時候追問：誰產製、想讓誰看、用了哪些字和圖引導、證據是否可查、哪些人的觀點沒有出現。這是閱讀理解用在日常資訊上。
+guiding_questions:
+- 同一件事，兩家媒體的標題為什麼差那麼多？
+scenario: 親子共學：挑同一事件的兩則報導，全家各負責一格四格表，最後一起決定哪一則比較可信、為什麼。
+goal: 讀一則新聞或貼文時問四件事：誰寫的、為了什麼、證據在哪、少了誰的聲音。
+review: 孩子挑一則熱門貼文或新聞，填一張四格表（作者、目的、證據、缺少的觀點）並附原始來源連結；家長點開連結確認來源存在。
+formats:
+  slides: []
+  exercise: 目標：讀一則新聞或貼文時問四件事：誰寫的、為了什麼、證據在哪、少了誰的聲音。　檢核：孩子挑一則熱門貼文或新聞，填一張四格表（作者、目的、證據、缺少的觀點）並附原始來源連結；家長點開連結確認來源存在。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

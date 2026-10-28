@@ -1,0 +1,64 @@
+id: zh.viewpoint@jh
+concept: zh.viewpoint
+title: 作者的觀點與寫作目的
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 閱讀理解
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（會考國文「句段篇章的理解與賞析」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.clue@es
+- zh.texttype@jh
+links:
+  why:
+  - ph.fact@es
+  how: []
+  related: []
+  deeper:
+  - zh.evaluate@sh
+link_notes: 框架：會考國文「句段篇章的理解與賞析」。跨學門連結：哲學「事實還是意見？」。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 查證
+  - 媒體素養
+ai:
+  delegable:
+  - 摘要觀點與論據
+  human_experience:
+  - 判斷自己同不同意，並說出理由
+idea: 會考國文考「句段篇章的理解與賞析」，常問目的、觀點、寫作特色。讀的時候問三件事：作者想讓我知道或相信什麼？他用什麼支持？哪些是事實、哪些是他的看法？
+guiding_questions:
+- 作者寫這篇文章，是想告訴你、說服你，還是讓你感動？
+scenario: 親子共學：親子各讀同一則社論，各自寫一句「作者想要我……」，對照後討論差在哪裡。
+goal: 說出作者的觀點與寫作目的，並分清事實與意見。
+review: 孩子讀一篇 600 字評論，畫出作者觀點句、標出 2 個事實與 2 個意見；家長核對後至少 3 處正確。
+formats:
+  slides: []
+  exercise: 目標：說出作者的觀點與寫作目的，並分清事實與意見。　檢核：孩子讀一篇 600 字評論，畫出作者觀點句、標出 2 個事實與 2 個意見；家長核對後至少 3 處正確。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

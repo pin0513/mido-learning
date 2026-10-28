@@ -1,0 +1,59 @@
+id: zh.syntax@jh
+concept: zh.syntax
+title: 文言句式：判斷、被動、倒裝、省略
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 文言與古典
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（學測國綜測驗目標 A3 語法），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.wenyan@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：學測國綜測驗目標 A3 語法。
+competency:
+  specialist:
+  - 文言與古典
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 標出句式並示範翻譯
+  human_experience:
+  - 自己調整語序翻成白話
+idea: 文言文的語序和白話不完全一樣。判斷句常用「……者，……也」；被動句用「見、為、於」；倒裝句把賓語放前面（何陋之有）；省略句省掉主語或介詞。翻譯時先補齊、再調回白話語序。
+guiding_questions:
+- 「何陋之有」為什麼不寫成「有何陋」？
+scenario: 親子共學：親子各寫 3 句白話，交換改成文言倒裝或判斷句，再請對方翻回來。
+goal: 認出四種文言句式：判斷句、被動句、倒裝句、省略句，並翻成通順白話。
+review: 家長給 8 句文言句，孩子標出句式並翻成白話；句式與翻譯都對的至少 6 句。
+formats:
+  slides: []
+  exercise: 目標：認出四種文言句式：判斷句、被動句、倒裝句、省略句，並翻成通順白話。　檢核：家長給 8 句文言句，孩子標出句式並翻成白話；句式與翻譯都對的至少 6 句。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,56 @@
+id: zh.wrongchar@es
+concept: zh.wrongchar
+title: 錯別字：在／再、的／得
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 基礎功
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.dictionary@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 基礎語文
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 標出可能的同音錯字
+  human_experience:
+  - 說出為什麼是這個字
+idea: 很多錯字是同音字：在（在哪裡）、再（再一次）；的（我的書）、得（跑得快）。形聲字看部首猜意思，看聲旁猜讀音，可以少寫錯。
+guiding_questions:
+- 「我明天在來」和「他跑的很快」，各錯在哪裡？
+scenario: 親子共學：複習版：全家各寫下自己最常寫錯的 3 個字，貼在冰箱上一週，誰寫錯就畫一筆。
+goal: 分得清常見同音字（在／再、的／得），寫完會自己挑出來。
+review: 家長準備 10 句含「在、再、的、得」的句子（一半寫錯），孩子圈出錯字並說出理由，答對 8 句以上。
+formats:
+  slides: []
+  exercise: 目標：分得清常見同音字（在／再、的／得），寫完會自己挑出來。　檢核：家長準備 10 句含「在、再、的、得」的句子（一半寫錯），孩子圈出錯字並說出理由，答對 8 句以上。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

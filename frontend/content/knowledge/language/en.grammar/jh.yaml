@@ -1,0 +1,60 @@
+id: en.grammar@jh
+concept: en.grammar
+title: 時態：事情發生在什麼時候
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A2
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：初級單句寫作。
+prerequisites:
+- en.sentence@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文法句構
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 檢查時態、解釋為什麼
+  human_experience:
+  - 用時態說自己的生活
+idea: 英文用動詞的變化說出時間：現在、過去、正在進行、已經完成。中文靠「了、在、過」，英文靠動詞本身。
+guiding_questions:
+- 「我吃了」和「我正在吃」，英文怎麼分？
+scenario: 親子共學：拍家裡三個人正在做的事，用現在進行式寫說明；一小時後改成過去式再寫一次。
+goal: 用現在式、過去式、進行式、完成式說出事情發生的時間。
+review: 孩子用 4 種時態各寫 2 句關於自己的事，家長對照文法書確認 8 句裡至少 7 句正確。
+formats:
+  slides: []
+  exercise: 目標：用現在式、過去式、進行式、完成式說出事情發生的時間。　檢核：孩子用 4 種時態各寫 2 句關於自己的事，家長對照文法書確認 8 句裡至少 7 句正確。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

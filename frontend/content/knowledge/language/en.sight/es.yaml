@@ -1,0 +1,63 @@
+id: en.sight@es
+concept: en.sight
+title: 常見字與分級讀本
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - A1
+  issues:
+  - 閱讀素養教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：美國 K–2 讀本。
+prerequisites:
+- en.phonics@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.gept1@jh
+  - en.chapter@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 閱讀理解
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 朗讀繪本、標出常見字
+  human_experience:
+  - 和家人一起猜故事接下來會怎樣
+idea: 有些字出現得特別多，又不太照拼讀規則（the、is、said），一眼認得它們，讀繪本就快很多。美國小學用分級讀本（leveled readers）一級一級往上讀，台灣孩子也可以從幼兒園到二年級的程度開始。
+guiding_questions:
+- 繪本裡一直出現的 the、is、can，為什麼要先認得？
+scenario: 親子共學：親子共讀一本英文繪本，每次看到 the、is、can 就拍一下手，讀完數一數各出現幾次。
+goal: 一眼認得常見字，讀完一本美國幼兒園到二年級（K–2）程度的分級讀本。
+review: 孩子自己朗讀一本 K–2 分級讀本給家長聽，卡住的字少於 1 頁 2 個，讀完能用中文說出故事發生了什麼。
+formats:
+  slides: []
+  exercise: 目標：一眼認得常見字，讀完一本美國幼兒園到二年級（K–2）程度的分級讀本。　檢核：孩子自己朗讀一本 K–2 分級讀本給家長聽，卡住的字少於 1 頁 2 個，讀完能用中文說出故事發生了什麼。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,49 @@
+id: lg.culture@uni
+concept: lg.culture
+title: 跨文化溝通：語言背後的默契
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: true
+verify_notes:
+- 待核對：大學不對應 108 課綱，以學門路徑對應。
+prerequisites:
+- lg.ai@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 跨文化溝通
+  generalist:
+  - 溝通
+  - 跨域思考
+ai:
+  delegable:
+  - 整理不同文化的禮貌用語與例子
+  human_experience:
+  - 在真實交流裡察覺誤會，並調整自己的說法
+idea: 語言不只是字和文法，還包含說話的習慣：多直接、多客氣、沉默代表什麼。學外語也是在學另一套默契。
+guiding_questions:
+- 為什麼同一句「好啊」，在不同文化可能是拒絕？
+scenario: 親子共學：找一段英文和一段日文的道歉或拒絕，比較它們怎麼開頭、怎麼收尾，和中文的說法排在一起看。
+goal: 察覺語言背後的文化默契，避免照字面翻譯造成誤會。
+review: 找 3 句英文或日文裡「照字面翻會誤會」的說法，寫出字面意思、實際意思與適合的場合；家人看得懂差別。
+formats:
+  slides: []
+  exercise: 目標：察覺語言背後的文化默契，避免照字面翻譯造成誤會。　檢核：找 3 句英文或日文裡「照字面翻會誤會」的說法，寫出字面意思、實際意思與適合的場合；家人看得懂差別。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

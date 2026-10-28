@@ -261,4 +261,35 @@ test("溝通與解決問題預設不進學門切換，打開後只有口語表�
   assert.equal(openBlob.includes("說出感覺：我覺得……因為……"), false);
   assert.equal(openBlob.includes("問五次為什麼"), false);
   assert.equal(open.branches.find((item) => item.id === "talk")?.task?.title, "從開口到說服");
+  assert.equal(open.disciplines.find((item) => item.id === "language")?.ready, false);
+  assert.equal(open.branches.some((item) => item.disciplineId === "language"), false);
+});
+
+test("語文打開後十一條線都有點，關掉時不進圖", () => {
+  const catalog = loadCatalog();
+  const closed = buildHomeDiagram(catalog, publicDisciplineIds(), true, false);
+  assert.equal(JSON.stringify(closed).includes("zh.punct@es"), false);
+  assert.equal(closed.disciplines.find((item) => item.id === "language")?.ready, false);
+
+  const open = buildHomeDiagram(catalog, publicDisciplineIds(), true, true);
+  assert.equal(open.disciplines.find((item) => item.id === "language")?.ready, true);
+  const diagrams = open.diagrams.filter((item) => item.id === "language");
+  assert.deepEqual(diagrams.map((item) => item.branchId), [
+    "basic", "read", "classic", "write", "practical", "ai",
+    "en-talk", "en-read", "en-bench", "ja-read", "ja-talk",
+  ]);
+  const seen = new Set<string>();
+  for (const diagram of diagrams) {
+    assert.ok(diagram.nodes.length > 0 && diagram.nodes.length <= 14, `${diagram.branchId} ${diagram.nodes.length}`);
+    for (const node of diagram.nodes) seen.add(node.id);
+  }
+  assert.equal(seen.size, 108);
+  const bench = diagrams.find((item) => item.branchId === "en-bench");
+  assert.ok(bench);
+  assert.equal(bench.nodes.filter((node) => node.badge === "英日共用").length, 4);
+  assert.equal(diagrams.find((item) => item.branchId === "basic")?.nodes.some((node) => node.badge), false);
+  assert.equal(open.branches.find((item) => item.id === "en-talk")?.task?.title, "從打招呼到看圖說話");
+  assert.equal(open.branches.find((item) => item.id === "basic")?.task?.id, "zh.basics");
+  const talk = open.diagrams.find((item) => item.id === "soft-skills" && item.branchId === "talk");
+  assert.equal(talk?.nodes[0]?.id, "sk.voice@es");
 });

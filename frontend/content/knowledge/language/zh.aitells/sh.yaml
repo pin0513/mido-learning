@@ -1,0 +1,63 @@
+id: zh.aitells@sh
+concept: zh.aitells
+title: 認出 AI 腔
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - AI 協作寫作
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  - 科技
+  core_competencies:
+  - B1
+  - B2
+  issues:
+  - 資訊教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.aicoach@jh
+- zh.rhetoric@jh
+links:
+  why: []
+  how: []
+  related:
+  - ph.aijudge@sh
+  deeper:
+  - zh.cowrite@uni
+link_notes: 框架：—。
+competency:
+  specialist:
+  - AI 協作寫作
+  generalist:
+  - 媒體素養
+  - 查證
+ai:
+  delegable:
+  - 產生一篇對照用的範文
+  human_experience:
+  - 刪去套話並補上親身細節
+idea: 常見的 AI 腔：大時代開頭、一連串排比、四平八穩的空泛結論、沒有具體的人事時地物。改法是刪掉放進任何文章都通的句子，換成只有你知道的細節。
+guiding_questions:
+- 「在這個快速變遷的時代」放進任何文章都通嗎？
+scenario: 親子共學：請 AI 寫一篇學測情意題範文，用螢光筆標出「放進任何文章都通」的句子，再換成自己的經驗。
+goal: 認出 AI 腔（大時代開頭、空泛排比、四平八穩結論），換成只有自己知道的細節。
+review: 孩子在一篇 AI 範文上標出 5 句放進任何文章都通的句子，並各改寫成具體細節；家長讀改寫版，5 處都看得到具體的人事時地物。
+formats:
+  slides: []
+  exercise: 目標：認出 AI 腔（大時代開頭、空泛排比、四平八穩結論），換成只有自己知道的細節。　檢核：孩子在一篇 AI 範文上標出 5 句放進任何文章都通的句子，並各改寫成具體細節；家長讀改寫版，5 處都看得到具體的人事時地物。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

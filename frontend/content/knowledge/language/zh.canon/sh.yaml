@@ -1,0 +1,61 @@
+id: zh.canon@sh
+concept: zh.canon
+title: 文化經典：一句話讀出原意與今義
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 文言與古典
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A1
+  - C1
+  issues:
+  - 多元文化教育
+  - 品德教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 引用的框架只寫名稱（高中國語文「中華文化基本教材」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 本點為這次補強新增，內容尚未經老師審閱。
+prerequisites:
+- zh.classics@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：高中國語文「中華文化基本教材」。
+competency:
+  specialist:
+  - 文言與古典
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 提供原文出處與注解
+  human_experience:
+  - 連結自己的生活經驗並判斷
+idea: 高中國文每冊有一課文化經典。讀經典先弄清楚原句在什麼情境說的、原本的意思，再思考今天可以怎麼用；不要斷章取義。
+guiding_questions:
+- 「己所不欲，勿施於人」放到今天的網路留言，還適用嗎？
+scenario: 親子共學：每週全家選一則《論語》，各說一個這週發生的相關例子。
+goal: 讀懂文化經典裡的一句話（例如《論語》《孟子》），說出原意並舉一個今天的例子。
+review: 孩子選 3 則經典語句，各寫原意與一個生活例子；家長確認原意與注本相符，例子不是硬套。
+formats:
+  slides: []
+  exercise: 目標：讀懂文化經典裡的一句話（例如《論語》《孟子》），說出原意並舉一個今天的例子。　檢核：孩子選 3 則經典語句，各寫原意與一個生活例子；家長確認原意與注本相符，例子不是硬套。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

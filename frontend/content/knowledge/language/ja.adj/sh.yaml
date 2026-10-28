@@ -1,0 +1,58 @@
+id: ja.adj@sh
+concept: ja.adj
+title: 形容詞與比較
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N4。
+prerequisites:
+- ja.verb@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文法句構
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 判斷形容詞種類、出練習
+  human_experience:
+  - 用比較句說出自己的感受
+idea: 日文形容詞分兩種：い形容詞和な形容詞，變化方式不同。學會比較句，就能說出哪個比較好吃、比較漂亮。
+guiding_questions:
+- 「おいしい」和「きれい」為什麼變化方式不一樣？
+scenario: 親子共學：全家試吃三種零食，用日文說出「AはBより〜です」，選出第一名。
+goal: 用い形容詞、な形容詞描述和比較兩樣東西。
+review: 孩子用比較句型說 4 句比較家裡兩樣東西（大小、喜好），家長對照課本，4 句都正確。
+formats:
+  slides: []
+  exercise: 目標：用い形容詞、な形容詞描述和比較兩樣東西。　檢核：孩子用比較句型說 4 句比較家裡兩樣東西（大小、喜好），家長對照課本，4 句都正確。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

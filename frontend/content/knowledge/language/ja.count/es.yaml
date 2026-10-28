@@ -1,0 +1,58 @@
+id: ja.count@es
+concept: ja.count
+title: 數字與生活單字
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文讀寫
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N5 的準備。
+prerequisites:
+- ja.hira@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 字彙
+  generalist:
+  - 跨域思考
+ai:
+  delegable:
+  - 列出生活單字、念給你聽
+  human_experience:
+  - 在生活裡用出來
+idea: 日文的數字和很多漢字詞跟中文有關係，念起來有點像。從數字、顏色、食物這些生活單字開始最快。
+guiding_questions:
+- いち、に、さん……跟中文的一、二、三像不像？
+scenario: 親子共學：去超市時用日文數商品：いち、に、さん……回家把買的水果用日文念一遍。
+goal: 用日語數 1 到 100，說出顏色、食物等 20 個生活單字。
+review: 家長指家裡 10 樣東西，孩子用日語說出名字或數量，至少 8 個對。
+formats:
+  slides: []
+  exercise: 目標：用日語數 1 到 100，說出顏色、食物等 20 個生活單字。　檢核：家長指家裡 10 樣東西，孩子用日語說出名字或數量，至少 8 個對。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,58 @@
+id: lg.review@jh
+concept: lg.review
+title: 記得住的方法：字卡與間隔複習
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A1
+  - A3
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- lg.listen@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - lg.ai@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 語言學習策略
+  - 字彙
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 幫你排複習時間、產生例句
+  human_experience:
+  - 自己決定哪些字值得記，並用在自己的句子裡
+idea: 記憶會隨時間淡掉。隔一天、隔三天、隔一週再複習一次，比一次背很久更記得住；用例句記，比單背一個字更牢。
+guiding_questions:
+- 為什麼昨天背的單字，今天就忘了一半？
+scenario: 親子共學：做 20 張字卡（英文日文都可以），記下每張是第幾天複習，一週後看哪種排法記得最多。
+goal: 用字卡與間隔複習記住單字，知道什麼時候該複習。
+review: 孩子做 30 張字卡，用間隔複習排一週的複習表；一週後家長抽 10 張考，至少 8 張記得。
+formats:
+  slides: []
+  exercise: 目標：用字卡與間隔複習記住單字，知道什麼時候該複習。　檢核：孩子做 30 張字卡，用間隔複習排一週的複習表；一週後家長抽 10 張考，至少 8 張記得。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

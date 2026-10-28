@@ -1,0 +1,59 @@
+id: ja.verb@sh
+concept: ja.verb
+title: 動詞變化：ます形與て形
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 日文
+  - 日文會話
+  layer: foundation
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 基準標籤：JLPT N4。
+prerequisites:
+- ja.particle@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper: []
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 文法句構
+  generalist:
+  - 提問
+ai:
+  delegable:
+  - 出變化練習、解釋規則
+  human_experience:
+  - 找出規則並用在自己的句子
+idea: 日文動詞會依照語氣和用途變形：禮貌的ます形、連接動作的て形。動詞分三類，每類有自己的變化規則。
+guiding_questions:
+- 同一個動詞，為什麼有這麼多種樣子？
+scenario: 親子共學：把 10 個常用動詞做成卡片，正面是辭書形，背面寫ます形和て形，全家抽卡比賽。
+goal: 把動詞變成ます形與て形，說出正在做、請對方做的事。
+review: 家長給 10 個動詞原形，孩子變成ます形與て形，至少 8 組全對；再用て形說 2 句請家人做的事。
+formats:
+  slides: []
+  exercise: 目標：把動詞變成ます形與て形，說出正在做、請對方做的事。　檢核：家長給 10 個動詞原形，孩子變成ます形與て形，至少 8 組全對；再用て形說 2 句請家人做的事。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-10-27'

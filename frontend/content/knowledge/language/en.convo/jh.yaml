@@ -1,0 +1,65 @@
+id: en.convo@jh
+concept: en.convo
+title: 日常對話：問路、點餐
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 外語
+  - 英文
+  - 英文聽說
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C2
+  issues:
+  - 國際教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 英文以全民英檢、美國小學／中學讀本、多益、托福為主要基準，108 課綱英語文為次要對照；學段與檢定的對應是本站的學習建議，不是官方換算。
+- 基準標籤：全民英檢初級・口說。
+- 引用的框架只寫名稱（全民英檢初級口說：複誦、朗讀句子與短文、回答問題（LTTC）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+prerequisites:
+- en.listening@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - en.present@sh
+link_notes: 框架：全民英檢初級口說：複誦、朗讀句子與短文、回答問題（LTTC）。
+competency:
+  specialist:
+  - 口說
+  - 聽力
+  generalist:
+  - 溝通
+  - 團隊合作
+ai:
+  delegable:
+  - 扮演店員或路人陪你練
+  human_experience:
+  - 面對真人時不害怕，敢開口修補
+idea: 真實對話會卡住，重點是會「修補」：Sorry? Could you say that again? 會請對方慢一點、換個說法，就能把話說下去。
+guiding_questions:
+- 店員說太快，你要怎麼請他再說一次？
+scenario: 親子共學：在家開一間「英文早餐店」，孩子當店員、大人當客人，故意點很複雜的餐，練習請對方再說一次。
+goal: 在問路、點餐、購物對話裡聽懂並回答，聽不懂時會請對方再說一次。
+review: 家長扮演店員或路人用英文問 7 個問題（全民英檢初級口說「回答問題」的形式，每題 15 秒內回答），孩子每題都有回應，至少 5 題切題。
+formats:
+  slides: []
+  exercise: 目標：在問路、點餐、購物對話裡聽懂並回答，聽不懂時會請對方再說一次。　檢核：家長扮演店員或路人用英文問 7 個問題（全民英檢初級口說「回答問題」的形式，每題 15 秒內回答），孩子每題都有回應，至少 5 題切題。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

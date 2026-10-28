@@ -1,0 +1,61 @@
+id: zh.thinkfirst@es
+concept: zh.thinkfirst
+title: 先想再問
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - AI 協作寫作
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B2
+  issues:
+  - 資訊教育
+  - 家庭教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.aicoach@jh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - AI 協作寫作
+  generalist:
+  - 提問
+  - 查證
+ai:
+  delegable:
+  - 給一個不同的說法讓孩子比較
+  human_experience:
+  - 先說出自己的答案
+  - 和大人一起判斷哪個比較好
+idea: 先把自己的想法說出來或寫下來，再和大人一起問 AI，比一比哪裡一樣、哪裡不一樣。AI 的話不能直接抄成自己的作業。
+guiding_questions:
+- 問 AI 之前，你自己的答案是什麼？
+scenario: 親子共學：全程家長陪同：孩子先講「我覺得……」，家長再幫忙問 AI，一起找出 AI 說得不對或太籠統的地方。
+goal: 問 AI 之前先說出自己的答案，再和大人一起比較。
+review: 家長陪同時，孩子先講或寫「我覺得……」，再看 AI 的回答，說出一處一樣、一處不一樣。
+formats:
+  slides: []
+  exercise: 目標：問 AI 之前先說出自己的答案，再和大人一起比較。　檢核：家長陪同時，孩子先講或寫「我覺得……」，再看 AI 的回答，說出一處一樣、一處不一樣。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

@@ -1,0 +1,63 @@
+id: zh.aicoach@jh
+concept: zh.aicoach
+title: 請 AI 當教練，不當槍手
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - AI 協作寫作
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  - 科技
+  core_competencies:
+  - A2
+  - B2
+  issues:
+  - 資訊教育
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.thinkfirst@es
+links:
+  why: []
+  how: []
+  related:
+  - it.llm@sh
+  deeper:
+  - zh.aitells@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - AI 協作寫作
+  generalist:
+  - 查證
+  - 溝通
+ai:
+  delegable:
+  - 依規準指出可能的問題
+  human_experience:
+  - 寫出第一份草稿
+  - 決定採用哪些建議並自己改寫
+idea: 自己寫完草稿，再請 AI 照會考四向度「指出問題、不要改寫」。每個建議由你決定要不要採用，自己動手改。
+guiding_questions:
+- AI 幫你改完的作文，還算是你寫的嗎？
+scenario: 親子共學：同一篇草稿，比較「請 AI 改寫」和「請 AI 只指出三個問題」的結果，討論哪一種讓自己進步。
+goal: 請 AI 照規準「指出問題、不要改寫」，每個建議由自己決定、自己改。
+review: 孩子交草稿、AI 建議清單和定稿三份；家長檢查定稿裡沒有整段照抄 AI 的句子，且孩子說得出採用與不採用的理由。
+formats:
+  slides: []
+  exercise: 目標：請 AI 照規準「指出問題、不要改寫」，每個建議由自己決定、自己改。　檢核：孩子交草稿、AI 建議清單和定稿三份；家長檢查定稿裡沒有整段照抄 AI 的句子，且孩子說得出採用與不採用的理由。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'

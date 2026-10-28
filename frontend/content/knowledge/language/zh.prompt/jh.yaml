@@ -1,0 +1,57 @@
+id: zh.prompt@jh
+concept: zh.prompt
+title: 審題：看懂題目在問什麼
+status: published
+version: "0.1"
+discipline:
+  path:
+  - 語文
+  - 國文
+  - 作文與表達
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  issues: []
+to_verify: true
+verify_notes:
+- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+prerequisites:
+- zh.story@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - zh.reason@sh
+link_notes: 框架：—。
+competency:
+  specialist:
+  - 寫作
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 把題幹拆成問題清單讓你核對
+  human_experience:
+  - 判斷自己真正想寫的切入點
+idea: 引導寫作的題幹會給情境與任務。先把題目拆成幾個要回答的問題，每一個都要在文章裡找得到。
+guiding_questions:
+- 「賦予什麼新面貌？又會怎麼做？」要回答幾件事？
+scenario: 親子共學：拿近三年會考題目，各用 5 分鐘只做審題：列出要回答的問題，不寫文章。
+goal: 把引導寫作的題目拆成要回答的問題清單，寫完逐項打勾。
+review: 拿一題會考寫作歷屆題目，孩子 5 分鐘內列出題目要回答的問題；家長對照題幹，沒有漏掉任何一問。
+formats:
+  slides: []
+  exercise: 目標：把引導寫作的題目拆成要回答的問題清單，寫完逐項打勾。　檢核：拿一題會考寫作歷屆題目，孩子 5 分鐘內列出題目要回答的問題；家長對照題幹，沒有漏掉任何一問。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-10-27'
