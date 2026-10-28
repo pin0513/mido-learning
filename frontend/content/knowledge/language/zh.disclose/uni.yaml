@@ -1,8 +1,13 @@
+# B6 提案：zh.disclose@uni
+# - 補依據：教育部《未來人才AI能力圖像》（115 年）把「正確描述與標註AI協作情形」列為能力，大專校院階段的能力描述包括「清楚揭露其使用方式與範圍」（能力架構，不是規定）；學術倫理資源中心指南與電子報（目前沒有統一規定，先查規定、適度公開）。
+# - 補揭露要寫的三件事（工具、用途、誰負責）與揭露句範本（本站整理，示意）；補「AI 不能當作者」「揭露不等於免責」。
+# - 找不到以大專校院生成式 AI 使用指引為名的教育部文件，已在 notes 說明以學校規定為準。
+# - 「2–3 句」標示示意；補 Why/How/What 與兩張圖。
 id: zh.disclose@uni
 concept: zh.disclose
 title: 揭露與誠信：用了 AI 怎麼說
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,9 +17,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 揭露原則依教育部《未來人才AI能力圖像》與 115 年 5 月 22 日新聞稿、教育部臺灣學術倫理教育資源中心的寫作指南與電子報；目前查無以大專校院生成式 AI 使用指引為名的教育部文件，各校另訂規定，以自己學校與課程的規定為準。
 prerequisites:
 - zh.factcheck@sh
 links:
@@ -22,7 +28,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：教育部《未來人才AI能力圖像》（負責任使用AI的能力）；教育部臺灣學術倫理教育資源中心寫作指南；ICMJE、APA Style 的 AI 揭露原則。
 competency:
   specialist:
   - AI 協作寫作
@@ -33,17 +39,140 @@ ai:
   - 草擬揭露聲明
   human_experience:
   - 依規定誠實說明並負責
-idea: 各學校、期刊、公司對 AI 使用的規定不同。先查規定，再清楚說明 AI 幫了哪些忙、哪些是你自己的。
+idea: 學校、課程、期刊、公司對 AI 使用的規定不同，學術界目前也沒有統一標準。先查規定，再清楚說明用了哪個工具、做了哪些事、哪些是你自己的，並為整份作品負責。
 guiding_questions:
 - 有人問「這是你寫的嗎？」，你怎麼回答才誠實？
-scenario: 親子共學：找你學校或常投稿平台的 AI 使用規定，替自己一篇作品寫一段兩三句的使用說明。
-goal: 依學校或平台規定，寫出一段誠實的 AI 使用說明。
-review: 找到自己學校或投稿平台的 AI 使用規定原文，替一件作品寫 2–3 句說明；家人對照規定確認沒有遺漏。
+scenario: 親子共學：找你學校、課程或常投稿平臺的 AI 使用規定原文，替自己一篇作品寫一段兩三句（示意）的使用說明；說明裡不放個人資料。
+goal: 依學校或平臺規定，寫出一段誠實的 AI 使用說明：工具、用途、自己負責的部分。
+review: 找到自己學校或投稿平臺的 AI 使用規定原文，替一件作品寫 2–3 句說明（句數為示意）；家人對照規定，確認工具、用途與自己負責的部分都寫到。
 formats:
   slides: []
-  exercise: 目標：依學校或平台規定，寫出一段誠實的 AI 使用說明。　檢核：找到自己學校或投稿平台的 AI 使用規定原文，替一件作品寫 2–3 句說明；家人對照規定確認沒有遺漏。
+  exercise: 目標：依學校或平臺規定，寫出一段誠實的 AI 使用說明：工具、用途、自己負責的部分。　檢核：找到自己學校或投稿平臺的 AI 使用規定原文，替一件作品寫 2–3 句說明（句數為示意）；家人對照規定，確認工具、用途與自己負責的部分都寫到。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 用了 AI，要說清楚
+  body:
+  - 教育部的「未來人才AI能力圖像」把「負責任使用AI的能力」列為四項能力之一，內容包括「正確描述與標註AI協作情形」；大專校院階段的能力描述也包括「清楚揭露其使用方式與範圍」。能力圖像是能力架構，不是規定，實際規定以學校與課程為準。
+  - 沒有揭露，可能被當成不當行為。ICMJE 建議期刊要求作者投稿時揭露是否用了 AI、怎麼用，並指出未揭露在某些情況下可能被視為不當行為；APA Style 也提醒，把 AI 產出當成自己寫的交出去，對學生來說可能構成學術不端。
+  qa:
+    question: 有人問「這是你寫的嗎？」，你怎麼回答才誠實？
+    answer: 照實說：哪些是你想的、你寫的，哪些地方用了 AI、用哪個工具、做了什麼，並說明你檢查過、願意負責。教育部臺灣學術倫理教育資源中心的指南建議，在研究方法中聲明使用哪些 AI 工具以及如何使用。
+    source: ethics-guide
+  items_title: 揭露要寫的三件事（本站整理）
+  items:
+  - title: 用了哪個工具
+    text: 寫出工具與模型名稱，必要時寫版本或日期。
+  - title: 做了什麼
+    text: 例如檢查文法、整理文獻清單、提出反方。
+  - title: 誰負責
+    text: 說明你檢查過內容，並為整份作品負責。
+  sources:
+  - moe-ai-news
+  - moe-ai-portrait
+  - icmje-ai
+  - apa-genai
+how:
+  heading: 先查規定，再寫說明
+  body:
+  - 學術倫理電子報在 2023 年指出「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定」，建議先瞭解補助機關或期刊的政策，「並於著作或報告中適度公開相關訊息」。APA Style 也說，允許哪些 AI 使用、要怎麼揭露，取決於授課老師、系所與出版者的政策。
+  - 寫說明時，APA Style 的例句是寫明用了哪個工具編修論文、請它回饋清晰度與流暢度；它也建議把用過的提示詞留給自己做紀錄。說明裡不要放個人資料或未公開的內容（本站建議）。
+  items_title: 揭露句範本（本站整理，示意）
+  items:
+  - title: 只用於潤飾
+    text: 本文內容由我撰寫；我用〔工具名稱〕檢查文法與語句，每一處修改都經我逐句確認。
+  - title: 用於整理資料
+    text: 我用〔工具名稱〕初步整理文獻清單，每一筆都已打開原始來源核對；分析與結論由我完成。
+  checklist_title: 送出前問自己：
+  checklist:
+  - 查過規定了嗎
+  - 寫了工具名稱
+  - 寫了用途
+  - 寫了誰負責
+  - 留了紀錄嗎
+  activity_figure: how-flow
+  sources:
+  - ethics-epaper13
+  - apa-genai
+what:
+  heading: 揭露不等於免責
+  figures:
+  - what-compare
+  notes:
+  - AI 不能當作者：ICMJE 指出聊天機器人無法為作品的正確性、完整性與原創性負責，所以不能列為作者；APA Style 也說 AI 本身不能是作者。
+  - 教育部臺灣學術倫理教育資源中心的指南提醒「研究者應對自己的研究行為與產出負全部責任」，並說「直接使用AI翻譯整篇論文或直接複製貼上生成資料，都不符合學術誠信的基本原則」。
+  - 目前查無以大專校院生成式 AI 使用指引為名的教育部文件；各大學另有規定，以你的學校、課程或投稿單位的規定為準。
+  - 三件事與揭露句範本是本站整理；「2–3 句」是示意。
+  sources:
+  - ethics-guide
+  - icmje-ai
+  - apa-genai
+figures:
+- id: how-flow
+  type: flow
+  alt: 寫 AI 使用說明的步驟：自己找到規定原文、列出 AI 做了什麼、寫成幾句說明，家人對照規定檢查
+  steps:
+  - actor: 自己
+    text: 找規定原文
+  - actor: 自己
+    text: 列 AI 用途
+  - actor: 自己
+    text: 寫成說明
+  - actor: 家人
+    text: 對照規定
+- id: what-compare
+  type: compare
+  alt: 揭露是說明用了什麼工具、做了什麼；負責是內容正確與誠信仍由作者承擔，兩者不同
+  source: ethics-guide
+  relation: not_equal
+  items:
+  - term: 揭露
+    note: 說明用了什麼工具、做了什麼
+  - term: 負責
+    note: 內容正確與學術誠信仍由作者負全部責任
+sources:
+- id: moe-ai-news
+  title: 構築未來AI人才新圖像 引領方舟計畫啟向新航道
+  publisher: 教育部（115 年 5 月 22 日新聞稿）
+  url: https://www.edu.tw/News_Content.aspx?n=9E7AC85F1954DDA8&s=D4E6BE5B9409E630
+  accessed: '2026-10-29'
+  kind: government
+  supports: 新聞稿（上版日期 115-05-22）：教育部擘劃「未來人才AI能力圖像」；「負責任使用AI的能力：能識讀AI生成的內容並進行資訊查證，正確描述與標註AI協作情形，確保AI使用符合人類價值與社會規範。」
+- id: moe-ai-portrait
+  title: 未來人才AI能力圖像（電子布告欄附件 PDF）
+  publisher: 教育部資訊及科技教育司（上版日期 115-07-14）
+  url: https://depart.moe.edu.tw/ed2700/News_Content.aspx?n=A1E30194B1C3ACDF&s=4C49BBB8F747DE99
+  accessed: '2026-10-29'
+  kind: government
+  supports: 附件《未來人才AI能力圖像》（教育部 115.05.22）大專校院學生「負責任使用AI的能力」：「能理解並遵循AI相關之智慧財產權、個資保護及使用規範，於學習與職場情境中正當運用AI，並清楚揭露其使用方式與範圍」；「具備AI資安與風險意識」，「能識別AI生成之虛假或誤導性內容」
+- id: ethics-guide
+  title: AI世代的學術寫作指南⸺給研究生的參考手冊（電子書）
+  publisher: 教育部臺灣學術倫理教育資源中心（手冊註明「本手冊內容僅代表作者觀點，不代表教育部立場」）
+  url: https://ethics.moe.edu.tw/files/resource/ebook/file/ebook_05.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 參、四 運用生成式AI於學術與研究活動應注意事項：「研究者應對自己的研究行為與產出負全部責任」；「使用任何科技輔助軟體，都應留意相關的資訊安全及隱私問題」；「建議使用前仍應諮詢指導教授、參考相關機構的指引，並適度公開資訊，例如：在研究方法中聲明使用哪些AI工具以及如何使用」；「直接使用AI翻譯整篇論文或直接複製貼上生成資料，都不符合學術誠信的基本原則」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （五）學術寫作的自我揭露：「目前學術界對於使用生成式AI是否需要標註，尚無統一的規定，不過已有學術出版商要求揭露使用生成式AI之聲明。」；「建議研究者應先瞭解經費補助機關（構）或期刊等單位對於生成式AI之政策，並於著作或報告中適度公開相關訊息」；（三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」
+- id: icmje-ai
+  title: Use of AI by Authors（Recommendations）
+  publisher: International Committee of Medical Journal Editors（ICMJE）
+  url: https://www.icmje.org/recommendations/browse/artificial-intelligence/ai-use-by-authors.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「the journal should require authors to disclose at submission whether they used AI-assisted technologies」；「Chatbots (such as ChatGPT) and other AI-assisted tools should not be listed as authors because they cannot be responsible for the accuracy, integrity, and originality of the work」；「Nondisclosure of AI use may require corrective action and may be construed as misconduct in some circumstances」
+- id: apa-genai
+  title: 'Citing generative AI in APA Style: Part 1—Reference formats'
+  publisher: APA Style（American Psychological Association），McAdoo, Denneny & Lee，2025 年 9 月 9 日
+  url: https://apastyle.apa.org/blog/cite-generative-ai-references
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Although it’s still not a good idea to submit AI-generated work as though you did it yourself—doing so would be considered unethical, for example, academic misconduct for students」；「the details of what AI use is allowed and how it should be disclosed depend on many factors, such as instructor, departmental, and publisher policies」；例句「I used ChatGPT (OpenAI, 2025) to edit my paper and provide feedback on clarity and flow.」；「Researchers should document the prompts used with AI tools for their own records.」；「AI itself cannot be an author」

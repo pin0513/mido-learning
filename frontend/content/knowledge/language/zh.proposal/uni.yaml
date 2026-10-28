@@ -1,8 +1,12 @@
+# B6 提案：zh.proposal@uni
+# - 標題「讓人願意說好」承諾太多（本點教的是讓審核者一眼看懂、能判斷），改為「企劃書：第一段就讓人看懂」。
+# - 補依據：UNC 寫作中心〈Grant Proposals〉（審查者三問、可能只讀摘要、方法與預算；摘要寫目的、目標、設計、方法、重要性；預算說明）；國科會大專學生研究計畫審查重點與申請書格式。
+# - AI 整理預算表：補自己逐項核算、不把未公開資料貼進 AI。補 Why/How/What 與兩張圖。
 id: zh.proposal@uni
 concept: zh.proposal
-title: 企劃書：讓人願意說好
+title: 企劃書：第一段就讓人看懂
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,17 +16,19 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 企劃書結構依 UNC 寫作中心〈Grant Proposals (or Give me the money!)〉；審查重點與計畫書項目依國家科學及技術委員會補助大專學生研究計畫作業要點與申請書格式（國立成功大學研究發展處轉載）。
 prerequisites:
 - zh.explain@sh
 links:
   why: []
   how: []
-  related: []
+  related:
+  - zh.disclose@uni
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：UNC 寫作中心〈Grant Proposals〉；國家科學及技術委員會補助大專學生研究計畫作業要點（審查重點）。
 competency:
   specialist:
   - 應用文寫作
@@ -47,4 +53,119 @@ audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 審查者可能只讀開頭
+  body:
+  - UNC 寫作中心指出，審查者可能不會讀完每個字，也許只讀摘要、研究設計與方法、履歷和預算；摘要給讀者對計畫的第一印象。它也引述審查者讀計畫時心裡的三個問題：會學到什麼（目標）、為什麼值得知道（重要性）、怎麼知道結論成立（成功標準）。
+  - 國內也一樣：國家科學及技術委員會補助大專學生研究計畫的審查重點，包括「研究主題之重要性、研究方法及步驟之可行性」等項目。
+  qa:
+    question: 審核的人最想先知道什麼：做什麼、為什麼、花多少？
+    answer: 三件都想先知道，再加上怎麼判斷成功。所以第一段就要寫清楚：要做什麼、為什麼值得做、需要多少錢或時間、做到什麼程度算成功，細節放後面。
+    source: unc-grant
+  items_title: 審查者的三個問題（UNC）
+  items:
+  - title: 目標
+    text: 這個計畫要達成什麼。
+  - title: 重要性
+    text: 為什麼值得做。
+  - title: 成功標準
+    text: 怎麼知道做到了。
+  sources:
+  - unc-grant
+  - nstc-ugrad
+how:
+  heading: 先寫一段結論，再補細節
+  body:
+  - UNC 寫作中心建議，摘要要寫出計畫的整體目的、具體目標、研究設計、方法與重要性；預算除了表格，最好附一兩頁說明每一項為什麼需要。
+  - 國科會大專學生研究計畫的申請書依序要寫摘要、研究動機與研究問題、文獻回顧與探討、研究方法及步驟、預期結果、需要指導教授指導內容與參考文獻，研究計畫內容以 10 頁為限。家庭或社團活動不必寫這麼多，但可以照同樣的順序。
+  items_title: 一頁企劃（本站建議）
+  items:
+  - title: 第一段
+    text: 做什麼、為什麼、要多少資源、怎麼算成功。
+  - title: 做法
+    text: 步驟、分工與時程。
+  - title: 預算說明
+    text: 每一項寫出金額與為什麼需要。
+  checklist_title: 第一段有沒有寫到：
+  checklist:
+  - 做什麼
+  - 為什麼
+  - 要多少資源
+  - 怎麼算成功
+  activity_figure: how-flow
+  sources:
+  - unc-grant
+  - nstc-form
+what:
+  heading: 先寫結論，不把重點埋在後面
+  figures:
+  - what-compare
+  notes:
+  - 用 AI 整理格式與預算表時，每一個數字都要自己核算；指南提醒「若要用生成式AI輔助完成論文或計畫書，研究者必須具備資訊驗證與判斷的能力」。未公開的計畫內容、個人資料不要貼進對話框。計畫書用了 AI，依補助機關或課程的規定說明用了哪個工具、做了什麼（本站建議）。
+  - 申請國科會大專學生研究計畫者，依要點須「完成至少六小時之學術倫理教育課程訓練」。
+  - 一頁企劃的格式是本站建議；正式申請依各單位規定的格式。
+  - 一頁企劃的四段順序是本站整理。
+  sources:
+  - ethics-guide
+  - ethics-epaper13
+  - nstc-ugrad
+figures:
+- id: how-flow
+  type: flow
+  alt: 企劃書審核演練：自己寫第一段與細節，家長當審核者只讀第一段，說出四項後再決定要不要往下讀
+  steps:
+  - actor: 自己
+    text: 寫第一段
+  - actor: 自己
+    text: 補上細節
+  - actor: 家長
+    text: 只讀第一段
+  - actor: 家長
+    text: 說出四項
+- id: what-compare
+  type: compare
+  alt: 先寫結論是摘要就交代目的、目標、設計、方法與重要性；重點埋在後面時，審查者可能只讀摘要、研究設計與方法等段落
+  source: unc-grant
+  relation: not_equal
+  items:
+  - term: 先寫結論
+    note: 摘要就交代目的、目標、設計、方法與重要性
+  - term: 重點埋在後面
+    note: 審查者可能只讀摘要、研究設計與方法等段落
+sources:
+- id: unc-grant
+  title: Grant Proposals (or Give me the money!)（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/grant-proposals-or-give-me-the-money/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Keep in mind that reviewers may not read every word of your proposal. Your reviewer may only read the abstract, the sections on research design and methodology, the vitae, and the budget.」；「The abstract provides readers with their first impression of your project.」；「reviewers read with three questions in mind」：「What are we going to learn as a result of the proposed project that we do not know now? (goals, aims, and outcomes)」「Why is it worth knowing? (significance)」「How will we know that the conclusions are valid? (criteria for success)」；「Most abstracts state」：「(1) the general purpose, (2) specific goals, (3) research design, (4) methods, and (5) significance (contribution and rationale).」；Budget：「be sure to include a one or two page explanation of the budget」
+- id: nstc-ugrad
+  title: 國家科學及技術委員會補助大專學生研究計畫作業要點
+  publisher: 國家科學及技術委員會（國科會主管法規查詢系統，修正日期：民國 113 年 11 月 01 日）
+  url: https://law.nstc.gov.tw/LawContent.aspx?id=GL000114
+  accessed: '2026-10-29'
+  kind: government
+  supports: 審查：「(二)審查重點：包括研究主題之重要性、研究方法及步驟之可行性、學生相關學科成績、指導教授學術研究及指導能力等。」；學術倫理：「完成至少六小時之學術倫理教育課程訓練」
+- id: nstc-form
+  title: 國家科學及技術委員會大專學生研究計畫申請書（表 C802，研究計畫內容格式）
+  publisher: 國家科學及技術委員會表格（國立成功大學研究發展處轉載）
+  url: https://ord.ncku.edu.tw/userfiles/files/20251229060702900.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 研究計畫內容：(一)摘要 (二)研究動機與研究問題 (三)文獻回顧與探討 (四)研究方法及步驟 (五)預期結果 (六)需要指導教授指導內容 (七)參考文獻；「研究計畫內容以 10 頁為限（參考文獻不計）」
+- id: ethics-guide
+  title: AI世代的學術寫作指南⸺給研究生的參考手冊（電子書）
+  publisher: 教育部臺灣學術倫理教育資源中心（手冊註明「本手冊內容僅代表作者觀點，不代表教育部立場」）
+  url: https://ethics.moe.edu.tw/files/resource/ebook/file/ebook_05.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 常見問題：「若要用生成式AI輔助完成論文或計畫書，研究者必須具備資訊驗證與判斷的能力」；「研究者應對自己的研究行為與產出負全部責任」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」

@@ -1,8 +1,12 @@
+# B6 提案：zh.editing@uni
+# - 安全／隱私（中）：原文的 AI 可代勞「逐字標出錯字與標點」沒提醒那是別人的稿子。補：未經作者同意不貼進 AI；學術倫理電子報「不要將…未公開文件…輸入」、Springer Nature「Manuscripts…must not be shared with unsecured or public AI systems」。
+# - 補依據：UNC 寫作中心（編輯先、校對最後）、Purdue OWL（聚焦三四個主要修改、具體稱讚）、Kennesaw State 寫作中心（用「我」開頭、不改成你的風格）。「最多三個」標示本站建議。
+# - 「至少 2 個」標示示意；補 Why/How/What 與兩張圖。
 id: zh.editing@uni
 concept: zh.editing
 title: 替別人校稿：清楚又不傷人
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,9 +16,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 先內容後文字依 UNC 寫作中心〈Editing and Proofreading〉；評語聚焦三四個主要修改、具體稱讚依 Purdue OWL；「一個優點、最多三個修改」是本站建議。
 - 與「溝通與解決問題」sk.feedback@sh 交界：本點管文字修改的層次與順序，給回饋的方式由 sk.feedback 負責，互列 related。
 prerequisites:
 - zh.proofread@sh
@@ -24,7 +29,7 @@ links:
   related:
   - sk.feedback@sh
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：UNC 寫作中心〈Editing and Proofreading〉；Purdue OWL 高層次／低層次問題（HOCs／LOCs）。
 competency:
   specialist:
   - 基礎語文
@@ -33,20 +38,131 @@ competency:
   - 團隊合作
 ai:
   delegable:
-  - 逐字標出錯字與標點
+  - 經作者同意後，逐字標出錯字與標點
   human_experience:
   - 判斷哪三個修改最重要，用對方聽得進去的方式說
-idea: 校稿分兩層：內容（主旨、結構）先講，文字（錯字、標點、病句）後講。先說一個具體優點，再給最多三個最重要的修改。
+idea: 校稿分兩層：內容（主旨、結構、證據）先講，文字（錯字、標點、病句）後講。先說一個具體優點，再給最多三個最重要的修改（本站建議）；稿子是對方的，怎麼改由作者決定。
 guiding_questions:
 - 幫朋友改稿，先說錯字，還是先說哪裡寫得好？
-scenario: 親子共學：親子互換作品校稿：大人改孩子的作文、孩子改大人的訊息或報告，各給一個優點、三個建議。
+scenario: 親子共學：親子互換作品校稿：大人改孩子的作文、孩子改大人的訊息或報告，各給一個優點、最多三個建議；沒經對方同意，不把對方的稿子貼進 AI 工具。
 goal: 替別人校稿：先內容後文字，給一個優點和最多三個修改。
-review: 親子互改一篇作品，校稿單上有 1 個具體優點、最多 3 個最重要的修改；被改的人說出至少 2 個建議「聽得進去」。
+review: 親子互改一篇作品，校稿單上有 1 個具體優點、最多 3 個最重要的修改；被改的人說出至少 2 個建議「聽得進去」（2 個為示意）。
 formats:
   slides: []
-  exercise: 目標：替別人校稿：先內容後文字，給一個優點和最多三個修改。　檢核：親子互改一篇作品，校稿單上有 1 個具體優點、最多 3 個最重要的修改；被改的人說出至少 2 個建議「聽得進去」。
+  exercise: 目標：替別人校稿：先內容後文字，給一個優點和最多三個修改。　檢核：親子互改一篇作品，校稿單上有 1 個具體優點、最多 3 個最重要的修改；被改的人說出至少 2 個建議「聽得進去」（2 個為示意）。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 先改大處，再改小處
+  body:
+  - UNC 寫作中心把修改分成兩個階段：編輯看內容、整體結構、段落、清晰度、風格與引註；校對是最後一步，專看錯字、文法與標點，而且應該在其他修改都完成後才做。
+  - Purdue OWL 指出，評語太多、方向太分散時，寫作者會被淹沒，常常只改容易改的文法，錯過內容與組織這些高層次問題；所以建議評語只集中在三四個主要修改。
+  qa:
+    question: 幫朋友改稿，先說錯字，還是先說哪裡寫得好？
+    answer: 先說哪裡寫得好，而且要具體說出好在哪、為什麼；Purdue OWL 提醒，籠統的稱讚後面接一大堆批評，對方得不到幫助。錯字留到最後，等內容和結構談完再標。
+    source: purdue-feedback
+  items_title: 兩層修改
+  items:
+  - title: 內容層
+    text: 主旨清楚嗎、結構合理嗎、證據撐得住嗎。
+  - title: 文字層
+    text: 錯字、標點、文法與病句，最後才看。
+  sources:
+  - unc-editing
+  - purdue-feedback
+how:
+  heading: 一個優點，最多三個修改
+  body:
+  - Kennesaw State University 寫作中心建議：先問作者想要哪種回饋；態度要和善；用「我」開頭說出讀者的感受，例如說我在這段有點迷惑，而不是說你寫得不清楚；也不要把對方的文字改成你的風格。
+  - 本站建議：校稿單只寫一個具體優點和最多三個最重要的修改，每個修改都指出位置、說明原因，依重要性排序。
+  items_title: 校稿單（本站建議）
+  items:
+  - title: 具體優點
+    text: 指出位置，說明好在哪裡。
+    example: 第二段用數據回應反方，讓我更相信你的主張。
+  - title: 最多三個修改
+    text: 先內容後文字，依重要性排序。
+  - title: 用我開頭
+    text: 說出你讀到哪裡卡住、哪裡不懂。
+  checklist_title: 交回校稿前：
+  checklist:
+  - 先問想要什麼
+  - 優點夠具體
+  - 修改不超過三
+  - 沒改成我的風格
+  activity_figure: how-flow
+  sources:
+  - ksu-feedback
+what:
+  heading: 校稿不等於改成你的
+  figures:
+  - what-compare
+  notes:
+  - 別人的稿子是未公開文件。學術倫理電子報提醒「不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中」；Springer Nature 也規定，稿件、審查報告與敏感資料不得分享給不安全或公開的 AI 系統。要用工具標錯字，先取得作者同意，或請作者自己用。
+  - 「一個優點、最多三個修改」是本站建議（Purdue OWL 建議三四個主要修改）；「2 個」是示意。
+  sources:
+  - ethics-epaper13
+  - nature-ai
+  - purdue-feedback
+figures:
+- id: how-flow
+  type: flow
+  alt: 親子互相校稿：大人改孩子的作文、孩子改大人的報告，雙方各填校稿單，最後由作者決定怎麼改
+  steps:
+  - actor: 大人
+    text: 改孩子作文
+  - actor: 孩子
+    text: 改大人報告
+  - actor: 雙方
+    text: 填校稿單
+  - actor: 作者
+    text: 決定怎麼改
+- id: what-compare
+  type: compare
+  alt: 校稿是指出問題與原因、由作者決定；代改是直接改成你喜歡的說法，兩者不同
+  source: ksu-feedback
+  relation: not_equal
+  items:
+  - term: 校稿
+    note: 指出問題與原因，由作者決定怎麼改
+  - term: 代改
+    note: 直接改成你喜歡的說法
+sources:
+- id: unc-editing
+  title: Editing and Proofreading（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/editing-and-proofreading/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「editing and proofreading are two different stages of the revision process」；Editing 的層次：Content、Overall structure、Structure within paragraphs、Clarity、Style、Citations；「Proofreading is the final stage of the editing process, focusing on surface errors such as misspellings and mistakes in grammar and punctuation. You should proofread only after you have finished all of your other editing revisions.」
+- id: purdue-feedback
+  title: Instructor's Guide for Giving Feedback
+  publisher: Purdue Online Writing Lab（Purdue OWL），Purdue University
+  url: https://owl.purdue.edu/owl/general_writing/the_writing_process/feedback/instructor_guide_giving%20feedback.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Focus：「Students often become overwhelmed if there are too many comments on a paper」；「So, teachers should try to keep comments engaged with just three or four major elements to be revised.」；HOC/LOC：higher order concerns 多與想法和整體結構有關，lower order concerns 多是句子層級的文法與技術問題；Praise：「being specific about what is working well and why, rather than just saying 『great work!』」；「If a general compliment is followed with an abundance of criticism, even if it's formulated in a compliment sandwich, students won't benefit from the praise.」
+- id: ksu-feedback
+  title: Giving and Receiving Feedback
+  publisher: Writing Center，Kennesaw State University
+  url: https://campus.kennesaw.edu/current-students/academics/writing-center/open-educational-resources/giving-receiving-feedback.php
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Giving Peer Feedback：「First, listen to the writer. What kind of feedback are they asking for?」；「Be kind.」；「Comment on the higher order concerns first.」；「Use 『I』 statements to help stay focused on your reaction to the writing.」；「Don’t try to make the writer sound like you.」；「Remember that the responsibility for correcting the errors lies with the writer, not with you.」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」
+- id: nature-ai
+  title: Artificial Intelligence (AI)（Editorial policies）
+  publisher: Springer Nature／Nature Portfolio
+  url: https://www.nature.com/nature-portfolio/editorial-policies/ai
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Manuscripts, peer review reports, and sensitive data must not be shared with unsecured or public AI systems.」；審查者：「Confidential manuscript content must not be shared with unsecured or public AI tools.」

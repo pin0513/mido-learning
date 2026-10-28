@@ -1,8 +1,12 @@
+# B6 提案：zh.audience@uni
+# - 標題沒有冒號；改為「讀者意識：同一件事寫給三種人」，內容不變。
+# - 補依據：UNC 寫作中心〈Audience〉（永遠在寫給某個讀者；讀者需要、想要、重視什麼；同一件事寫給奶奶和好友，內容、結構與語氣都不同）、〈Revising Drafts〉（語氣與正式程度適合讀者嗎）。
+# - 「事實一致」補「先列事實表」（本站建議）；AI 改寫草稿：補逐項核對事實、不貼個資（UNC、學術倫理電子報）。補 Why/How/What 與兩張圖。
 id: zh.audience@uni
 concept: zh.audience
-title: 同一件事，寫給三種人
+title: 讀者意識：同一件事寫給三種人
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,9 +16,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 讀者意識依 UNC 寫作中心〈Audience〉〈Revising Drafts〉；三種文類的慣例與事實表是本站整理與本站建議。
 - 與「溝通與解決問題」sk.audience@jh 交界：「說給誰聽」的對象意識由 sk.audience 負責，列為本點的 why；本點管文字怎麼改寫。
 prerequisites:
 - zh.social@sh
@@ -23,9 +28,10 @@ links:
   why:
   - sk.audience@jh
   how: []
-  related: []
+  related:
+  - zh.disclose@uni
   deeper: []
-link_notes: 框架：—。跨學門連結：溝通解題「說給誰聽：傳播的五個問題」。
+link_notes: 框架：UNC 寫作中心〈Audience〉〈Revising Drafts〉。跨學門連結：溝通解題「說給誰聽：傳播的五個問題」。
 competency:
   specialist:
   - 應用文寫作
@@ -37,7 +43,7 @@ ai:
   - 依對象產生改寫草稿
   human_experience:
   - 確認每個版本的事實正確、語氣得體
-idea: 對象決定用詞、長度和格式。正式信件、新聞稿、社群貼文各有慣例，事實要一致，語氣可以不同。
+idea: 對象決定用詞、長度和格式。正式信件、新聞稿、社群貼文各有慣例（本站整理），事實要一致，語氣可以不同。
 guiding_questions:
 - 同一個活動，寫給主管、家長和同學，哪裡要改？
 scenario: 親子共學：同一則活動消息，寫成一封正式邀請信、一則新聞稿和一則社群貼文，比較三者的差別。
@@ -50,4 +56,108 @@ audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 寫給誰，決定怎麼寫
+  body:
+  - UNC 寫作中心提醒，你永遠是在寫給某個讀者；寫作時把讀者放在心上，能幫你決定要放哪些材料、怎麼組織想法，以及怎麼支持你的論點。
+  - 它舉例：同一件事寫信告訴奶奶和告訴好友，兩封信的內容、結構，甚至語氣都會很不一樣。
+  qa:
+    question: 同一個活動，寫給主管、家長和同學，哪裡要改？
+    answer: 先問三件事：他們需要知道什麼、想知道什麼、在乎什麼，再調整用詞、長度、格式和語氣。時間、地點、數字這些事實，三個版本都要一樣。
+    source: unc-audience
+  items_title: 寫之前問三件事（UNC）
+  items:
+  - title: 需要什麼
+    text: 讀者一定要知道的資訊。
+  - title: 想要什麼
+    text: 讀者有興趣、會想多看的部分。
+  - title: 重視什麼
+    text: 讀者在乎的價值與語氣。
+  sources:
+  - unc-audience
+how:
+  heading: 三個版本，事實一致
+  body:
+  - 本站建議先列一張事實表：時間、地點、人物、數字，三個版本都從這張表取材。再依讀者調整：UNC 寫作中心說，用詞與語氣要符合讀者的期待；修改草稿時也問自己，語氣與正式程度適合你的讀者嗎。
+  - 用 AI 產生改寫草稿時，UNC 寫作中心談到用 AI 草擬信件、活動宣傳這類事務性文字，建議每個結果都要依讀者與目的修改；它談 AI 翻譯時也提到，AI 不太會拿捏慣用語、情境與正式程度。本站建議逐項對照事實表，也不要把個人資料貼進對話框。作業或正式文件用了 AI，依課程或單位規定說明用了哪個工具、做了什麼（本站建議）。
+  items_title: 三種文類（本站整理）
+  items:
+  - title: 正式邀請信
+    text: 稱謂、目的、時間地點、敬請回覆。
+  - title: 新聞稿
+    text: 標題與第一段交代誰、何時、何地、做什麼。
+  - title: 社群貼文
+    text: 短句、重點在前、附報名或連結。
+  checklist_title: 三版寫完後對照：
+  checklist:
+  - 時間一致
+  - 地點一致
+  - 數字一致
+  - 說得出寫給誰
+  activity_figure: how-flow
+  sources:
+  - unc-audience
+  - unc-revising
+  - unc-ai
+  - ethics-epaper13
+what:
+  heading: 語氣可變，事實不變
+  figures:
+  - what-compare
+  notes:
+  - 事實表與三種文類的分法是本站整理與本站建議；正式文書依機關或公司的規定格式。
+  sources:
+  - unc-audience
+figures:
+- id: how-flow
+  type: flow
+  alt: 同一件事寫給三種人：自己列事實表、寫成三個版本，家人比對三版事實是否一致並說出各寫給誰
+  steps:
+  - actor: 自己
+    text: 列事實表
+  - actor: 自己
+    text: 寫三個版本
+  - actor: 家人
+    text: 比對事實
+  - actor: 家人
+    text: 說出寫給誰
+- id: what-compare
+  type: compare
+  alt: 寫給奶奶和寫給好友，內容、結構與語氣都可能不同，但事實相同
+  source: unc-audience
+  relation: not_equal
+  items:
+  - term: 寫給奶奶
+    note: 內容、結構與語氣依奶奶調整
+  - term: 寫給好友
+    note: 同一件事，內容、結構與語氣都不同
+sources:
+- id: unc-audience
+  title: Audience（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/audience/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「you always write to an audience」；「Keeping your audience in mind while you write can help you make good decisions about what material to include, how to organize your ideas, and how best to support your argument.」；寫給奶奶與好友的兩封信「would look quite different in terms of content, structure, and even tone」；「What does your audience need? What do they want? What do they value?」；「Your word choice and tone need to match your audience’s expectations.」
+- id: unc-revising
+  title: Revising Drafts（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/revising-drafts/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Are the tone and formality of the language appropriate for your audience?」
+- id: unc-ai
+  title: Generative AI in Academic Writing（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/generative-ai-in-academic-writing/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Transactional communication：「AI tools can quickly generate drafts of polite emails to professors or classmates, meeting agendas, project timelines, event promotions, etc. Review each of the results and refine them appropriately for your audiences and purposes.」；Translation：「Generative AI can struggle with things like idiomatic phrases, context, and degree of formality.」；「Do not input anything you prefer not to have widely shared into an AI generator.」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」

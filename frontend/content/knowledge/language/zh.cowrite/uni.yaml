@@ -1,8 +1,12 @@
+# B6 提案：zh.cowrite@uni
+# - 安全（中）：原文要人「用一篇真的要交的文章走一次流程」，沒提醒先查課程是否允許 AI、不貼個資或未公開資料、定稿要揭露。依教育部《未來人才AI能力圖像》與學術倫理資源中心指南、電子報補上。
+# - 補依據：UNC 寫作中心「help you think and write—not think or write for you」、指南「建立版本控制紀錄」、APA 保留提示詞紀錄。
+# - 「AI 腔」沿用 zh.aitells@sh 的本站整理說法並標示；補 Why/How/What 與兩張圖。
 id: zh.cowrite@uni
 concept: zh.cowrite
 title: 人機共寫：我想、AI 陪練、我定稿
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,9 +16,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- AI 使用的隱私、揭露與誠信原則依教育部《未來人才AI能力圖像》、教育部臺灣學術倫理教育資源中心寫作指南與電子報；「AI 腔」沿用 zh.aitells@sh 的本站整理說法。
 prerequisites:
 - zh.aitells@sh
 - zh.feeling@sh
@@ -24,7 +29,7 @@ links:
   related:
   - it.hcai@uni
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：教育部《未來人才AI能力圖像》（負責任使用AI的能力）；教育部臺灣學術倫理教育資源中心寫作指南；UNC 寫作中心〈Generative AI in Academic Writing〉。
 competency:
   specialist:
   - AI 協作寫作
@@ -36,17 +41,139 @@ ai:
   - 提問、找漏洞、提供反方觀點
   human_experience:
   - 決定主旨、選材與最後每一句話
-idea: 先自己決定主旨與材料，請 AI 提問、挑錯、給反方；草稿與定稿由你寫。最後刪掉 AI 腔，補上親身細節。
+idea: 先查課程能不能用 AI。可以用時，主旨與材料自己決定，請 AI 提問、挑錯、給反方；草稿與定稿由你寫，最後刪掉 AI 腔（本站整理的說法）、補上親身細節，並依規定揭露。
 guiding_questions:
 - 一篇文章裡，哪些決定一定要你來做？
-scenario: 親子共學：用一篇真的要交的文章走一次流程，保留每一步的紀錄，最後標出哪些句子受過 AI 影響。
+scenario: 親子共學：先確認課程允許使用 AI，再用一篇要交的文章走一次流程，保留每一步的紀錄（不貼個人資料或未公開資料），最後標出哪些句子受過 AI 影響。
 goal: 人機共寫：主旨與選材自己決定，AI 只負責提問、挑錯、給反方。
-review: 交一份過程紀錄（自己的大綱、AI 提問、修改紀錄、定稿），並在定稿上標出受 AI 影響的句子；家人看紀錄就能說出哪些決定是你做的。
+review: 交一份過程紀錄（自己的大綱、AI 提問、修改紀錄、定稿），並在定稿上標出受 AI 影響的句子、附上揭露說明；家人看紀錄就能說出哪些決定是你做的。
 formats:
   slides: []
-  exercise: 目標：人機共寫：主旨與選材自己決定，AI 只負責提問、挑錯、給反方。　檢核：交一份過程紀錄（自己的大綱、AI 提問、修改紀錄、定稿），並在定稿上標出受 AI 影響的句子；家人看紀錄就能說出哪些決定是你做的。
+  exercise: 目標：人機共寫：主旨與選材自己決定，AI 只負責提問、挑錯、給反方。　檢核：交一份過程紀錄（自己的大綱、AI 提問、修改紀錄、定稿），並在定稿上標出受 AI 影響的句子、附上揭露說明；家人看紀錄就能說出哪些決定是你做的。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: AI 幫你想，不替你想
+  body:
+  - UNC 寫作中心提醒，老師允許用 AI 時，通常是假設工具幫你思考與寫作，而不是替你思考或寫作；你交出去的文字永遠由你百分之百負責。
+  - 教育部臺灣學術倫理教育資源中心的指南也說「研究者應對自己的研究行為與產出負全部責任」，並提醒「直接使用AI翻譯整篇論文或直接複製貼上生成資料，都不符合學術誠信的基本原則」。
+  qa:
+    question: 一篇文章裡，哪些決定一定要你來做？
+    answer: 主旨、立場、選哪些材料、每一句最後怎麼寫，都要你決定。AI 可以提問、挑漏洞、給反方，但它的內容可能出錯，取捨與查證都在你。
+    source: unc-ai
+  items_title: 三段分工（本站整理）
+  items:
+  - title: 我想
+    text: 決定主旨、立場與材料。
+  - title: AI 陪練
+    text: 提問、找漏洞、提出反方。
+  - title: 我定稿
+    text: 自己寫每一句，查證並依規定揭露。
+  sources:
+  - unc-ai
+  - ethics-guide
+how:
+  heading: 留下紀錄，守住隱私
+  body:
+  - 先看課程大綱或問老師能不能用 AI。可以用時，只把自己的大綱或段落交給 AI 提問；學術倫理電子報提醒，不要把個人資訊、未公開文件、機密資料輸入對話框。
+  - 每一步都留紀錄：指南建議「建立版本控制紀錄來證明人類創意的存在」，APA Style 也建議把用過的提示詞留給自己做紀錄。
+  items_title: 可以請 AI 做的事（本站建議）
+  items:
+  - title: 提問
+    text: 請它問你：這段想說什麼、證據在哪裡。
+  - title: 找漏洞
+    text: 請它指出推論跳太快的地方。
+  - title: 給反方
+    text: 請它列出可能的反對意見，你再自己查證。
+  checklist_title: 每輪對話後：
+  checklist:
+  - 課程允許嗎
+  - 有沒有個資
+  - 哪句是 AI 的
+  - 查證了嗎
+  - 紀錄存了嗎
+  activity_figure: how-flow
+  sources:
+  - ethics-epaper13
+  - ethics-guide
+  - apa-genai
+what:
+  heading: 陪練不等於代寫
+  figures:
+  - what-compare
+  notes:
+  - 教育部《未來人才AI能力圖像》是能力架構，不是規定；它把「能理解並遵循AI相關之智慧財產權、個資保護及使用規範，於學習與職場情境中正當運用AI，並清楚揭露其使用方式與範圍」列為大專校院階段的能力。實際規定以學校與課程為準。
+  - Springer Nature 的 AI 政策把用 AI 壓力測試研究問題列為允許的輔助用途，但把未揭露就用大型語言模型產生核心研究推論列為不允許；交作業時依課程規定揭露。
+  - 三段分工與可以請 AI 做的事是本站整理與本站建議。
+  sources:
+  - moe-ai-portrait
+  - nature-ai
+figures:
+- id: how-flow
+  type: flow
+  alt: 人機共寫的流程：自己先查課程規定、寫大綱，AI 只提問與給反方，最後自己定稿並揭露
+  steps:
+  - actor: 自己
+    text: 查課程規定
+  - actor: 自己
+    text: 寫大綱草稿
+  - actor: AI
+    text: 提問與反方
+  - actor: 自己
+    text: 定稿並揭露
+- id: what-compare
+  type: compare
+  alt: 陪練是 AI 提問、挑錯、給反方，文字由你決定；代寫是 AI 產生主要內容再照抄，兩者不同
+  source: ethics-guide
+  relation: not_equal
+  items:
+  - term: 陪練
+    note: AI 提問、挑錯、給反方，主旨與文字由你決定
+  - term: 代寫
+    note: 直接複製貼上生成內容，不符合學術誠信
+sources:
+- id: unc-ai
+  title: Generative AI in Academic Writing（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/generative-ai-in-academic-writing/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Before we begin：「Note that when your instructors authorize the use of generative AI tools, they will likely assume that these tools may help you think and write—not think or write for you.」；「You are always 100% responsible for whatever writing you chose to turn in to an instructor」；Potential pitfalls：「Information may be false」；「Do not input anything you prefer not to have widely shared into an AI generator.」
+- id: ethics-guide
+  title: AI世代的學術寫作指南⸺給研究生的參考手冊（電子書）
+  publisher: 教育部臺灣學術倫理教育資源中心（手冊註明「本手冊內容僅代表作者觀點，不代表教育部立場」）
+  url: https://ethics.moe.edu.tw/files/resource/ebook/file/ebook_05.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 參、二至四 運用生成式AI於學術與研究活動應注意事項：「研究者應對自己的研究行為與產出負全部責任」；「使用任何科技輔助軟體，都應留意相關的資訊安全及隱私問題」；「建議使用前仍應諮詢指導教授、參考相關機構的指引，並適度公開資訊，例如：在研究方法中聲明使用哪些AI工具以及如何使用」；「直接使用AI翻譯整篇論文或直接複製貼上生成資料，都不符合學術誠信的基本原則」；常見問題：「建立版本控制紀錄來證明人類創意的存在」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」
+- id: nature-ai
+  title: Artificial Intelligence (AI)（Editorial policies）
+  publisher: Springer Nature／Nature Portfolio
+  url: https://www.nature.com/nature-portfolio/editorial-policies/ai
+  accessed: '2026-10-29'
+  kind: reference
+  supports: '「Green-Permitted: Assistive AI use」列「Stress-testing research questions」；「Red - Not permitted: AI replacing scholarly judgement or lacking transparency」列「Using an LLM to generate core research reasoning without disclosure」；原則「Human accountability is non‑transferable」'
+- id: apa-genai
+  title: 'Citing generative AI in APA Style: Part 1—Reference formats'
+  publisher: APA Style（American Psychological Association），McAdoo, Denneny & Lee，2025 年 9 月 9 日
+  url: https://apastyle.apa.org/blog/cite-generative-ai-references
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Researchers should document the prompts used with AI tools for their own records.」；「if you used AI when writing your paper, it will usually be necessary to disclose the use and cite the chat and/or AI tool」
+- id: moe-ai-portrait
+  title: 未來人才AI能力圖像（電子布告欄附件 PDF）
+  publisher: 教育部資訊及科技教育司（上版日期 115-07-14）
+  url: https://depart.moe.edu.tw/ed2700/News_Content.aspx?n=A1E30194B1C3ACDF&s=4C49BBB8F747DE99
+  accessed: '2026-10-29'
+  kind: government
+  supports: 附件《未來人才AI能力圖像》（教育部 115.05.22）大專校院學生「負責任使用AI的能力」：「能理解並遵循AI相關之智慧財產權、個資保護及使用規範，於學習與職場情境中正當運用AI，並清楚揭露其使用方式與範圍」；「具備AI資安與風險意識」，「能識別AI生成之虛假或誤導性內容」

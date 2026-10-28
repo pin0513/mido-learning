@@ -1,8 +1,12 @@
+# B6 提案：zh.voice@uni
+# - 標題「找到自己的聲音」沒有冒號、承諾也太大（本點教的是唸出來、改到像自己），改為「自己的聲音：唸出來像你會說的話」。
+# - 補依據：UNC 寫作中心〈Style〉（目標不是聽起來聰明）、〈Editing and Proofreading〉（唸出來、句子長短變化）、〈Generative AI〉（AI 修改後檢查是否失去你的聲音）；學術倫理資源中心指南「以自己的語氣與論述」。
+# - 「聲音來自…」的分法標示本站整理；AI 分析用詞：補不貼他人或未公開文字。補 Why/How/What 與兩張圖。
 id: zh.voice@uni
 concept: zh.voice
-title: 找到自己的聲音
+title: 自己的聲音：唸出來像你會說的話
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,9 +16,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 唸出來檢查與句子長短變化依 UNC 寫作中心〈Editing and Proofreading〉〈Style〉；用 AI 修改後檢查聲音依 UNC 寫作中心〈Generative AI in Academic Writing〉；「聲音」的組成分法是本站整理。
 prerequisites:
 - zh.feeling@sh
 links:
@@ -22,7 +27,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：UNC 寫作中心〈Style〉〈Editing and Proofreading〉；教育部臺灣學術倫理教育資源中心寫作指南（文獻探討要以自己的語氣與論述）。
 competency:
   specialist:
   - 寫作
@@ -33,7 +38,7 @@ ai:
   - 分析你常用的詞與句長
   human_experience:
   - 決定什麼樣的聲音是自己
-idea: 聲音來自你的用詞、句子長短和節奏，以及你在意的事。長短句交錯、少用套語、寫你真的會說的話。
+idea: 聲音來自你的用詞、句子長短和節奏，以及你在意的事（本站整理）。長短句交錯、少用套語、寫你真的會說的話；唸出來卡住的句子，通常就是要改的地方。
 guiding_questions:
 - 唸出來時，哪一句不像你會說的話？
 scenario: 親子共學：把一篇自己的文章唸出來錄音，圈出唸起來卡卡、不像自己的句子，改寫到唸得順。
@@ -46,4 +51,123 @@ audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 不是聽起來聰明
+  body:
+  - UNC 寫作中心說，學術寫作的目標不是讓自己聽起來很聰明，而是把聰明的觀點傳達出去；刻意模仿複雜的文風，可能反而犧牲了溝通、讓人看不懂。
+  - 寫論文也一樣。教育部臺灣學術倫理教育資源中心的指南談文獻探討時提醒，許多研究生只把讀到的內容平鋪直述寫出來，研究生「應該以自己的語氣與論述」來描述文獻。用 AI 潤飾時，UNC 寫作中心建議，看 AI 的修改時問自己它有沒有拿掉你獨特的聲音，AI 建議改的地方，不一定要照改。
+  qa:
+    question: 唸出來時，哪一句不像你會說的話？
+    answer: 通常是套語太多、句子太長或太文、不是你平常會用的詞。把它唸出來，卡住或覺得彆扭的地方圈起來，改成你跟朋友解釋時會說的話，再唸一次。
+    source: unc-editing
+  items_title: 聲音的三個來源（本站整理）
+  items:
+  - title: 用詞
+    text: 你平常會用的詞，而不是套語。
+  - title: 句長與節奏
+    text: 長短句交錯，唸起來有變化。
+  - title: 在意的事
+    text: 你選的細節，反映你在乎什麼。
+  sources:
+  - unc-style
+  - ethics-guide
+  - unc-ai
+how:
+  heading: 唸出來，圈出卡住的句子
+  body:
+  - UNC 寫作中心建議大聲唸出來，這會逼你說出每一個字，也讓你聽見字和字放在一起的聲音；編輯時也檢查句子的長短與結構有沒有變化。
+  - Kennesaw State University 寫作中心提醒，替人改稿時不要把對方改成像你；反過來，聽別人的建議時，如果覺得對方想改掉你的風格，先想想這個建議會不會讓文章更好；不會，就可以先放著不用。
+  items_title: 三步改寫（本站建議）
+  items:
+  - title: 錄音朗讀
+    text: 唸一遍自己的文章並錄下來。
+  - title: 圈出卡住處
+    text: 聽錄音，圈出唸不順或不像你的句子。
+  - title: 改到唸得順
+    text: 改成你會說的話，再唸一次。
+  checklist_title: 改完再唸一次：
+  checklist:
+  - 唸得順嗎
+  - 像我會說嗎
+  - 套語刪了嗎
+  - 長短有變化
+  activity_figure: how-flow
+  sources:
+  - unc-editing
+  - ksu-feedback
+what:
+  heading: 你的聲音，不等於 AI 的潤飾
+  figures:
+  - what-compare
+  notes:
+  - 請 AI 分析你常用的詞與句長時，只貼你自己的文字；別人的作品、未公開文件不要貼進對話框。學術倫理電子報提醒「不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中」。
+  - 聲音的三個來源是本站整理，三步改寫是本站建議。
+  sources:
+  - ethics-epaper13
+figures:
+- id: how-flow
+  type: flow
+  alt: 找回自己聲音的步驟：自己錄音朗讀、圈出卡住的句子並改寫，家人聽改後版本說出哪裡像你
+  steps:
+  - actor: 自己
+    text: 錄音朗讀
+  - actor: 自己
+    text: 圈出卡住處
+  - actor: 自己
+    text: 改寫再唸
+  - actor: 家人
+    text: 說哪裡像你
+- id: what-compare
+  type: compare
+  alt: 你的聲音是你的用詞與節奏；AI 的潤飾可能把句子改得通順，卻拿掉你獨特的聲音，兩者不同
+  source: unc-ai
+  relation: not_equal
+  items:
+  - term: 你的聲音
+    note: 你會用的詞、你的節奏與在意的事
+  - term: AI 潤飾
+    note: 可能更通順，也可能拿掉你獨特的聲音
+sources:
+- id: unc-style
+  title: Style（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/style/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「your goal in academic writing is not to sound intelligent, but to get your intelligent point across」
+- id: unc-editing
+  title: Editing and Proofreading（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/editing-and-proofreading/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Style：「Have you varied the length and structure of your sentences?」；Proofreading（The proofreading process）：「Try reading out loud, which forces you to say each word and also lets you hear how the words sound together.」
+- id: ethics-guide
+  title: AI世代的學術寫作指南⸺給研究生的參考手冊（電子書）
+  publisher: 教育部臺灣學術倫理教育資源中心（手冊註明「本手冊內容僅代表作者觀點，不代表教育部立場」）
+  url: https://ethics.moe.edu.tw/files/resource/ebook/file/ebook_05.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 貳、五 常見的錯誤寫作行為（撰寫文獻探討時，無法看見作者的意見與聲音）：「許多研究生在這個環節只有平舖直述地將所閱讀到的內容寫出來，缺少自己的剖析與洞見。研究生應該以自己的語氣與論述，透過引述、改寫或摘寫等方式，適度地描述文獻資料，強化或證明自己現在進行此研究主題的重要性與必要性。」；參 如何運用生成式AI輔助學術寫作：「直接使用AI翻譯整篇論文或直接複製貼上生成資料，都不符合學術誠信的基本原則」
+- id: ksu-feedback
+  title: Giving and Receiving Feedback
+  publisher: Writing Center，Kennesaw State University
+  url: https://campus.kennesaw.edu/current-students/academics/writing-center/open-educational-resources/giving-receiving-feedback.php
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Giving：「Don’t try to make the writer sound like you.」；Receiving：「If you feel that the reviewer is trying to change your style so that the paper doesn’t sound like you anymore, consider whether the feedback helps you make the paper better. If not, feel free to set that feedback aside.」
+- id: unc-ai
+  title: Generative AI in Academic Writing（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/generative-ai-in-academic-writing/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Using AI for revision：「Did it remove your unique voice?」；「Just because AI suggests a change, doesn’t mean you need to make it」；「Do not input anything you prefer not to have widely shared into an AI generator.」
+- id: ethics-epaper13
+  title: 大學校園因應生成式AI之指引及教學建議（學術倫理電子報第 13 期）
+  publisher: 教育部臺灣學術倫理教育資源中心（2023 年 8 月）
+  url: https://ethics.moe.edu.tw/resource/epaper/html/21/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: （三）個人資料保護與資通安全：「研究者應留意，不要將個人資訊、未公開文件、機密資料等內容輸入到生成式AI的對話框中，以避免產生個人隱私洩露的問題。」

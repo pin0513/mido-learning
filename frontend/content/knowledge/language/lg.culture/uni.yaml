@@ -1,8 +1,13 @@
+# B6 提案：lg.culture@uni
+# - 引導問題「為什麼同一句『好啊』…」：引號沒有改成內層『』，且「好啊＝拒絕」查無可靠來源。改用有來源的例子：日語「…はちょっと」（東京外國語大學言語模組；字義依コトバンク所收辭典與加藤 2019）。
+# - idea 的「沉默代表什麼」查無來源，刪去；改成多直接、多客氣。
+# - 補依據：歐洲語言共同參考架構 CEFR 2020 版「多元文化能力」描述語（B1、B2、C1）；Cambridge Dictionary 英式英語 quite（加在可分程度形容詞前，常表示「還可以」）。
+# - AI 整理禮貌用語：補 AI 不擅長慣用語與情境（UNC）；避免刻板印象（本站建議，依 CEFR C1）。「3 句」標示示意；補 Why/How/What 與兩張圖。
 id: lg.culture@uni
 concept: lg.culture
 title: 跨文化溝通：語言背後的默契
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -11,9 +16,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：大學不對應 108 課綱，以學門路徑對應。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 日語「…はちょっと」依東京外國語大學言語模組；「ちょっと」的字義依コトバンク所收《デジタル大辞泉》《精選版 日本国語大辞典》與加藤香須美（2019）；英語 quite 依 Cambridge Dictionary（British grammar）；跨文化能力描述依 Council of Europe《CEFR Companion Volume》（2020）。
 prerequisites:
 - lg.ai@sh
 links:
@@ -21,7 +27,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：Council of Europe《CEFR Companion Volume》（2020）多元文化能力描述語。
 competency:
   specialist:
   - 跨文化溝通
@@ -33,17 +39,138 @@ ai:
   - 整理不同文化的禮貌用語與例子
   human_experience:
   - 在真實交流裡察覺誤會，並調整自己的說法
-idea: 語言不只是字和文法，還包含說話的習慣：多直接、多客氣、沉默代表什麼。學外語也是在學另一套默契。
+idea: 語言不只是字和文法，還包含說話的習慣：多直接、多客氣、話說到哪裡就停。學外語也是在學另一套默契，照字面翻可能翻錯意思。
 guiding_questions:
-- 為什麼同一句「好啊」，在不同文化可能是拒絕？
+- 為什麼日語只說「土曜日はちょっと」，對方就知道你在拒絕？
 scenario: 親子共學：找一段英文和一段日文的道歉或拒絕，比較它們怎麼開頭、怎麼收尾，和中文的說法排在一起看。
 goal: 察覺語言背後的文化默契，避免照字面翻譯造成誤會。
-review: 找 3 句英文或日文裡「照字面翻會誤會」的說法，寫出字面意思、實際意思與適合的場合；家人看得懂差別。
+review: 找 3 句（示意）英文或日文裡「照字面翻會誤會」的說法，寫出字面意思、實際意思與適合的場合，並附上查到的出處；家人看得懂差別。
 formats:
   slides: []
-  exercise: 目標：察覺語言背後的文化默契，避免照字面翻譯造成誤會。　檢核：找 3 句英文或日文裡「照字面翻會誤會」的說法，寫出字面意思、實際意思與適合的場合；家人看得懂差別。
+  exercise: 目標：察覺語言背後的文化默契，避免照字面翻譯造成誤會。　檢核：找 3 句（示意）英文或日文裡「照字面翻會誤會」的說法，寫出字面意思、實際意思與適合的場合，並附上查到的出處；家人看得懂差別。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-29'
+why:
+  heading: 照字面翻，可能翻錯意思
+  body:
+  - 東京外國語大學的日語教材把「･･･はちょっと。」列為拒絕邀請的說法，例如「土曜日ですか。土曜日はちょっと。」。辭典把「ちょっと」解釋為數量、程度或時間很少，也就是すこし；也記載它可以把不方便、不好說的事說得含糊，例如「私はお酒はちょっと…」。加藤香須美（2019）分析日語教科書時也說，它的原義是程度或數量上的少，在教科書裡是拒絕邀請時的委婉說法。
+  - 英語也有類似情形。Cambridge Dictionary 說明，quite 加在可分程度的形容詞或副詞前，通常是有一點、還可以但不是很的意思；它的例句說某人以前 quite good at drawing，意思是還可以、不算出色。照字面翻成「很會畫」，就把評價翻高了。
+  qa:
+    question: 為什麼日語只說「土曜日はちょっと」，對方就知道你在拒絕？
+    answer: 拒絕邀請時，日語常用「…はちょっと」，把不方便說得委婉；照字面翻成星期六有一點，就看不出是在拒絕。不過它不是每個場合都合適：加藤香須美（2019）的訪談裡，也有人被這樣拒絕後覺得不愉快，該教科書的教師手冊則建議別只說「ちょっと…」，要補上理由。
+    source: kato-chotto
+  items_title: 兩個照字面會誤會的例子
+  items:
+  - title: 日語〜はちょっと
+    text: 字面是一點點，拒絕邀請時是委婉說法。
+    example: 土曜日はちょっと。
+  - title: 英式英語 quite
+    text: 字面像很，加在 good 前常是還可以。
+    example: He had been quite good at drawing when he was at school.
+  sources:
+  - tufs-kotowari
+  - kotobank-chotto
+  - kato-chotto
+  - cambridge-quite
+how:
+  heading: 並排比較，再問情境
+  body:
+  - CEFR 2020 版描述跨文化能力的進程：B1 能簡單討論在另一個文化裡看似奇怪的事，對當地人可能很正常；B2 能察覺自己視為理所當然的事，別人不一定這樣想，並能反思不同的溝通方式可能帶來的誤會。
+  - 本站建議：把外語說法、字面翻譯、實際意思和適合的場合並排寫下來，每一句都附上查到的出處，再找會說這種語言的人或教材確認情境。
+  items_title: 並排表（本站建議）
+  items:
+  - title: 字面意思
+    text: 逐字翻成中文是什麼。
+  - title: 實際意思
+    text: 說話的人真正想表達什麼。
+  - title: 適合的場合
+    text: 對誰說、在什麼情況說。
+  checklist_title: 每一句都寫出：
+  checklist:
+  - 字面意思
+  - 實際意思
+  - 適合的場合
+  - 查到的出處
+  activity_figure: how-flow
+  sources:
+  - cefr-cv
+what:
+  heading: 字面意思，不等於實際意思
+  figures:
+  - what-compare
+  notes:
+  - 用 AI 整理禮貌用語時，UNC 寫作中心提醒 AI 不太會拿捏慣用語、情境與正式程度；它給的例子要回到教材或辭典查證。
+  - 別把一個例子當成整個文化的定論。CEFR C1 描述語描述的能力包括察覺判斷與偏見背後常有隱含的價值觀；本站建議說成「這個說法在某些情境常見」，而不是「某國人都這樣」。
+  - 並排表是本站建議；「3 句」是示意。
+  sources:
+  - unc-ai
+  - cefr-cv
+figures:
+- id: how-flow
+  type: flow
+  alt: 照字面會誤會的說法：自己找例句、寫出字面與實際意思並查出處，家人看並排表說出差別
+  steps:
+  - actor: 自己
+    text: 找外語例句
+  - actor: 自己
+    text: 寫字面意思
+  - actor: 自己
+    text: 查實際意思
+  - actor: 家人
+    text: 說出差別
+- id: what-compare
+  type: compare
+  alt: 日語「土曜日はちょっと」字面是星期六有一點，實際意思是委婉拒絕，兩者不同
+  source: tufs-kotowari
+  relation: not_equal
+  items:
+  - term: 字面意思
+    note: 土曜日はちょっと：星期六有一點
+  - term: 實際意思
+    note: 委婉拒絕：星期六不方便
+sources:
+- id: tufs-kotowari
+  title: 誘いの受け方、断り方（言語モジュール 日本語 文法モジュール 064）
+  publisher: 東京外国語大学（TUFS 言語モジュール）
+  url: https://www.coelang.tufs.ac.jp/modules/ja/gmod/contents/explanation/064.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 断り方：「･･･はちょっと。」；例「土曜日ですか。土曜日はちょっと。」；「ありがとうございます。でも、あしたはちょっと。」；受け方：「いいですね。Vましょう。」
+- id: kotobank-chotto
+  title: ちょっと【一寸／鳥渡】（デジタル大辞泉；精選版 日本国語大辞典）
+  publisher: コトバンク（小学館『デジタル大辞泉』『精選版 日本国語大辞典』）
+  url: https://kotobank.jp/word/%E4%B8%80%E5%AF%B8-434275
+  accessed: '2026-10-29'
+  kind: reference
+  supports: デジタル大辞泉 ちょっと［副］１：「物事の数量・程度や時間がわずかであるさま。すこし。」；精選版 日本国語大辞典 ちょっと［一］③：「差し障りのあること、具合の悪いことを曖昧にぼかして表わす語。」例「私はお酒はちょっと…」
+- id: kato-chotto
+  title: 日本語教科書の中の「ちょっと」―外国人は「ちょっと」をどう学ぶか―（“Chotto” in a Japanese language textbook）
+  publisher: 加藤香須美，日本国際情報学会誌『Kokusai-Joho』4 巻 1 号 pp. 49–55（2019 年 7 月 7 日発行；J-STAGE）
+  url: https://www.jstage.jst.go.jp/article/kjoho/4/1/4_49/_article/-char/ja
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Abstract：「The original meaning of this word is the amount and extent」；「The former is euphemism used when declining an invitation, or making a request moderately.」；本文：「『ちょっと』の原義は程度や数量を表す『少し』であるのだが、文脈によってさまざまな意味に変化し多くの機能を持つことになる。」；『翻訳・文法解説』は「誘いを断るときの婉曲表現と説明している」；『手引き』：「『ちょっと…。』で止めるのではなく、相手への気配りから理由を添えるとしている」；「一方で日本人同士でも『ちょっと…。』と断られて不愉快になりその後その人との関係に影響を及ぼしたと話す人もいた。」
+- id: cambridge-quite
+  title: Quite（English Grammar Today, British grammar）
+  publisher: Cambridge Dictionary（Cambridge University Press & Assessment）
+  url: https://dictionary.cambridge.org/grammar/british-grammar/quite
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Quite + gradable adjectives and adverbs：「When we use quite with a gradable adjective or adverb, it usually means 『a little, moderately but not very』.」；同一個意思的例句「He had been quite good at drawing when he was at school. (OK, moderately good but not outstanding)」
+- id: cefr-cv
+  title: 'Common European Framework of Reference for Languages: Learning, teaching, assessment – Companion volume'
+  publisher: Council of Europe（2020 年 4 月，ISBN 978-92-871-8621-8）
+  url: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Building on pluricultural repertoire：B1「Can discuss in simple terms the way in which things that may look 『strange』 to them in another sociocultural context may well be 『normal』 for the other people concerned.」；B2「Can, in an intercultural encounter, recognise that what one normally takes for granted in a particular situation is not necessarily shared by others, and can react and express themselves appropriately.」；「Can reflect on and explain particular ways of communicating in their own and other cultures, and the risks of misunderstanding they generate.」；C1「Can describe and evaluate the viewpoints and practices of their own and other social groups, showing awareness of the implicit values on which judgments and prejudices are frequently based.」
+- id: unc-ai
+  title: Generative AI in Academic Writing（Writing Center 寫作講義）
+  publisher: The Writing Center, University of North Carolina at Chapel Hill
+  url: https://writingcenter.unc.edu/tips-and-tools/generative-ai-in-academic-writing/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Generative AI can struggle with things like idiomatic phrases, context, and degree of formality.」
