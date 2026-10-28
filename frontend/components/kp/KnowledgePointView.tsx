@@ -3,6 +3,7 @@ import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { competencyName, disciplineTitle, layerName, stageName } from "@/lib/content";
 import { isFolderLaunched } from "@/lib/content";
 import { competencyPath, disciplinePath, knowledgePointPath, learningPathPath, stagePath } from "@/lib/kp/routes";
+import { GlueTail } from "./v2/text";
 import { ColearnCard } from "./ColearnCard";
 import { Estimator } from "./Estimator";
 import { StageGlyph } from "./StageGlyph";
@@ -123,9 +124,9 @@ export function KnowledgePointView({
           <StageGlyph stage={point.stage} label={stage} />
           <p className="small" style={{ margin: 0 }}>{stage}・{layer}</p>
         </div>
-        <p className="lead" style={{ marginTop: 16 }}>{point.idea}</p>
-        {point.goal ? <p className="mt-4 leading-7" data-testid="kp-goal"><b>一句目標　</b>{point.goal}</p> : null}
-        {point.review ? <p className="mt-2 leading-7" data-testid="kp-review"><b>家長檢核　</b>{point.review}</p> : null}
+        <p className="lead" style={{ marginTop: 16 }}><GlueTail text={point.idea} /></p>
+        {point.goal ? <p className="mt-4 leading-7" data-testid="kp-goal"><b>一句目標　</b><GlueTail text={point.goal} /></p> : null}
+        {point.review ? <p className="mt-2 leading-7" data-testid="kp-review"><b>家長檢核　</b><GlueTail text={point.review} /></p> : null}
         {point.id.startsWith("pm.estimate@") ? <Estimator /> : null}
       </header>
 
@@ -146,7 +147,7 @@ export function KnowledgePointView({
         <h2 id="kp-scenario-heading" className="text-xl font-bold">
           情境
         </h2>
-        <p className="mt-2 max-w-3xl leading-7">{point.scenario}</p>
+        <p className="mt-2 max-w-3xl leading-7"><GlueTail text={point.scenario} /></p>
       </section>
 
       <section className="mt-8" aria-labelledby="kp-questions-heading">
@@ -155,7 +156,7 @@ export function KnowledgePointView({
         </h2>
         <ol className="mt-2 list-decimal space-y-2 pl-5 leading-7">
           {point.guidingQuestions.map((question) => (
-            <li key={question}>{question}</li>
+            <li key={question}><GlueTail text={question} /></li>
           ))}
         </ol>
       </section>
@@ -250,7 +251,7 @@ export function KnowledgePointView({
             <h3 className="font-semibold">可以交給工具</h3>
             <ul className="mt-2 list-disc pl-5">
               {point.delegable.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item}><GlueTail text={item} /></li>
               ))}
             </ul>
           </div>
@@ -258,7 +259,7 @@ export function KnowledgePointView({
             <h3 className="font-semibold">要自己經歷</h3>
             <ul className="mt-2 list-disc pl-5">
               {point.humanExperience.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item}><GlueTail text={item} /></li>
               ))}
             </ul>
           </div>
@@ -310,7 +311,7 @@ export function KnowledgePointView({
           ))}
         </div>
         {point.linkNotes ? (
-          <p className="mt-4 text-sm leading-6 text-[#3d3830]">跨學門關聯：{point.linkNotes}</p>
+          <p className="mt-4 text-sm leading-6 text-[#3d3830]">跨學門關聯：<GlueTail text={point.linkNotes} /></p>
         ) : null}
       </section>
 
@@ -319,32 +320,32 @@ export function KnowledgePointView({
       {point.article ? (
         <section className="mt-8">
           <h2 className="text-xl font-bold">文章</h2>
-          <p className="mt-2 leading-7">{point.article}</p>
+          <p className="mt-2 leading-7"><GlueTail text={point.article} /></p>
         </section>
       ) : null}
       {point.exercise ? (
         <section className="mt-8">
           <h2 className="text-xl font-bold">練習</h2>
-          <p className="mt-2 leading-7">{point.exercise}</p>
+          <p className="mt-2 leading-7"><GlueTail text={point.exercise} /></p>
         </section>
       ) : null}
       {point.project ? (
         <section className="mt-8">
           <h2 className="text-xl font-bold">專題</h2>
-          <p className="mt-2 leading-7">{point.project}</p>
+          <p className="mt-2 leading-7"><GlueTail text={point.project} /></p>
         </section>
       ) : null}
       {point.aiPrompt ? (
         <section className="mt-8">
           <h2 className="text-xl font-bold">提問提示</h2>
-          <p className="mt-2 leading-7">{point.aiPrompt}</p>
+          <p className="mt-2 leading-7"><GlueTail text={point.aiPrompt} /></p>
         </section>
       ) : null}
       {point.game ? (
         <section className="mt-8">
           <h2 className="text-xl font-bold">遊戲說明</h2>
           <p className="mt-2 text-sm text-[#3d3830]">遊戲維持獨立格式，這一頁只放說明，不內嵌遊戲。</p>
-          <p className="mt-2 leading-7">{point.game}</p>
+          <p className="mt-2 leading-7"><GlueTail text={point.game} /></p>
         </section>
       ) : null}
 

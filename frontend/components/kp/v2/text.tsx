@@ -73,6 +73,18 @@ export function RichText({ text }: { text: string }) {
   return <>{nodes}</>;
 }
 
+/** 結尾四個字黏在一起。舊版詳情頁沒有 V2 的分段器，用這個避免最後一行只剩一兩個字。 */
+export function GlueTail({ text }: { text: string }) {
+  const chars = [...text];
+  if (chars.length <= 4) return text;
+  return (
+    <>
+      {chars.slice(0, -4).join("")}
+      <span className="whitespace-nowrap">{chars.slice(-4).join("")}</span>
+    </>
+  );
+}
+
 /** 全形冒號後不超過 14 字才不斷行，避免窄螢幕把整列撐出去。 */
 export function HeadingLine({ lead, tail }: { lead: string; tail?: string }) {
   if (!tail) return lead;

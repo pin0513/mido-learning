@@ -9,7 +9,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { Compare } from "../../components/kp/v2/figures/Compare";
 import { Spelling } from "../../components/kp/v2/figures/Spelling";
 import { ToneChart } from "../../components/kp/v2/figures/ToneChart";
-import { RichText } from "../../components/kp/v2/text";
+import { GlueTail, RichText } from "../../components/kp/v2/text";
 import { catalogFromModel } from "../content/catalog";
 import { loadContent } from "../content/load";
 import type { ContentCatalog } from "../content/catalog";
@@ -55,6 +55,12 @@ test("短書名不斷行，長書名可以換行", () => {
   assert.match(html, new RegExp(`<span class="v2-nw">${kept}`));
   assert.equal(html.includes(`<span class="v2-nw">${long}</span>`), false);
   assert.equal(html.includes("NASA Work Breakdown Structure"), true);
+});
+
+test("舊版內文結尾四個字黏在一起", () => {
+  const html = renderToStaticMarkup(createElement(GlueTail, { text: "同樂會還是開得成嗎？" }));
+  assert.match(html, /<span class="whitespace-nowrap">得成嗎？<\/span>/);
+  assert.equal(html.startsWith("同樂會還是開"), true);
 });
 
 test("比較圖的長註記折進卡片，兩欄也有窄螢幕版", () => {
