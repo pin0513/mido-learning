@@ -3,18 +3,23 @@
 # id_prefix 與 content_folder 只標在這一輪有知識點的根節點。
 # 沒有知識點的節點先留著，讓後面的學門有地方掛，驗證器不會要求每個節點都有檔案。
 
+# short_name 是層級的簡稱。詳細頁要顯示「層級」時用它；這一輪還沒有改畫面。
 layers:
   - id: essence
     name: 本質層
+    short_name: 本質
     role: 知識點的 why 最終指向這裡。
   - id: foundation
     name: 基礎科學
+    short_name: 基礎
     role: 國小到國中的主體，對應課綱領域。
   - id: advanced
     name: 進階理論
+    short_name: 進階
     role: 高中到大學，連結本質與應用。
   - id: applied
     name: 應用領域
+    short_name: 應用
     role: 知識點的 how 最終落在這裡。
 
 crosscutting:

@@ -1,0 +1,79 @@
+# 學習表現與學習內容。文字從官方課綱逐字複製，不可自編、不可改寫。
+# 代碼鍵用拉丁字母 I／V。官方 PDF 裡的羅馬數字原字（Ⅰ、Ⅱ）在這裡寫成 I、II，顯示時照這個鍵輸出。
+# 出處頁碼是 PDF 頁腳印的頁碼。
+# https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+語文/國文:
+  performances:
+    3-I-1:
+      stage: 1
+      text: 正確認念、拼讀及書寫注音符號。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    3-I-2:
+      stage: 1
+      text: 運用注音符號輔助識字，也能利用國字鞏固注音符號的學習。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    3-I-3:
+      stage: 1
+      text: 運用注音符號表達想法，記錄訊息。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    3-I-4:
+      stage: 1
+      text: 利用注音讀物，學習閱讀，享受閱讀樂趣。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    3-II-1:
+      stage: 2
+      text: 運用注音符號，理解生字新詞，提升閱讀效能。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+    3-II-2:
+      stage: 2
+      text: 運用注音符號，檢索資訊，吸收新知。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 8
+  contents:
+    Aa-I-1:
+      stage: 1
+      text: 聲符、韻符、介符的正確發音和寫法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 13
+    Aa-I-2:
+      stage: 1
+      text: 聲調及其正確的標注方式。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 13
+    Aa-I-3:
+      stage: 1
+      text: 二拼音和三拼音的拼讀和書寫。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 13
+    Aa-I-4:
+      stage: 1
+      text: 結合韻的拼讀和書寫。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 13
+    Aa-I-5:
+      stage: 1
+      text: 標注注音符號的各類文本。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 13
+    Aa-II-1:
+      stage: 2
+      text: 標注注音符號的各類文本。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 13
