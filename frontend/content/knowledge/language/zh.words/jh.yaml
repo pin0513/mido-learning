@@ -1,8 +1,13 @@
+# B4 提案：zh.words@jh
+# - 「差強人意」的解釋與教育部《成語典》一致（「雖然不夠好，但大體上還能讓人滿意」），保留並改成逐字引用。
+# - 檢核裡的「首當其衝」在《成語典》只收在附錄（修訂本參考資料），正文查不到；檢核改成「查教育部《成語典》或《重編國語辭典修訂本》」，並引用辭典釋義。
+# - 「名詞、動詞、形容詞」本批沒有找到國中課綱的直接條文，本點也沒有教詞性；複審修正：標題由「詞性與成語：用對地方」改為「成語與詞語：用對地方」，goal 刪掉「分辨詞性，」，what.notes 的詞性句一併刪除。
+# - 補 grades、代碼、Why/How/What。
 id: zh.words@jh
 concept: zh.words
-title: 詞性與成語：用對地方
+title: 成語與詞語：用對地方
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +17,27 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 4-IV-3
+  contents:
+  - Ab-IV-4
+  - Ab-IV-5
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 「差強人意」依教育部《成語典》正文（ID=369）逐字核對；「首當其衝」《成語典》正文查不到，只在附錄，釋義依《重編國語辭典修訂本》（ID=130258）。
+- 會考「（二）詞語的理解與使用」逐字引自心測中心國文科考試內容頁。
+- 原標題與 goal 的「詞性」已刪除：本點只教成語與詞語，沒有詞性的內容。
 prerequisites:
 - zh.dictionary@es
 links:
@@ -28,7 +45,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：國中教育會考國文「詞語的理解與使用」；國語文領綱 4-Ⅳ-3、Ab-Ⅳ-4、Ab-Ⅳ-5；教育部《成語典》。
 competency:
   specialist:
   - 基礎語文
@@ -39,18 +56,129 @@ ai:
   - 查成語出處與釋義
   human_experience:
   - 判斷這個詞放在這裡準不準
-idea: 同一個詞要放對位置：名詞、動詞、形容詞各有用法。成語先查清楚意思再用，例如「差強人意」是勉強讓人滿意，不是很好。
+idea: 詞語要放對位置、用對意思。會考國文考「詞語的理解與使用」。成語先查清楚意思再用：教育部《成語典》說「差強人意」是「雖然不夠好，但大體上還能讓人滿意」，不是「很好」。
 guiding_questions:
 - 「他的演講差強人意，大家都很滿意。」哪裡怪怪的？
 scenario: 親子共學：複習版：每人找一個自己以前用錯的成語，用教育部《成語典》查原意，再各造一個正確的句子。
-goal: 分辨詞性，把成語用在對的情境；不確定就先查再用。
-review: 家長給 5 個常被用錯的成語（例如差強人意、首當其衝），孩子先各造一句，再查教育部《成語典》自己訂正，最後 5 句都用對。
+goal: 把成語用在對的情境；不確定就先查再用。
+review: 家長給 5 個常被用錯的成語（例如差強人意、首當其衝），孩子先各造一句，再查教育部《成語典》或《重編國語辭典修訂本》自己訂正，最後 5 句都用對。
 formats:
   slides: []
-  exercise: 目標：分辨詞性，把成語用在對的情境；不確定就先查再用。　檢核：家長給 5 個常被用錯的成語（例如差強人意、首當其衝），孩子先各造一句，再查教育部《成語典》自己訂正，最後 5 句都用對。
+  exercise: 目標：把成語用在對的情境；不確定就先查再用。　檢核：家長給 5 個常被用錯的成語（例如差強人意、首當其衝），孩子先各造一句，再查教育部《成語典》或《重編國語辭典修訂本》自己訂正，最後 5 句都用對。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 詞用錯，意思就反了
+  body:
+  - 會考國文考「詞語的理解與使用：理解、應用詞語，理解常用文言文的詞義。」國語文課綱也列出國中要「認念」6,500 個、「使用」5,000 個常用語詞。
+  - 成語常有古代的本義和現在的用法。以「差強人意」為例，《成語典》說它的本義是「還真是能夠振奮人心」，後來用來「比喻雖然不夠好，但大體上還能讓人滿意」。
+  qa:
+    question: 「他的演講差強人意，大家都很滿意。」哪裡怪怪的？
+    answer: 「差強人意」是「雖然不夠好，但大體上還能讓人滿意」，用在「勉強可以」的情況。後半句說「大家都很滿意」，意思衝突。可以改成「他的演講差強人意，還有進步空間。」或者把前半句改成「他的演講很精彩」。
+    source: idiom-chaqiang
+  items_title: 國中課綱的詞語目標
+  items:
+  - title: 認念常用語詞
+    text: 國語文 Ab-Ⅳ-4：6,500 個常用語詞的認念。
+    code: Ab-IV-4
+  - title: 使用常用語詞
+    text: 國語文 Ab-Ⅳ-5：5,000 個常用語詞的使用。
+    code: Ab-IV-5
+  - title: 查辭典辨一字多義
+    text: 國語文 4-Ⅳ-3：能運用字典或辭典了解一字多音及一字多義的現象。
+    code: 4-IV-3
+  sources:
+  - cap-guowen
+  - kuoyu
+  - idiom-chaqiang
+how:
+  heading: 先查再用，造句驗證
+  body:
+  - 不確定的成語，先查教育部《成語典》，看「釋義」和「使用類別」，再造一個句子試試；《成語典》正文沒收的，改查《重編國語辭典修訂本》。造好的句子唸一遍，看前後意思有沒有衝突。
+  items:
+  - title: 看使用類別
+    text: 《成語典》把「差強人意」歸在「勉強可以」的表述。
+    example: 差強人意
+  - title: 不在成語典就查辭典
+    text: 「首當其衝」：最先受到攻擊，或首先遭遇災難（《重編國語辭典修訂本》）。
+    example: 首當其衝
+  - title: 前後意思要一致
+    text: 褒貶方向和句子其他部分要配得上（本站整理）。
+  checklist_title: 用成語之前：
+  checklist:
+  - 查釋義
+  - 看使用類別
+  - 造一句
+  - 唸一遍
+  activity_figure: how-flow
+  sources:
+  - idiom-chaqiang
+  - rev-shoudang
+what:
+  heading: 差強人意：勉強可以
+  figures:
+  - what-compare
+  notes:
+  - 國中課綱要「認念」6,500 個、「使用」5,000 個常用語詞（Ab-Ⅳ-4、Ab-Ⅳ-5）；成語也是語詞，先查清楚再用。
+  sources:
+  - idiom-chaqiang
+  - kuoyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 用成語前：孩子先查成語典，看使用類別，造一句，家長一起唸一遍檢查
+  steps:
+  - actor: 孩子
+    text: 查成語典
+  - actor: 孩子
+    text: 看使用類別
+  - actor: 孩子
+    text: 造一句
+  - actor: 一起
+    text: 唸一遍
+- id: what-compare
+  type: compare
+  alt: 差強人意是勉強可以、大體還能讓人滿意，不等於很好
+  source: idiom-chaqiang
+  relation: not_equal
+  items:
+  - term: 差強人意
+    note: 雖然不夠好，但大體上還能讓人滿意
+  - term: 很好
+    note: 常見的誤用
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：4-Ⅳ-3「能運用字典或辭典了解一字多音及一字多義的現象。」（p.9）；Ab-Ⅳ-4「6,500 個常用語詞的認念。」（p.14）；Ab-Ⅳ-5「5,000 個常用語詞的使用。」（p.14）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）
+- id: cap-guowen
+  title: 國中教育會考 國文科考試內容
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test4-2.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 考試內容「（二）詞語的理解與使用：理解、應用詞語，理解常用文言文的詞義。」
+- id: idiom-chaqiang
+  title: 成語典「差強人意」
+  publisher: 教育部
+  url: https://dict.idioms.moe.edu.tw/idiomView.jsp?ID=369&webMd=2
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 釋義「本義是還真是能夠振奮人心。語出《東觀漢記．卷八．列傳．吳漢》。後用「差強人意」比喻雖然不夠好，但大體上還能讓人滿意。」；使用類別：用在「勉強可以」的表述上
+- id: rev-shoudang
+  title: 重編國語辭典修訂本「首當其衝」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=130258
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「最先受到攻擊，或首先遭遇災難。」（《成語典》正文未收，只見於附錄）

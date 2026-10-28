@@ -1,8 +1,15 @@
+# B4 提案：zh.rhetoric@jh（四種修辭逐條對照教育部《重編國語辭典修訂本》）
+# - 內容不精確：原文「轉化是把物當人寫」只是轉化的一種；辭典分「人性化、物性化、形象化三種」，改寫。
+# - 內容不精確：原文「設問是自問自答」太窄；辭典是「由平敘的語氣變為詢問的語氣」，改寫。
+# - 「排比是三句以上同樣的句型」與辭典「連續用三個或三個以上內容相關，結構相同或相似的句法」一致，改成逐字引用。
+# - 原文「連續排比……也是常見的 AI 腔」找不到來源，刪除；保留「排比太多讀起來像口號」並標本站建議。
+# - 補 grades、5-Ⅳ-3、6-Ⅳ-2 與 Why/How/What。
+# - 複審修正：觀點類標籤統一為「本站建議」；排比定義的「句子」改回辭典原文「句法」。
 id: zh.rhetoric@jh
 concept: zh.rhetoric
 title: 修辭入門：譬喻、轉化、排比、設問
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +19,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -19,9 +30,14 @@ curriculum_108:
   - B1
   - B3
   issues: []
-to_verify: true
+  performances:
+  - 5-IV-3
+  - 6-IV-2
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 譬喻、轉化、排比、設問的定義逐字引自教育部《重編國語辭典修訂本》（ID 25007、119332、22842、129598，2026-10-28 讀取）。
+- 原文「也是常見的 AI 腔」沒有來源，已刪除；「排比太多像口號」是本站建議。
 prerequisites:
 - zh.words@jh
 links:
@@ -29,7 +45,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：國語文領綱 5-Ⅳ-3（寫作特色）、6-Ⅳ-2（文辭優美）；教育部《重編國語辭典修訂本》修辭條目。
 competency:
   specialist:
   - 基礎語文
@@ -40,18 +56,143 @@ ai:
   - 舉出各種修辭的例句
   human_experience:
   - 判斷這裡需不需要修辭
-idea: 譬喻是拿熟悉的東西比；轉化是把物當人寫；排比是三句以上同樣的句型；設問是自問自答。修辭要有理由才用，連續排比讀起來像口號，也是常見的 AI 腔。
+idea: 譬喻是「利用二件事物的相似點，用彼方來說明此方」；轉化是改變事物原來的性質來寫，分人性化、物性化、形象化；排比是連續三個或三個以上結構相同或相似的句法；設問是由平敘忽然變成詢問的語氣。修辭要有理由才用；排比連用太多，讀起來容易像喊口號（本站建議）。
 guiding_questions:
 - 「月亮害羞地躲進雲裡」，月亮真的會害羞嗎？
 scenario: 親子共學：複習版：在一篇文章裡找到排比，刪掉其中兩句，比較哪個版本比較有力。
 goal: 認出譬喻、轉化、排比、設問，並說出這裡用它的理由。
-review: 家長從課文挑 4 句，孩子說出各是哪一種修辭，再自己用其中兩種寫一句描寫家裡的東西，家長判斷用得自然。
+review: 家長從課文挑 4 句，孩子說出各是哪一種修辭並說出判斷理由，再自己用其中兩種寫一句描寫家裡的東西，家長判斷用得自然。
 formats:
   slides: []
-  exercise: 目標：認出譬喻、轉化、排比、設問，並說出這裡用它的理由。　檢核：家長從課文挑 4 句，孩子說出各是哪一種修辭，再自己用其中兩種寫一句描寫家裡的東西，家長判斷用得自然。
+  exercise: 目標：認出譬喻、轉化、排比、設問，並說出這裡用它的理由。　檢核：家長從課文挑 4 句，孩子說出各是哪一種修辭並說出判斷理由，再自己用其中兩種寫一句描寫家裡的東西，家長判斷用得自然。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 修辭是寫作特色
+  body:
+  - 國語文課綱要國中生「理解各類文本內容、形式和寫作特色」，寫作要「寫出結構完整、主旨明確、文辭優美的文章」。會考國文第五項考試內容也包括「理解各類文本內容、形式和寫作特色」。
+  - 認得修辭，讀文章時才看得出作者為什麼這樣寫；自己寫作時，也能選對地方用（本站建議）。
+  qa:
+    question: 「月亮害羞地躲進雲裡」，月亮真的會害羞嗎？
+    answer: 不會。這句把月亮當成人來寫，是轉化裡的「人性化」。辭典說轉化是描述一件事物時，「轉變其原來的性質，化成另一種本質截然不同的事物」來形容敘述；除了人性化，還有物性化、形象化。
+    source: rev-zhuanhua
+  items_title: 國中課綱怎麼說
+  items:
+  - title: 理解寫作特色
+    text: 國語文 5-Ⅳ-3：理解各類文本內容、形式和寫作特色。
+    code: 5-IV-3
+  - title: 寫出文辭優美的文章
+    text: 國語文 6-Ⅳ-2：依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。
+    code: 6-IV-2
+  sources:
+  - kuoyu
+  - cap-guowen
+  - rev-zhuanhua
+how:
+  heading: 先認出，再問為什麼
+  body:
+  - 讀到一句特別的句子，先對照下面四種定義認出是哪一種修辭，再問：作者為什麼在這裡用它？換成平鋪直敘，效果差在哪裡？
+  items:
+  - title: 譬喻
+    text: 利用二件事物的相似點，用彼方來說明此方，通常以易知說明難知、以具體說明抽象。
+  - title: 轉化
+    text: 轉變事物原來的性質來寫，分人性化、物性化、形象化三種，也叫比擬。
+  - title: 排比
+    text: 連續三個或三個以上內容相關、結構相同或相似的句法。
+    example: 富貴不能淫，貧賤不能移，威武不能屈。
+  - title: 設問
+    text: 講話行文時，忽然由平敘的語氣變為詢問的語氣。
+    example: 借問酒家何處有？牧童遙指杏花村。
+  checklist_title: 分析一句修辭：
+  checklist:
+  - 認出是哪一種
+  - 說出效果
+  - 改成平敘比較
+  activity_figure: how-flow
+  sources:
+  - rev-piyu
+  - rev-zhuanhua
+  - rev-paibi
+  - rev-shewen
+what:
+  heading: 轉化不只把物當人
+  figures:
+  - what-compare
+  notes:
+  - 辭典說「轉化」也稱為「比擬」。
+  - 「排比太多像口號」是本站建議，提醒修辭要有理由才用。
+  sources:
+  - rev-zhuanhua
+figures:
+- id: how-flow
+  type: flow
+  alt: 分析修辭：孩子找出句子，認出修辭種類，改成平鋪直敘，再和家長比較效果
+  steps:
+  - actor: 孩子
+    text: 找出句子
+  - actor: 孩子
+    text: 認出修辭
+  - actor: 孩子
+    text: 改成平敘
+  - actor: 一起
+    text: 比較效果
+- id: what-compare
+  type: compare
+  alt: 轉化分人性化、物性化、形象化三種
+  source: rev-zhuanhua
+  relation: versus
+  items:
+  - term: 人性化
+  - term: 物性化
+  - term: 形象化
+  caption: 三種名稱依《重編國語辭典修訂本》「轉化」條。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：5-Ⅳ-3「理解各類文本內容、形式和寫作特色。」（p.11）；6-Ⅳ-2「依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。」（p.12）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）
+- id: cap-guowen
+  title: 國中教育會考 國文科考試內容
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test4-2.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 考試內容「（五）句段篇章的理解與賞析：理解各類文本的句子、段落與主要概念，指出寫作的目的與觀點，理解各類文本內容、形式和寫作特色。」
+- id: rev-piyu
+  title: 重編國語辭典修訂本「譬喻」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=25007
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「利用二件事物的相似點，用彼方來說明此方，通常是以易知說明難知，以具體說明抽象。可分為明喻、隱喻、略喻、借喻、假喻五種。」
+- id: rev-zhuanhua
+  title: 重編國語辭典修訂本「轉化」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=119332
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「描述一件事物時，轉變其原來的性質，化成另一種本質截然不同的事物，而加以形容敘述的修辭法，稱為「轉化」。分人性化、物性化、形象化三種。也稱為「比擬」。」
+- id: rev-paibi
+  title: 重編國語辭典修訂本「排比」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=22842
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「連續用三個或三個以上內容相關，結構相同或相似的句法，藉以表達出同範圍、同性質的意象，稱為「排比」。如：「富貴不能淫，貧賤不能移，威武不能屈。」」
+- id: rev-shewen
+  title: 重編國語辭典修訂本「設問」
+  publisher: 教育部
+  url: https://dict.revised.moe.edu.tw/dictView.jsp?ID=129598
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「修辭學上指講話行文時，忽然由平敘的語氣變為詢問的語氣。如：「『借問酒家何處有？牧童遙指杏花村。』就是設問的語氣。」」

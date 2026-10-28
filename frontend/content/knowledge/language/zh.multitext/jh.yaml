@@ -1,8 +1,14 @@
+# B4 提案：zh.multitext@jh
+# - 會考「文本的統整與應用」改成逐字全文。
+# - 原文「學測國綜也有圖表與多文本題」：大考中心說明只寫到「文本」「也包含圖表、圖形、圖解、表單等等」，沒有「多文本題」的字樣，改成逐字引用，不推論題型。
+# - 「讀圖先看標題、單位與時間」標本站建議；用 112 年會考寫作的影劇類型統計圖當例子（逐字引用題目）。
+# - 補 grades、5-Ⅳ-4、Bc-Ⅳ-3 與 Why/How/What；ma.data 連結保留。
+# - 複審修正：what.notes 的標籤改為「本站建議」。
 id: zh.multitext@jh
 concept: zh.multitext
 title: 圖表與多文本：把資料兜起來
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,6 +18,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -21,10 +31,15 @@ curriculum_108:
   - B1
   issues:
   - 閱讀素養教育
-to_verify: true
+  performances:
+  - 5-IV-4
+  contents:
+  - Bc-IV-3
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
-- 引用的框架只寫名稱（會考國文「文本的統整與應用」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 會考國文考試內容（四）逐字引自心測中心；大考中心學測國文考試說明 Q2（印刷頁 Ⅰ-19）逐字核對；112 年會考寫作試題本第 3 頁的圖表題逐字核對。
+- 「先看標題、單位與時間」是本站建議的讀圖步驟。
 - 本點為這次補強新增，內容尚未經老師審閱。
 prerequisites:
 - zh.retrieve@es
@@ -34,7 +49,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：會考國文「文本的統整與應用」。跨學門連結：數學「整理資料與統計圖」。
+link_notes: 框架：國中教育會考國文「文本的統整與應用」；國語文領綱 5-Ⅳ-4、Bc-Ⅳ-3（數據、圖表、圖片、工具列等輔助說明）。跨學門連結：數學「整理資料與統計圖」。
 competency:
   specialist:
   - 閱讀理解
@@ -46,7 +61,7 @@ ai:
   - 整理圖表重點
   human_experience:
   - 比對資料矛盾並下結論
-idea: 會考國文考「文本的統整與應用」，學測國綜也有圖表與多文本題。先各自讀懂，再找共同點與矛盾，最後用自己的話統整。讀圖先看標題、單位與時間。
+idea: 會考國文考「文本的統整與應用：提取、統整文本訊息，並轉化為解決問題的能力。」大學入學考試中心也說學測國文的「文本」「也包含圖表、圖形、圖解、表單等等」。先各自讀懂，再找共同點與矛盾，最後用自己的話統整。讀圖先看標題、單位與時間（本站建議）。
 guiding_questions:
 - 一張圖和一篇文章說法不一樣，你相信哪一個？
 scenario: 親子共學：找一則有圖表的新聞，孩子先讀圖說一句，大人讀文說一句，再一起寫出合起來的結論。
@@ -60,4 +75,120 @@ audience:
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 資料要兜起來才有用
+  body:
+  - 會考國文第四項考試內容是「文本的統整與應用：提取、統整文本訊息，並轉化為解決問題的能力。」國語文課綱的說明文本學習內容也有「數據、圖表、圖片、工具列等輔助說明」。
+  - 會考寫作也用「圖例、報章新聞、問卷調查」等訊息引導寫作；112 年的題目就先給一張「近年來臺灣民眾最喜愛的影劇類型統計」圖。
+  qa:
+    question: 一張圖和一篇文章說法不一樣，你相信哪一個？
+    answer: 先不要急著選邊。比一比兩份資料的時間、單位、調查對象和定義是不是一樣；常常是兩份資料問的不是同一件事。都對照過了還是矛盾，就找第三份可靠的資料查證，並在結論裡說明差異（本站建議）。會考要的正是「提取、統整文本訊息」。
+    source: cap-guowen
+  items_title: 國中課綱怎麼說
+  items:
+  - title: 整合知識解決問題
+    text: 國語文 5-Ⅳ-4：應用閱讀策略增進學習效能，整合跨領域知識轉化為解決問題的能力。
+    code: 5-IV-4
+  - title: 圖表輔助說明
+    text: 國語文 Bc-Ⅳ-3：數據、圖表、圖片、工具列等輔助說明。
+    code: Bc-IV-3
+  sources:
+  - cap-guowen
+  - kuoyu
+  - cap-wcontent
+  - cap-112w
+  - ceec
+how:
+  heading: 各自讀懂，再對照
+  body:
+  - 先各自讀懂：圖說了什麼、文說了什麼，各寫一句。再對照：哪裡一樣、哪裡不一樣、為什麼不一樣。最後用自己的話寫出合起來的結論（本站建議的步驟）。
+  items:
+  - title: 讀圖三件事
+    text: 標題、單位、時間（本站建議）。
+  - title: 讀文抓重點
+    text: 提取和題目有關的訊息。
+  - title: 找共同與矛盾
+    text: 比較兩份資料的時間、對象與定義（本站建議）。
+  checklist_title: 統整兩份資料：
+  checklist:
+  - 圖說一句
+  - 文說一句
+  - 找相同與不同
+  - 寫出結論
+  activity_figure: how-flow
+  sources:
+  - cap-guowen
+what:
+  heading: 讀圖：112 年會考圖表
+  figures:
+  - what-compare
+  notes:
+  - 112 年會考寫作的統計圖只寫「近年來」，沒有寫是哪一年、調查多少人；讀圖時要注意這些限制，不要說得比資料更多（本站建議）。
+  sources:
+  - cap-112w
+figures:
+- id: how-flow
+  type: flow
+  alt: 統整圖文：孩子讀圖說一句，家長讀文說一句，一起找相同與不同，再寫出結論
+  steps:
+  - actor: 孩子
+    text: 讀圖說一句
+  - actor: 家長
+    text: 讀文說一句
+  - actor: 一起
+    text: 找相同不同
+  - actor: 一起
+    text: 寫出結論
+- id: what-compare
+  type: compare
+  alt: 112年會考寫作圖表：標題是影劇類型統計，單位是人數百分比，時間只寫近年來
+  source: cap-112w
+  relation: versus
+  items:
+  - term: 標題
+    note: 近年來臺灣民眾最喜愛的影劇類型統計
+  - term: 單位
+    note: 人數百分比（%）
+  - term: 時間
+    note: 只寫「近年來」
+  caption: 看標題、單位、時間是本站建議的讀圖順序；圖表內容依 112 年會考寫作試題本。
+sources:
+- id: cap-guowen
+  title: 國中教育會考 國文科考試內容
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test4-2.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 考試內容「（四）文本的統整與應用：提取、統整文本訊息，並轉化為解決問題的能力。」
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：5-Ⅳ-4「應用閱讀策略增進學習效能，整合跨領域知識轉化為解決問題的能力。」（p.11）；Bc-Ⅳ-3「數據、圖表、圖片、工具列等輔助說明。」（p.17）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）
+- id: cap-wcontent
+  title: 國中教育會考 寫作測驗考試內容
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test4-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 考試內容：「試題採「引導寫作」，透過各類不同形式訊息如圖例、報章新聞、問卷調查等，呈現必要的寫作資訊，同時指示寫作任務。」
+- id: cap-112w
+  title: 112 年國中教育會考 寫作測驗試題本
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/exam/112/112P_Writing.pdf
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 試題本第 3 頁：「下列是近年來臺灣民眾最喜愛的影劇類型統計：」縱軸「人數百分比 (%)」，橫軸「影劇類型」（動作冒險、奇幻想像、恐怖驚悚、浪漫愛情、家庭倫理、其他）；要求「對於上列圖表顯示的類型喜好，簡要說明你的理解是什麼？」
+- id: ceec
+  title: 學科能力測驗 國文考科考試說明－111 學年度起適用－
+  publisher: 財團法人大學入學考試中心基金會
+  url: https://www.ceec.edu.tw/files/file_pool/1/0N118339019965852517/111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%B5%B7%E9%81%A9%E7%94%A8%E5%AD%B8%E6%B8%AC%E5%9C%8B%E6%96%87%E8%80%83%E7%A7%91%E8%80%83%E8%A9%A6%E8%AA%AA%E6%98%8E%28%E5%AE%9A%E7%A8%BF%29.pdf
+  accessed: '2026-10-28'
+  kind: exam
+  supports: Q2：「國綜測驗的「文本」除語言文字組成的篇章外，也包含圖表、圖形、圖解、表單等等。」（印刷頁 Ⅰ-19）

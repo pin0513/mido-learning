@@ -1,8 +1,14 @@
+# B4 提案：lg.review@jh
+# - guiding question「忘了一半」沒有來源支持具體比例，改成「忘了不少」。
+# - 「隔一天、隔三天、隔一週」原文寫成定論，改標本站建議（示意）；補上研究依據：Dunlosky 等（2013）把「練習測驗」與「分散練習」評為高效用、重讀與畫重點評為低效用；Cepeda 等（2006）的統合分析指出最佳複習間隔會隨要記住的時間變長而變長。
+# - 「用例句記比單背一個字更牢」沒有開到直接證據，改成英語文課綱的教材編纂原則（字彙「於不同的文本、語境反覆出現」）。
+# - 補 grades 與 Why/How/What；英語文 7-Ⅳ-5 的條文只寫在正文與來源。
+# - 複審修正：英語文 7-Ⅳ-5 不放進 curriculum_108、不加進 taxonomy（第二外國語文領綱也有 7-Ⅳ-5，同號不同文，代碼表以代碼為唯一鍵）；how-flow 圖補「隔三天考」，和 checklist 一致（天數是本站建議）。
 id: lg.review@jh
 concept: lg.review
 title: 記得住的方法：字卡與間隔複習
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -11,6 +17,10 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
@@ -18,9 +28,12 @@ curriculum_108:
   - A1
   - A3
   issues: []
-to_verify: true
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已對照英語文領綱第四學習階段原文（頁碼見來源）。
+- 英語文 7-Ⅳ-5 依英語文領綱原文引用於正文與來源，未放進 curriculum_108：taxonomy 代碼表跨科共用、以代碼為唯一鍵，第二外國語文領綱也有 7-Ⅳ-5（「能以簡易外語介紹國內主要節慶。」印刷頁 7），同號不同文。
+- 英語文領綱 7-Ⅳ-5（p.15）、詞彙教材編纂原則（p.27–28）逐字核對；三篇研究只讀了摘要（Europe PMC／PLOS），引用不超出摘要內容。
+- 「隔一天、隔三天、隔一週」與字卡數量、「至少 8 張」都是本站建議的示意。
 prerequisites:
 - lg.listen@es
 links:
@@ -29,7 +42,7 @@ links:
   related: []
   deeper:
   - lg.ai@sh
-link_notes: 框架：—。
+link_notes: 框架：英語文領綱 7-Ⅳ-5（學習方法與策略）；Dunlosky et al.（2013）學習技巧回顧；Cepeda et al.（2006）分散練習統合分析。
 competency:
   specialist:
   - 語言學習策略
@@ -41,18 +54,130 @@ ai:
   - 幫你排複習時間、產生例句
   human_experience:
   - 自己決定哪些字值得記，並用在自己的句子裡
-idea: 記憶會隨時間淡掉。隔一天、隔三天、隔一週再複習一次，比一次背很久更記得住；用例句記，比單背一個字更牢。
+idea: 記憶會隨時間淡掉。研究回顧把「自己考自己」（字卡就是一種）和「分散練習」（分幾次、隔一段時間複習）評為效用高的方法，重讀、畫重點效用低。隔一天、隔三天、隔一週再複習是本站建議的排法（示意）。把單字放在例句裡，在不同句子中多遇到幾次。
 guiding_questions:
-- 為什麼昨天背的單字，今天就忘了一半？
-scenario: 親子共學：做 20 張字卡（英文日文都可以），記下每張是第幾天複習，一週後看哪種排法記得最多。
+- 為什麼昨天背的單字，今天就忘了不少？
+scenario: 親子共學：做 20 張字卡（示意；英文日文都可以），記下每張是第幾天複習，一週後看哪種排法記得最多。
 goal: 用字卡與間隔複習記住單字，知道什麼時候該複習。
-review: 孩子做 30 張字卡，用間隔複習排一週的複習表；一週後家長抽 10 張考，至少 8 張記得。
+review: 孩子做 30 張字卡（示意），用間隔複習排一週的複習表；一週後家長抽 10 張考，至少 8 張記得（示意）。
 formats:
   slides: []
-  exercise: 目標：用字卡與間隔複習記住單字，知道什麼時候該複習。　檢核：孩子做 30 張字卡，用間隔複習排一週的複習表；一週後家長抽 10 張考，至少 8 張記得。
+  exercise: 目標：用字卡與間隔複習記住單字，知道什麼時候該複習。　檢核：孩子做 30 張字卡（示意），用間隔複習排一週的複習表；一週後家長抽 10 張考，至少 8 張記得（示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: english
+why:
+  heading: 背得多，不如記得久
+  body:
+  - 遺忘會隨時間發生：Murre 與 Dros（2015）重做了艾賓豪斯（Ebbinghaus）在 1880 年做的遺忘曲線實驗，一位受試者在 20 分鐘到 31 天後重學，結果和原始資料相近。
+  - 英語文課綱要國中生「能訂定英文學習計畫，檢視自我學習過程，並隨時改進。」國中畢業時「應至少學會 1,200 個字詞」。
+  qa:
+    question: 為什麼昨天背的單字，今天就忘了不少？
+    answer: 記憶本來就會隨時間淡掉，背完後沒有再提取，就容易忘。研究回顧指出，反覆重讀、畫重點「do not consistently boost students' performance」（不一定能提升表現），建議改用自我測驗；分散在不同時間複習，也比一次背完有效（Dunlosky 等，2013）。
+    source: dunlosky-2013
+  items_title: 國中課綱怎麼說
+  items:
+  - title: 訂學習計畫
+    text: 英語文 7-Ⅳ-5：能訂定英文學習計畫，檢視自我學習過程，並隨時改進。
+  sources:
+  - murre-2015
+  - english
+how:
+  heading: 字卡自我考，隔天再考
+  body:
+  - 一面寫單字和例句，一面寫意思。看一面、說出另一面，說不出來再翻；答對的隔久一點再考，答錯的明天再考（本站建議）。
+  items:
+  - title: 自我考試
+    text: 看單字說意思，比重讀更有效（Dunlosky 等，2013）。
+  - title: 分散複習
+    text: 分幾天複習，比一次背完有效（Dunlosky 等，2013）。
+  - title: 間隔拉長
+    text: 最佳間隔會隨要記多久而變長（Cepeda 等，2006）。
+    example: 隔一天、隔三天、隔一週（本站建議，示意）
+  - title: 用例句
+    text: 課綱：字彙在不同文本、語境反覆出現。
+  checklist_title: 一週複習表：
+  checklist:
+  - 做字卡
+  - 第1天考
+  - 隔天再考
+  - 隔三天考
+  - 隔一週考
+  activity_figure: how-flow
+  sources:
+  - dunlosky-2013
+  - cepeda-2006
+  - english
+what:
+  heading: 哪些方法比較有效
+  figures:
+  - what-compare
+  notes:
+  - 三篇研究的引用只根據摘要；Murre 與 Dros（2015）只有一位受試者。
+  - 隔一、三、七天是本站建議的示意，研究沒有指定這組天數。
+  sources:
+  - dunlosky-2013
+  - murre-2015
+figures:
+- id: how-flow
+  type: flow
+  alt: 間隔複習：孩子做字卡，當天自我考，隔一天、隔三天、隔一週再考，家長抽考
+  steps:
+  - actor: 孩子
+    text: 做字卡
+  - actor: 孩子
+    text: 當天自考
+  - actor: 孩子
+    text: 隔天再考
+  - actor: 孩子
+    text: 隔三天考
+  - actor: 孩子
+    text: 隔週再考
+  - actor: 家長
+    text: 抽考
+  caption: 隔一天、隔三天、隔一週的排法是本站建議（示意），研究沒有指定這組天數。
+- id: what-compare
+  type: compare
+  alt: 研究回顧：練習測驗和分散練習效用高，重讀和畫重點效用低
+  source: dunlosky-2013
+  relation: versus
+  items:
+  - term: 效用高
+    note: 練習測驗（自我考）、分散練習
+  - term: 效用低
+    note: 重讀、畫重點、摘要等
+sources:
+- id: english
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 7-Ⅳ-5「能訂定英文學習計畫，檢視自我學習過程，並隨時改進。」（p.15）；詞彙：「國民中學畢業時，學生應至少學會 1,200 個字詞」（p.28）；「為深化學習效果，教材編纂宜採反覆出現、螺旋向上的教材編纂原則。任一學習階段所學的字彙，力求在後續學習過程中，於不同的文本、語境反覆出現」（p.28）
+- id: dunlosky-2013
+  title: Improving Students' Learning With Effective Learning Techniques（Dunlosky et al., 2013, Psychological Science in the Public Interest 14(1)，doi:10.1177/1529100612453266；摘要）
+  publisher: SAGE／Association for Psychological Science；摘要經 Europe PMC（PMID 26173288）讀取
+  url: https://europepmc.org/article/MED/26173288
+  accessed: '2026-10-28'
+  kind: peer_reviewed
+  supports: '摘要：「Practice testing and distributed practice received high utility assessments」；「Five techniques received a low utility assessment: summarization, highlighting, the keyword mnemonic, imagery use for text learning, and rereading.」；「Most students report rereading and highlighting, yet these techniques do not consistently boost students'' performance, so other techniques should be used in their place (e.g., practice testing instead of rereading).」'
+- id: cepeda-2006
+  title: 'Distributed practice in verbal recall tasks: A review and quantitative synthesis（Cepeda et al., 2006, Psychological Bulletin 132(3)，doi:10.1037/0033-2909.132.3.354；摘要）'
+  publisher: American Psychological Association；摘要經 Europe PMC（PMID 16719566）讀取
+  url: https://europepmc.org/article/MED/16719566
+  accessed: '2026-10-28'
+  kind: peer_reviewed
+  supports: 摘要：統合 317 個實驗；「the ISI producing maximal retention increased as retention interval increased」（ISI：兩次學習之間的間隔）
+- id: murre-2015
+  title: 'Replication and Analysis of Ebbinghaus'' Forgetting Curve（Murre & Dros, 2015, PLoS ONE 10(7): e0120644，doi:10.1371/journal.pone.0120644；摘要）'
+  publisher: PLOS；摘要經 Europe PMC（PMID 26148023）讀取
+  url: https://europepmc.org/article/MED/26148023
+  accessed: '2026-10-29'
+  kind: peer_reviewed
+  supports: 摘要：「We present a successful replication of Ebbinghaus' classic forgetting curve from 1880 based on the method of savings. One subject spent 70 hours learning lists and relearning them after 20 min, 1 hour, 9 hours, 1 day, 2 days, or 31 days. The results are similar to Ebbinghaus' original data.」

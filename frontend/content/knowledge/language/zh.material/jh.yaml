@@ -1,8 +1,13 @@
+# B4 提案：zh.material@jh
+# - 六級分「立意取材」的引文與會考評分規準一致，保留；補上五級分、四級分的對照（逐字）。
+# - guiding question 的答案說明：規準沒有規定材料件數，「把一件事說深」是本站建議。
+# - 「300 字」標示意；補 grades、6-Ⅳ-2 與 Why/How/What。
+# - 複審建議：scenario「最只有你寫得出來」改為「最像只有你寫得出來」；「差別在……說得深不深」標本站整理。
 id: zh.material@jh
 concept: zh.material
 title: 選材：一件小事撐起主旨
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 語文
@@ -12,15 +17,23 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 語文
   core_competencies:
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 6-IV-2
+to_verify: false
 verify_notes:
-- 待核對：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對。
+- 原有待核對「上線前請以教育部課綱與國語文、英語文、第二外國語文課綱核對」已刪除：本點已逐條對照國語文領綱第四學習階段原文（頁碼見來源），英語文與第二外國語文課綱和本點無關。
+- 立意取材各級分描述逐字引自心測中心寫作測驗評分規準一覽表。
+- 規準沒有規定材料件數；「挑一件事說深」是本站建議；「300 字」是示意。
 prerequisites:
 - zh.prompt@jh
 - zh.observe@es
@@ -29,7 +42,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：—。
+link_notes: 框架：國中教育會考寫作評分規準「立意取材」；國語文領綱 6-Ⅳ-2。
 competency:
   specialist:
   - 寫作
@@ -40,18 +53,115 @@ ai:
   - 列出可能的材料方向
   human_experience:
   - 選出真的發生過、自己有感的那件事
-idea: 六級分要「適切地統整、運用材料，並能進一步闡述說明以凸顯主旨」。挑一件最有感的事，寫出細節和你的想法。
+idea: 會考寫作六級分的立意取材是「能依據題目或寫作任務，適切地統整、運用材料，並能進一步闡述說明以凸顯主旨。」挑一件最有感的事，寫出細節和你的想法（本站建議）。
 guiding_questions:
 - 寫「改變」，說五件事，還是把一件事說深？
-scenario: 親子共學：同一題列出 5 個材料，親子各投一票「最只有你寫得出來」的那個，再說為什麼。
+scenario: 親子共學：同一題列出 5 個材料，親子各投一票「最像只有你寫得出來」的那個，再說為什麼。
 goal: 為題目選一件最有感的小事，寫出細節與自己的想法來撐起主旨。
-review: 同一題孩子列 5 個材料，選 1 個寫成 300 字段落；家長讀完能說出一個「只有你寫得出來」的細節。
+review: 同一題孩子列 5 個材料，選 1 個寫成約 300 字（示意）的段落；家長讀完能說出一個「只有你寫得出來」的細節。
 formats:
   slides: []
-  exercise: 目標：為題目選一件最有感的小事，寫出細節與自己的想法來撐起主旨。　檢核：同一題孩子列 5 個材料，選 1 個寫成 300 字段落；家長讀完能說出一個「只有你寫得出來」的細節。
+  exercise: 目標：為題目選一件最有感的小事，寫出細節與自己的想法來撐起主旨。　檢核：同一題孩子列 5 個材料，選 1 個寫成約 300 字（示意）的段落；家長讀完能說出一個「只有你寫得出來」的細節。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+est_time:
+  school: 國中七至九年級（第四學習階段）
+  source: kuoyu
+why:
+  heading: 材料要撐得起主旨
+  body:
+  - 會考寫作評分規準把「立意取材」列為第一個向度。六級分要「適切地統整、運用材料，並能進一步闡述說明以凸顯主旨」；四級分只「尚能闡述說明主旨」。差別在材料選得準不準、說得深不深（本站整理）。
+  - 國語文課綱寫作的步驟是「審題、立意、取材、組織、遣詞造句、修改潤飾」。
+  qa:
+    question: 寫「改變」，說五件事，還是把一件事說深？
+    answer: 評分規準沒有規定要寫幾件事，看的是材料能不能「適切地統整、運用」，並「進一步闡述說明以凸顯主旨」。五件事都只說一句，很難做到「進一步闡述」；所以通常建議挑一件最有感的事寫深，再用一兩件小事呼應（本站建議）。
+    source: cap-rubric
+  items_title: 國中課綱怎麼說
+  items:
+  - title: 立意、取材
+    text: 國語文 6-Ⅳ-2：依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。
+    code: 6-IV-2
+  sources:
+  - cap-rubric
+  - kuoyu
+how:
+  heading: 列五個，選一個寫深
+  body:
+  - 先列 5 個可能的材料，問自己：哪一件真的發生過、我最有感、別人寫不出來？選定後，寫出當時看到、聽到的細節，再寫你因此想到什麼（本站建議）。
+  items:
+  - title: 列材料
+    text: 先寫 5 個，不急著挑。
+  - title: 選最有感的
+    text: 真的發生過、別人寫不出來的那件。
+  - title: 寫細節和想法
+    text: 細節讓人相信，想法讓人看到主旨。
+  checklist_title: 選材之前：
+  checklist:
+  - 列五個材料
+  - 選最有感的
+  - 寫出細節
+  - 連回主旨
+  activity_figure: how-flow
+  sources:
+  - cap-rubric
+what:
+  heading: 立意取材：六、五、四級分
+  figures:
+  - what-compare
+  notes:
+  - 會考採整體性評分，四個向度「並沒有特定比重的規定」（寫作測驗問與答 Q3）。
+  - 「300 字」是示意的練習份量。
+  sources:
+  - cap-rubric
+  - cap-writing
+figures:
+- id: how-flow
+  type: flow
+  alt: 選材：孩子列出五個材料，親子各投一票，孩子選定一件寫出細節與想法
+  steps:
+  - actor: 孩子
+    text: 列五個材料
+  - actor: 一起
+    text: 各投一票
+  - actor: 孩子
+    text: 寫出細節
+  - actor: 孩子
+    text: 連回主旨
+- id: what-compare
+  type: compare
+  alt: 立意取材：六級分適切統整並進一步闡述，五級分適當統整並闡述，四級分尚能闡述
+  source: cap-rubric
+  relation: versus
+  items:
+  - term: 六級分
+    note: 適切地統整、運用材料，並能進一步闡述說明以凸顯主旨
+  - term: 五級分
+    note: 適當地統整、運用材料，並能闡述說明主旨
+  - term: 四級分
+    note: 統整、運用材料，尚能闡述說明主旨
+sources:
+- id: cap-rubric
+  title: 國中教育會考 寫作測驗評分規準
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/exam3-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: 立意取材：六級分「能依據題目或寫作任務，適切地統整、運用材料，並能進一步闡述說明以凸顯主旨。」五級分「能依據題目或寫作任務，適當地統整、運用材料，並能闡述說明主旨。」四級分「能依據題目或寫作任務，統整、運用材料，尚能闡述說明主旨。」
+- id: cap-writing
+  title: 國中教育會考 寫作測驗問答
+  publisher: 國立臺灣師範大學心理與教育測驗研究發展中心（國中教育會考）
+  url: https://cap.rcpet.edu.tw/test5-1.html
+  accessed: '2026-10-28'
+  kind: exam
+  supports: Q3：四個評分向度「並沒有特定比重的規定」。
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 第四學習階段學習重點：6-Ⅳ-2「依據審題、立意、取材、組織、遣詞造句、修改潤飾，寫出結構完整、主旨明確、文辭優美的文章。」（p.12）；教材編選「（二）第四學習階段（國民中學教育階段）」（p.22）
