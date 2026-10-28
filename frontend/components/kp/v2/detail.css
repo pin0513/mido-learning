@@ -34,17 +34,17 @@
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1.35;
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 .kp-root .kp-detail h1 { font-size: var(--t-h1); }
 .kp-root .kp-detail h2 { font-size: var(--t-h2); }
 .kp-root .kp-detail h3 { font-size: var(--t-lead); margin: 32px 0 12px; }
-.kp-root .kp-detail p { max-width: none; margin: 0 0 16px; text-wrap: balance; }
+.kp-root .kp-detail p { max-width: none; margin: 0 0 16px; text-wrap: pretty; }
 .kp-root .kp-detail li,
 .kp-root .kp-detail dd,
 .kp-root .kp-detail figcaption,
-.kp-root .kp-detail small { text-wrap: balance; }
+.kp-root .kp-detail small { text-wrap: pretty; }
 .kp-root .kp-detail .v2-nw { white-space: nowrap; }
 .kp-root .kp-detail a { color: var(--accent-deep); text-underline-offset: 3px; }
 .kp-root .kp-detail a:hover { text-decoration: underline; }

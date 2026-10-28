@@ -51,10 +51,11 @@ export function SymbolGrid({ figure }: { figure: SymbolGridFigure }) {
   const sizes = groups.map((group) => groupSize(group.symbols.length));
   const side = groups.length > 1 && groups.length <= 2;
   const desktopWidth = side ? sizes[0].width + 48 + sizes[1].width : Math.max(...sizes.map((size) => size.width), 320);
+  const legendPad = figure.highlight ? 48 : 8;
   const desktopHeight = side
-    ? Math.max(sizes[0].height, sizes[1].height) + (figure.highlight ? 28 : 8)
-    : sizes.reduce((sum, size) => sum + size.height + 16, figure.highlight ? 28 : 8);
-  const mobileHeight = sizes.reduce((sum, size) => sum + size.height + 16, figure.highlight ? 28 : 8);
+    ? Math.max(sizes[0].height, sizes[1].height) + legendPad
+    : sizes.reduce((sum, size) => sum + size.height + 16, legendPad);
+  const mobileHeight = sizes.reduce((sum, size) => sum + size.height + 16, legendPad);
 
   const paint = (stacked: boolean) => {
     let y = 4;

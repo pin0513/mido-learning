@@ -8,6 +8,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Spelling } from "../../components/kp/v2/figures/Spelling";
 import { ToneChart } from "../../components/kp/v2/figures/ToneChart";
+import { RichText } from "../../components/kp/v2/text";
 import { catalogFromModel } from "../content/catalog";
 import { loadContent } from "../content/load";
 import type { ContentCatalog } from "../content/catalog";
@@ -32,6 +33,19 @@ function point(id: string): KnowledgePoint {
   assert.ok(found, id);
   return found;
 }
+
+test("注音音節和課綱代碼整段不斷行", () => {
+  const html = renderToStaticMarkup(
+    createElement(RichText, {
+      text: "例字把ㄅㄚˇ、爸ㄅㄚˋ、嗎˙ㄇㄚ。代碼 3-I-1～3-I-4、3-II-2、Aa-I-1，以及 3-I-1 ~ 3-I-4。見《重編國語辭典修訂本》。",
+    }),
+  );
+  for (const token of ["把ㄅㄚˇ", "爸ㄅㄚˋ", "嗎˙ㄇㄚ", "3-I-1～3-I-4", "3-II-2", "Aa-I-1", "3-I-1 ~ 3-I-4", "《重編國語辭典修訂本》"]) {
+    assert.match(html, new RegExp(`<span class="v2-nw">[^<]*${token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^<]*</span>`));
+  }
+  assert.equal(html.includes("3-II-</span>"), false);
+  assert.equal(html.includes("ㄅㄚ</span>"), false);
+});
 
 test("未轉換的點用既有欄位組三圈", () => {
   const found = point("pm.breakdown@es");

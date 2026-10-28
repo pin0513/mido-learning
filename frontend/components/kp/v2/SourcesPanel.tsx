@@ -1,4 +1,5 @@
 import type { KnowledgePoint } from "@/lib/content";
+import { RichText } from "./text";
 
 export function SourcesPanel({ sources }: { sources: KnowledgePoint["sources"] }) {
   if (!sources || sources.length === 0) return null;
@@ -11,8 +12,7 @@ export function SourcesPanel({ sources }: { sources: KnowledgePoint["sources"] }
             <a className="v2-hit" href={source.url}>
               <span>{source.title}</span>
               <small>
-                {source.publisher}
-                {source.supports ? `。${source.supports}` : ""}
+                <RichText text={`${source.publisher}${source.supports ? `。${source.supports}` : ""}`} />
               </small>
             </a>
           </li>
