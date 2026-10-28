@@ -2,58 +2,129 @@ id: pm.breakdown@es
 concept: pm.breakdown
 title: 大事拆成小事
 status: published
-version: "0.1"
+version: "0.2"
 discipline:
-  path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  path: [管理, 專案管理與領導, 規劃]
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades: [5, 6]
 curriculum_108:
-  domains:
-    - 綜合活動
-  core_competencies:
-    - A2
-    - A3
-    - C2
+  domains: [綜合活動]
+  core_competencies: [A2, A3, C2]
   issues: []
-to_verify: true
-verify_notes:
-  - A2、A3、C2 與綜合活動的對應還沒有附上課綱來源。
-prerequisites:
-  - pm.goal@es
+  performances: [1b-III-1, 2b-III-1, 2c-III-1]
+  contents: [Ab-III-1, Bb-III-1, Bb-III-2, Bb-III-3, Bc-III-3]
+to_verify: false
+verify_notes: []
+prerequisites: [pm.goal@es]
 links:
-  why:
-    - ph.parts@es
+  why: [ph.parts@es]
   how: []
-  related:
-    - ma.pattern@es
-  deeper:
-    - pm.triangle@jh
+  related: [ma.pattern@es]
+  deeper: [pm.triangle@jh]
 link_notes: 數學（分類與整理）
 competency:
-  specialist:
-    - 規劃
-  generalist:
-    - 專案管理
-    - 溝通
+  specialist: [規劃]
+  generalist: [專案管理, 溝通]
 ai:
-  delegable:
-    - 幫忙想「還漏了哪些任務」
-  human_experience:
-    - 判斷哪些任務自己做得到、要花多少力氣
-idea: 一件大事看起來很難，拆成一張張小任務卡，就知道明天可以從哪裡開始。
+  delegable: [幫忙想「還漏了哪些任務」]
+  human_experience: [判斷哪些任務自己做得到、要花多少力氣]
+idea: 一件大事看起來很難，拆成一張張小任務卡，就知道明天可以從哪裡開始。拆到看得出誰來做、什麼時候做完就夠了，不用每張都拆得一樣細。
 guiding_questions:
-  - 一件事要拆到多小，才知道明天就能開始做？
-  - 這張任務卡是一個人做得到，還是還要再拆？
-  - 如果少做其中一張卡，同樂會還是開得成嗎？
-  - 哪些卡可以同一天做，哪些一定要先做完？
-scenario: 把同樂會拆成任務卡：場地布置、遊戲、點心、邀請老師……貼在白板上。可以印的任務卡範例：標題「準備點心」，誰來做「小華」，什麼時候「週五放學後」，完成的樣子「點心盒裝好、數量夠全班」，下一步「週六早上拿到教室」。
+- 一件事要拆到多小，才知道明天就能開始做？
+- 這張任務卡是一個人做得到，還是還要再拆？
+- 如果少做其中一張卡，同樂會還是開得成嗎？
+- 哪些卡可以同一天做，哪些一定要先做完？
+scenario: 把同樂會拆成任務卡：場地布置、遊戲、點心、邀請老師……貼在白板上。可以印的任務卡範例：標題「準備點心」，誰來做「小華」，什麼時候「週五放學後」，完成的樣子「點心盒裝好、數量夠全班」，下一步「同樂會當天早上拿到教室」。
+goal: 把一件班上活動拆成任務卡，每張都寫清楚誰來做、什麼時候、完成的樣子。
+review: 家長或老師看任務卡：每張都有「誰來做、什麼時候、完成的樣子」，而且沒有一張大到一個人做不完；再問孩子「少了哪張卡，活動就辦不成？」孩子說得出理由。
 formats:
   slides: []
-authors:
-  - I-PING Huang
-updated: 2026-10-26
+authors: [I-PING Huang]
+updated: "2026-10-28"
+
+# ---------- 新增 ----------
+why:
+  heading: 大事拆小，才知道從哪開始
+  body:
+  - 108 課綱的綜合活動，要國小高年級「分析與判讀各類資源，規劃策略以解決日常生活的問題」，也要在團體裡「協同合作達成共同目標」。先把大事拆成小事，才分得出誰做什麼。
+  - 專案管理也這樣做。NASA 的工作分解手冊說，拆解是為了把整個專案的工作分成可以管理的小塊，方便規劃、追蹤時間和花費。
+  figures: [why-compare]
+  qa:
+    question: 如果少做其中一張卡，同樂會還是開得成嗎？
+    answer: 先看那張卡是不是同樂會一定要有的事。NASA 手冊說，清單外的工作不算在這次專案裡；反過來，該做的事都要列進清單。「準備點心」這張卡不見了，就沒有人會去準備點心。
+    source: nasa-wbs
+  sources: [zonghe, zonggang, nasa-wbs, sinek]
+
+how:
+  heading: 一張卡，寫一件事
+  body:
+  - 課綱的補充說明寫到，高年級做「解決問題的規劃」，要探究問題成因、思考解決方法、評估各種方法的優缺點，再擬訂解決步驟；團隊合作的技巧，包含釐清團隊目標、表達自己的意見、尊重別人的意見、形成共識。
+  items:
+  - {title: 先說好目標, text: 全班先說清楚，同樂會要辦成什麼樣子。}
+  - {title: 想到一件寫一張, text: 先不排順序，把要做的事都寫成卡片。}
+  - {title: 太大的卡再拆, text: 拆到看得出誰來做、什麼時候做完，就停。}
+  - {title: 排先後、分工, text: 哪些要先做完，哪些可以同一天做，各由誰負責。}
+  checklist_title: 每張任務卡寫上：
+  checklist: [標題, 誰來做, 什麼時候, 完成的樣子, 下一步]
+  activity_figure: how-flow
+  sources: [zonghe, nasa-wbs]
+
+what:
+  heading: 從一件大事到一疊任務卡
+  notes:
+  - 專案管理有一種拆法叫「工作分解結構」（WBS），拆的是要交出來的東西（例如點心、海報、遊戲道具）。任務卡是在拆好之後，再寫下每樣東西要做的事、誰做、什麼時候做；NASA 手冊說，WBS 最底層的每一項，至少要有一件要做的工作。高中的 pm.estimate 會再學怎麼替每一項估時間。
+  - 不必每一張都拆得一樣細。NASA 手冊說，每一支只要拆到足以管理、看得到進度就好。
+  - 清單外的事不算在這次活動裡。想多做一件事，先加一張卡，大家同意再做。
+  sources: [nasa-wbs]
+
+figures:
+- id: why-compare
+  type: compare
+  alt: 拆之前只有「辦同樂會」一句話；拆之後是一張張寫明誰來做、什麼時候的任務卡
+  source: nasa-wbs
+  relation: versus
+  items:
+  - {term: 拆之前, note: 「辦同樂會」，不知道從哪開始}
+  - {term: 拆之後, note: 「準備點心」：小華，週五放學後}
+- id: how-flow
+  type: flow
+  alt: 任務卡四步驟：全班說好目標，每人想到一件寫一張，太大的卡再拆，最後排先後並分工
+  source: zonghe
+  steps:
+  - {actor: 全班, text: 說好目標}
+  - {actor: 每個人, text: 想到一件寫一張}
+  - {actor: 全班, text: 太大的卡再拆}
+  - {actor: 全班, text: 排先後、分工}
+
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 綜-E-A2、綜-E-A3、綜-E-C2；第三學習階段 1b-III-1 規劃與執行學習計畫／Ab-III-1；2b-III-1 協同合作達成共同目標／Bb-III-1～3（補充說明：團隊合作技巧包含釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議）；2c-III-1／Bc-III-3（補充說明：解決問題的規劃包括探究問題成因、思考解決方法、評估各種方法的優缺點，進一步擬訂解決步驟）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱（111 學年度實施版）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/288/(111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%AF%A6%E6%96%BD)%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 國小核心素養 E-A2 探索問題、處理日常生活問題；E-A3 擬定計畫與實作；E-C2 與團隊成員合作
+- id: nasa-wbs
+  title: NASA Work Breakdown Structure (WBS) Handbook, NASA/SP-2016-3404/REV1
+  publisher: NASA（2018 年 1 月）
+  url: https://ntrs.nasa.gov/api/citations/20180000844/downloads/20180000844.pdf
+  accessed: "2026-10-28"
+  kind: government
+  supports: WBS 是以產出物為導向的家族樹，不是組織結構；最低層的每個 WBS 元素至少要有一件工作或活動；WBS 把專案工作分成可管理的小塊以利規劃與控管；每一支只需拆到足以管理即可；WBS 以外的工作不算專案範疇；WBS 應包含範疇內全部工作（3.3.5）
+- id: sinek
+  title: How great leaders inspire action
+  publisher: Simon Sinek，TED（2009）
+  url: https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
+  accessed: "2026-10-28"
+  kind: aux
+  supports: 頁面結構採用的黃金圈（Why → How → What），不支持教學內容

@@ -2,57 +2,167 @@ id: pm.estimate@sh
 concept: pm.estimate
 title: WBS 與三點估算
 status: published
-version: "0.1"
+version: "0.2"
 discipline:
-  path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  path: [管理, 專案管理與領導, 規劃]
   layer: essence
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
-  domains:
-    - 綜合活動
-    - 數學
-  core_competencies:
-    - A2
-    - A3
-    - C2
+  domains: [綜合活動, 數學]
+  core_competencies: [A2, A3]
   issues: []
-to_verify: true
-verify_notes:
-  - 數學領域，以及 A2、A3、C2 的對應，還沒有附上課綱來源。
-prerequisites:
-  - pm.breakdown@es
-  - pm.triangle@jh
+  performances: ["涯 3b-V-1", "家 3a-V-1"]
+  contents: ["涯 Cb-V-1", "涯 Cb-V-2", "家 Ca-V-1"]
+to_verify: false
+verify_notes: []
+prerequisites: [pm.breakdown@es, pm.triangle@jh]
 links:
-  why:
-    - ph.bias@sh
+  why: [ph.bias@sh]
   how: []
-  related:
-    - ma.stats@sh
-  deeper:
-    - pm.evm@uni
+  related: [ma.stats@sh]
+  deeper: [pm.evm@uni]
 link_notes: 心理學（計畫謬誤）
 competency:
-  specialist:
-    - 估算
-  generalist:
-    - 專案管理
-    - 溝通
+  specialist: [估算]
+  generalist: [專案管理, 溝通]
 ai:
-  delegable:
-    - 檢查 WBS 是否遺漏、代為計算
-  human_experience:
-    - 比對估算與實際，修正自己的「時間感」
-idea: 把工作拆到可以估算的大小，叫做 WBS（工作分解結構）。再用樂觀（O）、最可能（M）、悲觀（P）三個值估時間。PERT 期望值 E=(O+4M+P)/6，標準差約 (P−O)/6。另一種三角分佈是 (O+M+P)/3。這樣是承認不確定，而不是假裝有一個準確數字。
+  delegable: [檢查 WBS 是否遺漏、代為計算]
+  human_experience: [比對估算與實際，修正自己的「時間感」]
+idea: 把工作拆到可以估算的大小，叫做 WBS（工作分解結構）。再替每一項給樂觀（O）、最可能（M）、悲觀（P）三個估計。PERT 的期望值是 E=(O+4M+P)/6，並假設標準差約為 (P−O)/6；如果改用三角分佈，平均是 (O+M+P)/3。三點估算是承認不確定，但不會自動治好低估，還要拿實際花的時間回頭對照。
 guiding_questions:
-  - 為什麼人總是低估自己需要的時間？
-scenario: 替自主學習計畫建立 WBS，用三點估算算出預期工時，期末再對照實際花費。
+- 為什麼人總是低估自己需要的時間？
+- 悲觀估計就一定夠用嗎？
+- 最可能的時間，就是平均會花的時間嗎？
+scenario: 替彈性學習時間的自主學習計畫建立 WBS，每一項用三點估算算出期望時數；每週記下實際花的時間，期末對照估計，寫下下次要怎麼調整。
+goal: 用 WBS 和三點估算排出自主學習計畫，期末用實際紀錄檢討自己的估計。
+review: 計畫裡每一項都有 O、M、P 和算出的期望值；期末表格列出「估計／實際／差多少」，並寫出一條下次估計時要改的做法。
 formats:
   slides: []
-authors:
-  - I-PING Huang
-updated: 2026-10-26
+authors: [I-PING Huang]
+updated: "2026-10-28"
+
+# ---------- 新增 ----------
+why:
+  heading: 人總是把時間估得太短
+  body:
+  - 心理學家把這種現象叫「計畫謬誤」。在一項研究裡，大學生預測自己平均 33.9 天完成榮譽學程的畢業論文，實際平均花了 55.5 天；只有 29.7% 的人在自己預測的時間內完成。
+  - 高中課綱的生涯規劃，要學自主學習的方法與策略、時間管理；總綱也讓高中的彈性學習時間可以做學生自主學習。估得準，計畫才排得出來。
+  figures: [why-compare]
+  qa:
+    question: 悲觀估計就一定夠用嗎？
+    answer: 不一定。同一項研究也請學生想像「一切都最糟」時要幾天，平均答 48.6 天，還是比實際的 55.5 天短，只有 48.7% 的人在這個悲觀日期內完成。
+    source: buehler
+  sources: [buehler, zonghe, zonggang, sinek]
+
+how:
+  heading: 拆開、估三次、再對照
+  body:
+  - 同一項研究的研究四發現，只請受試者回想過去的經驗，預測一樣偏短；要把過去類似的任務花了多久，明確連到這一次的預測，偏短的情形才消失。不過作者也指出，這樣的預測偏差較小，卻沒有比較準。
+  - 一個實用的做法（這是建議，不是研究結果）：三點估算之後，記下每一項實際花的時間，下一次估計前拿出來對照。
+  items:
+  - {title: 拆到估得出來, text: 用 WBS 拆到每一項都有具體要做的事。}
+  - {title: 每項估三個數, text: 樂觀 O、最可能 M、悲觀 P。}
+  - {title: 算出期望值, text: PERT：E=(O+4M+P)/6。, example: （示意）O=2、M=3、P=7 小時 → E=(2+12+7)/6=3.5 小時}
+  - {title: 記實際、回頭對照, text: 每週記下實際時數，下次估計前先看上次差多少。}
+  activity_figure: how-flow
+  sources: [nasa-wbs, pert-1959, buehler]
+
+what:
+  heading: 三個估計，兩種分佈
+  notes:
+  - PERT 原始論文（1959）用 a、m、b 代表樂觀、最可能、悲觀，期望值 t_e = (a+4m+b)/6；它假設標準差可以用 (b−a)/6 估計，活動時間服從 beta 分佈。
+  - 如果把三個值當成三角分佈的最低、最可能、最高，平均是 (O+M+P)/3。NASA 的成本估算手冊說，三角分佈只要三個點就能定出來，常用來描述風險；再用蒙地卡羅模擬反覆抽樣，算出可能結果的範圍。
+  - 最可能的值、中位數、平均不一定相同：分佈左右對稱時三者相等（NASA 手冊的常態分佈例子，三者都是 15），偏向一邊時就會分開。像 NASA 手冊這個偏右的三角分佈例子：最低 10、最可能 15、最高 30，中位數 17.75，平均 18.33。
+  - NASA 手冊也提醒，分析師和工程師常把最好的情況想得太好、把最壞的情況想得不夠壞。
+  - 平均數、標準差、期望值是高中數學 10 年級的學習內容（D-10-2、D-10-4）。11 年級 A 類還要檢視主觀機率合不合理（D-11A-1）。PERT 公式本身不在課綱裡。
+  sources: [pert-1959, nasa-ceh, wiki-triangular, math]
+
+figures:
+- id: why-compare
+  type: compare
+  title: 三點估算也救不了低估
+  caption: 把 Buehler 等人（1994）研究一的平均預測（最好 27.4、最可能 33.9、最糟 48.6 天）代入兩個公式，再和實際平均比較。這是示意計算，不是原論文做的。原論文的三種問法（最可能、一切最順、一切最糟）和 M、O、P 意思接近，但不完全相同。
+  alt: PERT 期望值約 35.3 天、三角分佈平均約 36.6 天，實際平均 55.5 天
+  source: buehler
+  relation: versus
+  items:
+  - {term: PERT 期望值, reading: 約 35.3 天, note: (27.4+4×33.9+48.6)÷6}
+  - {term: 三角分佈平均, reading: 約 36.6 天, note: (27.4+33.9+48.6)÷3}
+  - {term: 實際平均, reading: 55.5 天}
+- id: how-flow
+  type: flow
+  alt: 估算五步驟：用 WBS 拆出工作項目，每項寫三個估計，算出期望值，記錄實際花的時間，對照後修正下次估計
+  source: buehler
+  steps:
+  - {text: 拆出工作項目}
+  - {text: 每項寫三個估計}
+  - {text: 算出期望值}
+  - {text: 記錄實際時間}
+  - {text: 對照、修正下次估計}
+
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 綜S-U-A2（透過具體可行的學習方案與實踐過程）；生涯規劃 涯 3b-V-1 善用學習方法與策略，進行有效學習／涯 Cb-V-1 自主學習的方法與策略、涯 Cb-V-2 時間管理與壓力調適等；家政 家 3a-V-1／家 Ca-V-1 時間、精力管理與生活品質
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱（111 學年度實施版）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/288/(111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E5%AF%A6%E6%96%BD)%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 高中核心素養 U-A2 系統思考、分析與探索；U-A3 規劃、實踐與檢討反省；普通型高中彈性學習時間可做為學生自主學習，各校應保障學生自主學習
+- id: math
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: "2026-10-28"
+  kind: curriculum
+  supports: 10 年級 D-10-2 一維數據的平均數、標準差；D-10-4 古典機率性質，期望值；11 年級 A 類 D-11A-1 根據機率性質檢視主觀機率的合理性（PERT 公式本身不在課綱內）
+- id: nasa-wbs
+  title: NASA Work Breakdown Structure (WBS) Handbook, NASA/SP-2016-3404/REV1
+  publisher: NASA（2018 年 1 月）
+  url: https://ntrs.nasa.gov/api/citations/20180000844/downloads/20180000844.pdf
+  accessed: "2026-10-28"
+  kind: government
+  supports: WBS 的定義與目的（把專案工作分成可管理的小塊，以利規劃與控管成本、時程）；最低層每個元素至少有一個工作項目
+- id: pert-1959
+  title: "Application of a Technique for Research and Development Program Evaluation（Operations Research 7(5): 646–669，DOI 10.1287/opre.7.5.646；公開掃描副本）"
+  publisher: D. G. Malcolm、J. H. Roseboom、C. E. Clark、W. Fazar，Operations Research（1959）
+  url: https://mosaicprojects.com.au/PDF/PM-History_PERT-Original_Paper.pdf
+  accessed: "2026-10-28"
+  kind: peer_reviewed
+  supports: 第 651–652 頁：a 樂觀、m 最可能、b 悲觀；假設標準差可用 (b−a) 的 1/6 估計、beta 分佈足以描述活動時間；式 (1) t_e = 1/3[2m + 1/2(a+b)]，式 (2) σ² = [(b−a)/6]²
+- id: nasa-ceh
+  title: NASA Cost Estimating Handbook Version 4.0, Appendix G：Cost Risk and Uncertainty Methodologies
+  publisher: NASA（2015 年 2 月）
+  url: https://www.nasa.gov/wp-content/uploads/2020/11/ceh_appg.pdf
+  accessed: "2026-10-28"
+  kind: government
+  supports: G-7 頁 Figure G-2：三角分佈與常態分佈的眾數、中位數、平均（三角分佈例：最低 10、最可能 15、最高 30，中位數 17.75、平均 18.33；常態分佈三者相等）；G-8 頁：三角分佈需要最可能、最低、最高三個輸入，分析師與工程師傾向高估最好情況、低估最壞情況；G-12 頁：模擬法用蒙地卡羅或拉丁超立方抽樣反覆計算；G-13 頁：技術風險常用三角分佈描述，只需三個點
+- id: buehler
+  title: "Exploring the \"planning fallacy\": Why people underestimate their task completion times（JPSP 67(3): 366–381，DOI 10.1037/0022-3514.67.3.366；公開全文副本）"
+  publisher: Roger Buehler、Dale Griffin、Michael Ross，American Psychological Association（1994）
+  url: https://web.mit.edu/curhan/www/docs/Articles/biases/67_J_Personality_and_Social_Psychology_366%2C_1994.pdf
+  accessed: "2026-10-28"
+  kind: peer_reviewed
+  supports: 研究一 Table 1：最佳預測 33.9 天、樂觀 27.4 天、悲觀 48.6 天，實際 55.5 天；在預測時間內完成的比例 29.7%、10.8%、48.7%；研究四（p.375）：只回想過去經驗的組仍低估，在預測時間內完成 38.1%（對照組 29.3%）；把過去經驗連到這次預測的組，低估消失（60.0%），但「less biased but no more accurate」
+- id: wiki-triangular
+  title: Triangular distribution
+  publisher: Wikipedia
+  url: https://en.wikipedia.org/wiki/Triangular_distribution
+  accessed: "2026-10-28"
+  kind: aux
+  supports: 三角分佈平均 (a+b+c)/3（D 級輔助，與 NASA CEH Figure G-2 的數字互相印證）
+- id: sinek
+  title: How great leaders inspire action
+  publisher: Simon Sinek，TED（2009）
+  url: https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
+  accessed: "2026-10-28"
+  kind: aux
+  supports: 頁面結構採用的黃金圈（Why → How → What），不支持教學內容

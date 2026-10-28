@@ -1,12 +1,17 @@
 import type { ReactNode } from "react";
 
-const ROMAN = "VIII|VII|VI|IV|IX|III|II|V|I";
-const CODE = `(?:\\d+|[A-Z][a-z])-(?:${ROMAN})-\\d+`;
+const ROMAN = "IV|III|II|V|I";
+const PERF = `(?:[\\u4e00-\\u9fff] )?[0-9]{1,2}[a-z]?-(?:${ROMAN})-[0-9]{1,2}`;
+const CONTENT = `(?:[\\u4e00-\\u9fff] )?(?:[A-Za-z]{1,2}-(?:${ROMAN})-[0-9]{1,2}|[A-Z]-(?:[1-9]|1[0-2])[A-Z]?-[0-9]{1,2})`;
+const ONE = `(?:${PERF}|${CONTENT})`;
+const CODE = `${ONE}(?:\\s*[~～〜]\\s*${ONE}|[~～〜]\\d{1,2})?`;
 /** 書名號、課綱代碼（含 3-I-1～3-I-4 這種區間）、注音音節（含調號，以及「把ㄅㄚˇ」這種例字）。 */
 const TOKEN = new RegExp(
-  `《[^》]+》|${CODE}(?:\\s*[~～〜]\\s*${CODE})?|[\\u4e00-\\u9fff]?˙?[\\u3105-\\u312f]+[ˉˊˇˋ]?`,
+  `《[^》]+》|${CODE}|[\\u4e00-\\u9fff]?˙?[\\u3105-\\u312f]+[ˉˊˇˋ]?`,
   "g",
 );
+/** 《重編國語辭典修訂本》這種短書名整段不拆。更長的書名要能換行，否則 390 寬會被英文書名撐出畫面。 */
+const BOOK_KEEP = 16;
 
 type Piece = { text: string; nowrap: boolean };
 
@@ -16,8 +21,10 @@ function piecesOf(text: string): Piece[] {
   for (const match of text.matchAll(TOKEN)) {
     const index = match.index ?? 0;
     if (index > last) pieces.push({ text: text.slice(last, index), nowrap: false });
-    pieces.push({ text: match[0], nowrap: true });
-    last = index + match[0].length;
+    const token = match[0];
+    const nowrap = !token.startsWith("《") || [...token].length <= BOOK_KEEP;
+    pieces.push({ text: token, nowrap });
+    last = index + token.length;
   }
   if (last < text.length) pieces.push({ text: text.slice(last), nowrap: false });
   return pieces;
@@ -47,7 +54,7 @@ function keepTail(pieces: Piece[]): Piece[] {
   return [...head, { text: tail.map((piece) => piece.text).join(""), nowrap: true }];
 }
 
-/** 書名號、注音、課綱代碼不斷行。 */
+/** 短書名、注音、課綱代碼不斷行。長書名照一般段落換行。 */
 export function RichText({ text }: { text: string }) {
   const pieces = keepTail(piecesOf(text));
   if (pieces.length === 1 && !pieces[0].nowrap) return pieces[0].text;
@@ -64,6 +71,18 @@ export function RichText({ text }: { text: string }) {
     );
   });
   return <>{nodes}</>;
+}
+
+/** 結尾四個字黏在一起。舊版詳情頁沒有 V2 的分段器，用這個避免最後一行只剩一兩個字。 */
+export function GlueTail({ text }: { text: string }) {
+  const chars = [...text];
+  if (chars.length <= 4) return text;
+  return (
+    <>
+      {chars.slice(0, -4).join("")}
+      <span className="whitespace-nowrap">{chars.slice(-4).join("")}</span>
+    </>
+  );
 }
 
 /** 全形冒號後不超過 14 字才不斷行，避免窄螢幕把整列撐出去。 */

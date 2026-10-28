@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { PrintColearnButton } from "./PrintColearnButton";
+import { GlueTail } from "./v2/text";
 
 interface ColearnCardProps {
   pathTitle: string;
@@ -31,13 +32,13 @@ export function ColearnCard({ pathTitle, pathHref, colearn, questions, scenario 
         </Link>
         <span className="hidden print:inline font-semibold">{pathTitle}</span>
       </p>
-      <p className="mt-3 text-base leading-7">{colearn}</p>
+      <p className="mt-3 text-base leading-7"><GlueTail text={colearn} /></p>
       {questions.length > 0 ? (
         <>
           <h3 className="mt-4 text-sm font-bold">可以一起問</h3>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-6">
             {questions.map((question) => (
-              <li key={question}>{question}</li>
+              <li key={question}><GlueTail text={question} /></li>
             ))}
           </ul>
         </>
@@ -45,7 +46,7 @@ export function ColearnCard({ pathTitle, pathHref, colearn, questions, scenario 
       {scenario ? (
         <>
           <h3 className="mt-4 text-sm font-bold">一起做</h3>
-          <p className="mt-2 text-sm leading-6">{scenario}</p>
+          <p className="mt-2 text-sm leading-6"><GlueTail text={scenario} /></p>
         </>
       ) : null}
     </section>
