@@ -2,7 +2,7 @@ id: sk.voice@es
 concept: sk.voice
 title: 說話讓人聽得清楚
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -18,17 +18,19 @@ curriculum_108:
   - B1
   issues:
   - 家庭教育
-to_verify: true
-verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（國語文「口語表達」），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+  performances:
+  - 2-I-1
+  - 2-II-1
+  - 2-III-4
+to_verify: false
+verify_notes: []
 prerequisites: []
 links:
   why: []
   how: []
   related: []
   deeper: []
-link_notes: 框架：國語文「口語表達」。
+link_notes: 框架：國語文學習表現「口語表達」。
 competency:
   specialist:
   - 口語表達
@@ -39,18 +41,110 @@ ai:
   - 把錄音轉成文字，找出口頭禪
   human_experience:
   - 站在人面前開口、看著對方的眼睛
-idea: 說話的人要替聽的人著想：聲音大到最後一排聽得到，速度慢到對方跟得上，眼睛看著人。緊張很正常，先深呼吸再開口。
+idea: 說話的人要替聽的人著想：聲音讓最後一排也聽得到，速度慢到對方跟得上，眼睛看著聽的人。緊張時容易越講越快，開口前先慢慢深呼吸，再放慢說。
 guiding_questions:
 - 你說話時，坐在最後一排的人聽得到嗎？
 scenario: 親子共學：晚餐時輪流當「今日播報員」，每人說一分鐘今天發生的事，其他人只聽不插話。大人也要輪。
 goal: 用夠大的聲音、不趕的速度、看著聽的人，說完一分鐘。
-review: 錄一段 1 分鐘自我介紹，一起看回放，家長勾三格：聽得清楚、不趕、有看鏡頭；一週後再錄一次，比較哪一格進步。
+review: 錄一段 1 分鐘（示意）自我介紹，一起看回放，家長勾三格：聽得清楚、不趕、有看鏡頭；一週後（示意）再錄一次，比較哪一格進步。
 formats:
   slides: []
-  exercise: 目標：用夠大的聲音、不趕的速度、看著聽的人，說完一分鐘。　檢核：錄一段 1 分鐘自我介紹，一起看回放，家長勾三格：聽得清楚、不趕、有看鏡頭；一週後再錄一次，比較哪一格進步。
+  exercise: 目標：用夠大的聲音、不趕的速度、看著聽的人，說完一分鐘。　檢核：錄一段 1 分鐘（示意）自我介紹，一起看回放，家長勾三格：聽得清楚、不趕、有看鏡頭；一週後（示意）再錄一次，比較哪一格進步。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 說出來，對方要聽得到
+  body:
+  - 對方聽不清楚、跟不上，內容再好也傳不過去。國語文課綱在一、二年級就要孩子「以正確發音流利的說出語意完整的話」，三、四年級再要求「用清晰語音、適當語速和音量說話」。
+  qa:
+    question: 你說話時，坐在最後一排的人聽得到嗎？
+    answer: 要試了才知道。上台說話時，要把聲音送到教室最後面，眼睛輪流看不同的聽眾；練習時可以請家人坐到最遠的位置，聽聽看是不是每個字都清楚（本站建議）。
+    source: mit-nse
+  items_title: 練好以後，孩子可以
+  items:
+  - title: 說出完整的話
+    text: 用正確發音，流利說出語意完整的話。
+    code: 2-I-1
+  - title: 清楚的聲音
+    text: 用清晰語音、適當語速和音量說話。
+    code: 2-II-1
+  - title: 加上語調表情
+    text: 高年級再用語調、表情和肢體輔助口語表達。
+    code: 2-III-4
+  sources:
+  - kuoyu
+  - zonggang
+how:
+  heading: 大聲、放慢、看著人
+  body:
+  - 課綱提醒，老師要指導學生「說得正確、說得清楚、說得有條理」，也要培養「發表的信心和儀態」。上台時，把聲音送到最後一排，眼睛輪流看不同的人；很多人一緊張就講太快，所以要刻意放慢，開口前先慢慢深呼吸。
+  checklist_title: 說話前，提醒自己：
+  checklist:
+  - 最後一排聽得到
+  - 速度不趕
+  - 看著聽的人
+  - 先慢慢深呼吸
+  activity_figure: how-flow
+  sources:
+  - kuoyu
+  - mit-nse
+what:
+  heading: 聲音、速度、眼神
+  figures:
+  - what-compare
+  notes:
+  - 音量：以最後一排聽得清楚為準，不是用喊的（本站建議）。
+  - 速度：講太快常是因為緊張或太熟內容；放慢，讓聽的人有時間理解。
+  - 眼神：輪流看不同的聽眾，不是只盯著一個人或地板（本站建議）。
+  sources:
+  - mit-nse
+  - kuoyu
+figures:
+- id: how-flow
+  type: flow
+  alt: 今日播報員：深呼吸、看著家人、說一分鐘，其他人只聽不插話，最後換人
+  steps:
+  - actor: 播報員
+    text: 先慢慢深呼吸
+  - actor: 播報員
+    text: 看著家人說
+  - actor: 家人
+    text: 只聽不插話
+  - actor: 全家
+    text: 換下一個人
+- id: what-compare
+  type: compare
+  alt: 聽不清楚的說法和聽得清楚的說法比較：小聲急著講，對比大聲放慢看著人
+  source: mit-nse
+  relation: versus
+  items:
+  - term: 聽不清楚
+    note: 聲音小、越講越快、眼睛看地板
+  - term: 聽得清楚
+    note: 聲音到最後一排、放慢、輪流看聽眾
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 2-I-1「以正確發音流利的說出語意完整的話。」、2-II-1「用清晰語音、適當語速和音量說話。」、2-III-4（p.7）；實施要點口語表達：「指導學生說得正確、說得清楚、說得有條理」「應培養學生發表的信心和儀態」（p.49）
+- id: mit-nse
+  title: Delivery and Q&A（CommKit）
+  publisher: MIT Department of Nuclear Science and Engineering Communication Lab
+  url: https://mitcommlab.mit.edu/nse/commkit/delivery-and-qa/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: §3.2「project to the back of the room and try to make eye contact with different members of the audience」；§2.3 講太快常因緊張或熟悉內容，要 speak clearly and slowly；§3.1「To calm your nerves, focus on slow, deep breaths.」
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習階段：國民小學一、二年級為第一學習階段，三、四年級為第二學習階段，五、六年級為第三學習階段（p.7）

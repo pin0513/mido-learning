@@ -146,7 +146,7 @@ test("exercise 與目標、檢核相同時不重複，What 空了就放補強句
 
 test("完整轉換的夾具走出黃金圈，而且不把 exercise 再塞進 What", () => {
   const live = readFileSync(join(contentDir, "knowledge", "language", "zh.zhuyin", "es.yaml"), "utf8");
-  assert.equal(/^why:/m.test(live), false);
+  assert.equal(/^why:/m.test(live), true);
   const dir = mkdtempSync(join(tmpdir(), "kp-circle-"));
   try {
     cpSync(contentDir, dir, { recursive: true });

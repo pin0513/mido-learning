@@ -2,7 +2,7 @@ id: sk.facilitate@uni
 concept: sk.facilitate
 title: 主持立場不同的會議
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -13,8 +13,8 @@ stage:
   level: uni
 to_verify: true
 verify_notes:
-- 草稿：大學不對應 108 課綱，以學門路徑對應。
-- 引用的框架只寫名稱（會議引導、利益與立場），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 大學不對應 108 課綱，以學門路徑對應。
+- 無法驗證：「收斂不了時，先決定下一步（補資料或組小組研議）」沒有找到可引用的出處，目前標為本站建議。
 prerequisites:
 - sk.consensus@sh
 - sk.hardtalk@sh
@@ -25,7 +25,7 @@ links:
   related:
   - pm.org@uni
   deeper: []
-link_notes: 框架：會議引導、利益與立場。
+link_notes: 框架：會議引導（國際引導者協會 IAF 倫理守則：對過程負責、對內容中立）、利益與立場（《Getting to Yes》原則式談判）。
 competency:
   specialist:
   - 口語表達
@@ -38,17 +38,108 @@ ai:
   - 會議紀錄、整理各方論點
   human_experience:
   - 在衝突現場維持公平，承受壓力
-idea: 立場對立時，主持人先維持規則與公平，讓每一方說出背後在乎的事，把「立場」轉成「大家要一起解決的問題」。收斂不了時，就先決定下一步，例如補資料或組小組研議。
+idea: 立場對立時，主持人對內容保持中立、對過程負責：維持規則與公平，讓每一方說出背後在乎的事（利益），把各自的「立場」轉成「大家要一起解決的問題」。收斂不了時，本站建議先決定下一步，例如補資料或組小組研議。
 guiding_questions:
 - 兩派吵起來時，主持人該先處理事情還是情緒？
 scenario: 親子共學：家族聚會要決定一件有爭議的事時，由大人主持、孩子記錄，會後一起檢討哪一句話讓氣氛轉好。
 goal: 主持一場有對立意見的會議，讓每一方都覺得被聽到，並收斂出下一步。
-review: 主持一次真實會議（社團、系學會、工作），會後發匿名問卷「我的意見有被聽到」1–5 分，平均 4 分以上，且紀錄裡有決議或明確的下一步。
+review: 主持一次真實會議（社團、系學會、工作），會後發匿名問卷「我的意見有被聽到」1–5 分，平均 4 分以上（示意），且紀錄裡有決議或明確的下一步。
 formats:
   slides: []
-  exercise: 目標：主持一場有對立意見的會議，讓每一方都覺得被聽到，並收斂出下一步。　檢核：主持一次真實會議（社團、系學會、工作），會後發匿名問卷「我的意見有被聽到」1–5 分，平均 4 分以上，且紀錄裡有決議或明確的下一步。
+  exercise: 目標：主持一場有對立意見的會議，讓每一方都覺得被聽到，並收斂出下一步。　檢核：主持一次真實會議（社團、系學會、工作），會後發匿名問卷「我的意見有被聽到」1–5 分，平均 4 分以上（示意），且紀錄裡有決議或明確的下一步。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 吵的是立場，要談的是利益
+  body:
+  - 哈佛法學院談判專案（Program on Negotiation，PON）整理的原則式談判指出：立場是表面的要求，底下的利益才是真正的需要、動機和擔心。只在立場上爭，很難有進展；說出各自在乎的事，常能找到雙方都能接受的做法。
+  - 國際引導者協會（International Association of Facilitators，IAF）的倫理守則也期許引導者扮演中立的角色，引出並尊重所有人的觀點，讓每位參與者都有機會說出想法。
+  qa:
+    question: 兩派吵起來時，主持人該先處理事情還是情緒？
+    answer: 兩個都要處理，但要分開處理。原則式談判建議把人和問題分開：先主動聆聽、承認雙方的情緒、澄清誤解，再把議題重新說成「我們要一起解決的問題」，回到事情本身。
+    source: pon-principled
+  items_title: 練好以後，可以
+  items:
+  - title: 中立主持
+    text: 對內容保持中立，對過程負責。
+  - title: 找出利益
+    text: 把立場背後的需要和擔心問出來。
+  - title: 讓人和事分開
+    text: 先接住情緒，再談共同的問題。
+  sources:
+  - pon-principled
+  - iaf-ethics
+how:
+  heading: 先立規則，再問在乎什麼
+  body:
+  - 開場先說規則（以下規則是本站建議）：一次一人發言、對事不對人、每一方都會輪到。接著請每一方說「你最擔心什麼、最在乎什麼」，主持人把它寫成利益，而不是要求。
+  - 最後把各方利益並排，改寫成一個共同的問題：「怎樣才能同時顧到……和……？」原則式談判也建議，雙方先同意用哪些客觀標準來比較選項。
+  items:
+  - title: 定規則
+    example: 一次一人、對事不對人、每方都輪到。
+    text: 對過程負責，不替任何一方說話。
+  - title: 問利益
+    example: 你最擔心的是什麼？
+    text: 把立場背後的需要寫下來。
+  - title: 改寫成共同問題
+    example: 怎樣才能同時顧到預算和時間？
+    text: 讓兩方面對同一個問題。
+  - title: 訂標準
+    example: 先同意用去年的出席數據比較。
+    text: 事先同意客觀標準。
+  activity_figure: how-flow
+  sources:
+  - iaf-ethics
+  - pon-principled
+what:
+  heading: 立場和利益的差別
+  figures:
+  - what-compare
+  notes:
+  - 「收斂不了時先決定下一步」是本站建議，尚未找到可引用的出處。
+  - 「平均 4 分以上」是示意的檢核標準。
+  sources:
+  - pon-principled
+figures:
+- id: how-flow
+  type: flow
+  alt: 家族會議：大人主持、孩子記錄，先定規則，各方說在乎的事，改寫成共同問題，會後檢討
+  steps:
+  - actor: 主持人
+    text: 說明規則
+  - actor: 各方
+    text: 說在乎的事
+  - actor: 記錄
+    text: 寫下各方利益
+  - actor: 主持人
+    text: 改寫成共同問題
+  - actor: 全家
+    text: 會後一起檢討
+- id: what-compare
+  type: compare
+  alt: 立場是表面的要求，利益是底下的需要和擔心；哈佛談判專案（PON）的例子是兄弟姊妹為父母結婚紀念派對的場地爭執
+  source: pon-principled
+  relation: not_equal
+  items:
+  - term: 立場
+    note: 表面的要求：一方要在餐廳辦，一方要在家辦
+  - term: 利益
+    note: 底下的需要：沒時間準備；另一方擔心花費
+sources:
+- id: pon-principled
+  title: 'Principled Negotiation: Focus on Interests to Create Value'
+  publisher: Program on Negotiation at Harvard Law School（Katie Shonk）
+  url: https://www.pon.harvard.edu/daily/negotiation-skills-daily/principled-negotiation-focus-interests-create-value/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 《Getting to Yes》原則式談判：把人和問題分開（處理情緒與關係的顧慮要和議題分開；主動聆聽、承認情緒、澄清誤解、把議題重新框成共同問題）；著眼利益（interests）而非立場（positions），立場是表面的要求，底下是需要與擔心；創造互利選項；堅持事先同意的客觀標準
+- id: iaf-ethics
+  title: IAF Statement of Values & Code of Ethics
+  publisher: International Association of Facilitators（國際引導者協會，2004 通過）
+  url: https://iaf-world.org/wp-content/uploads/2025/09/IAF-Statement-of-Values-Code-of-Ethics.pdf
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 前言：引導者「fill an impartial role in helping groups become more effective」、在參與與成果之間取得平衡；第 5 條（Respect, Safety, Equity, and Trust）：「elicit and honour the perspectives of all」，確保所有參與者都有機會表達想法；第 6 條：對過程負責（stewardship of process），對內容保持中立（impartiality toward content）

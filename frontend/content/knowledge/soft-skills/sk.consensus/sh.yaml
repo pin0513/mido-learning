@@ -2,7 +2,7 @@ id: sk.consensus@sh
 concept: sk.consensus
 title: 會議引導：發散、收斂、達成共識
 status: published
-version: "0.1"
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -19,10 +19,10 @@ curriculum_108:
   - C2
   - B1
   issues: []
-to_verify: true
+  performances:
+  - 2-V-2
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（會議引導（發散／收斂）、五指表態），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
 - 與 pm.team@jh 劃界：會議的流程與分工留在專案管理，這一點管引導與達成共識。
 prerequisites:
 - sk.discuss@jh
@@ -47,18 +47,136 @@ ai:
   - 把便利貼上的想法分類
   human_experience:
   - 讀出會議氣氛，讓沉默的人開口
-idea: 會議引導常分兩段：發散時不批評，把想法都寫出來；收斂時先訂選擇標準，再分類、比較、合併。共識不是每個人最喜歡，而是每個人都能接受、願意支持，可以用五指表態（拳頭到五指）檢查。
+idea: 本站借用設計流程（雙鑽石）的做法，把會議分兩段：發散時不急著批評，把想法都寫出來；收斂時先訂選擇標準，再分類、比較、合併。共識不是每個人最喜歡，而是每個人都能接受、願意支持，可以用五指表態（拳頭到五指）快速檢查。
 guiding_questions:
 - 投票決定，輸的那一方會願意一起做嗎？
 scenario: 親子共學：換孩子當家庭會議主持人，大人當成員；大人故意提一個很不一樣的意見，看主持人怎麼收。
 goal: 主持一場會議：先讓想法都出來，再訂標準收斂，最後用表態確認共識。
-review: 孩子主持 20 分鐘家庭會議決定一件事（週末行程、零用錢規則），交出一張紀錄：決議、負責人、期限；最後每人五指表態，三指以下的人有被問到原因。
+review: 孩子主持一場家庭會議決定一件事（週末行程、零用錢規則），交出一張紀錄：決議、負責人、期限；最後每人五指表態，兩指以下（含拳頭）的人有被問到原因。
 formats:
   slides: []
-  exercise: 目標：主持一場會議：先讓想法都出來，再訂標準收斂，最後用表態確認共識。　檢核：孩子主持 20 分鐘家庭會議決定一件事（週末行程、零用錢規則），交出一張紀錄：決議、負責人、期限；最後每人五指表態，三指以下的人有被問到原因。
+  exercise: 目標：主持一場會議：先讓想法都出來，再訂標準收斂，最後用表態確認共識。　檢核：孩子主持一場家庭會議決定一件事（週末行程、零用錢規則），交出一張紀錄：決議、負責人、期限；最後每人五指表態，兩指以下（含拳頭）的人有被問到原因。
 audience:
 - kid
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-28'
+why:
+  heading: 投票之後，大家還願意做嗎
+  body:
+  - 投票很快，但輸的一方不一定願意一起做。高中國語文課綱要學生「討論過程中，能適切陳述自身立場，歸納他人論點並給予回應，達成友善且平等的溝通」，核心素養也要「尋求共識，具備與他人有效溝通與協商的能力」。
+  - 綜合活動課綱的高中核心素養，則要學生「提升在團體生活中共同決策、合作解決問題」。
+  qa:
+    question: 投票決定，輸的那一方會願意一起做嗎？
+    answer: 不一定。所以在決定前，先請每個人表態：用五指表態，兩指以下（含拳頭）代表有疑慮，要先聽他的理由；大家都三指以上，代表都能接受、願意支持，才往下走。
+    source: berkeley-f2f
+  items_title: 練好以後，可以
+  items:
+  - title: 陳述與歸納
+    text: 陳述自身立場，歸納他人論點並回應。
+    code: 2-V-2
+  sources:
+  - kuoyu
+  - zonghe
+how:
+  heading: 先發散，再收斂
+  body:
+  - 英國設計委員會的雙鑽石模型，把過程分成先廣泛探索（發散）、再聚焦行動（收斂）。發散時，IDEO.org 建議「暫緩評判」（Defer judgement），讓每個人都敢說；收斂時先訂標準，哈佛談判專案的原則式談判也建議，雙方事先同意要用哪些客觀標準。
+  - 最後用五指表態確認：拳頭表示反對、要停下來談；三指表示可以接受；五指表示全心支持。
+  items:
+  - title: 發散
+    example: 週末想去哪？每個人寫三個。
+    text: 先寫下來，不批評。
+  - title: 訂標準
+    example: 車程一小時內、花費一千元內。
+    text: 先同意要用什麼標準選。
+  - title: 收斂
+    example: 把相近的合併，用標準刪去。
+    text: 分類、比較、合併。
+  - title: 五指表態
+    example: 妹妹出兩指，先聽她的擔心。
+    text: 兩指以下先聽理由。
+  activity_figure: how-flow
+  sources:
+  - designcouncil
+  - ideo-rules
+  - pon-principled
+  - berkeley-f2f
+what:
+  heading: 五指表態怎麼看
+  figures:
+  - what-compare
+  notes:
+  - 五指表態是快速測溫的工具：大家同時舉手、一眼看出支持程度。因為是公開表態，加州大學柏克萊分校（UC Berkeley）提醒它不適合敏感或高度爭議的決定。
+  - 車程、花費等標準數字都是示意。
+  sources:
+  - berkeley-f2f
+figures:
+- id: how-flow
+  type: flow
+  alt: 家庭會議：孩子主持，先發散寫想法，訂標準收斂，再五指表態，最後寫紀錄
+  steps:
+  - actor: 全家
+    text: 寫下想法
+  - actor: 主持人
+    text: 先訂選擇標準
+  - actor: 主持人
+    text: 分類比較合併
+  - actor: 全家
+    text: 五指表態
+  - actor: 主持人
+    text: 寫下決議
+- id: what-compare
+  type: compare
+  alt: 五指表態：兩指以下有疑慮要先聽，三指以上表示能接受
+  source: berkeley-f2f
+  relation: versus
+  items:
+  - term: 兩指以下
+    note: 含拳頭：有疑慮，先聽理由；拳頭要暫停
+  - term: 三指以上
+    note: 三指可以接受，四指支持，五指全心支持
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－國語文
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 學習表現 2-Ⅴ-2「討論過程中，能適切陳述自身立場，歸納他人論點並給予回應，達成友善且平等的溝通。」（p.8）；國 S-U-B1「……學會從他人的角度思考問題，尋求共識，具備與他人有效溝通與協商的能力。」（p.4）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部 2018 發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-28'
+  kind: curriculum
+  supports: 核心素養 綜S-U-C2「具備人際溝通知能，提升在團體生活中共同決策、合作解決問題，學習並善用領導素養，以面對社會變遷的挑戰，營造優質的生活。」（p.5）
+- id: designcouncil
+  title: The Double Diamond（Framework for Innovation）
+  publisher: Design Council（英國設計委員會）
+  url: https://www.designcouncil.org.uk/resources/framework-for-innovation/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 雙鑽石的兩個菱形代表「exploring an issue more widely or deeply (divergent thinking) and then taking focused action (convergent thinking)」
+- id: ideo-rules
+  title: Brainstorm Rules（Design Kit）
+  publisher: IDEO.org
+  url: https://www.designkit.org/methods/brainstorm-rules.html
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 「Defer judgement」：讓每個人都敢說出想法，別人才能接著往下想；「Go for quantity」
+- id: pon-principled
+  title: 'Principled Negotiation: Focus on Interests to Create Value'
+  publisher: Program on Negotiation at Harvard Law School（Katie Shonk）
+  url: https://www.pon.harvard.edu/daily/negotiation-skills-daily/principled-negotiation-focus-interests-create-value/
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 《Getting to Yes》原則式談判四要素：把人和問題分開（主動聆聽、承認情緒、把議題重新框成共同問題）；著眼利益而非立場；創造互利選項（腦力激盪時暫緩評判）；堅持客觀標準，並事先同意要用哪些標準
+- id: berkeley-f2f
+  title: Fist to Five（Decision Making Tools）
+  publisher: 加州大學柏克萊分校（UC Berkeley）Business Process Management Office
+  url: https://bpm.berkeley.edu/tools-resources/decision-making-tools/fist-five
+  accessed: '2026-10-28'
+  kind: reference
+  supports: 拳頭（0）＝我反對、需要停下來談；1 指＝重大疑慮；2 指＝有些疑慮；3 指＝I can live with it（不是最喜歡但會支持）；4 指＝支持；5 指＝全心支持。兩指以下（含拳頭）的人有值得先聽的疑慮，拳頭會讓決定暫停；全員三指以上即有足夠支持。它是 temperature check（快速測溫），不適合敏感或高度爭議的決定
