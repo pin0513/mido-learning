@@ -1,6 +1,6 @@
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { competencyName } from "@/lib/content";
-import { RichText } from "./text";
+import { RichText, type PointRefs } from "./text";
 
 function CodeRows({ codes, catalog }: { codes: string[]; catalog: ContentCatalog }) {
   return (
@@ -18,7 +18,7 @@ function CodeRows({ codes, catalog }: { codes: string[]; catalog: ContentCatalog
   );
 }
 
-export function CurriculumPanel({ point, all }: { point: KnowledgePoint; all: ContentCatalog }) {
+export function CurriculumPanel({ point, all, refs }: { point: KnowledgePoint; all: ContentCatalog; refs: PointRefs }) {
   const curriculum = point.curriculum108;
   if (!curriculum && !point.linkNotes) return null;
   const performances = curriculum?.performances ?? [];
@@ -59,12 +59,15 @@ export function CurriculumPanel({ point, all }: { point: KnowledgePoint; all: Co
             <CodeRows codes={contents} catalog={all} />
           </>
         ) : null}
+        {point.linkNotes ? (
+          <>
+            <dt>跨學門關聯</dt>
+            <dd className="v2-link-note">
+              <RichText text={point.linkNotes} refs={refs} />
+            </dd>
+          </>
+        ) : null}
       </dl>
-      {point.linkNotes ? (
-        <p className="v2-link-note">
-          <RichText text={point.linkNotes} />
-        </p>
-      ) : null}
     </section>
   );
 }

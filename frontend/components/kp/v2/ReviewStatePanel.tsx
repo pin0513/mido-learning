@@ -1,6 +1,7 @@
 import type { KnowledgePoint } from "@/lib/content";
+import { RichText, type PointRefs } from "./text";
 
-export function ReviewStatePanel({ point, converted }: { point: KnowledgePoint; converted: boolean }) {
+export function ReviewStatePanel({ point, converted, refs }: { point: KnowledgePoint; converted: boolean; refs: PointRefs }) {
   const authors = point.authors.join("、");
   return (
     <section aria-labelledby="v2-review-h">
@@ -22,7 +23,7 @@ export function ReviewStatePanel({ point, converted }: { point: KnowledgePoint; 
           <summary>要核對的地方（{point.verifyNotes.length}）</summary>
           <ul>
             {point.verifyNotes.map((note) => (
-              <li key={note}>{note}</li>
+              <li key={note}><RichText text={note} refs={refs} /></li>
             ))}
           </ul>
         </details>

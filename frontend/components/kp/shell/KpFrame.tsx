@@ -127,13 +127,6 @@ export function KpFrame({ children }: { children: React.ReactNode }) {
           <span>© {new Date().getFullYear()} Mido Learning</span>
           <a className="btn btn-quiet btn-sm" href="#main">回到頂端</a>
         </div>
-        <p className="credits">
-          圖片：
-          <a href="https://commons.wikimedia.org/wiki/File:Garden_City_diagram.jpg">Ebenezer Howard，1898</a>
-          ，
-          <a href="https://creativecommons.org/publicdomain/mark/1.0/">公眾領域</a>
-          ，Wikimedia Commons。用來說明階段怎麼套成空間，不是裝飾。
-        </p>
       </footer>
     </>
   );

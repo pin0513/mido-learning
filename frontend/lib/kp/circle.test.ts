@@ -9,6 +9,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { Compare } from "../../components/kp/v2/figures/Compare";
 import { Spelling } from "../../components/kp/v2/figures/Spelling";
 import { ToneChart } from "../../components/kp/v2/figures/ToneChart";
+import { pointRefs } from "../../components/kp/v2/refs";
 import { GlueTail, RichText } from "../../components/kp/v2/text";
 import { catalogFromModel } from "../content/catalog";
 import { loadContent } from "../content/load";
@@ -194,4 +195,32 @@ test("完整轉換的夾具走出黃金圈，而且不把 exercise 再塞進 Wha
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test("V2 段落結尾只黏最後兩個字和後面的標點，不再黏四個字", () => {
+  const html = renderToStaticMarkup(createElement(RichText, { text: "就文本的觀點，找出支持的理由。" }));
+  assert.equal(html, '就文本的觀點，找出支持的<span class="v2-nw">理由。</span>');
+  const kana = renderToStaticMarkup(createElement(RichText, { text: "對大人說おはようございます。" }));
+  assert.match(kana, /<span class="v2-nw">ます。<\/span>$/);
+  const bracket = renderToStaticMarkup(createElement(RichText, { text: "念法是本站整理（示意）。" }));
+  assert.match(bracket, /<span class="v2-nw">（示意）。<\/span>$/);
+  assert.equal(renderToStaticMarkup(createElement(RichText, { text: "Simon Sinek，TED (2009)" })), "Simon Sinek，TED (2009)");
+});
+
+test("內文裡的知識點 id 換成標題連結，讀者看不到 id", () => {
+  const refs = pointRefs(shared, shared, "pm-leadership");
+  const estimate = point("pm.estimate@sh");
+  const html = renderToStaticMarkup(createElement(RichText, { text: "高中的 pm.estimate 會再學怎麼替每一項估時間。", refs }));
+  assert.equal(html.includes("pm.estimate</"), false);
+  assert.equal(html.includes(" pm.estimate "), false);
+  assert.match(html, new RegExp(`高中的「<a class="v2-ref" href="/kp/pm.estimate/sh">${estimate.title}</a>」會再學`));
+  const plain = renderToStaticMarkup(createElement(RichText, { text: "網址 learn.paulfun.net 與 e.g. 不是 id。", refs }));
+  assert.equal(plain.includes("<a"), false);
+});
+
+test("學什麼只有 notes 時當內文；有內文時 notes 收成說明，內文、能力列與檢核都會出現", () => {
+  const reason = buildCircles(point("ph.reason@es"), shared).circles[2];
+  assert.deepEqual(reason.blocks.map((block) => block.kind), ["paragraphs"]);
+  const hello = buildCircles(point("ja.hello@es"), shared).circles[2];
+  assert.deepEqual(hello.blocks.map((block) => block.kind), ["paragraphs", "figure", "uses", "checklist", "notes"]);
 });

@@ -128,6 +128,8 @@ test.describe("黃金圈詳細頁", () => {
           for (const target of node.querySelectorAll("a, button, summary")) {
             const rect = target.getBoundingClientRect();
             if (rect.width < 1 || rect.height < 1) continue;
+            // 內文裡的知識點連結是行內連結，依 WCAG 2.5.8 行內例外不受 44px 限制。
+            if (target.matches("a.v2-ref")) continue;
             if (rect.width < 43.5 || rect.height < 43.5) {
               const label = (target.getAttribute("aria-label") || target.textContent || "").trim().slice(0, 24);
               issues.push(`small ${target.tagName} ${Math.round(rect.width)}x${Math.round(rect.height)} ${label}`);
