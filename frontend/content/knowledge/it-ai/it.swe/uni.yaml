@@ -1,48 +1,226 @@
 id: it.swe@uni
 concept: it.swe
 title: 軟體工程：版本控制、測試與架構
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 軟體與系統
+  - 資訊
+  - 軟體與系統
   layer: advanced
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級、item 不放代碼；高中資訊科技必修的相關學習重點（資 P-V-1、資 T-V-1、運 c-V-2、運 c-V-3）只在 tech108 來源逐字引用（含頁碼，頁碼是頁腳印的頁碼，比 PDF 頁少 4），當作先學過的內容，不引用高中加深加廣選修；主要依據改用大學教科書和官方文件。生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；教育部《高級中等以下學校人工智慧使用和學習指引》的適用對象是高級中等以下學校，本點不引用。
+- 英文網頁的引文取自 2026-10-29 讀取的網頁；只取不含彎引號或數學式的句子或片段，省略處用刪節號。
+- 原 guiding question「為什麼『我電腦上可以跑』不夠？」改成「為什麼『我這裡能跑』不夠？」：引號裡是口語說法，不是引用來源，縮短後意思相同。
+- 原 idea 的「清楚的架構」用 Software Engineering at Google 第 11 章說明：寫自動測試會逼人及早面對設計問題，通常帶來更模組化的軟體；本頁不另教架構模式。
 prerequisites:
-  - it.build@sh
-  - it.ds@sh
+- it.build@sh
+- it.ds@sh
 links:
   why: []
   how: []
   related:
-    - pm.schedule@uni
-    - pm.risk@jh
-    - pm.team@jh
+  - pm.schedule@uni
+  - pm.risk@jh
+  - pm.team@jh
   deeper: []
 link_notes: 專案管理（排程、風險、團隊溝通）
 competency:
   specialist:
-    - 軟體工程
+  - 軟體工程
   generalist:
-    - 團隊合作
-    - 跨域思考
+  - 團隊合作
+  - 跨域思考
 ai:
   delegable:
-    - 產生測試、審查程式碼建議
+  - 產生測試、審查程式碼建議
   human_experience:
-    - 協調分工、做架構決策、維持品質
+  - 協調分工、做架構決策、維持品質
 idea: 真實的軟體是團隊長期維護的。版本控制、自動測試、清楚的架構，讓很多人能一起改而不出亂子。
 guiding_questions:
-  - 為什麼「我電腦上可以跑」不夠？
-scenario: 團隊用 Git 協作開發一個小網站（例如學習資源分享站），練習分支、審查與自動測試。
+- 為什麼「我這裡能跑」不夠？
+- 合併前為什麼要讓別人看過？
+scenario: 幾位同學一組，用 Git 協作開發一個小網站（例如學習資源分享站）：每人在自己的分支改一個功能，開 pull request 互相審查，讓自動測試跑過才合併（本站整理）。
 formats:
   slides: []
+  exercise: 目標：用 Git 分支和 pull request 完成一次團隊協作：為新功能寫一個自動測試、讓 CI 跑過、經同學審查後合併，並自己解決一次合併衝突。　檢核：不看本頁，自己說出分支、程式碼審查、自動測試各防止什麼問題，說明為什麼只在自己電腦上能跑還不夠，並指出一次合併衝突兩邊的內容、把它解決。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 用 Git 分支和 pull request 完成一次團隊協作：為新功能寫一個自動測試、讓 CI 跑過、經同學審查後合併，並自己解決一次合併衝突。
+review: 不看本頁，自己說出分支、程式碼審查、自動測試各防止什麼問題，說明為什麼只在自己電腦上能跑還不夠，並指出一次合併衝突兩邊的內容、把它解決。
+why:
+  heading: 軟體要活很久
+  body:
+  - Google 的軟體工程書說：「Software engineering is programming integrated over time.」寫一次能跑的程式只是開始；別人接手、需求改變、好幾個人同時修改，才是真實軟體的日常。
+  - Pro Git 這樣說明分支：「Branching means you diverge from the main line of development and continue to do work without messing with that main line.」高中學過文字式程式設計、數位合作共創的工具和專案管理的概念，大學把它們變成團隊每天的工作方式。
+  items_title: 三個工具
+  items:
+  - title: 版本控制
+    text: 每次修改都有紀錄，可以回頭。
+  - title: 程式碼審查
+    text: 合併前讓另一個人看過。
+  - title: 自動測試
+    text: 每次提交都自動檢查。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會寫函式
+  - 會用終端機
+  sources:
+  - seag1
+  - git-branch
+  - tech108
+how:
+  heading: 分支、審查、測試
+  body:
+  - '分支與合併：每人從主線開自己的分支改一個功能。兩人改到同一個檔案的同一段時，Git 會停下來，書上的例子是「CONFLICT (content): Merge conflict in index.html」；打開檔案看兩邊的內容、決定保留什麼，再提交（說明是本站整理）。'
+  - 審查：在 GitHub 開 pull request，GitHub 說它「letting you discuss and review changes before merging them」。Google 的書說「Having another set of eyes look over a change helps ensure that the change does what was intended.」，而且「A code review is often the first test of whether a given change is understandable to a broader audience」。
+  - 自動測試與持續整合：為新功能寫一個測試，再用 GitHub Actions 設定 CI，GitHub 說「CI using GitHub Actions offers workflows that can build the code in your repository and run your tests.」。在儲存庫裡加一個 workflow 檔，讓每次提交都自動跑測試；儲存庫裡不放密碼、金鑰或個人資料（本站建議）。GitHub 說「Committing code more often detects errors sooner and reduces the amount of code a developer needs to debug」；Google 的書說自動測試「can quickly catch mistakes, and this makes it possible to change software with confidence」，寫測試也會逼人及早面對設計問題，通常帶來「more modular software that enables greater flexibility later on」。
+  qa:
+    question: 為什麼「我這裡能跑」不夠？
+    answer: 你的電腦可能裝了別人沒有的套件、留著沒提交的檔案，或只試過你想到的情況。CI 在共用儲存庫上自動建置和測試每次提交，GitHub 說這樣「detects errors sooner」；在共用的環境跑過、別人也能重現，才算真的能用（說明是本站整理）。
+    source: gh-ci
+  items_title: 四步做
+  items:
+  - title: 開分支
+    text: 每人改一個功能。
+  - title: 寫測試
+    text: 為新功能寫一個自動測試。
+  - title: 開 pull request
+    text: 請同學審查、回應意見。
+  - title: CI 通過才合併
+    text: 有衝突就自己解決。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 分支有說明
+  - 測試會跑
+  - 審查有回應
+  - 衝突已解決
+  activity_figure: swe-flow
+  sources:
+  - git-merge
+  - gh-pr
+  - seag9
+  - gh-ci
+  - seag11
+what:
+  heading: 多人一起改也不亂
+  body:
+  - 學完後，自己能用分支和 pull request 跟同學協作、寫自動測試並設定 CI，在合併前審查別人的程式碼，遇到合併衝突能自己解決。
+  - Google 的書也提醒，審查不必完美，它是多道防線之一：「A code review is neither a panacea nor the only check for such correctness」。
+  items_title: 學完能做到
+  items:
+  - title: 協作流程
+    text: 分支、審查、合併。
+  - title: 自動測試
+    text: 每次提交都檢查。
+  - title: 解決衝突
+    text: 看懂兩邊，決定保留什麼。
+  checklist_title: 自我檢核
+  checklist:
+  - 合併成功
+  - CI 通過
+  - 說出各防什麼
+  figures:
+  - swe-compare
+  notes:
+  - 本頁的網站和分組是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，程式、數字和引用的資料要自己驗證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - seag9
+  - genai-student
+figures:
+- id: swe-flow
+  type: flow
+  alt: 流程：自己開分支、寫測試，同學審查，CI 自動測試，通過後合併。
+  steps:
+  - actor: 自己
+    text: 開分支
+  - actor: 自己
+    text: 寫測試
+  - actor: 同學
+    text: 審查
+  - actor: CI
+    text: 自動測試
+  - actor: 自己
+    text: 合併
+  caption: 流程是本站建議。
+- id: swe-compare
+  type: compare
+  alt: 比較只在自己電腦上能跑和在 CI 上能跑：前者只證明你的環境可以，後者每次提交都在共用的地方自動建置和測試。
+  source: gh-ci
+  relation: not_equal
+  items:
+  - term: 自己電腦能跑
+    note: 只證明你的環境可以
+  - term: CI 能跑
+    note: 每次提交都自動建置和測試
+  caption: GitHub 說明持續整合會在提交時自動建置和測試；例子是本站整理。
+sources:
+- id: seag1
+  title: 'Software Engineering at Google, Chapter 1: What Is Software Engineering?'
+  publisher: Titus Winters、Tom Manshreck、Hyrum Wright 編（O'Reilly 出版，abseil.io 開放網頁版，CC BY-NC-ND 4.0）
+  url: https://abseil.io/resources/swe-book/html/ch01.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「Software engineering is programming integrated over time.」
+- id: git-branch
+  title: Pro Git（第 2 版）3.1 Git Branching – Branches in a Nutshell
+  publisher: Scott Chacon、Ben Straub 著（Apress 出版，git-scm.com 開放網頁版）
+  url: https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「Branching means you diverge from the main line of development and continue to do work without messing with that main line.」
+- id: git-merge
+  title: Pro Git（第 2 版）3.2 Git Branching – Basic Branching and Merging
+  publisher: Scott Chacon、Ben Straub 著（Apress 出版，git-scm.com 開放網頁版）
+  url: https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: '「CONFLICT (content): Merge conflict in index.html」'
+- id: gh-pr
+  title: About pull requests
+  publisher: GitHub Docs
+  url: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Pull requests are proposals to merge code changes into a project.」、「letting you discuss and review changes before merging them」
+- id: seag9
+  title: 'Software Engineering at Google, Chapter 9: Code Review'
+  publisher: Titus Winters、Tom Manshreck、Hyrum Wright 編（O'Reilly 出版，abseil.io 開放網頁版，CC BY-NC-ND 4.0）
+  url: https://abseil.io/resources/swe-book/html/ch09.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「Having another set of eyes look over a change helps ensure that the change does what was intended.」、「A code review is often the first test of whether a given change is understandable to a broader audience」、「A code review is neither a panacea nor the only check for such correctness」
+- id: gh-ci
+  title: About continuous integration with GitHub Actions
+  publisher: GitHub Docs
+  url: https://docs.github.com/en/actions/about-github-actions/about-continuous-integration-with-github-actions
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Continuous integration (CI) is a software practice that requires frequently committing code to a shared repository. Committing code more often detects errors sooner and reduces the amount of code a developer needs to debug」、「CI using GitHub Actions offers workflows that can build the code in your repository and run your tests.」
+- id: seag11
+  title: 'Software Engineering at Google, Chapter 11: Testing Overview'
+  publisher: Titus Winters、Tom Manshreck、Hyrum Wright 編（O'Reilly 出版，abseil.io 開放網頁版，CC BY-NC-ND 4.0）
+  url: https://abseil.io/resources/swe-book/html/ch11.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「automated testing can quickly catch mistakes, and this makes it possible to change software with confidence」、「Doing so generally leads to more modular software that enables greater flexibility later on.」
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：資 P-V-1「文字式程式設計概念與實作。」（p.11）；資 T-V-1「數位合作共創的概念與工具使用。」（p.11）；運 c-V-2「能認識專案管理的概念。」（p.7）；運 c-V-3「能整合適當的資訊科技與他人合作完成專題製作。」（p.7）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

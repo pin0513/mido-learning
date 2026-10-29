@@ -6,12 +6,12 @@ import { test, expect } from "@playwright/test";
  */
 const DRAFT_TITLES = [
   "部分與整體",
-  // B11、B12、B13 已發布數學 es／jh／sh／uni 全部 26 點，草稿樣本換成仍是草稿的大學資訊與 AI 點。
-  "神經網路與深度學習",
-  "軟體工程：版本控制、測試與架構",
+  // B11–B13 已發布數學全部 26 點，B14–B16 已發布資訊與 AI 全部 25 點；草稿樣本換成仍是草稿的專案管理點（pm.schedule@uni、pm.cpm@sh 接在 pm.estimate@sh 之後；pm.business@uni、pm.aiteam@uni 由已發布點連過去）。
+  "排程與資源最佳化",
+  "要徑：決定專案長度的那條路",
   "認知偏誤與思考盲點",
-  "AI 系統設計：評估與人在迴路",
-  "以人為本的人機協作",
+  "商業論證與專案治理",
+  "決策、倫理與 AI 協作",
 ];
 
 test.describe("學門總圖", () => {

@@ -1,49 +1,206 @@
 id: it.governance@uni
 concept: it.governance
 title: AI 安全、治理與法規
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 人工智慧
-    - AI 倫理
+  - 資訊
+  - 人工智慧
+  - AI 倫理
   layer: advanced
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
-  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級、item 不放代碼；高中資訊科技必修的相關學習重點（資 H-V-2、資 H-V-3、運 a-V-2）只在 tech108 來源逐字引用（含頁碼，頁碼是頁腳印的頁碼，比 PDF 頁少 4），當作先學過的內容，不引用高中加深加廣選修；主要依據改用大學教科書和官方文件。生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；教育部《高級中等以下學校人工智慧使用和學習指引》的適用對象是高級中等以下學校，本點不引用。
+- 原有待核對「UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。」已處理：本點不引用 UNESCO 框架，AI 治理的原則與做法改依可查證原文的來源（見 sources）。
+- 英文網頁的引文取自 2026-10-29 讀取的網頁；只取不含彎引號或數學式的句子或片段，省略處用刪節號。
+- NIST AI 100-1 的頁碼是頁腳印的「Page N」（PDF 頁 − 5）；引文避開 PDF 換行斷字（例如 oper- ation）的地方。
+- 原 idea「各國與國際組織正在發展相關規範與框架。」改成具體的台灣人工智慧基本法（115 年 1 月 14 日公布）和 NIST AI 100-1；歐盟 AI 法的官方網站這次無法讀取（EUR-Lex 回應 202 驗證頁），本點不引用。
+- 原 scenario「為一個 AI 應用（如履歷篩選）做風險評估，提出治理措施與申訴機制。」保留，改成虛構的履歷篩選案例，不用真人履歷或個人資料。
+- 原 ai.delegable「整理法規與框架重點」保留，加上條文要自己對照原文（本站建議）。
 prerequisites:
-  - it.ethics@sh
-  - it.aisys@uni
+- it.ethics@sh
+- it.aisys@uni
 links:
   why:
-    - ph.applied@uni
+  - ph.applied@uni
   how:
-    - pm.business@uni
+  - pm.business@uni
   related: []
   deeper: []
 link_notes: 哲學（應用倫理）、專案管理（商業論證與專案治理）、社會（法律）
 competency:
   specialist:
-    - AI 治理
+  - AI 治理
   generalist:
-    - 查證
-    - 媒體素養
+  - 查證
+  - 媒體素養
 ai:
   delegable:
-    - 整理法規與框架重點
+  - 整理法規與框架重點（條文要自己對照原文，本站建議）
   human_experience:
-    - 權衡利益與風險，做出並承擔建議
-idea: 依風險高低管理 AI：透明、可解釋、可問責。各國與國際組織正在發展相關規範與框架。
+  - 權衡利益與風險，做出並承擔建議
+idea: 依風險高低管理 AI：透明、可解釋、可問責。台灣的人工智慧基本法和美國 NIST 的 AI 風險管理框架，都把風險評估、人類監督和申訴救濟放在核心。
 guiding_questions:
-  - AI 造成傷害時，責任在開發者、使用者還是 AI？
-scenario: 為一個 AI 應用（如履歷篩選）做風險評估，提出治理措施與申訴機制。
+- AI 造成傷害時，責任在開發者、使用者還是 AI？
+- 履歷篩選 AI 為什麼要特別小心？
+scenario: 為一個虛構的履歷篩選 AI 做風險評估：找出可能的傷害和受影響的人、對照法規原則，提出治理措施與申訴機制（案例是虛構的，本站整理）。
 formats:
   slides: []
+  exercise: 目標：為虛構的履歷篩選 AI 寫一頁風險評估：列出至少 3 個風險和受影響的人，各配一個治理措施，並設計申訴與人工覆核流程（數字是示意）。　檢核：不看本頁，說出人工智慧基本法第 4 條裡和履歷篩選最相關的三項原則，說明就業服務法第 5 條為什麼跟履歷篩選有關，並說出你的申訴流程誰收件、誰覆核、多久回覆（數字是示意）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 為虛構的履歷篩選 AI 寫一頁風險評估：列出至少 3 個風險和受影響的人，各配一個治理措施，並設計申訴與人工覆核流程（數字是示意）。
+review: 不看本頁，說出人工智慧基本法第 4 條裡和履歷篩選最相關的三項原則，說明就業服務法第 5 條為什麼跟履歷篩選有關，並說出你的申訴流程誰收件、誰覆核、多久回覆（數字是示意）。
+why:
+  heading: 影響越大，管得越嚴
+  body:
+  - 教科書提醒，部署機器學習系統時，「you are typically providing a tool that will be used to (partially or fully) automate decisions」，而且「These technical systems can impact the lives of individuals who are subject to the resulting decisions.」履歷篩選就是這樣：模型的判斷會影響誰拿到面試。
+  - 台灣 115 年公布的人工智慧基本法要「推動與國際介接之人工智慧風險分類框架」（第 16 條），也要求「政府應就高風險人工智慧之應用，明確其責任歸屬及歸責條件，並建立其救濟、補償或保險機制。」（第 17 條）。第 4 條列了七項原則，下面挑和履歷篩選最相關的三項。高中學過資訊科技對人與社會的影響，也練習過用多元觀點思辨資訊科技議題，大學要能把原則變成具體措施。
+  items_title: 第 4 條挑三項
+  items:
+  - title: 透明與可解釋
+    text: 產出要適當揭露或標記。
+  - title: 公平與不歧視
+    text: 不對特定群體造成歧視。
+  - title: 問責
+    text: 承擔內部與外部的責任。
+  checklist_title: 開始前先確認
+  checklist:
+  - 讀過資訊倫理
+  - 知道個資保護
+  sources:
+  - d2l-shift
+  - aibasic
+  - tech108
+how:
+  heading: 評風險、定措施、留申訴
+  body:
+  - 找風險：先寫清楚系統用途和誰會受影響。NIST 框架用治理、對應、衡量、管理四個功能整理風險，也舉了「AI RMF hiring profile」當例子，表示徵才可以有專屬的風險做法。履歷篩選的風險例如：模型從過去的錄取資料學到對某些性別或年齡的偏差、求職者不知道有 AI 參與、被刷掉的人無從申訴（說明是本站整理）。
+  - 對照法規：就業服務法第 5 條規定雇主「不得以種族、階級、語言、思想、宗教、黨派、籍貫、出生地、性別、性傾向、年齡、婚姻、容貌、五官、身心障礙、星座、血型或以往工會會員身分為由，予以歧視」，用 AI 篩選也一樣；人工智慧基本法第 4 條要求「允許人類監督」，第 14 條要「避免不必要之個人資料蒐集、處理或利用」。所以不把性別、年齡、照片等欄位給模型，也檢查會間接透露這些特徵的欄位，並定期比較不同群體的通過率（本站建議）。基本法主要規範政府怎麼推動和管理 AI，雇主直接要遵守的是就業服務法等法律（說明是本站整理）。
+  - 定措施與申訴：NIST 要求「Fairness and bias – as identified in the MAP function – are evaluated and results are documented.」上線後的監測也要包含「appeal and override」。設計申訴流程：告知求職者有 AI 參與、可以要求真人重看、由誰在幾天內回覆，紀錄留下來供下次檢討（說明是本站整理）。
+  qa:
+    question: AI 造成傷害時，責任在開發者、使用者還是 AI？
+    answer: AI 本身不是負責的對象，責任落在開發、部署和使用它的人與組織，依角色分擔：開發者對模型和資料的品質負責，部署的公司對怎麼用、有沒有人工覆核負責，使用者要依規定使用。人工智慧基本法第 4 條的問責原則是「應確保承擔相應之責任，包含內部治理責任及外部社會責任。」（說明是本站整理）
+    source: aibasic
+  items_title: 四步做
+  items:
+  - title: 寫系統用途
+    text: 誰用、用來決定什麼。
+  - title: 列風險與受影響者
+    text: 偏差、不透明、無法申訴。
+  - title: 配治理措施
+    text: 移除敏感欄位、定期檢查。
+  - title: 設計申訴流程
+    text: 告知、人工重看、回覆期限。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 風險至少三個
+  - 每個都有措施
+  - 申訴有負責人
+  - 不用真人資料
+  activity_figure: gov-flow
+  sources:
+  - nist-ai-rmf
+  - esa5
+  - aibasic
+what:
+  heading: 把原則變成措施
+  body:
+  - 學完後，自己能為一個 AI 應用做風險評估，把法規原則對到具體措施，並設計申訴和人工覆核。
+  - NIST 也提醒，人和 AI 的分工要先講清楚：「Human roles and responsibilities in decision making and overseeing AI systems need to be clearly defined and differentiated.」
+  items_title: 學完能做到
+  items:
+  - title: 評估風險
+    text: 找出受影響的人。
+  - title: 對照法規
+    text: 說出條文和對應措施。
+  - title: 設計申訴
+    text: 有人收件、有人覆核。
+  checklist_title: 自我檢核
+  checklist:
+  - 風險評估完成
+  - 法規對得上
+  - 申訴流程可行
+  figures:
+  - gov-compare
+  notes:
+  - 本頁的履歷篩選案例是虛構的，數字是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，程式、數字和引用的資料要自己驗證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - nist-ai-rmf
+  - genai-student
+figures:
+- id: gov-flow
+  type: flow
+  alt: 流程：寫系統用途、列出風險、對照法規、配治理措施、設計申訴。
+  steps:
+  - actor: 自己
+    text: 寫系統用途
+  - actor: 自己
+    text: 列出風險
+  - actor: 自己
+    text: 對照法規
+  - actor: 自己
+    text: 配治理措施
+  - actor: 自己
+    text: 設計申訴
+  caption: 流程是本站建議。
+- id: gov-compare
+  type: compare
+  alt: 比較全自動篩選和有人工覆核的篩選：前者被刷掉的人無從申訴，後者可以要求真人重看、推翻 AI 的結果。
+  source: nist-ai-rmf
+  relation: not_equal
+  items:
+  - term: 全自動篩選
+    note: 沒有人看，錯了也無從申訴
+  - term: 有人工覆核
+    note: 可申訴，可推翻 AI 的結果
+  caption: NIST 要求上線後的監測包含申訴與推翻；例子是本站整理。
+sources:
+- id: d2l-shift
+  title: Dive into Deep Learning, 4.7 Environment and Distribution Shift
+  publisher: Aston Zhang、Zachary C. Lipton、Mu Li、Alexander J. Smola 著（Cambridge University Press 出版，d2l.ai 開放網頁版）
+  url: https://d2l.ai/chapter_linear-classification/environment-and-distribution-shift.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 4.7.5 節「you are typically providing a tool that will be used to (partially or fully) automate decisions」、「These technical systems can impact the lives of individuals who are subject to the resulting decisions.」
+- id: aibasic
+  title: 人工智慧基本法
+  publisher: 全國法規資料庫（法務部）；民國 115 年 1 月 14 日公布，主管機關國家科學及技術委員會
+  url: https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=H0160093
+  accessed: '2026-10-29'
+  kind: government
+  supports: 第 4 條「二、人類自主：應以支持人類自主權、尊重人格權等人類基本權利與文化價值，並允許人類監督」、「五、透明與可解釋：人工智慧之產出應做適當資訊揭露或標記」、「六、公平與不歧視：人工智慧研發與應用過程中，應盡可能避免演算法產生偏差及歧視等風險，不應對特定群體造成歧視之結果。」、「七、問責：應確保承擔相應之責任，包含內部治理責任及外部社會責任。」；第 14 條「避免不必要之個人資料蒐集、處理或利用」；第 16 條「推動與國際介接之人工智慧風險分類框架」；第 17 條「政府應就高風險人工智慧之應用，明確其責任歸屬及歸責條件，並建立其救濟、補償或保險機制。」
+- id: esa5
+  title: 就業服務法 第 5 條
+  publisher: 全國法規資料庫（法務部）；主管機關勞動部
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=N0090001&flno=5
+  accessed: '2026-10-29'
+  kind: government
+  supports: 第 5 條第 1 項「為保障國民就業機會平等，雇主對求職人或所僱用員工，不得以種族、階級、語言、思想、宗教、黨派、籍貫、出生地、性別、性傾向、年齡、婚姻、容貌、五官、身心障礙、星座、血型或以往工會會員身分為由，予以歧視」
+- id: nist-ai-rmf
+  title: Artificial Intelligence Risk Management Framework (AI RMF 1.0)（NIST AI 100-1）
+  publisher: National Institute of Standards and Technology（美國商務部，2023 年 1 月）
+  url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 「AI RMF hiring profile」（p.33）；「Fairness and bias – as identified in the MAP function – are evaluated and results are documented.」（p.30）；MANAGE 4.1「appeal and override」（p.33）；「Human roles and responsibilities in decision making and overseeing AI systems need to be clearly defined and differentiated.」（p.40）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：資 H-V-2「個人資料的保護。」（p.11）；資 H-V-3「資訊科技對人與社會的影響與衝擊。」（p.11）；運 a-V-2「能使用多元的觀點思辨資訊科技相關議題。」（p.7）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

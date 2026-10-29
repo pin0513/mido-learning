@@ -7,14 +7,14 @@ import { test, expect } from "@playwright/test";
 const DRAFT_TITLES = [
   "目標：我們想完成什麼？",
   "部分與整體",
-  "神經網路與深度學習",
+  "分工與說到做到",
   "排程與資源最佳化",
-  "軟體工程：版本控制、測試與架構",
+  "要徑：決定專案長度的那條路",
   "什麼是「專案」？",
   "先做什麼、後做什麼",
-  "AI 系統設計：評估與人在迴路",
+  "商業論證與專案治理",
 ];
-// B11 已發布「規律與關係」（ma.pattern）、「用字母代表數：方程式」（ma.algebra）、ma.measure；B12 已發布高中數學 7 點（ma.function、ma.trig、ma.rate 等）；B13 已發布大學數學 7 點（ma.limit、ma.derivative、ma.linalg 等）。草稿樣本改用仍是草稿的大學資訊與 AI 點（it.nn、it.swe、it.aisys）；已發布的 ma.derivative、ma.linalg 都連到 it.nn@uni，地圖不能露出它的 slug。
+// B11 已發布「規律與關係」（ma.pattern）、「用字母代表數：方程式」（ma.algebra）、ma.measure；B12 已發布高中數學 7 點（ma.function、ma.trig、ma.rate 等）；B13 已發布大學數學 7 點（ma.limit、ma.derivative、ma.linalg 等）。B16 已發布大學資訊與 AI 6 點（it.nn、it.swe、it.aisys 等），草稿樣本改用仍是草稿、接在 pm.breakdown／pm.estimate／pm.triangle 之後的專案管理點（pm.roles、pm.cpm、pm.business）；已發布的 it.aisys、it.governance、it.hcai 分別連到草稿 pm.aiteam@uni、pm.business@uni、ph.aimind@uni，地圖不能露出它們的 slug。
 
 test.describe("正式 build", () => {
   test("index 只有已發布，草稿頁 404，已發布頁不含草稿標題", async ({ request }) => {
@@ -51,7 +51,7 @@ test.describe("正式 build", () => {
   });
 
   test("地圖不放草稿標題，首頁畫出公開學門", async ({ request }) => {
-    const slugs = ["pm.goal", "ph.parts", "it.nn", "it.swe", "pm.schedule", "it.aisys"];
+    const slugs = ["pm.goal", "ph.parts", "pm.aiteam", "pm.business", "pm.schedule", "ph.aimind"];
     const map = await request.get("/kp/map");
     expect(map.status()).toBe(200);
     const mapHtml = await map.text();

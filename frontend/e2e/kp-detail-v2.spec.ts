@@ -14,9 +14,12 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   { path: "/kp/ph.reason/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/sk.voice/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/en.abc/es", layer: "基礎", verify: false, converted: true },
-  // B11 已轉換並發布 ma.number@es（to_verify: false）；數學草稿已全部發布（B12 sh、B13 uni），未轉換的大學草稿改由 it.nn@uni 覆蓋。
+  // B11 已轉換並發布 ma.number@es（to_verify: false）；B16 已轉換並發布 it.nn@uni（進階層，to_verify: false）。
+  // 進階層已沒有草稿；未轉換的大學草稿改由 ph.aimind@uni（to_verify: false）與 sk.hypo@uni（to_verify: true，溝通與解決問題旗標開啟才產生）覆蓋。
   { path: "/kp/ma.number/es", layer: "本質", verify: false, converted: true },
-  { path: "/kp/it.nn/uni", layer: "進階", verify: true },
+  { path: "/kp/it.nn/uni", layer: "進階", verify: false, converted: true },
+  { path: "/kp/ph.aimind/uni", layer: "本質", verify: false },
+  { path: "/kp/sk.hypo/uni", layer: "本質", verify: true },
   // B14 已轉換並發布 it.blocks@es（to_verify: false）；仍是草稿、to_verify、未轉換的國小點改由 sk.listen@es 覆蓋。
   { path: "/kp/it.blocks/es", layer: "基礎", verify: false, converted: true },
   { path: "/kp/sk.listen/es", layer: "本質", verify: true },
