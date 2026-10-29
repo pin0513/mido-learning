@@ -209,7 +209,7 @@ sources:
   url: https://depart.moe.edu.tw/ed2700/News_Content.aspx?n=A1E30194B1C3ACDF&s=4C49BBB8F747DE99
   accessed: '2026-10-29'
   kind: government
-  supports: C 運用與創造（國小）C-1-I-1「能運用運算思維將問題拆解，並判斷何時使用教育用AI工具最有效率。」（p.13）
+  supports: 能力C 運用AI解決問題的能力（國小）C-1-I-1「能運用運算思維將問題拆解，並判斷何時使用教育用AI工具最有效率。」（p.13）
 - id: genai-student
   title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
   publisher: 教育部（中小學數位學習精進方案網站）

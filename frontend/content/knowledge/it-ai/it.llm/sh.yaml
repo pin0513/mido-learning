@@ -1,58 +1,220 @@
 id: it.llm@sh
 concept: it.llm
 title: 大型語言模型怎麼運作
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 人工智慧
-    - 語言模型
+  - 資訊
+  - 人工智慧
+  - 語言模型
   layer: advanced
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 科技
-    - 語文
+  - 科技
+  - 語文
   core_competencies:
-    - B2
-    - A2
+  - B2
+  - A2
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+  contents:
+  - 資 D-V-2
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 運算思維學習表現（運 a-V-3）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（已加進代碼表），curriculum_108 只列資訊科技學習內容。
+- 核心素養依科技領綱 p.3–4 的 科S-U-A2、科S-U-B2 原文挑選（表格窄欄，文字已用頁面影像核對）。
+- 科技領綱只說高中資訊科技部定必修 2 學分、「建議依學期開設」（p.2），沒有指定年級，所以 stage 不填 grades；est_time 寫高中資訊科技必修課。
+- 原 scenario 的「再比較 AI 的接法」改成由老師用學校核可的教育用 AI 工具示範，學生不必自己註冊帳號（本站建議）；接龍在紙上做，不用電腦。
+- 接龍的開頭和輪數是示意。
+- 教育部《高級中等以下學校人工智慧使用和學習指引》（115 年 6 月 5 日核定）頁碼是頁腳印的頁碼（與 PDF 頁相同）；該 PDF 網站缺中繼憑證，下載時要略過憑證檢查。
+- 《未來人才AI能力圖像》的編號（例如 A-1-III-1）是該文件自己的編碼，III 是高中，不是 108 課綱代碼，只在來源引用；能力名稱照原文（能力A 運用AI學習的能力、能力B 負責任使用AI的能力、能力C 運用AI解決問題的能力、能力D AI無法取代的能力）；頁碼是頁腳印的頁碼（比 PDF 頁少 1），文字已用頁面影像核對。
 prerequisites:
-  - it.ml@sh
+- it.ml@sh
 links:
   why:
-    - ph.tok@sh
+  - ph.tok@sh
   how:
-    - it.build@sh
+  - it.build@sh
   related:
-    - ph.aijudge@sh
+  - ph.aijudge@sh
   deeper:
-    - it.aisys@uni
-link_notes: 語文（語意與文體）、哲學（判斷 AI 的回答）
+  - it.aisys@uni
+link_notes: 語文（語意與文體）、哲學（判斷 AI 的回答）；科技領綱 資 D-V-2、運 a-V-3。
 competency:
   specialist:
-    - AI 原理
+  - AI 原理
   generalist:
-    - 提問
-    - 查證
+  - 提問
+  - 查證
 ai:
   delegable:
-    - 示範不同提問方式產生的差異
+  - 示範不同提問方式產生的差異（由老師用學校核可的教育用工具操作，本站建議）
   human_experience:
-    - 判斷回答品質、追問與查證
-idea: 語言模型根據大量文字學會「預測下一個字」。它很會說話，但會一本正經地說錯（幻覺）；提問方式會影響回答。
+  - 判斷回答品質、追問與查證
+idea: 語言模型從大量文字學會估計下一個詞出現的機率，一個接一個產生文字。它很會說話，但會一本正經地說錯（幻覺）；提問方式也會影響回答（本站整理）。
 guiding_questions:
-  - 會說話，就代表懂嗎？
-scenario: 人工接龍：全班根據前文猜下一個詞，統計最常見答案；再比較 AI 的接法，討論為什麼會「編造」。
+- 會說話，就代表懂嗎？
+scenario: 人工接龍（不用電腦）：老師給一句話的開頭，每位學生在紙上寫下一個詞，統計最常見的接法，重複幾輪接出一句話；再由老師用學校核可的教育用 AI 工具示範同樣的開頭，全班比較並查證它的說法，討論它為什麼會編造（本站建議）。
 formats:
   slides: []
+  exercise: 目標：完成人工接龍並統計每輪最常見的接法，說明語言模型是依前文估計下一個詞的機率來產生文字，再從 AI 的回答中挑出一個說法查證。　檢核：統計表正確；說得出語言模型是依前文估計下一個詞的機率；挑出的說法有用可靠來源查證；說得出會說話不等於真的理解；四件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 完成人工接龍並統計每輪最常見的接法，說明語言模型是依前文估計下一個詞的機率來產生文字，再從 AI 的回答中挑出一個說法查證。
+review: 統計表正確；說得出語言模型是依前文估計下一個詞的機率；挑出的說法有用可靠來源查證；說得出會說話不等於真的理解；四件事都做到。
+est_time:
+  school: 高中資訊科技必修課
+  source: tech108
+why:
+  heading: 會說話，不等於懂
+  body:
+  - 科技領綱高中學「資料探勘與機器學習的基本概念。」，說明包含「模式識別的概念與應用（如電腦視覺、自然語言處理、生物特徵識別等）。」；學習表現要「能探索新興的資訊科技。」
+  - 教育部《未來人才AI能力圖像》高中階段要學生「知曉AI系統是基於機率的統計推論，並非具備真實理解力，釐清其能力邊界。」
+  items_title: 科技領綱的學習重點
+  items:
+  - title: 探索新興資訊科技
+    text: 高中科技領綱 運 a-V-3：能探索新興的資訊科技。
+    code: 運 a-V-3
+  - title: 機器學習基本概念
+    text: 高中科技領綱 資 D-V-2：資料探勘與機器學習的基本概念。
+    code: 資 D-V-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 會劃記統計
+  - 用過搜尋引擎
+  notes:
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 V 是第五學習階段（高中），本頁只列高中必修的條目，不含標「※」的加深加廣選修。
+  sources:
+  - tech108
+  - moe-ai-portrait
+how:
+  heading: 人工接龍，再比 AI
+  body:
+  - 老師給一句話的開頭（例如：今天放學後，我想去……，示意），每人在紙上寫下一個詞，統計各種接法的人數，選最多人寫的接上去，再接下一輪。這就是語言模型的基本想法：Google 的機器學習課程說，語言模型「estimates the probability of a token or sequence of tokens occurring within a longer sequence of tokens.」
+  - 接著老師用學校核可的教育用 AI 工具示範同樣的開頭，全班比較 AI 的接法，並挑出一個具體說法查證。Google 的課程提醒「LLMs hallucinate」，也就是預測常常有錯；教育部的指引說「學生也應學習向人工智慧『追問』，了解系統給出答案的可能依據與限制」，全班可以請老師代為追問。
+  qa:
+    question: 會說話，就代表懂嗎？
+    answer: 不一定。語言模型是根據大量文字估計下一個詞的機率，說得通順不代表真的理解，也可能一本正經地說錯（本站整理）。教育部《未來人才AI能力圖像》說，AI 系統「並非具備真實理解力」。
+    source: moe-ai-portrait
+  items_title: 接龍四步
+  items:
+  - title: 給開頭
+    text: 老師給一句話的開頭。
+  - title: 猜下一個詞
+    text: 每人寫、統計人數。
+  - title: 比較 AI
+    text: 老師示範 AI 的接法。
+  - title: 查證說法
+    text: 挑一個說法查證。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 統計表完成
+  - 說出機率
+  - 查證一個說法
+  activity_figure: llm-flow
+  sources:
+  - mlcc-lm
+  - mlcc-llm
+  - moe-ai-guide
+what:
+  heading: 懂原理，也會查證
+  body:
+  - 學完後，學生能用人工接龍說明語言模型依前文估計下一個詞的機率來產生文字，說出會說話不等於真的理解，並能查證 AI 回答中的說法。
+  items_title: 學完能做到
+  items:
+  - title: 估計機率
+    text: 依前文猜下一個詞。
+  - title: 幻覺
+    text: 說得通順也可能錯。
+  - title: 查證
+    text: 用可靠來源核對。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出原理
+  - 說得出幻覺
+  - 查證過一次
+  figures:
+  - llm-compare
+  notes:
+  - 本頁的接龍開頭是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - mlcc-llm
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: llm-flow
+  type: flow
+  alt: 人工接龍流程：老師給開頭，學生各寫下一個詞，全班統計接法，老師示範 AI，學生查證一個說法。
+  steps:
+  - actor: 老師
+    text: 給開頭
+  - actor: 學生
+    text: 寫下一個詞
+  - actor: 全班
+    text: 統計接法
+  - actor: 老師
+    text: 示範 AI
+  - actor: 學生
+    text: 查證說法
+  caption: 流程是本站建議。
+- id: llm-compare
+  type: compare
+  alt: 比較說得通順和說得正確：語言模型產生的文字很通順，但內容可能是錯的，要查證才知道。
+  source: mlcc-llm
+  relation: versus
+  items:
+  - term: 說得通順
+    note: 依機率接出順口的句子
+  - term: 說得正確
+    note: 要用可靠來源查證
+  caption: Google 的課程說「LLMs hallucinate」，預測常常有錯；例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：運 a-V-3「能探索新興的資訊科技。」（p.7）；資 D-V-2「資料探勘與機器學習的基本概念。」（p.11）；資訊科技學習內容說明「高級中等學校教育階段則更重視整合運用，藉由資訊科學的初步探索，讓學生進一步理解運算思維之相關原理，以培養整合資訊科技與運算思維以有效解決問題之能力。」（p.10）；時間分配「高級中等學校教育階段資訊科技與生活科技之部定必修課程各為 2 學分，建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；資 D-V-2 說明「模式識別的概念與應用（如電腦視覺、自然語言處理、生物特徵識別等）。」（p.45）；核心素養：科S-U-A2「運用科技工具與策略進行系統思考與分析探索，並有效解決問題。」（p.3）；科S-U-B2「理解科技與資訊的原理及發展趨勢，整合運用科技、資訊及媒體，並能分析思辨人與科技、社會、環境的關係。」（p.4）
+- id: moe-ai-portrait
+  title: 未來人才AI能力圖像（電子布告欄附件 PDF）
+  publisher: 教育部資訊及科技教育司（上版日期 115-07-14）
+  url: https://depart.moe.edu.tw/ed2700/News_Content.aspx?n=A1E30194B1C3ACDF&s=4C49BBB8F747DE99
+  accessed: '2026-10-29'
+  kind: government
+  supports: 能力A 運用AI學習的能力（高中）A-1-III-1 理解AI的功能與限制「知曉AI系統是基於機率的統計推論，並非具備真實理解力，釐清其能力邊界。」（p.11）
+- id: mlcc-lm
+  title: Introduction to Large Language Models（Machine Learning Crash Course）
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/llm
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「A language model estimates the probability of a token or sequence of tokens occurring within a longer sequence of tokens.」
+- id: mlcc-llm
+  title: 'LLMs: What''s a large language model?（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/llm/transformers
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「LLMs hallucinate」；「meaning their predictions often contain mistakes」
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-29'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）；（五）「學生也應學習向人工智慧『追問』，了解系統給出答案的可能依據與限制」（p.11）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

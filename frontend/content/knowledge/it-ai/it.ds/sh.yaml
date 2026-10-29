@@ -1,55 +1,205 @@
 id: it.ds@sh
 concept: it.ds
 title: 資料結構與演算法分析
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 軟體與系統
+  - 資訊
+  - 軟體與系統
   layer: advanced
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 科技
+  - 科技
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B2
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+  contents:
+  - 資 A-V-1
+  - 資 A-V-3
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 運算思維學習表現（運 t-V-3）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（已加進代碼表），curriculum_108 只列資訊科技學習內容。
+- 核心素養依科技領綱 p.3–4 的 科S-U-A2、科S-U-B2 原文挑選（表格窄欄，文字已用頁面影像核對）。
+- 科技領綱只說高中資訊科技部定必修 2 學分、「建議依學期開設」（p.2），沒有指定年級，所以 stage 不填 grades；est_time 寫高中資訊科技必修課。
+- 原 scenario「把捷運路網畫成圖，寫程式找兩站之間轉乘最少的路線。」改成在紙上用示意路網找經過站數最少的路線（本站建議）：轉乘最少要把路線別也放進圖裡，超出本頁；寫程式實作屬於 資 P-V-1 的範圍，本頁不承諾。
+- 原 idea「分析演算法隨資料量增加變慢多少」改寫成步驟數隨資料量增加多少；步驟數大約和站數加連線數成正比是本站整理。
+- 路網是示意。
+- 教育部《高級中等以下學校人工智慧使用和學習指引》（115 年 6 月 5 日核定）頁碼是頁腳印的頁碼（與 PDF 頁相同）；該 PDF 網站缺中繼憑證，下載時要略過憑證檢查。
 prerequisites:
-  - it.algo@jh
-  - it.prog@jh
+- it.algo@jh
+- it.prog@jh
 links:
   why: []
   how:
-    - pm.cpm@sh
+  - pm.cpm@sh
   related:
-    - ma.proof@sh
+  - ma.proof@sh
   deeper:
-    - it.nn@uni
-link_notes: 數學（證明與數學歸納法、圖）、專案管理（要徑）
+  - it.nn@uni
+link_notes: 數學（圖與數學歸納法）；科技領綱 資 A-V-1、資 A-V-3、運 t-V-3。
 competency:
   specialist:
-    - 演算法
+  - 演算法
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 產生測試資料、解釋演算法
+  - 產生示意路網、解釋演算法（AI 的說明要自己驗證，本站建議）
   human_experience:
-    - 自己設計資料結構，分析取捨
-idea: 選對資料的組織方式（陣列、樹、圖），問題會簡單很多；分析演算法隨資料量增加變慢多少。
+  - 自己設計資料結構，分析取捨
+idea: 選對資料的組織方式（陣列、樹、圖），問題會簡單很多；分析演算法時，看資料量變大時步驟數增加多少（本站整理）。
 guiding_questions:
-  - 為什麼導航 App 能在一瞬間找到路線？
-scenario: 把捷運路網畫成圖，寫程式找兩站之間轉乘最少的路線。
+- 為什麼導航 App 能在一瞬間找到路線？
+scenario: 把一張示意的捷運路網畫成圖（車站是點、相鄰兩站之間連一條邊），用廣度優先搜尋在紙上找出兩站之間經過站數最少的路線，並說明每站最多被處理幾次（路網是示意，本站建議）。
 formats:
   slides: []
+  exercise: 目標：把示意路網畫成圖並寫出相鄰串列，用廣度優先搜尋找出兩站之間經過站數最少的路線，說出為什麼每一站最多只會放進佇列一次（路網是示意）。　檢核：畫出的圖和相鄰串列一致；找到的路線經過站數最少；說得出每站只放進佇列一次，所以步驟數大約和站數加連線數成正比（本站整理）；三件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 把示意路網畫成圖並寫出相鄰串列，用廣度優先搜尋找出兩站之間經過站數最少的路線，說出為什麼每一站最多只會放進佇列一次（路網是示意）。
+review: 畫出的圖和相鄰串列一致；找到的路線經過站數最少；說得出每站只放進佇列一次，所以步驟數大約和站數加連線數成正比（本站整理）；三件事都做到。
+est_time:
+  school: 高中資訊科技必修課
+  source: tech108
+why:
+  heading: 把路網變成一張圖
+  body:
+  - 科技領綱高中學「重要資料結構的概念與應用。」，說明包含「圖的表示法。」和「樹與圖於問題解決之應用。」；也學「演算法效能分析。」，說明包含「時間複雜度的概念」。學習表現要「能應用運算思維評估解題方法的優劣。」
+  - Open Data Structures 說，廣度優先搜尋很適合用來算最短路徑：「A particularly useful application of the breadth-first-search algorithm is, therefore, in computing shortest paths.」
+  items_title: 科技領綱的學習重點
+  items:
+  - title: 評估解題方法
+    text: 高中科技領綱 運 t-V-3：能應用運算思維評估解題方法的優劣。
+    code: 運 t-V-3
+  - title: 重要資料結構
+    text: 高中科技領綱 資 A-V-1：重要資料結構的概念與應用。
+    code: 資 A-V-1
+  - title: 演算法效能分析
+    text: 高中科技領綱 資 A-V-3：演算法效能分析。
+    code: 資 A-V-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 會畫點和線
+  - 知道什麼是佇列
+  notes:
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 V 是第五學習階段（高中），本頁只列高中必修的條目，不含標「※」的加深加廣選修。
+  sources:
+  - tech108
+  - ods-bfs
+how:
+  heading: 畫成圖，一層一層找
+  body:
+  - 先畫圖：每站是一個點，相鄰兩站連一條邊，再為每站寫出相鄰的站（相鄰串列）。從起點開始：起點做記號、放進佇列；佇列像排隊，先放進去的先取出。每次從佇列前面取出一站，把還沒做記號的相鄰站做記號、記下是從哪站來的，再放到佇列後面（本站整理）。
+  - 這樣會先找到距離 1 站的所有站，再找距離 2 站的，所以第一次碰到終點時，沿著記下的來源倒推回去，就是經過站數最少的路線；Open Data Structures 說，這個方法依「in increasing order of distance」拜訪各點。每站只放進佇列一次、每條連線最多從兩端各看一次，所以步驟數大約和站數加連線數成正比（本站整理）。
+  qa:
+    question: 為什麼導航 App 能在一瞬間找到路線？
+    answer: 因為地圖先存成圖（路口或車站是點，路段是邊），再用有效率的圖搜尋演算法找路；像廣度優先搜尋每個點最多處理一次，不必把所有路線一條條試完（本站整理）。實際的導航 App 還要考慮距離和路況，方法更複雜（本站整理）。Open Data Structures 說，廣度優先搜尋可以用在「computing shortest paths」。
+    source: ods-bfs
+  items_title: 廣度優先四步
+  items:
+  - title: 畫成圖
+    text: 站是點，相鄰連一條邊。
+  - title: 起點進佇列
+    text: 做記號，放進佇列。
+  - title: 一層一層找
+    text: 取出一站，鄰站進佇列。
+  - title: 倒推路線
+    text: 從終點沿來源走回。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 相鄰串列正確
+  - 路線站數最少
+  - 說出效率
+  activity_figure: ds-flow
+  sources:
+  - ods-bfs
+what:
+  heading: 會用圖找最短路線
+  body:
+  - 學完後，學生能把路網表示成圖和相鄰串列，用廣度優先搜尋找出經過站數最少的路線，並用每站只處理一次說明它的效率。
+  items_title: 學完能做到
+  items:
+  - title: 圖的表示
+    text: 畫圖並寫相鄰串列。
+  - title: 廣度優先
+    text: 找出站數最少的路線。
+  - title: 分析效率
+    text: 說出每站只處理一次。
+  checklist_title: 家長檢核
+  checklist:
+  - 圖畫對了
+  - 路線最短
+  - 說得出效率
+  figures:
+  - ds-compare
+  notes:
+  - 本頁的路網是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - ods-bfs
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: ds-flow
+  type: flow
+  alt: 廣度優先搜尋流程：學生把路網畫成圖、起點放進佇列、取出一站、把鄰站放進佇列，找到終點後倒推路線。
+  steps:
+  - actor: 學生
+    text: 畫成圖
+  - actor: 學生
+    text: 起點進佇列
+  - actor: 學生
+    text: 取出一站
+  - actor: 學生
+    text: 鄰站進佇列
+  - actor: 學生
+    text: 倒推路線
+  caption: 流程是本站整理。
+- id: ds-compare
+  type: compare
+  alt: 比較把所有路線一條條試和廣度優先搜尋：一條條試要看的路線可能非常多，廣度優先搜尋每站最多處理一次。
+  source: ods-bfs
+  relation: versus
+  items:
+  - term: 一條條試
+    note: 路線數可能隨站數急速變多（本站整理）
+  - term: 廣度優先
+    note: 每站最多放進佇列一次（本站整理）
+  caption: Open Data Structures 說，廣度優先搜尋可以用在「computing shortest paths」；例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：運 t-V-3「能應用運算思維評估解題方法的優劣。」（p.7）；資 A-V-1「重要資料結構的概念與應用。」（p.11）；資 A-V-3「演算法效能分析。」（p.11）；資訊科技學習內容說明「高級中等學校教育階段則更重視整合運用，藉由資訊科學的初步探索，讓學生進一步理解運算思維之相關原理，以培養整合資訊科技與運算思維以有效解決問題之能力。」（p.10）；時間分配「高級中等學校教育階段資訊科技與生活科技之部定必修課程各為 2 學分，建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；資 A-V-1 說明「圖的表示法。」、「樹與圖於問題解決之應用。」（p.44）；資 A-V-3 說明「時間複雜度的概念」、「演算法之效能分析與比較」（p.45）；核心素養：科S-U-A2「運用科技工具與策略進行系統思考與分析探索，並有效解決問題。」（p.3）；科S-U-B2「理解科技與資訊的原理及發展趨勢，整合運用科技、資訊及媒體，並能分析思辨人與科技、社會、環境的關係。」（p.4）
+- id: ods-bfs
+  title: Open Data Structures 12.3 Graph Traversal
+  publisher: Open Data Structures（Pat Morin 著）
+  url: https://opendatastructures.org/ods-python/12_3_Graph_Traversal.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「A particularly useful application of the breadth-first-search algorithm is, therefore, in computing shortest paths.」；「in increasing order of distance」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-29'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）
