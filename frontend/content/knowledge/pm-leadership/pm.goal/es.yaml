@@ -1,54 +1,222 @@
 id: pm.goal@es
 concept: pm.goal
 title: 目標：我們想完成什麼？
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  - 管理
+  - 專案管理與領導
+  - 規劃
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 綜合活動
+  - 綜合活動
   core_competencies:
-    - A2
-    - A3
-    - C2
+  - A2
+  - A3
+  - C2
   issues:
-    - 生涯規劃教育
+  - 生涯規劃教育
+  performances:
+  - 2b-III-1
+  contents:
+  - Bb-III-3
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 國民小學教育的 E-A2、E-A3、E-C2 與綜合活動領綱 p.3、p.5 的綜-E-A2、綜-E-A3、綜-E-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage.grades 填 5、6：本點的綜合活動代碼都是第三學習階段（III），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，議題融入說明手冊少 16，氣象常識問答集少 10，NASA 排程手冊少 1，NASA 風險手冊少 20。
+- 議題保留生涯規劃教育：議題融入說明手冊國小的實質內涵 涯E12「學習解決問題與做決定的能力。」（p.96），手冊建議融入綜合活動領域；本點的全班挑出共同目標就是在練習做決定。
+- 原 idea「動手之前，先說清楚『成功長什麼樣子』。」的引號拿掉：那是本站整理的說法，不是引文。
+- 原 scenario「班級同樂會：每人畫一張『同樂會成功的樣子』，再一起挑出大家都同意的三件事。」保留做法，引號拿掉，補上家庭聚會也可以照做，並把三件事寫成做完看得出有沒有做到的句子（本站建議）。
+- 原 ai.delegable「提供活動點子、把大家的想法整理成清單」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- Scrum Guide 2020（Ken Schwaber、Jeff Sutherland，CC BY-SA 4.0）是軟體團隊的指南，本點只借它對目標和完成定義的說法，英文短句引用，中文說明是本站整理。
 prerequisites: []
 links:
   why:
-    - ph.question@es
+  - ph.question@es
   how: []
   related: []
   deeper:
-    - pm.project@jh
-link_notes: 語文（表達與聆聽）、哲學（為什麼要做這件事）
+  - pm.project@jh
+link_notes: 語文（表達與聆聽）、哲學（為什麼要做這件事）；綜合活動 2b-III-1、Bb-III-3。
 competency:
   specialist:
-    - 規劃
+  - 規劃
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 提供活動點子、把大家的想法整理成清單
+  - 提供活動點子、把大家的想法整理成清單（由大人操作，本站建議）
   human_experience:
-    - 和同學討論、聽見不同意見後達成共識
-idea: 動手之前，先說清楚「成功長什麼樣子」。大家心裡的畫面一樣，才不會各做各的。
+  - 和同學討論、聽見不同意見後達成共識
+idea: 動手之前，先說清楚成功長什麼樣子。大家心裡的畫面一樣，才不會各做各的。
 guiding_questions:
-  - 如果同樂會結束後大家都很開心，那是因為我們做對了什麼？
-scenario: 班級同樂會：每人畫一張「同樂會成功的樣子」，再一起挑出大家都同意的三件事。
+- 如果同樂會結束後大家都很開心，那是因為我們做對了什麼？
+- 大家畫的成功樣子不一樣時，怎麼挑出共同的？
+- 怎樣寫，做完才看得出目標有沒有達成？
+scenario: 班級同樂會（家庭聚會也可以）：每人畫一張同樂會成功的樣子，再一起挑出大家都同意的三件事，寫成做完看得出有沒有做到的句子（本站建議）。
 formats:
   slides: []
+  exercise: 目標：和同學或家人一起，把一次活動成功的樣子寫成三句大家都同意、做完看得出有沒有做到的話。　檢核：家長或老師看三句話：每句都說得出做完怎麼檢查，例如每個人都玩到至少一個遊戲；孩子說得出這三句是怎麼從大家的畫裡挑出來的，有人不同意時怎麼處理。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 和同學或家人一起，把一次活動成功的樣子寫成三句大家都同意、做完看得出有沒有做到的話。
+review: 家長或老師看三句話：每句都說得出做完怎麼檢查，例如每個人都玩到至少一個遊戲；孩子說得出這三句是怎麼從大家的畫裡挑出來的，有人不同意時怎麼處理。
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 先說好成功的樣子
+  body:
+  - 108 課綱的綜合活動要國小高年級「參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。」補充說明列出的團隊合作技巧，第一項就是釐清團隊目標：「團隊合作技巧包含釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議等。」
+  - 專案管理也從目標開始。Scrum 指南說：「The Product Goal describes a future state of the product which can serve as a target for the Scrum Team to plan against.」意思是目標描述的是做完以後的樣子，大家照著它來計畫（翻譯是本站整理）。
+  qa:
+    question: 如果同樂會結束後大家都很開心，那是因為我們做對了什麼？
+    answer: 拿出活動前大家說好的三句話，一句一句對照：做到了哪幾句，那幾句就是做對的事，下次要保留。沒有先說好，就只能說很好玩，說不出是哪裡做對了（本站整理）。綜合活動學習計畫的補充說明也寫到要「檢核、修正學習計畫，再度執行及檢討。」
+    source: zonghe
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 協同合作達成共同目標
+    text: 綜合活動 2b-III-1：參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。
+    code: 2b-III-1
+  - title: 團隊合作的技巧
+    text: 綜合活動 Bb-III-3：團隊合作的技巧。
+    code: Bb-III-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 有一件要辦的活動
+  - 大家都到齊了
+  figures:
+  - goal-compare
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - scrum-guide
+  - zonggang
+how:
+  heading: 從每個人的畫到三句話
+  body:
+  - 先各自畫：每個人畫一張活動成功的樣子，畫出當天會看到什麼。再輪流說給大家聽，其他人先聽完再發問。課綱說團隊合作要「表達自己的意見、尊重別人的意見」，最後「形成共識與決議」。
+  - 再挑出共同點：把大家畫裡重複出現的事圈起來，挑三件大家都同意的。有人不同意時，先問他擔心什麼，能補進句子就補；補不進就投票，並把他的意見記下來，活動後回顧時再看（本站建議）。
+  - 最後寫成檢查得到的句子：Scrum 指南把完成的定義寫成「a formal description of the state of the Increment when it meets the quality measures required for the product」。不寫要很好玩，改寫成每個人都玩到至少一個遊戲；不寫點心要夠，改寫成每人都拿到一份點心（例子是本站建議）。做完拿著句子一條一條對，就知道有沒有做到。
+  qa:
+    question: 怎樣寫，做完才看得出目標有沒有達成？
+    answer: 寫成做完可以看、可以數的句子。例如每人都拿到一份點心，活動結束數一數就知道；要很好玩就沒辦法檢查。Scrum 指南把完成的定義叫做「a formal description」，大家照同一份說明檢查（說明是本站整理）。
+    source: scrum-guide
+  items_title: 四步做
+  items:
+  - title: 各自畫
+    text: 畫出活動成功那天會看到什麼。
+  - title: 輪流說
+    text: 先聽完，再發問。
+  - title: 圈出共同點
+    text: 挑三件大家都同意的。
+  - title: 寫成三句話
+    text: 每句做完都看得出有沒有做到。
+  checklist_title: 每句話檢查一下
+  checklist:
+  - 做完看得出來
+  - 大家都同意
+  - 說得出怎麼檢查
+  activity_figure: goal-flow
+  sources:
+  - zonghe
+  - scrum-guide
+what:
+  heading: 三句話，大家都同意
+  body:
+  - 學完後，孩子能和同學或家人一起，把一次活動成功的樣子寫成三句大家都同意、做完看得出有沒有做到的話，並在活動後拿來對照。
+  items_title: 學完能做到
+  items:
+  - title: 說出成功的樣子
+    text: 畫出來，再說給大家聽。
+  - title: 找出共同點
+    text: 有人不同意時先聽他擔心什麼。
+  - title: 寫成檢查得到的話
+    text: 做完數得出、看得到。
+  checklist_title: 家長檢核
+  checklist:
+  - 三句話都寫好
+  - 每句都能檢查
+  - 說得出怎麼挑
+  notes:
+  - 本點融入生涯規劃教育議題：議題融入說明手冊國小的實質內涵有「學習解決問題與做決定的能力。」大家一起挑出三件事，就是在練習做決定。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: goal-flow
+  type: flow
+  alt: 訂目標四步驟：每個人畫成功的樣子，輪流說給大家聽，全班圈出共同點，寫成三句檢查得到的話。
+  steps:
+  - actor: 每個人
+    text: 畫成功的樣子
+  - actor: 每個人
+    text: 輪流說給大家聽
+  - actor: 全班
+    text: 圈出共同點
+  - actor: 全班
+    text: 寫成三句話
+  source: zonghe
+  caption: 流程是本站建議。
+- id: goal-compare
+  type: compare
+  alt: 比較兩種目標：要很好玩，做完看不出有沒有做到；每個人都玩到至少一個遊戲，做完數得出來。
+  source: scrum-guide
+  relation: versus
+  items:
+  - term: 看不出來
+    note: 同樂會要很好玩
+  - term: 看得出來
+    note: 每個人都玩到至少一個遊戲
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：2b-III-1「參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。」（p.73）；Bb-III-3「團隊合作的技巧。」（p.73）；補充說明 Bb-III-3「團隊合作技巧包含釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議等。」（p.74）；補充說明 Ab-III-1「檢核、修正學習計畫，再度執行及檢討。」（p.67）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-A3「規劃、執行學習及生活計畫，運用資源或策略，預防危機、保護自己，並以創新思考方式，因應日常生活情境。」（p.3）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-A3「具備擬定計畫與實作的能力，並以創新思考方式，因應日常生活情境。」（p.5）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 生涯規劃教育國小實質內涵 涯E12「學習解決問題與做決定的能力。」（p.96）；「建議融入之領域/科目：綜合活動領域及高中生涯規劃課程等」（p.96）
+- id: scrum-guide
+  title: The 2020 Scrum Guide
+  publisher: Ken Schwaber、Jeff Sutherland（scrumguides.org，2020 年 11 月，CC BY-SA 4.0）
+  url: https://scrumguides.org/scrum-guide.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Product Goal「The Product Goal describes a future state of the product which can serve as a target for the Scrum Team to plan against.」；Definition of Done「The Definition of Done is a formal description of the state of the Increment when it meets the quality measures required for the product.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

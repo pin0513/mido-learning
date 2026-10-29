@@ -8,8 +8,8 @@ test.describe("學習城市的主線與進度", () => {
   test("沒選主線時不畫路線，選了拆解與估算就依序標四站", async ({ page }) => {
     await page.goto("/kp/map");
     await expect(page.getByTestId("city-route")).toHaveCount(0);
-    // 「不標路線」＋主線 17 條（B11 發布數學 es／jh 後多 7 條，B14 發布資訊與 AI es／jh 後再多 8 條，同 lib/content/city.test.ts 的 landmarks.length）。
-    await expect(page.getByTestId("city-path").locator("option")).toHaveCount(18);
+    // 「不標路線」＋主線 23 條（B11 發布數學 es／jh 後多 7 條，B14 發布資訊與 AI es／jh 後再多 8 條，B17 發布專案管理 es 5 點後再多 6 條，同 lib/content/city.test.ts 的 landmarks.length）。
+    await expect(page.getByTestId("city-path").locator("option")).toHaveCount(24);
     await page.getByTestId("city-path").selectOption({ label: "拆解與估算（有家庭時間）" });
     await expect(page.getByTestId("city-route")).toHaveCount(1);
     await expect(page.getByTestId("city-stop")).toHaveCount(4);

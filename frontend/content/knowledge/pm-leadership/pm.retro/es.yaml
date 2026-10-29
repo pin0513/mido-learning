@@ -1,54 +1,221 @@
 id: pm.retro@es
 concept: pm.retro
 title: 回顧：哪裡好、哪裡可以更好
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 回顧
+  - 管理
+  - 專案管理與領導
+  - 回顧
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 綜合活動
+  - 綜合活動
   core_competencies:
-    - A2
-    - A3
-    - C2
+  - A2
+  - A3
+  - C2
   issues: []
+  performances:
+  - 1b-III-1
+  - 2b-III-1
+  contents:
+  - Ab-III-1
+  - Bb-III-2
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 國民小學教育的 E-A2、E-A3、E-C2 與綜合活動領綱 p.3、p.5 的綜-E-A2、綜-E-A3、綜-E-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage.grades 填 5、6：本點的綜合活動代碼都是第三學習階段（III），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，議題融入說明手冊少 16，氣象常識問答集少 10，NASA 排程手冊少 1，NASA 風險手冊少 20。
+- 原 scenario「同樂會後開 10 分鐘『星星與願望』回顧會：星星是做得好的事，願望是下次希望改進的事。」改成星星與箭頭：箭頭是下次要改的一件事，並寫成任務卡；時間標示意，補上家庭聚會也可以照做（本站建議）。
+- 原 ai.delegable「把大家的回饋整理成清單」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 對事不對人是本站建議：Scrum 指南要團隊檢視個人、互動、流程、工具與完成的定義，本點對國小只說事情和原因，不點名怪人。
 prerequisites:
-  - pm.roles@es
+- pm.roles@es
 links:
   why: []
   how: []
   related:
-    - ph.hypothesis@jh
+  - ph.hypothesis@jh
   deeper:
-    - pm.team@jh
-link_notes: 科學方法（觀察與改進）、心理學（成長心態）
+  - pm.team@jh
+link_notes: 科學方法（觀察與改進）、心理學（成長心態）；綜合活動 1b-III-1、2b-III-1、Ab-III-1、Bb-III-2。
 competency:
   specialist:
-    - 回顧
+  - 回顧
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 把大家的回饋整理成清單
+  - 把大家的回饋整理成清單（由大人操作，本站建議）
   human_experience:
-    - 誠實面對自己的表現、給別人友善的回饋
+  - 誠實面對自己的表現、給別人友善的回饋
 idea: 活動結束不是終點。說出做得好的地方和可以改進的地方，下次會更好。
 guiding_questions:
-  - 下次再辦一次，你最想改變的一件事是什麼？
-scenario: 同樂會後開 10 分鐘「星星與願望」回顧會：星星是做得好的事，願望是下次希望改進的事。
+- 下次再辦一次，你最想改變的一件事是什麼？
+- 說可以更好的地方時，怎麼說才不會變成在怪別人？
+- 做得好的地方，為什麼也要說出來？
+scenario: 同樂會後開 10 分鐘回顧會（時間是示意）：每人寫星星和箭頭，星星是做得好的事，箭頭是下次要改的一件事；家庭聚會後也可以照做（本站建議）。
 formats:
   slides: []
+  exercise: 目標：活動後和大家開一次回顧會，說出做得好的事和下次要改的一件事，把要改的事寫成下次的任務卡，說的時候對事不對人。　檢核：家長或老師看回顧的紀錄：有做得好的事，也有一件寫成任務卡的改變，卡上寫了誰做、什麼時候；孩子說的是事情和原因，不是怪某個人。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 活動後和大家開一次回顧會，說出做得好的事和下次要改的一件事，把要改的事寫成下次的任務卡，說的時候對事不對人。
+review: 家長或老師看回顧的紀錄：有做得好的事，也有一件寫成任務卡的改變，卡上寫了誰做、什麼時候；孩子說的是事情和原因，不是怪某個人。
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 做完回頭看，下次更好
+  body:
+  - 108 課綱的綜合活動要高年級「規劃與執行學習計畫，培養自律與負責的態度。」補充說明把學習計畫分成規劃、執行、檢核、修正，還要「檢核、修正學習計畫，再度執行及檢討。」在團隊裡，也要「在活動中覺察團隊運作出現的問題，找出原因，提出有效解決的策略，並著手改善。」
+  - Scrum 指南說：「The purpose of the Sprint Retrospective is to plan ways to increase quality and effectiveness.」回顧不是為了打分數，是為了讓下次做得更好（說明是本站整理）。
+  qa:
+    question: 做得好的地方，為什麼也要說出來？
+    answer: 知道哪裡做對了，下次才會保留。Scrum 指南說回顧時要討論「what went well during the Sprint, what problems it encountered」，做得好的和遇到的問題都要說（說明是本站整理）。
+    source: scrum-guide
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 規劃與執行計畫
+    text: 綜合活動 1b-III-1：規劃與執行學習計畫，培養自律與負責的態度。
+    code: 1b-III-1
+  - title: 學習計畫
+    text: 綜合活動 Ab-III-1：學習計畫的規劃與執行。
+    code: Ab-III-1
+  - title: 在團體中合作
+    text: 綜合活動 2b-III-1：參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。
+    code: 2b-III-1
+  - title: 團隊運作的問題
+    text: 綜合活動 Bb-III-2：團隊運作的問題與解決。
+    code: Bb-III-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 活動剛結束
+  - 大家都在場
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - scrum-guide
+  - zonggang
+how:
+  heading: 星星、箭頭，再選一件
+  body:
+  - 先寫星星和箭頭：每人寫一張星星（做得好的事）和一張箭頭（下次可以更好的事）。Scrum 指南說團隊要討論「what went well during the Sprint, what problems it encountered, and how those problems were (or were not) solved」。
+  - 再找原因：把箭頭貼在一起，相近的放一堆，問這件事為什麼會發生。說的時候對事不對人：說點心單太晚定，不說都怪某個人（本站建議）。
+  - 最後只選一件：指南說團隊要找出「the most helpful changes to improve its effectiveness」，最有幫助的改變要「addressed as soon as possible」。所以大家選一件最想改的事，寫成下次活動的任務卡，寫上誰做、什麼時候（本站整理）。
+  qa:
+    question: 下次再辦一次，你最想改變的一件事是什麼？
+    answer: 每個人先說一件，再一起選出最有幫助的那一件，寫成任務卡：誰做、什麼時候。Scrum 指南說要找出「the most helpful changes to improve its effectiveness」；一次只改一件，下次才看得出有沒有變好（說明是本站整理）。
+    source: scrum-guide
+  items_title: 四步做
+  items:
+  - title: 寫星星
+    text: 做得好的事。
+  - title: 寫箭頭
+    text: 下次可以更好的事。
+  - title: 找原因
+    text: 對事不對人。
+  - title: 選一件寫成卡
+    text: 寫上誰做、什麼時候。
+  checklist_title: 回顧完檢查
+  checklist:
+  - 有星星也有箭頭
+  - 說事不說人
+  - 改變寫成卡
+  activity_figure: retro-flow
+  sources:
+  - scrum-guide
+  - zonghe
+what:
+  heading: 下次要改的，寫成任務卡
+  body:
+  - 學完後，孩子能在活動後說出做得好的事和可以更好的事，找出原因，並把最想改的一件事寫成下次的任務卡；說的時候對事不對人。
+  items_title: 學完能做到
+  items:
+  - title: 說出星星和箭頭
+    text: 好的和要改的都說。
+  - title: 找出原因
+    text: 對事不對人。
+  - title: 寫成下次的卡
+    text: 誰做、什麼時候。
+  checklist_title: 家長檢核
+  checklist:
+  - 有星星有箭頭
+  - 對事不對人
+  - 改變寫成卡
+  figures:
+  - retro-compare
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: retro-flow
+  type: flow
+  alt: 回顧五步驟：每個人寫星星、寫箭頭，全班分類找原因、選一件改變、寫成任務卡。
+  steps:
+  - actor: 每個人
+    text: 寫星星
+  - actor: 每個人
+    text: 寫箭頭
+  - actor: 全班
+    text: 分類找原因
+  - actor: 全班
+    text: 選一件改變
+  - actor: 全班
+    text: 寫成任務卡
+  source: scrum-guide
+  caption: 流程是本站建議。
+- id: retro-compare
+  type: compare
+  alt: 比較兩種回顧的說法：怪某個人，都怪他太慢；找原因，點心單太晚定，下次早一天定。
+  source: zonghe
+  relation: versus
+  items:
+  - term: 怪某個人
+    note: 都怪他太慢
+  - term: 找原因
+    note: 點心單太晚定，下次早一天定
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：1b-III-1「規劃與執行學習計畫，培養自律與負責的態度。」（p.67）；Ab-III-1「學習計畫的規劃與執行。」（p.67）；2b-III-1「參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。」（p.73）；Bb-III-2「團隊運作的問題與解決。」（p.73）；學習表現細項「規劃、執行、檢核、修正學習計畫。」（p.67）；補充說明 Ab-III-1「檢核、修正學習計畫，再度執行及檢討。」（p.67）；補充說明 Bb-III-2「在活動中覺察團隊運作出現的問題，找出原因，提出有效解決的策略，並著手改善。」（p.74）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-A3「規劃、執行學習及生活計畫，運用資源或策略，預防危機、保護自己，並以創新思考方式，因應日常生活情境。」（p.3）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-A3「具備擬定計畫與實作的能力，並以創新思考方式，因應日常生活情境。」（p.5）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: scrum-guide
+  title: The 2020 Scrum Guide
+  publisher: Ken Schwaber、Jeff Sutherland（scrumguides.org，2020 年 11 月，CC BY-SA 4.0）
+  url: https://scrumguides.org/scrum-guide.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Sprint Retrospective：「The purpose of the Sprint Retrospective is to plan ways to increase quality and effectiveness.」；「The Scrum Team discusses what went well during the Sprint, what problems it encountered, and how those problems were (or were not) solved.」；「The Scrum Team identifies the most helpful changes to improve its effectiveness.」；「The most impactful improvements are addressed as soon as possible.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
