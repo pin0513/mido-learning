@@ -243,9 +243,9 @@ function runSelfTest(): string[] {
     ["家政學習內容", "contents", "輔 Ca-IV-9"],
     ["公民學習內容", "contents", "歷 Ba-IV-9"],
     ["涂科目前綴", "contents", "涂 Da-IV-1"],
-    ["高中數學代碼", "contents", "D-10-2"],
-    ["高中數學分流代碼", "contents", "D-11A-1"],
-    ["國中數學代碼", "contents", "n-III-1"],
+    ["高中數學代碼", "contents", "D-10-99"],
+    ["高中數學分流代碼", "contents", "D-11A-99"],
+    ["國小數學代碼", "contents", "n-III-99"],
   ] as const;
   for (const [label, field, code] of accepted) {
     const quoted = code.includes(" ") ? `"${code}"` : code;
@@ -295,13 +295,13 @@ function runSelfTest(): string[] {
         url: https://example.com/curriculum.pdf
         page: 2
   contents:
-    n-III-1:
+    n-III-99:
       stage: 3
       text: 測試用學習內容。
       source:
         url: https://example.com/curriculum.pdf
         page: 3
-    N-3-9:
+    N-3-99:
       stage: 2
       text: 測試用學習內容。
       source:
@@ -325,13 +325,13 @@ function runSelfTest(): string[] {
       source:
         url: https://example.com/curriculum.pdf
         page: 7
-    D-10-2:
+    D-10-99:
       stage: 5
       text: 測試用學習內容。
       source:
         url: https://example.com/curriculum.pdf
         page: 8
-    D-11A-1:
+    D-11A-99:
       stage: 5
       text: 測試用學習內容。
       source:
@@ -343,7 +343,7 @@ function runSelfTest(): string[] {
   };
   check(
     "國小新格式收錄後可過",
-    VALID_ES.replace("issues: []", "issues: []\n  performances: [1c-III-9]\n  contents: [n-III-1, N-3-9]"),
+    VALID_ES.replace("issues: []", "issues: []\n  performances: [1c-III-9]\n  contents: [n-III-99, N-3-99]"),
     VALID_JH,
     VALID_PATH,
     (errors) => errors.length === 0,
@@ -362,7 +362,7 @@ function runSelfTest(): string[] {
     VALID_ES.replace("deeper: [ph.next@jh]", "deeper: [ph.next@sh]"),
     VALID_JH.replace("id: ph.next@jh", "id: ph.next@sh")
       .replace("level: jh", "level: sh")
-      .replace("issues: []", 'issues: []\n  performances: ["輔 3b-V-9"]\n  contents: [D-10-2, D-11A-1]'),
+      .replace("issues: []", 'issues: []\n  performances: ["輔 3b-V-9"]\n  contents: [D-10-99, D-11A-99]'),
     VALID_PATH.replace("ph.next@jh", "ph.next@sh"),
     (errors) => errors.length === 0,
     (dir) => {

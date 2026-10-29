@@ -39,7 +39,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
     map.buildings.map((building) => `${building.id}:${building.x}:${building.y}:${building.height}`).join("\n");
   assert.equal(signature(first), signature(second));
   const digest = createHash("sha256").update(signature(first)).digest("hex");
-  assert.equal(digest, "6b65762dd27cfc27c861926ab36e838b4f1a62351a422189ca0d85add4862921");
+  assert.equal(digest, "d38a3110a2e1c90be73d56ba2d90b7ac69d7c4453dfdc415f191ad1ff65101fc");
   for (const district of first.districts) {
     for (const stage of first.stages) {
       const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;
@@ -86,7 +86,8 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.equal(shown.buildings.find((building) => building.id === "pm.breakdown@es")?.title, "大事拆成小事");
   assert.ok(shown.roads.every((road) => !draftIds.has(road.from) && !draftIds.has(road.to)));
   assert.ok(shown.bridges.every((bridge) => !draftIds.has(bridge.from) && !draftIds.has(bridge.to)));
-  assert.equal(shown.landmarks.length, 2);
+  // B11 發布數學 es／jh 12 點後，數學的 7 條路線（ma.algebra、ma.beauty、ma.change、ma.data、ma.geometry、ma.model、ma.proof）各有 es＋jh 兩站已發布，跟著顯示。
+  assert.equal(shown.landmarks.length, 9);
   const shownEstimate = shown.landmarks.find((landmark) => landmark.id === "pm.estimate");
   assert.ok(shownEstimate);
   assert.deepEqual(shownEstimate.stops, ["pm.breakdown@es", "pm.triangle@jh", "pm.estimate@sh", "pm.evm@uni"]);

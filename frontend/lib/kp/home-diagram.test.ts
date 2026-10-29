@@ -17,6 +17,13 @@ const DRAFT_TITLES = [
 
 const DRAFT_SLUGS = ["pm.goal", "ph.parts", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "pm.schedule"];
 
+// 已發布的點才有頁面連結：ph.reason@es，以及 B11 發布的數學 es／jh 12 點。
+const PUBLISHED = new Set([
+  "ph.reason@es",
+  "ma.number@es", "ma.pattern@es", "ma.data@es", "ma.measure@es", "ma.shape@es", "ma.fraction@es",
+  "ma.algebra@jh", "ma.coord@jh", "ma.prob@jh", "ma.pythag@jh", "ma.quadratic@jh", "ma.similar@jh",
+]);
+
 test("四個學門都有學段總圖，專案管理仍只有已發布的四步", () => {
   const model = buildHomeDiagram(loadCatalog());
   assert.deepEqual(publicDisciplineIds(), ["pm-leadership", "philosophy", "math", "it-ai"]);
@@ -66,7 +73,7 @@ test("四個學門都有學段總圖，專案管理仍只有已發布的四步",
     }
     for (const node of diagram.nodes) {
       assert.ok(node.question.length > 0, node.id);
-      const href = node.id === "ph.reason@es" ? "/kp/ph.reason/es" : null;
+      const href = PUBLISHED.has(node.id) ? `/kp/${node.id.replace("@", "/")}` : null;
       assert.equal(node.pageHref, href, node.id);
     }
     assert.ok(diagram.edges.some((edge) => edge.kind === "pre"), id);
