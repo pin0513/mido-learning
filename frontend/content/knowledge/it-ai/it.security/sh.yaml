@@ -1,54 +1,201 @@
 id: it.security@sh
 concept: it.security
 title: 資訊安全與密碼學
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 軟體與系統
+  - 資訊
+  - 軟體與系統
   layer: advanced
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 科技
+  - 科技
   core_competencies:
-    - A2
-    - B2
-    - C1
+  - B2
+  - C1
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+  contents:
+  - 資 H-V-2
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 運算思維學習表現（運 a-V-1）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（已加進代碼表），curriculum_108 只列資訊科技學習內容。
+- 核心素養依科技領綱 p.3–4 的 科S-U-B2、科S-U-C1 原文挑選（表格窄欄，文字已用頁面影像核對）。
+- 科技領綱只說高中資訊科技部定必修 2 學分、「建議依學期開設」（p.2），沒有指定年級，所以 stage 不填 grades；est_time 寫高中資訊科技必修課。
+- 原 ai.delegable「產生釣魚信範例供練習辨識」改成請 AI 解釋加密和雜湊（本站建議）：釣魚信範例由老師事先準備虛構版本，不讓學生用 AI 產生詐騙內容。
+- 原 scenario 的公開金鑰比喻刪除（本頁沒有教公開金鑰，也找不到合適的來源），改教網站用雜湊保存密碼（OWASP）。
+- 原 human_experience「建立自己的安全習慣、幫家人檢查帳號」改成和家人一起設定強密碼，不查看他人帳號（本站建議）。
+- 原稿的核心素養 A2 改成 C1：本點重在數位公民的安全習慣與責任，對應科S-U-C1。
+- 科技領綱高中必修沒有獨立的資訊安全學習內容；本點依 資 H-V-2 的說明「資訊科技對個人隱私的保護方法。」和 運 a-V-1。
+- 凱薩密碼最多 25 種位移是本站整理（英文字母 26 個，扣掉不移動）；破綻數是示意。
+- 教育部《高級中等以下學校人工智慧使用和學習指引》（115 年 6 月 5 日核定）頁碼是頁腳印的頁碼（與 PDF 頁相同）；該 PDF 網站缺中繼憑證，下載時要略過憑證檢查。
 prerequisites:
-  - it.network@jh
+- it.network@jh
 links:
   why:
-    - ph.ethicstheory@sh
+  - ph.ethicstheory@sh
   how: []
   related: []
   deeper:
-    - it.swe@uni
-link_notes: 數學（數論與機率）、哲學（倫理）
+  - it.swe@uni
+link_notes: 數學（數論與機率）、哲學（倫理）；科技領綱 資 H-V-2、運 a-V-1。
 competency:
   specialist:
-    - 資訊安全
+  - 資訊安全
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 產生釣魚信範例供練習辨識
+  - 解釋加密和雜湊的差別（AI 的說明要再查證，本站建議）
   human_experience:
-    - 建立自己的安全習慣、幫家人檢查帳號
-idea: 加密讓訊息只有對的人看得懂；強密碼、多因素驗證和辨識釣魚，是每個人的基本防線。
+  - 建立自己的安全習慣、和家人一起設定強密碼
+idea: 加密讓訊息只有知道金鑰的人看得懂；網站應該只存密碼的雜湊值、不存原文；辨識釣魚訊息、不點可疑連結，是每個人的基本防線（本站整理）。
 guiding_questions:
-  - 為什麼網站不應該知道你的密碼原文？
-scenario: 從凱薩密碼開始加解密，再用「上鎖的箱子」比喻理解公開金鑰；分析一封釣魚信的破綻。
+- 為什麼網站不應該知道你的密碼原文？
+scenario: 在紙上用凱薩密碼加密一句話，請同學逐一試位移來破解；再討論網站為什麼只該存密碼的雜湊值；最後看老師準備的一封虛構釣魚信範例，圈出破綻（不點任何連結、不輸入真實帳號密碼，本站建議）。
 formats:
   slides: []
+  exercise: 目標：用凱薩密碼加密並破解一句話，說出為什麼最多試 25 種位移就能破解；說出加密和雜湊的差別；在虛構的釣魚信範例圈出至少 3 個破綻（25 種是本站整理，破綻數是示意）。　檢核：加密和解密都正確；說得出凱薩密碼為什麼容易破解；說得出網站存雜湊值、不存原文的理由；圈出的破綻包含急迫語氣或要求個資；四件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 用凱薩密碼加密並破解一句話，說出為什麼最多試 25 種位移就能破解；說出加密和雜湊的差別；在虛構的釣魚信範例圈出至少 3 個破綻（25 種是本站整理，破綻數是示意）。
+review: 加密和解密都正確；說得出凱薩密碼為什麼容易破解；說得出網站存雜湊值、不存原文的理由；圈出的破綻包含急迫語氣或要求個資；四件事都做到。
+est_time:
+  school: 高中資訊科技必修課
+  source: tech108
+why:
+  heading: 保護資料，也保護自己
+  body:
+  - 科技領綱高中學「個人資料的保護。」，說明包含「資訊科技對個人隱私的保護方法。」；學習表現要「能實踐健康適切的數位公民生活。」
+  - 教育部的指引提醒學生「不隨意下載來路不明的程式、不點擊可疑連結、不在公共電腦儲存帳號密碼」。
+  items_title: 科技領綱的學習重點
+  items:
+  - title: 數位公民生活
+    text: 高中科技領綱 運 a-V-1：能實踐健康適切的數位公民生活。
+    code: 運 a-V-1
+  - title: 個人資料的保護
+    text: 高中科技領綱 資 H-V-2：個人資料的保護。
+    code: 資 H-V-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 會英文字母
+  - 用過密碼登入
+  notes:
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 V 是第五學習階段（高中），本頁只列高中必修的條目，不含標「※」的加深加廣選修。
+  sources:
+  - tech108
+  - moe-ai-guide
+how:
+  heading: 加密、破解、辨識釣魚
+  body:
+  - 凱薩密碼：把每個字母往後移固定幾位，例如移 3 位，A 變 D、B 變 E，知道移幾位的人才能解回。但英文字母只有 26 個，位移最多 25 種，逐一試就能破解，所以真正的加密要用夠長、猜不到的金鑰（本站整理）。
+  - 網站保存密碼不該用加密，而要用雜湊：OWASP 說雜湊是「a one-way function」，不像加密可以用金鑰解回原文；攻擊者拿到雜湊值也不能拿來登入；但太簡單的密碼仍可能被一個個試出來，所以密碼要夠長（本站整理）。最後看老師準備的虛構釣魚信，圈出急迫的語氣、要你登入或提供個資、可疑的寄件人或連結；只在紙上圈，不點連結（本站建議）。
+  qa:
+    question: 為什麼網站不應該知道你的密碼原文？
+    answer: 因為網站一旦被入侵，存著原文的密碼會全部外洩，你在別的網站用同一組密碼也會跟著危險；只存雜湊值，登入時比對雜湊就好，網站不需要知道原文（本站整理）。OWASP 說，攻擊者即使拿到雜湊後的密碼，「they cannot use it to log in as the victim.」
+    source: owasp-pw
+  items_title: 資安四步
+  items:
+  - title: 凱薩加密
+    text: 每個字母移固定位數。
+  - title: 逐一破解
+    text: 試遍所有位移就能解。
+  - title: 雜湊存密碼
+    text: 網站不存密碼原文。
+  - title: 圈出破綻
+    text: 找出釣魚信的破綻。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 加解密正確
+  - 說出雜湊
+  - 圈出破綻
+  activity_figure: security-flow
+  sources:
+  - owasp-pw
+what:
+  heading: 懂加密，也防得了釣魚
+  body:
+  - 學完後，學生能用凱薩密碼加密和破解，說出它為什麼不安全、網站為什麼只存密碼的雜湊值，也能在釣魚訊息裡找出破綻，不點可疑連結。
+  items_title: 學完能做到
+  items:
+  - title: 加密與破解
+    text: 說出凱薩密碼的弱點。
+  - title: 雜湊
+    text: 說出網站不存原文的理由。
+  - title: 辨識釣魚
+    text: 找出破綻，不點連結。
+  checklist_title: 家長檢核
+  checklist:
+  - 會加解密
+  - 說得出雜湊
+  - 找得出破綻
+  figures:
+  - security-compare
+  notes:
+  - 本頁的釣魚信是老師準備的虛構範例。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - moe-ai-guide
+  - genai-student
+figures:
+- id: security-flow
+  type: flow
+  alt: 資安活動流程：學生加密一句話、同學逐一試位移破解、全班討論雜湊、老師發虛構範例信，學生圈出破綻。
+  steps:
+  - actor: 學生
+    text: 加密一句話
+  - actor: 同學
+    text: 逐一試破解
+  - actor: 全班
+    text: 討論雜湊
+  - actor: 老師
+    text: 發範例信
+  - actor: 學生
+    text: 圈出破綻
+  caption: 流程是本站建議。
+- id: security-compare
+  type: compare
+  alt: 比較加密和雜湊：加密可以用金鑰解回原文，雜湊是單向的，算不回原文。
+  source: owasp-pw
+  relation: versus
+  items:
+  - term: 加密
+    note: 用金鑰可以解回原文
+  - term: 雜湊
+    note: 單向，算不回原文，適合存密碼
+  caption: OWASP 說加密是「a two-way function」、雜湊是「a one-way function」；例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：運 a-V-1「能實踐健康適切的數位公民生活。」（p.7）；資 H-V-2「個人資料的保護。」（p.11）；資訊科技學習內容說明「高級中等學校教育階段則更重視整合運用，藉由資訊科學的初步探索，讓學生進一步理解運算思維之相關原理，以培養整合資訊科技與運算思維以有效解決問題之能力。」（p.10）；時間分配「高級中等學校教育階段資訊科技與生活科技之部定必修課程各為 2 學分，建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；資 H-V-2 說明「資訊科技對個人隱私的保護方法。」（p.46）；核心素養：科S-U-B2「理解科技與資訊的原理及發展趨勢，整合運用科技、資訊及媒體，並能分析思辨人與科技、社會、環境的關係。」（p.4）；科S-U-C1「具備科技與人文議題的思辨與反省能力，並能主動關注科技發展衍生之社會議題與倫理責任。」（p.4）
+- id: owasp-pw
+  title: Password Storage Cheat Sheet
+  publisher: OWASP Cheat Sheet Series
+  url: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Because hashing is a one-way function」；「Even if an attacker obtains the hashed password, they cannot use it to log in as the victim.」；「Since encryption is a two-way function」
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-29'
+  kind: government
+  supports: 學生學習方面（四）未成年學生保護（含資安與安全）「不隨意下載來路不明的程式、不點擊可疑連結、不在公共電腦儲存帳號密碼」（p.11）；教師教學與專業成長方面（四）「說明人工智慧可能帶來的新型威脅，例如深偽影像、假訊息與釣魚攻擊」（p.8）；學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

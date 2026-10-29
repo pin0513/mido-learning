@@ -295,8 +295,8 @@ jobs:
           KP_ENABLED: "true"
           KP_HOME_ENABLED: "true"
           E2E_BASE_URL: http://127.0.0.1:3000
-          # 專案管理 4＋哲學 1＋數學 26（B11 es／jh 12、B12 sh 7、B13 uni 7）＋資訊與 AI 12（B14 es／jh 12）（語文、溝通與解決問題旗標關閉，不列）。
-          E2E_PUBLISHED_COUNT: "43"
+          # 專案管理 4＋哲學 1＋數學 26（B11 es／jh 12、B12 sh 7、B13 uni 7）＋資訊與 AI 19（B14 es／jh 12、B15 sh 7）（語文、溝通與解決問題旗標關閉，不列）。
+          E2E_PUBLISHED_COUNT: "50"
         run: |
           pnpm exec next start -p 3000 > /tmp/next-published.log 2>&1 &
           echo $! > /tmp/next.pid
