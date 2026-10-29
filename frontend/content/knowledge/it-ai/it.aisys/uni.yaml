@@ -1,47 +1,221 @@
 id: it.aisys@uni
 concept: it.aisys
 title: AI 系統設計：評估與人在迴路
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 人工智慧
-    - AI 系統
+  - 資訊
+  - 人工智慧
+  - AI 系統
   layer: advanced
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
-  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級、item 不放代碼；高中資訊科技必修的相關學習重點（資 D-V-2、運 t-V-3）只在 tech108 來源逐字引用（含頁碼，頁碼是頁腳印的頁碼，比 PDF 頁少 4），當作先學過的內容，不引用高中加深加廣選修；主要依據改用大學教科書和官方文件。生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；教育部《高級中等以下學校人工智慧使用和學習指引》的適用對象是高級中等以下學校，本點不引用。
+- 原有待核對「UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。」已處理：本點不引用 UNESCO 框架，AI 系統的評估與人工監督改依可查證原文的來源（見 sources）。
+- 英文網頁的引文取自 2026-10-29 讀取的網頁；只取不含彎引號或數學式的句子或片段，省略處用刪節號。
+- NIST AI 100-1 的頁碼是頁腳印的「Page N」（PDF 頁 − 5）；引文避開 PDF 換行斷字（例如 oper- ation）的地方。
+- 原 scenario「設計一個 AI 助教：定義它能做與不能做的事、評估題組、何時轉給真人老師。」保留，改成一門大學課程的 AI 助教；評估題組只用自己寫的課程問題和標準答案，不放任何真實學生的資料。
+- 原 ai.delegable「執行大量評估、產生測試案例」保留，加上產生的題目要自己檢查（本站建議）。
 prerequisites:
-  - it.llm@sh
-  - it.swe@uni
+- it.llm@sh
+- it.swe@uni
 links:
   why: []
   how:
-    - pm.aiteam@uni
+  - pm.aiteam@uni
   related: []
   deeper: []
 link_notes: 專案管理（決策、倫理與 AI 協作）、心理學（使用者行為）
 competency:
   specialist:
-    - AI 原理
+  - AI 原理
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 執行大量評估、產生測試案例
+  - 執行大量評估、產生測試案例（產生的題目要自己檢查，本站建議）
   human_experience:
-    - 決定標準與界線、對使用者負責
+  - 決定標準與界線、對使用者負責
 idea: 把 AI 放進產品，要定義成功標準、建立評估方法、設計人工審核點，並準備好出錯時怎麼辦。
 guiding_questions:
-  - AI 助教答錯一題，影響有多大？怎麼及早發現？
-scenario: 設計一個 AI 助教：定義它能做與不能做的事、評估題組、何時轉給真人老師。
+- AI 助教答錯一題，影響有多大？怎麼及早發現？
+- 準確率高，就可以上線嗎？
+scenario: 為一門大學課程設計 AI 助教：定義它能做與不能做的事，用自己寫、不含學生個資的題組評估它，並訂出何時轉給真人老師（本站整理）。
 formats:
   slides: []
+  exercise: 目標：為 AI 助教寫出能做與不能做的清單、一組 20 題的評估題組和計分方式，算出三個指標，並訂出轉給真人老師的規則（數字是示意）。　檢核：不看本頁，用自己的評估結果說明準確率、精確率、召回率各回答什麼問題，並說出你的轉人工規則在什麼情況啟動；題組裡沒有任何真實學生的資料。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 為 AI 助教寫出能做與不能做的清單、一組 20 題的評估題組和計分方式，算出三個指標，並訂出轉給真人老師的規則（數字是示意）。
+review: 不看本頁，用自己的評估結果說明準確率、精確率、召回率各回答什麼問題，並說出你的轉人工規則在什麼情況啟動；題組裡沒有任何真實學生的資料。
+why:
+  heading: 上線前先想清楚
+  body:
+  - PAIR 的人與 AI 指南說：「When AI makes an error or fails, things can get complicated.」它也提醒要依情境估計出錯的風險：使用者是新手、系統信心低、結果牽涉健康或安全時，風險較高（說明是本站整理）。
+  - NIST 的 AI 風險管理框架要求評估要接近實際使用：「AI system performance or assurance criteria are measured qualitatively or quantitatively and demonstrated for conditions similar to deployment setting(s).」也要事先規劃人的監督：「Processes for human oversight are defined, assessed, and documented」。高中學過機器學習的基本概念和評估解題方法的優劣，大學把評估變成上線前的必要工作。
+  items_title: 三件事先定
+  items:
+  - title: 成功標準
+    text: 答對什麼才算有用。
+  - title: 評估方法
+    text: 用題組量出表現。
+  - title: 人工審核點
+    text: 什麼情況交給真人。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會算比例
+  - 分得清訓練與測試
+  sources:
+  - pair-errors
+  - nist-ai-rmf
+  - tech108
+how:
+  heading: 定界線、做題組、算指標
+  body:
+  - 定界線：列出 AI 助教能做的（例如解釋課本概念、出練習題）和不能做的（例如判定成績、回答考試題目、處理個人問題），寫在介面上讓學生看得到。PAIR 建議「Help users calibrate their trust」，讓使用者「know when to trust the system」，什麼時候該自己判斷（說明是本站整理）。
+  - 做題組：自己寫 20 題課程問題和標準答案，不放任何真實學生的資料；分成調整用和最後評估用兩份，最後那份只在定稿時用。MLCC 建議把資料分成「training, validation, and test sets」。AI 助教用學校或課程核可的工具（本站建議）。每題先標好該不該轉人工，再讓 AI 助教作答，記下它答對、答錯，以及它有沒有轉人工（數字是示意，本站整理）。
+  - 算指標：MLCC 說哪個指標最有意義，要看「the cost of different misclassifications, and whether the dataset is balanced or imbalanced」。三個指標都用轉不轉人工的判斷來算，把該轉人工的題目當成正類：準確率看全部題目裡，轉或不轉判斷對的有多少；精確率看它說要轉的有多少真的該轉；召回率看該轉的有多少被它抓到（說明是本站整理）。答錯會誤導學生的題目，召回率要優先（本站建議）。
+  qa:
+    question: AI 助教答錯一題，影響有多大？怎麼及早發現？
+    answer: 要看答錯什麼：練習題的提示答錯，學生還能查證；考試規定或作業截止日答錯，影響就大。及早發現靠三件事：上線前用題組評估、上線後讓學生能回報錯誤、定期抽查紀錄。NIST 也要求建立讓使用者「report problems and appeal system outcomes」的回饋管道（說明是本站整理）。
+    source: nist-ai-rmf
+  items_title: 四步做
+  items:
+  - title: 寫能做與不能做
+    text: 放在介面上讓人看到。
+  - title: 做評估題組
+    text: 調整用和評估用分開。
+  - title: 算三個指標
+    text: 準確率、精確率、召回率。
+  - title: 訂轉人工規則
+    text: 低信心或敏感問題就轉。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 清單寫好
+  - 題組無個資
+  - 算出三指標
+  - 規則寫清楚
+  activity_figure: aisys-flow
+  sources:
+  - pair-trust
+  - mlcc-split
+  - mlcc-acc
+what:
+  heading: 評得出，也接得住
+  body:
+  - 學完後，自己能為一個 AI 功能訂出成功標準、做評估題組、依錯誤代價選指標，並設計轉給真人的規則。
+  - 上線後也要能停：NIST 要求有機制「to supersede, disengage, or deactivate AI systems that demonstrate performance or outcomes inconsistent with intended use」。PAIR 也建議出錯時「Address mistakes with humanity and humility」，說明系統的限制，讓人能繼續往下做。準確率高也不代表可以放心上線，教科書提醒：「Sometimes models appear to perform marvelously as measured by test set accuracy but fail catastrophically in deployment when the distribution of data suddenly shifts.」學期中課程內容改了，就要用新題組再評一次（本站建議）。
+  items_title: 學完能做到
+  items:
+  - title: 訂標準
+    text: 說得出什麼算成功。
+  - title: 選指標
+    text: 依錯誤代價選。
+  - title: 設轉人工
+    text: 知道何時交給人。
+  checklist_title: 自我檢核
+  checklist:
+  - 標準寫清楚
+  - 指標選得對
+  - 轉人工會啟動
+  figures:
+  - aisys-compare
+  notes:
+  - 本頁的題數和例子是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，程式、數字和引用的資料要自己驗證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - nist-ai-rmf
+  - pair-errors
+  - d2l-shift
+  - genai-student
+figures:
+- id: aisys-flow
+  type: flow
+  alt: 流程：自己寫能做清單、做評估題組，AI 作答，自己算三個指標、訂轉人工規則。
+  steps:
+  - actor: 自己
+    text: 寫能做清單
+  - actor: 自己
+    text: 做評估題組
+  - actor: AI
+    text: 作答
+  - actor: 自己
+    text: 算三個指標
+  - actor: 自己
+    text: 訂轉人工規則
+  caption: 流程是本站建議。
+- id: aisys-compare
+  type: compare
+  alt: 比較準確率、精確率和召回率：把該轉人工的題目當成正類，準確率看全部題目判斷對的比例，精確率看說要轉的有多少真該轉，召回率看該轉的有多少被抓到。
+  source: mlcc-acc
+  relation: not_equal
+  items:
+  - term: 準確率
+    note: 全部題目，轉不轉判斷對的
+  - term: 精確率
+    note: 說要轉的，有多少真該轉
+  - term: 召回率
+    note: 該轉的，有多少被抓到
+  caption: MLCC 說明準確率、精確率和召回率；例子是本站整理。
+sources:
+- id: pair-errors
+  title: 'People + AI Guidebook: Errors + Graceful Failure'
+  publisher: Google PAIR（People + AI Research）
+  url: https://pair.withgoogle.com/chapter/errors-failing/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「When AI makes an error or fails, things can get complicated.」、「Address mistakes with humanity and humility」
+- id: pair-trust
+  title: 'People + AI Guidebook: Explainability + Trust'
+  publisher: Google PAIR（People + AI Research）
+  url: https://pair.withgoogle.com/chapter/explainability-trust/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Help users calibrate their trust」、「the user should know when to trust the system」
+- id: mlcc-split
+  title: 'Datasets: Dividing the original dataset（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets
+  accessed: '2026-10-29'
+  kind: reference
+  supports: '「Machine learning models should be tested against a separate dataset, called the test set」、「split the dataset into three subsets: training, validation, and test sets」'
+- id: mlcc-acc
+  title: 'Classification: Accuracy, recall, precision, and related metrics（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Which evaluation metrics are most meaningful depends on the specific model and the specific task, the cost of different misclassifications, and whether the dataset is balanced or imbalanced.」
+- id: d2l-shift
+  title: Dive into Deep Learning, 4.7 Environment and Distribution Shift
+  publisher: Aston Zhang、Zachary C. Lipton、Mu Li、Alexander J. Smola 著（Cambridge University Press 出版，d2l.ai 開放網頁版）
+  url: https://d2l.ai/chapter_linear-classification/environment-and-distribution-shift.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 4.7 節「Sometimes models appear to perform marvelously as measured by test set accuracy but fail catastrophically in deployment when the distribution of data suddenly shifts.」
+- id: nist-ai-rmf
+  title: Artificial Intelligence Risk Management Framework (AI RMF 1.0)（NIST AI 100-1）
+  publisher: National Institute of Standards and Technology（美國商務部，2023 年 1 月）
+  url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 「AI system performance or assurance criteria are measured qualitatively or quantitatively and demonstrated for conditions similar to deployment setting(s).」（p.29）；「Processes for human oversight are defined, assessed, and documented」（p.27）；「Feedback processes for end users and impacted communities to report problems and appeal system outcomes are established」（p.31）；「to supersede, disengage, or deactivate AI systems that demonstrate performance or outcomes inconsistent with intended use」（p.32）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：資 D-V-2「資料探勘與機器學習的基本概念。」（p.11）；運 t-V-3「能應用運算思維評估解題方法的優劣。」（p.7）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

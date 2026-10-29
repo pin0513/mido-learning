@@ -127,6 +127,22 @@ test.describe("溝通與解決問題", () => {
   }
 });
 
+test.describe("溝通與解決問題的大學草稿", () => {
+  test.beforeEach(() => {
+    test.skip(!process.env.E2E_SOFTSKILLS, "KP_SOFTSKILLS_ENABLED 沒開");
+  });
+
+  // B16 已發布資訊與 AI 大學 6 點；仍是草稿、to_verify、沒有課綱對應的大學點只剩溝通與解決問題，原本 kp.spec.ts 對 it.nn@uni 的檢查移到這裡。
+  test("sk.hypo@uni 沒有課綱區塊，顯示課綱對應待核對", async ({ page }) => {
+    const response = await page.goto("/kp/sk.hypo/uni");
+    expect(response?.status()).toBe(200);
+    await expect(page.getByTestId("kp-draft")).toHaveText("草稿");
+    await expect(page.getByTestId("kp-curriculum")).toHaveCount(0);
+    await expect(page.getByTestId("kp-to-verify")).toContainText("課綱對應待核對");
+    await expect(page.getByTestId("kp-license-body")).toBeEmpty();
+  });
+});
+
 async function assertLabelsClear(page: Page) {
   const height = await page.evaluate(() => document.documentElement.scrollHeight);
   const view = page.viewportSize()?.height ?? 800;

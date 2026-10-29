@@ -33,10 +33,12 @@ test.describe("知識地圖", () => {
     await expect(page.getByText("尚未發布")).toHaveCount(0);
     await expect(page.getByTestId("kp-slides")).toHaveCount(0);
 
-    // B13 已發布 ma.limit@uni；仍是草稿、to_verify、沒有課綱對應的大學點改用 it.nn@uni。
-    await page.goto("/kp/it.nn/uni");
+    // B16 已發布資訊與 AI 大學 6 點（含 it.nn@uni）；仍是草稿、沒有課綱對應的大學點改用 ph.aimind@uni（to_verify: false）。
+    // to_verify 的大學草稿只剩溝通與解決問題（這個行程旗標關閉，頁面 404），「課綱對應待核對」改在 softskills.spec.ts 用 sk.hypo@uni 檢查。
+    await page.goto("/kp/ph.aimind/uni");
+    await expect(page.getByTestId("kp-draft")).toHaveText("草稿");
     await expect(page.getByTestId("kp-curriculum")).toHaveCount(0);
-    await expect(page.getByTestId("kp-to-verify")).toContainText("課綱對應待核對");
+    await expect(page.getByTestId("kp-to-verify")).toHaveCount(0);
     await expect(page.getByTestId("kp-license-body")).toBeEmpty();
   });
 

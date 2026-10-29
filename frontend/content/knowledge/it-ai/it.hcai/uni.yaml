@@ -1,49 +1,221 @@
 id: it.hcai@uni
 concept: it.hcai
 title: 以人為本的人機協作
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 人工智慧
-    - AI 系統
+  - 資訊
+  - 人工智慧
+  - AI 系統
   layer: advanced
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
-  - UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級、item 不放代碼；高中資訊科技必修的相關學習重點（資 H-V-3、運 a-V-2）只在 tech108 來源逐字引用（含頁碼，頁碼是頁腳印的頁碼，比 PDF 頁少 4），當作先學過的內容，不引用高中加深加廣選修；主要依據改用大學教科書和官方文件。生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；教育部《高級中等以下學校人工智慧使用和學習指引》的適用對象是高級中等以下學校，本點不引用。
+- 原有待核對「UNESCO 2024 學生與教師 AI 素養框架的面向名稱與進階層次待核對。」已處理：本點不引用 UNESCO 框架，人機協作的設計原則改依可查證原文的來源（見 sources）。
+- 英文網頁的引文取自 2026-10-29 讀取的網頁；只取不含彎引號或數學式的句子或片段，省略處用刪節號。
+- NIST AI 100-1 的頁碼是頁腳印的「Page N」（PDF 頁 − 5）；引文避開 PDF 換行斷字（例如 oper- ation）的地方。
+- Lee 等人 2025 年論文的 PDF 沒有印頁碼，頁碼是 PDF 頁；這是 319 位知識工作者的自陳問卷研究，結果是相關，不是因果。
+- 原 scenario「觀察一位家人或同學用 AI 完成一件事，找出困難與風險，重新設計流程並測試。」改成大學生觀察同學：先徵得同意，只記錄步驟和困難，不記錄姓名、學號或對話裡的個人資料；刪除家人。
+- 原 ai.delegable「協助整理觀察紀錄與方案」保留，加上紀錄先去除個人資料（本站建議）。
 prerequisites:
-  - it.aisys@uni
-  - it.governance@uni
+- it.aisys@uni
+- it.governance@uni
 links:
   why:
-    - ph.aimind@uni
+  - ph.aimind@uni
   how:
-    - pm.stakeholder@sh
+  - pm.stakeholder@sh
   related: []
   deeper: []
 link_notes: 心理學、哲學（AI 時代的思考）、專案管理（利害關係人）
 competency:
   specialist:
-    - AI 治理
+  - AI 治理
   generalist:
-    - 查證
-    - 媒體素養
+  - 查證
+  - 媒體素養
 ai:
   delegable:
-    - 協助整理觀察紀錄與方案
+  - 協助整理觀察紀錄與方案（紀錄先去除個人資料，本站建議）
   human_experience:
-    - 實地觀察、同理使用者、判斷什麼對人真正有益
-idea: 好的 AI 工具讓人變得更有能力，而不是更依賴。設計時從人的需求、能力與價值出發。
+  - 實地觀察、同理使用者、判斷什麼對人真正有益
+idea: 好的 AI 工具讓人變得更有能力，而不是更依賴。設計時從人的需求、能力與價值出發：哪些事交給 AI、哪些留給人，人什麼時候該信它、什麼時候該自己判斷。
 guiding_questions:
-  - 用了 AI 之後，你變得更會思考，還是更少思考？
-scenario: 觀察一位家人或同學用 AI 完成一件事，找出困難與風險，重新設計流程並測試。
+- 用了 AI 之後，你變得更會思考，還是更少思考？
+- 哪些事該讓 AI 做，哪些該留給人？
+scenario: 徵得一位同學同意後，觀察他用 AI 完成一件課業任務，只記錄步驟和遇到的困難，不記錄姓名和個人資料；找出困難與風險，重新設計流程並請他試用（本站整理）。
 formats:
   slides: []
+  exercise: 目標：觀察一次同學用 AI 完成任務，找出至少 2 個直接採信或卡住的地方，重新設計流程並請同學試用一次，比較前後差異（數字是示意）。　檢核：不看本頁，說出自動化和輔助的差別、什麼是校準信任，並用自己的觀察紀錄指出新流程哪一步讓人多做了判斷；紀錄裡沒有任何個人資料。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 觀察一次同學用 AI 完成任務，找出至少 2 個直接採信或卡住的地方，重新設計流程並請同學試用一次，比較前後差異（數字是示意）。
+review: 不看本頁，說出自動化和輔助的差別、什麼是校準信任，並用自己的觀察紀錄指出新流程哪一步讓人多做了判斷；紀錄裡沒有任何個人資料。
+why:
+  heading: 讓人更有能力
+  body:
+  - PAIR 的人與 AI 指南把 AI 的角色分成自動化和輔助兩種，並建議「Augment tasks that people enjoy doing, that carry social capital」…。要問的不只是能不能用 AI，而是用了之後人得到什麼。
+  - 卡內基美隆大學和微軟研究院的研究者 2025 年調查 319 位知識工作者，發現「higher confidence in GenAI is associated with less critical thinking, while higher self-confidence is associated with more critical thinking.」這是自陳問卷，只能說兩者相關，但提醒設計者：工具要讓人保持判斷。高中學過資訊科技對人與社會的影響，大學要把它變成設計。
+  items_title: 三個關鍵詞
+  items:
+  - title: 自動化
+    text: 交給 AI 做完。
+  - title: 輔助
+    text: AI 幫忙，人做決定。
+  - title: 校準信任
+    text: 知道何時信、何時查。
+  checklist_title: 開始前先確認
+  checklist:
+  - 用過生成式 AI
+  - 會寫觀察紀錄
+  sources:
+  - pair-needs
+  - lee-chi25
+  - tech108
+how:
+  heading: 觀察、找風險、重新設計
+  body:
+  - 觀察：先徵得同學同意，說明只記錄步驟和困難，不記姓名、學號或對話裡的個人資料。設計方法教科書介紹的可用性測試是「In a usability test, you define some common tasks to perform with your user interface」，也建議「ask your participants to think aloud」。請同學邊做邊說，看他怎麼下指令、有沒有檢查 AI 的回答、在哪裡卡住，觀察時不插手（本站建議）。
+  - 找風險：PAIR 說使用者應該「know when to trust the system」，也知道什麼時候「apply their own judgement」。Lee 等人也發現，生成式 AI 讓批判思考轉向「information verification, response integration, and task stewardship」。對照紀錄，標出他直接採信、沒有查證的地方。
+  - 重新設計與測試：改流程讓人多做一步判斷，例如先自己寫出答案大綱再問 AI、AI 回答後列出要查證的兩件事。NIST 說人和 AI 的分工可以「span from fully autonomous to fully manual」。請同學用新流程再做一次，比較查證的次數和他的感受（數字是示意，本站整理）。
+  qa:
+    question: 用了 AI 之後，你變得更會思考，還是更少思考？
+    answer: 看你怎麼用。Lee 等人的調查發現「higher confidence in GenAI is associated with less critical thinking」，對自己越有信心的人想得越多。這是問卷調查，只能說兩者相關，不能說誰造成誰；但先自己想、再用 AI、最後查證，至少讓判斷留在自己手上（說明是本站整理，做法是本站建議）。
+    source: lee-chi25
+  items_title: 四步做
+  items:
+  - title: 徵得同意
+    text: 只記步驟，不記個資。
+  - title: 觀察使用
+    text: 看下指令和查證。
+  - title: 標出風險
+    text: 直接採信的地方。
+  - title: 改流程再試
+    text: 比較前後差異。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 已徵得同意
+  - 紀錄無個資
+  - 標出風險
+  - 試用新流程
+  activity_figure: hcai-flow
+  sources:
+  - dm-empirical
+  - pair-trust
+  - lee-chi25
+  - nist-ai-rmf
+what:
+  heading: 設計讓人保持判斷
+  body:
+  - 學完後，自己能觀察真實的使用過程，分辨自動化和輔助，找出過度依賴的地方，並設計讓人保持判斷的流程。
+  - 設計也要讓人能改正 AI。PAIR 說：「When users have the opportunity to offer feedback, they can play a direct role in personalizing their experiences and maximizing the benefit your product brings to them.」
+  items_title: 學完能做到
+  items:
+  - title: 分辨角色
+    text: 自動化還是輔助。
+  - title: 找出依賴
+    text: 直接採信的步驟。
+  - title: 改善流程
+    text: 讓人多做一步判斷。
+  checklist_title: 自我檢核
+  checklist:
+  - 觀察完成
+  - 風險標出
+  - 新流程試過
+  figures:
+  - hcai-compare
+  notes:
+  - 本頁的觀察例子和數字是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，程式、數字和引用的資料要自己驗證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - pair-feedback
+  - genai-student
+figures:
+- id: hcai-flow
+  type: flow
+  alt: 流程：自己徵得同意，同學用 AI 做事，自己記錄步驟、標出風險，同學試用新流程。
+  steps:
+  - actor: 自己
+    text: 徵得同意
+  - actor: 同學
+    text: 用 AI 做事
+  - actor: 自己
+    text: 記錄步驟
+  - actor: 自己
+    text: 標出風險
+  - actor: 同學
+    text: 試新流程
+  caption: 流程是本站建議。
+- id: hcai-compare
+  type: compare
+  alt: 比較直接採信和先想再查：前者省力但容易信錯，後者多花時間但保留自己的判斷。
+  source: lee-chi25
+  relation: versus
+  items:
+  - term: 直接採信
+    note: 省力，但容易信錯
+  - term: 先想再查
+    note: 多花時間，保留判斷
+  caption: Lee 等人的調查說明信任與批判思考的關係；例子是本站整理。
+sources:
+- id: dm-empirical
+  title: 'Design Methods（第 2 版）Chapter 9: How to evaluate empirically'
+  publisher: Amy J. Ko 著（華盛頓大學，開放網頁版，CC BY-ND 4.0）
+  url: https://faculty.washington.edu/ajko/books/design-methods/empirical
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「In a usability test, you define some common tasks to perform with your user interface」、「One strategy is to ask your participants to think aloud」、「Sit on your hands and close your mouth!」
+- id: pair-needs
+  title: 'People + AI Guidebook: User Needs + Defining Success'
+  publisher: Google PAIR（People + AI Research）
+  url: https://pair.withgoogle.com/chapter/user-needs/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Assess automation vs. augmentation」、「Augment tasks that people enjoy doing, that carry social capital」
+- id: pair-trust
+  title: 'People + AI Guidebook: Explainability + Trust'
+  publisher: Google PAIR（People + AI Research）
+  url: https://pair.withgoogle.com/chapter/explainability-trust/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Help users calibrate their trust」、「the user should know when to trust the system」、「and when to apply their own judgement」
+- id: pair-feedback
+  title: 'People + AI Guidebook: Feedback + Control'
+  publisher: Google PAIR（People + AI Research）
+  url: https://pair.withgoogle.com/chapter/feedback-controls/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「When users have the opportunity to offer feedback, they can play a direct role in personalizing their experiences and maximizing the benefit your product brings to them.」
+- id: lee-chi25
+  title: 'The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers'
+  publisher: Hao-Ping (Hank) Lee 等著，CHI 2025 論文（ACM，CC BY 4.0；第二作者 Advait Sarkar 網站存放的 PDF）
+  url: https://advait.org/files/lee_2025_ai_critical_thinking_survey.pdf
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「We survey 319 knowledge workers」（p.1）；「higher confidence in GenAI is associated with less critical thinking, while higher self-confidence is associated with more critical thinking.」（p.1）；「GenAI shifts the nature of critical thinking toward information verification, response integration, and task stewardship.」（p.1）
+- id: nist-ai-rmf
+  title: Artificial Intelligence Risk Management Framework (AI RMF 1.0)（NIST AI 100-1）
+  publisher: National Institute of Standards and Technology（美國商務部，2023 年 1 月）
+  url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 「Human-AI configurations can span from fully autonomous to fully manual.」（p.40）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：資 H-V-3「資訊科技對人與社會的影響與衝擊。」（p.11）；運 a-V-2「能使用多元的觀點思辨資訊科技相關議題。」（p.7）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

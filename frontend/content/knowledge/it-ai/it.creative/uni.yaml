@@ -1,45 +1,216 @@
 id: it.creative@uni
 concept: it.creative
 title: 創意程式與生成藝術
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 軟體與系統
+  - 資訊
+  - 軟體與系統
   layer: advanced
   crosscutting:
-    - aesthetics
+  - aesthetics
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級、item 不放代碼；高中資訊科技必修的相關學習重點（資 P-V-1、資 H-V-1、運 a-V-3）只在 tech108 來源逐字引用（含頁碼，頁碼是頁腳印的頁碼，比 PDF 頁少 4），當作先學過的內容，不引用高中加深加廣選修；主要依據改用大學教科書和官方文件。生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；教育部《高級中等以下學校人工智慧使用和學習指引》的適用對象是高級中等以下學校，本點不引用。
+- 英文網頁的引文取自 2026-10-29 讀取的網頁；只取不含彎引號或數學式的句子或片段，省略處用刪節號。
+- 美國著作權局報告的頁碼是頁首印的頁碼（PDF 頁 − 8），是美國法的見解，只當對照；台灣的著作權以經濟部智慧財產局的令函為準。
+- 原 scenario「用創意程式工具做一件生成藝術作品，再和 AI 生成的作品並陳，討論誰是作者。」保留，工具具體寫成 p5.js；AI 生成的圖要用學校允許的工具、不輸入個人資料，並註明工具和用途；誰是作者依智慧局令函說明。
+- 原 idea 的「圖像、聲音與互動作品」本頁只教圖像與動畫，改成「圖像與動畫」。
+- 原 ai.delegable「生成素材、協助寫程式」保留，加上要註明工具與用途（本站建議）。
 prerequisites:
-  - it.build@sh
+- it.build@sh
 links:
   why: []
   how: []
   related:
-    - ma.beauty@uni
+  - ma.beauty@uni
   deeper: []
 link_notes: 美學與藝術、數學（對稱與結構）
 competency:
   specialist:
-    - 生成藝術
+  - 生成藝術
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 生成素材、協助寫程式
+  - 生成素材、協助寫程式（要註明工具與用途，本站建議）
   human_experience:
-    - 決定美感方向、說出作品想表達什麼
-idea: 程式也是創作工具：用規則與隨機產生圖像、聲音與互動作品。AI 時代要重新思考作者與原創。
+  - 決定美感方向、說出作品想表達什麼
+idea: 程式也是創作工具：用規則與隨機產生圖像與動畫。AI 時代要重新思考作者與原創：人有實際的創意投入，作品才受著作權保護。
 guiding_questions:
-  - 規則是你寫的、畫面是電腦畫的，作品是誰的？
-scenario: 用創意程式工具做一件生成藝術作品，再和 AI 生成的作品並陳，討論誰是作者。
+- 規則是你寫的、畫面是電腦畫的，作品是誰的？
+- 隨機和雜訊畫出來的線條有什麼不同？
+scenario: 用 p5.js 寫一件生成藝術作品，比較 random() 和 noise() 畫出的線條；再和一張用學校允許的 AI 工具生成的圖並陳，對照著作權令函討論誰是作者（本站整理）。
 formats:
   slides: []
+  exercise: 目標：寫出一件用 random() 和 noise() 的生成藝術作品，說明兩者的差別和固定種子的作用，並用智慧局令函說明自己的作品和 AI 生成的圖在著作權上差在哪。　檢核：不看本頁，說出 random() 和 noise() 畫出的線條差在哪、randomSeed() 和 noiseSeed() 有什麼用，並說明令函怎麼區分 AI 當工具的創作和 AI 獨立完成的創作。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 寫出一件用 random() 和 noise() 的生成藝術作品，說明兩者的差別和固定種子的作用，並用智慧局令函說明自己的作品和 AI 生成的圖在著作權上差在哪。
+review: 不看本頁，說出 random() 和 noise() 畫出的線條差在哪、randomSeed() 和 noiseSeed() 有什麼用，並說明令函怎麼區分 AI 當工具的創作和 AI 獨立完成的創作。
+why:
+  heading: 規則加上隨機
+  body:
+  - 《The Nature of Code》整本書反覆問：「How do you define the rules that govern the behavior of your objects?」生成藝術就是這樣：作者寫規則，電腦依規則一筆筆畫出來，每次執行都可能不同。
+  - 隨機不一定自然。書上介紹 Perlin 雜訊，它「producing a naturally ordered sequence of pseudorandom numbers, where each number in the sequence is quite close in value to the one before it」。高中學過文字式程式設計和資訊科技的合理使用原則，這裡把程式當畫筆，也要面對作品歸誰的問題。
+  items_title: 三個關鍵詞
+  items:
+  - title: 規則
+    text: 作者寫下的畫法。
+  - title: 隨機
+    text: 每次執行都不同。
+  - title: 作者
+    text: 有實際創意投入的人。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會寫迴圈
+  - 會用變數
+  sources:
+  - noc-random
+  - tech108
+how:
+  heading: 寫規則、加雜訊、談作者
+  body:
+  - random()：p5.js 說它「follows uniform distribution, which means that all outcomes are equally likely」。讓 200 個點各自隨機走步，線條會抖得很碎；用 randomSeed() 固定種子，p5.js 說可以「generate the same sequence of numbers or choices each time a sketch runs」，方便重現同一件作品（數字是示意，本站整理）。
+  - noise()：把隨機走步換成 noise()，p5.js 說「Calls to noise() with similar inputs will produce similar outputs.」輸入每次只加一點點，線條就會平滑起伏；這個函式由 Ken Perlin 發明，常用來做紋理、動作和地形。noise() 的種子要另外固定，p5.js 說「The noiseSeed() function can be used to generate the same sequence of Perlin noise values each time a sketch runs」。比較兩張圖，寫下你選哪一種、為什麼。
+  - 談作者：智慧局令函把 AI 的創作分成兩種：「第一種是『以人工智慧為工具的創作』，也就是人類有實際的創意投入」，成果仍受保護；「第二種是『人工智慧獨立創作』」，成果「原則上無法享有著作權」。另一函也提醒，AI 生成的圖若與訓練資料中的原作「構成實質近似」，商業使用可能侵權。把自己的程式作品和一張用學校允許的 AI 工具生成的圖並陳，說明兩者各有多少你的創意投入（本站建議）。
+  qa:
+    question: 規則是你寫的、畫面是電腦畫的，作品是誰的？
+    answer: 規則、參數和挑選都是你決定的，電腦只是照規則執行，所以是你的作品。令函說用工具的創作「著作權則由該投入創意的自然人享有」；如果只讓 AI 自己生成、人沒有實際的創意投入，原則上就沒有著作權（說明是本站整理）。
+    source: tipo-1111031
+  items_title: 四步做
+  items:
+  - title: 用 random()
+    text: 均勻隨機，線條碎。
+  - title: 用 noise()
+    text: 相近輸入得相近輸出。
+  - title: 固定種子
+    text: randomSeed() 和 noiseSeed()。
+  - title: 並陳討論
+    text: 說出各有多少創意投入。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 兩種線條都畫出
+  - 種子已固定
+  - AI 圖已標註
+  - 說出作者是誰
+  activity_figure: creative-flow
+  sources:
+  - p5-random
+  - p5-noise
+  - tipo-1111031
+  - tipo-1140522c
+what:
+  heading: 能創作，也懂權利
+  body:
+  - 學完後，自己能用規則、隨機和雜訊寫出生成藝術作品，說明不同隨機方法的效果，並說明人和 AI 在作品裡的角色與權利。
+  - 美國著作權局 2025 年的報告也說：「Where AI merely assists an author in the creative process, its use does not change the copyrightability of the output.」並認為以目前的技術，「prompts alone do not provide sufficient human control to make users of an AI system the authors of the output」。這是美國的見解，只當對照；台灣以智慧局的令函為準。
+  items_title: 學完能做到
+  items:
+  - title: 寫生成藝術
+    text: 規則、隨機、雜訊。
+  - title: 說明差別
+    text: random() 和 noise()。
+  - title: 說明權利
+    text: 創意投入決定作者。
+  checklist_title: 自我檢核
+  checklist:
+  - 作品完成
+  - 差別說對
+  - 權利說對
+  figures:
+  - creative-compare
+  notes:
+  - 本頁的點數和例子是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，程式、數字和引用的資料要自己驗證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - usco-ai2
+  - genai-student
+figures:
+- id: creative-flow
+  type: flow
+  alt: 流程：寫畫圖規則、做 random() 版、做 noise() 版、固定種子、和 AI 生成的圖並陳討論。
+  steps:
+  - actor: 自己
+    text: 寫畫圖規則
+  - actor: 自己
+    text: random() 版
+  - actor: 自己
+    text: noise() 版
+  - actor: 自己
+    text: 固定種子
+  - actor: 自己
+    text: 並陳討論
+  caption: 流程是本站建議。
+- id: creative-compare
+  type: compare
+  alt: 比較 AI 當工具的創作和 AI 獨立完成的創作：前者人有實際的創意投入，受著作權保護；後者原則上無法享有著作權。
+  source: tipo-1111031
+  relation: not_equal
+  items:
+  - term: AI 當工具
+    note: 人有實際創意投入，受保護
+  - term: AI 獨立完成
+    note: 原則上無法享有著作權
+  caption: 智慧局令函區分兩種 AI 創作；例子是本站整理。
+sources:
+- id: noc-random
+  title: 'The Nature of Code, Chapter 0: Randomness'
+  publisher: Daniel Shiffman 著（No Starch Press 2024 出版，natureofcode.com 開放網頁版）
+  url: https://natureofcode.com/random/
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「How do you define the rules that govern the behavior of your objects?」、「producing a naturally ordered sequence of pseudorandom numbers, where each number in the sequence is quite close in value to the one before it」
+- id: p5-random
+  title: random()（p5.js Reference）
+  publisher: p5.js（Processing Foundation）
+  url: https://p5js.org/reference/p5/random/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「random() follows uniform distribution, which means that all outcomes are equally likely.」、「The randomSeed() function can be used to generate the same sequence of numbers or choices each time a sketch runs.」
+- id: p5-noise
+  title: noise()（p5.js Reference）
+  publisher: p5.js（Processing Foundation）
+  url: https://p5js.org/reference/p5/noise/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Calls to noise() with similar inputs will produce similar outputs.」、「noise() is used to create textures, motion, shapes, terrains, and so on. Ken Perlin invented noise() while animating the original Tron film in the 1980s.」、「The noiseSeed() function can be used to generate the same sequence of Perlin noise values each time a sketch runs」
+- id: tipo-1111031
+  title: 著作權令函 電子郵件1111031（人工智慧的創作）
+  publisher: 經濟部智慧財產局（令函日期 111-10-31）
+  url: https://www.tipo.gov.tw/tw/copyright/692-16813.html
+  accessed: '2026-10-29'
+  kind: government
+  supports: 「第一種是『以人工智慧為工具的創作』，也就是人類有實際的創意投入」、「著作權則由該投入創意的自然人享有」、「第二種是『人工智慧獨立創作』，也就是人類並無實際的創意投入」、「原則上無法享有著作權」
+- id: tipo-1140522c
+  title: 著作權令函 電子郵件1140522c（利用 ChatGPT 生成的圖畫）
+  publisher: 經濟部智慧財產局（令函日期 114-05-22）
+  url: https://www.tipo.gov.tw/tw/copyright/692-34252.html
+  accessed: '2026-10-29'
+  kind: government
+  supports: 「若只是把AI當作輔助工具(例如:繪圖軟體)來使用，而有人類實際的創意投入，則完成的創作成果仍可受著作權保護」、「可能會因該圖案與原始著作構成實質近似而有侵權之問題」
+- id: usco-ai2
+  title: 'Copyright and Artificial Intelligence, Part 2: Copyrightability'
+  publisher: U.S. Copyright Office（美國著作權局，2025 年 1 月）
+  url: https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 「Where AI merely assists an author in the creative process, its use does not change the copyrightability of the output.」（p.2）；「prompts alone do not provide sufficient human control to make users of an AI system the authors of the output」（p.18）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：資 P-V-1「文字式程式設計概念與實作。」（p.11）；資 H-V-1「資訊科技的合理使用原則。」（p.11）；運 a-V-3「能探索新興的資訊科技。」（p.7）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

@@ -1,47 +1,240 @@
 id: it.nn@uni
 concept: it.nn
 title: 神經網路與深度學習
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 人工智慧
-    - 機器學習
+  - 資訊
+  - 人工智慧
+  - 機器學習
   layer: advanced
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級、item 不放代碼；高中資訊科技必修的相關學習重點（資 D-V-2、資 P-V-1）只在 tech108 來源逐字引用（含頁碼，頁碼是頁腳印的頁碼，比 PDF 頁少 4），當作先學過的內容，不引用高中加深加廣選修；主要依據改用大學教科書和官方文件。生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；教育部《高級中等以下學校人工智慧使用和學習指引》的適用對象是高級中等以下學校，本點不引用。
+- 英文網頁的引文取自 2026-10-29 讀取的網頁；只取不含彎引號或數學式的句子或片段，省略處用刪節號。
+- NIST AI 100-1 的頁碼是頁腳印的「Page N」（PDF 頁 − 5）；引文避開 PDF 換行斷字（例如 oper- ation）的地方。
+- 原 scenario「從零寫一個小型神經網路辨識手寫數字，觀察學習率太大或太小時會怎樣。」改成先用試算表手算 f(x) ＝ x² 的梯度下降，再照 d2l 5.2 的從零實作訓練一層隱藏層、256 個隱藏單元的網路；資料用教科書用的 Fashion-MNIST 衣物圖片（784 個輸入特徵、10 類），手寫數字的 MNIST 也可以換用，教科書說它現在多半只當基本檢查。
+- d2l 12.3 的例子：f(x) ＝ x²、x 從 10 開始、走 10 步，每步 x ← (1 − 2η)x；η ＝ 0.2 得 10 × 0.6¹⁰ ≈ 0.060466（書上印出的值相同），η ＝ 0.05 得 10 × 0.9¹⁰ ≈ 3.486784，η ＝ 1.1 得 10 × (−1.2)¹⁰ ≈ 61.917364，都已驗算。
+- 原 ai.delegable「提供框架、加速訓練」保留，加上先自己算一次再用框架（本站建議）。
 prerequisites:
-  - it.ml@sh
-  - it.ds@sh
+- it.ml@sh
+- it.ds@sh
 links:
   why: []
   how: []
   related:
-    - ma.derivative@uni
-    - ma.linalg@uni
+  - ma.derivative@uni
+  - ma.linalg@uni
   deeper: []
 link_notes: 數學（導數與最佳化、線性代數與資料）
 competency:
   specialist:
-    - 機器學習
+  - 機器學習
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 提供框架、加速訓練
+  - 提供框架、加速訓練（先自己手算一次梯度下降再用框架，本站建議）
   human_experience:
-    - 理解數學原理、診斷訓練失敗
-idea: 神經網路由許多簡單單元層層組成，用梯度下降調整權重；資料、模型與運算資源共同決定能力。
+  - 理解數學原理、診斷訓練失敗
+idea: 神經網路由許多簡單單元層層組成：每個隱藏層先做線性計算，再經過非線性的激活函數；訓練時用反向傳播算出梯度，再用梯度下降調整權重。學習率太小學得慢，太大會來回震盪甚至發散。
 guiding_questions:
-  - 模型「學會」了，我們能知道它是怎麼想的嗎？
-scenario: 從零寫一個小型神經網路辨識手寫數字，觀察學習率太大或太小時會怎樣。
+- 模型「學會」了，我們能知道它是怎麼想的嗎？
+- 學習率太大或太小，訓練會怎樣？
+scenario: 先用試算表算 f(x) ＝ x² 的梯度下降，比較三種學習率；再照教科書的從零實作，訓練一層隱藏層的神經網路辨識衣物圖片，觀察學習率太大或太小時損失怎麼變（數字是示意，本站整理）。
 formats:
   slides: []
+  exercise: 目標：用試算表算出三種學習率下梯度下降 10 步的結果，說明學習率太小、剛好、太大各會怎樣，訓練一個一層隱藏層的網路並讀懂損失曲線（數字是示意）。　檢核：不看本頁，自己算出 x 從 10 開始、學習率 0.2 時每步乘 0.6，說出學習率 1.1 為什麼會發散，並用一句話說明為什麼隱藏層要有非線性的激活函數；三件事都對（數字是示意）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 用試算表算出三種學習率下梯度下降 10 步的結果，說明學習率太小、剛好、太大各會怎樣，訓練一個一層隱藏層的網路並讀懂損失曲線（數字是示意）。
+review: 不看本頁，自己算出 x 從 10 開始、學習率 0.2 時每步乘 0.6，說出學習率 1.1 為什麼會發散，並用一句話說明為什麼隱藏層要有非線性的激活函數；三件事都對（數字是示意）。
+why:
+  heading: 一層層的簡單計算
+  body:
+  - Google 的機器學習速成課這樣定義隱藏層：「additional layers between the input layer and the output layer are called hidden layers」；隱藏層每個神經元的值，算法和線性模型的輸出一樣。但只疊線性計算沒有用：「Linear operations performed on linear operations are still linear.」所以每層要再經過非線性的激活函數。
+  - 加上非線性之後，「Stacking nonlinearities on nonlinearities lets us model very complicated relationships between the inputs and the predicted outputs.」高中學過機器學習的基本概念和文字式程式設計，大學把它們接起來：自己寫出一個多層網路並訓練它。
+  items_title: 三個零件
+  items:
+  - title: 隱藏層
+    text: 輸入和輸出之間的層，先做線性計算。
+  - title: 激活函數
+    text: 加上非線性，才學得到複雜關係。
+  - title: 反向傳播
+    text: 算出每個權重該往哪裡調。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會算導數
+  - 會寫迴圈
+  sources:
+  - mlcc-nodes
+  - mlcc-act
+  - tech108
+how:
+  heading: 先手算，再訓練
+  body:
+  - 手算梯度下降：教科書用 f(x) ＝ x² 示範，x 從 10 開始，每步減掉學習率 η 乘上導數 2x，也就是每步乘上 (1 − 2η)。在試算表算 10 步：η ＝ 0.2 時 x 約 0.060466；η ＝ 0.05 時只到約 3.486784；η ＝ 1.1 時每步乘 −1.2，x 正負跳動、越跳越遠，約 61.917364（數字是示意，本站整理）。書上說「If we use a learning rate that is too small, it will cause」…「to update very slowly, requiring more iterations to get a better solution」，太大則「the optimization problem might diverge due to an overly large learning rate」。
+  - 訓練網路：照教科書的從零實作，建一個「MLP with one hidden layer and 256 hidden units」，學習率 0.1，資料是教科書用的 Fashion-MNIST 衣物圖片（「784 input features and 10 classes」）。不用手寫數字的 MNIST，是因為教科書說「Today, MNIST serves as more of a sanity check than as a benchmark.」反向傳播負責算梯度：「It makes gradient descent feasible for multi-layer neural networks.」再把學習率改小、改大各訓練一次，畫出損失曲線比較（設定是示意，本站整理）。
+  - 讀曲線：MLCC 說學習率太低時「the model can take a long time to converge」，太高時「the model never converges, but instead bounces around the weights and bias that minimize the loss」。損失降得很慢就調大，忽上忽下或變成很大的數就調小；學習率是自己設定的超參數，權重是訓練算出的參數。每次訓練都記下學習率、訓練輪數、最後的損失和測試準確率，比較時才知道差別從哪來（說明是本站整理）。
+  qa:
+    question: 學習率太大或太小，訓練會怎樣？
+    answer: 太小時每步只動一點點，要很多步才接近最低點；太大時會跨過最低點來回跳，甚至越跳越遠。MLCC 的說法是學習率太高時「the model never converges」（說明是本站整理）。
+    source: mlcc-lr
+  items_title: 四步做
+  items:
+  - title: 手算梯度下降
+    text: 試算表算三種學習率各 10 步。
+  - title: 建一層隱藏層
+    text: 照教科書的從零實作。
+  - title: 換學習率訓練
+    text: 改小、改大各試一次。
+  - title: 比較損失曲線
+    text: 說出太慢、剛好、震盪。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 算出三種結果
+  - 網路跑得起來
+  - 畫出損失曲線
+  - 說出調整理由
+  activity_figure: nn-flow
+  sources:
+  - d2l-gd
+  - d2l-mlpimpl
+  - d2l-data
+  - mlcc-bp
+  - mlcc-lr
+what:
+  heading: 會訓練，也知道限度
+  body:
+  - 學完後，自己能手算梯度下降、說明學習率的影響，能訓練一個一層隱藏層的網路並讀懂損失曲線。
+  - 但會訓練不代表看得懂模型在想什麼。NIST 的 AI 風險管理框架說，難以理解可能來自「the opaque nature of AI systems」，而「Explainable systems can be debugged and monitored more easily」。所以要記錄資料、設定和測試結果，不把準確率當成理解。
+  qa:
+    question: 模型「學會」了，我們能知道它是怎麼想的嗎？
+    answer: 只能知道一部分。每個權重的數值都看得到，卻很難直接讀出它為什麼這樣判斷；NIST 把這種情形說成「the opaque nature of AI systems」。實際的做法是記錄資料與設定、用沒看過的測試資料檢查，並看它在哪些例子出錯（說明是本站整理）。
+    source: nist-ai-rmf
+  items_title: 學完能做到
+  items:
+  - title: 說明學習率
+    text: 太小慢，太大震盪或發散。
+  - title: 訓練小網路
+    text: 一層隱藏層，讀懂損失曲線。
+  - title: 說出限度
+    text: 準確率高不等於看得懂。
+  checklist_title: 自我檢核
+  checklist:
+  - 三種結果算對
+  - 說出非線性
+  - 說出限度
+  figures:
+  - nn-compare
+  notes:
+  - 本頁的數字和訓練設定是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，程式、數字和引用的資料要自己驗證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - nist-ai-rmf
+  - genai-student
+figures:
+- id: nn-flow
+  type: flow
+  alt: 流程：手算梯度下降、建一層隱藏層的網路、換學習率訓練、比較損失曲線、記錄設定。
+  steps:
+  - actor: 自己
+    text: 手算梯度下降
+  - actor: 自己
+    text: 建隱藏層網路
+  - actor: 自己
+    text: 換學習率訓練
+  - actor: 自己
+    text: 比較損失曲線
+  - actor: 自己
+    text: 記錄設定
+  caption: 流程是本站建議。
+- id: nn-compare
+  type: compare
+  alt: 比較三種學習率：f(x) ＝ x²、x 從 10 開始走 10 步，0.05 太慢、0.2 接近 0、1.1 正負跳動越來越遠（示意）。
+  source: d2l-gd
+  relation: not_equal
+  items:
+  - term: η ＝ 0.05
+    note: 10 步後約 3.49，太慢
+  - term: η ＝ 0.2
+    note: 10 步後約 0.06，接近 0
+  - term: η ＝ 1.1
+    note: 正負跳動，越來越遠
+  caption: 教科書用 f(x) ＝ x² 示範學習率；例子是本站整理，數字是示意。
+sources:
+- id: mlcc-nodes
+  title: 'Neural networks: Nodes and hidden layers（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「additional layers between the input layer and the output layer are called hidden layers」、「The value of each neuron in the hidden layer is calculated the same way as the output of a linear model」
+- id: mlcc-act
+  title: 'Neural networks: Activation functions（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/neural-networks/activation-functions
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Linear operations performed on linear operations are still linear.」、「Stacking nonlinearities on nonlinearities lets us model very complicated relationships between the inputs and the predicted outputs.」
+- id: mlcc-bp
+  title: 'Neural networks: Training using backpropagation（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/neural-networks/backpropagation
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「It makes gradient descent feasible for multi-layer neural networks.」
+- id: mlcc-lr
+  title: 'Linear regression: Hyperparameters（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/linear-regression/hyperparameters
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「If the learning rate is too low, the model can take a long time to converge. However, if the learning rate is too high, the model never converges, but instead bounces around the weights and bias that minimize the loss.」、「hyperparameters are values that you control; parameters are values that the model calculates during training.」
+- id: d2l-gd
+  title: Dive into Deep Learning, 12.3 Gradient Descent
+  publisher: Aston Zhang、Zachary C. Lipton、Mu Li、Alexander J. Smola 著（Cambridge University Press 出版，d2l.ai 開放網頁版）
+  url: https://d2l.ai/chapter_optimization/gd.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「the optimization problem might diverge due to an overly large learning rate」、「If we use a learning rate that is too small, it will cause」…「to update very slowly, requiring more iterations to get a better solution」；書中的程式用 f(x) ＝ x²、x 從 10 開始、學習率 0.2 走 10 步，印出 x 約 0.060466
+- id: d2l-mlpimpl
+  title: Dive into Deep Learning, 5.2 Implementation of Multilayer Perceptrons
+  publisher: Aston Zhang、Zachary C. Lipton、Mu Li、Alexander J. Smola 著（Cambridge University Press 出版，d2l.ai 開放網頁版）
+  url: https://d2l.ai/chapter_multilayer-perceptrons/mlp-implementation.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「we will implement an MLP with one hidden layer and 256 hidden units」、「784 input features and 10 classes」、「Both the number of layers and their width are adjustable (they are considered hyperparameters).」
+- id: d2l-data
+  title: Dive into Deep Learning, 4.2 The Image Classification Dataset
+  publisher: Aston Zhang、Zachary C. Lipton、Mu Li、Alexander J. Smola 著（Cambridge University Press 出版，d2l.ai 開放網頁版）
+  url: https://d2l.ai/chapter_linear-classification/image-classification-dataset.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「One widely used dataset for image classification is the MNIST dataset」、「Today, MNIST serves as more of a sanity check than as a benchmark.」
+- id: nist-ai-rmf
+  title: Artificial Intelligence Risk Management Framework (AI RMF 1.0)（NIST AI 100-1）
+  publisher: National Institute of Standards and Technology（美國商務部，2023 年 1 月）
+  url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 「Inscrutability can be a result of the opaque nature of AI systems」（p.6）；「Explainable systems can be debugged and monitored more easily」（p.16）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：資 D-V-2「資料探勘與機器學習的基本概念。」（p.11）；資 P-V-1「文字式程式設計概念與實作。」（p.11）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
