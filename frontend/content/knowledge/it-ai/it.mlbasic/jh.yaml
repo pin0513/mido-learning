@@ -192,7 +192,7 @@ sources:
   url: https://depart.moe.edu.tw/ed2700/News_Content.aspx?n=A1E30194B1C3ACDF&s=4C49BBB8F747DE99
   accessed: '2026-10-29'
   kind: government
-  supports: A 素養與理解（國中）A-1-II-1「能熟練運用AI工具輔助科學探究（數據分析）、社會科報告（觀點對照）或語文創作，並理解AI透過資料訓練與模型運算產生結果的基本原理。」（p.11）；C 運用與創造（國中）C-2-II-1「理解『垃圾進，垃圾出（GIGO）』原理，具備基本的資料清理與辨識偏誤，以提升AI模型準確度。」（p.13）
+  supports: 能力A 運用AI學習的能力（國中）A-1-II-1「能熟練運用AI工具輔助科學探究（數據分析）、社會科報告（觀點對照）或語文創作，並理解AI透過資料訓練與模型運算產生結果的基本原理。」（p.11）；能力C 運用AI解決問題的能力（國中）C-2-II-1「理解『垃圾進，垃圾出（GIGO）』原理，具備基本的資料清理與辨識偏誤，以提升AI模型準確度。」（p.13）
 - id: mlcc-split
   title: 'Datasets: Dividing the original dataset（Machine Learning Crash Course）'
   publisher: Google for Developers
