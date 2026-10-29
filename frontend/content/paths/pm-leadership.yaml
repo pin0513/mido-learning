@@ -16,7 +16,7 @@ paths:
       - pm.triangle@jh
       - pm.estimate@sh
       - pm.evm@uni
-    colearn: 孩子讀國小版「大事拆成小事」，大人讀高中版「WBS 與三點估算」，一起規劃一次家庭出遊，結束後開星星與願望回顧。
+    colearn: 孩子讀國小版「大事拆成小事」，大人讀高中版「WBS 與三點估算」，一起規劃一次家庭出遊，結束後開星星與箭頭回顧。
   - id: pm.schedule
     title: 時間與排程
     knowledge_points:

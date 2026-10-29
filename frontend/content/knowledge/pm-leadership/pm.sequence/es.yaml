@@ -1,54 +1,220 @@
 id: pm.sequence@es
 concept: pm.sequence
 title: 先做什麼、後做什麼
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  - 管理
+  - 專案管理與領導
+  - 規劃
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 綜合活動
+  - 綜合活動
   core_competencies:
-    - A2
-    - A3
-    - C2
+  - A2
+  - A3
+  - C2
   issues: []
+  performances:
+  - 1b-III-1
+  - 2c-III-1
+  contents:
+  - Ab-III-1
+  - Bc-III-3
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 國民小學教育的 E-A2、E-A3、E-C2 與綜合活動領綱 p.3、p.5 的綜-E-A2、綜-E-A3、綜-E-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage.grades 填 5、6：本點的綜合活動代碼都是第三學習階段（III），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，議題融入說明手冊少 16，氣象常識問答集少 10，NASA 排程手冊少 1，NASA 風險手冊少 20。
+- 原 competency.specialist「代數」改成「排程」（competencies.yaml 的 specialist scheduling，pm-leadership 用）：本點練的是排先後與時程，不是代數。
+- 原 scenario「做一張『倒數 10 天』日曆，把任務卡貼到對的日子。」保留做法，引號拿掉，天數標示意，補上先畫箭頭再往回排（本站建議）。
+- 原 ai.delegable「檢查順序有沒有前後矛盾」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 要徑（critical path）只在 How 的 qa 點到，算法留給高中的 pm.cpm@sh；NASA 手冊的定義原文見來源。
 prerequisites:
-  - pm.breakdown@es
+- pm.breakdown@es
 links:
   why: []
   how: []
   related:
-    - ma.measure@es
+  - ma.measure@es
   deeper:
-    - pm.gantt@jh
-link_notes: 數學（時間與順序）
+  - pm.gantt@jh
+link_notes: 數學（時間與順序）；綜合活動 1b-III-1、2c-III-1、Ab-III-1、Bc-III-3。
 competency:
   specialist:
-    - 代數
+  - 排程
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
 ai:
   delegable:
-    - 檢查順序有沒有前後矛盾
+  - 檢查順序有沒有前後矛盾（由大人操作，本站建議）
   human_experience:
-    - 親身體會「來不及」的感覺，學會預留時間
+  - 親身體會「來不及」的感覺，學會預留時間
 idea: 有些事要等別的事完成才能做，例如要先知道人數才能買點心。把任務排到時間線上。
 guiding_questions:
-  - 哪一張任務卡如果晚了，後面全部都會跟著晚？
-scenario: 做一張「倒數 10 天」日曆，把任務卡貼到對的日子。
+- 哪一張任務卡如果晚了，後面全部都會跟著晚？
+- 要先知道什麼，才能做下一件事？
+- 為什麼要從活動那天往回排？
+scenario: 做一張倒數 10 天的日曆（天數是示意），先在任務卡之間畫先後箭頭，再從同樂會那天往回排，把任務卡貼到對的日子；家庭出遊也可以照做（本站建議）。
 formats:
   slides: []
+  exercise: 目標：替一次活動的任務卡畫出先後箭頭，從活動那天往回排到日曆上，找出最不能晚的那一串卡，並留一天緩衝。　檢核：家長或老師看日曆：每張卡都排在它前面那張之後，活動前留了緩衝的日子；孩子說得出為什麼要先問人數才買點心，也指得出最不能晚的那一串卡，說得出它晚了為什麼會用掉緩衝。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 替一次活動的任務卡畫出先後箭頭，從活動那天往回排到日曆上，找出最不能晚的那一串卡，並留一天緩衝。
+review: 家長或老師看日曆：每張卡都排在它前面那張之後，活動前留了緩衝的日子；孩子說得出為什麼要先問人數才買點心，也指得出最不能晚的那一串卡，說得出它晚了為什麼會用掉緩衝。
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 有些事要等別的事做完
+  body:
+  - 108 課綱的綜合活動要高年級「規劃與執行學習計畫，培養自律與負責的態度。」補充說明也寫到「解決問題的規劃包括：探究問題成因、思考解決方法、評估各種方法的優缺點，進一步擬訂解決步驟等。」排出先後，就是在擬訂步驟。
+  - NASA 的排程手冊把最常見的先後關係叫做完成到開始：「The successor activity cannot start until the predecessor activity has completed.」例如要先知道人數，才能買點心（例子是本站整理）。
+  qa:
+    question: 要先知道什麼，才能做下一件事？
+    answer: 問自己：這張卡要用到哪張卡做出來的東西？買點心要用到人數，所以問人數那張卡要排前面。NASA 手冊說這是最常見的關係，因為它照著最常見的工作順序：「complete an activity and hand off the work to the next activity.」（說明是本站整理）
+    source: nasa-smh
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 規劃與執行計畫
+    text: 綜合活動 1b-III-1：規劃與執行學習計畫，培養自律與負責的態度。
+    code: 1b-III-1
+  - title: 學習計畫
+    text: 綜合活動 Ab-III-1：學習計畫的規劃與執行。
+    code: Ab-III-1
+  - title: 規劃策略解決問題
+    text: 綜合活動 2c-III-1：分析與判讀各類資源，規劃策略以解決日常生活的問題。
+    code: 2c-III-1
+  - title: 解決問題的規劃
+    text: 綜合活動 Bc-III-3：運用各類資源解決問題的規劃。
+    code: Bc-III-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 任務卡已經拆好
+  - 知道活動日期
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - nasa-smh
+  - zonggang
+how:
+  heading: 畫箭頭，再往回排
+  body:
+  - 畫箭頭：拿出大事拆成小事那一課拆好的任務卡，兩張兩張問：哪張要先做完，另一張才能開始？從先做的畫箭頭指向後做的。NASA 手冊說，排程裡的每一項「should have at least one predecessor and at least one successor」，只有開始和結束可以例外；所以除了第一張和最後一張，每張卡前後都要接得上箭頭（本站整理）。
+  - 往回排：活動日期不能改，所以從同樂會那天開始，沿著箭頭倒著把卡片貼到日曆上，才知道每張卡最晚哪天要開始；每張卡要花幾天就占幾格，沒有箭頭相連的卡可以排在同一天（本站整理）。課綱的學習計畫也包含「學習目標、學習時間、學習內容、學習方法等規劃」。最後在活動前留一天空白當緩衝（本站建議）。排好後，沿著箭頭找出每張卡天數加起來最多的那一串：這一串沒有空檔，任何一張晚一天，後面都跟著晚，只能用掉緩衝（本站整理）。
+  qa:
+    question: 哪一張任務卡如果晚了，後面全部都會跟著晚？
+    answer: 沿著箭頭找出從開始到活動那天、每張卡天數加起來最多的那一串；這一串上的任何一張晚一天，後面每張都跟著晚一天，只能用掉活動前的緩衝，緩衝用完就來不及了。NASA 手冊把它叫做要徑：「the critical path is the sequence of activities that are tied together with network logic that have the longest overall duration」。高中會再學怎麼算（說明是本站整理）。
+    source: nasa-smh
+  items_title: 四步做
+  items:
+  - title: 畫先後箭頭
+    text: 先做的指向後做的。
+  - title: 從活動日往回排
+    text: 每張卡最晚哪天開始。
+  - title: 找出最不能晚的一串
+    text: 天數加起來最多的那串。
+  - title: 留一天緩衝
+    text: 活動前空一天。
+  checklist_title: 排完檢查
+  checklist:
+  - 每張卡接得上
+  - 先做的排前面
+  - 留了緩衝
+  activity_figure: seq-flow
+  sources:
+  - nasa-smh
+  - zonghe
+what:
+  heading: 排得出先後，也知道哪裡不能晚
+  body:
+  - 學完後，孩子能替一次活動的任務卡畫出先後箭頭，從活動那天往回排到日曆上，指出最不能晚的那一串卡，並留一天緩衝。
+  items_title: 學完能做到
+  items:
+  - title: 畫出先後
+    text: 說得出為什麼要先做。
+  - title: 排到日曆
+    text: 從活動那天往回排。
+  - title: 找出不能晚的卡
+    text: 也留了緩衝。
+  checklist_title: 家長檢核
+  checklist:
+  - 箭頭方向對
+  - 日曆排得對
+  - 留了緩衝
+  figures:
+  - seq-compare
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: seq-flow
+  type: flow
+  alt: 排先後五步驟：列出任務卡、畫先後箭頭、從活動日往回排、找出最不能晚的一串、留一天緩衝。
+  steps:
+  - actor: 全班
+    text: 列出任務卡
+  - actor: 全班
+    text: 畫先後箭頭
+  - actor: 全班
+    text: 從活動日往回排
+  - actor: 全班
+    text: 找出最不能晚的
+  - actor: 全班
+    text: 留一天緩衝
+  source: nasa-smh
+  caption: 流程是本站建議。
+- id: seq-compare
+  type: compare
+  alt: 比較兩種順序：先買點心再問人數，可能太多或不夠；先問人數再買點心，數量剛好。
+  source: nasa-smh
+  relation: versus
+  items:
+  - term: 先買再問
+    note: 先買點心再問人數，可能太多或不夠
+  - term: 先問再買
+    note: 先問人數再買點心，數量剛好
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：1b-III-1「規劃與執行學習計畫，培養自律與負責的態度。」（p.67）；Ab-III-1「學習計畫的規劃與執行。」（p.67）；2c-III-1「分析與判讀各類資源，規劃策略以解決日常生活的問題。」（p.75）；Bc-III-3「運用各類資源解決問題的規劃。」（p.75）；學習表現細項「規劃、執行、檢核、修正學習計畫。」（p.67）；補充說明 Ab-III-1「學習計畫如：學習目標、學習時間、學習內容、學習方法等規劃。」（p.67）；補充說明 Bc-III-3「解決問題的規劃包括：探究問題成因、思考解決方法、評估各種方法的優缺點，進一步擬訂解決步驟等。」（p.75）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-A3「規劃、執行學習及生活計畫，運用資源或策略，預防危機、保護自己，並以創新思考方式，因應日常生活情境。」（p.3）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-A3「具備擬定計畫與實作的能力，並以創新思考方式，因應日常生活情境。」（p.5）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: nasa-smh
+  title: NASA Schedule Management Handbook（NASA/SP-2010-3403, Revision 1）
+  publisher: NASA（Office of the Chief Financial Officer；生效日 2020 年 1 月 30 日）
+  url: https://www.nasa.gov/wp-content/uploads/2020/11/nasa_schedule_management_hand_book.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: Finish-to-Start「The successor activity cannot start until the predecessor activity has completed. This is the most common linkage because it follows the most common work flow; complete an activity and hand off the work to the next activity.」（p.99）；「Every milestone and activity in the schedule should have at least one predecessor and at least one successor」（p.95）；「the critical path is the sequence of activities that are tied together with network logic that have the longest overall duration」（p.115）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

@@ -1,56 +1,227 @@
 id: pm.roles@es
 concept: pm.roles
 title: 分工與說到做到
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 團隊
+  - 管理
+  - 專案管理與領導
+  - 團隊
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 綜合活動
+  - 綜合活動
   core_competencies:
-    - A2
-    - A3
-    - C2
+  - A2
+  - A3
+  - C2
   issues: []
+  performances:
+  - 2b-III-1
+  contents:
+  - Bb-III-1
+  - Bb-III-2
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 國民小學教育的 E-A2、E-A3、E-C2 與綜合活動領綱 p.3、p.5 的綜-E-A2、綜-E-A3、綜-E-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage.grades 填 5、6：本點的綜合活動代碼都是第三學習階段（III），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，議題融入說明手冊少 16，氣象常識問答集少 10，NASA 排程手冊少 1，NASA 風險手冊少 20。
+- 原 scenario「任務板分『待做／進行中／完成』三欄，每天早自習移動自己的卡片。」保留做法，引號拿掉，補上寫名字和家裡用便利貼的做法（本站建議）。
+- 原 ai.delegable「製作任務板範本」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 每人同時最多一張進行中的卡是本站建議：Kanban 指南要求控制進行中的數量，沒有規定國小活動要幾張。
+- Kanban Guide 與 Scrum Guide 都是 CC BY-SA 4.0 的軟體團隊指南，本點只借看板、進行中與承諾的說法，英文短句引用，中文說明是本站整理。
 prerequisites:
-  - pm.breakdown@es
+- pm.breakdown@es
 links:
   why: []
   how: []
   related:
-    - ph.fair@es
+  - ph.fair@es
   deeper:
-    - pm.team@jh
-    - pm.lead@jh
-link_notes: 綜合活動（團體生活）、心理學（責任感）
+  - pm.team@jh
+  - pm.lead@jh
+link_notes: 綜合活動（團體生活）、心理學（責任感）；綜合活動 2b-III-1、Bb-III-1、Bb-III-2。
 competency:
   specialist:
-    - 團隊合作實作
+  - 團隊合作實作
   generalist:
-    - 團隊合作
-    - 溝通
-    - 專案管理
+  - 團隊合作
+  - 溝通
+  - 專案管理
 ai:
   delegable:
-    - 製作任務板範本
+  - 製作任務板範本（由大人操作，本站建議）
   human_experience:
-    - 做出承諾、建立信任、鼓起勇氣請求協助
+  - 做出承諾、建立信任、鼓起勇氣請求協助
 idea: 每個人認領自己的任務，並且說到做到；需要幫忙時要早點說出來。
 guiding_questions:
-  - 如果有人的卡片一直停在「進行中」，我們可以怎麼幫他？
-scenario: 任務板分「待做／進行中／完成」三欄，每天早自習移動自己的卡片。
+- 如果有人的卡片一直停在「進行中」，我們可以怎麼幫他？
+- 認領一張卡以後，怎樣才算說到做到？
+- 同一時間手上可以有幾張進行中的卡？
+scenario: 任務板分成待做、進行中、完成三欄，每人在認領的任務卡寫上名字，每天早自習移動自己的卡片；家裡也可以用冰箱上的便利貼做（本站建議）。
 formats:
   slides: []
+  exercise: 目標：在任務板上認領任務卡並寫上名字，每天移動自己的卡片；卡住時在約好的時間前說出來，請人幫忙。　檢核：家長或老師看任務板：每張卡都有名字，孩子的卡從待做一路移到完成，進行中一次只有一張；有卡住時，孩子說得出他什麼時候、跟誰說了，大家怎麼幫忙。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 在任務板上認領任務卡並寫上名字，每天移動自己的卡片；卡住時在約好的時間前說出來，請人幫忙。
+review: 家長或老師看任務板：每張卡都有名字，孩子的卡從待做一路移到完成，進行中一次只有一張；有卡住時，孩子說得出他什麼時候、跟誰說了，大家怎麼幫忙。
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 說好的事，大家看得到
+  body:
+  - 108 課綱的綜合活動要高年級「參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。」補充說明寫到，要「了解自己在團體中扮演的角色，省思並扮演好自己的角色」。
+  - Scrum 指南把承諾寫成團隊的價值：「The Scrum Team commits to achieving its goals and to supporting each other.」說到做到不只是做好自己那張卡，也包括卡住時讓別人幫得上忙（說明是本站整理）。
+  qa:
+    question: 認領一張卡以後，怎樣才算說到做到？
+    answer: 照卡上寫的時間做完，移到完成；做不完時，在約好的時間前先說出來，請大家一起想辦法。Scrum 指南說團隊承諾的是「achieving its goals and to supporting each other」，所以早點說、讓人幫忙，也是說到做到（說明是本站整理）。
+    source: scrum-guide
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 在團體中合作
+    text: 綜合活動 2b-III-1：參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。
+    code: 2b-III-1
+  - title: 團體中的角色
+    text: 綜合活動 Bb-III-1：團體中的角色探索。
+    code: Bb-III-1
+  - title: 團隊運作的問題
+    text: 綜合活動 Bb-III-2：團隊運作的問題與解決。
+    code: Bb-III-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 任務卡已經拆好
+  - 每張卡寫了時間
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - scrum-guide
+  - zonggang
+how:
+  heading: 一張卡，從待做移到完成
+  body:
+  - 做一個任務板：Kanban 指南說「The visualization of a DoW is a Kanban board.」DoW 是工作流程的定義，要寫清楚工作從哪裡開始、到哪裡算完成：「A definition for when work items are started and finished within the workflow.」同樂會的任務板分成待做、進行中、完成三欄，卡片就是大事拆成小事那一課拆出來的那一疊（本站整理）。
+  - 認領與移動：每人認領卡片，在卡上寫好名字和約好做完的日子，開始做就移到進行中，做完才移到完成。指南說「Any work items between a started point and a finished point are considered work in progress (WIP).」也要控制進行中的數量；本站建議每人同時最多一張在進行中，做完一張再拿下一張。
+  - 卡住早點說：指南說「Items in the workflow must be managed actively.」卡片停在進行中好幾天沒動，就是要停下來問的訊號。課綱的補充說明也要在活動中「覺察團隊運作出現的問題，找出原因，提出有效解決的策略，並著手改善。」大家可以幫忙做一部分、把卡再拆小，或換人接手（本站建議）。
+  qa:
+    question: 如果有人的卡片一直停在「進行中」，我們可以怎麼幫他？
+    answer: 先問他卡在哪裡，不要先怪他。Kanban 指南有一個量法叫工作項目的年齡：「The elapsed time between when a work item started and the current date.」卡片停得越久，越要早點一起想辦法：幫忙做一部分、把卡再拆小，或換人接手（說明是本站整理）。
+    source: kanban-guide
+  items_title: 四步做
+  items:
+  - title: 做任務板
+    text: 分成待做、進行中、完成。
+  - title: 認領寫名字
+    text: 一人一次一張進行中。
+  - title: 每天移卡片
+    text: 開始做、做完都要移。
+  - title: 卡住早點說
+    text: 在約好的時間前說。
+  checklist_title: 每天看一下
+  checklist:
+  - 卡上有名字
+  - 進行中只有一張
+  - 卡住說出來了
+  activity_figure: roles-flow
+  sources:
+  - kanban-guide
+  - zonghe
+what:
+  heading: 看得到誰在做什麼
+  body:
+  - 學完後，孩子能在任務板上認領任務、每天移動自己的卡片，卡住時在約好的時間前說出來，也會一起幫忙卡住的同學。
+  items_title: 學完能做到
+  items:
+  - title: 認領任務
+    text: 卡上寫名字。
+  - title: 每天移卡片
+    text: 進行中一次一張。
+  - title: 卡住早點說
+    text: 也幫忙卡住的同學。
+  checklist_title: 家長檢核
+  checklist:
+  - 每張卡有名字
+  - 卡片有移動
+  - 卡住有說出來
+  figures:
+  - roles-compare
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: roles-flow
+  type: flow
+  alt: 任務板流程：自己認領任務卡、寫上名字、每天移動卡片、卡住早點說，全班一起想辦法。
+  steps:
+  - actor: 自己
+    text: 認領任務卡
+  - actor: 自己
+    text: 寫上名字
+  - actor: 自己
+    text: 每天移動卡片
+  - actor: 自己
+    text: 卡住早點說
+  - actor: 全班
+    text: 一起想辦法
+  source: kanban-guide
+  caption: 流程是本站建議。
+- id: roles-compare
+  type: compare
+  alt: 比較卡住時的兩種做法：最後才說，前一天才發現來不及；卡住當天就說，大家還有時間幫忙。
+  source: kanban-guide
+  relation: versus
+  items:
+  - term: 最後才說
+    note: 前一天才發現來不及，沒人幫得上
+  - term: 早點說
+    note: 卡住當天就說，大家還有時間幫忙
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：2b-III-1「參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。」（p.73）；Bb-III-1「團體中的角色探索。」（p.73）；Bb-III-2「團隊運作的問題與解決。」（p.73）；補充說明 Bb-III-1「藉由參與各項活動及生活情境，了解自己在團體中扮演的角色，省思並扮演好自己的角色」（p.73）；補充說明 Bb-III-2「在活動中覺察團隊運作出現的問題，找出原因，提出有效解決的策略，並著手改善。」（p.74）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-A3「規劃、執行學習及生活計畫，運用資源或策略，預防危機、保護自己，並以創新思考方式，因應日常生活情境。」（p.3）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-A3「具備擬定計畫與實作的能力，並以創新思考方式，因應日常生活情境。」（p.5）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: kanban-guide
+  title: The Kanban Guide（May 2025）
+  publisher: John Coleman、Daniel Vacanti 等（kanbanguides.org；© 2019-2025 Orderly Disruption Limited、Daniel S. Vacanti, Inc.，CC BY-SA 4.0）
+  url: https://kanbanguides.org/english/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「The visualization of a DoW is a Kanban board.」；「A definition for when work items are started and finished within the workflow.」；「Any work items between a started point and a finished point are considered work in progress (WIP).」；「Items in the workflow must be managed actively.」；「Kanban system members must explicitly control the number of work items in a workflow from started to finished.」；Work Item Age「The elapsed time between when a work item started and the current date.」
+- id: scrum-guide
+  title: The 2020 Scrum Guide
+  publisher: Ken Schwaber、Jeff Sutherland（scrumguides.org，2020 年 11 月，CC BY-SA 4.0）
+  url: https://scrumguides.org/scrum-guide.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: Scrum Values：「The Scrum Team commits to achieving its goals and to supporting each other.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

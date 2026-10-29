@@ -1,55 +1,244 @@
 id: pm.planb@es
 concept: pm.planb
 title: 如果下雨怎麼辦？
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 風險
+  - 管理
+  - 專案管理與領導
+  - 風險
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 綜合活動
-    - 健康與體育
+  - 綜合活動
   core_competencies:
-    - A2
-    - A3
-    - C2
+  - A2
+  - A3
+  - C2
   issues:
-    - 安全教育
+  - 安全教育
+  performances:
+  - 3a-III-1
+  contents:
+  - Ca-III-1
+  - Ca-III-2
+  - Ca-III-3
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 國民小學教育的 E-A2、E-A3、E-C2 與綜合活動領綱 p.3、p.5 的綜-E-A2、綜-E-A3、綜-E-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage.grades 填 5、6：本點的綜合活動代碼都是第三學習階段（III），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，議題融入說明手冊少 16，氣象常識問答集少 10，NASA 排程手冊少 1，NASA 風險手冊少 20。
+- 原 curriculum_108.domains 的健康與體育刪除：本點的危機辨識與 B 計畫對應綜合活動 3a-III-1 與 Ca-III-1～Ca-III-3，沒有對應的健康與體育代碼；link_notes 仍保留健康與體育（安全）當跨科提示（本站建議）。
+- 3a-III-1、Ca-III-1、Ca-III-2、Ca-III-3 不在 main 的代碼表，已寫進 taxonomy-additions.yaml，頁碼用綜合活動領綱 p.15 的學習重點表（整句都在同一頁）。
+- 議題保留安全教育：議題融入說明手冊國小的實質內涵 安E2「了解危機與安全。」、安E4「探討日常生活應該注意的安全。」（p.89），手冊建議融入的領域包含綜合活動領域（p.90）。
+- 原 scenario「每組替同樂會想 2 個『萬一』，並寫下對應的 B 計畫。」保留做法，引號拿掉，個數標示意，補上改用 B 計畫的時機和家庭出遊也可以照做（本站建議）。
+- 原 ai.delegable「列出常見的意外狀況」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 降雨機率的說法依中央氣象局氣象常識問答集 p.55；前一天看降雨機率、很高就改到室內是本站建議，沒有訂數字門檻。
+- 安全界線：受傷、地震、火災這類情況要馬上找大人、照學校的防災規定做，不由孩子自己的 B 計畫處理（本站建議；資源清單依綜合活動領綱 p.79）。
 prerequisites:
-  - pm.sequence@es
+- pm.sequence@es
 links:
   why: []
   how: []
   related: []
   deeper:
-    - pm.risk@jh
-link_notes: 自然科學（天氣）、健康與體育（安全）
+  - pm.risk@jh
+link_notes: 自然科學（天氣）、健康與體育（安全）；綜合活動 3a-III-1、Ca-III-1、Ca-III-2、Ca-III-3。
 competency:
   specialist:
-    - 風險管理
+  - 風險管理
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 列出常見的意外狀況
+  - 列出常見的意外狀況（由大人操作，本站建議）
   human_experience:
-    - 意外真的發生時保持冷靜、臨場應變
+  - 意外真的發生時保持冷靜、臨場應變
 idea: 計畫常會遇到意外。事先想好「萬一」，真的發生時就不會手忙腳亂。
 guiding_questions:
-  - 哪些「萬一」最可能發生？哪些發生了最麻煩？
-scenario: 每組替同樂會想 2 個「萬一」，並寫下對應的 B 計畫。
+- 哪些「萬一」最可能發生？哪些發生了最麻煩？
+- 什麼時候要改用 B 計畫？
+- 哪些萬一不是小朋友自己處理，要馬上找大人？
+scenario: 每組替同樂會想 2 個萬一（個數是示意），替每個萬一寫好 B 計畫和改用 B 計畫的時機；家庭出遊也可以照做（本站建議）。
 formats:
   slides: []
+  exercise: 目標：替一次活動想出幾個萬一，比較每個萬一多可能發生、發生了多麻煩，替最重要的兩個寫好 B 計畫和改用的時機，並分得出哪些要馬上找大人。　檢核：家長或老師看 B 計畫：每個都寫了什麼情況改用、改成怎樣、誰負責；孩子說得出為什麼先處理這兩個萬一，也說得出受傷或地震這類情況要馬上找大人、照學校的規定做。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 替一次活動想出幾個萬一，比較每個萬一多可能發生、發生了多麻煩，替最重要的兩個寫好 B 計畫和改用的時機，並分得出哪些要馬上找大人。
+review: 家長或老師看 B 計畫：每個都寫了什麼情況改用、改成怎樣、誰負責；孩子說得出為什麼先處理這兩個萬一，也說得出受傷或地震這類情況要馬上找大人、照學校的規定做。
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 事先想好萬一
+  body:
+  - 108 課綱的綜合活動要高年級「辨識周遭環境的潛藏危機，運用各項資源或策略化解危機。」補充說明舉的例子是「自然環境潛藏的危機，如：風災、地震、水災、火災、土石流、雷擊、海嘯及複合式危機等。」
+  - NASA 的風險管理手冊把風險拆成三件事：會發生什麼情況、多可能發生、發生了有多嚴重。原文是「The scenario(s) leading to degraded performance」、「The likelihood(s) (qualitative or quantitative) of those scenarios.」和「The consequence(s) (qualitative or quantitative severity of the performance degradation) that would result if those scenarios were to occur.」（翻譯是本站整理）
+  qa:
+    question: 哪些「萬一」最可能發生？哪些發生了最麻煩？
+    answer: 把每個萬一問兩題：多可能發生？發生了多麻煩？這就是 NASA 手冊說的可能性「The likelihood(s)」和後果「The consequence(s)」。兩題都高的先寫 B 計畫；不太可能又不麻煩的，記下來就好（說明是本站整理）。
+    source: nasa-risk
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 辨識危機並化解
+    text: 綜合活動 3a-III-1：辨識周遭環境的潛藏危機，運用各項資源或策略化解危機。
+    code: 3a-III-1
+  - title: 環境潛藏的危機
+    text: 綜合活動 Ca-III-1：環境潛藏的危機。
+    code: Ca-III-1
+  - title: 辨識危機的方法
+    text: 綜合活動 Ca-III-2：辨識環境潛藏危機的方法。
+    code: Ca-III-2
+  - title: 化解危機的資源或策略
+    text: 綜合活動 Ca-III-3：化解危機的資源或策略。
+    code: Ca-III-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 活動計畫已排好
+  - 知道活動場地
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - nasa-risk
+  - zonggang
+how:
+  heading: 看天氣，寫 B 計畫
+  body:
+  - 列出萬一：用課綱說的方法「有效運用各種感官，客觀蒐集訊息，以辨識可能存在的危機。」例如去看場地、問老師以前遇過什麼事。再把每個萬一問兩題：多可能？多麻煩？兩題都高的先處理（本站建議）。
+  - 看降雨機率：中央氣象局的氣象常識問答集說，降雨機率大時，「對於預定的活動即須預作準備」，也提醒「在使用降雨機率預報時，必須存有風險的觀念」。所以 B 計畫要先寫好改用的時機，例如前一天降雨機率很高就改到室內（本站建議）。
+  - 寫 B 計畫：每個 B 計畫寫清楚什麼情況改用、改成怎樣、誰負責。NASA 手冊說：「Risk drivers can be selected for detailed observation and contingency plans developed.」受傷、地震、火災這類情況不是孩子自己處理，課綱列的資源有「親人、師長、社區愛心商店、急救專線、社會福利機構等」，要馬上找大人、照學校的防災規定做（本站建議）。
+  qa:
+    question: 什麼時候要改用 B 計畫？
+    answer: 事先說好一個看得到的時機，到時候照著做，不用臨時吵。例如前一天晚上看降雨機率，很高就改到室內。問答集說降雨機率大時，「對於預定的活動即須預作準備」（時機的訂法是本站建議）。
+    source: cwa-qa
+  items_title: 四步做
+  items:
+  - title: 列出萬一
+    text: 看場地、問老師。
+  - title: 問兩題
+    text: 多可能？多麻煩？
+  - title: 寫 B 計畫
+    text: 什麼時候改用、改成怎樣、誰負責。
+  - title: 危險就找大人
+    text: 照學校的防災規定做。
+  checklist_title: 每個 B 計畫寫上
+  checklist:
+  - 什麼時候改用
+  - 改成怎樣
+  - 誰負責
+  activity_figure: planb-flow
+  sources:
+  - zonghe
+  - cwa-qa
+  - nasa-risk
+what:
+  heading: 萬一發生，也不慌
+  body:
+  - 學完後，孩子能替一次活動想出萬一，比較可能性和麻煩程度，替最重要的萬一寫好 B 計畫和改用時機，並分得出哪些情況要馬上找大人。
+  items_title: 學完能做到
+  items:
+  - title: 找出萬一
+    text: 看場地、問老師。
+  - title: 排出先後
+    text: 先處理又可能又麻煩的。
+  - title: 寫好 B 計畫
+    text: 也寫好改用的時機。
+  - title: 知道找大人
+    text: 受傷、地震、火災。
+  checklist_title: 家長檢核
+  checklist:
+  - B 計畫寫清楚
+  - 說得出改用時機
+  - 知道要找大人
+  figures:
+  - planb-compare
+  notes:
+  - 本點融入安全教育議題：議題融入說明手冊國小的實質內涵有「了解危機與安全。」和「探討日常生活應該注意的安全。」
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: planb-flow
+  type: flow
+  alt: 寫 B 計畫五步驟：每組列出萬一、問多可能多麻煩、挑最重要的、寫好 B 計畫、說好改用時機。
+  steps:
+  - actor: 每組
+    text: 列出萬一
+  - actor: 每組
+    text: 問多可能多麻煩
+  - actor: 每組
+    text: 挑最重要的
+  - actor: 每組
+    text: 寫好 B 計畫
+  - actor: 每組
+    text: 說好改用時機
+  source: nasa-risk
+  caption: 流程是本站建議。
+- id: planb-compare
+  type: compare
+  alt: 比較下雨時的兩種情況：沒有 B 計畫，下雨了才臨時找地方；有 B 計畫，前一天看降雨機率，照約好的改到室內。
+  source: cwa-qa
+  relation: versus
+  items:
+  - term: 沒有 B 計畫
+    note: 下雨了才臨時找地方
+  - term: 有 B 計畫
+    note: 前一天看降雨機率，照約好的改到室內
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：3a-III-1「辨識周遭環境的潛藏危機，運用各項資源或策略化解危機。」（p.15）；Ca-III-1「環境潛藏的危機。」（p.15）；Ca-III-2「辨識環境潛藏危機的方法。」（p.15）；Ca-III-3「化解危機的資源或策略。」（p.15）；補充說明 Ca-III-1「自然環境潛藏的危機，如：風災、地震、水災、火災、土石流、雷擊、海嘯及複合式危機等。」（p.78–79）；補充說明 Ca-III-2「有效運用各種感官，客觀蒐集訊息，以辨識可能存在的危機。」（p.79）；補充說明 Ca-III-3「各項化解危機的資源，如：親人、師長、社區愛心商店、急救專線、社會福利機構等。」（p.79）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-A3「規劃、執行學習及生活計畫，運用資源或策略，預防危機、保護自己，並以創新思考方式，因應日常生活情境。」（p.3）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-A3「具備擬定計畫與實作的能力，並以創新思考方式，因應日常生活情境。」（p.5）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 安全教育國小實質內涵 安E2「了解危機與安全。」、安E4「探討日常生活應該注意的安全。」（p.89）；「建議融入之領域/科目：例如自然科學領域、健康與體育領域、綜合活動領域與全民國防教育等」（p.90）
+- id: nasa-risk
+  title: NASA Risk Management Handbook（NASA/SP-2011-3422, Version 1.0）
+  publisher: NASA（2011 年 11 月）
+  url: https://ntrs.nasa.gov/api/citations/20120000033/downloads/20120000033.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 風險的三件事「The scenario(s) leading to degraded performance」、「The likelihood(s) (qualitative or quantitative) of those scenarios.」、「The consequence(s) (qualitative or quantitative severity of the performance degradation) that would result if those scenarios were to occur.」（p.4）；「Risk drivers can be selected for detailed observation and contingency plans developed.」（p.19）
+- id: cwa-qa
+  title: 氣象常識問答集
+  publisher: 交通部中央氣象局（中華民國 109 年 3 月）
+  url: https://www.cwa.gov.tw/Data/service/notice/download/publish_20200310092437.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 降雨機率的用法「如降雨機率大時，對於預定的活動即須預作準備」、「在使用降雨機率預報時，必須存有風險的觀念」（p.55）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

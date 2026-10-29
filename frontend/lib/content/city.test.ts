@@ -39,7 +39,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
     map.buildings.map((building) => `${building.id}:${building.x}:${building.y}:${building.height}`).join("\n");
   assert.equal(signature(first), signature(second));
   const digest = createHash("sha256").update(signature(first)).digest("hex");
-  assert.equal(digest, "f3eeed1d458f91730f9343a7b1bc38d8349c54f9ad906d9218395d802c42b325");
+  assert.equal(digest, "29138095afd07d6e7aae122c2c3f3b731df8ad34192937b0a25286811ad56234");
   for (const district of first.districts) {
     for (const stage of first.stages) {
       const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;
@@ -88,7 +88,11 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.ok(shown.bridges.every((bridge) => !draftIds.has(bridge.from) && !draftIds.has(bridge.to)));
   // B11 發布數學 es／jh 12 點後，數學的 7 條路線（ma.algebra、ma.beauty、ma.change、ma.data、ma.geometry、ma.model、ma.proof）各有 es＋jh 兩站已發布，跟著顯示。
   // B14 發布資訊與 AI es／jh 12 點後，資訊與 AI 的 8 條路線（it.collab、it.creative、it.ct、it.data、it.literacy、it.ml、it.net、it.prog）各有 es＋jh 兩站已發布，也跟著顯示。
-  assert.equal(shown.landmarks.length, 17);
+  // B17 發布專案管理 es 5 點後，專案管理的 6 條路線（pm.goal、pm.lead、pm.reflect、pm.risk、pm.schedule、pm.team）各有國小一站已發布，也跟著顯示；pm.lead 與 pm.team 都從 pm.roles@es 出發。
+  assert.equal(shown.landmarks.length, 23);
+  const shownTeam = shown.landmarks.find((landmark) => landmark.id === "pm.team");
+  assert.ok(shownTeam);
+  assert.deepEqual(shownTeam.stops, ["pm.roles@es"]);
   const shownEstimate = shown.landmarks.find((landmark) => landmark.id === "pm.estimate");
   assert.ok(shownEstimate);
   assert.deepEqual(shownEstimate.stops, ["pm.breakdown@es", "pm.triangle@jh", "pm.estimate@sh", "pm.evm@uni"]);
@@ -96,10 +100,10 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.ok(shownLogic);
   assert.deepEqual(shownLogic.stops, ["ph.reason@es"]);
   const identified = presentCityMap(map, true);
-  const namedDraft = identified.buildings.find((building) => building.id === "pm.goal@es");
+  const namedDraft = identified.buildings.find((building) => building.id === "pm.project@jh");
   assert.ok(namedDraft);
   assert.equal(namedDraft.title, "");
-  assert.equal(namedDraft.href, "/kp/pm.goal/es");
+  assert.equal(namedDraft.href, "/kp/pm.project/jh");
   assert.equal(map.buildings.filter((building) => building.aesthetics).length, 2);
 });
 
@@ -139,11 +143,16 @@ test("開放主線只帶已發布標題", () => {
     ["大事拆成小事", "時間、金錢、品質的取捨", "WBS 與三點估算", "實獲值管理（EVM）"],
   );
   const blob = JSON.stringify(brief);
-  for (const title of ["目標：我們想完成什麼", "什麼是「專案」", "先做什麼、後做什麼"]) {
+  // B17 發布 pm.goal@es、pm.sequence@es 後，它們以已發布先備出現；草稿先備（pm.triangle@jh 的 pm.project@jh、pm.evm@uni 的 pm.schedule@uni）只算筆數。
+  for (const title of ["什麼是「專案」", "甘特圖與里程碑", "排程與資源"]) {
     assert.equal(blob.includes(title), false, title);
   }
-  assert.ok(brief.stops[0].hiddenPrerequisites >= 1);
-  assert.equal(brief.stops[0].prerequisites.length, 0);
+  assert.deepEqual(brief.stops[0].prerequisites, [{ title: "目標：我們想完成什麼？", href: "/kp/pm.goal/es" }]);
+  assert.equal(brief.stops[0].hiddenPrerequisites, 0);
+  assert.deepEqual(brief.stops[1].prerequisites, [{ title: "先做什麼、後做什麼", href: "/kp/pm.sequence/es" }]);
+  assert.equal(brief.stops[1].hiddenPrerequisites, 1);
+  assert.equal(brief.stops[3].hiddenPrerequisites, 1);
   assert.equal(brief.stops[2].question.length > 0, true);
   assert.ok(brief.colearn.includes("大事拆成小事"));
+  assert.ok(brief.colearn.includes("星星與箭頭"));
 });
