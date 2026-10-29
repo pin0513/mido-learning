@@ -1,57 +1,222 @@
 id: pm.gantt@jh
 concept: pm.gantt
 title: 甘特圖與里程碑
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  - 管理
+  - 專案管理與領導
+  - 規劃
   layer: essence
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
-    - 綜合活動
-    - 數學
-    - 科技
+  - 綜合活動
   core_competencies:
-    - A2
-    - A3
-    - C2
+  - A2
+  - A3
+  - C2
   issues: []
+  performances:
+  - 2c-IV-1
+  contents:
+  - 家 Ca-IV-1
+  - 童 Cb-IV-2
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 國民中學教育的 J-A2、J-A3、J-C2 與綜合活動領綱 p.3、p.5 的綜-J-A2、綜-J-A3、綜-J-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage.grades 填 7、8、9：本點的綜合活動代碼都是第四學習階段（IV），綜合活動領綱國中的學習重點沒有再分年級；總綱 p.7 說國民中學七、八、九年級為第四學習階段。
+- est_time 依綜合活動領綱 p.2：第四學習階段綜合活動實施領域教學，每週 3 節課；本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，議題融入說明手冊少 16，NASA 排程手冊少 1，NASA 風險手冊少 20；會議規範沒有印頁碼，用 PDF 頁並註明條次。
+- 原 curriculum_108.domains 的數學、科技刪除：本點的計畫與時間管理對應綜合活動 2c-IV-1、家 Ca-IV-1、童 Cb-IV-2，沒有對應的數學或科技代碼（畫甘特圖用試算表或方格紙都可以）；link_notes 仍保留數學、科技當跨科提示，related 的 ma.coord@jh、it.datatable@jh 不變。
+- 原 idea「把任務畫成橫條放在時間軸上，用里程碑標出『這天一定要完成』的關鍵點。」的引號拿掉：那是本站整理的說法，不是引文。
+- 原 scenario「用試算表替班際合唱比賽畫甘特圖，標出 3 個里程碑。」的 3 改成三，並補上方格紙也可以（本站建議）。
+- 原 ai.delegable「由任務清單自動產生甘特圖」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 甘特圖、里程碑與控制里程碑的說法依 NASA Schedule Management Handbook；手冊的 P/p 是 program/project（計畫或專案）。英文短句引用，中文說明是本站整理；合唱比賽的任務與先後是本站整理的例子。
 prerequisites:
-  - pm.sequence@es
+- pm.sequence@es
 links:
   why: []
   how: []
   related:
-    - ma.coord@jh
-    - it.datatable@jh
+  - ma.coord@jh
+  - it.datatable@jh
   deeper:
-    - pm.cpm@sh
-link_notes: 數學（座標與圖形）、科技（資訊科技：試算表）
+  - pm.cpm@sh
+link_notes: 數學（座標與圖形）、科技（資訊科技：試算表）；綜合活動 2c-IV-1、家 Ca-IV-1、童 Cb-IV-2。
 competency:
   specialist:
-    - 排程
+  - 排程
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 由任務清單自動產生甘特圖
+  - 由任務清單自動產生甘特圖（由老師或家長操作，本站建議）
   human_experience:
-    - 判斷哪個日期是真正不能延的
-idea: 把任務畫成橫條放在時間軸上，用里程碑標出「這天一定要完成」的關鍵點。
+  - 判斷哪個日期是真正不能延的
+idea: 把任務畫成橫條放在時間軸上，用里程碑標出這天一定要完成的關鍵點。
 guiding_questions:
-  - 哪些橫條可以同時進行？哪些不行？
-scenario: 用試算表替班際合唱比賽畫甘特圖，標出 3 個里程碑。
+- 哪些橫條可以同時進行？哪些不行？
+- 哪個日期是真正不能延的？為什麼？
+- 有一件事延誤了，從甘特圖看得出會影響誰嗎？
+scenario: 用試算表或方格紙替班際合唱比賽畫甘特圖，標出三個里程碑（本站建議）。
 formats:
   slides: []
+  exercise: 目標：替一次班級活動畫出甘特圖：每件任務一條橫條，標出三個里程碑，並說出哪些任務可以同時做、哪個日期不能延。　檢核：家長或老師看圖：橫軸是日期，每條橫條都有開始和結束，里程碑只標一天；孩子說得出哪兩件任務可以同時做、哪件要等前一件做完，以及為什麼比賽當天不能延。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 替一次班級活動畫出甘特圖：每件任務一條橫條，標出三個里程碑，並說出哪些任務可以同時做、哪個日期不能延。
+review: 家長或老師看圖：橫軸是日期，每條橫條都有開始和結束，里程碑只標一天；孩子說得出哪兩件任務可以同時做、哪件要等前一件做完，以及為什麼比賽當天不能延。
+est_time:
+  school: 國中七至九年級綜合活動課
+  source: zonghe
+why:
+  heading: 一張圖看懂誰在什麼時候做什麼
+  body:
+  - 108 課綱的綜合活動要國中生「善用各項資源，妥善計畫與執行個人生活中重要事務。」家政要學「個人與家庭生活的金錢及時間管理。」童軍露營也要「透過團隊編組與分工，擬定露營計畫，設計露營流程」。活動的任務一多，就需要一張大家都看得懂的時間表。
+  - NASA 的排程手冊說甘特圖是「a Gantt chart, or horizontal bar chart」：橫軸是時間，每件工作是一條橫條，橫條從開始畫到結束；「Key milestones are typically represented by diamonds (or triangles).」里程碑通常畫成菱形或三角形（翻譯是本站整理）。
+  qa:
+    question: 哪個日期是真正不能延的？為什麼？
+    answer: 由別人訂下、你們改不了的日期，例如學校訂的比賽當天；你們自己訂的練唱進度還可以商量。NASA 手冊把這種日期叫控制里程碑：「Control milestones are typically milestones owned by the sponsors or the stakeholders and cannot be changed by the P/p.」（P/p 是計畫或專案；說明是本站整理）
+    source: nasa-smh
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 妥善計畫重要事務
+    text: 綜合活動 2c-IV-1：善用各項資源，妥善計畫與執行個人生活中重要事務。
+    code: 2c-IV-1
+  - title: 時間管理
+    text: 綜合活動 家 Ca-IV-1：個人與家庭生活的金錢及時間管理。
+    code: 家 Ca-IV-1
+  - title: 露營的計畫與分工
+    text: 綜合活動 童 Cb-IV-2：露營活動組織分工、計畫、執行、檢討與反思。
+    code: 童 Cb-IV-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 任務已經列好
+  - 知道比賽日期
+  figures:
+  - gantt-compare
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現；開頭是家、童、輔的是學習內容，分別是家政、童軍、輔導；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 總綱把國民中學七、八、九年級定為第四學習階段，所以本頁代碼中間都是 IV。
+  sources:
+  - zonghe
+  - nasa-smh
+  - zonggang
+how:
+  heading: 從任務清單到甘特圖
+  body:
+  - 先列任務、找先後：把合唱比賽要做的事列出來，例如選曲、分部練唱、做服裝、彩排，每件估要幾天、誰負責。再找出先後：選好曲才能開始練唱，要等前一件做完；做服裝和練唱不用互相等，可以同時進行（例子是本站整理）。
+  - 畫橫條：橫軸寫日期，一件任務一列，從開始那天畫到結束那天。可以同時做的任務，橫條會上下重疊；要等前一件的，橫條排在前一條的後面。NASA 手冊提醒「In its typical form, the Gantt chart does not show task dependencies」，一般的甘特圖不會畫出誰在等誰，所以要自己用箭頭連起來，一件延誤時才看得出會影響後面哪幾條（本站建議）。
+  - 標里程碑：里程碑只有一天，不是一段時間，手冊說「Milestones differ from the bars in a Gantt chart in that they show only a single date」。挑三個一定要完成的關鍵點，例如曲目定案、第一次全班合唱、比賽當天。比賽當天是學校訂的，你們改不了，就是不能延的日期；練唱進度是自己訂的，可以商量調整（本站整理）。之後每週對照實際進度更新一次。
+  qa:
+    question: 哪些橫條可以同時進行？哪些不行？
+    answer: 不用等別人做完的可以同時進行，例如做服裝和練唱；要等前一件做完才能開始的不行，例如選好曲才能練唱。手冊說一般的甘特圖「does not show task dependencies」，所以要自己加箭頭（說明是本站整理）。
+    source: nasa-smh
+  items_title: 四步做
+  items:
+  - title: 列任務估天數
+    text: 每件寫誰負責、要幾天。
+  - title: 找出先後
+    text: 哪件要等前一件做完。
+  - title: 畫橫條
+    text: 從開始畫到結束，加上箭頭。
+  - title: 標里程碑
+    text: 三個一定要完成的日子。
+  checklist_title: 畫完檢查
+  checklist:
+  - 橫軸是日期
+  - 每條有起訖
+  - 里程碑只標一天
+  activity_figure: gantt-flow
+  sources:
+  - nasa-smh
+  - zonghe
+what:
+  heading: 看得懂也畫得出甘特圖
+  body:
+  - 學完後，孩子能替一次班級活動畫出甘特圖，標出三個里程碑，說出哪些任務可以同時做、哪件要等前一件、哪個日期不能延，也會每週對照進度更新。
+  items_title: 學完能做到
+  items:
+  - title: 畫出甘特圖
+    text: 橫軸是日期，一件任務一條。
+  - title: 分辨能不能同時做
+    text: 要等的用箭頭連起來。
+  - title: 找出不能延的日期
+    text: 別人訂的日期改不了。
+  checklist_title: 家長檢核
+  checklist:
+  - 每條有起訖
+  - 有三個里程碑
+  - 說得出先後
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  - 本頁的 AI 活動由老師或家長操作，孩子在旁邊一起看、一起檢查 AI 的回答（本站建議）。
+  sources:
+  - genai-student
+figures:
+- id: gantt-flow
+  type: flow
+  alt: 畫甘特圖五步驟：每組列任務估天數，找出先後，畫橫條，標三個里程碑，之後每週對照進度更新。
+  steps:
+  - actor: 每組
+    text: 列任務估天數
+  - actor: 每組
+    text: 找出先後
+  - actor: 每組
+    text: 畫橫條
+  - actor: 每組
+    text: 標三個里程碑
+  - actor: 每週
+    text: 對照進度更新
+  source: nasa-smh
+  caption: 流程是本站建議。
+- id: gantt-compare
+  type: compare
+  alt: 比較橫條與里程碑：橫條是一段時間，從開始做到做完，例如分部練唱；里程碑只有一天，是一定要完成的關鍵點，例如比賽當天。
+  source: nasa-smh
+  relation: versus
+  items:
+  - term: 橫條
+    note: 一段時間：從開始做到做完，例如分部練唱
+  - term: 里程碑
+    note: 只有一天：一定要完成的關鍵點，例如比賽當天
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：2c-IV-1「善用各項資源，妥善計畫與執行個人生活中重要事務。」（p.20）；家 Ca-IV-1「個人與家庭生活的金錢及時間管理。」（p.85）；童 Cb-IV-2「露營活動組織分工、計畫、執行、檢討與反思。」（p.88–89）；補充說明 童 Cb-IV-2「透過團隊編組與分工，擬定露營計畫，設計露營流程，準備團隊露營器材與個人裝備。」（p.89）；「露營活動實施後，藉由分享與討論進行回饋檢討與個人反思。」（p.89）；領域核心素養：綜-J-A2「釐清學習目標，探究多元的思考與學習方法，養成自主學習的能力，運用適當的策略，解決生活議題。」（p.3）；綜-J-A3「因應社會變遷與環境風險，檢核、評估學習及生活計畫，發揮創新思維，運用最佳策略，保護自我與他人。」（p.3）；綜-J-C2「運用合宜的人際互動技巧，經營良好的人際關係，發揮正向影響力，培養利他與合群的態度，提升團隊效能，達成共同目標。」（p.5）；時間分配：「第四學習階段以實施領域教學為原則，包含家政、童軍、輔導，每週 3節課。」（p.2）；代碼說明：「『1a-IV-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 IV是第四學習階段；第三碼 1 是流水號。」；學習內容「由家政、童軍和輔導的科目專業發展，以『家』、『童』、『輔』的簡稱示之」（p.8）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民中學教育）：J-A2「具備理解情境全貌，並做獨立思考與分析的知能，運用適當的策略處理解決生活及生命議題。」（p.4）；J-A3「具備善用資源以擬定計畫，有效執行，並發揮主動學習與創新求變的素養。」（p.5）；J-C2「具備利他與合群的知能與態度，並培育相互合作及與人和諧互動的素養。」（p.6）；學習階段「國民中學七、八、九年級為第四學習階段」（p.7）
+- id: nasa-smh
+  title: NASA Schedule Management Handbook（NASA/SP-2010-3403, Revision 1）
+  publisher: NASA（Office of the Chief Financial Officer；生效日 2020 年 1 月 30 日）
+  url: https://www.nasa.gov/wp-content/uploads/2020/11/nasa_schedule_management_hand_book.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 甘特圖「A Summary Schedule is composed of a Gantt chart, or horizontal bar chart, where the horizontal axis represents the total time span of the P/p broken down into increments of time」（p.357）；「Key milestones are typically represented by diamonds (or triangles).」（p.357）；「In its typical form, the Gantt chart does not show task dependencies, so it is impossible to tell how one task slipping may affect another task.」（p.357）；「Milestones differ from the bars in a Gantt chart in that they show only a single date and are usually depicted as a triangle instead of a bar.」（p.371）；「Control milestones are typically milestones owned by the sponsors or the stakeholders and cannot be changed by the P/p.」（p.47）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

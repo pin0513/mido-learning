@@ -88,7 +88,7 @@ test.describe("學門總圖", () => {
     await expect(task).toContainText("大事拆成小事");
     await expect(task).not.toContainText("準備中");
     await expect(task.locator("table")).toHaveCount(0);
-    await expect(page.locator("body")).not.toContainText("什麼是「專案」");
+    await expect(page.locator("body")).not.toContainText("要徑：決定專案長度的那條路");
   });
 
   test("手機上四個學門都不橫向溢出", async ({ page }) => {

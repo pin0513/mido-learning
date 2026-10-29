@@ -12,10 +12,10 @@ const DRAFT_TITLES = [
   "認知偏誤與思考盲點",
   "統計推論：用機率檢核說法",
   "從平均變化率到瞬間變化率",
-  "什麼是「專案」",
+  "要徑：決定專案長度的那條路",
 ];
 
-const DRAFT_SLUGS = ["pm.project", "ph.parts", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "pm.schedule"];
+const DRAFT_SLUGS = ["pm.cpm", "ph.parts", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "pm.schedule"];
 
 // 已發布的點才有頁面連結：ph.reason@es，B11 發布的數學 es／jh 12 點，B12 發布的數學 sh 7 點，B13 發布的數學 uni 7 點，B14 發布的資訊與 AI es／jh 12 點，B15 發布的資訊與 AI sh 7 點，B16 發布的資訊與 AI uni 6 點，以及 B17 發布的專案管理 es 5 點（專案管理的點另外在第一個測試逐一檢查）。
 const PUBLISHED = new Set([
@@ -31,7 +31,7 @@ const PUBLISHED = new Set([
   "pm.goal@es", "pm.planb@es", "pm.retro@es", "pm.roles@es", "pm.sequence@es",
 ]);
 
-test("四個學門都有學段總圖，專案管理只畫已發布的九步", () => {
+test("四個學門都有學段總圖，專案管理只畫已發布的十四步", () => {
   const model = buildHomeDiagram(loadCatalog());
   assert.deepEqual(publicDisciplineIds(), ["pm-leadership", "philosophy", "math", "it-ai"]);
   assert.deepEqual(
@@ -46,11 +46,12 @@ test("四個學門都有學段總圖，專案管理只畫已發布的九步", ()
   assert.equal(model.defaultDisciplineId, "pm-leadership");
   const pm = model.diagrams.find((item) => item.id === "pm-leadership");
   assert.ok(pm);
-  // B17 發布專案管理 es 5 點後，國小多了目標、分工、回顧、先後、B 計畫五步。
+  // B17 發布專案管理 es 5 點後，國小多了目標、分工、回顧、先後、B 計畫五步；B18 發布 jh 5 點後，國中多了甘特圖、專案、風險、會議、領導五步。
   assert.deepEqual(
     pm.nodes.map((node) => node.title),
     [
       "目標：我們想完成什麼？", "大事拆成小事", "分工與說到做到", "回顧：哪裡好、哪裡可以更好", "先做什麼、後做什麼", "如果下雨怎麼辦？",
+      "甘特圖與里程碑", "什麼是「專案」？", "風險：可能性 × 影響", "團隊溝通與會議", "領導是行為，不是職位",
       "時間、金錢、品質的取捨", "WBS 與三點估算", "實獲值管理（EVM）",
     ],
   );
@@ -70,16 +71,28 @@ test("四個學門都有學段總圖，專案管理只畫已發布的九步", ()
     ["目標：我們想完成什麼？"],
   );
   assert.deepEqual(
+    pmNode("pm.triangle@jh").prerequisites.map((item) => item.title),
+    ["什麼是「專案」？", "先做什麼、後做什麼"],
+  );
+  assert.deepEqual(pmNode("pm.lead@jh").prerequisites.map((item) => item.title), ["團隊溝通與會議"]);
+  assert.deepEqual(
     pm.edges.map((edge) => `${edge.kind}:${edge.from}->${edge.to}`).sort(),
     [
+      "ext:pm.retro@es->pm.team@jh",
       "pre:pm.breakdown@es->pm.estimate@sh",
       "pre:pm.breakdown@es->pm.roles@es",
       "pre:pm.breakdown@es->pm.sequence@es",
       "pre:pm.estimate@sh->pm.evm@uni",
       "pre:pm.goal@es->pm.breakdown@es",
+      "pre:pm.goal@es->pm.project@jh",
+      "pre:pm.planb@es->pm.risk@jh",
+      "pre:pm.project@jh->pm.triangle@jh",
       "pre:pm.roles@es->pm.retro@es",
+      "pre:pm.roles@es->pm.team@jh",
+      "pre:pm.sequence@es->pm.gantt@jh",
       "pre:pm.sequence@es->pm.planb@es",
       "pre:pm.sequence@es->pm.triangle@jh",
+      "pre:pm.team@jh->pm.lead@jh",
       "pre:pm.triangle@jh->pm.estimate@sh",
     ].sort(),
   );
@@ -107,7 +120,7 @@ test("四個學門都有學段總圖，專案管理只畫已發布的九步", ()
   }
   const blob = JSON.stringify(model);
   assert.equal(blob.includes("城市"), false);
-  for (const title of ["什麼是「專案」", "甘特圖與里程碑", "團隊溝通與會議"]) assert.equal(blob.includes(title), false, title);
+  for (const title of ["要徑：決定專案長度的那條路", "利害關係人", "排程與資源"]) assert.equal(blob.includes(title), false, title);
 });
 
 test("目前任務連到已畫出來的跨學門，沒畫的不帶標題", () => {
@@ -148,8 +161,9 @@ test("虛線只拿掉實線已經到得了的，實線保持原樣", () => {
   const count = (id: string, kind: "pre" | "ext") =>
     model.diagrams.find((item) => item.id === id)?.edges.filter((edge) => edge.kind === kind).length ?? -1;
   // B17：pm.sequence@es 發布後，pm.breakdown@es 經 pm.sequence@es 用實線就到得了 pm.triangle@jh，主線那條虛線因此拿掉。
-  assert.equal(count("pm-leadership", "pre"), 9);
-  assert.equal(count("pm-leadership", "ext"), 0);
+  // B18：國中 5 點發布後多 6 條實線；pm.reflect 路線的 pm.retro@es → pm.team@jh 不是先備（pm.team@jh 的先備是 pm.roles@es），實線也到不了，畫成虛線。
+  assert.equal(count("pm-leadership", "pre"), 15);
+  assert.equal(count("pm-leadership", "ext"), 1);
   const pm = model.diagrams.find((item) => item.id === "pm-leadership");
   assert.ok(pm);
   assert.equal(pm.edges.some((edge) => edge.from === "pm.breakdown@es" && edge.to === "pm.triangle@jh"), false);
