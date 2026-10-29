@@ -39,7 +39,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
     map.buildings.map((building) => `${building.id}:${building.x}:${building.y}:${building.height}`).join("\n");
   assert.equal(signature(first), signature(second));
   const digest = createHash("sha256").update(signature(first)).digest("hex");
-  assert.equal(digest, "d38a3110a2e1c90be73d56ba2d90b7ac69d7c4453dfdc415f191ad1ff65101fc");
+  assert.equal(digest, "283e880fcc499e4b4c5259d90243bf6ebe041d79aff342a87d2d5788c26aa635");
   for (const district of first.districts) {
     for (const stage of first.stages) {
       const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;

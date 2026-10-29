@@ -10,18 +10,19 @@ const DRAFT_TITLES = [
   "規律與關係",
   "用字母代表數：方程式",
   "認知偏誤與思考盲點",
-  "統計推論：抽樣與信賴",
+  "統計推論：用機率檢核說法",
   "從平均變化率到瞬間變化率",
   "目標：我們想完成什麼",
 ];
 
 const DRAFT_SLUGS = ["pm.goal", "ph.parts", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "pm.schedule"];
 
-// 已發布的點才有頁面連結：ph.reason@es，以及 B11 發布的數學 es／jh 12 點。
+// 已發布的點才有頁面連結：ph.reason@es，B11 發布的數學 es／jh 12 點，以及 B12 發布的數學 sh 7 點。
 const PUBLISHED = new Set([
   "ph.reason@es",
   "ma.number@es", "ma.pattern@es", "ma.data@es", "ma.measure@es", "ma.shape@es", "ma.fraction@es",
   "ma.algebra@jh", "ma.coord@jh", "ma.prob@jh", "ma.pythag@jh", "ma.quadratic@jh", "ma.similar@jh",
+  "ma.function@sh", "ma.proof@sh", "ma.rate@sh", "ma.sequence@sh", "ma.stats@sh", "ma.trig@sh", "ma.vector@sh",
 ]);
 
 test("四個學門都有學段總圖，專案管理仍只有已發布的四步", () => {
