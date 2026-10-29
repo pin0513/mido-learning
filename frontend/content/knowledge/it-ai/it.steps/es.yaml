@@ -1,54 +1,227 @@
 id: it.steps@es
 concept: it.steps
 title: 一步一步的指令
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 運算思維
+  - 資訊
+  - 運算思維
   layer: foundation
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
 curriculum_108:
   domains:
-    - 綜合活動
+  - 數學
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B2
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
-  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 原有待核對「國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。」已處理：國家教育研究院參考說明 p.1 確認「國民小學教育階段則是採用議題融入各領域學習課程/彈性學習課程中實施。」；年級依參考說明的學習階段與總綱 p.7（三、四年級為第二學習階段，五、六年級為第三學習階段）。參考說明頁碼是頁腳印的頁碼（比 PDF 頁少 2），議題融入說明手冊頁碼是頁腳印的頁碼（比 PDF 頁少 16），總綱頁碼是頁腳印的頁碼（比 PDF 頁少 4）。
+- 參考說明的「資議」代碼（例如資議 t-Ⅱ-3）與議題融入說明手冊的「資 E」代碼不是部定課綱代碼，也不合 schema 的代碼格式，只在來源 supports 逐字引用，不列入 curriculum_108 和代碼表；參考說明自述「本說明係為參考性質」。國小因此不列 curriculum_108 學習內容，只在 Why 列出國中、高中會接著學的科技領綱代碼。
+- 國小沒有科技領域，curriculum_108.domains 改填數學（本站建議）：議題融入說明手冊 p.87 說「建議融入之領域/科目：例如科技領域等，其他相關領域亦可適切融入。」，並舉數學領域「例如可利用演算法與程式設計呈現數學解題流程，以使學生更深刻體驗抽象化與步驟化之歷程與重要性。」；原稿的綜合活動沒有對應的官方融入例子，已刪除。
+- 核心素養依總綱 p.4–6 國民小學教育的 E-A2、E-B2 原文挑選（總綱表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- 原 scenario「人體機器人：一位同學蒙眼當機器人」改成小玩偶在方格紙上移動：不蒙眼、不走動，避免碰撞；寫指令和找錯的分工依 CS Unplugged Kidbots，家長只照卡片移動（本站建議）。
 prerequisites: []
 links:
   why: []
   how:
-    - pm.sequence@es
+  - pm.sequence@es
   related: []
   deeper:
-    - it.algo@jh
-    - it.media@jh
-link_notes: 專案管理（先做什麼、後做什麼）、語文（清楚表達）
+  - it.algo@jh
+  - it.media@jh
+link_notes: 專案管理（先做什麼、後做什麼）、語文（清楚表達）；科技領綱 資 A-IV-1（國中）。
 competency:
   specialist:
-    - 運算思維
+  - 運算思維
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 示範「指令不清楚，結果就出錯」的例子
+  - 示範指令不清楚會怎樣出錯（由大人操作，本站建議）
   human_experience:
-    - 親身體驗指令模糊時的混亂，學會說清楚
-idea: 電腦不會猜你的意思，只會照指令做。把一件事寫成清楚、有順序的步驟，就是演算法。
+  - 親身體驗指令模糊時的混亂，學會說清楚
+idea: 電腦不會猜你的意思，只會照指令一步一步做。把一件事寫成清楚、有順序的步驟，就是演算法的開始（本站整理）。
 guiding_questions:
-  - 「去洗手」對電腦來說，要拆成幾個步驟？
-scenario: 人體機器人：一位同學蒙眼當機器人，其他人只能用「前進一步、左轉、右轉」指揮他走出教室迷宮。
+- 「去洗手」對電腦來說，要拆成幾個步驟？
+- 指令出錯時，怎麼找到是哪一步錯了？
+scenario: 親子共學：在方格紙上放一個小玩偶，孩子用「前進」「左轉」「右轉」寫指令卡，家長只照卡片移動玩偶，看它能不能走到終點；走錯了就一起找出錯的那一步（本站建議）。
 formats:
   slides: []
+  exercise: 目標：用「前進」「左轉」「右轉」排出一串指令卡，讓玩偶在方格紙上從起點走到終點；走錯時找出錯的那一步並改好。　檢核：家長只照孩子的指令卡移動玩偶：玩偶走到終點；出錯時，孩子指得出是哪一張卡錯了並改好；兩件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 用「前進」「左轉」「右轉」排出一串指令卡，讓玩偶在方格紙上從起點走到終點；走錯時找出錯的那一步並改好。
+review: 家長只照孩子的指令卡移動玩偶：玩偶走到終點；出錯時，孩子指得出是哪一張卡錯了並改好；兩件事都做到。
+est_time:
+  school: 國小三、四年級（議題融入）
+  source: es-ref
+why:
+  heading: 說清楚，電腦才做得對
+  body:
+  - 國家教育研究院的參考說明，國小三、四年級的資訊教育要「認識以運算思維解決問題的過程。」，學習內容的說明是「以圖表或語言，描述日常生活或課業問題的簡單解決步驟。」議題融入說明手冊也列出「應用運算思維描述問題解決的方法。」
+  - CS Unplugged 說，電腦需要非常具體的指令：「They need to be told each of the tiny steps they need to follow in order to do things.」
+  items_title: 國中會接著學
+  items:
+  - title: 演算法基本概念
+    text: 科技領綱 資 A-IV-1：演算法基本概念。
+    code: 資 A-IV-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 分得清左右
+  - 會數格子
+  notes:
+  - 國小沒有部定的資訊科技課程，資訊教育是融入各領域實施的議題；國小的學習重點出自國家教育研究院的參考說明，只寫在來源裡。本頁列的代碼開頭的「資」是科技領綱（國中、高中）的資訊科技學習內容，中間的 IV 是第四學習階段（國中）、V 是第五學習階段（高中），代表之後會接著學。
+  sources:
+  - es-ref
+  - issues-handbook
+  - cs-ct
+  - tech108
+  - zonggang
+how:
+  heading: 寫指令卡，照著走
+  body:
+  - 在方格紙上畫起點和終點，放一個小玩偶。孩子用「前進」「左轉」「右轉」三種指令卡排出步驟；移動前，先讓孩子預測玩偶會停在哪一格；家長只照卡片移動玩偶，不幫忙猜（本站建議）。
+  - 走錯了就從第一張卡開始，一張一張照著走，看玩偶在哪一步走偏。CS Unplugged 的 Kidbots 活動說，孩子要能「Identify where a bug has occurred and be able to correct the code to allow the object to move to the desired destination.」
+  qa:
+    question: 指令出錯時，怎麼找到是哪一步錯了？
+    answer: 從第一張卡開始，一張一張照著走，看玩偶在哪一步偏離路線，就是那張卡錯了（本站整理）。CS Unplugged 說，孩子要「step through each instruction and identify when something goes wrong」。
+    source: cs-kidbots-about
+  items_title: 寫指令四步
+  items:
+  - title: 畫起點終點
+    text: 在方格紙上畫出起點和終點。
+  - title: 排指令卡
+    text: 用前進、左轉、右轉排出步驟。
+  - title: 照卡片走
+    text: 家長只照卡片移動玩偶。
+  - title: 找錯改好
+    text: 走錯時一張一張檢查，改掉錯的卡。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 指令有順序
+  - 玩偶到終點
+  - 找到錯的卡
+  activity_figure: steps-flow
+  sources:
+  - cs-rescue
+  - cs-kidbots-about
+what:
+  heading: 指令清楚，也會除錯
+  body:
+  - 學完後，孩子能把一件事寫成有順序的指令，讓玩偶照著走到終點；走錯時能一步一步檢查，找出並改好錯的那一步。
+  items_title: 學完能做到
+  items:
+  - title: 寫出指令
+    text: 照順序寫出每一步。
+  - title: 先預測
+    text: 走之前先說玩偶會停在哪。
+  - title: 找錯改好
+    text: 找出錯的那一步並改好。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出步驟
+  - 會先預測
+  - 會改錯
+  figures:
+  - steps-compare
+  notes:
+  - 本頁的方格和步數是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - cs-ct
+  - genai-student
+figures:
+- id: steps-flow
+  type: flow
+  alt: 指令卡流程：孩子畫起點終點、排指令卡，家長照卡片移動玩偶，孩子看有沒有到終點，再找錯改好。
+  steps:
+  - actor: 孩子
+    text: 畫起點終點
+  - actor: 孩子
+    text: 排指令卡
+  - actor: 家長
+    text: 照卡片移動
+  - actor: 孩子
+    text: 看到終點沒
+  - actor: 孩子
+    text: 找錯改好
+  caption: 流程是本站建議。
+- id: steps-compare
+  type: compare
+  alt: 比較模糊指令和清楚指令：模糊指令讓玩偶不知道走幾格、往哪轉，清楚指令每一步都說清楚。
+  source: cs-ct
+  relation: versus
+  items:
+  - term: 模糊指令
+    note: 例如走過去，玩偶不知道走幾格、往哪轉
+  - term: 清楚指令
+    note: 例如前進兩格、右轉、前進一格（示意）
+  caption: CS Unplugged 說電腦「need very specific instructions」；例子是本站整理。
+sources:
+- id: es-ref
+  title: 國民小學科技教育及資訊教育課程發展參考說明
+  publisher: 國家教育研究院（中華民國一○九年六月）
+  url: https://www.naer.edu.tw/upload/1/9/doc/280/1090611_%E5%9C%8B%E6%B0%91%E5%B0%8F%E5%AD%B8%E7%A7%91%E6%8A%80%E6%95%99%E8%82%B2%E5%8F%8A%E8%B3%87%E8%A8%8A%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%99%BC%E5%B1%95%E5%8F%83%E8%80%83%E8%AA%AA%E6%98%8E.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習表現 資議 t-Ⅱ-3「認識以運算思維解決問題的過程。」（p.5）；學習內容 資議 A-Ⅱ-1「簡單的問題解決表示方法。」，說明「以圖表或語言，描述日常生活或課業問題的簡單解決步驟。」（p.5）；「國民小學教育階段則是採用議題融入各領域學習課程/彈性學習課程中實施。」（p.1）；「本說明係為參考性質」（p.1）；「建議可進行三到六年級系統性、整體性的規劃」（p.1）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 表 4.12.1 資訊教育議題學習主題與實質內涵（國民小學）：資 E3「應用運算思維描述問題解決的方法。」（p.87）；融入領域/科目的說明「建議融入之領域/科目：例如科技領域等，其他相關領域亦可適切融入。」、例舉（1）數學領域：「例如可利用演算法與程式設計呈現數學解題流程，以使學生更深刻體驗抽象化與步驟化之歷程與重要性。」（p.87）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：資 A-IV-1「演算法基本概念。」（p.10）；資訊科技學習內容說明「國民中學教育階段以問題解決為主軸，強調培養學生利用資訊科技與運算思維解決問題之能力」（p.10）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-B2「具備科技與資訊應用的基本素養，並理解各類媒體內容的意義與影響。」（p.5）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: cs-ct
+  title: Computational thinking
+  publisher: CS Unplugged（University of Canterbury Computer Science Education Research Group）
+  url: https://www.csunplugged.org/en/computational-thinking/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「They need to be told each of the tiny steps they need to follow in order to do things.」；「because computers need very specific instructions」
+- id: cs-rescue
+  title: Kidbots – Rescue mission
+  publisher: CS Unplugged（University of Canterbury Computer Science Education Research Group）
+  url: https://www.csunplugged.org/en/topics/kidbots/rescue-mission/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Identify where a bug has occurred and be able to correct the code to allow the object to move to the desired destination.」
+- id: cs-kidbots-about
+  title: Kidbots – What's it all about?
+  publisher: CS Unplugged（University of Canterbury Computer Science Education Research Group）
+  url: https://www.csunplugged.org/en/topics/kidbots/whats-it-all-about/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「They will need to step through each instruction and identify when something goes wrong and how they can fix the bug so the program then behaves as expected.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

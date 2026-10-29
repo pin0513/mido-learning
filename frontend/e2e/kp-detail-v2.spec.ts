@@ -17,7 +17,9 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   // B11 已轉換並發布 ma.number@es（to_verify: false）；數學草稿已全部發布（B12 sh、B13 uni），未轉換的大學草稿改由 it.nn@uni 覆蓋。
   { path: "/kp/ma.number/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/it.nn/uni", layer: "進階", verify: true },
-  { path: "/kp/it.blocks/es", layer: "基礎", verify: true },
+  // B14 已轉換並發布 it.blocks@es（to_verify: false）；仍是草稿、to_verify、未轉換的國小點改由 sk.listen@es 覆蓋。
+  { path: "/kp/it.blocks/es", layer: "基礎", verify: false, converted: true },
+  { path: "/kp/sk.listen/es", layer: "本質", verify: true },
 ];
 
 test("直連 /kp-v2 是 404，sitemap 也不列", async ({ request }) => {

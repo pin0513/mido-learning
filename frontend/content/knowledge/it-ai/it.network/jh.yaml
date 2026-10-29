@@ -1,52 +1,208 @@
 id: it.network@jh
 concept: it.network
 title: 網路如何運作
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 網路
+  - 資訊
+  - 網路
   layer: foundation
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 9
 curriculum_108:
   domains:
-    - 科技
+  - 科技
   core_competencies:
-    - A2
-    - B2
+  - B2
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+  contents:
+  - 資 S-IV-3
+  - 資 S-IV-4
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 運算思維學習表現（運 t-IV-1）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（已加進代碼表），curriculum_108 只列資訊科技學習內容。
+- 核心素養依科技領綱 p.3–4 的 科-J-B2 原文挑選（表格窄欄，文字已用頁面影像核對）。
+- stage.grades 依科技領綱 p.10–11 表格所列的年級：資 S-IV-3、資 S-IV-4 九年級。
+- 原稿的核心素養 A2 刪除：本點重在理解網路的基本原理，對應科-J-B2。
+- 原 scenario「經不同同學傳遞」改成經過家人傳遞（本站建議）；紙條張數是示意；IP 位址例子 192.0.2.172 是文件用的示範位址（本站整理）。
 prerequisites:
-  - it.data@es
+- it.data@es
 links:
   why: []
   how: []
   related: []
   deeper:
-    - it.security@sh
-link_notes: 社會（全球連結）
+  - it.security@sh
+link_notes: 社會（全球連結）；科技領綱 資 S-IV-3、資 S-IV-4、運 t-IV-1。
 competency:
   specialist:
-    - 網路
+  - 網路
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 視覺化封包傳遞路徑
+  - 視覺化封包傳遞路徑（AI 的說明要再查證，本站建議）
   human_experience:
-    - 親身扮演路由，理解為什麼會延遲或遺失
-idea: 訊息被切成小封包，各自找路傳到目的地再組合起來；每台裝置都有自己的位址。
+  - 親身扮演路由，理解為什麼會延遲或遺失
+idea: 訊息被切成小封包，各自找路傳到目的地再組合起來；每台裝置都有自己的位址（本站整理）。
 guiding_questions:
-  - 你傳出去的訊息，真的只有對方看得到嗎？
-scenario: 傳紙條遊戲：把一句話拆成編號紙條，經不同同學傳遞，最後在終點重組，模擬封包與遺失重傳。
+- 你傳出去的訊息，真的只有對方看得到嗎？
+scenario: 親子共學：把一句話拆成編號紙條，每張寫上寄件人、收件人和編號，經過家人一個傳一個送到終點，再照編號重組；故意弄丟一張，看收件人怎麼發現少了哪一張（本站建議）。
 formats:
   slides: []
+  exercise: 目標：把一句話拆成有編號、有寄件和收件位址的紙條，經過家人傳到終點後照編號重組；說出收件人怎麼發現少了一張，以及傳遞的人能不能看到內容。　檢核：收件人照編號把句子拼回來；說得出少了哪一張、怎麼請寄件人重傳；也說得出沿路的人看得到紙條內容（本站整理）；三件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 把一句話拆成有編號、有寄件和收件位址的紙條，經過家人傳到終點後照編號重組；說出收件人怎麼發現少了一張，以及傳遞的人能不能看到內容。
+review: 收件人照編號把句子拼回來；說得出少了哪一張、怎麼請寄件人重傳；也說得出沿路的人看得到紙條內容（本站整理）；三件事都做到。
+est_time:
+  school: 國中九年級資訊科技課
+  source: tech108
+why:
+  heading: 訊息怎麼跑過網路
+  body:
+  - 科技領綱九年級學「網路技術的概念與介紹。」和「網路服務的概念與介紹。」，說明包含「網際網路的重要概念。」；學習表現要「能了解資訊系統的基本組成架構與運算原理。」
+  - MDN 說，網際網路「is a large network of computers which communicate all together.」；封包是「a formatted chunk of data sent over a network.」
+  items_title: 科技領綱的學習重點
+  items:
+  - title: 資訊系統的原理
+    text: 科技領綱 運 t-IV-1：能了解資訊系統的基本組成架構與運算原理。
+    code: 運 t-IV-1
+  - title: 網路技術
+    text: 科技領綱 資 S-IV-3：網路技術的概念與介紹。
+    code: 資 S-IV-3
+  - title: 網路服務
+    text: 科技領綱 資 S-IV-4：網路服務的概念與介紹。
+    code: 資 S-IV-4
+  checklist_title: 開始前先確認
+  checklist:
+  - 用過網路
+  - 會寫收件人
+  notes:
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 IV 是第四學習階段（國中七至九年級），V 是第五學習階段（高中）。
+  sources:
+  - tech108
+  - mdn-internet
+  - mdn-packet
+how:
+  heading: 拆成紙條，照號碼拼回
+  body:
+  - 把一句話拆成 4 張紙條（張數是示意），每張寫上寄件人、收件人和第幾張。MDN 說封包裡有「network addresses for the source and destination, sequencing information」。紙條經過家人一個傳一個送到收件人，收件人照編號拼回句子。真正的網路上，寄件人和收件人是每台裝置的 IP 位址；我們打的網址（例如 mozilla.org）會先換成 IP 位址（本站整理）。
+  - 故意弄丟一張：收件人看編號就知道少了哪一張，可以請寄件人重傳（本站整理）。再想一想：傳紙條的人都看得到內容，所以重要的訊息要用加密的服務，個人資料不要隨便傳（本站整理）。
+  qa:
+    question: 你傳出去的訊息，真的只有對方看得到嗎？
+    answer: 不一定。訊息會經過很多台設備才到對方手上；就像傳紙條，沿路的人可能看得到，所以重要的內容要用加密的服務，個人資料不要隨便傳（本站整理）。MDN 說網際網路由很多網路連在一起：「The Internet consists of this whole infrastructure of networks.」
+    source: mdn-internet
+  items_title: 封包四步
+  items:
+  - title: 切成小塊
+    text: 一句話拆成編號紙條。
+  - title: 寫上位址
+    text: 寄件人、收件人、第幾張。
+  - title: 一站一站傳
+    text: 經過家人傳到終點。
+  - title: 照號碼拼回
+    text: 少了就請對方重傳。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 句子拼對
+  - 找到少的那張
+  - 說出誰看得到
+  activity_figure: network-flow
+  sources:
+  - mdn-packet
+  - mdn-internet
+what:
+  heading: 懂封包，也懂隱私
+  body:
+  - 學完後，孩子能說出訊息會切成封包、靠位址和編號傳到對方再拼回，也知道訊息沿路可能被看到，個人資料不要隨便傳。
+  items_title: 學完能做到
+  items:
+  - title: 封包
+    text: 訊息切成小塊傳送。
+  - title: 位址
+    text: 每台裝置有自己的位址。
+  - title: 隱私
+    text: 訊息沿路可能被看到。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出封包
+  - 說得出位址
+  - 說得出隱私
+  figures:
+  - network-compare
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - mdn-dns
+  - genai-student
+figures:
+- id: network-flow
+  type: flow
+  alt: 傳紙條流程：孩子拆成紙條、寫上位址，家人一站站傳，收件人照編號拼回，少了就請求重傳。
+  steps:
+  - actor: 孩子
+    text: 拆成紙條
+  - actor: 孩子
+    text: 寫上位址
+  - actor: 家人
+    text: 一站站傳
+  - actor: 收件人
+    text: 照號拼回
+  - actor: 收件人
+    text: 請求重傳
+  caption: 流程是本站建議。
+- id: network-compare
+  type: compare
+  alt: 比較網域名稱和 IP 位址：網域名稱是人好記的名字，IP 位址是電腦用的數字位址。
+  source: mdn-dns
+  relation: versus
+  items:
+  - term: 網域名稱
+    note: 人好記的名字，例如 mozilla.org
+  - term: IP 位址
+    note: 電腦用的數字位址，例如 192.0.2.172（示意）
+  caption: MDN 說 DNS 把「human-friendly domain names (such as mozilla.org)」轉成數字的 IP 位址；例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：運 t-IV-1「能了解資訊系統的基本組成架構與運算原理。」（p.7）；資 S-IV-3「網路技術的概念與介紹。」（p.10）；資 S-IV-4「網路服務的概念與介紹。」（p.10）；資訊科技學習內容說明「國民中學教育階段以問題解決為主軸，強調培養學生利用資訊科技與運算思維解決問題之能力」（p.10）；時間分配「國民中學階段科技領域學習節數每週 2 節課。建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；資 S-IV-3 說明「電腦網路的概念與發展歷史。」、「網際網路的重要概念。」（p.43）；核心素養：科-J-B2「理解資訊與科技的基本原理，具備媒體識讀的能力，並能了解人與科技、資訊、媒體的互動關係。」（p.4）
+- id: mdn-internet
+  title: How does the Internet work?
+  publisher: MDN Web Docs（Mozilla）
+  url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/How_does_the_Internet_work
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「At its most basic, the Internet is a large network of computers which communicate all together.」；「The Internet consists of this whole infrastructure of networks.」
+- id: mdn-packet
+  title: Packet（MDN Glossary）
+  publisher: MDN Web Docs（Mozilla）
+  url: https://developer.mozilla.org/en-US/docs/Glossary/Packet
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「A packet, or network packet, is a formatted chunk of data sent over a network.」；「It consists of network addresses for the source and destination, sequencing information, and error detection codes and is generally found in packet headers and footer.」
+- id: mdn-dns
+  title: DNS（MDN Glossary）
+  publisher: MDN Web Docs（Mozilla）
+  url: https://developer.mozilla.org/en-US/docs/Glossary/DNS
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「human-friendly domain names (such as mozilla.org)」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

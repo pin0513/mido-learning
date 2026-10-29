@@ -1,55 +1,216 @@
 id: it.blocks@es
 concept: it.blocks
 title: 積木程式：重複與條件
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 運算思維
+  - 資訊
+  - 運算思維
   layer: foundation
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 綜合活動
-    - 藝術
+  - 數學
   core_competencies:
-    - A2
-    - B2
-    - B3
+  - A2
+  - B2
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
-  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 原有待核對「國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。」已處理：國家教育研究院參考說明 p.1 確認「國民小學教育階段則是採用議題融入各領域學習課程/彈性學習課程中實施。」；年級依參考說明的學習階段與總綱 p.7（三、四年級為第二學習階段，五、六年級為第三學習階段）。參考說明頁碼是頁腳印的頁碼（比 PDF 頁少 2），議題融入說明手冊頁碼是頁腳印的頁碼（比 PDF 頁少 16），總綱頁碼是頁腳印的頁碼（比 PDF 頁少 4）。
+- 參考說明的「資議」代碼（例如資議 t-Ⅱ-3）與議題融入說明手冊的「資 E」代碼不是部定課綱代碼，也不合 schema 的代碼格式，只在來源 supports 逐字引用，不列入 curriculum_108 和代碼表；參考說明自述「本說明係為參考性質」。國小因此不列 curriculum_108 學習內容，只在 Why 列出國中、高中會接著學的科技領綱代碼。
+- 國小沒有科技領域，curriculum_108.domains 改填數學（本站建議）：議題融入說明手冊 p.87 說「建議融入之領域/科目：例如科技領域等，其他相關領域亦可適切融入。」，並舉數學領域「例如可利用演算法與程式設計呈現數學解題流程，以使學生更深刻體驗抽象化與步驟化之歷程與重要性。」；原稿的綜合活動、藝術沒有對應的官方融入例子，已刪除。
+- 核心素養依總綱 p.4–6 國民小學教育的 E-A2、E-B2 原文挑選（總綱表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- 原稿的核心素養 B3 沒有對應的活動，已刪除。
+- 原 scenario「走到終點就跳舞」刪除，活動聚焦重複和條件；Scratch 只是工具舉例，不代表推薦特定產品（本站建議）。
 prerequisites:
-  - it.steps@es
+- it.steps@es
 links:
   why: []
   how: []
   related: []
   deeper:
-    - it.prog@jh
-link_notes: 藝術（動畫與故事）、數學（角度）
+  - it.prog@jh
+link_notes: 藝術（動畫與故事）、數學（角度）；科技領綱 資 P-IV-2（國中）。
 competency:
   specialist:
-    - 程式設計
+  - 程式設計
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 提示下一步可以用哪個積木
+  - 提示下一步可以用哪個積木（由大人操作，本站建議）
   human_experience:
-    - 自己除錯：找出角色為什麼卡住
-idea: 用積木組合指令；「重複做」讓程式變短，「如果……就……」讓程式會判斷。
+  - 自己除錯：找出角色為什麼卡住
+idea: 用積木組合指令；重複積木讓程式變短，如果積木讓程式會判斷（本站整理）。
 guiding_questions:
-  - 怎樣用最少的積木讓角色走完迷宮？
-scenario: 用積木程式（如 Scratch）讓角色走迷宮，碰到牆就轉彎，走到終點就跳舞。
+- 怎樣用最少的積木讓角色走完迷宮？
+scenario: 親子共學：家長先在電腦上開好圖像式程式工具（例如 Scratch），孩子用積木讓角色走一段迷宮：先一步一步排，再用重複積木縮短，最後加上碰到牆就轉彎的如果積木（本站建議）。
 formats:
   slides: []
+  exercise: 目標：用積木讓角色走完一段迷宮：先排出一步一步的指令，再用重複積木把相同的步驟縮短，並加一個碰到牆就轉彎的如果積木。　檢核：孩子的程式讓角色走到終點；說得出哪幾塊積木換成了重複積木；也指得出如果積木在什麼時候會執行；三件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 用積木讓角色走完一段迷宮：先排出一步一步的指令，再用重複積木把相同的步驟縮短，並加一個碰到牆就轉彎的如果積木。
+review: 孩子的程式讓角色走到終點；說得出哪幾塊積木換成了重複積木；也指得出如果積木在什麼時候會執行；三件事都做到。
+est_time:
+  school: 國小五、六年級（議題融入）
+  source: es-ref
+why:
+  heading: 重複和判斷，讓程式更好用
+  body:
+  - 國家教育研究院的參考說明，三、四年級先認識「圖像式程式設計工具的操作介紹」，五、六年級再學「圖像式程式設計工具的基本功能及操作」；議題融入說明手冊也列出「使用資訊科技解決生活中簡單的問題。」
+  - 'Scratch 基金會說，孩子用的是「a simple, block-based coding interface that they can drag and snap together: no tricky syntax required.」'
+  items_title: 國中會接著學
+  items:
+  - title: 結構化程式設計
+    text: 科技領綱 資 P-IV-2：結構化程式設計。說明包含「重複結構的程式設計實作與應用。」
+    code: 資 P-IV-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 會用滑鼠拖拉
+  - 做過指令卡
+  notes:
+  - 國小沒有部定的資訊科技課程，資訊教育是融入各領域實施的議題；國小的學習重點出自國家教育研究院的參考說明，只寫在來源裡。本頁列的代碼開頭的「資」是科技領綱（國中、高中）的資訊科技學習內容，中間的 IV 是第四學習階段（國中）、V 是第五學習階段（高中），代表之後會接著學。
+  sources:
+  - es-ref
+  - issues-handbook
+  - scratch-about
+  - tech108
+  - zonggang
+how:
+  heading: 先排一步步，再縮短
+  body:
+  - 家長先開好圖像式程式工具。孩子先一步一步排出走迷宮的積木，例如前進、前進、前進、右轉；接著把三塊一樣的前進積木換成一塊重複 3 次的積木，程式變短，結果一樣（次數是示意）。
+  - 再加一塊如果積木：如果碰到牆，就右轉。按下執行前，先讓孩子預測角色會走到哪裡；走錯了就一塊一塊檢查。作品不上傳、不登入帳號，只在家長準備的電腦上做（本站建議）。
+  qa:
+    question: 怎樣用最少的積木讓角色走完迷宮？
+    answer: 找出一直重複的步驟，用重複積木包起來；需要判斷的地方用如果積木（本站整理）。CS Unplugged 說，找出重複的指令後，就可以「reuse these groups of instructions」。
+    source: cs-kidbots-about
+  items_title: 積木三步
+  items:
+  - title: 一步一步排
+    text: 先把每一步都排出來。
+  - title: 用重複縮短
+    text: 相同的積木換成重複積木。
+  - title: 加上如果
+    text: 碰到牆就轉彎。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 先預測再執行
+  - 用了重複積木
+  - 用了如果積木
+  activity_figure: blocks-flow
+  sources:
+  - cs-kidbots-about
+what:
+  heading: 會用重複，也會用如果
+  body:
+  - 學完後，孩子能用圖像式程式工具排出走迷宮的程式，用重複積木把相同步驟縮短，用如果積木讓角色碰到牆時轉彎。
+  items_title: 學完能做到
+  items:
+  - title: 排出程式
+    text: 一步一步排出走迷宮的積木。
+  - title: 用重複縮短
+    text: 把相同步驟換成重複積木。
+  - title: 用如果判斷
+    text: 碰到牆時讓角色轉彎。
+  checklist_title: 家長檢核
+  checklist:
+  - 角色走到終點
+  - 說得出重複
+  - 說得出如果
+  figures:
+  - blocks-compare
+  notes:
+  - 本頁的步數和次數是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - tech108
+  - genai-student
+figures:
+- id: blocks-flow
+  type: flow
+  alt: 積木程式流程：家長開好程式工具，孩子一步步排積木、換成重複積木、加上如果積木，再預測後執行。
+  steps:
+  - actor: 家長
+    text: 開好程式工具
+  - actor: 孩子
+    text: 一步步排積木
+  - actor: 孩子
+    text: 換成重複積木
+  - actor: 孩子
+    text: 加上如果積木
+  - actor: 孩子
+    text: 預測再執行
+  caption: 流程是本站建議。
+- id: blocks-compare
+  type: compare
+  alt: 比較重複積木和如果積木：重複是同樣的事做好幾次，如果是條件成立才做。
+  source: tech108
+  relation: versus
+  items:
+  - term: 重複積木
+    note: 同樣的事做好幾次，例如前進重複 3 次（示意）
+  - term: 如果積木
+    note: 條件成立才做，例如碰到牆就右轉
+  caption: 國中資訊科技的學習內容說明列有「選擇結構的概念與應用。」和「重複結構的概念與應用。」；例子是本站整理。
+sources:
+- id: es-ref
+  title: 國民小學科技教育及資訊教育課程發展參考說明
+  publisher: 國家教育研究院（中華民國一○九年六月）
+  url: https://www.naer.edu.tw/upload/1/9/doc/280/1090611_%E5%9C%8B%E6%B0%91%E5%B0%8F%E5%AD%B8%E7%A7%91%E6%8A%80%E6%95%99%E8%82%B2%E5%8F%8A%E8%B3%87%E8%A8%8A%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%99%BC%E5%B1%95%E5%8F%83%E8%80%83%E8%AA%AA%E6%98%8E.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習內容 資議 P-Ⅱ-1「程式設計工具的介紹與體驗。」，說明「圖像式程式設計工具的操作介紹，及利用程式執行輸出、輸入、運算等簡易的工作。」（p.5）；資議 P-Ⅲ-1「程式設計工具的基本應用。」，說明「圖像式程式設計工具的基本功能及操作，如利用控制板連結程式與物件。」（p.6）；「國民小學教育階段則是採用議題融入各領域學習課程/彈性學習課程中實施。」（p.1）；「本說明係為參考性質」（p.1）；「建議可進行三到六年級系統性、整體性的規劃」（p.1）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 表 4.12.1 資訊教育議題學習主題與實質內涵（國民小學）：資 E2「使用資訊科技解決生活中簡單的問題。」（p.87）；融入領域/科目的說明「建議融入之領域/科目：例如科技領域等，其他相關領域亦可適切融入。」、例舉（1）數學領域：「例如可利用演算法與程式設計呈現數學解題流程，以使學生更深刻體驗抽象化與步驟化之歷程與重要性。」（p.87）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：資 P-IV-2「結構化程式設計。」（p.10）；資 A-IV-1 說明「選擇結構的概念與應用。」、「重複結構的概念與應用。」（p.42）；資 P-IV-2 說明「重複結構的程式設計實作與應用。」（p.42）；「可採用視覺化程式設計工具，並搭配演算法進行教學。」（p.10）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-B2「具備科技與資訊應用的基本素養，並理解各類媒體內容的意義與影響。」（p.5）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: scratch-about
+  title: Scratch Foundation（首頁）
+  publisher: Scratch Foundation
+  url: https://scratchfoundation.org/home
+  accessed: '2026-10-29'
+  kind: reference
+  supports: '「Kids bring Scratch projects to life using a simple, block-based coding interface that they can drag and snap together: no tricky syntax required.」'
+- id: cs-kidbots-about
+  title: Kidbots – What's it all about?
+  publisher: CS Unplugged（University of Canterbury Computer Science Education Research Group）
+  url: https://www.csunplugged.org/en/topics/kidbots/whats-it-all-about/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「they can reuse these groups of instructions」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

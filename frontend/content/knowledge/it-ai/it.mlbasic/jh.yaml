@@ -1,55 +1,216 @@
 id: it.mlbasic@jh
 concept: it.mlbasic
 title: 機器學習初探：訓練、測試與偏誤
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 數位素養
+  - 資訊
+  - 數位素養
   layer: foundation
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 9
 curriculum_108:
   domains:
-    - 科技
+  - 科技
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B2
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+  contents:
+  - 資 D-IV-3
+  - 資 H-IV-6
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 運算思維學習表現（運 a-IV-2）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（已加進代碼表），curriculum_108 只列資訊科技學習內容。
+- 核心素養依科技領綱 p.3–4 的 科-J-A2、科-J-B2 原文挑選（表格窄欄，文字已用頁面影像核對）。
+- stage.grades 依科技領綱 p.10–11 表格所列的年級：資 D-IV-3、資 H-IV-6 九年級。
+- 《未來人才AI能力圖像》的編號（例如 A-1-I-1）是該文件自己的編碼，I、II 分別是國小、國中，不是 108 課綱代碼，只在來源引用；頁碼是頁腳印的頁碼（比 PDF 頁少 1），文字已用頁面影像核對。
+- 國中科技領綱沒有機器學習的學習內容；機器學習列在高中必修 資 D-V-2，本點只在 Why 列為之後會學，國中的依據是 資 D-IV-3、資 H-IV-6 和《未來人才AI能力圖像》國中階段。
+- 原 scenario「訓練一個分辨垃圾分類的影像模型」改成不用電腦的分類卡活動；卡片張數、準確率都是示意（本站整理）；分類規則是孩子自己歸納的，不是垃圾分類的官方規定。
 prerequisites:
-  - it.machine@es
-  - it.datatable@jh
+- it.machine@es
+- it.datatable@jh
 links:
   why:
-    - ph.fallacy@jh
+  - ph.fallacy@jh
   how: []
   related:
-    - ma.prob@jh
+  - ma.prob@jh
   deeper:
-    - it.ml@sh
-link_notes: 數學（機率入門）、哲學（以偏概全）
+  - it.ml@sh
+link_notes: 數學（機率入門）、哲學（以偏概全）；科技領綱 資 D-IV-3、資 H-IV-6、運 a-IV-2；高中 資 D-V-2。
 competency:
   specialist:
-    - 機器學習
+  - 機器學習
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 執行訓練並回報準確率
+  - 執行訓練並回報準確率（由家長或老師操作教學工具，結果要自己檢查，本站建議）
   human_experience:
-    - 設計資料、分析錯誤原因
-idea: 機器學習用「訓練資料」學規律，再用沒看過的「測試資料」檢查。訓練資料有偏，模型就會有偏。
+  - 設計資料、分析錯誤原因
+idea: 機器學習是從訓練資料找規律，再用沒看過的測試資料檢查學得好不好；資料偏了，模型就會學偏（本站整理）。
 guiding_questions:
-  - 準確率 95%，代表它可以放心用嗎？
-scenario: 訓練一個分辨垃圾分類的影像模型，分出訓練組和測試組，計算準確率，找出常錯的類別。
+- 準確率 95%，代表它可以放心用嗎？
+scenario: 親子共學（不用電腦）：用自己畫的垃圾分類卡（紙類、塑膠、廚餘），分成訓練組和測試組；孩子當模型只看訓練組歸納規則，再用測試組算答對幾張，找出常錯的類別（本站建議）。
 formats:
   slides: []
+  exercise: 目標：把分類卡分成訓練組和測試組，只看訓練組寫出分類規則，再用測試組算出準確率（例如 5 張答對 4 張是 80%，數字是示意），並找出最常錯的類別和原因。　檢核：孩子說得出為什麼測試組不能先看；準確率算對；也說得出只看準確率可能被騙，例如資料大多是同一類的時候（本站整理）；三件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 把分類卡分成訓練組和測試組，只看訓練組寫出分類規則，再用測試組算出準確率（例如 5 張答對 4 張是 80%，數字是示意），並找出最常錯的類別和原因。
+review: 孩子說得出為什麼測試組不能先看；準確率算對；也說得出只看準確率可能被騙，例如資料大多是同一類的時候（本站整理）；三件事都做到。
+est_time:
+  school: 國中九年級資訊科技課
+  source: tech108
+why:
+  heading: 從例子學，用新例子考
+  body:
+  - 科技領綱九年級學「資料處理概念與方法。」和「資訊科技對人類生活之影響。」；機器學習要到高中才列入學習內容。教育部《未來人才AI能力圖像》國中階段要「理解AI透過資料訓練與模型運算產生結果的基本原理」。
+  - Google 的機器學習速成課程說，模型要用另一份資料測試：「Machine learning models should be tested against a separate dataset, called the test set, to ensure accurate predictions on unseen data.」
+  items_title: 科技領綱的學習重點
+  items:
+  - title: 法律倫理與社會議題
+    text: 科技領綱 運 a-IV-2：能了解資訊科技相關之法律、倫理及社會議題，以保護自己與尊重他人。
+    code: 運 a-IV-2
+  - title: 資料處理
+    text: 科技領綱 資 D-IV-3：資料處理概念與方法。
+    code: 資 D-IV-3
+  - title: 對人類生活的影響
+    text: 科技領綱 資 H-IV-6：資訊科技對人類生活之影響。
+    code: 資 H-IV-6
+  - title: 高中：機器學習
+    text: 高中科技領綱 資 D-V-2：資料探勘與機器學習的基本概念。
+    code: 資 D-V-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 會算百分率
+  - 知道垃圾分類
+  notes:
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 IV 是第四學習階段（國中七至九年級），V 是第五學習階段（高中）。
+  sources:
+  - tech108
+  - moe-ai-portrait
+  - mlcc-split
+how:
+  heading: 分組訓練，再用新卡考
+  body:
+  - 畫 20 張垃圾分類卡（張數是示意），洗牌後分成訓練組 15 張、測試組 5 張，測試組先蓋起來。孩子只看訓練組，寫下自己歸納的分類規則；規則不一定完全對，這正是要測試的（本站整理）。
+  - 再翻開測試組，照規則分類，算出準確率 ＝ 答對張數 ÷ 測試張數。如果測試組幾乎都是紙類，就算規則只會說紙類，準確率也可能很高（本站整理）。Google 的課程舉例，一個沒有用的模型也可能「would score 99% on accuracy, despite being useless.」
+  qa:
+    question: 準確率 95%，代表它可以放心用嗎？
+    answer: 不一定。要看測試資料是不是模型沒看過的，以及各類別的資料夠不夠平均（本站整理）。Google 的課程提醒，在「heavily imbalanced datasets」裡，只看準確率不夠。
+    source: mlcc-acc
+  items_title: 訓練測試四步
+  items:
+  - title: 分兩組
+    text: 訓練組和測試組分開。
+  - title: 學規則
+    text: 只看訓練組寫規則。
+  - title: 算準確率
+    text: 答對張數 ÷ 測試張數。
+  - title: 找常錯的
+    text: 看哪一類最常錯、為什麼。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 測試組沒偷看
+  - 準確率算對
+  - 找到常錯類別
+  activity_figure: mlbasic-flow
+  sources:
+  - mlcc-acc
+what:
+  heading: 會測試，也看得出偏誤
+  body:
+  - 學完後，孩子能說出訓練資料和測試資料要分開、會算準確率，也知道資料偏了，模型就可能學偏，準確率高不代表一定可靠。
+  items_title: 學完能做到
+  items:
+  - title: 分開資料
+    text: 訓練和測試不混用。
+  - title: 算準確率
+    text: 算出答對的比例。
+  - title: 看出偏誤
+    text: 說出資料偏了會怎樣。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出分組
+  - 算得出比例
+  - 說得出偏誤
+  figures:
+  - mlbasic-compare
+  notes:
+  - 本頁的卡片張數和準確率都是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - mlcc-split
+  - genai-student
+figures:
+- id: mlbasic-flow
+  type: flow
+  alt: 訓練測試流程：孩子畫分類卡、分成訓練組和測試組、從訓練組學規則、用測試組考，再找出常錯的類別。
+  steps:
+  - actor: 孩子
+    text: 畫分類卡
+  - actor: 孩子
+    text: 分訓練測試
+  - actor: 孩子
+    text: 從訓練組學
+  - actor: 孩子
+    text: 用測試組考
+  - actor: 孩子
+    text: 找常錯類別
+  caption: 流程是本站建議。
+- id: mlbasic-compare
+  type: compare
+  alt: 比較訓練資料和測試資料：訓練資料拿來學規則，測試資料是沒看過的例子，用來檢查。
+  source: mlcc-split
+  relation: versus
+  items:
+  - term: 訓練資料
+    note: 拿來學規則的例子
+  - term: 測試資料
+    note: 沒看過的例子，用來檢查
+  caption: Google 的課程說好的測試資料「contains no duplicates from the training set.」；例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：運 a-IV-2「能了解資訊科技相關之法律、倫理及社會議題，以保護自己與尊重他人。」（p.7）；資 D-IV-3「資料處理概念與方法。」（p.11）；資 H-IV-6「資訊科技對人類生活之影響。」（p.11）；資 D-V-2「資料探勘與機器學習的基本概念。」（p.11）；資訊科技學習內容說明「國民中學教育階段以問題解決為主軸，強調培養學生利用資訊科技與運算思維解決問題之能力」（p.10）；時間分配「國民中學階段科技領域學習節數每週 2 節課。建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；資 H-IV-6 說明「資訊科技對食衣住行之影響與衝擊。」（p.44）；資 D-V-2 說明「資料分類的概念。」、「機器學習的概念與應用。」（p.45）；核心素養：科-J-A2「運用科技工具，理解與歸納問題，進而提出簡易的解決之道。」（p.3）；科-J-B2「理解資訊與科技的基本原理，具備媒體識讀的能力，並能了解人與科技、資訊、媒體的互動關係。」（p.4）
+- id: moe-ai-portrait
+  title: 未來人才AI能力圖像（電子布告欄附件 PDF）
+  publisher: 教育部資訊及科技教育司（上版日期 115-07-14）
+  url: https://depart.moe.edu.tw/ed2700/News_Content.aspx?n=A1E30194B1C3ACDF&s=4C49BBB8F747DE99
+  accessed: '2026-10-29'
+  kind: government
+  supports: A 素養與理解（國中）A-1-II-1「能熟練運用AI工具輔助科學探究（數據分析）、社會科報告（觀點對照）或語文創作，並理解AI透過資料訓練與模型運算產生結果的基本原理。」（p.11）；C 運用與創造（國中）C-2-II-1「理解『垃圾進，垃圾出（GIGO）』原理，具備基本的資料清理與辨識偏誤，以提升AI模型準確度。」（p.13）
+- id: mlcc-split
+  title: 'Datasets: Dividing the original dataset（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Machine learning models should be tested against a separate dataset, called the test set, to ensure accurate predictions on unseen data.」；「A good test set is statistically significant, representative of the dataset and real-world data, and contains no duplicates from the training set.」
+- id: mlcc-acc
+  title: 'Classification: Accuracy, recall, precision, and related metrics（Machine Learning Crash Course）'
+  publisher: Google for Developers
+  url: https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「would score 99% on accuracy, despite being useless.」；「heavily imbalanced datasets」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

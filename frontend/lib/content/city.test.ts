@@ -39,7 +39,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
     map.buildings.map((building) => `${building.id}:${building.x}:${building.y}:${building.height}`).join("\n");
   assert.equal(signature(first), signature(second));
   const digest = createHash("sha256").update(signature(first)).digest("hex");
-  assert.equal(digest, "29a3bd3b4284214b84b1f19da84a1ddf3541d7543dfda2e370ea00924c281db3");
+  assert.equal(digest, "734fe2de1bd0bf3c45169aa9a1b6d0cb5d5dda016ce0bfc08686e33cfcd8d47f");
   for (const district of first.districts) {
     for (const stage of first.stages) {
       const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;
@@ -87,7 +87,8 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.ok(shown.roads.every((road) => !draftIds.has(road.from) && !draftIds.has(road.to)));
   assert.ok(shown.bridges.every((bridge) => !draftIds.has(bridge.from) && !draftIds.has(bridge.to)));
   // B11 發布數學 es／jh 12 點後，數學的 7 條路線（ma.algebra、ma.beauty、ma.change、ma.data、ma.geometry、ma.model、ma.proof）各有 es＋jh 兩站已發布，跟著顯示。
-  assert.equal(shown.landmarks.length, 9);
+  // B14 發布資訊與 AI es／jh 12 點後，資訊與 AI 的 8 條路線（it.collab、it.creative、it.ct、it.data、it.literacy、it.ml、it.net、it.prog）各有 es＋jh 兩站已發布，也跟著顯示。
+  assert.equal(shown.landmarks.length, 17);
   const shownEstimate = shown.landmarks.find((landmark) => landmark.id === "pm.estimate");
   assert.ok(shownEstimate);
   assert.deepEqual(shownEstimate.stops, ["pm.breakdown@es", "pm.triangle@jh", "pm.estimate@sh", "pm.evm@uni"]);

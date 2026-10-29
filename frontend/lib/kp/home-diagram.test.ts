@@ -17,13 +17,15 @@ const DRAFT_TITLES = [
 
 const DRAFT_SLUGS = ["pm.goal", "ph.parts", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "pm.schedule"];
 
-// 已發布的點才有頁面連結：ph.reason@es，B11 發布的數學 es／jh 12 點，B12 發布的數學 sh 7 點，以及 B13 發布的數學 uni 7 點。
+// 已發布的點才有頁面連結：ph.reason@es，B11 發布的數學 es／jh 12 點，B12 發布的數學 sh 7 點，B13 發布的數學 uni 7 點，以及 B14 發布的資訊與 AI es／jh 12 點。
 const PUBLISHED = new Set([
   "ph.reason@es",
   "ma.number@es", "ma.pattern@es", "ma.data@es", "ma.measure@es", "ma.shape@es", "ma.fraction@es",
   "ma.algebra@jh", "ma.coord@jh", "ma.prob@jh", "ma.pythag@jh", "ma.quadratic@jh", "ma.similar@jh",
   "ma.function@sh", "ma.proof@sh", "ma.rate@sh", "ma.sequence@sh", "ma.stats@sh", "ma.trig@sh", "ma.vector@sh",
   "ma.beauty@uni", "ma.derivative@uni", "ma.diffeq@uni", "ma.integral@uni", "ma.limit@uni", "ma.linalg@uni", "ma.probmodel@uni",
+  "it.blocks@es", "it.data@es", "it.machine@es", "it.pattern@es", "it.safe@es", "it.steps@es",
+  "it.algo@jh", "it.datatable@jh", "it.media@jh", "it.mlbasic@jh", "it.network@jh", "it.prog@jh",
 ]);
 
 test("四個學門都有學段總圖，專案管理仍只有已發布的四步", () => {
