@@ -10,6 +10,7 @@ import "./detail.css";
 import { GoldenCircleNav } from "./GoldenCircleNav";
 import { ReviewStatePanel } from "./ReviewStatePanel";
 import { SeqPanel } from "./SeqPanel";
+import { pointRefs } from "./refs";
 import { SourcesPanel } from "./SourcesPanel";
 import { RichText, TitleLine } from "./text";
 
@@ -24,6 +25,7 @@ export function KpDetailV2({
 }) {
   const built = buildCircles(point, visible);
   const facts = pointFacts(point, all);
+  const refs = pointRefs(all, visible, point.folder);
   const crumbs = point.disciplinePath.length > 1 ? point.disciplinePath.slice(0, -1) : point.disciplinePath;
   return (
     <article className="kp-detail" data-testid="kp-detail-v2" data-converted={built.converted ? "yes" : "no"}>
@@ -51,26 +53,26 @@ export function KpDetailV2({
             ) : null}
             <h1><TitleLine title={point.title} /></h1>
             <AttrChips facts={facts} />
-            {point.idea ? <p className="v2-lead"><RichText text={point.idea} /></p> : null}
+            {point.idea ? <p className="v2-lead"><RichText text={point.idea} refs={refs} /></p> : null}
             {point.goal ? (
               <div className="v2-goal">
                 <b>學完能做到</b>
-                <p><RichText text={point.goal} /></p>
+                <p><RichText text={point.goal} refs={refs} /></p>
               </div>
             ) : null}
           </header>
           <GoldenCircleNav circles={built.circles} point={point} />
           {built.circles.map((circle) => (
-            <CircleSection key={circle.kind} circle={circle} point={point} all={all} visible={visible} />
+            <CircleSection key={circle.kind} circle={circle} point={point} all={all} visible={visible} refs={refs} />
           ))}
         </div>
         <aside className="v2-aside" aria-label="知識點屬性與出處" data-testid="v2-aside">
           <div className="v2-panel">
             <AttrPanel facts={facts} />
             <SeqPanel point={point} all={all} visible={visible} />
-            <CurriculumPanel point={point} all={all} />
+            <CurriculumPanel point={point} all={all} refs={refs} />
             <SourcesPanel sources={point.sources} />
-            <ReviewStatePanel point={point} converted={built.converted} />
+            <ReviewStatePanel point={point} converted={built.converted} refs={refs} />
           </div>
         </aside>
       </div>

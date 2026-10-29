@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import Link from "next/link";
+import { Fragment, type ReactNode } from "react";
 
 const ROMAN = "IV|III|II|V|I";
 const PERF = `(?:[\\u4e00-\\u9fff] )?[0-9]{1,2}[a-z]?-(?:${ROMAN})-[0-9]{1,2}`;
@@ -13,10 +14,20 @@ const TOKEN = new RegExp(
 /** 《重編國語辭典修訂本》這種短書名整段不拆。更長的書名要能換行，否則 390 寬會被英文書名撐出畫面。 */
 const BOOK_KEEP = 16;
 
-type Piece = { text: string; nowrap: boolean };
+/** 內文提到的知識點。有 href 才連出去（草稿或未上線的學門只顯示標題）。 */
+export type PointRef = { title: string; href?: string };
+/** key 是 concept（例如 pm.estimate）或 concept@stage。 */
+export type PointRefs = ReadonlyMap<string, PointRef>;
 
-function piecesOf(text: string): Piece[] {
-  const pieces: Piece[] = [];
+type Piece = { text: string; nowrap: boolean } | { ref: PointRef; open: string; close: string };
+type TextPiece = Extract<Piece, { text: string }>;
+
+function isText(piece: Piece): piece is TextPiece {
+  return "text" in piece;
+}
+
+function piecesOf(text: string): TextPiece[] {
+  const pieces: TextPiece[] = [];
   let last = 0;
   for (const match of text.matchAll(TOKEN)) {
     const index = match.index ?? 0;
@@ -30,36 +41,90 @@ function piecesOf(text: string): Piece[] {
   return pieces;
 }
 
-/** 結尾至少四個字黏在一起，避免最後一行只剩一兩個字。已是不斷行的代碼或音節整段算進去。 */
-function keepTail(pieces: Piece[]): Piece[] {
-  let need = 4;
-  const tail: Piece[] = [];
-  const head = [...pieces];
-  while (head.length > 0 && need > 0) {
-    const piece = head.pop();
-    if (!piece) break;
-    const length = [...piece.text].length;
-    if (piece.nowrap || length <= need) {
-      tail.unshift(piece);
-      need -= length;
-      continue;
-    }
-    const chars = [...piece.text];
-    const stay = chars.slice(0, chars.length - need).join("");
-    if (stay) head.push({ text: stay, nowrap: false });
-    tail.unshift({ text: chars.slice(chars.length - need).join(""), nowrap: true });
-    need = 0;
+/** 內文裡的知識點 id（pm.estimate、sk.present@sh）。前後不能黏著英數、點或斜線，網址和檔名才不會被誤認。 */
+const POINT_ID = /(?<![A-Za-z0-9_.@/-])[a-z]{2}\.[a-z][a-z0-9]*(?:@[a-z]{2,3})?(?![A-Za-z0-9_@/-])/g;
+const CJK_OR_PUNCT = /[\u3000-\u30ff\u3105-\u312f\u3400-\u9fff\uf900-\ufaff\uff00-\uffef]/;
+
+/** 讀者不該看到內部 id：換成知識點標題，前後沒有引號就補上「」，和中文相鄰的半形空白一併拿掉。 */
+function withRefs(text: string, refs: PointRefs | undefined): Piece[] {
+  if (!refs || refs.size === 0) return piecesOf(text);
+  const out: Piece[] = [];
+  let cursor = 0;
+  const matches = [...text.matchAll(POINT_ID)].filter((match) => refs.has(match[0]));
+  if (matches.length === 0) return piecesOf(text);
+  for (const match of matches) {
+    const index = match.index ?? 0;
+    const ref = refs.get(match[0]);
+    if (!ref) continue;
+    let before = text.slice(cursor, index);
+    let after = index + match[0].length;
+    if (before.endsWith(" ") && CJK_OR_PUNCT.test(before.at(-2) ?? "")) before = before.slice(0, -1);
+    if (text[after] === " " && CJK_OR_PUNCT.test(text[after + 1] ?? "")) after += 1;
+    const quoted = /[「『〈《]$/.test(before);
+    const open = quoted ? "" : ref.title.includes("「") ? "『" : "「";
+    const close = quoted ? "" : open === "『" ? "』" : "」";
+    if (before) out.push(...piecesOf(before));
+    out.push({ ref, open, close });
+    cursor = after;
   }
-  if (tail.length === 0) return pieces;
-  return [...head, { text: tail.map((piece) => piece.text).join(""), nowrap: true }];
+  const rest = text.slice(cursor);
+  if (rest) out.push(...piecesOf(rest));
+  return out;
 }
 
-/** 短書名、注音、課綱代碼不斷行。長書名照一般段落換行。 */
-export function RichText({ text }: { text: string }) {
-  const pieces = keepTail(piecesOf(text));
-  if (pieces.length === 1 && !pieces[0].nowrap) return pieces[0].text;
+/** 不能放在行首的標點（逗號、句號、收尾括號……）。 */
+const NO_START = "，。、；：！？」』）》〉】〕…‥—～,.;:!?)]}%";
+/** 不能放在行尾的標點（開頭括號）。 */
+const NO_END = "「『（《〈【〔([{";
+const CJK = /[\u3040-\u30ff\u3105-\u312f\u3400-\u9fff\uf900-\ufaff]/;
+
+/**
+ * 段落結尾的最後兩個中日文字，連同後面的標點黏在一起，最後一行就不會只剩一個字或一個標點。
+ * 只黏這麼短，窄欄裡也不會因為黏太長被迫在詞中間斷開。結尾是英數或代碼時不黏，英文本來就不會拆字。
+ * 行首不放逗號句號、行尾不放開括號，交給 CSS 的 line-break: strict。
+ */
+function keepTail(pieces: Piece[]): Piece[] {
+  const last = pieces.at(-1);
+  if (!last || !isText(last) || last.nowrap) return pieces;
+  const chars = [...last.text];
+  let index = chars.length;
+  while (index > 0 && NO_START.includes(chars[index - 1])) index -= 1;
+  let kept = 0;
+  while (index > 0 && kept < 2 && CJK.test(chars[index - 1])) {
+    index -= 1;
+    kept += 1;
+  }
+  if (kept === 0) return pieces;
+  while (index > 0 && NO_END.includes(chars[index - 1])) index -= 1;
+  const head = chars.slice(0, index).join("");
+  const tail = chars.slice(index).join("");
+  const rest = pieces.slice(0, -1);
+  if (head) rest.push({ text: head, nowrap: false });
+  rest.push({ text: tail, nowrap: true });
+  return rest;
+}
+
+/** 短書名、注音、課綱代碼不斷行。長書名照一般段落換行。內文裡的知識點 id 換成標題連結。 */
+export function RichText({ text, refs }: { text: string; refs?: PointRefs }) {
+  const pieces = keepTail(withRefs(text, refs));
+  if (pieces.length === 1 && isText(pieces[0]) && !pieces[0].nowrap) return pieces[0].text;
   const nodes: ReactNode[] = [];
   pieces.forEach((piece, index) => {
+    if (!isText(piece)) {
+      const label = `${piece.open}${piece.ref.title}${piece.close}`;
+      nodes.push(
+        piece.ref.href ? (
+          <Fragment key={`ref-${index}`}>
+            {piece.open}
+            <Link className="v2-ref" href={piece.ref.href}>{piece.ref.title}</Link>
+            {piece.close}
+          </Fragment>
+        ) : (
+          label
+        ),
+      );
+      return;
+    }
     if (!piece.nowrap) {
       nodes.push(piece.text);
       return;

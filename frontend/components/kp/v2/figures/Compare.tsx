@@ -91,7 +91,11 @@ function blockHeight(item: Item, width: number): number {
   return cardH + 16 + Math.max(notes, 1) * 20 + 8;
 }
 
-export function Compare({ figure }: { figure: CompareFigure }) {
+/**
+ * 並排一張、直排一張，CSS 依寬度切換。stacked 時兩種寬度都用直排：
+ * 和問答並排的窄欄（約 340px）放不下並排版，字會被縮到 9px。
+ */
+export function Compare({ figure, stacked = false }: { figure: CompareFigure; stacked?: boolean }) {
   const items = figure.items;
   const gap = 36;
   const cardW = Math.max(
@@ -112,6 +116,21 @@ export function Compare({ figure }: { figure: CompareFigure }) {
     mobileY += blockHeight(item, 304) + 28;
     return row;
   });
+  const vertical = (
+    <svg className={stacked ? "v2-cmp-stack" : "v2-only-m"} viewBox={`0 0 320 ${mobileY - 20}`} role="img" aria-label={figure.alt}>
+      {mobileRows.map(({ item, y }, index) => (
+        <g key={`${item.term}-m`}>
+          {index > 0 ? (
+            <text x={160} y={y - 12} textAnchor="middle" fontSize={18} fill="#6a635b">
+              {RELATION[figure.relation]}
+            </text>
+          ) : null}
+          <Card item={item} x={8} y={y} width={304} />
+        </g>
+      ))}
+    </svg>
+  );
+  if (stacked) return vertical;
   return (
     <>
       <svg className="v2-only-d" viewBox={`0 0 ${width} ${height}`} role="img" aria-label={figure.alt}>
@@ -126,18 +145,7 @@ export function Compare({ figure }: { figure: CompareFigure }) {
           </g>
         ))}
       </svg>
-      <svg className="v2-only-m" viewBox={`0 0 320 ${mobileY - 20}`} role="img" aria-label={figure.alt}>
-        {mobileRows.map(({ item, y }, index) => (
-          <g key={`${item.term}-m`}>
-            {index > 0 ? (
-              <text x={160} y={y - 12} textAnchor="middle" fontSize={18} fill="#6a635b">
-                {RELATION[figure.relation]}
-              </text>
-            ) : null}
-            <Card item={item} x={8} y={y} width={304} />
-          </g>
-        ))}
-      </svg>
+      {vertical}
     </>
   );
 }

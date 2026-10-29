@@ -97,6 +97,25 @@ function fallbackWhat(point: KnowledgePoint, catalog: ContentCatalog): Block[] {
   return blocks;
 }
 
+function usesBlock(part: CirclePart): Extract<Block, { kind: "uses" }> {
+  const block: Extract<Block, { kind: "uses" }> = {
+    kind: "uses",
+    items: part.items.map((item) => {
+      const row: { title: string; text: string; code?: string } = { title: item.title, text: item.text };
+      if (item.code) row.code = item.code;
+      return row;
+    }),
+  };
+  if (part.itemsTitle) block.title = part.itemsTitle;
+  return block;
+}
+
+function checklistBlock(part: CirclePart): Extract<Block, { kind: "checklist" }> {
+  const block: Extract<Block, { kind: "checklist" }> = { kind: "checklist", items: part.checklist };
+  if (part.checklistTitle) block.title = part.checklistTitle;
+  return block;
+}
+
 function convertedWhy(part: CirclePart, point: KnowledgePoint): Block[] {
   const blocks: Block[] = [];
   if (part.body.length > 0) blocks.push({ kind: "paragraphs", texts: part.body });
@@ -111,18 +130,7 @@ function convertedWhy(part: CirclePart, point: KnowledgePoint): Block[] {
   for (const id of part.figures) {
     if (!paired.has(id)) blocks.push({ kind: "figure", id });
   }
-  if (part.items.length > 0) {
-    const block: Extract<Block, { kind: "uses" }> = {
-      kind: "uses",
-      items: part.items.map((item) => {
-        const row: { title: string; text: string; code?: string } = { title: item.title, text: item.text };
-        if (item.code) row.code = item.code;
-        return row;
-      }),
-    };
-    if (part.itemsTitle) block.title = part.itemsTitle;
-    blocks.push(block);
-  }
+  if (part.items.length > 0) blocks.push(usesBlock(part));
   if (part.notes.length > 0) blocks.push({ kind: "notes", items: part.notes });
   return blocks;
 }
@@ -144,23 +152,11 @@ function convertedHow(part: CirclePart, point: KnowledgePoint): Block[] {
         }),
       });
     } else {
-      const block: Extract<Block, { kind: "uses" }> = {
-        kind: "uses",
-        items: part.items.map((item) => {
-          const row: { title: string; text: string; code?: string } = { title: item.title, text: item.text };
-          if (item.code) row.code = item.code;
-          return row;
-        }),
-      };
-      if (part.itemsTitle) block.title = part.itemsTitle;
-      blocks.push(block);
+      blocks.push(usesBlock(part));
     }
   }
-  if (part.checklist.length > 0) {
-    const block: Extract<Block, { kind: "checklist" }> = { kind: "checklist", items: part.checklist };
-    if (part.checklistTitle) block.title = part.checklistTitle;
-    blocks.push(block);
-  }
+  if (part.checklist.length > 0) blocks.push(checklistBlock(part));
+  if (part.notes.length > 0) blocks.push({ kind: "notes", items: part.notes });
   if (point.scenario || part.activityFigure) {
     const scenario: Extract<Block, { kind: "scenario" }> = { kind: "scenario" };
     if (point.scenario) {
@@ -179,8 +175,18 @@ function convertedHow(part: CirclePart, point: KnowledgePoint): Block[] {
   return blocks;
 }
 
+/**
+ * 學什麼：先內文，再圖、能力列、檢核，最後是說明。
+ * 只有 notes、沒有內文和圖的頁面，notes 就是這一圈的內文，照一般段落呈現。
+ */
 function convertedWhat(part: CirclePart, point: KnowledgePoint): Block[] {
   const blocks: Block[] = [];
+  const onlyNotes = part.body.length === 0 && part.figures.length === 0 && part.items.length === 0 && part.checklist.length === 0;
+  if (onlyNotes) {
+    if (part.notes.length > 0) blocks.push({ kind: "paragraphs", texts: part.notes });
+    return blocks;
+  }
+  if (part.body.length > 0) blocks.push({ kind: "paragraphs", texts: part.body });
   const lastId = part.figures[part.figures.length - 1];
   const last = point.figures?.find((figure) => figure.id === lastId);
   const notesOnLast = last?.type === "tone_chart" && part.notes.length > 0;
@@ -189,6 +195,8 @@ function convertedWhat(part: CirclePart, point: KnowledgePoint): Block[] {
     if (notesOnLast && index === part.figures.length - 1) block.notes = part.notes;
     blocks.push(block);
   });
+  if (part.items.length > 0) blocks.push(usesBlock(part));
+  if (part.checklist.length > 0) blocks.push(checklistBlock(part));
   if (!notesOnLast && part.notes.length > 0) blocks.push({ kind: "notes", items: part.notes });
   return blocks;
 }
