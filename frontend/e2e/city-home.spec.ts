@@ -6,8 +6,9 @@ import { test, expect } from "@playwright/test";
  */
 const DRAFT_TITLES = [
   "部分與整體",
-  "規律與關係",
-  "用字母代表數：方程式",
+  // B11 已發布「規律與關係」「用字母代表數：方程式」，改放仍是草稿的數學點。
+  "函數的眼光：指數與對數",
+  "三角函數與週期",
   "認知偏誤與思考盲點",
   "統計推論：抽樣與信賴",
   "從平均變化率到瞬間變化率",
@@ -34,7 +35,8 @@ test.describe("學門總圖", () => {
     await page.getByRole("link", { name: "數學" }).click();
     await expect(page).toHaveURL(/[?&]d=math(?:&|$)/);
     await expect(diagram.getByRole("link", { name: /^規律與關係/ })).toBeVisible();
-    await expect(diagram.getByRole("link", { name: /你怎麼確定第 100 個/ })).toBeVisible();
+    // B11 把 ma.pattern@es 的引導問題改成這句（content/knowledge/math/ma.pattern/es.yaml guiding_questions[0]）。
+    await expect(diagram.getByRole("link", { name: /同一串數，可能有不只一種規律嗎？/ })).toBeVisible();
     await expect(diagram.getByRole("link", { name: /^大事拆成小事/ })).toHaveCount(0);
     await expect(diagram.locator("table")).toHaveCount(0);
 
