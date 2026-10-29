@@ -14,9 +14,9 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   { path: "/kp/ph.reason/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/sk.voice/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/en.abc/es", layer: "基礎", verify: false, converted: true },
-  // B11 已轉換並發布 ma.number@es（to_verify: false）；未轉換的數學草稿改由 ma.function@sh 覆蓋。
+  // B11 已轉換並發布 ma.number@es（to_verify: false）；未轉換的數學草稿由 ma.limit@uni 覆蓋（B12 已發布 ma.function@sh）。
   { path: "/kp/ma.number/es", layer: "本質", verify: false, converted: true },
-  { path: "/kp/ma.function/sh", layer: "本質", verify: true },
+  { path: "/kp/ma.limit/uni", layer: "本質", verify: true },
   { path: "/kp/it.blocks/es", layer: "基礎", verify: true },
 ];
 
