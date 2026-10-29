@@ -7,14 +7,14 @@ import { test, expect } from "@playwright/test";
 const DRAFT_TITLES = [
   "目標：我們想完成什麼？",
   "部分與整體",
-  "極限與連續",
+  "神經網路與深度學習",
   "排程與資源最佳化",
-  "導數與最佳化",
+  "軟體工程：版本控制、測試與架構",
   "什麼是「專案」？",
   "先做什麼、後做什麼",
-  "線性代數與資料",
+  "AI 系統設計：評估與人在迴路",
 ];
-// B11 已發布「規律與關係」（ma.pattern）、「用字母代表數：方程式」（ma.algebra）、ma.measure；B12 已發布高中數學 7 點（ma.function、ma.trig、ma.rate 等）。草稿樣本改用仍是草稿的大學數學點。
+// B11 已發布「規律與關係」（ma.pattern）、「用字母代表數：方程式」（ma.algebra）、ma.measure；B12 已發布高中數學 7 點（ma.function、ma.trig、ma.rate 等）；B13 已發布大學數學 7 點（ma.limit、ma.derivative、ma.linalg 等）。草稿樣本改用仍是草稿的大學資訊與 AI 點（it.nn、it.swe、it.aisys）；已發布的 ma.derivative、ma.linalg 都連到 it.nn@uni，地圖不能露出它的 slug。
 
 test.describe("正式 build", () => {
   test("index 只有已發布，草稿頁 404，已發布頁不含草稿標題", async ({ request }) => {
@@ -51,7 +51,7 @@ test.describe("正式 build", () => {
   });
 
   test("地圖不放草稿標題，首頁畫出公開學門", async ({ request }) => {
-    const slugs = ["pm.goal", "ph.parts", "ma.limit", "ma.linalg", "pm.schedule", "ma.derivative"];
+    const slugs = ["pm.goal", "ph.parts", "it.nn", "it.swe", "pm.schedule", "it.aisys"];
     const map = await request.get("/kp/map");
     expect(map.status()).toBe(200);
     const mapHtml = await map.text();

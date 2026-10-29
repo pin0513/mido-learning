@@ -1,47 +1,184 @@
 id: ma.diffeq@uni
 concept: ma.diffeq
 title: 微分方程與數學建模
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 數學
-    - 分析
-    - 建模
+  - 數學
+  - 分析
+  - 建模
   layer: essence
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+- 原有待核對「課綱對應只到領域與核心素養（A1–C3）…」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級；高中數學 A／B、甲／乙的相關學習內容只在 math108 來源逐字引用（含頁碼），當作先學過的內容，主要依據改用大學開放教科書。
+- math108 來源裡 12 年級加深加廣選修的代碼照 PDF 寫成有空白的「12 甲」「12 乙」（如 F-12 甲-4）；含數學斜體字元的條目只引不含斜體字的一段，用刪節號表示省略。頁碼是頁腳印的頁碼（PDF 頁 − 3）。
+- 英文教科書的引文取自網頁版（2026-10-29 讀取）；網頁上的數學式是 MathML，引文只取不含數學式或彎引號的句子或片段，省略處用刪節號。
+- 安全：原 scenario「記錄一杯熱水每 2 分鐘的溫度，建立冷卻模型，預測何時降到可以喝的溫度」要碰熱水，改成用已記好的示意數據計算；預測目標改成降到 40°C，不判斷能不能喝。
+- 原 idea 的人口成長、疾病傳播本頁沒有教，只留冷卻的例子，族群模型留在 link_notes。
+- 示意數據 T(t) ＝ 25 ＋ 60 × 2^(−t/10)：t ＝ 0、2、4、6、8、10 分鐘時 85、77.2、70.5、64.6、59.5、55°C，差 60、52.2、45.5、39.6、34.5、30，每 2 分鐘約乘 0.87，k ＝ ln 2 ÷ 10 ≈ 0.069，降到 40°C 要 20 分鐘，都已驗算。
 prerequisites:
-  - ma.integral@uni
-  - ma.function@sh
+- ma.integral@uni
+- ma.function@sh
 links:
   why:
-    - ph.complex@uni
+  - ph.complex@uni
   how: []
   related: []
   deeper: []
 link_notes: 生物（族群）、物理（熱）、哲學（複雜性思維與模型的限度）
 competency:
   specialist:
-    - 數學建模
+  - 數學建模
   generalist:
-    - 建模
-    - 跨域思考
+  - 建模
+  - 跨域思考
 ai:
   delegable:
-    - 求解與模擬
+  - 求解與模擬
   human_experience:
-    - 決定模型假設、判斷模型與現實的落差
-idea: 很多現象是「變化率取決於現況」：人口成長、熱咖啡冷卻、疾病傳播。用微分方程建模，再檢查模型是否合理。
+  - 決定模型假設、判斷模型與現實的落差
+idea: 很多現象的變化率取決於現況：熱水和室溫差越多，降溫越快。把這個關係寫成微分方程，解出公式，再拿資料比對；對不上時，要回頭檢查模型的假設。
 guiding_questions:
-  - 模型預測錯了，是模型壞了還是假設錯了？
-scenario: 記錄一杯熱水每 2 分鐘的溫度，建立冷卻模型，預測何時降到可以喝的溫度。
+- 模型預測錯了，是模型壞了還是假設錯了？
+- 知道降溫多快和現在幾度，能預測之後的溫度嗎？
+scenario: 一杯熱水放在 25°C 的房間，已經記好每 2 分鐘的溫度（示意數據：85、77.2、70.5、64.6、59.5、55°C）。用牛頓冷卻定律建立模型，預測什麼時候降到 40°C；本頁只用數據計算，不需要自己燒水或碰熱水（本站整理）。
 formats:
   slides: []
+  exercise: 目標：把牛頓冷卻定律寫成微分方程，用示意數據定出常數，預測水溫降到 40°C 的時間，並說出模型用了哪些假設（數字是示意）。　檢核：不看本頁，自己寫出 dT/dt ＝ −k(T − 25)、算出溫差每 10 分鐘減半、預測 20 分鐘降到 40°C，並說出室溫不變是模型的假設；三件事都對（數字是示意）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 把牛頓冷卻定律寫成微分方程，用示意數據定出常數，預測水溫降到 40°C 的時間，並說出模型用了哪些假設（數字是示意）。
+review: 不看本頁，自己寫出 dT/dt ＝ −k(T − 25)、算出溫差每 10 分鐘減半、預測 20 分鐘降到 40°C，並說出室溫不變是模型的假設；三件事都對（數字是示意）。
+why:
+  heading: 用變化率說未來
+  body:
+  - OpenStax 說微分方程是「an equation involving an unknown function」…「and one or more of its derivatives」：不直接給出答案，而是說答案怎麼變化。再加上起點，就是「A differential equation together with one or more initial values is called an initial-value problem」。
+  - 高中數學 A 類已經學過「按比例成長或衰退的數學模型」，學習表現也要「認識以指數函數為數學模型的成長或衰退現象」。大學從變化率出發，解出為什麼會是指數，也學會檢查模型。
+  items_title: 建模的三個部分
+  items:
+  - title: 微分方程
+    text: 說明變化率和現況的關係。
+  - title: 初始值
+    text: 一開始的狀態。
+  - title: 和資料比對
+    text: 對不上就檢查假設。
+  checklist_title: 開始前先確認
+  checklist:
+  - 懂指數函數
+  - 會用自然對數
+  sources:
+  - os-de
+  - math108
+how:
+  heading: 寫方程、解出、比對
+  body:
+  - 寫方程：OpenStax 的牛頓冷卻定律說，物體溫度的變化率「is proportional to the difference between its own temperature and the ambient temperature」。室溫是 25°C 時寫成 dT/dt ＝ −k(T − 25)，k 是正的常數，初始值 T(0) ＝ 85。
+  - 解和定常數：這個方程的解是 T ＝ 25 ＋ 60 × e^(−kt)，溫差每過同樣的時間就乘同一個倍數。示意數據的溫差是 60、52.2、45.5、39.6、34.5、30，每 2 分鐘約乘 0.87，10 分鐘剛好減半，所以 k ＝ ln 2 ÷ 10 ≈ 0.069（每分鐘）（說明是本站整理）。
+  - 預測和檢查：降到 40°C 時溫差是 15，是 60 的四分之一，要減半兩次，也就是 20 分鐘（數字是示意）。如果實際數據每 2 分鐘的倍數不固定，就要回頭檢查假設，例如室溫是不是真的不變（說明是本站整理）。
+  qa:
+    question: 模型預測錯了，是模型壞了還是假設錯了？
+    answer: 先檢查假設。本頁的模型假設室溫固定 25°C，而且降溫速度和溫差成正比；數學推導沒錯時，預測對不上通常表示某個假設不成立，例如室溫在變，就要改模型再比對（說明是本站整理）。牛頓冷卻定律本身就是一個假設：變化率「is proportional to the difference between its own temperature and the ambient temperature」。
+    source: os-cool
+  items_title: 三步做
+  items:
+  - title: 寫出方程
+    text: 變化率和溫差成正比。
+  - title: 定出常數
+    text: 從數據的倍數算 k。
+  - title: 預測再檢查
+    text: 對不上就改假設。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 寫出方程
+  - 算出倍數
+  - 預測 40°C
+  - 說出假設
+  activity_figure: diffeq-flow
+  sources:
+  - os-cool
+what:
+  heading: 建模、預測、檢查
+  body:
+  - 學完後，自己能把變化率取決於現況的現象寫成微分方程，用資料定出常數做預測，並在預測對不上時回頭檢查假設。
+  items_title: 學完能做到
+  items:
+  - title: 寫出微分方程
+    text: dT/dt ＝ −k(T − 25)。
+  - title: 用資料定常數
+    text: 算出 k ≈ 0.069。
+  - title: 檢查假設
+    text: 說出模型的前提。
+  checklist_title: 自我檢核
+  checklist:
+  - 方程寫對
+  - 時間算對
+  - 說出假設
+  figures:
+  - diffeq-compare
+  notes:
+  - 本頁的溫度數據是示意；不需要自己燒水或碰熱水。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，算式和數字要自己驗算；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - os-de
+  - genai-student
+figures:
+- id: diffeq-flow
+  type: flow
+  alt: 流程：寫出假設、列微分方程、解出公式、用資料定常數、預測再檢查。
+  steps:
+  - actor: 自己
+    text: 寫出假設
+  - actor: 自己
+    text: 列微分方程
+  - actor: 自己
+    text: 解出公式
+  - actor: 自己
+    text: 用資料定 k
+  - actor: 自己
+    text: 預測再檢查
+  caption: 流程是本站建議。
+- id: diffeq-compare
+  type: compare
+  alt: 比較微分方程和它的解：方程說溫度怎麼變，dT/dt ＝ −k(T − 25)；解說每個時刻幾度，T ＝ 25 ＋ 60 × e^(−kt)（示意）。
+  source: os-de
+  relation: versus
+  items:
+  - term: 微分方程
+    note: 說溫度怎麼變：dT/dt ＝ −k(T − 25)
+  - term: 解
+    note: 說每個時刻幾度：T ＝ 25 ＋ 60 × e^(−kt)
+  caption: OpenStax 說明微分方程含有未知函數和它的導數；例子是本站整理，數字是示意。
+sources:
+- id: os-de
+  title: Calculus Volume 2, 4.1 Basics of Differential Equations
+  publisher: Gilbert Strang、Edwin Herman 等著，OpenStax（Rice University），CC BY-NC-SA 4.0，2016
+  url: https://openstax.org/books/calculus-volume-2/pages/4-1-basics-of-differential-equations
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「A differential equation is an equation involving an unknown function」…「and one or more of its derivatives.」、「A differential equation together with one or more initial values is called an initial-value problem」
+- id: os-cool
+  title: Calculus Volume 2, 4.3 Separable Equations
+  publisher: Gilbert Strang、Edwin Herman 等著，OpenStax（Rice University），CC BY-NC-SA 4.0，2016
+  url: https://openstax.org/books/calculus-volume-2/pages/4-3-separable-equations
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 牛頓冷卻定律：物體溫度的變化率「is proportional to the difference between its own temperature and the ambient temperature」
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中（或國中）先學過的相關學習內容，只當先備：F-11A-4「指數與對數函數：指數函數及其圖形，按比例成長或衰退的數學模型，常用對數函數的圖形，在科學和金融上的應用。」（p.49）；f-V-4「認識指數與對數函數的圖形特徵，理解其特徵的意義，認識以指數函數為數學模型的成長或衰退現象，並能用以溝通和解決問題。」（p.13）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

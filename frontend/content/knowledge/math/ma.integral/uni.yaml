@@ -1,22 +1,26 @@
 id: ma.integral@uni
 concept: ma.integral
 title: 積分：累積與面積
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 數學
-    - 分析
-    - 變化率
+  - 數學
+  - 分析
+  - 變化率
   layer: essence
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+- 原有待核對「課綱對應只到領域與核心素養（A1–C3）…」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級；高中數學 A／B、甲／乙的相關學習內容只在 math108 來源逐字引用（含頁碼），當作先學過的內容，主要依據改用大學開放教科書。
+- math108 來源裡 12 年級加深加廣選修的代碼照 PDF 寫成有空白的「12 甲」「12 乙」（如 F-12 甲-4）；含數學斜體字元的條目只引不含斜體字的一段，用刪節號表示省略。頁碼是頁腳印的頁碼（PDF 頁 − 3）。
+- 英文教科書的引文取自網頁版（2026-10-29 讀取）；網頁上的數學式是 MathML，引文只取不含數學式或彎引號的句子或片段，省略處用刪節號。
+- 原 scenario「從腳踏車碼表每秒的速度紀錄，算出總距離，再和地圖量的距離比較。」改成每 0.5 秒取一次示意速度 v ＝ 2t，刪除地圖比較；v ＝ 2t 接 ma.rate@sh 的位置 s ＝ t²。
+- 0 到 2 秒切 4 段：左端點 0.5 × (0 ＋ 1 ＋ 2 ＋ 3) ＝ 3、右端點 0.5 × (1 ＋ 2 ＋ 3 ＋ 4) ＝ 5；切 8 段：3.5 和 4.5；s(2) − s(0) ＝ 4，都已驗算。
 prerequisites:
-  - ma.derivative@uni
+- ma.derivative@uni
 links:
   why: []
   how: []
@@ -25,20 +29,161 @@ links:
 link_notes: 物理（位移、功）、土木與建築（面積、體積、受力）
 competency:
   specialist:
-    - 微積分
+  - 微積分
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 數值積分、符號運算
+  - 數值積分、符號運算
   human_experience:
-    - 連結「變化」與「累積」的直覺
-idea: 積分是把很多很小的量累積起來。微積分基本定理說：累積和變化率是一體兩面。
+  - 連結「變化」與「累積」的直覺
+idea: 積分是把很多很小的量累積起來：每一小段時間的速度乘時間再加總，就逼近走過的距離，切得越細越準。微積分基本定理說，累積和變化率是一體兩面。
 guiding_questions:
-  - 知道每一刻的速度，就能知道走了多遠嗎？
-scenario: 從腳踏車碼表每秒的速度紀錄，算出總距離，再和地圖量的距離比較。
+- 知道每一刻的速度，就能知道走了多遠嗎？
+scenario: 腳踏車碼表每 0.5 秒記一次速度，假設速度 v ＝ 2t 公尺／秒（t 從 0 到 2 秒），用長方形面積加總估計騎了多遠，再用微積分基本定理算出準確的答案比較（數字是示意，本站整理）。
 formats:
   slides: []
+  exercise: 目標：用左、右端點的長方形加總估計本頁 0 到 2 秒的距離，說出切得越細兩個估計越接近，並用微積分基本定理算出準確的距離（數字是示意）。　檢核：不看本頁，自己算出切 4 段時估計是 3 公尺和 5 公尺、準確答案是 4 公尺，並說出位移和總路程什麼時候不一樣；三件事都對（數字是示意）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 用左、右端點的長方形加總估計本頁 0 到 2 秒的距離，說出切得越細兩個估計越接近，並用微積分基本定理算出準確的距離（數字是示意）。
+review: 不看本頁，自己算出切 4 段時估計是 3 公尺和 5 公尺、準確答案是 4 公尺，並說出位移和總路程什麼時候不一樣；三件事都對（數字是示意）。
+why:
+  heading: 從速度算出距離
+  body:
+  - OpenStax 說「By using smaller and smaller rectangles, we get closer and closer approximations to the area. Taking a limit allows us to calculate the exact area under the curve.」速度圖下的面積就是走過的距離，切越細越準，取極限就是定積分。
+  - 高中數學甲已經學過「黎曼和與定積分的連結」，也學過「定積分在面積、位移、總變化量的意涵」。大學課本再把這個想法寫成淨變化定理：知道起始值和變化率，就能算出新的值；OpenStax 也說微積分基本定理「establish a relationship between integration and differentiation」。
+  items_title: 積分的三個重點
+  items:
+  - title: 曲線下的面積
+    text: 很多細長方形加起來。
+  - title: 總變化量
+    text: 變化率累積起來的結果。
+  - title: 微積分基本定理
+    text: 累積和變化率互為逆運算。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會求導數
+  - 會算長方形面積
+  sources:
+  - os-area
+  - os-net
+  - os-ftc
+  - math108
+how:
+  heading: 切段、加總、再驗算
+  body:
+  - 切 4 段（每段 0.5 秒）：用每段開頭的速度 0、1、2、3，距離約 0.5 × (0 ＋ 1 ＋ 2 ＋ 3) ＝ 3 公尺；用每段結尾的速度 1、2、3、4，約 0.5 × (1 ＋ 2 ＋ 3 ＋ 4) ＝ 5 公尺。切 8 段時兩個估計是 3.5 和 4.5 公尺，越切越接近（說明是本站整理）。
+  - 驗算：位置 s ＝ t² 的導數是 v ＝ 2t（ma.rate@sh 的例子），所以 0 到 2 秒走的距離是 s(2) − s(0) ＝ 4 − 0 ＝ 4 公尺，剛好夾在兩個估計中間。這是微積分基本定理第二部分：「if we can find an antiderivative for the integrand, then we can evaluate the definite integral by evaluating the antiderivative at the endpoints of the interval and subtracting」。OpenStax 的淨變化定理也說「The new value of a changing quantity equals the initial value plus the integral of the rate of change」。
+  - 位移和總路程：如果中途倒退，速度會是負的，速度的積分得到的是位移。OpenStax 提醒「Total distance traveled, on the other hand, is always positive.」，要算總路程，就把速度取絕對值再積分，書中說「we need to integrate the absolute value of the velocity function」。
+  qa:
+    question: 知道每一刻的速度，就能知道走了多遠嗎？
+    answer: 能。速度對時間的積分是位移，速度一直是正的時，就是走過的距離；本頁的例子 0 到 2 秒走了 4 公尺（數字是示意）。但要知道最後在哪裡，還要知道起點，這就是淨變化定理說的「the new value equals the initial value plus the integral of the rate of change」。
+    source: os-net
+  items_title: 三步做
+  items:
+  - title: 切成小段
+    text: 每段當成等速。
+  - title: 加總估計
+    text: 左端點和右端點各算一次。
+  - title: 用定理驗算
+    text: 找出位置函數相減。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 算出 3 和 5
+  - 切 8 段再算
+  - 用 s(t) 驗算
+  - 分辨位移路程
+  activity_figure: integral-flow
+  sources:
+  - os-net
+  - os-ftc
+what:
+  heading: 累積算得出來
+  body:
+  - 學完後，自己能用長方形加總估計累積量，說明切得越細越準，用微積分基本定理算出準確值，並分辨位移和總路程。
+  items_title: 學完能做到
+  items:
+  - title: 估計累積量
+    text: 左、右端點加總。
+  - title: 算出準確值
+    text: 用位置函數相減。
+  - title: 分辨位移路程
+    text: 倒退時兩者不同。
+  checklist_title: 自我檢核
+  checklist:
+  - 估計算對
+  - 準確值算對
+  - 說出兩者差別
+  figures:
+  - integral-compare
+  notes:
+  - 本頁的速度模型和數字是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，算式和數字要自己驗算；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - os-net
+  - genai-student
+figures:
+- id: integral-flow
+  type: flow
+  alt: 流程：切成小段、每段速度乘時間、加總、切得更細、用基本定理驗算。
+  steps:
+  - actor: 自己
+    text: 切成小段
+  - actor: 自己
+    text: 速度乘時間
+  - actor: 自己
+    text: 加總估計
+  - actor: 自己
+    text: 切得更細
+  - actor: 自己
+    text: 用定理驗算
+  caption: 流程是本站建議。
+- id: integral-compare
+  type: compare
+  alt: 比較黎曼和和定積分：切 4 段估計 3 和 5 公尺、切 8 段 3.5 和 4.5 公尺，定積分剛好是 4 公尺（示意）。
+  source: os-area
+  relation: versus
+  items:
+  - term: 長方形加總
+    note: 切 4 段：3 和 5；切 8 段：3.5 和 4.5
+  - term: 定積分
+    note: 取極限，剛好 4 公尺
+  caption: OpenStax 說長方形越小、估計越接近，取極限得到準確面積；例子是本站整理，數字是示意。
+sources:
+- id: os-area
+  title: Calculus Volume 1, 5.1 Approximating Areas
+  publisher: Gilbert Strang、Edwin Herman 等著，OpenStax（Rice University），CC BY-NC-SA 4.0，2016
+  url: https://openstax.org/books/calculus-volume-1/pages/5-1-approximating-areas
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「By using smaller and smaller rectangles, we get closer and closer approximations to the area. Taking a limit allows us to calculate the exact area under the curve.」
+- id: os-net
+  title: Calculus Volume 1, 5.4 Integration Formulas and the Net Change Theorem
+  publisher: Gilbert Strang、Edwin Herman 等著，OpenStax（Rice University），CC BY-NC-SA 4.0，2016
+  url: https://openstax.org/books/calculus-volume-1/pages/5-4-integration-formulas-and-the-net-change-theorem
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「It says that when a quantity changes, the new value equals the initial value plus the integral of the rate of change of that quantity.」、「The new value of a changing quantity equals the initial value plus the integral of the rate of change」、「To find net displacement, integrate the velocity function over the interval. Total distance traveled, on the other hand, is always positive. To find the total distance traveled by an object, regardless of direction, we need to integrate the absolute value of the velocity function.」
+- id: os-ftc
+  title: Calculus Volume 1, 5.3 The Fundamental Theorem of Calculus
+  publisher: Gilbert Strang、Edwin Herman 等著，OpenStax（Rice University），CC BY-NC-SA 4.0，2016
+  url: https://openstax.org/books/calculus-volume-1/pages/5-3-the-fundamental-theorem-of-calculus
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「Not only does it establish a relationship between integration and differentiation, but also it guarantees that any integrable function has an antiderivative.」、第二部分「states that if we can find an antiderivative for the integrand, then we can evaluate the definite integral by evaluating the antiderivative at the endpoints of the interval and subtracting.」
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中（或國中）先學過的相關學習內容，只當先備：F-12 甲-5「黎曼和：黎曼和與定積分的連結。」（p.52）；F-12 甲-6「積分：多項式函數的反導函數與不定積分。定積分在面積、位移、總變化量的意涵，微積分基本定理。」（p.52）；F-12 乙-5「積分：一次與二次函數的反導函數與定積分。定積分的面積與總變化量的意涵，微積分基本定理。」（p.53）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

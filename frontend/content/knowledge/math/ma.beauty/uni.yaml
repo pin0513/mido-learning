@@ -1,23 +1,27 @@
 id: ma.beauty@uni
 concept: ma.beauty
 title: 對稱與結構：數學之美
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 數學
-    - 數學之美
+  - 數學
+  - 數學之美
   layer: essence
   crosscutting:
-    - aesthetics
+  - aesthetics
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+- 原有待核對「課綱對應只到領域與核心素養（A1–C3）…」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級；高中數學 A／B、甲／乙的相關學習內容只在 math108 來源逐字引用（含頁碼），當作先學過的內容，主要依據改用大學開放教科書。
+- math108 來源裡 12 年級加深加廣選修的代碼照 PDF 寫成有空白的「12 甲」「12 乙」（如 F-12 甲-4）；含數學斜體字元的條目只引不含斜體字的一段，用刪節號表示省略。頁碼是頁腳印的頁碼（PDF 頁 − 3）。
+- 英文教科書的引文取自網頁版（2026-10-29 讀取）；網頁上的數學式是 MathML，引文只取不含數學式或彎引號的句子或片段，省略處用刪節號。
+- 原 guiding question「一個證明『很美』，是什麼意思？」沒有來源可以回答，改成「一個正方形有幾種對稱？」；原 scenario「收集台灣傳統窗花、磁磚與廟宇紋樣，分析其中的對稱類型；用程式畫出碎形」改成用安全剪刀剪正方形紙、觀察家裡的花紋，窗花、廟宇紋樣和碎形本頁沒有來源，刪除（link_notes 和原稿一樣保留「藝術（紋樣與設計）」）。
+- 正方形的 8 種對稱（4 種旋轉、4 種翻轉）、先轉 90 度再轉 90 度等於轉 180 度、壁紙圖樣的點群只能是 n ＝ 1、2、3、4、6 的旋轉群或二面體群，都已依 Judson 的書核對。
 prerequisites:
-  - ma.linalg@uni
-  - ma.proof@sh
+- ma.linalg@uni
+- ma.proof@sh
 links:
   why: []
   how: []
@@ -26,20 +30,160 @@ links:
 link_notes: 藝術（紋樣與設計）、土木與建築、哲學（美學）
 competency:
   specialist:
-    - 幾何
+  - 幾何
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 生成碎形與對稱圖樣
+  - 畫出對稱圖樣（先自己找出對稱再請 AI 畫，本站建議）
   human_experience:
-    - 實地觀察並說出「為什麼覺得美」
-idea: 對稱、比例、碎形和簡潔的證明，讓數學有一種獨特的美。對稱可以被精確描述，甚至分類。
+  - 觀察身邊的花紋，說出自己為什麼覺得它美
+idea: 對稱可以精確描述：把圖形轉一轉或翻一翻，還和原來重合，這個動作就是一種對稱。一個圖形的所有對稱可以接連做、像數一樣運算，形成群；重複的花紋也能依它的對稱分類。
 guiding_questions:
-  - 一個證明「很美」，是什麼意思？
-scenario: 收集台灣傳統窗花、磁磚與廟宇紋樣，分析其中的對稱類型；用程式畫出碎形。
+- 一個正方形有幾種對稱？
+- 牆上重複的磁磚花紋，能有五重旋轉對稱嗎？
+scenario: 用安全剪刀剪一張正方形紙，四個角標上 1、2、3、4，找出所有讓它和原來位置重合的轉法和翻法；再看看家裡的磁磚、布料或包裝紙，找出花紋有哪些對稱（本站整理）。
 formats:
   slides: []
+  exercise: 目標：找出正方形的 8 種對稱，說明兩個對稱接連做還是一個對稱，並說出重複花紋不會有五重旋轉對稱（本站整理）。　檢核：不看本頁，自己列出正方形的 4 種旋轉和 4 種翻轉、說出轉 90 度兩次等於轉 180 度，並說出壁紙花紋只會有 1、2、3、4、6 重旋轉；三件事都對（本站整理）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 找出正方形的 8 種對稱，說明兩個對稱接連做還是一個對稱，並說出重複花紋不會有五重旋轉對稱（本站整理）。
+review: 不看本頁，自己列出正方形的 4 種旋轉和 4 種翻轉、說出轉 90 度兩次等於轉 180 度，並說出壁紙花紋只會有 1、2、3、4、6 重旋轉；三件事都對（本站整理）。
+why:
+  heading: 把對稱說精確
+  body:
+  - Judson 的教科書這樣定義：「A symmetry of a geometric figure is a rearrangement of the figure preserving the arrangement of its sides and vertices as well as its distances and angles.」有了定義，對稱就能數、能算，也能分類。
+  - 國中已經學過「線對稱的基本圖形：等腰三角形；正方形；菱形；箏形；正多邊形。」大學把旋轉和翻轉放在一起，用群描述一個圖形所有的對稱（說明是本站整理）。
+  items_title: 對稱的三個層次
+  items:
+  - title: 一個對稱
+    text: 轉或翻之後和原來重合。
+  - title: 對稱群
+    text: 所有對稱，可以接連做。
+  - title: 花紋分類
+    text: 依對稱把重複花紋分組。
+  checklist_title: 開始前先確認
+  checklist:
+  - 懂線對稱
+  - 懂旋轉角度
+  sources:
+  - aata-sym
+  - math108
+how:
+  heading: 剪、轉、翻、數
+  body:
+  - 數對稱：正方形可以轉 0、90、180、270 度，共 4 種；也可以沿兩條對角線、兩條對邊中點的連線翻，共 4 種，合起來 8 種。Judson 的書也說正方形的剛體運動群「consists of eight elements」。
+  - 接連做：先轉 90 度再轉 90 度等於轉 180 度；沿同一條線翻兩次等於不動。任兩個對稱接連做還是這 8 種之一，所以它們形成一個群，叫做二面體群 D₄。轉 90 度也可以用 ma.linalg@uni 的旋轉矩陣表示（說明是本站整理）。
+  - 重複花紋：Judson 的書說「Wallpaper patterns are simply repeating patterns in the plane」，並列出「The 17 wallpaper groups」；書中的定理說壁紙群的點群只能是 n ＝ 1、2、3、4、6 的旋轉群或二面體群，所以重複花紋不會有五重旋轉對稱。
+  qa:
+    question: 一個正方形有幾種對稱？
+    answer: 8 種：轉 0、90、180、270 度 4 種，沿兩條對角線和兩條對邊中點連線翻 4 種。Judson 的書說正方形的剛體運動群「consists of eight elements」。
+    source: aata-dih
+  items_title: 三步做
+  items:
+  - title: 標號
+    text: 四個角寫上 1 到 4。
+  - title: 找轉法和翻法
+    text: 每種都要和原位置重合。
+  - title: 試接連做
+    text: 看結果是哪一種。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 找到 4 種轉法
+  - 找到 4 種翻法
+  - 試 2 次接連做
+  - 找一種花紋
+  activity_figure: beauty-flow
+  sources:
+  - aata-dih
+  - aata-wall
+what:
+  heading: 看見結構
+  body:
+  - 學完後，自己能用定義判斷一個動作是不是對稱，列出正方形的 8 種對稱並說明它們形成群，也能說出重複花紋的旋轉對稱有哪些限制。
+  items_title: 學完能做到
+  items:
+  - title: 列出對稱
+    text: 正方形的 8 種。
+  - title: 說明群
+    text: 接連做還在裡面。
+  - title: 說出限制
+    text: 沒有五重旋轉的壁紙。
+  checklist_title: 自我檢核
+  checklist:
+  - 8 種列對
+  - 接連做說對
+  - 說出限制
+  figures:
+  - beauty-compare
+  notes:
+  - 剪紙請用安全剪刀；觀察花紋只看、不拆。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，算式和數字要自己驗算；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - aata-wall
+  - genai-student
+figures:
+- id: beauty-flow
+  type: flow
+  alt: 流程：剪正方形、標角編號、找轉法、找翻法、列出 8 種。
+  steps:
+  - actor: 自己
+    text: 剪正方形
+  - actor: 自己
+    text: 標角編號
+  - actor: 自己
+    text: 找轉法
+  - actor: 自己
+    text: 找翻法
+  - actor: 自己
+    text: 列出 8 種
+  caption: 流程是本站建議。
+- id: beauty-compare
+  type: compare
+  alt: 比較國中的線對稱和大學的對稱群：正方形有 4 條對稱軸；對稱群再加上 4 種旋轉，共 8 種。
+  source: aata-dih
+  relation: versus
+  items:
+  - term: 線對稱
+    note: 正方形有 4 條對稱軸
+  - term: 對稱群
+    note: 4 種翻轉加 4 種旋轉，共 8 種
+  caption: Judson 的書說正方形的剛體運動群有 8 個元素；比較是本站整理。
+sources:
+- id: aata-sym
+  title: 'Abstract Algebra: Theory and Applications, 3.1 Integer Equivalence Classes and Symmetries'
+  publisher: Thomas W. Judson 著（開放教科書）
+  url: https://judsonbooks.org/aata-files/aata-html/groups-section-mod-n-sym.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「A symmetry of a geometric figure is a rearrangement of the figure preserving the arrangement of its sides and vertices as well as its distances and angles.」
+- id: aata-dih
+  title: 'Abstract Algebra: Theory and Applications, 5.2 Dihedral Groups'
+  publisher: Thomas W. Judson 著（開放教科書）
+  url: https://judsonbooks.org/aata-files/aata-html/permute-section-dihedral-groups.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「The group of rigid motions of a square,」…「consists of eight elements.」
+- id: aata-wall
+  title: 'Abstract Algebra: Theory and Applications, 12.2 Symmetry'
+  publisher: Thomas W. Judson 著（開放教科書）
+  url: https://judsonbooks.org/aata-files/aata-html/matrix-section-symmetry.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「Wallpaper patterns are simply repeating patterns in the plane」、表 12.2.11「The 17 wallpaper groups」、「The point group in the wallpaper groups is isomorphic to」…（Z_n 或 D_n，n ＝ 1、2、3、4、6；網頁上的數學式是 MathJax，這裡是轉述）
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中（或國中）先學過的相關學習內容，只當先備：S-7-5「線對稱的基本圖形：等腰三角形；正方形；菱形；箏形；正多邊形。」（p.37）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
