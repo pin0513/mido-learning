@@ -1,55 +1,220 @@
 id: it.data@es
 concept: it.data
 title: 資訊怎麼表示：0 與 1
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 資料表示
+  - 資訊
+  - 資料表示
   layer: foundation
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 綜合活動
+  - 數學
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B2
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
-  - 國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 原有待核對「國小沒有獨立科技領域；資訊教育以議題融入與彈性學習課程實施，此落點待核對。」已處理：國家教育研究院參考說明 p.1 確認「國民小學教育階段則是採用議題融入各領域學習課程/彈性學習課程中實施。」；年級依參考說明的學習階段與總綱 p.7（三、四年級為第二學習階段，五、六年級為第三學習階段）。參考說明頁碼是頁腳印的頁碼（比 PDF 頁少 2），議題融入說明手冊頁碼是頁腳印的頁碼（比 PDF 頁少 16），總綱頁碼是頁腳印的頁碼（比 PDF 頁少 4）。
+- 參考說明的「資議」代碼（例如資議 t-Ⅱ-3）與議題融入說明手冊的「資 E」代碼不是部定課綱代碼，也不合 schema 的代碼格式，只在來源 supports 逐字引用，不列入 curriculum_108 和代碼表；參考說明自述「本說明係為參考性質」。國小因此不列 curriculum_108 學習內容，只在 Why 列出國中、高中會接著學的科技領綱代碼。
+- 國小沒有科技領域，curriculum_108.domains 改填數學（本站建議）：議題融入說明手冊 p.87 說「建議融入之領域/科目：例如科技領域等，其他相關領域亦可適切融入。」，並舉數學領域「例如可利用演算法與程式設計呈現數學解題流程，以使學生更深刻體驗抽象化與步驟化之歷程與重要性。」；原稿的綜合活動沒有對應的官方融入例子，已刪除。
+- 核心素養依總綱 p.4–6 國民小學教育的 E-A2、E-B2 原文挑選（總綱表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- 原 scenario「塗黑＝1、空白＝0」和 CS Unplugged Colour by numbers 的規則（1 是白、0 是黑）相反，改成照 CS Unplugged；方格大小（8 × 8）是示意，CS Unplugged 的 Kidbots 活動也提到 8 x 8 的方格；兩倍寬、兩倍高要寫四倍數字是本站整理。
+- 原 ai.delegable「把照片轉成像素格示範」補上由大人操作、不用孩子或家人的照片（本站建議）。
 prerequisites:
-  - it.pattern@es
+- it.pattern@es
 links:
   why: []
   how: []
   related:
-    - ma.number@es
+  - ma.number@es
   deeper:
-    - it.datatable@jh
-    - it.network@jh
-link_notes: 藝術（像素藝術）、數學（數與量）
+  - it.datatable@jh
+  - it.network@jh
+link_notes: 藝術（像素藝術）、數學（數與量）；科技領綱 資 D-IV-2（國中）。
 competency:
   specialist:
-    - 資料表示
+  - 資料表示
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 把照片轉成像素格示範
+  - 把圖片轉成像素格示範（由大人操作，不用孩子或家人的照片，本站建議）
   human_experience:
-    - 親手編碼、解碼，體會資訊可以被傳遞
-idea: 電腦裡的文字、圖片、聲音，最後都變成 0 和 1。一張圖片就是很多小方格（像素）。
+  - 親手編碼、解碼，體會資訊可以被傳遞
+idea: 電腦裡的文字、圖片、聲音，最後都用 0 和 1 存起來。一張黑白圖片可以看成很多小方格，每一格用一個數字表示（本站整理）。
 guiding_questions:
-  - 格子越多，圖片會怎麼樣？檔案會怎麼樣？
-scenario: 在方格紙上用「塗黑＝1、空白＝0」畫像素畫，把數字唸給同學聽，看他能不能畫出一樣的圖。
+- 格子越多，圖片會怎麼樣？檔案會怎麼樣？
+scenario: 親子共學：在方格紙上畫黑白像素畫，照 CS Unplugged 的規則 1 代表白、0 代表黑，把每一行寫成數字；家長只看數字畫出圖，比一比兩張圖一不一樣（規則依 CS Unplugged，活動是本站整理）。
 formats:
   slides: []
+  exercise: 目標：在 8 × 8 的方格紙上畫一張黑白像素畫（大小是示意），用 1 代表白、0 代表黑把每一行寫成數字，讓家長只看數字畫出同樣的圖。　檢核：家長只看孩子寫的數字畫圖：兩張圖一樣；孩子說得出 1 和 0 各代表什麼；也說得出格子變多時，要寫的數字會變多（本站整理）；三件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 在 8 × 8 的方格紙上畫一張黑白像素畫（大小是示意），用 1 代表白、0 代表黑把每一行寫成數字，讓家長只看數字畫出同樣的圖。
+review: 家長只看孩子寫的數字畫圖：兩張圖一樣；孩子說得出 1 和 0 各代表什麼；也說得出格子變多時，要寫的數字會變多（本站整理）；三件事都做到。
+est_time:
+  school: 國小五、六年級（議題融入）
+  source: es-ref
+why:
+  heading: 圖片也能變成數字
+  body:
+  - 國家教育研究院的參考說明，三、四年級先認識「文字、圖片、影像、聲音數位檔案的種類、儲存裝置及其儲存方法。」，五、六年級再學「常見的數位資料類型與儲存架構。」；國中科技領綱接著學「二進位資料表示法。」
+  - CS Unplugged 說，二進位只用兩個數字「with just two digits (usually written as 0 and 1)」，而且這些位元「are used to store text, numbers, images, video, and anything else that we need to store or transmit.」
+  items_title: 國中會接著學
+  items:
+  - title: 數位資料的表示
+    text: 科技領綱 資 D-IV-2：數位資料的表示方法。
+    code: 資 D-IV-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 會數到八
+  - 會塗方格
+  notes:
+  - 國小沒有部定的資訊科技課程，資訊教育是融入各領域實施的議題；國小的學習重點出自國家教育研究院的參考說明，只寫在來源裡。本頁列的代碼開頭的「資」是科技領綱（國中、高中）的資訊科技學習內容，中間的 IV 是第四學習階段（國中）、V 是第五學習階段（高中），代表之後會接著學。
+  sources:
+  - es-ref
+  - cs-binary-about
+  - tech108
+  - zonggang
+how:
+  heading: 畫像素畫，寫成數字
+  body:
+  - CS Unplugged 說，螢幕上的小方格「We call these squares picture elements, or pixels.」在方格紙上畫一張黑白像素畫，照 CS Unplugged 的規則「If a 1 indicates a white square and a 0 indicates a black square」，把每一行寫成一串 0 和 1。
+  - 把數字唸給家長，家長只看數字在另一張方格紙上塗黑，最後比一比兩張圖。再交換：家長寫一串數字，孩子只看數字畫回圖。再想一想：方格變成兩倍寬、兩倍高，要寫的數字變成幾倍？答案是 4 倍（本站整理）。
+  qa:
+    question: 格子越多，圖片會怎麼樣？檔案會怎麼樣？
+    answer: 格子越多，圖片越細緻，但要記的數字也越多，檔案就越大（本站整理）。CS Unplugged 說，每一格只有黑或白的圖片「is much simpler to represent using digits than a full length, colour, and high-definition film is!」
+    source: cs-image-about
+  items_title: 像素畫四步
+  items:
+  - title: 畫像素畫
+    text: 在方格紙上塗黑白。
+  - title: 寫成數字
+    text: 白寫 1、黑寫 0。
+  - title: 唸給家長
+    text: 家長只看數字畫圖。
+  - title: 比一比
+    text: 看兩張圖一不一樣，再交換。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 數字寫完整
+  - 兩張圖一樣
+  - 說得出規則
+  activity_figure: data-flow
+  sources:
+  - cs-colour
+  - cs-image-about
+what:
+  heading: 看得懂 0 和 1 的圖
+  body:
+  - 學完後，孩子能把一張黑白像素畫寫成 0 和 1，也能把一串 0 和 1 畫回圖片，並說出格子越多、要存的數字越多。
+  items_title: 學完能做到
+  items:
+  - title: 編碼
+    text: 把圖寫成 0 和 1。
+  - title: 解碼
+    text: 把數字畫回圖。
+  - title: 說出取捨
+    text: 格子多，圖細、數字也多。
+  checklist_title: 家長檢核
+  checklist:
+  - 編碼正確
+  - 解碼正確
+  - 說得出取捨
+  figures:
+  - data-compare
+  notes:
+  - 本頁的方格大小是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - cs-colour
+  - genai-student
+figures:
+- id: data-flow
+  type: flow
+  alt: 像素畫流程：孩子畫像素畫、寫成 0 和 1、唸出數字，家長只看數字畫圖，全家比一比。
+  steps:
+  - actor: 孩子
+    text: 畫像素畫
+  - actor: 孩子
+    text: 寫成 0 和 1
+  - actor: 孩子
+    text: 唸出數字
+  - actor: 家長
+    text: 只看數字畫
+  - actor: 全家
+    text: 比一比
+  caption: 流程是本站建議。
+- id: data-compare
+  type: compare
+  alt: 比較白色格子和黑色格子：白色格子寫成 1，黑色格子寫成 0。
+  source: cs-colour
+  relation: versus
+  items:
+  - term: 白色格子
+    note: 寫成 1
+  - term: 黑色格子
+    note: 寫成 0
+  caption: 規則依 CS Unplugged 的 Colour by numbers 活動；例子是本站整理。
+sources:
+- id: es-ref
+  title: 國民小學科技教育及資訊教育課程發展參考說明
+  publisher: 國家教育研究院（中華民國一○九年六月）
+  url: https://www.naer.edu.tw/upload/1/9/doc/280/1090611_%E5%9C%8B%E6%B0%91%E5%B0%8F%E5%AD%B8%E7%A7%91%E6%8A%80%E6%95%99%E8%82%B2%E5%8F%8A%E8%B3%87%E8%A8%8A%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%99%BC%E5%B1%95%E5%8F%83%E8%80%83%E8%AA%AA%E6%98%8E.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習內容 資議 D-Ⅱ-1「常見的數位資料儲存方法。」，說明「文字、圖片、影像、聲音數位檔案的種類、儲存裝置及其儲存方法。」（p.6）；資議 D-Ⅲ-1「常見的數位資料類型與儲存架構。」（p.6）；「國民小學教育階段則是採用議題融入各領域學習課程/彈性學習課程中實施。」（p.1）；「本說明係為參考性質」（p.1）；「建議可進行三到六年級系統性、整體性的規劃」（p.1）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：資 D-IV-2「數位資料的表示方法。」（p.11）；資 D-IV-2 說明「數位資料表示法的概念。」、「二進位資料表示法。」（p.43）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-B2「具備科技與資訊應用的基本素養，並理解各類媒體內容的意義與影響。」（p.5）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: cs-binary-about
+  title: Binary numbers – What's it all about?
+  publisher: CS Unplugged（University of Canterbury Computer Science Education Research Group）
+  url: https://www.csunplugged.org/en/topics/binary-numbers/whats-it-all-about/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「The simplest and most common way to represent digits is the binary number system, with just two digits (usually written as 0 and 1).」；「they are used to store text, numbers, images, video, and anything else that we need to store or transmit.」
+- id: cs-colour
+  title: Image representation – Colour by numbers
+  publisher: CS Unplugged（University of Canterbury Computer Science Education Research Group）
+  url: https://www.csunplugged.org/en/topics/image-representation/colour-by-numbers/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「We call these squares picture elements, or pixels.」；「If a 1 indicates a white square and a 0 indicates a black square」
+- id: cs-image-about
+  title: Image representation – What's it all about?
+  publisher: CS Unplugged（University of Canterbury Computer Science Education Research Group）
+  url: https://www.csunplugged.org/en/topics/image-representation/whats-it-all-about/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Computer screens are divided into a grid of tiny coloured squares, which are called pixels.」；「is much simpler to represent using digits than a full length, colour, and high-definition film is!」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

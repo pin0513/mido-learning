@@ -1,55 +1,197 @@
 id: it.datatable@jh
 concept: it.datatable
 title: 資料處理與視覺化
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 資料表示
+  - 資訊
+  - 資料表示
   layer: foundation
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 9
 curriculum_108:
   domains:
-    - 科技
-    - 數學
+  - 科技
+  - 數學
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B2
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+  contents:
+  - 資 T-IV-1
+  - 資 D-IV-3
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 運算思維學習表現（運 p-IV-1）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（已加進代碼表），curriculum_108 只列資訊科技學習內容。
+- 核心素養依科技領綱 p.3–4 的 科-J-A2、科-J-B2 原文挑選（表格窄欄，文字已用頁面影像核對）。
+- stage.grades 依科技領綱 p.10–11 表格所列的年級：資 T-IV-1 七年級、資 D-IV-3 九年級。
+- 原 scenario「用試算表整理全班一週的睡眠時數」改成示意資料，不收集同學的資料（本站建議）。
+- 截斷縱軸的提醒依英國政府 Analysis Function 的圖表指引；步數資料是示意。
 prerequisites:
-  - it.data@es
+- it.data@es
 links:
   why:
-    - ph.evidence@jh
+  - ph.evidence@jh
   how: []
   related:
-    - ma.data@es
+  - ma.data@es
   deeper:
-    - it.analysis@sh
-link_notes: 數學（統計圖、坐標）、哲學（證據與來源）
+  - it.analysis@sh
+link_notes: 數學（統計圖、坐標）、哲學（證據與來源）；科技領綱 資 T-IV-1、資 D-IV-3、運 p-IV-1。
 competency:
   specialist:
-    - 資料分析
+  - 資料分析
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 自動整理與畫圖
+  - 自動整理與畫圖（結果要自己檢查，本站建議）
   human_experience:
-    - 決定要問什麼問題、判斷圖表是否誠實
-idea: 收集資料、整理成表格、做成圖表，才能從資料中看出故事；圖表也可能被做得誤導人。
+  - 決定要問什麼問題、判斷圖表是否誠實
+idea: 資料要先整理乾淨，才看得出規律；同一份資料，畫法不同，給人的印象也不同（本站整理）。
 guiding_questions:
-  - 同一份資料，怎麼畫會讓人產生完全不同的印象？
-scenario: 用試算表整理全班一週的睡眠時數，做圖表找趨勢，再故意做一張「誤導」的圖讓同學挑錯。
+- 同一份資料，怎麼畫會讓人產生完全不同的印象？
+scenario: 親子共學：用試算表整理一份示意資料（例如一週每天走路的步數），先檢查有沒有打錯或漏填，再做長條圖；最後故意做一張縱軸不從零開始的圖，比一比兩張圖給人的感覺（本站建議）。
 formats:
   slides: []
+  exercise: 目標：把一週每天走路的步數（示意資料）輸入試算表，找出並修正打錯或漏填的資料，做成長條圖；再做一張縱軸不從零開始的圖，說出它哪裡會誤導人。　檢核：表格裡打錯或漏填的資料都處理了；長條圖的縱軸從零開始；說得出縱軸不從零開始的圖為什麼會誇大差距；三件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 把一週每天走路的步數（示意資料）輸入試算表，找出並修正打錯或漏填的資料，做成長條圖；再做一張縱軸不從零開始的圖，說出它哪裡會誤導人。
+review: 表格裡打錯或漏填的資料都處理了；長條圖的縱軸從零開始；說得出縱軸不從零開始的圖為什麼會誇大差距；三件事都做到。
+est_time:
+  school: 國中七至九年級資訊科技課
+  source: tech108
+why:
+  heading: 從資料看出故事
+  body:
+  - 科技領綱七年級的資料處理應用專題，說明包含「資料運算與分析：應用數位工具進行資料運算與分析以獲取所需資訊，可視需要融入試算表軟體的應用。」；九年級學「資料處理概念與方法。」，說明包含「資料前處理的概念與方法。」
+  - 學習表現要「能選用適當的資訊科技組織思維，並進行有效的表達。」
+  items_title: 科技領綱的學習重點
+  items:
+  - title: 有效的表達
+    text: 科技領綱 運 p-IV-1：能選用適當的資訊科技組織思維，並進行有效的表達。
+    code: 運 p-IV-1
+  - title: 資料處理應用專題
+    text: 科技領綱 資 T-IV-1：資料處理應用專題。
+    code: 資 T-IV-1
+  - title: 資料處理
+    text: 科技領綱 資 D-IV-3：資料處理概念與方法。
+    code: 資 D-IV-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 會打字輸入
+  - 看得懂長條圖
+  notes:
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 IV 是第四學習階段（國中七至九年級），V 是第五學習階段（高中）。
+  sources:
+  - tech108
+how:
+  heading: 整理、畫圖、找誤導
+  body:
+  - 先把示意資料輸入試算表，檢查有沒有打錯（例如多打一個 0）或漏填的格子，修好再算平均；這就是資料清理（本站整理）。再選資料做長條圖，縱軸從 0 開始。
+  - 接著做一張縱軸從較大的數開始的長條圖，看起來每天差很多。英國政府 Analysis Function 的圖表指引說「Do not break the numerical axis on bar charts」，因為截斷縱軸「distorts these relative proportions.」
+  qa:
+    question: 同一份資料，怎麼畫會讓人產生完全不同的印象？
+    answer: 把長條圖的縱軸改成不從 0 開始，小差距看起來就像大差距（本站整理）。英國政府 Analysis Function 的指引說，截斷縱軸是「when you make the axis start from a number other than zero」。
+    source: gss-charts
+  items_title: 資料四步
+  items:
+  - title: 輸入資料
+    text: 把示意資料打進試算表。
+  - title: 清理資料
+    text: 找出打錯和漏填的格子。
+  - title: 畫長條圖
+    text: 縱軸從 0 開始。
+  - title: 找誤導
+    text: 比較截斷縱軸的圖。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 資料清理過
+  - 縱軸從 0 開始
+  - 說出誤導處
+  activity_figure: datatable-flow
+  sources:
+  - gss-charts
+what:
+  heading: 會整理資料，也會挑圖錯
+  body:
+  - 學完後，孩子能用試算表整理和清理資料、做出誠實的長條圖，也能看出截斷縱軸的圖哪裡會誤導人。
+  items_title: 學完能做到
+  items:
+  - title: 清理資料
+    text: 找出並修正錯誤和漏填。
+  - title: 誠實畫圖
+    text: 長條圖縱軸從 0 開始。
+  - title: 看出誤導
+    text: 說出截斷縱軸的問題。
+  checklist_title: 家長檢核
+  checklist:
+  - 表格正確
+  - 圖表誠實
+  - 說得出誤導
+  figures:
+  - datatable-compare
+  notes:
+  - 本頁的資料是示意。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - gss-charts
+  - genai-student
+figures:
+- id: datatable-flow
+  type: flow
+  alt: 資料處理流程：孩子輸入資料、清理資料、畫長條圖、做一張誤導圖，再和家長一起比一比。
+  steps:
+  - actor: 孩子
+    text: 輸入資料
+  - actor: 孩子
+    text: 清理資料
+  - actor: 孩子
+    text: 畫長條圖
+  - actor: 孩子
+    text: 做誤導圖
+  - actor: 家長
+    text: 一起比一比
+  caption: 流程是本站建議。
+- id: datatable-compare
+  type: compare
+  alt: 比較縱軸從 0 開始和截斷縱軸：從 0 開始時長條長短和數量成比例，截斷時小差距看起來像大差距。
+  source: gss-charts
+  relation: versus
+  items:
+  - term: 縱軸從 0 開始
+    note: 長條的長短和數量成比例
+  - term: 截斷縱軸
+    note: 小差距看起來像大差距（示意）
+  caption: 英國政府 Analysis Function 的圖表指引說「Do not break the numerical axis on bar charts」；例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：運 p-IV-1「能選用適當的資訊科技組織思維，並進行有效的表達。」（p.7）；資 T-IV-1「資料處理應用專題。」（p.11）；資 D-IV-3「資料處理概念與方法。」（p.11）；資訊科技學習內容說明「國民中學教育階段以問題解決為主軸，強調培養學生利用資訊科技與運算思維解決問題之能力」（p.10）；時間分配「國民中學階段科技領域學習節數每週 2 節課。建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；資 T-IV-1 說明「資料運算與分析：應用數位工具進行資料運算與分析以獲取所需資訊，可視需要融入試算表軟體的應用。」（p.44）；資 D-IV-3 說明「資料前處理的概念與方法。」（p.43）；核心素養：科-J-A2「運用科技工具，理解與歸納問題，進而提出簡易的解決之道。」（p.3）；科-J-B2「理解資訊與科技的基本原理，具備媒體識讀的能力，並能了解人與科技、資訊、媒體的互動關係。」（p.4）
+- id: gss-charts
+  title: 'Data visualisation: charts'
+  publisher: Analysis Function（UK Government Analysis Function）
+  url: https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-charts/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Do not break the numerical axis on bar charts」；「Breaking the numerical axis is when you make the axis start from a number other than zero.」；「breaking the numerical axis distorts these relative proportions.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

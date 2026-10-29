@@ -1,55 +1,203 @@
 id: it.prog@jh
 concept: it.prog
 title: 程式設計：變數、迴圈、函式
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 資訊
-    - 運算思維
+  - 資訊
+  - 運算思維
   layer: foundation
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
 curriculum_108:
   domains:
-    - 科技
-    - 數學
+  - 科技
+  - 數學
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B1
   issues:
-    - 資訊教育
-to_verify: true
+  - 資訊教育
+  contents:
+  - 資 P-IV-1
+  - 資 P-IV-2
+  - 資 P-IV-4
+to_verify: false
 verify_notes:
-  - 108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。
+- 原有待核對「108 課綱科技領域在生成式 AI 普及前公布，涉及生成式 AI 的內容屬延伸。國中資訊科技主題名稱與高中加深加廣選修名稱，上線前請以教育部科技領域課綱核對。」已處理：本點的代碼與文字逐條對照科技領域課綱（教育部 107 年 9 月 20 日發布）原文，頁碼是頁腳印的頁碼（比 PDF 頁少 4）；本點不引用高中加深加廣選修。涉及 AI 的內容另依教育部《未來人才AI能力圖像》（115 年）與注意事項（學生版），不寫成課綱內容。
+- 運算思維學習表現（運 t-IV-3）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（已加進代碼表），curriculum_108 只列資訊科技學習內容。
+- 核心素養依科技領綱 p.3–4 的 科-J-A2、科-J-B1 原文挑選（表格窄欄，文字已用頁面影像核對）。
+- stage.grades 依科技領綱 p.10–11 表格所列的年級：資 P-IV-1、資 P-IV-2 七年級，資 P-IV-4 八年級。
+- 原 scenario「寫一個『班級零用錢記帳』小程式，或一個猜數字遊戲，並請同學試玩找 bug。」改成只做猜數字遊戲、請家人試玩（本站建議）。
+- 原稿的核心素養 B2 改成 B1：本點重在用程式符號表達解題步驟，對應科-J-B1。
+- 次數從 0 開始寫成從 1 開始的 bug 是本站整理的示意例子。
 prerequisites:
-  - it.blocks@es
-  - it.algo@jh
+- it.blocks@es
+- it.algo@jh
 links:
   why: []
   how: []
   related:
-    - ma.algebra@jh
+  - ma.algebra@jh
   deeper:
-    - it.build@sh
-link_notes: 數學（用字母代表數）
+  - it.build@sh
+link_notes: 數學（用字母代表數）；科技領綱 資 P-IV-1、資 P-IV-2、資 P-IV-4、運 t-IV-3。
 competency:
   specialist:
-    - 程式設計
+  - 程式設計
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 解釋錯誤訊息、提示寫法
+  - 解釋錯誤訊息、提示寫法（AI 的說明要自己測試確認，本站建議）
   human_experience:
-    - 自己除錯、忍受卡關、體會做出來的成就感
-idea: 變數記住資料、迴圈重複工作、函式把常用的步驟包起來重複使用。寫程式就是把想法變成可以執行的步驟。
+  - 自己除錯、忍受卡關、體會做出來的成就感
+idea: 變數讓程式記得事情，迴圈讓程式重複做事，函式把常用的步驟包起來重複使用（本站整理）。
 guiding_questions:
-  - 為什麼程式「看起來對」卻跑出錯的結果？
-scenario: 寫一個「班級零用錢記帳」小程式，或一個猜數字遊戲，並請同學試玩找 bug。
+- 為什麼程式「看起來對」卻跑出錯的結果？
+scenario: 親子共學：用家長準備的電腦和圖像式程式工具寫一個猜數字小遊戲：變數記住答案和猜的次數，迴圈讓玩家一直猜，自訂的積木（函式）負責回答太大或太小；寫好請家人試玩找 bug（本站建議）。
 formats:
   slides: []
+  exercise: 目標：寫一個猜數字小遊戲：用變數記住答案和次數、用迴圈重複猜、用函式回答太大或太小；請家人試玩，找到並修好至少一個 bug（數字是示意）。　檢核：遊戲能從頭玩到猜中；說得出每個變數記什麼、迴圈什麼時候停、函式做什麼；修好了家人找到的 bug；三件事都做到。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 寫一個猜數字小遊戲：用變數記住答案和次數、用迴圈重複猜、用函式回答太大或太小；請家人試玩，找到並修好至少一個 bug（數字是示意）。
+review: 遊戲能從頭玩到猜中；說得出每個變數記什麼、迴圈什麼時候停、函式做什麼；修好了家人找到的 bug；三件事都做到。
+est_time:
+  school: 國中七、八年級資訊科技課
+  source: tech108
+why:
+  heading: 把想法變成會動的程式
+  body:
+  - 科技領綱七年級學「程式語言基本概念、功能及應用。」和「結構化程式設計。」，八年級學「模組化程式設計的概念。」；說明列出「程式語言的重要概念：資料形態、變數、輸入/輸出、算術運算與邏輯運算。」和「函數的概念。」
+  - 領綱也說，國中的程式設計「可採用視覺化程式設計工具，並搭配演算法進行教學。」
+  items_title: 科技領綱的學習重點
+  items:
+  - title: 設計資訊作品
+    text: 科技領綱 運 t-IV-3：能設計資訊作品以解決生活問題。
+    code: 運 t-IV-3
+  - title: 程式語言基本概念
+    text: 科技領綱 資 P-IV-1：程式語言基本概念、功能及應用。
+    code: 資 P-IV-1
+  - title: 結構化程式設計
+    text: 科技領綱 資 P-IV-2：結構化程式設計。
+    code: 資 P-IV-2
+  - title: 模組化程式設計
+    text: 科技領綱 資 P-IV-4：模組化程式設計的概念。
+    code: 資 P-IV-4
+  checklist_title: 開始前先確認
+  checklist:
+  - 會用積木工具
+  - 玩過猜數字
+  notes:
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 IV 是第四學習階段（國中七至九年級），V 是第五學習階段（高中）。
+  sources:
+  - tech108
+how:
+  heading: 寫遊戲，請家人試玩
+  body:
+  - 先在紙上寫出步驟：電腦想一個數、玩家猜、回答太大或太小、猜中就結束。再用程式工具做出來：一個變數記住電腦想的數，另一個變數記次數，每猜一次加 1；重複執行直到猜中；把回答太大或太小的積木包成一個自訂積木（函式），需要時呼叫它（本站整理）。
+  - 寫好後請家人試玩，故意輸入最小和最大的數。例如次數應該從 0 開始卻寫成從 1 開始，程式看起來對，結果卻多算一次（數字是示意）；找到 bug 就改，再試一次（本站建議）。
+  qa:
+    question: 為什麼程式「看起來對」卻跑出錯的結果？
+    answer: 電腦只照寫下的步驟做，不會猜你想做什麼；初始值、判斷條件或迴圈停止的時機寫錯一點，結果就會錯（本站整理）。CS Unplugged 說，除錯要「step through each instruction and identify when something goes wrong」。
+    source: cs-kidbots-about
+  items_title: 寫程式四步
+  items:
+  - title: 先寫步驟
+    text: 在紙上寫出遊戲怎麼玩。
+  - title: 用變數記
+    text: 記住答案和次數。
+  - title: 用迴圈重複
+    text: 一直猜到猜中為止。
+  - title: 包成函式
+    text: 把回答步驟包起來重複用。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 遊戲能猜中
+  - 次數算對
+  - 修好 bug
+  activity_figure: prog-flow
+  sources:
+  - cs-kidbots-about
+what:
+  heading: 會用變數、迴圈和函式
+  body:
+  - 學完後，孩子能用變數記住資料、用迴圈重複步驟、把常用的步驟包成函式，寫出一個能玩的小遊戲，並找到、修好 bug。
+  items_title: 學完能做到
+  items:
+  - title: 變數
+    text: 記住答案和次數。
+  - title: 迴圈
+    text: 重複到猜中為止。
+  - title: 函式
+    text: 把回答步驟包起來。
+  checklist_title: 家長檢核
+  checklist:
+  - 遊戲玩得完
+  - 說得出變數
+  - 說得出函式
+  figures:
+  - prog-compare
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - tech108
+  - genai-student
+figures:
+- id: prog-flow
+  type: flow
+  alt: 寫遊戲流程：孩子在紙上寫步驟、做出程式，家人試玩找 bug，孩子修好後家人再試一次。
+  steps:
+  - actor: 孩子
+    text: 紙上寫步驟
+  - actor: 孩子
+    text: 做出程式
+  - actor: 家人
+    text: 試玩找 bug
+  - actor: 孩子
+    text: 修好 bug
+  - actor: 家人
+    text: 再試一次
+  caption: 流程是本站建議。
+- id: prog-compare
+  type: compare
+  alt: 比較循序、選擇、重複三種結構：循序一步接一步，選擇依條件決定，重複一直做到條件成立。
+  source: tech108
+  relation: versus
+  items:
+  - term: 循序
+    note: 一步接一步做
+  - term: 選擇
+    note: 如果猜太大，就說太大
+  - term: 重複
+    note: 一直猜，直到猜中
+  caption: 國中資訊科技的學習內容說明列有「程式的循序性。」、「選擇結構的程式設計實作與應用。」和「重複結構的程式設計實作與應用。」；例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：運 t-IV-3「能設計資訊作品以解決生活問題。」（p.7）；資 P-IV-1「程式語言基本概念、功能及應用。」（p.10）；資 P-IV-2「結構化程式設計。」（p.10）；資 P-IV-4「模組化程式設計的概念。」（p.10）；資訊科技學習內容說明「國民中學教育階段以問題解決為主軸，強調培養學生利用資訊科技與運算思維解決問題之能力」（p.10）；時間分配「國民中學階段科技領域學習節數每週 2 節課。建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；資 P-IV-1 說明「程式語言的重要概念：資料形態、變數、輸入/輸出、算術運算與邏輯運算。」（p.42）；資 P-IV-2 說明「程式的循序性。」、「選擇結構的程式設計實作與應用。」、「重複結構的程式設計實作與應用。」（p.42）；資 P-IV-4 說明「模組化的意義與特性。」、「函數的概念。」（p.42）；「可採用視覺化程式設計工具，並搭配演算法進行教學。」（p.10）；核心素養：科-J-A2「運用科技工具，理解與歸納問題，進而提出簡易的解決之道。」（p.3）；科-J-B1「具備運用科技符號與運算思維進行日常生活的表達與溝通。」（p.3）
+- id: cs-kidbots-about
+  title: Kidbots – What's it all about?
+  publisher: CS Unplugged（University of Canterbury Computer Science Education Research Group）
+  url: https://www.csunplugged.org/en/topics/kidbots/whats-it-all-about/
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「They will need to step through each instruction and identify when something goes wrong and how they can fix the bug so the program then behaves as expected.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
