@@ -1,12 +1,7 @@
 import Link from "next/link";
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
-import { isFolderLaunched } from "@/lib/content";
 import { knowledgePointPath } from "@/lib/kp/routes";
-
-function shown(point: KnowledgePoint, currentFolder: string, visible: ContentCatalog): boolean {
-  if (!visible.indexes.byId.has(point.id)) return false;
-  return isFolderLaunched(point.folder) || point.folder === currentFolder;
-}
+import { shownPoint } from "./refs";
 
 export function PointLinks({
   ids,
@@ -24,7 +19,7 @@ export function PointLinks({
   const known = ids
     .map((id) => all.indexes.byId.get(id))
     .filter((item): item is KnowledgePoint => Boolean(item));
-  const links = known.filter((item) => shown(item, currentFolder, visible));
+  const links = known.filter((item) => shownPoint(item, currentFolder, visible));
   const hidden = known.length - links.length;
   if (links.length === 0 && hidden === 0) return empty ? <p className="v2-none">{empty}</p> : null;
   return (
