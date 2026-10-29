@@ -1,44 +1,189 @@
 id: ma.linalg@uni
 concept: ma.linalg
 title: 線性代數與資料
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 數學
-    - 線性代數
+  - 數學
+  - 線性代數
   layer: essence
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+- 原有待核對「課綱對應只到領域與核心素養（A1–C3）…」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級；高中數學 A／B、甲／乙的相關學習內容只在 math108 來源逐字引用（含頁碼），當作先學過的內容，主要依據改用大學開放教科書。
+- math108 來源裡 12 年級加深加廣選修的代碼照 PDF 寫成有空白的「12 甲」「12 乙」（如 F-12 甲-4）；含數學斜體字元的條目只引不含斜體字的一段，用刪節號表示省略。頁碼是頁腳印的頁碼（PDF 頁 − 3）。
+- 英文教科書的引文取自網頁版（2026-10-29 讀取）；網頁上的數學式是 MathML，引文只取不含數學式或彎引號的句子或片段，省略處用刪節號。
+- 原 idea「圖片、文字在 AI 裡都被表示成向量」改成有來源的說法：Google 機器學習課程說嵌入是資料的向量表示；原 scenario 的小圖片矩陣改成方格紙上的 L 形，不必寫程式。
+- 旋轉矩陣第一列 (0, −1)、第二列 (1, 0)：(1, 0) → (0, 1)、(0, 2) → (−2, 0)；先轉再放大的乘積第一列 (0, −2)、第二列 (2, 0)；字數向量 A ＝ (1, 1, 1, 0)、B ＝ (1, 1, 0, 1)、C ＝ (0, 0, 1, 1)：cos(A, B) ＝ 2/3 ≈ 0.67、cos(A, C) ＝ 1 ÷ √6 ≈ 0.41，都已驗算。
 prerequisites:
-  - ma.vector@sh
+- ma.vector@sh
 links:
   why: []
   how:
-    - it.nn@uni
+  - it.nn@uni
   related: []
   deeper: []
 link_notes: 資訊與 AI（向量表示、神經網路）、物理
 competency:
   specialist:
-    - 線性代數
+  - 線性代數
   generalist:
-    - 跨域思考
+  - 跨域思考
 ai:
   delegable:
-    - 大量矩陣運算
+  - 大量矩陣運算（先手算一個小例子再對照，本站建議）
   human_experience:
-    - 理解運算背後的幾何意義
-idea: 矩陣和向量可以同時處理大量數字；圖片、文字在 AI 裡都被表示成向量。
+  - 理解運算背後的幾何意義
+idea: 矩陣可以看成把向量變成向量的函數：旋轉、縮放都能寫成矩陣乘向量，接連做兩個變換就是兩個矩陣相乘。資料也能寫成一串數字（向量），兩個向量夾角的餘弦可以衡量它們有多像。
 guiding_questions:
-  - 電腦怎麼知道兩句話的意思很像？
-scenario: 把一張小圖片當成矩陣，做旋轉與縮放；用向量相似度比較幾段文字。
+- 電腦怎麼知道兩句話的意思很像？
+- 把一個圖形轉 90 度，可以用一個矩陣表示嗎？
+scenario: 在方格紙上畫一個 L 形（點 (0, 0)、(1, 0)、(0, 2)），用矩陣把它轉 90 度、放大 2 倍；再把三個短句寫成字數向量，算它們兩兩的餘弦相似度（數字是示意，本站整理）。
 formats:
   slides: []
+  exercise: 目標：用 2 × 2 矩陣算出 L 形旋轉和放大後的位置，並用字數向量算出兩個短句的餘弦相似度，說明 AI 用的向量和自己數的有什麼不同（數字是示意）。　檢核：不看本頁，自己算出 (0, 2) 轉 90 度後是 (−2, 0)、句子 A 和 B 的餘弦相似度是 2/3，並說出 AI 的嵌入向量是模型學出來的；三件事都對（數字是示意）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 用 2 × 2 矩陣算出 L 形旋轉和放大後的位置，並用字數向量算出兩個短句的餘弦相似度，說明 AI 用的向量和自己數的有什麼不同（數字是示意）。
+review: 不看本頁，自己算出 (0, 2) 轉 90 度後是 (−2, 0)、句子 A 和 B 的餘弦相似度是 2/3，並說出 AI 的嵌入向量是模型學出來的；三件事都對（數字是示意）。
+why:
+  heading: 矩陣是一種函數
+  body:
+  - Interactive Linear Algebra 的學習目標是「Learn to view a matrix geometrically as a function.」，並舉出「reflection, dilation, rotation, shear, projection」等矩陣變換。把矩陣看成函數，就能用幾何想像計算。
+  - 高中數學 A 類已經學過「將矩陣視為資料表，用電腦做矩陣運算的觀念與示範。」和「平面上的線性變換」。大學線性代數再處理任意維度的向量和矩陣（本站整理）；機器學習也用很多維的向量表示資料，Google 的機器學習課程說「An embedding is a vector representation of data in embedding space」。
+  items_title: 向量和矩陣
+  items:
+  - title: 向量
+    text: 一串數字，可以是點，也可以是資料。
+  - title: 矩陣乘向量
+    text: 把向量變成另一個向量。
+  - title: 餘弦相似度
+    text: 看兩個向量的方向有多接近。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會算內積
+  - 會算向量長度
+  sources:
+  - ila-mt
+  - gml-emb
+  - math108
+how:
+  heading: 轉圖形，比句子
+  body:
+  - 轉 90 度：逆時針轉 90 度的矩陣第一列是 (0, −1)、第二列是 (1, 0)。(1, 0) 變成 (0, 1)，(0, 2) 變成 (−2, 0)，L 形整個轉了 90 度。放大 2 倍的矩陣第一列 (2, 0)、第二列 (0, 2)；先轉再放大，等於乘上兩個矩陣的乘積，第一列 (0, −2)、第二列 (2, 0)（說明是本站整理）。
+  - 字數向量：只數貓、喜歡、魚、老鼠四個詞各出現幾次。句子 A（貓喜歡魚）是 (1, 1, 1, 0)，B（貓喜歡老鼠）是 (1, 1, 0, 1)，C（魚和老鼠）是 (0, 0, 1, 1)。cos(A, B) ＝ 2 ÷ (√3 × √3) ＝ 2/3 ≈ 0.67，cos(A, C) ＝ 1 ÷ (√3 × √2) ≈ 0.41，所以 A 和 B 比較像（說明是本站整理）。
+  - Google 的課程列出餘弦是比較兩個向量相似度的方法之一，相似度越高，餘弦越大；也說「words that are used in similar contexts will be closer to each other in embedding space」。字數向量只看用了哪些字，AI 用的是模型學出來的嵌入向量。
+  qa:
+    question: 電腦怎麼知道兩句話的意思很像？
+    answer: 一種作法是把每句話表示成向量，再算兩個向量夾角的餘弦，越接近 1 越像。本頁用自己數的字數向量示範，A 和 B 的餘弦是 2/3（數字是示意）；AI 用的是模型學出來的嵌入向量，Google 的課程說嵌入裡「the distance between any two items can be calculated mathematically」。
+    source: gml-emb
+  items_title: 三步做
+  items:
+  - title: 寫成向量
+    text: 點的坐標，或詞的次數。
+  - title: 矩陣乘向量
+    text: 算出變換後的位置。
+  - title: 算餘弦
+    text: 內積除以兩個長度。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 轉出三個點
+  - 算出乘積矩陣
+  - 寫出三個向量
+  - 算出兩個餘弦
+  activity_figure: linalg-flow
+  sources:
+  - gml-sim
+  - gml-emb
+what:
+  heading: 看懂向量和變換
+  body:
+  - 學完後，自己能把旋轉、縮放寫成矩陣，算出圖形變換後的位置，並用餘弦相似度比較兩筆資料，說出 AI 的嵌入向量和自己數的向量有什麼不同。
+  items_title: 學完能做到
+  items:
+  - title: 寫出變換矩陣
+    text: 旋轉、縮放、接連變換。
+  - title: 算出相似度
+    text: 用餘弦比較兩個向量。
+  - title: 說出嵌入
+    text: 模型學出來的向量。
+  checklist_title: 自我檢核
+  checklist:
+  - 旋轉算對
+  - 餘弦算對
+  - 說出兩種向量
+  figures:
+  - linalg-compare
+  notes:
+  - 本頁的圖形、句子和數字是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，算式和數字要自己驗算；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - gml-emb
+  - genai-student
+figures:
+- id: linalg-flow
+  type: flow
+  alt: 流程：寫成向量、寫出矩陣、矩陣乘向量、畫圖檢查、算餘弦相似度。
+  steps:
+  - actor: 自己
+    text: 寫成向量
+  - actor: 自己
+    text: 寫出矩陣
+  - actor: 自己
+    text: 矩陣乘向量
+  - actor: 自己
+    text: 畫圖檢查
+  - actor: 自己
+    text: 算餘弦相似度
+  caption: 流程是本站建議。
+- id: linalg-compare
+  type: compare
+  alt: 比較字數向量和嵌入向量：字數向量是自己數詞出現的次數；嵌入向量是模型學出來的資料表示。
+  source: gml-emb
+  relation: versus
+  items:
+  - term: 字數向量
+    note: 自己數詞的次數，A、B 的餘弦是 2/3（示意）
+  - term: 嵌入向量
+    note: 模型學出來，相似的詞靠得近
+  caption: Google 的機器學習課程說明嵌入是資料的向量表示；字數向量的例子是本站整理。
+sources:
+- id: ila-mt
+  title: Interactive Linear Algebra, 3.1 Matrix Transformations
+  publisher: Dan Margalit、Joseph Rabinoff 著（Georgia Institute of Technology 開放教科書）
+  url: https://textbooks.math.gatech.edu/ila/matrix-transformations.html
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: '學習目標「Learn to view a matrix geometrically as a function.」、「Learn examples of matrix transformations: reflection, dilation, rotation, shear, projection.」'
+- id: gml-emb
+  title: 'Embeddings: Embedding space and static embeddings'
+  publisher: Google for Developers（Machine Learning 課程）
+  url: https://developers.google.com/machine-learning/crash-course/embeddings/embedding-space
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「An embedding is a vector representation of data in embedding space」、「In an embedding, the distance between any two items can be calculated mathematically, and can be interpreted as a measure of relative similarity between those two items.」、「words that are used in similar contexts will be closer to each other in embedding space」
+- id: gml-sim
+  title: Measuring similarity from embeddings
+  publisher: Google for Developers（Machine Learning 課程）
+  url: https://developers.google.com/machine-learning/clustering/dnn-clustering/supervised-similarity
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 相似度表格列出歐氏距離、餘弦（兩向量夾角的餘弦）、內積三種方法，餘弦是「As similarity increases, this measure...」那一欄的「Increases」；「Remember that embeddings are vectors of numbers.」
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中（或國中）先學過的相關學習內容，只當先備：A-11A-3「矩陣的運算：矩陣的定義，矩陣的係數積與加減運算，矩陣相乘，反方陣。將矩陣視為資料表，用電腦做矩陣運算的觀念與示範。」（p.49）；F-11A-3「矩陣的應用：平面上的線性變換，二階轉移方陣。」（p.49）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

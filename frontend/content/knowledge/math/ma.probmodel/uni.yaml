@@ -1,47 +1,191 @@
 id: ma.probmodel@uni
 concept: ma.probmodel
 title: 機率模型與不確定性
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 數學
-    - 資料與機率
+  - 數學
+  - 資料與機率
   layer: essence
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-  - 課綱對應只到領域與核心素養（A1–C3）。高中數學 A／B、數學甲／乙分流，以及極限、導數、積分所在選修，上線前請以教育部數學領域課綱核對。
+- 原有待核對「課綱對應只到領域與核心素養（A1–C3）…」已處理：大學不屬於 108 課綱，本點不填 curriculum_108、不列年級；高中數學 A／B、甲／乙的相關學習內容只在 math108 來源逐字引用（含頁碼），當作先學過的內容，主要依據改用大學開放教科書。
+- math108 來源裡 12 年級加深加廣選修的代碼照 PDF 寫成有空白的「12 甲」「12 乙」（如 F-12 甲-4）；含數學斜體字元的條目只引不含斜體字的一段，用刪節號表示省略。頁碼是頁腳印的頁碼（PDF 頁 − 3）。
+- 英文教科書的引文取自網頁版（2026-10-29 讀取）；網頁上的數學式是 MathML，引文只取不含數學式或彎引號的句子或片段，省略處用刪節號。
+- 原 guiding question 把八成會準時、一定會準時放在「」裡，但那不是引文，已拿掉引號；原 scenario「用蒙地卡羅模擬估計一個專案的完工時間分布」改成丟銅板、骰子 30 次的重複模擬，不用沒有來源的術語。
+- A 為 2 或 3 天（各 1/2）、B 為 1、2、3 天（各 1/3），兩者獨立：P(T ≤ 5) ＝ 1/2 × 1 ＋ 1/2 × 2/3 ＝ 5/6 ≈ 83%、E(T) ＝ 2.5 ＋ 2 ＝ 4.5、遲到機率 1/6（A ＝ 3 且 B ＝ 3）、期限 6 天時準時機率 1，都已驗算。
 prerequisites:
-  - ma.stats@sh
-  - ma.integral@uni
+- ma.stats@sh
+- ma.integral@uni
 links:
   why:
-    - ph.epistem@uni
+  - ph.epistem@uni
   how:
-    - pm.schedule@uni
+  - pm.schedule@uni
   related: []
   deeper: []
 link_notes: 專案管理（排程與資源最佳化）、哲學（知識論與不確定性）
 competency:
   specialist:
-    - 機率統計
+  - 機率統計
   generalist:
-    - 建模
-    - 跨域思考
+  - 建模
+  - 跨域思考
 ai:
   delegable:
-    - 執行大量模擬
+  - 執行大量模擬
   human_experience:
-    - 決定可接受的風險、向別人說明不確定性
-idea: 隨機變數與機率分布描述不確定的世界；用模擬可以估計複雜情況下的風險。
+  - 決定可接受的風險、向別人說明不確定性
+idea: 隨機變數把不確定的結果寫成數字，機率分布說明每個結果有多可能。期望值是長期的平均，卻看不出風險；重複模擬可以估計機率，試得越多次，相對次數越接近理論機率。
 guiding_questions:
-  - 「八成會準時」和「一定會準時」，對決策有什麼不同？
-scenario: 用蒙地卡羅模擬估計一個專案的完工時間分布，回答「準時完成的機率有多少」。
+- 八成會準時和一定會準時，對決策有什麼不同？
+- 平均 4.5 天就做得完，期限 5 天就一定來得及嗎？
+scenario: 一個小專案有兩項工作接著做：A 要 2 或 3 天（丟銅板決定），B 要 1、2 或 3 天（丟骰子：1–2 點 1 天、3–4 點 2 天、5–6 點 3 天），期限 5 天。先算準時的機率和平均天數，再丟 30 次模擬比較（數字是示意，本站整理）。
 formats:
   slides: []
+  exercise: 目標：算出本頁小專案準時完成的機率和期望天數，說明平均比期限短為什麼還會遲到，並用丟銅板和骰子的模擬檢查結果（數字是示意）。　檢核：不看本頁，自己算出準時的機率是 5/6、期望值是 4.5 天、遲到機率是 1/6，並說出 30 次模擬的結果為什麼不一定剛好是 5/6；三件事都對（數字是示意）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 算出本頁小專案準時完成的機率和期望天數，說明平均比期限短為什麼還會遲到，並用丟銅板和骰子的模擬檢查結果（數字是示意）。
+review: 不看本頁，自己算出準時的機率是 5/6、期望值是 4.5 天、遲到機率是 1/6，並說出 30 次模擬的結果為什麼不一定剛好是 5/6；三件事都對（數字是示意）。
+why:
+  heading: 不確定也能算
+  body:
+  - OpenStax 說機率「does not describe the short-term results of an experiment. It gives information about what can be expected in the long term.」做決策時，要知道的不只是平均，還有出錯的機會有多大。
+  - 高中數學甲、乙的 12 年級選修都列了「離散型隨機變數：期望值、變異數與標準差，獨立性，伯努力試驗與重複試驗。」大學再把它用到更複雜的問題，例如本頁把每項工作的時間當成隨機變數，算出整個計畫準時的機率（本站整理）。
+  items_title: 三個工具
+  items:
+  - title: 隨機變數
+    text: 把結果寫成數字，例如天數。
+  - title: 機率分布
+    text: 每個值的機率，合起來是 1。
+  - title: 期望值
+    text: 長期下來的平均。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會算獨立事件
+  - 會算期望值
+  sources:
+  - os-mean
+  - math108
+how:
+  heading: 先算，再模擬
+  body:
+  - 算機率：總天數 T ＝ A ＋ B，假設 A 和 B 互相獨立。A ＝ 2 時，B 不管幾天都不超過 5 天；A ＝ 3 時，B 要 1 或 2 天才準時，機率 2/3。準時的機率 ＝ 1/2 × 1 ＋ 1/2 × 2/3 ＝ 5/6 ≈ 83%。OpenStax 的機率分布要符合「Each probability is between zero and one, inclusive.」和「The sum of the probabilities is one.」（說明是本站整理）。
+  - 看平均：E(A) ＝ 2.5、E(B) ＝ 2，E(T) ＝ 4.5 天，比期限短；但 A ＝ 3 且 B ＝ 3 時要 6 天，遲到機率是 1/2 × 1/3 ＝ 1/6。只看平均會漏掉風險；期限放寬到 6 天，準時的機率就是 1（說明是本站整理）。
+  - 模擬：丟一次銅板（正面 2 天、反面 3 天）和一次骰子算一次專案，做 30 次，數準時幾次再除以 30。OpenStax 的大數法則說「as the number of repetitions of an experiment is increased, the relative frequency obtained in the experiment tends to become closer and closer to the theoretical probability」，30 次的結果離 5/6 有點遠是正常的。
+  qa:
+    question: 八成會準時和一定會準時，對決策有什麼不同？
+    answer: 5/6 會準時，表示大約每 6 次有 1 次遲到；要不要多留 1 天緩衝，看遲到的代價有多大。本頁的例子把期限放寬到 6 天，準時的機率就是 1（數字是示意，說明是本站整理）。OpenStax 也提醒，機率講的是長期，「probability does not describe the short-term results of an experiment」。
+    source: os-mean
+  items_title: 三步做
+  items:
+  - title: 列出結果
+    text: A、B 的天數和機率。
+  - title: 算機率和平均
+    text: 準時機率、期望天數。
+  - title: 模擬比較
+    text: 丟 30 次，和理論比。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 算出 5/6
+  - 算出 4.5 天
+  - 丟滿 30 次
+  - 比較模擬結果
+  activity_figure: probmodel-flow
+  sources:
+  - os-pdf
+  - os-lln
+what:
+  heading: 用機率說明風險
+  body:
+  - 學完後，自己能把不確定的時間寫成隨機變數，算出準時的機率和期望值，用模擬檢查結果，並向別人說明平均和風險的差別。
+  items_title: 學完能做到
+  items:
+  - title: 算出準時機率
+    text: 用獨立事件相乘相加。
+  - title: 分辨平均和風險
+    text: 平均短，仍可能遲到。
+  - title: 用模擬檢查
+    text: 次數越多越接近。
+  checklist_title: 自我檢核
+  checklist:
+  - 機率算對
+  - 期望值算對
+  - 說出模擬差距
+  figures:
+  - probmodel-compare
+  notes:
+  - 本頁的工作天數和期限都是示意；銅板和骰子只是用來產生隨機結果。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，算式和數字要自己驗算；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - os-lln
+  - genai-student
+figures:
+- id: probmodel-flow
+  type: flow
+  alt: 流程：列出結果和機率、算準時機率、算期望值、模擬 30 次、比較理論和模擬。
+  steps:
+  - actor: 自己
+    text: 列出結果
+  - actor: 自己
+    text: 算準時機率
+  - actor: 自己
+    text: 算期望值
+  - actor: 自己
+    text: 模擬 30 次
+  - actor: 自己
+    text: 比較兩者
+  caption: 流程是本站建議。
+- id: probmodel-compare
+  type: compare
+  alt: 比較期望值和準時機率：期望 4.5 天比期限 5 天短，但準時機率是 5/6，仍有 1/6 會遲到（示意）。
+  source: os-mean
+  relation: versus
+  items:
+  - term: 期望值
+    note: 4.5 天，比期限短
+  - term: 準時機率
+    note: 5/6，仍有 1/6 會遲到
+  caption: OpenStax 說明期望值是長期的平均；例子是本站整理，數字是示意。
+sources:
+- id: os-lln
+  title: Introductory Statistics 2e, 3.1 Terminology
+  publisher: Barbara Illowsky、Susan Dean 等著，OpenStax（Rice University），CC BY-NC-SA 4.0，2023
+  url: https://openstax.org/books/introductory-statistics-2e/pages/3-1-terminology
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「This important characteristic of probability experiments is known as the law of large numbers which states that as the number of repetitions of an experiment is increased, the relative frequency obtained in the experiment tends to become closer and closer to the theoretical probability.」
+- id: os-pdf
+  title: Introductory Statistics 2e, 4.1 Probability Distribution Function (PDF) for a Discrete Random Variable
+  publisher: Barbara Illowsky、Susan Dean 等著，OpenStax（Rice University），CC BY-NC-SA 4.0，2023
+  url: https://openstax.org/books/introductory-statistics-2e/pages/4-1-probability-distribution-function-pdf-for-a-discrete-random-variable
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「A discrete probability distribution function has two characteristics:」、「Each probability is between zero and one, inclusive.」、「The sum of the probabilities is one.」
+- id: os-mean
+  title: Introductory Statistics 2e, 4.2 Mean or Expected Value and Standard Deviation
+  publisher: Barbara Illowsky、Susan Dean 等著，OpenStax（Rice University），CC BY-NC-SA 4.0，2023
+  url: https://openstax.org/books/introductory-statistics-2e/pages/4-2-mean-or-expected-value-and-standard-deviation
+  accessed: '2026-10-29'
+  kind: textbook
+  supports: 「probability does not describe the short-term results of an experiment. It gives information about what can be expected in the long term.」、「To find the expected value or long term average」…「simply multiply each value of the random variable by its probability and add the products.」
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部 107 年 4 月 16 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中（或國中）先學過的相關學習內容，只當先備：D-12 甲-1「離散型隨機變數：期望值、變異數與標準差，獨立性，伯努力試驗與重複試驗。」（p.52）；D-12 乙-1「離散型隨機變數：期望值、變異數與標準差，獨立性，伯努力試驗與重複試驗。」（p.53）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

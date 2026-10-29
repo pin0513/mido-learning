@@ -33,7 +33,8 @@ test.describe("知識地圖", () => {
     await expect(page.getByText("尚未發布")).toHaveCount(0);
     await expect(page.getByTestId("kp-slides")).toHaveCount(0);
 
-    await page.goto("/kp/ma.limit/uni");
+    // B13 已發布 ma.limit@uni；仍是草稿、to_verify、沒有課綱對應的大學點改用 it.nn@uni。
+    await page.goto("/kp/it.nn/uni");
     await expect(page.getByTestId("kp-curriculum")).toHaveCount(0);
     await expect(page.getByTestId("kp-to-verify")).toContainText("課綱對應待核對");
     await expect(page.getByTestId("kp-license-body")).toBeEmpty();
