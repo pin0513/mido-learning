@@ -1,55 +1,229 @@
 id: ph.fact@es
 concept: ph.fact
 title: 事實還是意見？
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 批判思考
+  - 哲學
+  - 思考方法
+  - 批判思考
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 語文
-    - 社會
+  - 語文
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B2
   issues:
-    - 閱讀素養教育
+  - 閱讀素養教育
+  performances:
+  - 1-III-3
+  - 5-III-4
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、B2：依總綱 p.4–6 國民小學教育的 E-A2、E-B2 與國語文領綱 p.3–4 的國-E-A2、國-E-B2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 5、6：本點的國語文代碼都是第三學習階段（III），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依國語文領綱 p.2 時間分配表：國民小學五、六年級國語文每週 5 節；本點建議在國語課做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，綜合活動領綱、總綱、社會領綱比 PDF 頁少 4，議題融入說明手冊少 16。
+- 原 domains 的社會刪除：社會領綱第二學習階段 1a-II-1「辨別社會生活中的事實與意見。」（p.6）和本點最貼近，但社會國小代碼沒有科目字首，和綜合活動的 1a-II-1 同號（代碼表以代碼為唯一鍵），所以只在正文與來源引用，不放進 curriculum_108；link_notes 保留社會（媒體識讀）。
+- 議題閱讀素養教育：議題融入說明手冊國小的實質內涵 閱E7「發展詮釋、反思、評鑑文本的能力。」（p.104）；分辨廣告裡的事實和意見，就是在評鑑文本。
+- 原 idea「『今天下雨』是事實，可以檢查；『下雨天很討厭』是意見，每個人可以不同。」的引號拿掉：例句是本站整理，不是引文；另補上出去看看就能檢查。
+- 原 scenario「從廣告單和班刊剪下句子，分成事實和意見兩欄，討論哪些句子很難分。」保留做法，補上不剪姓名、電話和照片（本站建議）。
+- 原 ai.delegable「出更多練習句子」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- Pew Research Center 2018 年的報告（Amy Mitchell 等）是研究新聞讀者的調查，本點只借它對事實句與意見句的定義，英文短句引用，中文說明是本站整理。
 prerequisites:
-  - ph.reason@es
+- ph.reason@es
 links:
   why: []
   how: []
   related: []
   deeper:
-    - ph.fallacy@jh
-    - ph.evidence@jh
-link_notes: 社會（媒體識讀）、語文
+  - ph.fallacy@jh
+  - ph.evidence@jh
+link_notes: 社會（媒體識讀）、語文；國語文 1-III-3、5-III-4。
 competency:
   specialist:
-    - 批判思考
+  - 批判思考
   generalist:
-    - 查證
-    - 跨域思考
+  - 查證
+  - 跨域思考
 ai:
   delegable:
-    - 出更多練習句子
+  - 出更多練習句子（由大人操作，本站建議）
   human_experience:
-    - 發現自己也常把意見當成事實
-idea: 「今天下雨」是事實，可以檢查；「下雨天很討厭」是意見，每個人可以不同。
+  - 發現自己也常把意見當成事實
+idea: 說今天下雨，是事實，出去看看就能檢查；說下雨天很討厭，是意見，每個人可以不同。
 guiding_questions:
-  - 廣告為什麼常把意見說得像事實？
-scenario: 從廣告單和班刊剪下句子，分成事實和意見兩欄，討論哪些句子很難分。
+- 廣告為什麼常把意見說得像事實？
+- 一句話說錯了，它還算事實的句子嗎？
+- 哪些句子很難分，為什麼？
+scenario: 從廣告單和班刊剪下句子（不剪姓名、電話和照片），分成事實和意見兩欄，再討論哪些句子很難分（本站建議）。
 formats:
   slides: []
+  exercise: 目標：讀一段廣告或文章時，能把句子分成事實和意見，並說出事實句可以怎麼檢查、意見是誰的看法。　檢核：家長或老師給一張廣告單，孩子圈出三句事實、三句意見：每句事實說得出怎麼檢查，每句意見說得出是誰的看法；遇到又像事實又像意見的句子，說得出為什麼難分。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 讀一段廣告或文章時，能把句子分成事實和意見，並說出事實句可以怎麼檢查、意見是誰的看法。
+review: 家長或老師給一張廣告單，孩子圈出三句事實、三句意見：每句事實說得出怎麼檢查，每句意見說得出是誰的看法；遇到又像事實又像意見的句子，說得出為什麼難分。
+est_time:
+  school: 國小五、六年級國語課
+  source: kuoyu
+why:
+  heading: 分清事實和意見
+  body:
+  - 國語課綱要五、六年級學生「判斷聆聽內容的合理性，並分辨事實或意見。」讀文章時也要「區分文本中的客觀事實與主觀判斷之間的差別。」社會課從三、四年級就開始練習「辨別社會生活中的事實與意見。」
+  - 研究新聞讀者的皮尤研究中心這樣分：事實句是「capable of being proved or disproved by objective evidence」，意見句則「reflects the beliefs and values of whoever expressed it」。意思是事實句可以用證據檢查，意見句說的是說話的人相信什麼、看重什麼（翻譯是本站整理）。
+  qa:
+    question: 一句話說錯了，它還算事實的句子嗎？
+    answer: 還算。皮尤研究中心分類時，只看能不能用證據檢查，「regardless of whether it was accurate or inaccurate」，也就是不管它對不對（翻譯是本站整理）。例如本班有 30 人，數一數發現是 28 人，這句話錯了，但它還是可以檢查的事實句（例子是本站整理）。
+    source: pew-fact
+  items_title: 國語文領綱的學習重點
+  items:
+  - title: 分辨事實或意見
+    text: 國語文 1-III-3：判斷聆聽內容的合理性，並分辨事實或意見。
+    code: 1-III-3
+  - title: 區分事實與判斷
+    text: 國語文 5-III-4：區分文本中的客觀事實與主觀判斷之間的差別。
+    code: 5-III-4
+  checklist_title: 開始前先確認
+  checklist:
+  - 準備一張廣告單
+  - 準備剪刀和膠水
+  figures:
+  - fact-compare
+  notes:
+  - 國語文的代碼：第一碼是類別（1 聆聽、2 口語表達、5 閱讀），第二碼是學習階段，第三碼是流水號。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - kuoyu
+  - social108
+  - pew-fact
+  - zonggang
+how:
+  heading: 剪句子，分兩欄
+  body:
+  - 先剪：從廣告單和班刊各剪幾句話，不剪有姓名、電話或照片的部分（本站建議）。再分：每句問自己，可以用證據檢查嗎？可以數一數、量一量、查資料或去看看的，貼到事實欄，旁邊寫怎麼檢查；說的是喜不喜歡、好不好的，貼到意見欄，旁邊寫這是誰的看法。
+  - 最後談難分的句子。像全校最受歡迎的飲料，聽起來像事實，但如果沒有人做過調查，其實是賣的人的看法；像這雙鞋很輕，只有 200 克，前半句是意見，後半句可以秤（例子是本站整理）。廣告常把意見寫得像事實，因為聽起來像事實的句子比較容易讓人相信（本站整理）。
+  - 還要記得：這樣分，看的是能不能用證據檢查，不是對不對。皮尤研究中心說事實句是「capable of being proved or disproved」，所以一句事實句說錯了，被證據推翻，它仍然是事實句（說明是本站整理）。
+  qa:
+    question: 廣告為什麼常把意見說得像事實？
+    answer: 因為聽起來像事實的句子，比較容易讓人相信，也比較想買（本站整理）。所以看到最好、第一名、最受歡迎這類字，先問：有證據嗎？是誰說的？國語課綱也要學生「判斷聆聽內容的合理性」，聽到的、讀到的都要想一想。
+    source: kuoyu
+  items_title: 四步做
+  items:
+  - title: 剪句子
+    text: 不剪姓名、電話和照片。
+  - title: 問能不能檢查
+    text: 數、量、查、看得到嗎？
+  - title: 分成兩欄
+    text: 意見旁寫上是誰的看法。
+  - title: 談難分的
+    text: 說出為什麼難分。
+  checklist_title: 分完檢查一下
+  checklist:
+  - 事實寫了怎麼查
+  - 意見寫了是誰的
+  activity_figure: fact-flow
+  sources:
+  - pew-fact
+  - kuoyu
+what:
+  heading: 事實可以查，意見看是誰說
+  body:
+  - 學完後，孩子讀廣告或文章時，能把句子分成事實和意見，說出事實句可以怎麼檢查、意見是誰的看法，也說得出有些句子為什麼難分。
+  items_title: 學完能做到
+  items:
+  - title: 找出事實句
+    text: 說得出怎麼檢查。
+  - title: 找出意見句
+    text: 說得出是誰的看法。
+  - title: 談難分的句子
+    text: 說得出為什麼難分。
+  checklist_title: 家長檢核
+  checklist:
+  - 事實意見都圈好
+  - 說得出怎麼檢查
+  - 說得出是誰的看法
+  notes:
+  - 本點融入閱讀素養教育議題：議題融入說明手冊國小的實質內涵有「發展詮釋、反思、評鑑文本的能力。」分辨廣告裡的事實和意見，就是在評鑑文本。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: fact-flow
+  type: flow
+  alt: 分事實和意見四步驟：我剪下句子，問能不能用證據檢查，分成事實和意見兩欄，全班再談難分的句子。
+  steps:
+  - actor: 我
+    text: 剪下句子
+  - actor: 我
+    text: 問能不能檢查
+  - actor: 我
+    text: 分成兩欄
+  - actor: 全班
+    text: 談難分的句子
+  source: pew-fact
+  caption: 流程是本站建議。
+- id: fact-compare
+  type: compare
+  alt: 比較事實句和意見句：本店週日公休，可以去看看來檢查；本店的麵最好吃，是說話的人的看法。
+  source: pew-fact
+  relation: versus
+  items:
+  - term: 事實句
+    note: 本店週日公休。
+  - term: 意見句
+    note: 本店的麵最好吃。
+  caption: 例子是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：1-III-3「判斷聆聽內容的合理性，並分辨事實或意見。」（p.7）；5-III-4「區分文本中的客觀事實與主觀判斷之間的差別。」（p.10）；領域核心素養：國-E-A2「透過國語文學習，掌握文本要旨、發展學習及解決問題策略、初探邏輯思維，並透過體驗與實踐，處理日常生活問題。」（p.3）；國-E-B2「理解網際網路和資訊科技對學習的重要性，藉以擴展語文學習的範疇，並培養審慎使用各類資訊的能力。」（p.4）；時間分配：「國語文各教育階段之時間分配如下」（p.2），表中國民小學三至六年級每週 5 節；代碼說明：「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 第二學習階段學習表現 1a-II-1「辨別社會生活中的事實與意見。」（p.6）；本點只引用文字，代碼和綜合活動同號，不放進 curriculum_108
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-B2「具備科技與資訊應用的基本素養，並理解各類媒體內容的意義與影響。」（p.5）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 閱讀素養教育國小實質內涵 閱E7「發展詮釋、反思、評鑑文本的能力。」（p.104）
+- id: pew-fact
+  title: Distinguishing Between Factual and Opinion Statements in the News
+  publisher: Amy Mitchell、Jeffrey Gottfried、Michael Barthel、Nami Sumida（Pew Research Center，2018 年 6 月 18 日）
+  url: https://www.pewresearch.org/journalism/2018/06/18/distinguishing-between-factual-and-opinion-statements-in-the-news/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「capable of being proved or disproved by objective evidence」；「an opinion that reflects the beliefs and values of whoever expressed it」；「regardless of whether it was accurate or inaccurate」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

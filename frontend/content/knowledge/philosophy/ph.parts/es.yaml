@@ -1,52 +1,222 @@
 id: ph.parts@es
 concept: ph.parts
 title: 部分與整體
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 系統思考
+  - 哲學
+  - 思考方法
+  - 系統思考
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 自然科學
+  - 綜合活動
   core_competencies:
-    - A2
-  issues: []
+  - A2
+  - C1
+  issues:
+  - 環境教育
+  performances:
+  - 3d-III-1
+  contents:
+  - Cd-III-1
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、C1：依總綱 p.4–6 國民小學教育的 E-A2、E-C1 與綜合活動領綱 p.3–4 的綜-E-A2、綜-E-C1原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 5、6：本點的綜合活動代碼都是第三學習階段（III），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，綜合活動領綱、總綱、社會領綱比 PDF 頁少 4，議題融入說明手冊少 16。
+- 原 domains 的自然科學改成綜合活動：本點的戶外觀察與友善行動對應綜合活動 3d-III-1、Cd-III-1；自然科學領綱的學習表現代碼不符代碼表的格式，沒有放進 curriculum_108；link_notes 保留自然科學（生態）。原 core_competencies 只有 A2，加上 C1（總綱 E-C1 關懷生態環境）。
+- 議題環境教育：議題融入說明手冊國小的實質內涵 環E1「參與戶外學習與自然體驗，覺知自然環境的美、平衡、與完整性。」（p.47）。
+- 原 scenario「觀察校園花圃，畫出植物、蟲、鳥、雨水的關係圖，討論『如果少了蜜蜂會怎樣？』」保留做法，引號拿掉，補上隔著距離看、不碰不抓、蜂螫過敏的同學先告訴老師、大人陪同（本站建議）。
+- 原 ai.delegable「提供生物之間關係的資料」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- FAO 授粉服務頁是聯合國糧農組織的公開說明，英文短句引用，中文說明是本站整理；87.5% 是該頁寫的全球估計。
 prerequisites:
-  - ph.question@es
+- ph.question@es
 links:
   why: []
   how:
-    - pm.breakdown@es
+  - pm.breakdown@es
   related: []
   deeper:
-    - ph.feedback@jh
-link_notes: 自然科學（生態）、專案管理（大事拆成小事）
+  - ph.feedback@jh
+link_notes: 自然科學（生態）、專案管理（大事拆成小事）；綜合活動 3d-III-1、Cd-III-1。
 competency:
   specialist:
-    - 系統思考
+  - 系統思考
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 提供生物之間關係的資料
+  - 提供生物之間關係的資料（由大人操作，本站建議）
   human_experience:
-    - 到戶外實際觀察、記錄
+  - 到戶外實際觀察、記錄
 idea: 很多東西是一群部分連在一起運作的。拿掉其中一個，整體可能就會改變。
 guiding_questions:
-  - 班上少了一個人，會有什麼不一樣？
-scenario: 觀察校園花圃，畫出植物、蟲、鳥、雨水的關係圖，討論「如果少了蜜蜂會怎樣？」
+- 班上少了一個人，會有什麼不一樣？
+- 花圃裡少了蜜蜂，花會怎樣？
+- 觀察時，怎樣才不會打擾小動物？
+scenario: 大人陪同觀察校園花圃，畫出植物、蟲、鳥、雨水的關係圖，討論如果少了蜜蜂會怎樣；觀察時隔著距離看、不碰不抓，對蜂螫過敏的同學先告訴老師（本站建議）。
 formats:
   slides: []
+  exercise: 目標：觀察一個小環境後，能畫出裡面至少四樣東西的關係圖，並說出拿掉其中一樣，整體可能怎麼改變。　檢核：家長或老師看關係圖：每條連線說得出誰幫誰或誰需要誰；孩子說得出少了蜜蜂，花和果實可能怎麼改變；觀察時做到不碰不抓、隔著距離看。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 觀察一個小環境後，能畫出裡面至少四樣東西的關係圖，並說出拿掉其中一樣，整體可能怎麼改變。
+review: 家長或老師看關係圖：每條連線說得出誰幫誰或誰需要誰；孩子說得出少了蜜蜂，花和果實可能怎麼改變；觀察時做到不碰不抓、隔著距離看。
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 拿掉一個，整體會變
+  body:
+  - 綜合活動課綱要五、六年級學生「實踐環境友善行動，珍惜生態資源與環境。」補充說明也寫到要了解「生態資源的種類、所在地、重要性及其與環境的關係。」議題融入說明手冊的環境教育，要國小學生「參與戶外學習與自然體驗，覺知自然環境的美、平衡、與完整性。」
+  - 花圃就是一個小小的整體。聯合國糧農組織說，全世界約 87.5% 的開花植物「are pollinated by animals」；少了授粉的動物，「many interconnected species and processes functioning within ecosystems would collapse」，意思是許多互相連結的物種和生態系裡的運作會垮掉（翻譯是本站整理）。
+  qa:
+    question: 花圃裡少了蜜蜂，花會怎樣？
+    answer: 很多花要靠蜜蜂這類動物幫忙傳花粉，才能結出果實和種子；少了牠們，果實和種子可能變少，下一季的花也可能變少，吃果實的鳥也會受影響（本站整理）。糧農組織說，大部分開花植物「are pollinated by animals」。
+    source: fao-poll
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 環境友善行動
+    text: 綜合活動 3d-III-1：實踐環境友善行動，珍惜生態資源與環境。
+    code: 3d-III-1
+  - title: 生態資源與環境
+    text: 綜合活動 Cd-III-1：生態資源及其與環境的相關。
+    code: Cd-III-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 大人陪同
+  - 問過誰對蜂螫過敏
+  figures:
+  - parts-compare
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - issues-handbook
+  - fao-poll
+  - zonggang
+how:
+  heading: 畫出花圃的關係圖
+  body:
+  - 先觀察：大人陪同，在校園花圃旁站好，隔著一步以上的距離看，不碰、不抓、不追小動物；對蜂螫過敏的同學先告訴老師，站遠一點（本站建議）。把看到的植物、蟲、鳥，還有雨水、陽光、土壤寫在紙上。
+  - 再連線：兩樣東西有關係就畫一條線，線旁寫誰幫誰或誰需要誰，例如蜜蜂幫花傳花粉、花需要雨水、鳥吃果實（例子是本站整理）。這就像大事拆成小事：先看清楚有哪些部分，再看它們怎麼連在一起。
+  - 最後拿掉一個：用手遮住蜜蜂，沿著連線想，花傳不了花粉，果實和種子變少，吃果實的鳥也少了食物（本站整理）。班上也是一個整體，少了負責澆花的同學，花可能就沒人澆（例子是本站整理）。觀察完照原樣離開，不帶走花草和小動物，這就是課綱說的環境友善行動。
+  qa:
+    question: 觀察時，怎樣才不會打擾小動物？
+    answer: 隔著距離看，不碰、不抓、不追，也不摘花草，看完照原樣離開（本站建議）。綜合活動課綱要學生「實踐環境友善行動，珍惜生態資源與環境。」安靜觀察就是一種友善行動。
+    source: zonghe
+  items_title: 四步做
+  items:
+  - title: 站好觀察
+    text: 隔著距離，不碰不抓。
+  - title: 寫下看到的
+    text: 植物、蟲、鳥、雨水。
+  - title: 畫線連起來
+    text: 線旁寫誰幫誰。
+  - title: 拿掉一個
+    text: 沿著線想會怎樣。
+  checklist_title: 觀察時檢查一下
+  checklist:
+  - 不碰不抓
+  - 隔著距離看
+  - 照原樣離開
+  activity_figure: parts-flow
+  sources:
+  - zonghe
+what:
+  heading: 看見部分，也看見整體
+  body:
+  - 學完後，孩子觀察一個小環境時，能畫出裡面至少四樣東西的關係圖，說出每條線是誰幫誰或誰需要誰，並說出拿掉其中一樣，整體可能怎麼改變；觀察時做到不碰不抓、隔著距離看。
+  items_title: 學完能做到
+  items:
+  - title: 畫出關係圖
+    text: 每條線說得出關係。
+  - title: 拿掉一個想
+    text: 說出整體怎麼改變。
+  - title: 友善觀察
+    text: 不碰不抓，照原樣離開。
+  checklist_title: 家長檢核
+  checklist:
+  - 關係圖有四樣以上
+  - 線旁寫了關係
+  - 說出少了會怎樣
+  notes:
+  - 本點融入環境教育議題：議題融入說明手冊國小的實質內涵有「參與戶外學習與自然體驗，覺知自然環境的美、平衡、與完整性。」到花圃觀察、畫出關係圖，就是在覺察自然的平衡與完整。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: parts-flow
+  type: flow
+  alt: 花圃關係圖四步驟：大人陪同到花圃，我觀察並寫下來，我畫線連起來，全班拿掉一個想想會怎樣。
+  steps:
+  - actor: 大人
+    text: 陪同到花圃
+  - actor: 我
+    text: 觀察寫下來
+  - actor: 我
+    text: 畫線連起來
+  - actor: 全班
+    text: 拿掉一個想
+  source: zonghe
+  caption: 流程是本站建議。
+- id: parts-compare
+  type: compare
+  alt: 比較有蜜蜂和少了蜜蜂的花圃：有蜜蜂，花粉被帶到別朵花，結出果實；少了蜜蜂，花粉傳不出去，果實變少。
+  source: fao-poll
+  relation: versus
+  items:
+  - term: 有蜜蜂
+    note: 花粉被帶到別朵花，結出果實
+  - term: 少了蜜蜂
+    note: 花粉傳不出去，果實變少
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：3d-III-1「實踐環境友善行動，珍惜生態資源與環境。」（p.16）；Cd-III-1「生態資源及其與環境的相關。」（p.16）；補充說明 Cd-III-1「生態資源的種類、所在地、重要性及其與環境的關係。」（p.82）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-C1「關懷生態環境與周遭人事物，體驗服務歷程與樂趣，理解並遵守道德規範，培養公民意識。」（p.4）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-C1「具備個人生活道德的知識與是非判斷的能力，理解並遵守社會道德規範，培養公民意識，關懷生態環境。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 環境教育國小實質內涵 環E1「參與戶外學習與自然體驗，覺知自然環境的美、平衡、與完整性。」（p.47）
+- id: fao-poll
+  title: About | Global Action on Pollination Services for Sustainable Agriculture
+  publisher: 聯合國糧食及農業組織（FAO）
+  url: https://www.fao.org/pollination/about/en
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「Globally, approximately 87.5% of flowering plants are pollinated by animals (both invertebrates and/or vertebrates).」；「Without pollinators and pollination, many interconnected species and processes functioning within ecosystems would collapse」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

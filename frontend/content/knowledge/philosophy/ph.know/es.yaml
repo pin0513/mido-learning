@@ -1,54 +1,213 @@
 id: ph.know@es
 concept: ph.know
 title: 我怎麼知道的？
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 知識論
+  - 哲學
+  - 思考方法
+  - 知識論
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 自然科學
-    - 語文
+  - 語文
   core_competencies:
-    - A2
-    - B1
+  - A2
+  - B1
   issues: []
+  performances:
+  - 2-III-2
+  - 5-III-12
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、B1：依總綱 p.4–6 國民小學教育的 E-A2、E-B1 與國語文領綱 p.3–4 的國-E-A2、國-E-B1原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 5、6：本點的國語文代碼都是第三學習階段（III），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依國語文領綱 p.2 時間分配表：國民小學五、六年級國語文每週 5 節；本點建議在國語課做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，綜合活動領綱、總綱、社會領綱比 PDF 頁少 4，議題融入說明手冊少 16。
+- 原 domains 的自然科學刪除：本點的猜測與查證對應國語文 2-III-2、5-III-12；自然科學領綱的學習表現代碼不符代碼表的格式，沒有放進 curriculum_108；link_notes 保留自然科學（觀察）當跨科提示。
+- 原 scenario「神祕箱猜物：只能摸、只能聽或只能聽同學描述，猜完說出你是靠什麼知道的。」保留做法，補上大人先檢查物品（不放尖銳、易碎、會動的東西或食物）（本站建議）。
+- 原 ai.delegable「示範『AI 也會猜錯』的例子」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- Epistemology 是 Stanford Encyclopedia of Philosophy 的條目（Matthias Steup、Ram Neta），英文短句引用，中文說明是本站整理；本點只挑感官、別人的說法、推理三種來源。
 prerequisites:
-  - ph.fact@es
+- ph.fact@es
 links:
   why: []
   how: []
   related:
-    - it.machine@es
+  - it.machine@es
   deeper:
-    - ph.evidence@jh
-link_notes: 自然科學（觀察）、資訊與 AI
+  - ph.evidence@jh
+link_notes: 自然科學（觀察）、資訊與 AI；國語文 2-III-2、5-III-12。
 competency:
   specialist:
-    - 知識論
+  - 知識論
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 示範「AI 也會猜錯」的例子
+  - 示範 AI 也會猜錯的例子（由大人操作，本站建議）
   human_experience:
-    - 親自比較摸到、聽到和聽說的差別
+  - 親自比較摸到、聽到和聽說的差別
 idea: 我們知道一件事，可能是親眼看到、聽別人說、或自己推想。不同的來源，可信度不一樣，機器說的也要想一想。
 guiding_questions:
-  - 聽說的事情，要怎麼確認是真的？
-scenario: 神祕箱猜物：只能摸、只能聽或只能聽同學描述，猜完說出你是靠什麼知道的。
+- 聽說的事情，要怎麼確認是真的？
+- 只能摸的時候，為什麼也會猜錯？
+- AI 說的答案，要怎麼查證？
+scenario: 神祕箱猜物：箱子裡放大人檢查過的安全物品，只能摸、只能聽搖晃的聲音，或只能聽同學描述，猜完說出你是靠什麼知道的（本站建議）。
 formats:
   slides: []
+  exercise: 目標：猜一件事或回答一個問題時，能說出自己是靠看到摸到、聽別人說，還是自己推想知道的，並說出要怎麼再確認。　檢核：家長或老師看神祕箱的紀錄：每次猜測都寫了靠什麼知道；打開箱子後，孩子說得出哪一種方法猜錯、為什麼會錯；再給一句聽說的話，孩子說得出兩種確認的方法。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 猜一件事或回答一個問題時，能說出自己是靠看到摸到、聽別人說，還是自己推想知道的，並說出要怎麼再確認。
+review: 家長或老師看神祕箱的紀錄：每次猜測都寫了靠什麼知道；打開箱子後，孩子說得出哪一種方法猜錯、為什麼會錯；再給一句聽說的話，孩子說得出兩種確認的方法。
+est_time:
+  school: 國小五、六年級國語課
+  source: kuoyu
+why:
+  heading: 知道，是從哪裡來的
+  body:
+  - 我們相信一件事，總有個來源。研究知識的知識論說，要算是知識，信念必須「originate in sources we have good reason to consider reliable」，也就是來自有理由信得過的來源；常見的來源有「perception, introspection, memory, reason, and testimony」，也就是感官、內省、記憶、推理和別人的說法（翻譯是本站整理）。本點挑三種最常用的：自己看到摸到、聽別人說、自己推想。
+  - 國語課綱要五、六年級學生「從聽聞內容進行判斷和提問，並做合理的應對。」上網查資料時，也要「進行資料蒐集、解讀與判斷」。AI 說的也一樣：教育部提醒，這些工具「無法自行判斷結果的正確性和合理性。」
+  qa:
+    question: 只能摸的時候，為什麼也會猜錯？
+    answer: 因為感官也會出錯。知識論的文章說「It is easy to see how a perceptual seeming can go wrong」，摸起來像，不一定就是（翻譯是本站整理）。例如摸到圓圓硬硬的，可能是球，也可能是別的圓東西；多用一種感官，或打開來看，才比較確定（例子是本站整理）。
+    source: sep-epist
+  items_title: 國語文領綱的學習重點
+  items:
+  - title: 判斷聽到的內容
+    text: 國語文 2-III-2：從聽聞內容進行判斷和提問，並做合理的應對。
+    code: 2-III-2
+  - title: 蒐集並判斷資料
+    text: 國語文 5-III-12：運用圖書館(室)、科技與網路，進行資料蒐集、解讀與判斷，提升多元文本的閱讀和應用能力。
+    code: 5-III-12
+  checklist_title: 開始前先確認
+  checklist:
+  - 大人先檢查物品
+  - 準備紀錄表
+  figures:
+  - know-compare
+  notes:
+  - 國語文的代碼：第一碼是類別（1 聆聽、2 口語表達、5 閱讀），第二碼是學習階段，第三碼是流水號。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - sep-epist
+  - kuoyu
+  - genai-student
+  - zonggang
+how:
+  heading: 神祕箱：猜完說出根據
+  body:
+  - 大人先在箱子裡放一樣安全的物品，不放尖銳、易碎、會動的東西或食物（本站建議）。分三輪猜：第一輪只能伸手摸，第二輪只能搖一搖聽聲音，第三輪只能聽一位看過的同學描述。每輪寫下猜什麼，和靠什麼知道。
+  - 打開箱子對答案，談談哪一輪猜錯、為什麼。摸和聽是自己的感官，可能把形狀或聲音相近的東西搞混；聽同學說，是靠別人的說法，說的人可能看錯或漏講；把線索拼起來猜，是自己推想，線索不夠就容易錯（本站整理）。
+  - 最後練確認：聽到一句聽說的話，可以自己去看、問最早說的人、查書或可靠的網站，或請大人幫忙查。AI 的答案也要這樣查證，教育部提醒要「結合其他可靠來源的知識和批判性思維進行查證」。
+  qa:
+    question: 聽說的事情，要怎麼確認是真的？
+    answer: 找第二個來源對一對：自己去看、問最早說的人，或查書、查可靠的網站（本站整理）。知識論把別人的說法列為知識的來源之一，但說的人也可能弄錯；文章說知識要來自「sources we have good reason to consider reliable」，所以重要的事要多查一個來源。
+    source: sep-epist
+  items_title: 四步做
+  items:
+  - title: 大人放物品
+    text: 不放尖銳、易碎或食物。
+  - title: 分三輪猜
+    text: 摸、聽聲音、聽描述。
+  - title: 寫下根據
+    text: 每輪寫靠什麼知道。
+  - title: 打開對答案
+    text: 談哪一輪錯、為什麼。
+  checklist_title: 猜完檢查一下
+  checklist:
+  - 寫下靠什麼知道
+  - 說出為什麼猜錯
+  - 想出確認方法
+  activity_figure: know-flow
+  sources:
+  - sep-epist
+  - genai-student
+what:
+  heading: 說得出我怎麼知道
+  body:
+  - 學完後，孩子猜一件事或回答問題時，能說出自己是靠看到摸到、聽別人說，還是自己推想知道的，說得出這種方法可能怎麼錯，也想得出兩種再確認的方法。
+  items_title: 學完能做到
+  items:
+  - title: 說出來源
+    text: 看到摸到、聽說，還是推想。
+  - title: 說出可能的錯
+    text: 感官、別人、線索都可能出錯。
+  - title: 想出確認方法
+    text: 自己看、問人、查資料。
+  checklist_title: 家長檢核
+  checklist:
+  - 每次都寫根據
+  - 說得出哪裡猜錯
+  - 想得出兩種確認
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: know-flow
+  type: flow
+  alt: 神祕箱四步驟：大人放安全物品，我分三輪猜，我寫下根據，全班打開箱子對答案。
+  steps:
+  - actor: 大人
+    text: 放安全物品
+  - actor: 我
+    text: 分三輪猜
+  - actor: 我
+    text: 寫下根據
+  - actor: 全班
+    text: 打開對答案
+  source: sep-epist
+  caption: 流程是本站建議。
+- id: know-compare
+  type: compare
+  alt: 比較三種知道的方法：看到摸到，例如摸到圓圓硬硬的；聽別人說，例如同學說是文具；自己推想，例如會滾所以可能是球。
+  source: sep-epist
+  relation: not_equal
+  items:
+  - term: 看到摸到
+    note: 摸到圓圓硬硬的
+  - term: 聽別人說
+    note: 同學說是文具
+  - term: 自己推想
+    note: 會滾，可能是球
+  caption: 例子是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：2-III-2「從聽聞內容進行判斷和提問，並做合理的應對。」（p.7）；5-III-12「運用圖書館(室)、科技與網路，進行資料蒐集、解讀與判斷，提升多元文本的閱讀和應用能力。」（p.10）；領域核心素養：國-E-A2「透過國語文學習，掌握文本要旨、發展學習及解決問題策略、初探邏輯思維，並透過體驗與實踐，處理日常生活問題。」（p.3）；國-E-B1「理解與運用國語文在日常生活中學習體察他人的感受，並給予適當的回應，以達成溝通及互動的目標。」（p.4）；時間分配：「國語文各教育階段之時間分配如下」（p.2），表中國民小學三至六年級每週 5 節；代碼說明：「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-B1「具備『聽、說、讀、寫、作』的基本語文素養，並具有生活所需的基礎數理、肢體及藝術等符號知能，能以同理心應用在生活與人際溝通。」（p.5）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: sep-epist
+  title: Epistemology（Stanford Encyclopedia of Philosophy）
+  publisher: Matthias Steup、Ram Neta（Stanford Encyclopedia of Philosophy；2005 年首次發表，2024 年 10 月 26 日實質修訂）
+  url: https://plato.stanford.edu/entries/epistemology/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「For true beliefs to count as knowledge, it is necessary that they originate in sources we have good reason to consider reliable.」；「These are perception, introspection, memory, reason, and testimony.」；「It is easy to see how a perceptual seeming can go wrong」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
