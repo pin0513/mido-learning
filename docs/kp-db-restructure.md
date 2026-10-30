@@ -390,7 +390,7 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 ### 17.6 做法 B（V2）：「尚未發布」只算草稿
 
 - `components/kp/v2/refs.ts` 新增 `hiddenDraftCount(known, shown)`：不連出去的點裡，只算 `status` 不是 `published` 的。`PointLinks` 改用它。已發布、只因學門旗標沒上線而不連的點整筆不出現，也不算數。
-- 清單裡只有這種點（沒有可連的點、也沒有草稿）時，整段不畫，不寫「沒有，這是起點。」這類空清單的話（那句話只在清單本來就空時才對）。
+- 清單裡只有這種點（沒有可連的點、也沒有草稿）時，只略過這一個清單，不寫「沒有，這是起點。」這類空清單的話（那句話只在清單本來就空時才對）；「學習順序」區塊與另一個清單照常畫。後續 PR 讓「先學」「後學」標題跟著清單一起畫（`PointLinks` 的 `label`），清單略過時標題也略過，不留孤零零的標題。
 - 舊版詳細頁（`KnowledgePointView` 的 `LinkedIds`）**沒改**。它也會把旗標擋掉的已發布點算成「尚未發布」（第 17.1 節問題 2，正式站 6 個點、12 條路由，見第 17.5 節的表），所以不是「正確」的參考。這個 PR 只改 V2，正式站（`KP_DETAIL_V2_ENABLED` 關）的頁面一條都不變；舊版要另開 PR，那會改變正式內容。
 - 旗標的值都沒改（workflow、env、Dockerfile 都不動）。`lib/kp/flags.ts`、`content/README.md`、`docs/specs/rollback.md` 的說明改成：「不用重新 build」只對請求時算的頁面（middleware、首頁、`/api/kp-launch`、`/kp/index.json`、sitemap、`/kp`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`）成立；靜態詳細頁要重新 build。另外，請求時的清單頁與 `/kp/index.json` 也讀 `KP_INCLUDE_DRAFTS`（`visibleCatalog` 的預設值），不只 build 時。
 - 渲染比對（本機用正式 Dockerfile build `main`（`70d03c0`）與分支兩張 image，build 時 `KP_*` 全關，執行時用正式站的四個 `true`，爬 552 條路由，去掉 build id、雜湊與時間後比對 HTML）：
@@ -411,5 +411,6 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 | `pm.team@jh` | `sk.consensus@sh` | 另有 1 個尚未發布 | — |
 | `pm.triangle@jh` | `sk.decide@sh` | 另有 1 個尚未發布 | — |
 
-- 測試：`components/kp/hidden-notice.test.ts` 加一則（學門旗標關時只算草稿；只有旗標擋掉的點時整段不畫；旗標開時連出去、草稿照算），在舊的 `PointLinks` 上會失敗。新的 `e2e/kp-detail-v2-flag-hidden.spec.ts` 由 `content/` 算出所有受影響的點，在 CI 的「Published-only pages, V2 with production runtime flags」步驟（不含草稿、`KP_*` 全關的 build，執行時用正式站的旗標加 V2）檢查；對 `main` 的 image 會失敗（1 個多餘的「尚未發布」），對分支通過。`e2e/kp-published-softskills.spec.ts` 的 V2 輪改成只算草稿。
+- 測試：`components/kp/hidden-notice.test.ts` 加一則（學門旗標關時只算草稿；只有旗標擋掉的點時略過那個清單；旗標開時連出去、草稿照算），在舊的 `PointLinks` 上會失敗。新的 `e2e/kp-detail-v2-flag-hidden.spec.ts` 由 `content/` 算出所有受影響的點，在 CI 的「Published-only pages, V2 with production runtime flags」步驟（不含草稿、`KP_*` 全關的 build，執行時用正式站的旗標加 V2）檢查；對 `main` 的 image 會失敗（1 個多餘的「尚未發布」），對分支通過。`e2e/kp-published-softskills.spec.ts` 的 V2 輪改成只算草稿。
+- eslint：改到的檔案沒有錯誤。`components/kp` 裡有 2 個既有錯誤（`AxisBrowser.tsx:38`、`v2/figures/Compare.tsx:116`），整個 `frontend/` 在 `main` 上有 26 個既有錯誤（`npx eslint .`，65 個警告），都不是這些 PR 加的。
 - 回滾：revert 這個 PR 的 squash commit，或回到 PM 建的 pre-tag。

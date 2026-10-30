@@ -15,10 +15,8 @@ export function SeqPanel({
     <section>
       <h2>學習順序</h2>
       <div className="v2-seq">
-        <span className="v2-lbl">先學</span>
-        <PointLinks ids={point.prerequisites} all={all} visible={visible} currentFolder={point.folder} empty="沒有，這是起點。" />
-        <span className="v2-lbl">後學</span>
-        <PointLinks ids={nextIds} all={all} visible={visible} currentFolder={point.folder} empty="還沒有往下接的知識點。" />
+        <PointLinks label="先學" ids={point.prerequisites} all={all} visible={visible} currentFolder={point.folder} empty="沒有，這是起點。" />
+        <PointLinks label="後學" ids={nextIds} all={all} visible={visible} currentFolder={point.folder} empty="還沒有往下接的知識點。" />
       </div>
     </section>
   );
