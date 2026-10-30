@@ -24,7 +24,7 @@ verify_notes:
 - 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
 - 加拿大公共服務學院的工作單是寫給公務員領導課程的；Imperial College 的頁面是寫給大學部學生的學習指南。本點借它們的定義與四步問題，用在大學生陪同學或同事談（本站建議）。工作單印的頁碼就是 PDF 頁。
 - 原 review 的 20 分鐘、1–5 分標成示意；原 review 的錄音改成先徵得對方同意才錄，不同意就談完馬上寫下記得的提問和建議（本站建議）；錄音與談話內容是對方的個人資料，不交給 AI（本站建議）。原 review 的下一步是我自己想出來的拿掉引號。
-- 安全界線：教練式對話不是心理諮商或治療；How 第三段寫明對方談到傷害自己或他人、受到暴力或長期情緒低落時，停止練習，陪他找學校諮商中心或專業人員，有立即危險就打 110 或 119（本站建議；電話是本站整理）。
+- 安全界線：教練式對話不是心理諮商或治療；How 第三段寫明對方談到傷害自己或他人、受到暴力或長期情緒低落時，停止練習，陪他找學校諮商中心或專業人員，也可以撥 1925 安心專線（24 小時免付費），有立即危險就打 110 或 119（本站建議；電話是本站整理）；1925 依衛福部心理健康司「提供24小時免付費心理諮詢服務」。How 第一段先說保密的例外：談到有人可能受傷時不在保密範圍（本站建議）。
 - 原 idea 的對方自己想出來的行動比較會真的去做，改成讓下一步由對方自己決定，不寫成保證的效果。
 - 原有草稿說明「草稿：大學不對應 108 課綱，以學門路徑對應。」已處理：見第一條，大學點維持不對應 108 課綱。
 - 原有草稿說明「引用的框架只寫名稱（GROW 教練模式）…」已處理：依加拿大公共服務學院 GROW 工作單與 Imperial College 的 GROW 說明改寫，英文短句逐字引用，中文說明是本站整理。ICF 的網站會擋自動讀取，本點不引 ICF。
@@ -101,9 +101,9 @@ why:
 how:
   heading: 四類問題陪對方談
   body:
-  - 開始前先說好：我會多問少給答案，談的內容不外傳；要錄音先問對方，同意才錄，不同意就談完馬上寫下記得的內容（本站建議）。先問目標，工作單的例子是「What do you want to achieve?」、「What does success look like?」；再問現況，例如「What is the current situation?」、「What are the internal/external obstacles?」（翻譯是本站整理）。
+  - 開始前先說好：我會多問少給答案，談的內容不外傳，除非談到有人可能受傷；要錄音先問對方，同意才錄，不同意就談完馬上寫下記得的內容（本站建議）。先問目標，工作單的例子是「What do you want to achieve?」、「What does success look like?」；再問現況，例如「What is the current situation?」、「What are the internal/external obstacles?」（翻譯是本站整理）。
   - 接著問選項：「What are your options?」、「What else could you do?」；Imperial 說這一步要「generate as many options as possible relating to your goal」（翻譯是本站整理）。最後問行動：「What is the first, next step?」、「When will you do it by?」，也可以問「On a scale of 1 to 10, what is your level of commitment to this action?」（翻譯是本站整理）。想給建議時，先把它改成問題，例如你想過先問助教嗎（例子是本站整理），選不選由對方決定（本站建議）。
-  - 談完馬上寫下你問了幾個問題、給了幾個建議，數一數提問有沒有比建議多；再請對方用一到五分評下一步是不是自己想出來的（分數是示意）。教練式對話不是心理諮商：對方談到想傷害自己或他人、受到暴力，或長期情緒低落，就停止練習，陪他找學校諮商中心或專業人員；有立即危險就打 110 或 119（本站建議；電話是本站整理）。AI 可以提供問題清單，但不輸入對方姓名和談話內容（本站建議）。
+  - 談完馬上寫下你問了幾個問題、給了幾個建議，數一數提問有沒有比建議多；再請對方用一到五分評下一步是不是自己想出來的（分數是示意）。教練式對話不是心理諮商：對方談到想傷害自己或他人、受到暴力，或長期情緒低落，就停止練習，陪他找學校諮商中心或專業人員，也可以撥 1925 安心專線（24 小時免付費）；有立即危險就打 110 或 119（本站建議；電話是本站整理）。衛福部說 1925 安心專線「提供24小時免付費心理諮詢服務」。AI 可以提供問題清單，但不輸入對方姓名和談話內容（本站建議）。
   qa:
     question: 四個步驟各可以問什麼問題？
     answer: 目標問想達到什麼，現況問現在怎樣、卡在哪，選項問還有什麼做法，行動問第一步和何時做。工作單的例子有「What do you want to achieve?」和「What is the first, next step?」（翻譯是本站整理）。
@@ -127,6 +127,7 @@ how:
   sources:
   - csps-grow
   - imperial-grow
+  - mohw-1925
 what:
   heading: 讓下一步由對方決定
   body:
@@ -192,6 +193,13 @@ sources:
   accessed: '2026-10-30'
   kind: reference
   supports: 「One of the earliest models is the GROW model, developed by Sir John Whitmore.」；「a learner-centred approach to structuring a conversation」；「generate as many options as possible relating to your goal」
+- id: mohw-1925
+  title: 1925安心專線（依舊愛我）
+  publisher: 衛生福利部心理健康司
+  url: https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「提供24小時免付費心理諮詢服務」
 - id: genai-student
   title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
   publisher: 教育部（中小學數位學習精進方案網站）

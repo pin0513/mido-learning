@@ -23,7 +23,7 @@ verify_notes:
 - 英文 PDF 的引文避開彎引號與撇號；PDF 換行處的斷字照原詞接回，其餘空白照原文；中文說明和翻譯是本站整理。
 - 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
 - Model Standards of Conduct for Mediators 是美國 AAA、ABA、ACR 給專業調解人的行為準則（ICDR 網站提供，PDF 沒有印頁碼，頁碼用 PDF 頁）；聯合國指引是寫給國際和平調解的（印的頁碼是 PDF 頁減 2）。本點只借調解的定義與原則，用在大學生協助室友、社團或同事的意見衝突（本站建議）。
-- 安全界線：How 第三段寫明有暴力、威脅、騷擾，或自己做不到中立時，不自己調解，停止並陪當事人找學校、專業人員；有立即危險就打 110（本站建議；電話是本站整理）。依據 Model Standards 的 withdraw 與 domestic abuse or violence 兩條。
+- 安全界線：How 第三段寫明有暴力、威脅、騷擾，或自己做不到中立時，不自己調解，停止並陪當事人找學校、專業人員；遇到家庭暴力、性侵害或性騷擾可以撥 113 保護專線（24 小時免付費），有立即危險就打 110（本站建議；電話是本站整理）；113 依衛福部保護服務司是「24小時全年無休的服務專線」，受理家庭暴力、性侵害、性騷擾的通報與求助。How 第一段先說保密的例外：談到有人可能受傷時不在保密範圍（本站建議）。依據 Model Standards 的 withdraw 與 domestic abuse or violence 兩條。
 - 原 review 的 1–5 分、4 分以上標成示意（分數是示意）；原 review 的我覺得對方懂我在乎什麼拿掉引號，改成兩方各評一到五分。真實衝突或角色扮演都要先徵得兩方同意（本站建議）。
 - PON 部落格（Katie Shonk，2026 年 6 月 30 日）講的是談判；本點借它的立場與需要（positions／interests）區分，用在調解人幫兩方說出需要（本站建議）。
 - 原有草稿說明「草稿：大學不對應 108 課綱，以學門路徑對應。」已處理：見第一條，大學點維持不對應 108 課綱。
@@ -71,7 +71,7 @@ why:
   heading: 調解人不判誰對
   body:
   - Model Standards 這樣定義調解：「Mediation is a process in which an impartial third party facilitates communication and negotiation and promotes voluntary decision making by the parties to the dispute.」也就是中立的第三方幫兩方溝通，決定由兩方自己做（翻譯是本站整理）。聯合國的指引也說調解是「a voluntary process that requires the consent of the conflict parties to be effective.」（翻譯是本站整理）。
-  - 所以兩個朋友都來找你，你不先站任何一邊。調解人要能「run a balanced process that treats all actors fairly」（翻譯是本站整理）；Model Standards 也說，做不到中立就要退出：「If at any time a mediator is unable to conduct a mediation in an impartial manner, the mediator shall withdraw.」（翻譯是本站整理）。你一選邊，另一方就不會再說真話（本站整理）。
+  - 所以兩個朋友都來找你，你不先站任何一邊。調解人要能「run a balanced process that treats all actors fairly」（翻譯是本站整理）；Model Standards 也說，做不到中立就要退出：「If at any time a mediator is unable to conduct a mediation in an impartial manner, the mediator shall withdraw.」（翻譯是本站整理）。你一選邊，另一方可能就不願再說真話（本站整理）。
   qa:
     question: 兩個朋友吵架都來找你，你要先站哪一邊？
     answer: 不站任何一邊。調解人的工作是讓兩方都能好好說、好好聽，由他們自己決定；Model Standards 說調解人是「an impartial third party」（翻譯是本站整理）。做不到中立就請別人協助。
@@ -85,7 +85,7 @@ why:
   - title: 立場與需要
     text: 說出來的要求，和背後在乎的事。
   - title: 保密
-    text: 談的內容不外傳。
+    text: 不外傳，除非有人可能受傷。
   checklist_title: 開始前先確認
   checklist:
   - 會處理困難對話
@@ -98,9 +98,9 @@ why:
 how:
   heading: 輪流說、複述，找需要
   body:
-  - 先說好規則：兩方都同意才談，談的內容不外傳，一次一個人說，不打斷（本站建議）；Model Standards 說調解人要保密所有在調解中得知的資訊（翻譯是本站整理）。接著請甲方說，說完請乙方用自己的話複述甲方在乎什麼，甲方確認聽對了再換人；PON 的建議是「Practice active listening」、「Clarify misunderstandings」（翻譯是本站整理）。
+  - 先說好規則：兩方都同意才談，談的內容不外傳，除非談到有人可能受傷，一次一個人說，不打斷（本站建議）；Model Standards 說調解人要保密所有在調解中得知的資訊（翻譯是本站整理）。接著請甲方說，說完請乙方用自己的話複述甲方在乎什麼，甲方確認聽對了再換人；PON 的建議是「Practice active listening」、「Clarify misunderstandings」（翻譯是本站整理）。
   - 立場和需要不一樣：PON 說「Positions are surface-level statements.」，而「Beneath them lie interests—the underlying needs, motivations, and concerns driving those demands.」（翻譯是本站整理）。例如室友爭冷氣：立場是開到幾度，需要可能是一個怕熱睡不著、一個怕電費太高（例子是本站整理）。找到需要後，請兩方一起想選項，由他們自己選；調解人不替他們決定（本站建議）。
-  - 什麼情況不該自己調解：有暴力、威脅、騷擾，或一方怕另一方時，不要再談，停止並陪當事人找學校或專業人員，有立即危險就打 110（本站建議；電話是本站整理）。Model Standards 說遇到暴力時要停止，「including, if necessary, postponing, withdrawing from or terminating the mediation.」（翻譯是本站整理）；自己做不到中立時也要退出。會後請兩方各用一到五分評覺得對方懂自己在乎什麼（分數是示意）；AI 可以幫忙整理雙方說法的重點，但要兩方同意，不輸入姓名和可辨認的細節（本站建議）。
+  - 什麼情況不該自己調解：有暴力、威脅、騷擾，或一方怕另一方時，不要再談，停止並陪當事人找學校或專業人員；遇到家庭暴力、性侵害或性騷擾，可以撥 113 保護專線（24 小時免付費），有立即危險就打 110（本站建議；電話是本站整理）。衛福部說 113 是「24小時全年無休的服務專線」。Model Standards 說遇到暴力時要停止，「including, if necessary, postponing, withdrawing from or terminating the mediation.」（翻譯是本站整理）；自己做不到中立時也要退出。會後請兩方各用一到五分評覺得對方懂自己在乎什麼，兩方都四分以上才算彼此聽懂；有一方不到四分，就再輪流複述一次（分數是示意）。AI 只能在兩方都同意後幫忙整理雙方說法的重點，不輸入姓名和可辨認的細節（本站建議）。
   qa:
     question: 立場和需要差在哪裡？
     answer: 立場是說出來的要求，需要是要求背後在乎的事。PON 說「Positions are surface-level statements.」（翻譯是本站整理）；兩方的立場常常對立，需要卻可能找得到一起滿足的做法。
@@ -125,6 +125,7 @@ how:
   sources:
   - msc-2005
   - pon-principled
+  - mohw-113
 what:
   heading: 陪兩方找到共同需要
   body:
@@ -197,6 +198,13 @@ sources:
   accessed: '2026-10-30'
   kind: reference
   supports: 「Practice active listening」；「Clarify misunderstandings」；「Positions are surface-level statements.」；「Beneath them lie interests—the underlying needs, motivations, and concerns driving those demands.」
+- id: mohw-113
+  title: 113保護專線介紹
+  publisher: 衛生福利部保護服務司
+  url: https://dep.mohw.gov.tw/dops/cp-1183-6499-105.html
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「24小時全年無休的服務專線」
 - id: genai-student
   title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
   publisher: 教育部（中小學數位學習精進方案網站）
