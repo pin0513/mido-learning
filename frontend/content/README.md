@@ -137,6 +137,16 @@ pnpm validate:content
 
 Pull request 若改到 `frontend/content/**`，GitHub Actions 的 “Validate knowledge points” 會跑這支指令。既有的部署 workflow 沒有改。
 
+### YAML 註解（審稿紀錄）不能悄悄消失
+
+`comments.lock.yaml` 記了每個 YAML 檔的註解指紋。CI 會擋下刪掉或改掉既有註解的 PR；新檔、新加的註解不擋。故意刪改既有註解時，在 `frontend/` 跑：
+
+```bash
+pnpm content:comments:lock
+```
+
+再把 `content/comments.lock.yaml` 一起提交，並在 PR 說明寫原因。只想檢查的話跑 `pnpm content:comments`。規格見 `docs/kp-db-restructure.md` 第 16 節。
+
 ## 建置用的環境變數
 
 正式 image 不要設這些。說明也寫在 `frontend/lib/kp/flags.ts`。

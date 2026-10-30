@@ -2,7 +2,7 @@
 
 | 項目 | 內容 |
 | --- | --- |
-| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）、第二段（YAML ⇄ 修訂版轉換器，#59）已合併；YAML 註解的去處（第 15 節）進行中 |
+| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）、第二段（YAML ⇄ 修訂版轉換器，#59）已合併；YAML 註解的去處（第 15 節，#61）已合併；註解守門與主線、分類的註解（第 16 節）進行中 |
 | 依據 | 「知識點資料重構方案」（2026-10-29，分析 main `8c62d7e`）；本文件對照 main `e1763c7`（2026-10-30）的程式重寫 |
 | 決定者 | I-PING（admin） |
 | 不做的事 | 本文件與 P1 不碰正式 Firestore、GCP 資源，不改任何旗標 |
@@ -27,7 +27,7 @@
 | --- | --- | --- |
 | 知識點 | `frontend/content/knowledge/<學門資料夾>/<concept>/<學段>.yaml` | 241 份：language 108、soft-skills 33、math 26、it-ai 25、philosophy 25、pm-leadership 24；206 published、35 draft |
 | Schema | `frontend/content/schema/knowledge-point.schema.json` | Ajv（strict、allErrors）；代碼格式（`perfCode`、`contentCode`）也在這裡 |
-| 分類 | `frontend/content/taxonomy/`：`stages`、`curriculum-108`、`curriculum-108-codes`、`competencies`、`disciplines`、`formats` | Git 參考資料，維持不動 |
+| 分類 | `frontend/content/taxonomy/`：`stages`、`curriculum-108`、`curriculum-108-codes`、`competencies`、`disciplines`、`formats` | Git 參考資料，維持不動（檔內註解也留在 Git，第 16 節） |
 | 主線 | `frontend/content/paths/<學門>.yaml` | 每份是一個學門的多條主線 |
 | 補件清單 | `frontend/content/sources-backfill.yaml`、`golden-circle-backfill.yaml` | 只能刪不能加（`scripts/check-backfill-shrink.ts`） |
 | 讀取 | `frontend/lib/content/load.ts` → `catalog.ts`（`loadCatalog`） | build 時讀 YAML、生成靜態頁 |
@@ -74,7 +74,7 @@
 
 | 集合 | 重點欄位 | 說明 |
 | --- | --- | --- |
-| `learning_paths/{pathId}` | title、discipline、items[]、version、updatedBy | 取代 `content/paths/*.yaml`；只有 admin 能改 |
+| `learning_paths/{pathId}` | title、discipline、items[]、version、updatedBy、importNotes | 取代 `content/paths/*.yaml`；只有 admin 能改。`importNotes` 和知識點同一個形狀（第 3.2 節），匯入時由 `importNotesFor` 從主線 YAML 逐字抽出，之後的修改不複製 |
 | `kp_material_links/{linkId}` | kpId、revision、role（slides／audio／file／video／link）、section（why／how／what／null）、order、title、note、componentId、materialId、version、url、provider | 頂層集合才查得到「教材用在哪些知識點」；教材型的 `materialId`＋`version` 發布時寫死；`video` 只收允許清單網址 |
 | `materials`（既有，加欄位） | kind（html_bundle／audio／file）、contentType、durationSec、pageCount | 舊資料沒有 `kind` 視為 html_bundle；不收影片 |
 | `audit_log/{id}` | at、uid、action、kpId、fromRevision、toRevision、structureDiff、validationSummary | 只能新增。匯入那筆 action＝`kp.import`，另帶 file、commit、comments[]（和 revision 1 的 `importNotes` 同一份，`importAuditEntry` 產生），修訂版之後被改也查得到原始註解 |
@@ -192,8 +192,9 @@
 
 1. **規則包**（P1，本 PR）：檢查改吃記憶體物件，CI 行為不變。
 2. **YAML → 修訂版轉換器**（P1 第二段，`lib/content/revision/`）：結構＋Markdown 可逆；每一點逐點比對 V2 主欄與側欄輸出，一字不差才算過；每個檔的註解逐字抽進 `importNotes`，以 `#` 開頭的每一行都要抽到（`scripts/kp-revision-roundtrip.test.ts` 在 `pnpm test:unit` 裡跑；`pnpm kp:roundtrip` 印各學門結果）。
-3. **一次性匯入**（P2）：預設 dry-run，先對 Firestore 模擬器；每點建 `knowledge_points`＋revision 1（`yamlToRecord` 帶原文與 commit，註解進 `importNotes`），主線進 `learning_paths`，`audit_log` 每點一筆 `kp.import`（gitSha＋同一份註解）；匯入報表列出每個檔的註解筆數，和原檔以 `#` 開頭的行數相同才算成功；重跑不重複（`contentHash`）。正式 Firestore 匯入要另外取得 I-PING 同意。
-4. **依學門凍結**（P6）：`frontend/content/db-frozen.yaml` 列出已交給 DB 的學門（只能增加），CI 擋下這些學門的 YAML 修改。條件：該學門沒有未合併的 YAML 批次 PR（B23–B28 照舊走 YAML）；凍結前以當時 main 重新匯入；每晚 Git 匯出與原 YAML 比對一致（比資料）後，再開 PR 刪掉該學門的 YAML。**註解的去處是凍結的前提**：(a) 該學門每個檔的註解都已在 DB 的 `importNotes` 與 `audit_log`（從凍結當時的 main 重新抽一次，逐筆相同）；(b) 刪除前在那個 main commit 打標籤 `kp-yaml-final/<學門>`；(c) 刪 YAML 的 PR 說明寫出標籤與完整 sha，原檔與註解永遠留在 Git 歷史。三項缺一項就不凍結。凍結後的批次改用 API 建草稿。
+3. **一次性匯入**（P2）：預設 dry-run，先對 Firestore 模擬器；每點建 `knowledge_points`＋revision 1（`yamlToRecord` 帶原文與 commit，註解進 `importNotes`），主線進 `learning_paths`（`importNotes` 同上，`audit_log` 每條主線一筆 `path.import`），`audit_log` 每點一筆 `kp.import`（gitSha＋同一份註解）；匯入報表列出每個檔（知識點與主線）的註解筆數，和原檔以 `#` 開頭的行數相同才算成功；重跑不重複（`contentHash`）。正式 Firestore 匯入要另外取得 I-PING 同意。
+4. **依學門凍結**（P6）：`frontend/content/db-frozen.yaml` 列出已交給 DB 的學門（只能增加），CI 擋下這些學門的 YAML 修改。條件：該學門沒有未合併的 YAML 批次 PR（B23–B28 照舊走 YAML）；凍結前以當時 main 重新匯入；每晚 Git 匯出與原 YAML 比對一致（比資料）後，再開 PR 刪掉該學門的 YAML。**註解的去處是凍結的前提**：(a) 該學門每個檔的註解都已在 DB 的 `importNotes` 與 `audit_log`（從凍結當時的 main 重新抽一次，逐筆相同）；(b) 刪除前在那個 main commit 打標籤 `kp-yaml-final/<學門>`；(c) 刪 YAML 的 PR 說明寫出標籤與完整 sha，原檔與註解永遠留在 Git 歷史。三項缺一項就不凍結。凍結後的批次改用 API 建草稿。刪 YAML 的那個 PR 同時跑 `pnpm content:comments:lock`，把該學門的檔從註解鎖移掉（鎖檔的變更就是刪除紀錄）；主線檔在最後一個用到它的學門凍結時一起處理。分類檔不凍結、不刪，註解一直留在 Git。
+5. **凍結前的註解守門**（現在就生效，見第 16 節）：`content/comments.lock.yaml` 記每個 YAML 檔的註解指紋，CI 的「YAML comments may not silently disappear」擋下刪掉或改掉已鎖的註解；故意刪改要跑 `pnpm content:comments:lock`，鎖檔變更出現在 review。新檔、新註解不擋。
 
 ## 9. 旗標上線（`KP_DB_SOURCE_ENABLED`）
 
@@ -237,6 +238,8 @@
 9. 「YAML → 修訂版 → YAML 一字不差」做不到文字層級：131 個檔有註解（批次審查紀錄，其中 5 個檔中間還有「新增」分隔線），物件欄位順序各檔不同（最常見的兩種順序分別有 67、64 檔），日期字串的引號也是原本工具的寫法。改成以**資料**相同為準（第 4 節）。匯出的 YAML 文字與原檔（去掉註解）完全相同的有 91 檔，其餘只差欄位順序。凍結學門時「Git 匯出與原 YAML 比對一致」也要比資料，不比文字。註解不算資料，但要保存，見更正 11。
 10. 修訂版裡的圖與來源可以原樣進 Firestore：圖的 `groups[].symbols` 是「陣列裡的物件裡的陣列」，Firestore 允許；沒有陣列直接套陣列。轉換測試會檢查這一點。
 11. 更正 9 原本寫「註解要留的話寫進 `knowledge_points.seed`（P2 決定）」，PM 審查不接受「可能消失」：註解是批次審稿紀錄，凍結前一定要有去處。改成：轉換器逐字抽出每個檔的全部註解（不只檔頭；有 5 個檔在 `why` 前面還有一段「新增」紀錄），放進 revision 1 的 `importNotes`，匯入時同一份寫進 `audit_log`，凍結 PR 引用標籤與 sha，原檔留在 Git 歷史（第 3.2、8 節）。在 `e1763c7`：131 個檔、704 行，全部是整行註解，沒有行尾註解；附著欄位 `id` 699 筆、`why` 5 筆。
+12. 註解不只在知識點：`769c966` 上，`content/` 底下 146 個 YAML 檔、751 則註解（Lexer 數）：知識點 131 檔 704 則；分類 6 檔 35 則（`disciplines.yaml` 有 2 則行尾註解）；主線 6 檔各 1 則；`content/` 根目錄 3 檔 6 則（兩份補強清單、`home-disciplines.yaml`）。分類留在 Git，註解跟著留；主線搬進 `learning_paths`，轉換器目前不處理主線，P2 的主線匯入用同一個 `importNotesFor`（單元測試已證明 6 個主線檔的註解逐字抽得到）；根目錄三檔不搬，註解留在 Git。
+13. 「匯入時抽註解」只保護匯入那一刻的內容；匯入前的內容 PR 也可能刪掉註解。所以凍結前要有 CI 守門（第 8 節第 5 步、第 16 節）。
 
 ## 13. P1 第一段做了什麼（PR `refactor/kp-rules-p1`）
 
@@ -280,3 +283,23 @@ PM 審查接受「無損＝解析後的資料相同」，條件是註解要有�
 | `scripts/node-stubs.ts` | 不再由 `test:unit` 整體預先載入；只在需要 render 的腳本第一行 import。`node --test` 每個測試檔各一個行程，其他單元測試誤 import `server-only` 照樣失敗（`revision.test.ts` 有測） |
 
 結果（main `e1763c7`）：註解 131 個檔、704 行，逐字抽到 704 筆（行尾 0）；資料無損 241、畫面相同 241（447 頁）；規則 0 錯誤、140 警告，兩邊相同。
+
+## 16. 凍結前的註解守門（PR `feat/kp-comment-guard`）
+
+PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 註解。
+
+**規則**
+- `frontend/content/comments.lock.yaml`：`content/` 底下每個有註解的 YAML 檔，列出每一則註解的指紋（逐字內容的 sha256 前 12 碼）。順序不算，重複的註解各算一次。這個檔自己不掃。
+- CI 擋下：鎖裡有、檔案裡沒有的註解，包括刪掉、改字、整段檔頭刪光、整個檔刪掉或改名。錯誤訊息寫出檔名和指紋。
+- 不擋：新檔、新加的註解、搬動註解的位置。新註解在下一次重寫鎖檔時鎖進去。
+- 故意刪改既有註解時，在 `frontend/` 跑一個指令 `pnpm content:comments:lock`，把鎖檔一起提交。指令會印出這次解鎖了哪些檔，請寫在 PR 說明。
+- 和 main 比（CI 用 `--base`）：main 上有、還沒鎖、被這個 PR 刪掉的註解，發 GitHub 警告，不擋。從鎖看不出這種刪除是不是故意的，所以交給 reviewer。想讓新註解立刻受保護，加註解的批次可以順手跑一次 `pnpm content:comments:lock`。
+
+**用過去的批次重放**：每個 commit 用前一個 commit 的內容當鎖。B1–B23 和之前的內容 commit 共 26 個，25 個通過，只有 B8 會被擋下：它改寫了 `lg.ai/sh.yaml` 一行 B5 的審稿紀錄。這正是要 review 看到的情況，跑一次 `pnpm content:comments:lock` 就過。B13–B23 發布時拿掉了提案檔頭，所以註解沒有變化，也不用碰鎖檔。B1–B12 保留檔頭，只會新增註解，也通過。B24（哲學大學）要改的 6 個檔目前沒有註解，加不加檔頭都會過。
+
+| 檔案 | 內容 |
+| --- | --- |
+| `lib/content/comment-lock.ts` | `snapshotComments`、`lockToText`／`parseLock`、`checkAgainstLock`、`unlockedRemovals`（純函式） |
+| `scripts/check-yaml-comments.ts` | `pnpm content:comments`（檢查）、`pnpm content:comments:lock`（重寫）、`--base`（和 origin/main 比） |
+| `lib/content/comment-lock.test.ts` | 刪一則、改一字、刪光檔頭、刪檔都擋下；一般批次（改內容、加檔頭、搬註解、新檔）都過；重寫鎖後過；主線註解逐字抽得到 |
+| `.github/workflows/validate-knowledge-points.yml` | 在 backfill 檢查後面加一步 `pnpm content:comments --base` |
