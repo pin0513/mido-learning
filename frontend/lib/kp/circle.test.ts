@@ -36,6 +36,14 @@ function point(id: string): KnowledgePoint {
   return found;
 }
 
+// B28 發布 sk.a3@uni 後，全站已沒有未轉換的真實點。改用 sk.a3@uni 的真實資料、拿掉 why／how／what 合成一個「未轉換的草稿」：
+// 舊欄位（goal、review、scenario、ai、links）仍是真的，只有三圈是拿掉的。
+function unconverted(id: string): KnowledgePoint {
+  const found = point(id);
+  assert.ok(found.why && found.how && found.what, `${id} 應該已轉換`);
+  return { ...found, status: "draft", why: undefined, how: undefined, what: undefined };
+}
+
 test("注音音節和課綱代碼整段不斷行", () => {
   const html = renderToStaticMarkup(
     createElement(RichText, {
@@ -87,9 +95,9 @@ test("比較圖的長註記折進卡片，兩欄也有窄螢幕版", () => {
 
 // B17 發布 pm.retro@es 後改用 pm.gantt@jh；B18 發布 pm.gantt@jh 後改用 pm.cpm@sh；B19 發布 pm.cpm@sh 後改用 pm.schedule@uni；B20 專案管理全部發布，未轉換的點改用哲學草稿 ph.epistem@uni（有 scenario、ai，links 有已知的點 pm.complexity@uni、ma.probmodel@uni）。
 // B24 哲學 25 點全部發布，未轉換的點改用軟實力草稿 sk.a3@uni（有 scenario、ai，links.related 是已發布的 pm.business@uni、ph.systems@sh）。下面兩個測試同樣改用它。
+// B28 發布 sk.a3@uni 後，三個測試改用上面的 unconverted()：同一筆真實資料拿掉三圈，不再要求它是草稿。
 test("未轉換的點用既有欄位組三圈", () => {
-  const found = point("sk.a3@uni");
-  assert.equal(found.status, "draft");
+  const found = unconverted("sk.a3@uni");
   const built = buildCircles(found, shared);
   assert.equal(built.converted, false);
   assert.deepEqual(built.circles.map((circle) => circle.kind), ["why", "how", "what"]);
@@ -103,8 +111,7 @@ test("未轉換的點用既有欄位組三圈", () => {
 });
 
 test("只補一圈時，那一圈用新欄位，其餘沿用舊欄位", () => {
-  const found = point("sk.a3@uni");
-  assert.equal(found.status, "draft");
+  const found = unconverted("sk.a3@uni");
   const partial: KnowledgePoint = {
     ...found,
     why: {
@@ -127,8 +134,7 @@ test("只補一圈時，那一圈用新欄位，其餘沿用舊欄位", () => {
 });
 
 test("exercise 與目標、檢核相同時不重複，What 空了就放補強句", () => {
-  const found = point("sk.a3@uni");
-  assert.equal(found.status, "draft");
+  const found = unconverted("sk.a3@uni");
   const duplicated: KnowledgePoint = {
     ...found,
     goal: "會做",

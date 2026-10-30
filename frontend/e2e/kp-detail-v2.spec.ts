@@ -1,5 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { join } from "node:path";
+import { loadContent } from "../lib/content/load";
 
 /**
  * 詳細頁 V2。視覺斷言只在 KP_DETAIL_V2_ENABLED=true 時跑。
@@ -26,13 +28,19 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   { path: "/kp/ma.number/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/it.nn/uni", layer: "進階", verify: false, converted: true },
   { path: "/kp/ph.aimind/uni", layer: "本質", verify: false, converted: true },
-  { path: "/kp/sk.hypo/uni", layer: "本質", verify: true },
+  // B28 已轉換並發布 sk.hypo@uni（to_verify: false），這一列改成已轉換；未轉換的真實頁改由下面「未轉換的真實頁」從 content/ 算。
+  { path: "/kp/sk.hypo/uni", layer: "本質", verify: false, converted: true },
   // B14 已轉換並發布 it.blocks@es（to_verify: false）；仍是草稿、to_verify、未轉換的國小點改由 sk.listen@es 覆蓋。
   // B25 已轉換並發布 sk.listen@es（to_verify: false），軟實力國小已沒有草稿；未轉換又待核對的樣本只剩上面的 sk.hypo@uni。
-  // B26：sk.hypo@uni 發布後這一列會變成已轉換；未轉換／待核對的三種組合改由 components/kp/v2/review-state.test.ts 的合成內容守住（不靠真實草稿）。
+  // B26：sk.hypo@uni 發布後這一列會變成已轉換（B28 已改）；未轉換／待核對的三種組合改由 components/kp/v2/review-state.test.ts 的合成內容守住（不靠真實草稿）。
   { path: "/kp/it.blocks/es", layer: "基礎", verify: false, converted: true },
   { path: "/kp/sk.listen/es", layer: "本質", verify: false, converted: true },
 ];
+
+// Playwright 從 frontend/ 執行（playwright.config.ts 所在）。
+const { errors, model } = loadContent(join(process.cwd(), "content"));
+if (errors.length > 0 || !model) throw new Error(errors.join("\n") || "content 載入失敗");
+const UNCONVERTED = model.points.filter((point) => !(point.why && point.how && point.what));
 
 test("直連 /kp-v2 是 404，sitemap 也不列", async ({ request }) => {
   expect((await request.get("/kp-v2/zh.zhuyin/es")).status()).toBe(404);
@@ -181,6 +189,27 @@ test.describe("黃金圈詳細頁", () => {
       }
     });
   }
+
+  // B28（B26 待辦 R1）：sk.hypo@uni 發布後，全站知識點都已轉換，沒有寫死的未轉換真實頁可查。
+  // 樣本改成每次從 content/ 算：沒有 why／how／what 的點（含草稿；草稿頁只有 KP_INCLUDE_DRAFTS 的 build 才產生）。之後再出現未轉換的點會自動查到。
+  // 沒有樣本時明確 skip 並寫原因（報表看得到），不會空跑成通過；三種審閱狀態組合的長期守門在 components/kp/v2/review-state.test.ts（合成內容）。
+  test("未轉換的真實頁：顯示內容補強中，待核對照 to_verify", async ({ page }) => {
+    test.skip(UNCONVERTED.length === 0, "全站知識點都已轉換（B28 起沒有未轉換的點），沒有未轉換的真實頁；審閱狀態三種組合由 components/kp/v2/review-state.test.ts 的合成內容守住");
+    test.info().annotations.push({ type: "unconverted", description: UNCONVERTED.map((point) => point.id).join("、") });
+    let checked = 0;
+    for (const point of UNCONVERTED) {
+      const response = await page.goto(`/kp/${point.concept}/${point.stage}`);
+      if (response?.status() === 404) continue;
+      expect(response?.status(), point.id).toBe(200);
+      const root = page.getByTestId("kp-detail-v2");
+      await expect(root, point.id).toContainText("內容補強中");
+      if (point.toVerify) await expect(root.locator(".v2-status", { hasText: "待核對" }), point.id).toBeVisible();
+      else await expect(root.locator(".v2-status", { hasText: "待核對" }), point.id).toHaveCount(0);
+      checked += 1;
+    }
+    test.skip(checked === 0, "未轉換的點這個 build 都沒有產生頁面（草稿或旗標關閉）；審閱狀態由 review-state.test.ts 的合成內容守住");
+    expect(checked).toBeGreaterThan(0);
+  });
 
   test("canonical 仍指向 /kp，axe 沒有 serious", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });

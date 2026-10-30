@@ -1,8 +1,13 @@
+# B28 提案：sk.hypo@uni
+# - 補 goal、review、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（大學）；沒有 curriculum_108、est_time。
+# - 依據：Chamberlin 多重工作假說（1890，Science 1965 重刊）＋ Platt 1964 Strong Inference（對立假說、能推翻的關鍵檢驗、重來一輪）。
+# - 原 review 的假說樹改成多個對立假說的清單（假說樹沒有找到可逐字引用的原始出處）；兩週標成示意；社團人數下降例子標本站整理。
+# - 這是 e2e 原本的真實路由未轉換樣本；發布後 e2e 的未轉換樣本改從 content/ 算（沒有就明確 skip 並寫原因），三種審閱狀態組合由 review-state.test.ts 的合成內容守住。
 id: sk.hypo@uni
 concept: sk.hypo
 title: 假說驅動：先猜答案，再用資料檢驗
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,10 +16,18 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 草稿：大學不對應 108 課綱，以學門路徑對應。
-- 引用的框架只寫名稱（假說驅動解題、假說樹），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼，以學門路徑對應（同 main 已發布的 sk.facilitate@uni、sk.persuade@uni）；軟實力大學沒有對應的高中先備代碼，所以也不列 108 先備來源。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
+- 英文 PDF 的引文避開彎引號與撇號；PDF 換行處的斷字照原詞接回，其餘空白照原文；中文說明和翻譯是本站整理。
+- Platt 1964 刊在 Science 146(3642)，頁 347–353，用期刊頁碼（PDF 頁＋346）；Chamberlin 1890 引用 Science 1965 重刊本，頁 754–759，用期刊頁碼（PDF 頁＋753）。兩篇講的是科學研究方法；本點借對立假說與找能推翻的資料，用在大學生的社團、專題與工作問題（本站建議）。kind 保守標成 reference。
+- 原 review 的假說樹改成多個對立假說的清單：假說樹是顧問業常用的說法，沒有找到可逐字引用的原始出處，所以改用 Chamberlin 與 Platt 的對立假說；原 review 的兩週標成示意，社團人數下降保留並標本站整理，產品回購率低刪掉，只留一個例子；原 review 的什麼結果會推翻它拿掉引號。
+- 原有草稿說明「草稿：大學不對應 108 課綱，以學門路徑對應。」已處理：見第一條，大學點維持不對應 108 課綱。
+- 原有草稿說明「引用的框架只寫名稱（假說驅動解題、假說樹）…」已處理：改依 Chamberlin 1890 的多重工作假說與 Platt 1964 的 Strong Inference，英文短句逐字引用，中文說明是本站整理；假說樹見上一條。
+- guiding_questions 補到三題，三題的答案都寫在 Why 或 How 內文（qa 只是摘要）。
+- 原 scenario「親子共學：大人把自己工作上的一個問題寫成假說樹，請孩子專門找『什麼證據會推翻它』。」大學點改成大學生把社團或專題的一個問題寫成幾個對立假說，請家人專門找什麼證據會推翻它，補上本站建議。
+- 原 ai.delegable「整理資料、找反例」補上使用條件（本站建議）。
 prerequisites:
 - sk.rootcause@sh
 - ph.bias@sh
@@ -25,7 +38,7 @@ links:
   related:
   - ph.philsci@uni
   deeper: []
-link_notes: 框架：假說驅動解題、假說樹。跨學門先學：哲學「認知偏誤與思考盲點」。
+link_notes: 框架：多重工作假說（Chamberlin 1890）、強推論（Platt 1964）。
 competency:
   specialist:
   - 問題解決
@@ -35,20 +48,151 @@ competency:
   - 建模
 ai:
   delegable:
-  - 整理資料、找反例
+  - 整理資料、找反例（AI 找到的反例和資料要自己查證，不輸入成員姓名，本站建議）
   human_experience:
-  - 提出假說，願意被推翻
-idea: 問題很大、時間有限時，可以先根據經驗提出假說（答案可能是……），列出它要成立需要哪些證據，再優先收集最能推翻它的資料。要刻意找反例，避免只看支持自己的證據。
+  - 判斷哪個假說最值得先驗、承認被推翻
+idea: 問題很大、時間有限時，可以先根據經驗提出幾個對立的假說（答案可能是……），寫出每個假說要成立需要哪些證據，再優先收集最能推翻它的資料。要刻意找反例，避免只看支持自己的證據。
 guiding_questions:
 - 還沒收集資料就先猜答案，不會有偏見嗎？
-scenario: 親子共學：大人把自己工作上的一個問題寫成假說樹，請孩子專門找「什麼證據會推翻它」。
-goal: 面對複雜問題，先寫出可檢驗的假說與要收的證據，再用資料修正。
-review: 選一個真實問題（社團人數下降、產品回購率低），交一頁：問題陳述、假說樹、每個假說要收的資料與「什麼結果會推翻它」；兩週後更新哪些假說被推翻。
+- 怎樣的假說才算可以檢驗？
+- 資料推翻了假說，接下來怎麼做？
+scenario: 親子共學：大學生把社團或專題的一個問題寫成幾個對立的假說，請家人專門找什麼證據會推翻它（本站建議）。
+goal: 面對複雜問題，先寫出幾個可以被推翻的對立假說，以及每個假說要收的資料，再用資料刪掉、修正假說。
+review: 不看本頁，說出為什麼要同時寫幾個假說、怎樣的假說才算可以檢驗、資料推翻假說後怎麼做；並選一個真實問題，例如社團人數下降（例子是本站整理），交一頁：問題陳述、幾個對立假說、每個假說要收的資料和什麼結果會推翻它；約兩週後（時間是示意）更新哪些假說被推翻。
 formats:
   slides: []
-  exercise: 目標：面對複雜問題，先寫出可檢驗的假說與要收的證據，再用資料修正。　檢核：選一個真實問題（社團人數下降、產品回購率低），交一頁：問題陳述、假說樹、每個假說要收的資料與「什麼結果會推翻它」；兩週後更新哪些假說被推翻。
+  exercise: 目標：面對複雜問題，先寫出幾個可以被推翻的對立假說，以及每個假說要收的資料，再用資料刪掉、修正假說。　檢核：不看本頁，說出為什麼要同時寫幾個假說、怎樣的假說才算可以檢驗、資料推翻假說後怎麼做；並選一個真實問題，例如社團人數下降（例子是本站整理），交一頁：問題陳述、幾個對立假說、每個假說要收的資料和什麼結果會推翻它；約兩週後（時間是示意）更新哪些假說被推翻。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+why:
+  heading: 先猜，但猜好幾個
+  body:
+  - 先猜答案確實可能有偏見。Chamberlin 指出只抱一個理論的毛病：「Under the method of the ruling theory, the stimulus was directed to the finding of facts for the support of the theory.」，也就是只去找支持它的事實（翻譯是本站整理）。他提出的解法是「the method of multiple working hypotheses」：同時寫好幾個可能的答案，讓它們互相競爭（翻譯是本站整理）。
+  - Platt 把做法寫成步驟，第一步就是「Devising alternative hypotheses」，第二步是設計關鍵檢驗，每個可能的結果都能「exclude one or more of the hypotheses」（翻譯是本站整理）。先猜不是問題，只猜一個、只找支持的資料才是；同時寫幾個，再找能分辨它們的資料，就能把偏見攤在桌上（本站整理）。
+  qa:
+    question: 還沒收集資料就先猜答案，不會有偏見嗎？
+    answer: 只猜一個、只找支持的資料，就容易有偏見。Chamberlin 建議「the method of multiple working hypotheses」：同時寫幾個對立的假說，再找能分辨它們的資料（翻譯是本站整理）。
+    source: chamberlin-1890
+  items_title: 這一點用到的
+  items:
+  - title: 對立假說
+    text: 同時寫好幾個可能的答案。
+  - title: 可以被推翻
+    text: 說得出什麼結果算它錯。
+  - title: 關鍵資料
+    text: 能分辨不同假說的資料。
+  - title: 重來一輪
+    text: 刪掉錯的，修正留下的。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會用資料找原因
+  - 知道常見的偏誤
+  figures:
+  - hypo-compare
+  sources:
+  - chamberlin-1890
+  - platt-1964
+how:
+  heading: 寫假說、找反證、再修正
+  body:
+  - 先寫問題陳述，再寫至少三個對立的假說（數量是示意）。例如社團人數下降，假說可以是社課時間和必修課衝堂、社課內容太難、宣傳沒觸及新生（例子是本站整理）。每個假說都要說得出什麼結果算它錯；Platt 說「a theory is not a theory unless it can be disproved」（翻譯是本站整理）。
+  - 再替每個假說寫要收的資料，先收最能推翻它、也最能分辨不同假說的資料；Platt 建議問自己「what experiment could disprove your hypothesis?」（翻譯是本站整理）。例如問退社的人為什麼不來，比問還留下的人喜不喜歡社課更能分辨（例子是本站整理）。AI 可以幫忙整理資料、找反例，但不輸入成員姓名，找到的反例和資料要自己查證（本站建議）。
+  - 資料推翻了假說，就把它劃掉，寫下是哪筆資料推翻的，再細分或修正留下的假說，進下一輪；Platt 的步驟是「Recycling the procedure, making subhypotheses or sequential hypotheses to refine the possibilities that remain」（翻譯是本站整理）。他也提醒「Any conclusion that is not an exclusion is insecure and must be rechecked.」（翻譯是本站整理）。約兩週後（時間是示意）更新清單，誠實寫下哪些假說被推翻（本站建議）。
+  qa:
+    question: 怎樣的假說才算可以檢驗？
+    answer: 說得出什麼結果算它錯，而且找得到那筆資料。Platt 說「a theory is not a theory unless it can be disproved」（翻譯是本站整理）；說不出什麼會推翻它的，就還不是可以檢驗的假說。
+    source: platt-1964
+  items_title: 四步做
+  items:
+  - title: 寫問題陳述
+    text: 一句話說清楚要解的問題。
+  - title: 寫對立假說
+    text: 每個都說得出什麼算它錯。
+  - title: 先收反證
+    text: 收最能推翻、分辨的資料。
+  - title: 刪掉再修正
+    text: 劃掉被推翻的，進下一輪。
+  checklist_title: 寫完檢查
+  checklist:
+  - 假說不只一個
+  - 寫了推翻條件
+  - 先收能推翻的
+  - 記下被推翻的
+  activity_figure: hypo-flow
+  sources:
+  - platt-1964
+what:
+  heading: 用對立假說逼近答案
+  body:
+  - 學完後，你能面對一個複雜問題，寫出幾個可以被推翻的對立假說和要收的資料，先找能推翻它們的資料，再誠實刪掉、修正假說。
+  items_title: 學完能做到
+  items:
+  - title: 寫可檢驗的假說
+    text: 說得出什麼結果算它錯。
+  - title: 先找反證
+    text: 收最能推翻、分辨的資料。
+  - title: 用資料修正
+    text: 劃掉被推翻的，再細分。
+  checklist_title: 自我檢核
+  checklist:
+  - 寫了幾個假說
+  - 每個都可推翻
+  - 更新了清單
+  notes:
+  - 本頁的社團人數下降例子是本站整理；方法取自 Chamberlin 1890 的多重工作假說與 Platt 1964 的 Strong Inference，中文說明是本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: hypo-flow
+  type: flow
+  alt: 假說驅動解題五步驟：寫問題陳述，寫幾個對立假說，寫推翻條件，先收能推翻的資料，刪掉被推翻的再修正。
+  steps:
+  - actor: 自己
+    text: 寫問題陳述
+  - actor: 自己
+    text: 寫對立假說
+  - actor: 自己
+    text: 寫推翻條件
+  - actor: 自己
+    text: 先收反證資料
+  - actor: 自己
+    text: 刪掉再修正
+  source: platt-1964
+  caption: 流程是本站建議。
+- id: hypo-compare
+  type: compare
+  alt: 比較只找支持的資料和找能推翻的資料：只找支持的資料，假說永遠看起來是對的；找能推翻的資料，錯的假說會被刪掉，留下的比較可靠。兩種做法互相對照。
+  source: chamberlin-1890
+  relation: versus
+  items:
+  - term: 找支持的資料
+    note: 假說看起來總是對的
+  - term: 找推翻的資料
+    note: 刪掉錯的，留下的較可靠
+  caption: 例子是本站整理。
+sources:
+- id: chamberlin-1890
+  title: The Method of Multiple Working Hypotheses
+  publisher: T. C. Chamberlin 著，Science 1890 年原刊；本頁引用 Science 148(3671)，1965 年 5 月 7 日重刊本，頁 754–759（University of Central Florida 課程網站提供）
+  url: https://sciences.ucf.edu/biology/d4lab/wp-content/uploads/sites/23/2016/12/Chamberlin1890.pdf
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Under the method of the ruling theory, the stimulus was directed to the finding of facts for the support of the theory.」（p.755）；「the method of multiple working hypotheses」（p.756）
+- id: platt-1964
+  title: Strong Inference
+  publisher: John R. Platt 著，Science 146(3642)，1964 年 10 月 16 日，頁 347–353（Harvard 課程網站提供的 JSTOR 掃描本）
+  url: https://bpb-us-e1.wpmucdn.com/websites.harvard.edu/dist/6/132/files/2023/06/Platt1964_Science_StrongInference.pdf
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Devising alternative hypotheses」（p.347）；「exclude one or more of the hypotheses」（p.347）；「Recycling the procedure, making subhypotheses or sequential hypotheses to refine the possibilities that remain」（p.347）；「Any conclusion that is not an exclusion is insecure and must be rechecked.」（p.347）；「a theory is not a theory unless it can be disproved」（p.350）；「what experiment could disprove your hypothesis?」（p.352）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

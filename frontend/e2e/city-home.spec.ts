@@ -8,6 +8,7 @@ import { test, expect } from "@playwright/test";
 // B24 發布哲學 uni 6 點後，四個公開學門都沒有草稿；6 個標題改用接在專案管理點上、仍是草稿的軟實力點（sk.issuetree←pm.breakdown@es、sk.decide←pm.triangle@jh、sk.a3→pm.business@uni、sk.mediate←pm.conflict@sh、sk.coach→pm.style@sh、sk.design→pm.agile@sh）。這個行程沒開溝通與解決問題旗標，也是不露出的原因之一。
 // B26 發布 sk.issuetree@jh 後，改用仍是草稿的 sk.feedback@sh（先備 pm.retro@es）。
 // B27 發布 sk.feedback@sh、sk.decide@sh、sk.design@sh 後拿掉這三個，改加仍是草稿的 sk.hypo@uni（先備 ph.bias@sh）；剩下大學 4 點。
+// B28 發布這 4 點後，全站沒有草稿；4 個標題留著當「旗標關閉不露出」的真實樣本：這個行程沒開溝通與解決問題旗標（KP_SOFTSKILLS_ENABLED），它們只靠旗標藏起來。草稿不露出改由 city.test.ts、home-diagram.test.ts 的合成內容守住。
 const DRAFT_TITLES = [
   // B11–B13 已發布數學全部 26 點，B14–B16 已發布資訊與 AI 全部 25 點；草稿樣本換成仍是草稿的專案管理點（pm.schedule@uni 接在 pm.estimate@sh 之後；pm.business@uni、pm.aiteam@uni 由已發布點連過去）。
   // B19 發布 pm.cpm@sh 後，改用由 pm.conflict@sh、pm.style@sh 連過去的草稿 pm.org@uni。
@@ -96,6 +97,7 @@ test.describe("學門總圖", () => {
     // B24 發布 ph.epistem@uni 後，改查接在 pm.breakdown@es（拆解與估算的第一步）後面的軟實力草稿 sk.issuetree@jh。
     // B26 發布 sk.issuetree@jh 後，改查接在 pm.triangle@jh（拆解與估算的第二步）後面、仍是草稿的 sk.decide@sh。
     // B27 發布 sk.decide@sh 後，改查仍是草稿的 sk.a3@uni（先備 sk.decide@sh；links.related pm.business@uni，跟拆解與估算的第四步 pm.evm@uni 同一階）。
+    // B28 發布 sk.a3@uni 後，它不露出只靠這個行程沒開溝通與解決問題旗標（樣本變成旗標關閉，不再是草稿）。
     await expect(page.locator("body")).not.toContainText("一頁問題報告：帶團隊從問題到行動");
   });
 

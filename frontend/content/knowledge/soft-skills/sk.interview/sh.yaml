@@ -123,7 +123,7 @@ why:
 how:
   heading: 問開放題，多追問、多聽
   body:
-  - 準備：先寫下想問的題目，再分成幾個主題、排好順序；d.school 說「Write down as many potential questions as your team can generate.」，接著「Identify and order themes.」（翻譯是本站整理）。題目多用開放式問題：是非題只能回答是或不是，例如你喜歡上學嗎；開放式問題要對方說經過，例如上次下雨天你怎麼去上學（例子是本站整理）。約好時間，先問對方能不能錄音，同意了才錄；對方不想被錄音，就改成手寫重點，訪談完馬上補寫成逐字稿（本站建議）。
+  - 準備：先寫下想問的題目，再分成幾個主題、排好順序；d.school 說「Write down as many potential questions as your team can generate.」，接著「Identify and order themes.」（翻譯是本站整理）。題目多用開放式問題：是非題只能回答是或不是，例如你喜歡你的社團嗎；開放式問題要對方說經過，例如上次社團活動你做了哪些事（例子是本站整理）。約好時間，先問對方能不能錄音，同意了才錄；對方不想被錄音，就改成手寫重點，訪談完馬上補寫成逐字稿（本站建議）。
   - 訪談時：問具體的某一次，「Instead, ask about a specific occurrence.」；請對方說故事，「Encourage stories.」；聽到重點就追問為什麼，d.school 說「Ask why.」，而且「Even when you think you know the answer.」（翻譯是本站整理）。例如一次訪談追問 3 次以上（數字是示意）。不推銷自己的點子，問題要中立，「Ask questions neutrally」（翻譯是本站整理）。
   - 多聽少說：自己說話的時間最好少於三分之一（比例是示意）；對方停下來時先等一下，d.school 說「When you allow for silence, you give users time to reflect on their answers」（翻譯是本站整理）。也留意說和做不一樣的地方，「What users say and do can be different.」，以及「Pay attention to nonverbal cues.」，例如表情和動作（翻譯是本站整理）。訪談完整理逐字稿，數一數開放式問題有沒有佔一半（比例是示意），再寫下一個沒想到的發現（本站建議）。
   qa:
@@ -196,9 +196,9 @@ figures:
   relation: versus
   items:
   - term: 是非題
-    note: 例如你喜歡上學嗎，只能答是或不是
+    note: 例如你喜歡你的社團嗎，只能答是或不是
   - term: 開放式問題
-    note: 例如上次下雨天你怎麼去上學
+    note: 例如上次社團活動你做了哪些事
   caption: 例子是本站整理。
 sources:
 - id: kuoyu
