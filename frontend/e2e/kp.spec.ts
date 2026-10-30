@@ -49,6 +49,12 @@ test.describe("知識地圖", () => {
     await expect(page.getByTestId("kp-curriculum")).toContainText("社會、自然科學");
     await expect(page.getByTestId("kp-curriculum")).toContainText("閱讀素養教育");
     await expect(page.getByTestId("kp-curriculum")).not.toContainText("ah-IV-1");
+    // B23 發布哲學 sh 7 點；ph.aijudge@sh 對應科技與語文兩個領域，議題是資訊教育（舊版頁不列學習表現代碼）。
+    await page.goto("/kp/ph.aijudge/sh");
+    await expect(page.getByTestId("kp-draft")).toHaveCount(0);
+    await expect(page.getByTestId("kp-curriculum")).toContainText("科技、語文");
+    await expect(page.getByTestId("kp-curriculum")).toContainText("資訊教育");
+    await expect(page.getByTestId("kp-curriculum")).not.toContainText("運 a-V-2");
     await page.goto("/kp/pm.breakdown/es");
     await expect(page.getByRole("link", { name: /我們想完成什麼/ })).toBeVisible();
     await expect(page.getByText("尚未發布")).toHaveCount(0);

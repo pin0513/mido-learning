@@ -1,55 +1,244 @@
 id: ph.ethicstheory@sh
 concept: ph.ethicstheory
 title: 倫理學的三種視角
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 倫理
+  - 哲學
+  - 思考方法
+  - 倫理
   layer: essence
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 社會
-    - 綜合活動
+  - 社會
+  - 綜合活動
   core_competencies:
-    - A2
-    - C1
+  - A2
+  - C1
   issues:
-    - 生命教育
+  - 生命教育
+  performances:
+  - 生 4a-V-1
+  - 公 1c-V-2
+  contents:
+  - 生 Da-V-2
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、C1：依總綱 p.4–6 高級中等學校教育的 U-A2、U-C1 與社會領綱的社-U-A2、社-U-C1、綜合活動領綱的綜S-U-A2、綜S-U-C1 原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對；跨頁的標 p.a–b）。
+- stage 不填 grades：高中的學習重點沒有再分年級，總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段；本點的代碼都是第五學習階段（V）。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，數學領綱少 3，社會、自然科學、綜合活動、科技領綱與總綱少 4，議題融入說明手冊少 16，Heuer 的 Psychology of Intelligence Analysis 少 28，NIST AI 600-1 少 4；教育部 AI 指引與 PDF 頁相同。
+- est_time 寫高中生命教育課：綜合活動領綱 p.2 的高中部定必修有生命教育 1 學分；本點的綜合活動代碼都出自生命教育。
+- 新增代碼：學習表現 生 4a-V-1（綜合活動領綱 p.26）、公 1c-V-2（社會領綱 p.10）；學習內容 生 Da-V-2（綜合活動領綱附錄二 p.96）。
+- 議題 生命教育 保留：議題融入說明手冊 p.79 高中生命教育的實質內涵 生U4、生U5（逐字引在 issues-handbook 的 supports）。
+- idea 的效益保留原稿用詞；SEP 把這一取向叫 consequentialism（後果論），效益主義是其中最有名的一種，Why 的說明照這個分法。
+- 原 scenario 保留手機使用規定的例子，並標本站建議。
+- 原 ai.delegable「整理各視角的論點」補上使用條件（本站建議）。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15、B19 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- Virtue Ethics（Rosalind Hursthouse、Glen Pettigrove）是 Stanford Encyclopedia of Philosophy 的條目；英文短句引用，中文說明是本站整理。
 prerequisites:
-  - ph.ethics@jh
+- ph.ethics@jh
 links:
   why: []
   how:
-    - pm.conflict@sh
+  - pm.conflict@sh
   related: []
   deeper:
-    - ph.applied@uni
-link_notes: 社會（公民與社會）、綜合活動（生命教育）、專案管理（衝突與協商）
+  - ph.applied@uni
+link_notes: 社會（公民與社會）、綜合活動（生命教育）、專案管理（衝突與協商）；綜合活動 生 4a-V-1、生 Da-V-2、社會 公 1c-V-2。
 competency:
   specialist:
-    - 倫理推理
+  - 倫理推理
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 整理各視角的論點
+  - 整理各視角的論點（只用虛構情境，不輸入真實姓名，本站建議）
   human_experience:
-    - 在辯論中聽懂對方的視角
+  - 在辯論中聽懂對方的視角
 idea: 看結果好不好（效益）、看該不該做（義務）、看會成為什麼樣的人（德行），三種視角幫助我們更完整地思考。
 guiding_questions:
-  - 結果很好，但手段不對，這件事可以做嗎？
-scenario: 用三種視角分析一個校園議題，例如手機使用規定，寫出各自的結論。
+- 結果很好，但手段不對，這件事可以做嗎？
+- 三種視角分別看什麼？
+- 三種視角結論不同時，怎麼辦？
+scenario: 用三種視角分析一個校園議題，例如手機使用規定，寫出各自的結論（本站建議）。
 formats:
   slides: []
+  exercise: 目標：能用效益、義務、德行三種視角分析一個校園議題，寫出各自的理由與結論，找出衝突的地方，並提出自己的主張和理由。　檢核：老師看三欄表：效益、義務、德行三欄都寫了理由和結論，標出了彼此衝突的地方，最後的主張說明了為什麼某一欄的理由比較重；學生說得出三種視角分別看什麼，也說得出結果好但手段不對時，三種視角會怎麼說。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 能用效益、義務、德行三種視角分析一個校園議題，寫出各自的理由與結論，找出衝突的地方，並提出自己的主張和理由。
+review: 老師看三欄表：效益、義務、德行三欄都寫了理由和結論，標出了彼此衝突的地方，最後的主張說明了為什麼某一欄的理由比較重；學生說得出三種視角分別看什麼，也說得出結果好但手段不對時，三種視角會怎麼說。
+est_time:
+  school: 高中生命教育課
+  source: zonghe
+why:
+  heading: 三副眼鏡看對錯
+  body:
+  - 倫理學有三種主要的視角。研究德行倫理的哲學文章說，德行倫理強調美德或品格，不同於強調「duties or rules」的義務論，也不同於強調「the consequences of actions」的後果論（翻譯是本站整理）。效益主義是後果論裡最有名的一種，看行為能不能讓大家的福祉最大（本站整理）。
+  - 生命教育課綱要高中生「具備對道德、個人行為及公共議題進行價值思辨的素養。」學習「判斷行為者善惡及行為對錯時應考慮的因素。」公民課則要學生「整合公民知識，論述自己的主張，並能提出合理的論證。」
+  qa:
+    question: 三種視角分別看什麼？
+    answer: 文章舉例：有人需要幫助，大家都同意該幫。效益主義者會指出「the consequences of doing so will maximize well-being」，義務論者會指出這是「acting in accordance with a moral rule」，德行倫理學者會指出幫助人是「charitable or benevolent」（翻譯是本站整理：效益看結果能讓福祉最大，義務看是否依照道德規則，德行看是否出於仁慈）。
+    source: sep-virtue
+  items_title: 課綱裡的價值思辨
+  items:
+  - title: 價值思辨的素養
+    text: 綜合活動 生 4a-V-1：具備對道德、個人行為及公共議題進行價值思辨的素養。
+    code: 生 4a-V-1
+  - title: 判斷對錯的因素
+    text: 綜合活動 生 Da-V-2：判斷行為者善惡及行為對錯時應考慮的因素。
+    code: 生 Da-V-2
+  - title: 提出合理的論證
+    text: 社會 公 1c-V-2：整合公民知識，論述自己的主張，並能提出合理的論證。
+    code: 公 1c-V-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好校園議題
+  - 準備三欄表
+  figures:
+  - ethics-compare
+  notes:
+  - 綜合活動的代碼：開頭的生是生命教育；接著是數字的是學習表現，是大寫字母的是學習內容；中間的 V 是第五學習階段（高中）。
+  - 社會的代碼：開頭的公是公民與社會的學習表現；中間的 V 是第五學習階段（高中）。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - sep-virtue
+  - zonghe
+  - social108
+  - zonggang
+how:
+  heading: 用三欄表分析校規
+  body:
+  - 選一個校園議題，例如上課時手機怎麼管，畫三欄表（本站建議）。效益欄問：這條規定對所有受影響的人，好處和壞處加起來如何？義務欄問：有沒有該守的規則或權利，例如尊重個人財產、說到做到？德行欄問：這樣做會讓我們成為什麼樣的人，自律、負責，還是只想躲避規定？（本站整理）
+  - 結果好但手段不對時，三欄常會吵架：效益欄可能說可以，義務欄可能說不行，德行欄會問做這件事的人會變成什麼樣子（本站整理）。文章提醒，三種取向都會談到美德、後果和規則，差別在把哪一個放在中心：「Each of the above-mentioned approaches can make room for virtues, consequences, and rules.」（翻譯是本站整理）。
+  - 三種視角結論不同時，不要急著選邊：把三欄的理由都寫出來，找出彼此衝突的那一點，再寫自己的主張，說明為什麼在這個情況下某一欄的理由比較重（本站建議）。
+  qa:
+    question: 結果很好，但手段不對，這件事可以做嗎？
+    answer: 要把三副眼鏡都戴上看看：效益看結果，義務看手段有沒有違反道德規則，德行看做這件事的人會變成什麼樣的人（本站整理）。文章說三種取向都能「make room for virtues, consequences, and rules」（翻譯是本站整理：都能容納美德、後果與規則），所以重點是把理由說清楚，再說明為什麼某一個理由比較重。
+    source: sep-virtue
+  items_title: 每欄這樣問
+  items:
+  - title: 效益
+    text: 好處壞處加起來如何？
+  - title: 義務
+    text: 有沒有該守的規則？
+  - title: 德行
+    text: 會成為什麼樣的人？
+  - title: 我的主張
+    text: 哪一欄理由比較重。
+  checklist_title: 寫完檢查一下
+  checklist:
+  - 三欄都有理由
+  - 找出衝突點
+  - 寫出自己的主張
+  activity_figure: ethics-flow
+  sources:
+  - sep-virtue
+what:
+  heading: 把道德理由說清楚
+  body:
+  - 學完後，學生能用效益、義務、德行三種視角分析一個校園議題，寫出各自的理由與結論，找出它們衝突的地方，並提出自己的主張和理由。
+  items_title: 學完能做到
+  items:
+  - title: 戴上三副眼鏡
+    text: 效益、義務、德行。
+  - title: 找出衝突點
+    text: 三欄哪裡吵架。
+  - title: 說出主張
+    text: 說明為什麼這樣選。
+  checklist_title: 家長檢核
+  checklist:
+  - 三欄表寫好
+  - 找出衝突點
+  - 主張有理由
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  - 本點融入生命教育議題：議題融入說明手冊高中的實質內涵要學生「思考人類福祉、生命意義、幸福、道德與至善的整體脈絡。」並在具爭議性的議題上「進行價值思辨，尋求解決之道。」
+  sources:
+  - genai-student
+  - moe-ai-guide
+  - issues-handbook
+figures:
+- id: ethics-flow
+  type: flow
+  alt: 三欄表四步驟：我選一個校園議題，我寫三種視角的理由，我找出衝突點，再寫出自己的主張。
+  steps:
+  - actor: 我
+    text: 選校園議題
+  - actor: 我
+    text: 寫三欄理由
+  - actor: 我
+    text: 找衝突點
+  - actor: 我
+    text: 寫出主張
+  source: sep-virtue
+  caption: 流程是本站建議。
+- id: ethics-compare
+  type: compare
+  alt: 比較三種視角：效益看結果，例如手機規定能不能讓大家更專心；義務看規則，例如收手機有沒有尊重個人財產；德行看品格，例如規定能不能培養自律。
+  source: sep-virtue
+  relation: versus
+  items:
+  - term: 效益
+    note: 看結果好不好
+  - term: 義務
+    note: 看該不該做
+  - term: 德行
+    note: 看成為什麼樣的人
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：生 4a-V-1「具備對道德、個人行為及公共議題進行價值思辨的素養。」（p.26）；生 Da-V-2「判斷行為者善惡及行為對錯時應考慮的因素。」（p.96）；補充說明「運用實例說明道德判斷的重要性與必要性，例如發生道德衝突面臨抉擇的難題等等。」（p.96）；領域核心素養：綜S-U-A2「確立自我需求與目標，學習批判思考與自主管理的知能，透過具體可行的學習方案與實踐過程，積極面對及處理生活與生命中的各種挑戰。」（p.3）；綜S-U-C1「具備道德思辨與應用的能力，積極關注公共議題並參與社會服務活動，主動關懷自然生態倫理與永續發展議題。」（p.4）；時間分配：普通型高級中等學校第五學習階段「部定必修科目包含生命教育（1 學分）、生涯規劃（1 學分）、家政（2 學分）三科，共 4 學分，可在不同年級規劃修習不同科目。」（p.2）；代碼說明：「生命教育、生涯規劃與家政分別以『生』、『涯』、『家』的簡稱示之。」（p.9）
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：公 1c-V-2「整合公民知識，論述自己的主張，並能提出合理的論證。」（p.10）；領域核心素養：社-U-A2「對人類生活相關議題，具備探索、思考、推理、分析、批判、統整與後設思考的素養，並能提出解決各種問題的可能策略。」（p.3）；社-U-C1「具備對道德、人權、環境與公共議題的思考與對話素養，健全良好品德、提升公民意識，主動參與環境保育與社會公共事務。」（p.4）；代碼說明：學習表現「國民中學與普通型高級中等學校若為領域共同的學習表現，則第 1碼前以『社』標示，若為各科目內涵則第 1 碼前以『歷』、『地』、『公』標示。」（p.6）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-C1「具備對道德課題與公共議題的思考與對話素養，培養良好品德、公民意識與社會責任，主動參與環境保育與社會公共事務。」（p.6）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: sep-virtue
+  title: Virtue Ethics（Stanford Encyclopedia of Philosophy）
+  publisher: Rosalind Hursthouse、Glen Pettigrove；2003 年 7 月 18 日首次發表，2026 年 5 月 3 日實質修訂（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/ethics-virtue/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「in contrast to the approach that emphasizes duties or rules (deontology) or that emphasizes the consequences of actions (consequentialism).」；「A utilitarian will point to the fact that the consequences of doing so will maximize well-being」；「acting in accordance with a moral rule」；「a virtue ethicist to the fact that helping the person would be charitable or benevolent.」；「Each of the above-mentioned approaches can make room for virtues, consequences, and rules.」
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 生命教育高中實質內涵：生U4「思考人類福祉、生命意義、幸福、道德與至善的整體脈絡。」（p.79）；生U5「覺察生活與公共事務中的各種迷思，在有關道德、美感、健康、社會、經濟、政治與國際等領域具爭議性的議題上進行價值思辨，尋求解決之道。」（p.79）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-30'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）

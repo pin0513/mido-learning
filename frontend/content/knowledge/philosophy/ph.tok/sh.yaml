@@ -1,56 +1,237 @@
 id: ph.tok@sh
 concept: ph.tok
 title: 知識論：我們怎麼知道我們知道？
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 知識論
+  - 哲學
+  - 思考方法
+  - 知識論
   layer: essence
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 語文
-    - 社會
+  - 社會
+  - 語文
   core_competencies:
-    - A2
-    - B1
-    - C1
+  - A2
+  - B1
   issues: []
+  performances:
+  - 歷 3b-V-3
+  - 歷 1c-V-2
+  contents:
+  - Bd-V-1
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、B1：依總綱 p.4–6 高級中等學校教育的 U-A2、U-B1 與社會領綱的社-U-A2、社-U-B1、國語文領綱的國S-U-A2、國S-U-B1 原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對；跨頁的標 p.a–b）。
+- 原 core_competencies 的 C1 拿掉：本點練的是知識的理由與證據，總綱 U-C1、社-U-C1、國S-U-C1 談的是道德課題與公共議題，本點沒有對應的學習重點；A2、B1 保留。
+- stage 不填 grades：高中的學習重點沒有再分年級，總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段；本點的代碼都是第五學習階段（V）。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，數學領綱少 3，社會、自然科學、綜合活動、科技領綱與總綱少 4，議題融入說明手冊少 16，Heuer 的 Psychology of Intelligence Analysis 少 28，NIST AI 600-1 少 4；教育部 AI 指引與 PDF 頁相同。
+- est_time 寫高中社會課：社會領綱 p.2 說普通型高中以歷史、地理、公民與社會分科教學為原則，部定必修每科 6 學分。
+- 新增學習表現代碼 歷 3b-V-3（社會領綱 p.11–12，條目跨頁，代碼表頁碼記 p.11）、歷 1c-V-2（p.9）；Bd-V-1 沿用代碼表的文字與頁碼。
+- 原 scenario 的四種方式保留，引號拿掉，並標本站建議。
+- 原 ai.delegable「整理不同領域的知識方法」補上使用條件（本站建議）。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15、B19 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- The Analysis of Knowledge（Jonathan Jenkins Ichikawa、Matthias Steup）與 Epistemology（Matthias Steup、Ram Neta）是 Stanford Encyclopedia of Philosophy 的條目；英文短句引用，中文說明是本站整理。
 prerequisites:
-  - ph.evidence@jh
-  - ph.hypothesis@jh
+- ph.evidence@jh
+- ph.hypothesis@jh
 links:
   why: []
   how: []
   related:
-    - ma.proof@sh
+  - ma.proof@sh
   deeper:
-    - ph.epistem@uni
-link_notes: 數學、社會（歷史）、藝術、IB 知識論的「知識問題」
+  - ph.epistem@uni
+link_notes: 數學、社會（歷史）、語文、藝術、IB 知識論的「知識問題」；社會 歷 3b-V-3、歷 1c-V-2、國語文 Bd-V-1。
 competency:
   specialist:
-    - 知識論
+  - 知識論
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 整理不同領域的知識方法
+  - 整理不同領域的知識方法（整理後自己對照課本與來源，本站建議）
   human_experience:
-    - 從自己的學科經驗中找出例子
+  - 從自己的學科經驗中找出例子
 idea: 知識不只是相信，還要有好的理由。數學、科學、歷史、藝術各有不同的「證明」方式。
 guiding_questions:
-  - 歷史課本寫的事，你憑什麼相信？
-scenario: 比較數學證明、科學實驗、歷史史料、藝術評論四種「讓人信服」的方式，寫一篇短文。
+- 歷史課本寫的事，你憑什麼相信？
+- 相信一件事，和知道一件事差在哪裡？
+- 數學證明和歷史史料，讓人信服的方式哪裡不同？
+scenario: 比較數學證明、科學實驗、歷史史料、藝術評論四種讓人信服的方式，寫一篇短文（本站建議）。
 formats:
   slides: []
+  exercise: 目標：能說出相信和知道的差別，比較數學證明、科學實驗、歷史史料、藝術評論四種讓人信服的方式，寫成短文，每種方式各有一個例子和一個限制。　檢核：老師看短文：四個領域都寫了它怎麼讓人信服、一個例子和一個限制；學生說得出相信和知道差在要是真的、還要有理由，也說得出相信歷史課本是因為有史料支持，遇到不同說法要回去查用了哪些史料。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 能說出相信和知道的差別，比較數學證明、科學實驗、歷史史料、藝術評論四種讓人信服的方式，寫成短文，每種方式各有一個例子和一個限制。
+review: 老師看短文：四個領域都寫了它怎麼讓人信服、一個例子和一個限制；學生說得出相信和知道差在要是真的、還要有理由，也說得出相信歷史課本是因為有史料支持，遇到不同說法要回去查用了哪些史料。
+est_time:
+  school: 高中社會課
+  source: social108
+why:
+  heading: 相信不等於知道
+  body:
+  - 知識論問的是：我們怎麼知道自己知道？研究知識分析的哲學文章說，傳統的分析有三個條件，認為「justified true belief is necessary and sufficient for knowledge.」，也就是要相信、要是真的、還要有好的理由（翻譯是本站整理）。文章也說，多數知識論學者同意「what is false cannot be known.」，錯的事不能算知道（翻譯是本站整理）。不過，1963 年葛梯爾舉出反例：有理由、也是真的，卻只是碰巧對了。文章說這些例子「appear to refute the JTB analysis」（翻譯是本站整理：看起來推翻了這個三條件分析）。所以，真和好的理由通常被當成知道的必要條件；多數哲學家認為這三個條件還不夠，至於要補上什麼，還在討論（本站整理）。
+  - 歷史課綱要高中生「分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。」也要「綜合歷史知識與史料證據，提出個人的分析與詮釋。」國語課的議論文本則要「以事實、理論為論據，達到說服、建構、批判等目的。」
+  qa:
+    question: 相信一件事，和知道一件事差在哪裡？
+    answer: 相信只要你心裡這樣想；知道還要它是真的，而且你有好的理由。文章說傳統分析認為「justified true belief is necessary and sufficient for knowledge.」（翻譯是本站整理：傳統上認為，有理由的真信念就是知識）。後來有反例挑戰這個說法（本站整理）。猜中答案的人相信了，答案也是真的，但沒有理由，還不算知道（例子是本站整理）。
+    source: sep-knowledge
+  items_title: 課綱裡的證據與論據
+  items:
+  - title: 分辨事實證據解釋
+    text: 社會 歷 3b-V-3：分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。
+    code: 歷 3b-V-3
+  - title: 綜合史料提出詮釋
+    text: 社會 歷 1c-V-2：綜合歷史知識與史料證據，提出個人的分析與詮釋。
+    code: 歷 1c-V-2
+  - title: 以事實理論為論據
+    text: 國語文 Bd-V-1：以事實、理論為論據，達到說服、建構、批判等目的。
+    code: Bd-V-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好四種例子
+  - 準備對照表
+  figures:
+  - tok-compare
+  notes:
+  - 社會的代碼：開頭的歷是歷史的學習表現；中間的 V 是第五學習階段（高中）。
+  - 國語文的代碼：大寫字母開頭的是學習內容，Bd 是議論文本；中間的 V 是第五學習階段（高中）。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - sep-knowledge
+  - social108
+  - kuoyu
+  - zonggang
+how:
+  heading: 比較四種讓人信服的方式
+  body:
+  - 先問知識從哪裡來。研究知識論的文章說，信念要算知識，來源要可靠，並列出「perception, introspection, memory, reason, and testimony.」，也就是知覺、內省、記憶、推理和他人的證詞（翻譯是本站整理）。歷史課本屬於證詞：你沒有親眼看到，是相信寫書的人和他們用的史料（本站整理）。
+  - 再比較四個領域：數學靠證明，從前提一步步推出結論；科學靠實驗和觀察，別人可以重做來檢查；歷史靠史料，要分辨事實、史料證據和解釋，再看證據適不適切；藝術評論靠理由和作品裡的細節，讓別人看見你看到的東西（本站整理）。
+  - 所以，你憑什麼相信歷史課本？不是因為它印成書，而是因為它的說法有史料支持；不同的書解釋不同時，要回去看它們用了哪些史料、證據夠不夠（本站整理）。寫短文時，每個領域寫一句它怎麼讓人信服、一個例子、一個限制（本站建議）。
+  qa:
+    question: 歷史課本寫的事，你憑什麼相信？
+    answer: 因為課本的說法有史料支持，你信的是寫書的人整理過的證據。知識論的文章把「testimony」列為知識的來源之一（翻譯是本站整理：他人的證詞）；證詞可不可信，要看來源可不可靠，所以遇到不同說法時，要回去查它們用了哪些史料（本站整理）。
+    source: sep-epist
+  items_title: 短文每段寫
+  items:
+  - title: 怎麼讓人信服
+    text: 證明、實驗、史料或理由。
+  - title: 一個例子
+    text: 從自己的學科找。
+  - title: 一個限制
+    text: 這種方式哪裡會出錯。
+  checklist_title: 寫完檢查一下
+  checklist:
+  - 四個領域都有
+  - 每段有例子
+  - 每段有限制
+  activity_figure: tok-flow
+  sources:
+  - sep-epist
+what:
+  heading: 說得出知識的理由
+  body:
+  - 學完後，學生能說出相信和知道的差別，比較數學證明、科學實驗、歷史史料、藝術評論四種讓人信服的方式，並寫一篇短文，每種方式都有一個例子和一個限制。
+  items_title: 學完能做到
+  items:
+  - title: 分辨相信與知道
+    text: 知道還要真和理由。
+  - title: 比較四種方式
+    text: 數學、科學、歷史、藝術。
+  - title: 寫出限制
+    text: 每種方式哪裡會出錯。
+  checklist_title: 家長檢核
+  checklist:
+  - 短文寫完
+  - 四種都有例子
+  - 說得出差別
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: tok-flow
+  type: flow
+  alt: 寫短文的四步驟：我選四個領域，我各找一個例子，我寫出各自的限制，全班交換短文互評。
+  steps:
+  - actor: 我
+    text: 選四個領域
+  - actor: 我
+    text: 各找例子
+  - actor: 我
+    text: 寫出限制
+  - actor: 全班
+    text: 交換互評
+  source: sep-epist
+  caption: 流程是本站建議。
+- id: tok-compare
+  type: compare
+  alt: 比較相信與知道：相信是心裡認為它是真的，例如猜考試會考第三章；知道還要它是真的、而且有好的理由，例如老師已經公布考試範圍。
+  source: sep-knowledge
+  relation: not_equal
+  items:
+  - term: 相信
+    note: 心裡認為是真的
+  - term: 知道
+    note: 是真的，而且有理由
+  caption: 例子是本站整理。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：歷 3b-V-3「分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。」（p.11–12）；歷 1c-V-2「綜合歷史知識與史料證據，提出個人的分析與詮釋。」（p.9）；領域核心素養：社-U-A2「對人類生活相關議題，具備探索、思考、推理、分析、批判、統整與後設思考的素養，並能提出解決各種問題的可能策略。」（p.3）；社-U-B1「運用語言、文字、圖表、影像、肢體等表徵符號，表達經驗、思想、價值與情意，且能同理他人所表達之意涵，增進與他人溝通。」（p.4）；時間分配：普通型高級中等學校「在領域課程架構下，以實施歷史、地理、公民與社會的分科教學為原則」（p.2）；「部定必修課程每科目總學分數6學分，可在不同年級規劃修習不同科目」（p.2）；代碼說明：學習表現「國民中學與普通型高級中等學校若為領域共同的學習表現，則第 1碼前以『社』標示，若為各科目內涵則第 1 碼前以『歷』、『地』、『公』標示。」（p.6）
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：Bd-V-1「以事實、理論為論據，達到說服、建構、批判等目的。」（p.17）；領域核心素養：國S-U-A2「透過統整文本的意義和規律，培養深度思辨及系統思維的能力，體會文化底蘊，進而感知人生的困境，積極面對挑戰，以有效處理及解決人生的各種問題。」（p.3）；國S-U-B1「運用國語文表達自我的經驗、理念與情意，並學會從他人的角度思考問題，尋求共識，具備與他人有效溝通與協商的能力。」（p.4）；代碼說明：學習表現「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習內容「編碼說明，第一碼為『主題及項目』，以大寫英文及小寫英文編號」（p.12）；文本表述「可分為『記敘文本』、『抒情文本』、『說明文本』、『議論文本』及『應用文本』五項。」（p.12）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-B1「具備掌握各類符號表達的能力，以進行經驗、思想、價值與情意之表達，能以同理心與他人溝通並解決問題。」（p.5）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: sep-knowledge
+  title: The Analysis of Knowledge（Stanford Encyclopedia of Philosophy）
+  publisher: Jonathan Jenkins Ichikawa、Matthias Steup；2001 年 2 月 6 日首次發表，2026 年 1 月 21 日實質修訂（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/knowledge-analysis/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: §1「According to this analysis, justified true belief is necessary and sufficient for knowledge.」；§1.1「Most epistemologists agree that what is false cannot be known.」；§3「Since they appear to refute the JTB analysis, many epistemologists, especially in the late 20th century, undertook the project of attempting to amend that analysis to provide an adequate account.」；§3「Although most agree that each element of the tripartite theory is necessary for knowledge, it is widely accepted that they are not themselves sufficient」
+- id: sep-epist
+  title: Epistemology（Stanford Encyclopedia of Philosophy）
+  publisher: Matthias Steup、Ram Neta；2005 年首次發表，2024 年 10 月 26 日實質修訂（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/epistemology/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「For true beliefs to count as knowledge, it is necessary that they originate in sources we have good reason to consider reliable. These are perception, introspection, memory, reason, and testimony.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-30'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）

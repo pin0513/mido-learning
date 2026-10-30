@@ -4,17 +4,17 @@ import { test, expect } from "@playwright/test";
  * 學門總圖。只在 KP_HOME_ENABLED=true 的行程跑（E2E_CITY_HOME=1）。
  * 旗標關閉的首頁由 kp-flags-off.spec.ts 覆蓋，這支檔案會整組跳過。
  */
-// B21 發布 ph.parts@es 後，改用它的下一階草稿 ph.feedback@jh；B22 發布 ph.feedback@jh 後，改用仍是草稿的 ph.science@sh。
+// B21 發布 ph.parts@es 後，改用它的下一階草稿 ph.feedback@jh；B22 發布 ph.feedback@jh 後，改用仍是草稿的 ph.science@sh；B23 發布哲學 sh 7 點後，三個 sh 標題改用同一條路線上仍是草稿的大學點 ph.philsci、ph.formal、ph.complex。
 const DRAFT_TITLES = [
-  "科學哲學：可檢驗與會修正",
+  "研究設計與科學方法的限制",
   // B11–B13 已發布數學全部 26 點，B14–B16 已發布資訊與 AI 全部 25 點；草稿樣本換成仍是草稿的專案管理點（pm.schedule@uni 接在 pm.estimate@sh 之後；pm.business@uni、pm.aiteam@uni 由已發布點連過去）。
   // B19 發布 pm.cpm@sh 後，改用由 pm.conflict@sh、pm.style@sh 連過去的草稿 pm.org@uni。
   // B20 發布專案管理 uni 5 點後，專案管理全部發布，改用 pm uni 點連過去、仍是草稿的哲學點（ph.epistem、ph.applied、ph.aimind）與 ph.systems。
   "知識論與不確定性",
   "應用倫理：科技、商業與專業責任",
-  "認知偏誤與思考盲點",
+  "形式邏輯與論證分析",
   "AI 時代的思考：人機分工與判斷",
-  "系統思考：槓桿點與非預期後果",
+  "複雜性思維與模型的限度",
 ];
 
 test.describe("學門總圖", () => {

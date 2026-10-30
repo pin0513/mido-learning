@@ -2,8 +2,10 @@ import Link from "next/link";
 import { Fragment, type ReactNode } from "react";
 
 const ROMAN = "IV|III|II|V|I";
+/** Vc（自然科學高中必修）只接在字母開頭的代碼後面，例如 an-Vc-2。 */
+const ROMAN_VC = "IV|III|II|Vc|V|I";
 const PERF = `(?:[\\u4e00-\\u9fff] )?[0-9]{1,2}[a-z]?-(?:${ROMAN})-[0-9]{1,2}`;
-const CONTENT = `(?:[\\u4e00-\\u9fff] )?(?:[A-Za-z]{1,2}-(?:${ROMAN})-[0-9]{1,2}|[A-Z]-(?:[1-9]|1[0-2])[A-Z]?-[0-9]{1,2})`;
+const CONTENT = `(?:[\\u4e00-\\u9fff] )?(?:[A-Za-z]{1,2}-(?:${ROMAN_VC})-[0-9]{1,2}|[A-Z]-(?:[1-9]|1[0-2])[A-Z]?-[0-9]{1,2})`;
 const ONE = `(?:${PERF}|${CONTENT})`;
 const CODE = `${ONE}(?:\\s*[~～〜]\\s*${ONE}|[~～〜]\\d{1,2})?`;
 /** 書名號、課綱代碼（含 3-I-1～3-I-4 這種區間）、注音音節（含調號，以及「把ㄅㄚˇ」這種例字）。 */

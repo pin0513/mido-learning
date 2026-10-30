@@ -5,25 +5,26 @@ import { buildHomeDiagram } from "./home-diagram";
 import { publicDisciplineIds } from "./home-public";
 import { routeWires } from "./home-wires";
 
-// B21 發布 ph.parts@es 後，改用它的下一階草稿 ph.feedback@jh；B22 發布 ph.feedback@jh 後，改用仍是草稿的 ph.science@sh。
+// B21 發布 ph.parts@es 後，改用它的下一階草稿 ph.feedback@jh；B22 發布 ph.feedback@jh 後，改用仍是草稿的 ph.science@sh；B23 發布哲學 sh 7 點後，改用仍是草稿的 ph.philsci@uni、ph.formal@uni。
 const DRAFT_TITLES = [
-  "科學哲學：可檢驗與會修正",
+  "研究設計與科學方法的限制",
   "規律與關係",
   "用字母代表數：方程式",
-  "認知偏誤與思考盲點",
+  "形式邏輯與論證分析",
   "統計推論：用機率檢核說法",
   "從平均變化率到瞬間變化率",
   // B19 發布 pm.cpm@sh 後改用仍是草稿的大學點；B20 專案管理全部發布，改用哲學的大學草稿。
   "知識論與不確定性",
 ];
 
-// B20：原本的 pm.business、pm.schedule 已發布，改用哲學草稿 ph.epistem、ph.aimind。B21：ph.parts@es 已發布，改用 ph.feedback。B22：ph.feedback@jh 已發布，改用 ph.science。
-const DRAFT_SLUGS = ["ph.epistem", "ph.science", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "ph.aimind"];
+// B20：原本的 pm.business、pm.schedule 已發布，改用哲學草稿 ph.epistem、ph.aimind。B21：ph.parts@es 已發布，改用 ph.feedback。B22：ph.feedback@jh 已發布，改用 ph.science。B23：ph.science、ph.bias 已發布，改用 ph.philsci、ph.formal。
+const DRAFT_SLUGS = ["ph.epistem", "ph.philsci", "ph.formal", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "ph.aimind"];
 
-// 已發布的點才有頁面連結：ph.reason@es，B11 發布的數學 es／jh 12 點，B12 發布的數學 sh 7 點，B13 發布的數學 uni 7 點，B14 發布的資訊與 AI es／jh 12 點，B15 發布的資訊與 AI sh 7 點，B16 發布的資訊與 AI uni 6 點，以及 B17 發布的專案管理 es 5 點（專案管理的點另外在第一個測試逐一檢查），B21 發布的哲學 es 5 點，B22 發布的哲學 jh 6 點。
+// 已發布的點才有頁面連結：ph.reason@es，B11 發布的數學 es／jh 12 點，B12 發布的數學 sh 7 點，B13 發布的數學 uni 7 點，B14 發布的資訊與 AI es／jh 12 點，B15 發布的資訊與 AI sh 7 點，B16 發布的資訊與 AI uni 6 點，以及 B17 發布的專案管理 es 5 點（專案管理的點另外在第一個測試逐一檢查），B21 發布的哲學 es 5 點，B22 發布的哲學 jh 6 點，B23 發布的哲學 sh 7 點。
 const PUBLISHED = new Set([
   "ph.reason@es", "ph.question@es", "ph.fact@es", "ph.know@es", "ph.fair@es", "ph.parts@es",
   "ph.argument@jh", "ph.fallacy@jh", "ph.evidence@jh", "ph.feedback@jh", "ph.hypothesis@jh", "ph.ethics@jh",
+  "ph.logic@sh", "ph.science@sh", "ph.tok@sh", "ph.bias@sh", "ph.aijudge@sh", "ph.systems@sh", "ph.ethicstheory@sh",
   "ma.number@es", "ma.pattern@es", "ma.data@es", "ma.measure@es", "ma.shape@es", "ma.fraction@es",
   "ma.algebra@jh", "ma.coord@jh", "ma.prob@jh", "ma.pythag@jh", "ma.quadratic@jh", "ma.similar@jh",
   "ma.function@sh", "ma.proof@sh", "ma.rate@sh", "ma.sequence@sh", "ma.stats@sh", "ma.trig@sh", "ma.vector@sh",

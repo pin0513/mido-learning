@@ -16,6 +16,8 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   { path: "/kp/ph.fair/es", layer: "本質", verify: false, converted: true },
   // B22 已轉換並發布哲學 jh 6 點；ph.hypothesis@jh 是自然科學與數學兩個領域的國中點（學習表現代碼都是小寫字母開頭）。
   { path: "/kp/ph.hypothesis/jh", layer: "本質", verify: false, converted: true },
+  // B23 已轉換並發布哲學 sh 7 點；ph.systems@sh 是社會與自然科學兩個領域的高中點（自然科學代碼 tm-Vc-1 是第五學習階段的 Vc）。
+  { path: "/kp/ph.systems/sh", layer: "本質", verify: false, converted: true },
   { path: "/kp/sk.voice/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/en.abc/es", layer: "基礎", verify: false, converted: true },
   // B11 已轉換並發布 ma.number@es（to_verify: false）；B16 已轉換並發布 it.nn@uni（進階層，to_verify: false）。

@@ -50,11 +50,7 @@ const ISSUES = [
   "原住民族教育",
 ] as const;
 
-// 下面三個常數已搬到 rules/point.ts。B23（Vc 代碼）會改到緊接著的 ROMAN_STAGE，等它合併後再刪，避免衝突。
-const AUDIENCE = new Set<string>(["kid", "adult", "family"]);
-const A_LEVEL_KINDS = new Set(["curriculum", "government", "exam"]);
-const CIRCLE_KEYS = ["why", "how", "what"] as const;
-const ROMAN_STAGE: Record<string, number> = { I: 1, II: 2, III: 3, IV: 4, V: 5 };
+const ROMAN_STAGE: Record<string, number> = { I: 1, II: 2, III: 3, IV: 4, V: 5, Vc: 5 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -67,12 +63,15 @@ function sameSet(actual: string[], expected: readonly string[]): boolean {
 }
 
 const CODE_ROMAN = "IV|III|II|V|I";
+/** Vc（自然科學高中必修）只接在字母開頭的代碼後面，例如 an-Vc-2；數字開頭的 2-Vc-1 不是課綱代碼。 */
+const CODE_ROMAN_VC = "IV|III|II|Vc|V|I";
 
 /** 從代碼推出學習階段。有羅馬數字用羅馬數字；數學的年級碼（D-10-2、D-11A-1、N-3-9）對到該年級所屬階段。 */
 function stageFromCode(code: string): number | null {
   const body = code.replace(/^[\u4e00-\u9fff] /, "");
-  const roman = new RegExp(`^(?:[0-9]{1,2}[a-z]?|[A-Za-z]{1,2})-(${CODE_ROMAN})-[0-9]{1,2}$`).exec(body);
-  if (roman?.[1]) return ROMAN_STAGE[roman[1]] ?? null;
+  const roman = new RegExp(`^(?:[0-9]{1,2}[a-z]?-(${CODE_ROMAN})|[A-Za-z]{1,2}-(${CODE_ROMAN_VC}))-[0-9]{1,2}$`).exec(body);
+  const r = roman?.[1] ?? roman?.[2];
+  if (r) return ROMAN_STAGE[r] ?? null;
   const grade = /^[A-Z]-(?:([1-9]|1[0-2]))[A-Z]?-[0-9]{1,2}$/.exec(body);
   if (!grade?.[1]) return null;
   const year = Number(grade[1]);

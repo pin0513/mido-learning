@@ -248,6 +248,7 @@ function runSelfTest(): string[] {
     ["國小數學代碼", "contents", "n-III-99"],
     ["自然科學學習表現", "performances", "tm-IV-99"],
     ["數學學習表現", "performances", "d-IV-99"],
+    ["自然科學高中必修學習表現", "performances", "an-Vc-99"],
   ] as const;
   for (const [label, field, code] of accepted) {
     const quoted = code.includes(" ") ? `"${code}"` : code;
@@ -264,6 +265,9 @@ function runSelfTest(): string[] {
   const rejected = [
     ["多一個字母", "performances", "1bb-III-1"],
     ["三個小寫字母", "performances", "tmm-IV-1"],
+    ["Vc 以外的階段字尾", "performances", "an-Va-1"],
+    ["IV 加字尾", "performances", "1-IVc-1"],
+    ["數字開頭接 Vc", "performances", "2-Vc-1"],
     ["Unicode 羅馬數字", "performances", "2-Ⅱ-4"],
     ["核心素養代碼", "performances", "綜-E-A2"],
     ["前綴少空格", "contents", "家Ca-IV-1"],
