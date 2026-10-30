@@ -4,9 +4,9 @@ import { test, expect } from "@playwright/test";
  * 學門總圖。只在 KP_HOME_ENABLED=true 的行程跑（E2E_CITY_HOME=1）。
  * 旗標關閉的首頁由 kp-flags-off.spec.ts 覆蓋，這支檔案會整組跳過。
  */
-// B21 發布 ph.parts@es 後，改用它的下一階草稿 ph.feedback@jh。
+// B21 發布 ph.parts@es 後，改用它的下一階草稿 ph.feedback@jh；B22 發布 ph.feedback@jh 後，改用仍是草稿的 ph.science@sh。
 const DRAFT_TITLES = [
-  "因果鏈與回饋迴圈",
+  "科學哲學：可檢驗與會修正",
   // B11–B13 已發布數學全部 26 點，B14–B16 已發布資訊與 AI 全部 25 點；草稿樣本換成仍是草稿的專案管理點（pm.schedule@uni 接在 pm.estimate@sh 之後；pm.business@uni、pm.aiteam@uni 由已發布點連過去）。
   // B19 發布 pm.cpm@sh 後，改用由 pm.conflict@sh、pm.style@sh 連過去的草稿 pm.org@uni。
   // B20 發布專案管理 uni 5 點後，專案管理全部發布，改用 pm uni 點連過去、仍是草稿的哲學點（ph.epistem、ph.applied、ph.aimind）與 ph.systems。

@@ -1,52 +1,221 @@
 id: ph.argument@jh
 concept: ph.argument
 title: 論證的結構：前提與結論
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 邏輯與論證
+  - 哲學
+  - 思考方法
+  - 邏輯與論證
   layer: essence
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
-    - 語文
+  - 語文
   core_competencies:
-    - A2
-    - B1
+  - A2
+  - B1
   issues: []
+  performances:
+  - 2-IV-3
+  - 5-IV-2
+  contents:
+  - Bd-IV-1
+  - Bd-IV-2
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、B1：依總綱 p.4–6 國民中學教育的 J-A2、J-B1 與國語文領綱 p.3–4 的國-J-A2、國-J-B1原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對；跨頁的標 p.a–b）。
+- stage.grades 填 7、8、9：本點的代碼都是第四學習階段（IV），國中的學習重點沒有再分年級；總綱 p.7 說國民中學七、八、九年級為第四學習階段。
+- est_time 依國語文領綱 p.2 時間分配表：國民中學七至九年級國語文每週 5 節；本點建議在國語課讀議論文時做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，數學領綱少 3，社會、自然科學、綜合活動領綱與總綱少 4，議題融入說明手冊少 16。
+- 新增學習內容代碼 Bd-IV-2（p.17，與代碼表既有的 Bd-IV-1 同頁）；2-IV-3、5-IV-2、Bd-IV-1 沿用代碼表的文字與頁碼。
+- 原 idea 的兩個引號拿掉（不是引文），改成先找出它想說服我什麼，再看它用什麼支持。
+- 原 scenario 保留做法，補上由老師挑一篇社論，並標本站建議；社論例子（學生睡太少、學校應該晚點上課）是本站整理。
+- 原 ai.delegable「協助標出前提與結論，供你核對」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- Argument and Argumentation 是 Stanford Encyclopedia of Philosophy 的條目（Catarina Dutilh Novaes），英文短句引用，中文說明是本站整理。
 prerequisites:
-  - ph.reason@es
+- ph.reason@es
 links:
   why: []
   how: []
   related: []
   deeper:
-    - ph.logic@sh
-link_notes: 語文（議論文）
+  - ph.logic@sh
+link_notes: 語文（議論文）；國語文 2-IV-3、5-IV-2、Bd-IV-1、Bd-IV-2。
 competency:
   specialist:
-    - 論證
+  - 論證
   generalist:
-    - 提問
-    - 溝通
+  - 提問
+  - 溝通
 ai:
   delegable:
-    - 協助標出前提與結論，供你核對
+  - 協助標出前提與結論，供你核對（由老師或家長操作，本站建議）
   human_experience:
-    - 自己拆解並判斷前提是否可接受
-idea: 一段論證由前提和結論組成。先找出「它想說服我什麼」，再看「它用什麼支持」。
+  - 自己拆解並判斷前提是否可接受
+idea: 一段論證由前提和結論組成。先找出它想說服我什麼，再看它用什麼支持。
 guiding_questions:
-  - 如果某個前提是錯的，結論還站得住嗎？
-scenario: 把一篇報紙社論拆成前提與結論，畫成論證圖，找出沒說出口的前提。
+- 如果某個前提是錯的，結論還站得住嗎？
+- 怎麼找出一段文字的結論？
+- 沒說出口的前提要怎麼找？
+scenario: 老師挑一篇報紙社論，學生把它拆成前提與結論，畫成論證圖，再找出沒說出口的前提（本站建議）。
 formats:
   slides: []
+  exercise: 目標：讀一篇議論文或社論，能標出結論和支持它的前提，畫成論證圖，並找出一個沒說出口的前提。　檢核：家長或老師看論證圖：結論只有一個，寫在最上面，每個前提都用箭頭連到它支持的句子；孩子說得出一個沒寫出來、但論證需要的前提，也說得出如果某個前提錯了，結論會怎樣。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 讀一篇議論文或社論，能標出結論和支持它的前提，畫成論證圖，並找出一個沒說出口的前提。
+review: 家長或老師看論證圖：結論只有一個，寫在最上面，每個前提都用箭頭連到它支持的句子；孩子說得出一個沒寫出來、但論證需要的前提，也說得出如果某個前提錯了，結論會怎樣。
+est_time:
+  school: 國中七至九年級國語課
+  source: kuoyu
+why:
+  heading: 看懂別人怎麼說服你
+  body:
+  - 報紙社論、網路貼文和廣告都在說服我們。研究論證的文章說，一段論證裡「some parts, known as the premises, offer support to another part, the conclusion」，也就是有些句子是前提，用來支持另一句結論（翻譯是本站整理）。看懂這個結構，才知道對方想說服你什麼、拿什麼來支持。
+  - 國語課綱要國中生「理解各類文本的句子、段落與主要概念，指出寫作的目的與觀點。」議論文本的學習內容也說，議論要「以事實、理論為論據，達到說服、建構、批判等目的。」自己說理時，也要「明確表達意見，進行有條理的論辯」。
+  qa:
+    question: 如果某個前提是錯的，結論還站得住嗎？
+    answer: 不一定。前提是用來支持結論的，論證的文章說，前提可能「guarantee the truth of the conclusion, or make its truth more probable」，也就是保證結論為真，或讓結論比較可能為真（翻譯是本站整理）。前提錯了，這份支持就不見了；結論也許另有理由，要再找找看（本站整理）。
+    source: sep-argument
+  items_title: 國語文領綱的學習重點
+  items:
+  - title: 指出寫作目的與觀點
+    text: 國語文 5-IV-2：理解各類文本的句子、段落與主要概念，指出寫作的目的與觀點。
+    code: 5-IV-2
+  - title: 有條理的論辯
+    text: 國語文 2-IV-3：依理解的內容，明確表達意見，進行有條理的論辯，並注重言談禮貌。
+    code: 2-IV-3
+  - title: 以事實理論為論據
+    text: 國語文 Bd-IV-1：以事實、理論為論據，達到說服、建構、批判等目的。
+    code: Bd-IV-1
+  - title: 比較與比喻的論證
+    text: 國語文 Bd-IV-2：論證方式如比較、比喻等。
+    code: Bd-IV-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好一篇社論
+  - 準備紙和筆
+  figures:
+  - argument-compare
+  notes:
+  - 國語文的代碼：數字開頭的是學習表現，第一碼是類別（1 聆聽、2 口語表達、5 閱讀）；大寫字母開頭的是學習內容，Bd 是議論文本；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 總綱把國民中學七、八、九年級定為第四學習階段，所以本頁代碼中間都是 IV。
+  sources:
+  - sep-argument
+  - kuoyu
+  - zonggang
+how:
+  heading: 畫論證圖：先找結論
+  body:
+  - 先找結論：問自己，這篇文章想要我相信什麼？結論常跟在所以、因此後面，前提常跟在因為、由於後面；論證的文章說，前提和結論之間常有「a stated or implicit marker」，也就是寫出來或沒寫出來的連接詞（翻譯是本站整理）。把結論寫在紙的最上面，前提寫在下面，再用箭頭連到它支持的句子（本站建議）。
+  - 再找沒說出口的前提：假設寫出來的前提都對，結論還差哪一句才會成立？缺的那一句就是沒說出口的前提。例如社論說學生睡太少，所以學校應該晚點上課，沒說出口的前提是晚點上課學生就會多睡（例子是本站整理）。如果某個前提是錯的，結論就少了一個支撐，要再找別的理由才站得住。
+  - 最後看前提怎麼支持：有的拿事實當論據，有的用比較或比喻，課綱說「論證方式如比較、比喻等。」用比喻時要問兩件事像不像；論證的文章說，這種論證的第一個前提要「establishes the analogy between two situations」，也就是先說明兩種情況相像（翻譯是本站整理）。
+  qa:
+    question: 沒說出口的前提要怎麼找？
+    answer: 假設寫出來的前提都對，再問：結論還差哪一句才會成立？缺的那一句就是沒說出口的前提（本站整理）。因為論證是前提支持結論：「some parts, known as the premises, offer support to another part, the conclusion」，支持不夠的地方，常常就藏著沒說的前提。
+    source: sep-argument
+  items_title: 四步做
+  items:
+  - title: 找結論
+    text: 這篇想要我相信什麼？
+  - title: 連前提
+    text: 用箭頭連到它支持的句子。
+  - title: 補隱藏前提
+    text: 結論還差哪一句？
+  - title: 看支持方式
+    text: 事實、比較或比喻。
+  checklist_title: 畫完檢查一下
+  checklist:
+  - 結論只有一個
+  - 前提都有箭頭
+  - 補上隱藏前提
+  activity_figure: argument-flow
+  sources:
+  - sep-argument
+  - kuoyu
+what:
+  heading: 拆得開別人的說理
+  body:
+  - 學完後，孩子讀一篇議論文或社論，能標出結論和支持它的前提，畫成論證圖，找出一個沒說出口的前提，也說得出如果某個前提錯了，結論會怎樣。
+  items_title: 學完能做到
+  items:
+  - title: 標出結論
+    text: 找出這篇想說服你什麼。
+  - title: 畫論證圖
+    text: 前提用箭頭連到結論。
+  - title: 找隱藏前提
+    text: 補上沒說出口的那句。
+  checklist_title: 家長檢核
+  checklist:
+  - 論證圖畫好了
+  - 補上隱藏前提
+  - 說得出前提錯時
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  - 本頁的 AI 活動由老師或家長操作，孩子在旁邊一起看、一起檢查 AI 的回答（本站建議）。
+  sources:
+  - genai-student
+figures:
+- id: argument-flow
+  type: flow
+  alt: 論證圖四步驟：我找出結論，我連上前提，我補上沒說出口的前提，全班比較彼此的論證圖。
+  steps:
+  - actor: 我
+    text: 找出結論
+  - actor: 我
+    text: 連上前提
+  - actor: 我
+    text: 補隱藏前提
+  - actor: 全班
+    text: 比較論證圖
+  source: sep-argument
+  caption: 流程是本站建議。
+- id: argument-compare
+  type: compare
+  alt: 比較前提與結論：前提是拿來支持的句子，例如學生睡太少；結論是想要你相信的句子，例如學校應該晚點上課。
+  source: sep-argument
+  relation: not_equal
+  items:
+  - term: 前提
+    note: 學生睡太少
+  - term: 結論
+    note: 學校應該晚點上課
+  caption: 例子是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：2-IV-3「依理解的內容，明確表達意見，進行有條理的論辯，並注重言談禮貌。」（p.8）；5-IV-2「理解各類文本的句子、段落與主要概念，指出寫作的目的與觀點。」（p.11）；Bd-IV-1「以事實、理論為論據，達到說服、建構、批判等目的。」（p.17）；Bd-IV-2「論證方式如比較、比喻等。」（p.17）；領域核心素養：國-J-A2「透過欣賞各類文本，培養思辨的能力，並能反思內容主題，應用於日常生活中，有效處理問題。」（p.3）；國-J-B1「運用國語文表情達意，增進閱讀理解，進而提升欣賞及評析文本的能力，並能傾聽他人的需求、理解他人的觀點，達到良性的人我溝通與互動。」（p.4）；時間分配：「國語文各教育階段之時間分配如下」（p.2），表中國民中學七至九年級每週 5 節；代碼說明：學習表現「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）；學習內容「編碼說明，第一碼為『主題及項目』，以大寫英文及小寫英文編號」（p.12）；文本表述「可分為『記敘文本』、『抒情文本』、『說明文本』、『議論文本』及『應用文本』五項。」（p.12）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民中學教育）：J-A2「具備理解情境全貌，並做獨立思考與分析的知能，運用適當的策略處理解決生活及生命議題。」（p.4）；J-B1「具備運用各類符號表情達意的素養，能以同理心與人溝通互動，並理解數理、美學等基本概念，應用於日常生活中。」（p.5）；學習階段「國民中學七、八、九年級為第四學習階段」（p.7）
+- id: sep-argument
+  title: Argument and Argumentation（Stanford Encyclopedia of Philosophy）
+  publisher: Catarina Dutilh Novaes（Stanford Encyclopedia of Philosophy；2021 年 7 月 16 日首次發表）
+  url: https://plato.stanford.edu/entries/argument/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「some parts, known as the premises, offer support to another part, the conclusion」；「the premises may guarantee the truth of the conclusion, or make its truth more probable」；「a stated or implicit marker」；「The first premise establishes the analogy between two situations」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

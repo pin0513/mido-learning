@@ -1,54 +1,228 @@
 id: ph.hypothesis@jh
 concept: ph.hypothesis
 title: 假設與實驗：把問題變成可以檢驗的
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 提問與探究
+  - 哲學
+  - 思考方法
+  - 提問與探究
   layer: essence
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
-    - 自然科學
-    - 數學
+  - 自然科學
+  - 數學
   core_competencies:
-    - A2
-    - B1
+  - A2
+  - B1
   issues: []
+  performances:
+  - po-IV-2
+  - pe-IV-1
+  - d-IV-1
+  contents: []
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、B1：依總綱 p.4–6 國民中學教育的 J-A2、J-B1 與自然科學領綱 p.4–5 的自-J-A2、自-J-B1，數學領綱 p.3–4 的數-J-A2、數-J-B1原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對；跨頁的標 p.a–b）。
+- stage.grades 填 7、8、9：本點的代碼都是第四學習階段（IV），國中的學習重點沒有再分年級；總綱 p.7 說國民中學七、八、九年級為第四學習階段。
+- est_time 依自然科學領綱 p.3：國民中學七至九年級自然科學每週 3 節；本點建議在自然課做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，數學領綱少 3，社會、自然科學、綜合活動領綱與總綱少 4，議題融入說明手冊少 16。
+- 新增學習表現代碼 po-IV-2、pe-IV-1（自然科學 p.21）與 d-IV-1（數學 p.12，與代碼表既有的 d-IV-2 同頁）。
+- 核心素養 B1 保留：自-J-B1 要學生製作圖表、使用數學運算整理數據，數-J-B1 要學生以基本的統計量描述不確定性，本點用平均數比較飛行距離。
+- 原 scenario 的引號拿掉（不是引文），補上在空曠的地方朝沒有人的方向丟；每種飛 5 次是示意，次數依場地和時間調整（本站建議）。
+- 原 ai.delegable「提出可能的變因供你挑選」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- Karl Popper 是 Stanford Encyclopedia of Philosophy 的條目（Stephen Thornton），英文短句引用，中文說明是本站整理；本點只借可否證與事先訂好推翻標準兩個想法。
 prerequisites:
-  - ph.question@es
-  - ph.know@es
+- ph.question@es
+- ph.know@es
 links:
   why: []
   how: []
   related: []
   deeper:
-    - ph.science@sh
-link_notes: 自然科學（理化）、數學（平均數）
+  - ph.science@sh
+link_notes: 自然科學（理化）、數學（平均數）；自然科學 po-IV-2、pe-IV-1，數學 d-IV-1。
 competency:
   specialist:
-    - 科學探究
+  - 科學探究
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 提出可能的變因供你挑選
+  - 提出可能的變因供你挑選（由老師或家長操作，本站建議）
   human_experience:
-    - 動手做、發現實驗出乎意料的地方
+  - 動手做、發現實驗出乎意料的地方
 idea: 好問題可以變成假設，再設計公平的實驗來檢驗：一次只改變一個條件。
 guiding_questions:
-  - 如果結果和你的假設不同，代表你錯了嗎？
-scenario: 設計「哪種紙飛機飛最遠」的對照實驗，每種飛 5 次取平均。
+- 如果結果和你的假設不同，代表你錯了嗎？
+- 怎樣的假設才可以檢驗？
+- 為什麼一次只改變一個條件？
+scenario: 設計哪種紙飛機飛最遠的對照實驗：在空曠的地方朝沒有人的方向丟，每種飛 5 次取平均（次數是示意，本站建議）。
 formats:
   slides: []
+  exercise: 目標：能把一個問題寫成可以檢驗的假設，事先說好怎樣算假設錯了，設計一次只改變一個條件的實驗，並用平均數比較結果。　檢核：家長或老師看實驗紀錄：假設寫成如果……那麼……的句子，事先寫好怎樣算錯；只改變一個條件，其他條件都一樣；每種飛了幾次、平均是多少都有寫。孩子說得出結果和假設不同時，學到了什麼。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 能把一個問題寫成可以檢驗的假設，事先說好怎樣算假設錯了，設計一次只改變一個條件的實驗，並用平均數比較結果。
+review: 家長或老師看實驗紀錄：假設寫成如果……那麼……的句子，事先寫好怎樣算錯；只改變一個條件，其他條件都一樣；每種飛了幾次、平均是多少都有寫。孩子說得出結果和假設不同時，學到了什麼。
+est_time:
+  school: 國中七至九年級自然課
+  source: sci108
+why:
+  heading: 把好奇變成可以檢驗的
+  body:
+  - 自然課綱要國中生「能辨別適合科學探究或適合以科學方式尋求解決的問題（或假說）」，再「規劃具有可信度（例如：多次測量等）的探究活動。」數學課綱也要學生「運用簡單統計量分析資料的特性」。把問題寫成假設，才知道要觀察什麼、怎樣算對或錯。
+  - 哲學家 Popper 認為，科學的假設要能被觀察推翻，他的標準是「if a theory is incompatible with possible empirical observations it is scientific」，也就是一個理論有可能和觀察結果不合，才算科學的（翻譯是本站整理）。科學就是「hypotheses or conjectures are imaginatively proposed and tested」的過程：大膽提出假設，再拿去檢驗（翻譯是本站整理）。
+  qa:
+    question: 如果結果和你的假設不同，代表你錯了嗎？
+    answer: 代表這個假設可能錯了，但你沒有失敗：你學到了這個原因可能不對，或實驗哪裡要改，可以改寫假設再試（本站整理）。Popper 說檢驗前要先講好怎樣算推翻：「criteria of refutation have to be laid down beforehand」，事先說好，結果出來才不會找藉口（翻譯是本站整理）。也要回頭檢查，實驗是不是只改變了一個條件。
+    source: sep-popper
+  items_title: 自然與數學領綱的學習重點
+  items:
+  - title: 提出適宜探究的問題
+    text: 自然科學 po-IV-2：能辨別適合科學探究或適合以科學方式尋求解決的問題（或假說），並能依據觀察、蒐集資料、閱讀、思考、討論等，提出適宜探究之問題。
+    code: po-IV-2
+  - title: 規劃可信的探究
+    text: 自然科學 pe-IV-1：能辨明多個自變項、應變項並計劃適當次數的測試、預測活動的可能結果。在教師或教科書的指導或說明下，能了解探究的計畫，並進而能根據問題特性、資源（例如：設備、時間）等因素，規劃具有可信度（例如：多次測量等）的探究活動。
+    code: pe-IV-1
+  - title: 用統計量分析資料
+    text: 數學 d-IV-1：理解常用統計圖表，並能運用簡單統計量分析資料的特性及使用統計軟體的資訊表徵，與人溝通。
+    code: d-IV-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 找好空曠場地
+  - 準備紀錄表
+  figures:
+  - hypothesis-compare
+  notes:
+  - 自然科學的代碼：小寫字母開頭的是學習表現，po、pe 是問題解決（p）裡的觀察與定題（o）、計劃與執行（e）；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 數學的代碼：第一碼 d 是資料與不確定性，第二碼 IV 是國民中學，第三碼是流水號。
+  - 總綱把國民中學七、八、九年級定為第四學習階段，所以本頁代碼中間都是 IV。
+  sources:
+  - sci108
+  - math108
+  - sep-popper
+  - zonggang
+how:
+  heading: 紙飛機實驗：一次改一個
+  body:
+  - 先寫假設：用如果……那麼……的句子，例如如果機翼摺得比較寬，那麼紙飛機會飛得比較遠（例子是本站整理）。同時寫下怎樣算假設錯了，例如寬翼的平均距離沒有比較遠。可以被結果推翻的假設，才可以檢驗；什麼結果都說得通的，就沒辦法檢驗（本站整理）。
+  - 再設計公平的實驗：一次只改變一個條件，這叫自變項，例如機翼寬度；量的結果叫應變項，例如飛行距離；紙張、丟的人和力道都保持一樣。只改一個條件，結果不同時才知道是它造成的；同時改兩個，就分不出是哪一個（本站整理）。課綱要學生「能辨明多個自變項、應變項並計劃適當次數的測試」。在空曠的地方朝沒有人的方向丟（本站建議）。
+  - 最後算平均：每種飛幾次，把距離加起來除以次數；多飛幾次，比較不會被某一次的意外影響。數學課綱要學生「運用簡單統計量分析資料的特性」。結果和假設不同也沒關係：這代表你學到寬翼可能不是讓它飛遠的原因，或是實驗哪裡要改；改寫假設再試一次（本站整理）。
+  qa:
+    question: 為什麼一次只改變一個條件？
+    answer: 只改一個條件，結果不同時才知道是它造成的；同時改兩個，就分不出是哪一個造成的（本站整理）。課綱要學生「能辨明多個自變項、應變項並計劃適當次數的測試」，先分清楚改的是什麼、量的是什麼。
+    source: sci108
+  items_title: 四步做
+  items:
+  - title: 寫假設
+    text: 如果……那麼……
+  - title: 說好怎樣算錯
+    text: 事先寫下來。
+  - title: 一次改一個
+    text: 其他條件都一樣。
+  - title: 多飛幾次算平均
+    text: 比較平均距離。
+  checklist_title: 實驗時檢查一下
+  checklist:
+  - 只改一個條件
+  - 朝沒人的方向
+  - 記下每一次
+  activity_figure: hypothesis-flow
+  sources:
+  - sci108
+  - math108
+what:
+  heading: 問得出，也驗得了
+  body:
+  - 學完後，孩子能把一個問題寫成可以檢驗的假設，事先說好怎樣算錯，設計一次只改變一個條件的實驗，用平均數比較結果，也說得出結果和假設不同時學到了什麼。
+  items_title: 學完能做到
+  items:
+  - title: 寫成假設
+    text: 可以被結果推翻。
+  - title: 公平的實驗
+    text: 一次只改一個條件。
+  - title: 用平均比較
+    text: 多做幾次再下結論。
+  checklist_title: 家長檢核
+  checklist:
+  - 假設寫好了
+  - 只改一個條件
+  - 算出平均
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  - 本頁的 AI 活動由老師或家長操作，孩子在旁邊一起看、一起檢查 AI 的回答（本站建議）。
+  sources:
+  - genai-student
+figures:
+- id: hypothesis-flow
+  type: flow
+  alt: 紙飛機實驗四步驟：我寫下假設，我說好怎樣算錯，小組一次只改一個條件來飛，小組算平均再比較。
+  steps:
+  - actor: 我
+    text: 寫下假設
+  - actor: 我
+    text: 說好怎樣算錯
+  - actor: 小組
+    text: 一次改一個
+  - actor: 小組
+    text: 算平均比較
+  source: sep-popper
+  caption: 流程是本站建議。
+- id: hypothesis-compare
+  type: compare
+  alt: 比較可以檢驗和沒辦法檢驗的假設：可以檢驗的，例如寬翼會飛比較遠；沒辦法檢驗的，例如這架飛機有時遠有時近。
+  source: sep-popper
+  relation: versus
+  items:
+  - term: 可以檢驗
+    note: 寬翼會飛比較遠
+  - term: 沒辦法檢驗
+    note: 有時遠有時近
+  caption: 例子是本站整理。
+sources:
+- id: sci108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：po-IV-2「能辨別適合科學探究或適合以科學方式尋求解決的問題（或假說），並能依據觀察、蒐集資料、閱讀、思考、討論等，提出適宜探究之問題。」（p.21）；pe-IV-1「能辨明多個自變項、應變項並計劃適當次數的測試、預測活動的可能結果。在教師或教科書的指導或說明下，能了解探究的計畫，並進而能根據問題特性、資源（例如：設備、時間）等因素，規劃具有可信度（例如：多次測量等）的探究活動。」（p.21）；領域核心素養：自-J-A2「能將所習得的科學知識，連結到自己觀察到的自然現象及實驗數據，學習自我或團體探索證據、回應多元觀點，並能對問題、方法、資訊或數據的可信性抱持合理的懷疑態度或進行檢核，提出問題可能的解決方案。」（p.4–5）；自-J-B1「能分析歸納、製作圖表、使用資訊及數學運算等方法，整理自然科學資訊或數據，並利用口語、影像、文字與圖案、繪圖或實物、科學名詞、數學公式、模型等，表達探究之過程、發現與成果、價值和限制等。」（p.5）；時間分配：「國民中學教育階段（七至九年級）自然科學領域學習節數為每週3節」（p.3）；代碼說明：學習表現的項目「思考智能（t）」（p.9）、「問題解決（p）」（p.9）與「科學的態度與本質」（p.9），子項「建立模型（m）」（p.9）、「觀察與定題（o）」（p.9）、「計劃與執行（e）」（p.9）、「養成應用科學思考與探究的習慣（ah）」（p.9），第 2 碼「第四學習階段（七至九年級，國民中學教育階段）」（p.9），領綱用羅馬數字表示，本站整理成拉丁字母 IV；學習內容「14 個主題以大寫英文字母 A~N 表示。」（p.11），次主題「生物體內的恆定性與調節（Dc）」（p.10）
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：d-IV-1「理解常用統計圖表，並能運用簡單統計量分析資料的特性及使用統計軟體的資訊表徵，與人溝通。」（p.12）；領域核心素養：數-J-A2「具備有理數、根式、坐標系之運作能力，並能以符號代表數或幾何物件，執行運算與推論，在生活情境或可理解的想像情境中，分析本質以解決問題。」（p.3–4）；數-J-B1「具備處理代數與幾何中數學關係的能力，並用以描述情境中的現象。能在經驗範圍內，以數學語言表述平面與空間的基本關係和性質。能以基本的統計量與機率，描述生活中不確定性的程度。」（p.4）；代碼說明：「第 1 碼為『表現類別』」…「d（資料與不確定性）表示」（p.8）；「第 2 碼為『學習階段』別，依序為 I（國民小學低年級）、II（國民小學中年級）、III（國民小學高年級）、IV（國民中學）、V（普通型高級中等學校）。」（p.8）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民中學教育）：J-A2「具備理解情境全貌，並做獨立思考與分析的知能，運用適當的策略處理解決生活及生命議題。」（p.4）；J-B1「具備運用各類符號表情達意的素養，能以同理心與人溝通互動，並理解數理、美學等基本概念，應用於日常生活中。」（p.5）；學習階段「國民中學七、八、九年級為第四學習階段」（p.7）
+- id: sep-popper
+  title: Karl Popper（Stanford Encyclopedia of Philosophy）
+  publisher: Stephen Thornton（Stanford Encyclopedia of Philosophy；1997 年首次發表，2026 年 7 月 31 日實質修訂）
+  url: https://plato.stanford.edu/entries/popper/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「if a theory is incompatible with possible empirical observations it is scientific」；「hypotheses or conjectures are imaginatively proposed and tested in order to explain facts or to solve problems」；「criteria of refutation have to be laid down beforehand」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
