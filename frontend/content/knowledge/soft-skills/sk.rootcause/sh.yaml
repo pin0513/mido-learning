@@ -1,8 +1,13 @@
+# B27 提案：sk.rootcause@sh
+# - 補 est_time、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（高中）。
+# - 課綱：數學 d-V-2（選用適當的統計量、處理例外）、綜合活動 家 3a-V-1（善用科技資訊管理事務）、家 Ca-V-1（時間、精力管理）。
+# - 依據：IHI QI Essentials Toolkit 的 Pareto Chart（由大到小排列、百分比、累積百分比；80/20 是大約的經驗法則），小實驗引用 CMS 的 PDSA 範本。
+# - 數學 d-V-2 是新加進代碼表的代碼（見 taxonomy patch）；核心素養 A2、B2 保留。
 id: sk.rootcause@sh
 concept: sk.rootcause
 title: 用資料找真正原因
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -19,10 +24,30 @@ curriculum_108:
   - A2
   - B2
   issues: []
-to_verify: true
+  performances:
+  - d-V-2
+  - 家 3a-V-1
+  contents:
+  - 家 Ca-V-1
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（柏拉圖分析、80/20 經驗法則），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 A2、B2：依總綱 p.4–6 高級中等學校教育的 U-A2、U-B2 與數學領綱的數S-U-A2、數S-U-B2、綜合活動領綱的綜S-U-A2 原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage 不填 grades：綜合活動領綱 p.2 說普通型高中的生命教育、生涯規劃、家政「可在不同年級規劃修習不同科目。」高中的學習重點也沒有分年級；總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段。
+- est_time 寫高中數學或家政課：數學 d-V-2 是高中的數據分析；綜合活動領綱 p.2 的高中部定必修有家政 2 學分，本點的綜合活動代碼出自家政（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱與總綱比 PDF 頁少 4，數學領綱少 3；教育部 AI 指引與學生版注意事項的 PDF 頁就是頁腳印的頁碼；IHI 的 Pareto Chart 工具、CMS 的 PDSA 範本沒有印頁碼或印的就是 PDF 頁，用 PDF 頁。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15、B19、B23 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- 數學 d-V-2（數學領綱 p.13 學習表現表）原本不在代碼表，本批依原文加入（taxonomy patch）；家 3a-V-1、家 Ca-V-1 沿用代碼表的文字與頁碼。數學領綱附錄一把 d-V-2 和數S-U-B2 列在同一列（p.60）。
+- d-V-2 沒有同號：已查健體、國語文、自然科學、科技、社會、英語文、第二外國語文與綜合活動領綱。
+- 原 core_competencies A2、B2 保留：B2 依總綱 U-B2 與數S-U-B2（正確使用計算機和電腦軟體，知道其適用性與限制）；用試算表畫柏拉圖、算百分比時，要自己核對數字（本站建議）。數S-U-B2 的條文接到 p.5，本點只引 p.4 的第一句。
+- 原 idea 保留（80/20 是經驗法則，不是定律）；IHI 原文寫 roughly，本頁寫成大約。
+- 原 guiding question 保留，另加兩題，答案寫在 Why 的問答、How 內文與 How 的問答；原 scenario 的「工作被打斷的原因」拿掉引號並標出一週是示意；原 review 的一週、前兩名標成示意，當下記錄的理由寫在 How。
+- 原 link_notes 的跨學門先學拿掉引號，改寫成數學的整理資料與統計圖（ma.data@es）。
+- 原 ai.delegable「資料整理與畫圖」補上使用條件（本站建議）。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（柏拉圖分析、80/20 經驗法則）…」已處理：依美國健康照護改善研究所（IHI）QI Essentials Toolkit 的 Pareto Chart 工具改寫（由大到小排列、算百分比與累積百分比），英文短句逐字引用，中文說明是本站整理；小實驗引用 CMS 的 PDSA 範本。
+- IHI 工具沒有印頁碼，頁碼用 PDF 頁；Pareto principle、vital few 等詞在原文帶彎引號，本頁不引。IHI 的版權說明允許教育、非營利用途影印，本頁只短句引用並註明出處。柏拉圖是 Pareto chart 的常見中文譯名，和哲學家柏拉圖無關（本站整理）。
+- 英文 PDF 的引文避開彎引號與撇號；PDF 換行處的斷字照原詞接回，其餘空白照原文；中文說明和翻譯是本站整理。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）與《高級中等以下學校人工智慧使用和學習指引》；supports 逐段標頁碼。
 prerequisites:
 - sk.fishbone@jh
 - ma.data@es
@@ -33,7 +58,7 @@ links:
   - ma.stats@sh
   deeper:
   - sk.hypo@uni
-link_notes: 框架：柏拉圖分析、80/20 經驗法則。跨學門先學：數學「整理資料與統計圖」。
+link_notes: 框架：柏拉圖分析（IHI 品質改善工具）、80/20 經驗法則。跨學門先學：數學的整理資料與統計圖（ma.data@es）。數學 d-V-2；綜合活動 家 3a-V-1、家 Ca-V-1。
 competency:
   specialist:
   - 問題解決
@@ -42,21 +67,191 @@ competency:
   - 查證
 ai:
   delegable:
-  - 資料整理與畫圖
+  - 資料整理與畫圖（只輸入分類和次數，不輸入姓名或學校名稱，圖畫好自己核對一次數字，本站建議）
   human_experience:
   - 決定要記錄什麼，親自做實驗
 idea: 想到的原因要用資料確認。把每次發生的情況記下來、分類計數，畫成柏拉圖（由多到少排列），常會發現少數原因造成大部分的問題（80/20 是經驗法則，不是定律）。再對最主要的原因做小實驗。
 guiding_questions:
 - 抱怨最多的原因，一定是影響最大的原因嗎？
-scenario: 親子共學：大人也記一週「工作被打斷的原因」，和孩子的分心紀錄一起畫柏拉圖比較。
+- 柏拉圖要怎麼畫？
+- 為什麼資料要當下記，不能事後回想？
+scenario: 親子共學：大人也記一週（時間是示意）工作被打斷的原因，和孩子的分心紀錄一起畫柏拉圖比較（本站建議）。
 goal: 收集資料、畫柏拉圖找出最主要的原因，再用小實驗驗證。
-review: 收集一週資料（例如每天分心的原因與次數）畫柏拉圖，指出前兩名原因，設計一週的小實驗並報告結果；家長檢查資料是當下記錄，不是事後回想。
+review: 收集一段時間的資料（例如一週內每天分心的原因與次數）畫柏拉圖，指出前兩名原因，設計一週的小實驗並報告結果（一週、前兩名都是示意）；家長檢查資料是當下記錄，不是事後回想。
 formats:
   slides: []
-  exercise: 目標：收集資料、畫柏拉圖找出最主要的原因，再用小實驗驗證。　檢核：收集一週資料（例如每天分心的原因與次數）畫柏拉圖，指出前兩名原因，設計一週的小實驗並報告結果；家長檢查資料是當下記錄，不是事後回想。
+  exercise: 目標：收集資料、畫柏拉圖找出最主要的原因，再用小實驗驗證。　檢核：收集一段時間的資料（例如一週內每天分心的原因與次數）畫柏拉圖，指出前兩名原因，設計一週的小實驗並報告結果（一週、前兩名都是示意）；家長檢查資料是當下記錄，不是事後回想。
 audience:
 - kid
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 高中數學或家政課
+  source: zonghe
+why:
+  heading: 用資料找出主要原因
+  body:
+  - 數學課綱要高中生「能判斷分析數據的時機，能選用適當的統計量作為描述數據的參數，理解數據分析可能產生的例外，並能處理例外。」家政要學生「善用科技、資訊，管理個人與家庭重要事務。」學習內容「時間、精力管理與生活品質。」的補充說明，也要「善用資源與管理技巧，提高時間密度、妥善分配精力與適度休閒。」記下自己分心的原因，就是用資料管理時間（本站整理）。
+  - 美國健康照護改善研究所（IHI）的品質改善工具說，柏拉圖是一種長條圖，「the various factors that contribute to an overall effect are arranged in order from the largest to the smallest contribution to the effect.」，也就是把造成結果的因素由大排到小（翻譯是本站整理）。IHI 也提到常見的說法：「roughly 80% of the effect comes from 20% of the causes.」，大約八成的結果來自兩成的原因；這是經驗法則，不是每次都這樣（翻譯和說明是本站整理）。
+  qa:
+    question: 抱怨最多的原因，一定是影響最大的原因嗎？
+    answer: 不一定。被抱怨最多，可能只是最常被想起來，要用資料比一比（本站整理）。IHI 要人寫下每個因素的「magnitude of each factor」，也就是它的大小，例如發生了幾次（翻譯是本站整理）。分心也一樣：手機可能次數最多，但一次被叫去幫忙可能花掉更多時間；所以先決定要比次數還是分鐘（例子是示意）。
+    source: ihi-pareto
+  items_title: 課綱的學習重點
+  items:
+  - title: 選適當統計量描述數據
+    text: 數學 d-V-2：能判斷分析數據的時機，能選用適當的統計量作為描述數據的參數，理解數據分析可能產生的例外，並能處理例外。
+    code: d-V-2
+  - title: 善用資訊管理事務
+    text: 綜合活動 家 3a-V-1：善用科技、資訊，管理個人與家庭重要事務。
+    code: 家 3a-V-1
+  - title: 時間與精力管理
+    text: 綜合活動 家 Ca-V-1：時間、精力管理與生活品質。
+    code: 家 Ca-V-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 想好要記的問題
+  - 準備紀錄表
+  figures:
+  - rootcause-compare
+  notes:
+  - 數學的代碼：第一碼 d 是資料與不確定性，第二碼 V 是普通型高級中等學校，第三碼是流水號。
+  - 綜合活動高中的代碼：開頭的涯是生涯規劃、家是家政；接著是數字的是學習表現，是大寫字母的是學習內容；中間的 V 是第五學習階段（高中）。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - math108
+  - zonghe
+  - ihi-pareto
+  - zonggang
+how:
+  heading: 當下記錄，畫圖，再做小實驗
+  body:
+  - 先記錄：決定要記什麼，例如每次分心的原因和花掉的分鐘（例子是示意），做一張紀錄表，分心一發生就記，不要等晚上再回想；事後回想容易漏掉，也容易只記得印象最深的幾次（本站建議）。IHI 的第一步就是「Write your data in a simple table」，把因素和數量寫成簡單的表（翻譯是本站整理）。
+  - 再畫柏拉圖：把原因分類、計數，照 IHI 的步驟「Order the factors according to the magnitude of contribution to the effect, from largest to smallest.」，再「Calculate the percentage of the total that each factor represents.」（翻譯是本站整理）。由多到少畫長條，接著「calculate the cumulative percentage for each category until you reach 100%.」，把累積百分比畫成折線（翻譯是本站整理）。看前兩名原因加起來佔了多少（前兩名是示意）。也想想有沒有例外，例如考試前那天特別不一樣（例子是本站整理），這就是課綱說的數據分析可能產生的例外（本站整理）。
+  - 最後做小實驗：只對最主要的原因改一件事，例如讀書時把手機放到另一個房間，做一週（例子和時間是示意），一樣當下記錄；CMS 的改善循環範本也說「Plan a small test of change.」（翻譯是本站整理）。實驗前後的數字變了，也可能是別的原因，例如那週作業比較少，所以也記下那段時間還有什麼不一樣（本站整理）。最後報告：改了什麼、前後的數字、還想再試什麼（本站建議）。
+  qa:
+    question: 為什麼資料要當下記，不能事後回想？
+    answer: 事後回想容易漏掉，也容易只記得印象最深的那幾次，數字就不準了（本站整理）。柏拉圖要先有每個因素的數量，IHI 的第一步是「Write your data in a simple table」，所以當下就把每一次記進表格（翻譯是本站整理）。
+    source: ihi-pareto
+  items_title: 四步做
+  items:
+  - title: 當下記錄
+    text: 一發生就寫進表。
+  - title: 分類計數
+    text: 由多到少排列。
+  - title: 畫柏拉圖
+    text: 看前幾名佔多少。
+  - title: 做小實驗
+    text: 只改一件事再記。
+  checklist_title: 畫圖前檢查一下
+  checklist:
+  - 資料當下記
+  - 原因有分類
+  - 由多到少排
+  - 想過例外
+  activity_figure: rootcause-flow
+  sources:
+  - ihi-pareto
+  - cms-pdsa
+what:
+  heading: 用資料找原因，用實驗驗證
+  body:
+  - 學完後，能當下記錄一段時間的資料，分類計數畫出柏拉圖，指出最主要的原因，並設計一個只改一件事的小實驗，報告前後的結果，也說得出還有哪些別的原因可能影響數字。
+  items_title: 學完能做到
+  items:
+  - title: 畫出柏拉圖
+    text: 由多到少排列。
+  - title: 找出主要原因
+    text: 看前幾名佔多少。
+  - title: 做小實驗
+    text: 前後比較再報告。
+  checklist_title: 家長檢核
+  checklist:
+  - 資料當下記錄
+  - 有柏拉圖
+  - 有小實驗結果
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: rootcause-flow
+  type: flow
+  alt: 找原因五步驟：孩子當下記錄，分類計數，畫柏拉圖，選最主要的原因做小實驗，再報告前後的結果。
+  steps:
+  - actor: 孩子
+    text: 當下記錄
+  - actor: 孩子
+    text: 分類計數
+  - actor: 孩子
+    text: 畫柏拉圖
+  - actor: 孩子
+    text: 做小實驗
+  - actor: 孩子
+    text: 報告結果
+  source: ihi-pareto
+  caption: 流程是本站建議。
+- id: rootcause-compare
+  type: compare
+  alt: 比較兩種找原因的方式：憑印象，容易只記得印象最深的幾次；用資料，當下記下每一次，再由多到少排。
+  source: ihi-pareto
+  relation: versus
+  items:
+  - term: 憑印象
+    note: 容易只記得印象最深的幾次
+  - term: 用資料
+    note: 當下記下每一次，再由多到少排
+  caption: 例子是本站整理。
+sources:
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：d-V-2「能判斷分析數據的時機，能選用適當的統計量作為描述數據的參數，理解數據分析可能產生的例外，並能處理例外。」（p.13）；領域核心素養：數S-U-A2「具備數學模型的基本工具，以數學模型解決典型的現實問題。了解數學在觀察歸納之後還須演繹證明的思維特徵及其價值。」（p.3–4）；數S-U-B2「具備正確使用計算機和電腦軟體以增進學習的素養，包含知道其適用性與限制、認識其與數學知識的輔成價值，並能用以執行數學程序。」（p.4）；代碼說明：「第 1 碼為『表現類別』，分別以英文小寫字母 n（數與量）」…「d（資料與不確定性）表示。」（p.8）；「第 2 碼為『學習階段』別，依序為 I（國民小學低年級）、II（國民小學中年級）、III（國民小學高年級）、IV（國民中學）、V（普通型高級中等學校）。第 3 碼為流水號。」（p.8）；附錄一 d-V-2 和數S-U-B2 列在同一列（p.60）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：家 3a-V-1「善用科技、資訊，管理個人與家庭重要事務。」（p.31）；家 Ca-V-1「時間、精力管理與生活品質。」（p.100）；補充說明 家 Ca-V-1「善用資源與管理技巧，提高時間密度、妥善分配精力與適度休閒。」（p.100）；領域核心素養：綜S-U-A2「確立自我需求與目標，學習批判思考與自主管理的知能，透過具體可行的學習方案與實踐過程，積極面對及處理生活與生命中的各種挑戰。」（p.3）；時間分配：普通型高級中等學校第五學習階段「部定必修科目包含生命教育（1 學分）、生涯規劃（1 學分）、家政（2 學分）三科，共 4 學分，可在不同年級規劃修習不同科目。」（p.2）；代碼說明：「生命教育、生涯規劃與家政分別以『生』、『涯』、『家』的簡稱示之。」（p.9）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-B2「具備適當運用科技、資訊與媒體之素養，進行各類媒體識讀與批判，並能反思科技、資訊與媒體倫理的議題。」（p.5）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: ihi-pareto
+  title: 'QI Essentials Toolkit: Pareto Chart'
+  publisher: 美國健康照護改善研究所（Institute for Healthcare Improvement，IHI），2017 年
+  url: https://www.ihi.org/sites/default/files/QIToolkit_ParetoChart.pdf
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「A Pareto chart is a type of bar chart in which the various factors that contribute to an overall effect are arranged in order from the largest to the smallest contribution to the effect.」（p.1）；「roughly 80% of the effect comes from 20% of the causes.」（p.1）；「Write your data in a simple table」（p.2）；「the magnitude of each factor」（p.2）；「Order the factors according to the magnitude of contribution to the effect, from largest to smallest.」（p.2）；「Calculate the percentage of the total that each factor represents.」（p.2）；「calculate the cumulative percentage for each category until you reach 100%.」（p.2）
+- id: cms-pdsa
+  title: Plan-Do-Study-Act (PDSA) Cycle Template
+  publisher: 美國聯邦醫療保險與補助服務中心（CMS），QAPI 品質改善工具
+  url: https://www.cms.gov/medicare/provider-enrollment-and-certification/qapi/downloads/pdsacycledebedits.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「Plan a small test of change.」（p.2）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-30'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）

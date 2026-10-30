@@ -1,8 +1,13 @@
+# B27 提案：sk.decide@sh
+# - 補 est_time、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（高中）。
+# - 課綱：綜合活動 涯 3a-V-1（生涯評估與抉擇的方法）、涯 Ca-V-1（抉擇歷程與評估工具）；議題生涯規劃教育（涯U8）。
+# - 依據：NASA 系統工程手冊的決策矩陣（準則依重要程度排、先講清楚權重和分數、最高分不一定要選）。
+# - 涯 3a-V-1、涯 Ca-V-1 是新加進代碼表的代碼（見 taxonomy patch）；domains 拿掉數學（沒有對應的高中數學條目）。
 id: sk.decide@sh
 concept: sk.decide
 title: 選方案：準則、權重、取捨
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -14,16 +19,36 @@ stage:
 curriculum_108:
   domains:
   - 綜合活動
-  - 數學
   core_competencies:
   - A2
   - A3
   issues:
   - 生涯規劃教育
-to_verify: true
+  performances:
+  - 涯 3a-V-1
+  contents:
+  - 涯 Ca-V-1
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（決策矩陣（加權評分）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 A2、A3：依總綱 p.4–6 高級中等學校教育的 U-A2、U-A3 與綜合活動領綱的綜S-U-A2、綜S-U-A3 原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage 不填 grades：綜合活動領綱 p.2 說普通型高中的生命教育、生涯規劃、家政「可在不同年級規劃修習不同科目。」高中的學習重點也沒有分年級；總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段。
+- est_time 寫高中生涯規劃課：綜合活動領綱 p.2 的高中部定必修是生命教育 1 學分、生涯規劃 1 學分、家政 2 學分；本點的綜合活動代碼出自生涯規劃。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱與總綱比 PDF 頁少 4，議題融入說明手冊少 16，NASA 系統工程手冊少 10；教育部 AI 指引與學生版注意事項的 PDF 頁就是頁腳印的頁碼。
+- 新增代碼的頁碼：學習表現用綜合活動領綱 p.28–32 學習重點表，學習內容用附錄二學習內容說明裡代碼所在的頁（同代碼表既有的 家 Ca-V-1 p.100、家 Cb-V-2 p.100）。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15、B19、B23 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- 綜合活動 涯 3a-V-1（p.29 學習重點表）、涯 Ca-V-1（p.99 附錄二）原本不在代碼表，本批依原文加入（taxonomy patch）。
+- 健康與體育領綱也有同號的代碼（文字不同）：學習表現 3a-V-1、4b-V-2（健體 p.30）、3c-V-1（p.31），學習內容 Ca-V-1、Db-V-2（p.31）、Cc-V-1（p.32）；國語文也有學習內容 Ca-V-1（國語文 p.18）、Cc-V-1（p.19）；綜合活動高中本身也有 生 3a-V-1、生 Ca-V-1、生 Db-V-2、涯 3c-V-1、涯 Cc-V-1。本點的代碼都帶科目字首（涯、家），代碼表的鍵不衝突（taxonomy 的綜合活動區塊加了註解；領綱用羅馬數字，本站整理成拉丁字母 V）。
+- 原 curriculum_108.domains 有數學：數學領綱高中的學習表現沒有對應加權評分的條目，本點不放數學代碼，domains 改成只有綜合活動；加權總分的算法寫在 How（本站整理）。核心素養維持 A2、A3。
+- 議題生涯規劃教育：生涯規劃教育高中實質內涵 涯U8「具備生涯評估與決定的方法，展現反思與彈性的能力。」（p.96）；用決策矩陣比較選組、選社團，就是在練習。
+- 原 idea 的怎麼比拿掉引號；原 guiding question「選社團時，『好朋友在那裡』應該佔幾分？」的內層引號拿掉，另加兩題，三題的答案寫在 Why 的問答、How 內文與 How 的問答；原 review 的 3 個方案、4 個準則標成示意，我放棄了什麼拿掉引號。
+- 原 scenario「親子共學：全家用同一張決策矩陣選下一次旅行地點，每個人先各自訂權重，再比較誰的權重不同、為什麼。」保留做法，補上本站建議。
+- 原 ai.delegable「計算加權分數、列出更多方案」補上使用條件（本站建議）。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（決策矩陣（加權評分））…」已處理：依 NASA 系統工程手冊（NASA/SP-2016-6105 Rev2）6.8 決策分析與名詞解釋的 Decision Matrix 改寫，英文短句逐字引用，中文說明是本站整理。
+- NASA 系統工程手冊是寫給太空任務工程團隊的；本點只借它對決策矩陣的定義和使用提醒（準則依重要程度排、準則要能衡量、先講清楚權重和分數的意思、最高分不一定要選、要反覆檢查），用在高中生的選組、選社團（本站建議）。手冊講正規化的句子含彎引號，本頁不引。
+- 原 link_notes 的跨學門先學拿掉引號，改寫成專案管理的時間、金錢、品質取捨（pm.triangle@jh）。
+- 英文 PDF 的引文避開彎引號與撇號；PDF 換行處的斷字照原詞接回，其餘空白照原文；中文說明和翻譯是本站整理。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）與《高級中等以下學校人工智慧使用和學習指引》；supports 逐段標頁碼。
 prerequisites:
 - sk.issuetree@jh
 - pm.triangle@jh
@@ -33,7 +58,7 @@ links:
   related:
   - ph.ethics@jh
   deeper: []
-link_notes: 框架：決策矩陣（加權評分）。跨學門先學：專案管理「時間、金錢、品質的取捨」。
+link_notes: 框架：決策矩陣（加權評分，NASA 系統工程手冊）。跨學門先學：專案管理的時間、金錢、品質取捨（pm.triangle@jh）。綜合活動 涯 3a-V-1、涯 Ca-V-1。
 competency:
   specialist:
   - 問題解決
@@ -42,21 +67,181 @@ competency:
   - 跨域思考
 ai:
   delegable:
-  - 計算加權分數、列出更多方案
+  - 計算加權分數、列出更多方案（不輸入真實姓名或學校名稱，算出的分數自己再驗算一次，本站建議）
   human_experience:
   - 決定什麼最重要，承擔選擇
-idea: 好的決定先決定「怎麼比」，再看選項。列出準則、給權重、替每個方案打分，算出總分後還要問：結果跟直覺不同嗎？為什麼？分數是幫助思考，不是取代判斷。
+idea: 好的決定先決定怎麼比，再看選項。列出準則、給權重、替每個方案打分，算出總分後還要問：結果跟直覺不同嗎？為什麼？分數是幫助思考，不是取代判斷。
 guiding_questions:
-- 選社團時，「好朋友在那裡」應該佔幾分？
-scenario: 親子共學：全家用同一張決策矩陣選下一次旅行地點，每個人先各自訂權重，再比較誰的權重不同、為什麼。
+- 選社團時，好朋友在那裡應該佔幾分？
+- 為什麼權重要在打分前先寫好？
+- 總分最高的方案，一定要選嗎？
+scenario: 親子共學：全家用同一張決策矩陣選下一次旅行地點，每個人先各自訂權重，再比較誰的權重不同、為什麼（本站建議）。
 goal: 用決策矩陣比較方案：先訂準則與權重，再打分，最後說出取捨。
-review: 用決策矩陣做一個真實選擇（選組、選社團、買哪台電腦）；家長檢查權重在打分前就寫好、至少 3 個方案與 4 個準則，最後有一段「我放棄了什麼」。
+review: 用決策矩陣做一個真實選擇（例如選組、選社團、買哪台電腦）；家長檢查權重在打分前就寫好、至少 3 個方案與 4 個準則（數字是示意），最後有一段我放棄了什麼。
 formats:
   slides: []
-  exercise: 目標：用決策矩陣比較方案：先訂準則與權重，再打分，最後說出取捨。　檢核：用決策矩陣做一個真實選擇（選組、選社團、買哪台電腦）；家長檢查權重在打分前就寫好、至少 3 個方案與 4 個準則，最後有一段「我放棄了什麼」。
+  exercise: 目標：用決策矩陣比較方案：先訂準則與權重，再打分，最後說出取捨。　檢核：用決策矩陣做一個真實選擇（例如選組、選社團、買哪台電腦）；家長檢查權重在打分前就寫好、至少 3 個方案與 4 個準則（數字是示意），最後有一段我放棄了什麼。
 audience:
 - kid
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 高中生涯規劃課
+  source: zonghe
+why:
+  heading: 先決定怎麼比，再做選擇
+  body:
+  - 108 課綱的生涯規劃要高中生「能使用生涯評估與抉擇的方法，規劃未來。」學習內容「抉擇歷程與評估工具。」的補充說明，要學生「善用各種評估模式或工具進行選課選組、選校選系等重要的生涯抉擇。」生涯規劃教育議題也要「具備生涯評估與決定的方法，展現反思與彈性的能力。」
+  - 決策矩陣就是一種評估工具。美國太空總署（NASA）的系統工程手冊這樣定義：「A methodology for evaluating alternatives in which valuation criteria are typically displayed in rows on the left side of the matrix and alternatives are the column headings of the matrix.」也就是把準則列在左邊、方案排在上面，一格一格評比（翻譯是本站整理）。手冊也說「Completing the decision matrix is iterative.」，算完常要回頭再檢查、再調整（翻譯是本站整理）。
+  qa:
+    question: 選社團時，好朋友在那裡應該佔幾分？
+    answer: 沒有標準答案，要看你自己最在乎什麼；重要的是在打分前就寫下來（本站建議）。NASA 手冊說要先訂出「The rank of each criterion by its importance.」，也就是依重要程度替準則排序（翻譯是本站整理）。例如有人給和好朋友一起 2 分、興趣 5 分，也有人反過來（例子和數字是示意）。
+    source: nasa-seh
+  items_title: 課綱的學習重點
+  items:
+  - title: 用抉擇方法規劃未來
+    text: 綜合活動 涯 3a-V-1：能使用生涯評估與抉擇的方法，規劃未來。
+    code: 涯 3a-V-1
+  - title: 抉擇歷程與評估工具
+    text: 綜合活動 涯 Ca-V-1：抉擇歷程與評估工具。
+    code: 涯 Ca-V-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 想好要做的選擇
+  - 準備紙或試算表
+  figures:
+  - decide-compare
+  notes:
+  - 綜合活動高中的代碼：開頭的涯是生涯規劃、家是家政；接著是數字的是學習表現，是大寫字母的是學習內容；中間的 V 是第五學習階段（高中）。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - zonghe
+  - issues-handbook
+  - nasa-seh
+  - zonggang
+how:
+  heading: 先寫準則和權重，再打分
+  body:
+  - 先列方案和準則。方案多列幾個，例如 3 個（數字是示意），也可以把維持現狀當成一個方案；NASA 手冊說「Sometimes doing nothing or not making a decision is an option.」（翻譯是本站整理）。準則是用來比的條件，例如選社團看興趣、每週要花的時間、和好朋友一起（例子是本站整理），列 4 個左右就好（數字是本站建議）；手冊說「Criteria should be objective and measurable.」，也就是盡量寫成量得出來的樣子（翻譯是本站整理）。
+  - 再給權重、打分。還沒打分前，先替每個準則寫權重，例如 1 到 5 分（本站建議）；先寫好，才不會為了想選的方案回頭改權重（本站整理）。手冊提醒「It is important to question and understand the operational definitions for the weights and scales of the tool.」，也就是先講清楚每個分數代表什麼（翻譯是本站整理），例如每週花不到 2 小時給 5 分（例子是示意）。接著替每個方案在每個準則打分，分數乘上權重再加起來，就是加權總分（本站整理）。
+  - 最後說出取捨。總分最高的不一定要選；手冊說「Sometimes the benefits and advantages of a lower or close score outweigh the highest score.」，但選了別的方案要說明理由：「an explanation should be provided as to why the lower score is preferred.」（翻譯是本站整理）。結果跟直覺不同時，先回頭看準則和權重有沒有漏掉什麼（本站建議）。最後寫一段我放棄了什麼：選了這個方案，在哪些準則上分數比較低（本站建議）。
+  qa:
+    question: 總分最高的方案，一定要選嗎？
+    answer: 不一定。分數是幫助思考，不是取代判斷（本站整理）。NASA 手冊說「Sometimes the benefits and advantages of a lower or close score outweigh the highest score.」，只是要把為什麼選分數較低的方案說清楚（翻譯是本站整理）。
+    source: nasa-seh
+  items_title: 四步做
+  items:
+  - title: 列出方案
+    text: 多列幾個，可含維持現狀。
+  - title: 寫準則和權重
+    text: 打分前先寫好。
+  - title: 打分算總分
+    text: 分數乘權重再加總。
+  - title: 說出取捨
+    text: 寫下放棄了什麼。
+  checklist_title: 打分前檢查一下
+  checklist:
+  - 準則講清楚
+  - 權重先寫好
+  - 方案不只一個
+  - 放棄的寫下來
+  activity_figure: decide-flow
+  sources:
+  - nasa-seh
+what:
+  heading: 用準則和權重做選擇
+  body:
+  - 學完後，能為一個真實的選擇列出方案、準則和權重，先寫權重再打分，算出加權總分，並說出最後選了什麼、放棄了什麼。
+  items_title: 學完能做到
+  items:
+  - title: 列準則和權重
+    text: 打分前先寫好。
+  - title: 算加權總分
+    text: 分數乘權重再加總。
+  - title: 說出取捨
+    text: 選了什麼、放棄了什麼。
+  checklist_title: 家長檢核
+  checklist:
+  - 權重先寫好
+  - 方案不只一個
+  - 有寫放棄什麼
+  notes:
+  - 本點融入生涯規劃教育議題：議題融入說明手冊高中的實質內涵有「具備生涯評估與決定的方法，展現反思與彈性的能力。」用決策矩陣比較選組或社團，就是在練習。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - issues-handbook
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: decide-flow
+  type: flow
+  alt: 決策矩陣五步驟：自己列出方案，寫下準則，先給權重，再打分算總分，最後寫下取捨。
+  steps:
+  - actor: 自己
+    text: 列出方案
+  - actor: 自己
+    text: 寫下準則
+  - actor: 自己
+    text: 先給權重
+  - actor: 自己
+    text: 打分算總分
+  - actor: 自己
+    text: 寫下取捨
+  source: nasa-seh
+  caption: 流程是本站建議。
+- id: decide-compare
+  type: compare
+  alt: 比較兩種選法：憑感覺選，很難說清楚為什麼；用決策矩陣選，準則和權重先寫好，說得出取捨。
+  source: nasa-seh
+  relation: versus
+  items:
+  - term: 憑感覺選
+    note: 很難說清楚為什麼選
+  - term: 決策矩陣
+    note: 準則權重先寫好，說得出取捨
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：涯 3a-V-1「能使用生涯評估與抉擇的方法，規劃未來。」（p.29）；涯 Ca-V-1「抉擇歷程與評估工具。」（p.99）；補充說明 涯 Ca-V-1「了解抉擇所涉及複雜歷程與相關原理原則，並善用各種評估模式或工具進行選課選組、選校選系等重要的生涯抉擇。」（p.99）；領域核心素養：綜S-U-A2「確立自我需求與目標，學習批判思考與自主管理的知能，透過具體可行的學習方案與實踐過程，積極面對及處理生活與生命中的各種挑戰。」（p.3）；綜S-U-A3「敏察和因應危險情境，規劃與運用資源，預防及化解可能的危機」…「剖析未來社會發展趨勢，發揮創新精神，促進適性發展與彈性適應的能力。」（p.3）；時間分配：普通型高級中等學校第五學習階段「部定必修科目包含生命教育（1 學分）、生涯規劃（1 學分）、家政（2 學分）三科，共 4 學分，可在不同年級規劃修習不同科目。」（p.2）；代碼說明：「生命教育、生涯規劃與家政分別以『生』、『涯』、『家』的簡稱示之。」（p.9）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-A3「具備規劃、實踐與檢討反省的素養，並以創新的態度與作為因應新的情境或問題。」（p.5）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 生涯規劃教育高中實質內涵 涯U8「具備生涯評估與決定的方法，展現反思與彈性的能力。」（p.96）
+- id: nasa-seh
+  title: NASA Systems Engineering Handbook（NASA/SP-2016-6105 Rev2）
+  publisher: NASA（2016 年 12 月）
+  url: https://www.nasa.gov/wp-content/uploads/2018/09/nasa_systems_engineering_handbook_0.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「The rank of each criterion by its importance.」（p.167）；「Criteria should be objective and measurable.」（p.167）；「Sometimes doing nothing or not making a decision is an option.」（p.168）；「It is important to question and understand the operational definitions for the weights and scales of the tool.」（p.169）；「Completing the decision matrix is iterative.」（p.169）；「If a different option is recommended, an explanation should be provided as to why the lower score is preferred.」（p.169）；「Sometimes the benefits and advantages of a lower or close score outweigh the highest score.」（p.169）；「A methodology for evaluating alternatives in which valuation criteria are typically displayed in rows on the left side of the matrix and alternatives are the column headings of the matrix.」（p.179）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-30'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）
