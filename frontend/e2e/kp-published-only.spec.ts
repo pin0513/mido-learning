@@ -13,13 +13,15 @@ import { test, expect } from "@playwright/test";
 // 這個行程沒開溝通與解決問題旗標，所以這 8 筆同時因「草稿」與「旗標關閉」兩個原因不露出；只靠草稿這個原因的樣本已經沒有了（地圖的草稿匿名改在 city.test.ts 用合成內容查）。
 // 旗標打開、只靠草稿過濾的那一輪在 kp-published-softskills.spec.ts（CI「Published-only pages, soft-skills on」）。
 // B25 發布 sk.problem@es 後，改用仍是草稿的 sk.interview@sh（先備 ph.question@es）。
+// B26 發布 sk.issuetree@jh 後，改用仍是草稿的 sk.feedback@sh（先備 pm.retro@es；zh.editing@uni 的 links 也連到它）。
+// 下面 PM_PAGES 裡 B26 發布的 sk.empmap、sk.nvc、sk.fishbone、sk.issuetree、sk.pdca 的標題與網址也留著，理由同下（各列註明）。
 // 下面 PM_PAGES 裡 sk.problem、sk.otherside、sk.why5 的標題與網址留著：它們已發布，這個行程只因旗標關閉不露出（已發布的軟實力點在別學門頁上，旗標開時有連結，見 kp-published-softskills.spec.ts 第一則）。
 const DRAFT_TITLES = [
   "選方案：準則、權重、取捨",
   "一頁問題報告：帶團隊從問題到行動",
   "當調解人：幫兩方聽懂彼此",
   "用資料找真正原因",
-  "問題樹：大問題拆成小問題",
+  "給回饋，也收回饋",
   "假說驅動：先猜答案，再用資料檢驗",
   "教練式對話：用提問陪對方找答案",
   "同理訪談：問開放式問題",
@@ -35,23 +37,23 @@ const PM_PAGES: [string, string[], string[]][] = [
   // B24 發布哲學 uni 6 點後，專案管理與哲學頁不露出的全部改用仍是草稿的軟實力點（有直接關係的用直接關係，沒有的用相鄰點的軟實力草稿，註在各列）；6 點出現在頁上的改成正向檢查。
   ["/kp/pm.goal/es", ["目標：我們想完成什麼？", "什麼是「專案」？", "好問題從「為什麼」開始"], ["問題是什麼？現在和想要"]], // sk.problem links.related；B25 起已發布，只因旗標關閉不露出
   ["/kp/pm.roles/es", ["分工與說到做到", "團隊溝通與會議", "領導是行為，不是職位", "怎樣才公平？"], ["換個位置想"]], // sk.otherside 連到 ph.fair@es；B25 起已發布，只因旗標關閉不露出
-  ["/kp/pm.sequence/es", ["先做什麼、後做什麼", "甘特圖與里程碑"], ["問題樹：大問題拆成小問題"]], // sk.issuetree 的先備 pm.breakdown@es 也是這頁的先備
+  ["/kp/pm.sequence/es", ["先做什麼、後做什麼", "甘特圖與里程碑"], ["問題樹：大問題拆成小問題"]], // sk.issuetree 的先備 pm.breakdown@es 也是這頁的先備；B26 起已發布，只因旗標關閉不露出
   ["/kp/pm.planb/es", ["如果下雨怎麼辦？", "風險：可能性 × 影響"], ["選方案：準則、權重、取捨"]],
   // B22 發布 ph.hypothesis@jh 後，pm.retro@es、pm.agile@sh 的 links.related 帶出它的標題，改成正向檢查；不露出的改用它的下一階草稿 ph.science@sh。
   // B23 發布 ph.science@sh 後，不露出的改用它的下一階草稿 ph.philsci@uni；下面 jh／sh／uni 各列的 sh 標題也同樣改成它們的下一階 uni 草稿。
   // B24 發布 ph.philsci@uni 後，pm.retro@es 改用 links.related 連到它的軟實力草稿 sk.feedback@sh。
   ["/kp/pm.retro/es", ["回顧：哪裡好、哪裡可以更好", "團隊溝通與會議", "假設與實驗：把問題變成可以檢驗的"], ["給回饋，也收回饋"]],
   ["/kp/pm.project/jh", ["什麼是「專案」？", "目標：我們想完成什麼？", "利害關係人"], ["選方案：準則、權重、取捨"]], // 下一階 pm.triangle@jh 是 sk.decide 的先備
-  ["/kp/pm.gantt/jh", ["甘特圖與里程碑", "先做什麼、後做什麼", "要徑：決定專案長度的那條路"], ["問題樹：大問題拆成小問題"]],
+  ["/kp/pm.gantt/jh", ["甘特圖與里程碑", "先做什麼、後做什麼", "要徑：決定專案長度的那條路"], ["問題樹：大問題拆成小問題"]], // B26 起 sk.issuetree 已發布，只因旗標關閉不露出
   ["/kp/pm.team/jh", ["團隊溝通與會議", "分工與說到做到", "領導是行為，不是職位", "衝突與協商", "利害關係人"], ["當調解人：幫兩方聽懂彼此"]], // 下一階 pm.conflict@sh 是 sk.mediate 的先備
   ["/kp/pm.lead/jh", ["領導是行為，不是職位", "團隊溝通與會議", "情境領導"], ["教練式對話：用提問陪對方找答案"]], // 下一階 pm.style@sh 由 sk.coach 連過去
   ["/kp/pm.risk/jh", ["風險：可能性 × 影響", "如果下雨怎麼辦？"], ["選方案：準則、權重、取捨"]],
   // B23 發布 ph.systems@sh、ph.ethicstheory@sh 後，pm.stakeholder@sh 的 links.related、pm.conflict@sh 的 links.why 帶出它們的標題，改成正向檢查。
-  ["/kp/pm.stakeholder/sh", ["利害關係人", "什麼是「專案」？", "團隊溝通與會議", "商業論證與專案治理", "系統思考：槓桿點與非預期後果"], ["同理心地圖：說、想、做、感受", "一頁問題報告：帶團隊從問題到行動"]], // sk.empmap links.related；sk.a3 連到下一階 pm.business@uni
+  ["/kp/pm.stakeholder/sh", ["利害關係人", "什麼是「專案」？", "團隊溝通與會議", "商業論證與專案治理", "系統思考：槓桿點與非預期後果"], ["同理心地圖：說、想、做、感受", "一頁問題報告：帶團隊從問題到行動"]], // sk.empmap links.related（B26 起已發布，只因旗標關閉不露出）；sk.a3 連到下一階 pm.business@uni
   ["/kp/pm.cpm/sh", ["要徑：決定專案長度的那條路", "甘特圖與里程碑", "WBS 與三點估算", "排程與資源最佳化"], ["選方案：準則、權重、取捨"]],
   ["/kp/pm.conflict/sh", ["衝突與協商", "團隊溝通與會議", "利害關係人", "組織行為與心理安全感", "倫理學的三種視角"], ["當調解人：幫兩方聽懂彼此"]], // sk.mediate 的先備
   ["/kp/pm.style/sh", ["情境領導", "領導是行為，不是職位", "組織行為與心理安全感"], ["教練式對話：用提問陪對方找答案"]], // sk.coach links.related
-  ["/kp/pm.agile/sh", ["敏捷與迭代", "回顧：哪裡好、哪裡可以更好", "甘特圖與里程碑", "複雜性與不確定性", "假設與實驗：把問題變成可以檢驗的"], ["設計思考：從同理到原型", "PDCA：計畫、執行、檢查、改進"]], // 兩者 links.related
+  ["/kp/pm.agile/sh", ["敏捷與迭代", "回顧：哪裡好、哪裡可以更好", "甘特圖與里程碑", "複雜性與不確定性", "假設與實驗：把問題變成可以檢驗的"], ["設計思考：從同理到原型", "PDCA：計畫、執行、檢查、改進"]], // 兩者 links.related；B26 起 sk.pdca 已發布，只因旗標關閉不露出
   ["/kp/pm.business/uni", ["商業論證與專案治理", "利害關係人", "時間、金錢、品質的取捨", "決策、倫理與 AI 協作", "應用倫理：科技、商業與專業責任", "/kp/ph.applied/uni"], ["一頁問題報告：帶團隊從問題到行動", "/kp/sk.a3/uni"]], // B24：links.why 的 ph.applied@uni 已發布；sk.a3 links.related
   ["/kp/pm.schedule/uni", ["排程與資源最佳化", "要徑：決定專案長度的那條路", "WBS 與三點估算", "實獲值管理（EVM）"], ["選方案：準則、權重、取捨"]],
   ["/kp/pm.org/uni", ["組織行為與心理安全感", "衝突與協商", "情境領導"], ["教練式對話：用提問陪對方找答案"]], // sk.coach links.related
@@ -60,19 +62,19 @@ const PM_PAGES: [string, string[], string[]][] = [
   // B21 發布的哲學 es 5 點：頁面 200，帶出已發布的相鄰點標題（links.how／related、先備、被依賴），不露出 links.deeper 連到的 jh 草稿標題。
   // B22 發布哲學 jh 6 點後，es 5 頁的下一階（links.deeper）與被依賴改成正向檢查；不露出的改用仍是草稿、由它們連過去的軟實力點（sk.interview@sh、sk.nvc@jh、sk.fishbone@jh 是被依賴），以及下一階的下一階 ph.tok@sh、ph.ethicstheory@sh。
   ["/kp/ph.question/es", ["好問題從「為什麼」開始", "部分與整體", "假設與實驗：把問題變成可以檢驗的"], ["同理訪談：問開放式問題"]],
-  ["/kp/ph.fact/es", ["事實還是意見？", "我怎麼知道的？", "常見的推理謬誤", "證據與來源"], ["非暴力溝通：觀察、感受、需要、請求"]],
+  ["/kp/ph.fact/es", ["事實還是意見？", "我怎麼知道的？", "常見的推理謬誤", "證據與來源"], ["非暴力溝通：觀察、感受、需要、請求"]], // B26 起 sk.nvc 已發布，只因旗標關閉不露出
   // B23 發布 ph.tok@sh、ph.ethicstheory@sh 後，改用它們的下一階草稿 ph.epistem@uni、ph.applied@uni。主線共學卡只寫出 sh 標題與 ph.aimind@uni 的標題，uni 草稿（ph.aimind 以外）改回查標題，ph.fair@es 同時查網址。
-  ["/kp/ph.know/es", ["我怎麼知道的？", "事實還是意見？", "證據與來源", "假設與實驗：把問題變成可以檢驗的"], ["PDCA：計畫、執行、檢查、改進"]], // B24：ph.hypothesis@jh 是 sk.pdca 的先備
+  ["/kp/ph.know/es", ["我怎麼知道的？", "事實還是意見？", "證據與來源", "假設與實驗：把問題變成可以檢驗的"], ["PDCA：計畫、執行、檢查、改進"]], // B24：ph.hypothesis@jh 是 sk.pdca 的先備；B26 起 sk.pdca 已發布，只因旗標關閉不露出
   ["/kp/ph.fair/es", ["怎樣才公平？", "分工與說到做到", "兩難與價值衝突"], ["換個位置想", "/kp/sk.otherside/es"]], // B24：sk.otherside links.related；B25 起已發布，只因旗標關閉不露出
-  ["/kp/ph.parts/es", ["部分與整體", "大事拆成小事", "好問題從「為什麼」開始", "因果鏈與回饋迴圈"], ["魚骨圖：把原因分類找"]],
+  ["/kp/ph.parts/es", ["部分與整體", "大事拆成小事", "好問題從「為什麼」開始", "因果鏈與回饋迴圈"], ["魚骨圖：把原因分類找"]], // B26 起 sk.fishbone 已發布，只因旗標關閉不露出
   // B22 發布的哲學 jh 6 點：帶出已發布的先備、同學門「把這裡當先備」與 links.related 標題，不露出 links.deeper 連到的 sh 草稿與仍是草稿的被依賴（sk.pdca@jh）。主線共學卡本來就寫出大人讀的標題，所以同一條主線上的 sh 草稿改查不連到草稿頁網址。
   // B23 發布哲學 sh 7 點後，jh 6 頁的下一階（links.deeper）與被依賴改成正向檢查（標題與連結網址）；不露出的改查下一階的下一階 uni 草稿的標題與網址。主線共學卡會寫出 ph.aimind@uni 的標題（ph.ai 路線），所以它只查網址；ph.hypothesis@jh 的 sk.pdca@jh 照舊。
   // B24 發布哲學 uni 6 點後，jh 6 頁不露出的改查相鄰的軟實力草稿標題與網址（uni 點不在 jh 頁上，不改成正向）。
   ["/kp/ph.argument/jh", ["論證的結構：前提與結論", "說出理由：「因為……所以……」", "常見的推理謬誤", "演繹、歸納與溯因", "/kp/ph.logic/sh"], ["問五次為什麼", "/kp/sk.why5/es"]], // 先備 ph.reason@es 是 sk.why5 的先備；B25 起已發布，只因旗標關閉不露出
   ["/kp/ph.fallacy/jh", ["常見的推理謬誤", "論證的結構：前提與結論", "認知偏誤與思考盲點", "/kp/ph.bias/sh"], ["假說驅動：先猜答案，再用資料檢驗", "/kp/sk.hypo/uni"]], // 下一階 ph.bias@sh 是 sk.hypo 的先備
   ["/kp/ph.evidence/jh", ["證據與來源", "事實還是意見？", "我怎麼知道的？", "生成式 AI 與媒體素養", "知識論：我們怎麼知道我們知道？", "判斷 AI 的回答"], ["用資料找真正原因", "/kp/sk.rootcause/sh", "/kp/sk.hypo/uni"]],
-  ["/kp/ph.feedback/jh", ["因果鏈與回饋迴圈", "部分與整體", "系統思考：槓桿點與非預期後果", "/kp/ph.systems/sh"], ["魚骨圖：把原因分類找", "/kp/sk.fishbone/jh"]], // sk.fishbone links.related
-  ["/kp/ph.hypothesis/jh", ["假設與實驗：把問題變成可以檢驗的", "好問題從「為什麼」開始", "我怎麼知道的？", "科學哲學：可檢驗與會修正", "知識論：我們怎麼知道我們知道？"], ["假說驅動：先猜答案，再用資料檢驗", "/kp/sk.hypo/uni", "設計思考：從同理到原型", "/kp/sk.design/sh", "PDCA：計畫、執行、檢查、改進"]], // sk.pdca 的先備；sk.design 是它的下一階
+  ["/kp/ph.feedback/jh", ["因果鏈與回饋迴圈", "部分與整體", "系統思考：槓桿點與非預期後果", "/kp/ph.systems/sh"], ["魚骨圖：把原因分類找", "/kp/sk.fishbone/jh"]], // sk.fishbone links.related；B26 起已發布，只因旗標關閉不露出
+  ["/kp/ph.hypothesis/jh", ["假設與實驗：把問題變成可以檢驗的", "好問題從「為什麼」開始", "我怎麼知道的？", "科學哲學：可檢驗與會修正", "知識論：我們怎麼知道我們知道？"], ["假說驅動：先猜答案，再用資料檢驗", "/kp/sk.hypo/uni", "設計思考：從同理到原型", "/kp/sk.design/sh", "PDCA：計畫、執行、檢查、改進"]], // sk.pdca 的先備（B26 起已發布，只因旗標關閉不露出）；sk.design 是它的下一階
   ["/kp/ph.ethics/jh", ["兩難與價值衝突", "怎樣才公平？", "說出理由：「因為……所以……」", "倫理學的三種視角", "/kp/ph.ethicstheory/sh"], ["選方案：準則、權重、取捨", "/kp/sk.decide/sh"]], // sk.decide links.related
   // B23 發布的哲學 sh 7 點：帶出已發布的先備與被依賴標題，不露出 links.deeper 連到的 uni 草稿標題與網址（ph.aimind@uni 的標題主線共學卡本來就寫出，只查網址），也不露出仍是草稿的被依賴（ph.bias@sh 的 sk.hypo@uni）。
   // B24 發布哲學 uni 6 點後，sh 7 頁的下一階（links.deeper）改成正向檢查（標題與網址）；不露出的改用相鄰的軟實力草稿。

@@ -353,18 +353,20 @@ test("溝通與解決問題預設不進學門切換，打開後口語表達全�
   const facilitate = talk.nodes.find((node) => node.id === "sk.facilitate@uni");
   assert.ok(facilitate);
   assert.ok(facilitate.priors.some((prior) => prior.href == null && prior.label.includes("準備中")));
-  // B25：同理與解題各發布 3 個國小點；國中以上仍是草稿，不進圖。
+  // B25：同理與解題各發布 3 個國小點。B26：再各發布 3 個國中點，排在國小點之後；高中以上仍是草稿，不進圖。
   const emp = open.diagrams.find((item) => item.branchId === "emp");
   const solve = open.diagrams.find((item) => item.branchId === "solve");
-  assert.deepEqual(emp?.nodes.map((node) => node.id), ["sk.feelings@es", "sk.listen@es", "sk.otherside@es"]);
-  assert.deepEqual(solve?.nodes.map((node) => node.id), ["sk.problem@es", "sk.why5@es", "sk.polya@es"]);
+  assert.deepEqual(emp?.nodes.map((node) => node.id), ["sk.feelings@es", "sk.listen@es", "sk.otherside@es", "sk.empmap@jh", "sk.imsg@jh", "sk.nvc@jh"]);
+  assert.deepEqual(solve?.nodes.map((node) => node.id), ["sk.problem@es", "sk.why5@es", "sk.polya@es", "sk.pdca@jh", "sk.issuetree@jh", "sk.fishbone@jh"]);
   assert.equal([...(emp?.nodes ?? []), ...(solve?.nodes ?? [])].every((node) => node.pageHref?.startsWith("/kp/sk.")), true);
   const openBlob = JSON.stringify(open);
   assert.equal(openBlob.includes("說出感覺：我覺得……因為……"), true);
   assert.equal(openBlob.includes("問五次為什麼"), true);
-  // 仍是草稿的標題不露出（同一條線的國中點）。
-  assert.equal(openBlob.includes("非暴力溝通：觀察、感受、需要、請求"), false);
-  assert.equal(openBlob.includes("魚骨圖：把原因分類找"), false);
+  // B26 發布的國中點標題出現；仍是草稿的標題不露出（同一條線的高中點：sk.hardtalk@sh 的先備是 sk.nvc@jh，sk.rootcause@sh 的先備是 sk.fishbone@jh）。
+  assert.equal(openBlob.includes("非暴力溝通：觀察、感受、需要、請求"), true);
+  assert.equal(openBlob.includes("魚骨圖：把原因分類找"), true);
+  assert.equal(openBlob.includes("困難對話：先處理情緒，再處理事情"), false);
+  assert.equal(openBlob.includes("用資料找真正原因"), false);
   assert.equal(open.branches.find((item) => item.id === "talk")?.task?.title, "從開口到說服");
   assert.equal(open.disciplines.find((item) => item.id === "language")?.ready, false);
   assert.equal(open.branches.some((item) => item.disciplineId === "language"), false);
