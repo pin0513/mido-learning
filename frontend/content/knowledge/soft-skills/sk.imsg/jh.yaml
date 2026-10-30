@@ -1,8 +1,13 @@
+# B26 提案：sk.imsg@jh
+# - 補 grades（七至九年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：國語文 2-IV-1（適切表情達意）、綜合活動 2a-IV-3、家 Da-IV-1（和家人溝通、情感表達）；議題家庭教育 家J5。
+# - 依據：Gordon Training International 的我訊息三部分（行為、感受、具體影響）。
+# - 綜合活動 2a-IV-3、家 Da-IV-1 是新加進代碼表的代碼（見 taxonomy patch）；domains 加上語文。
 id: sk.imsg@jh
 concept: sk.imsg
 title: 我訊息：說感受，不指責
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,18 +16,44 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 綜合活動
+  - 語文
   core_competencies:
   - C2
   - B1
   issues:
   - 家庭教育
-to_verify: true
+  performances:
+  - 2-IV-1
+  - 2a-IV-3
+  contents:
+  - 家 Da-IV-1
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（我訊息（I-message）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 C2、B1：依總綱 p.4–6 國民中學教育的 J-C2、J-B1 與綜合活動領綱 p.5 的綜-J-C2、國語文領綱 p.4 的國-J-B1（綜-J-B1 跨頁，改引國-J-B1）原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 7、8、9：本點的代碼都是第四學習階段（IV），國中的學習重點沒有再分年級；總綱 p.7 說國民中學七、八、九年級為第四學習階段。
+- est_time 依綜合活動領綱 p.2：第四學習階段綜合活動每週 3 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱與總綱比 PDF 頁少 4，國語文領綱少 2，議題融入說明手冊少 16；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 綜合活動 2a-IV-3（p.19 學習表現表）、家 Da-IV-1（p.85 附錄學習內容說明表，與代碼表既有的家 Ca-IV-1 同頁）原本不在代碼表，本批依原文加入（taxonomy patch）；國語文 2-IV-1 沿用代碼表的文字與頁碼。
+- 健康與體育領綱也有同號的學習表現：1b-IV-2、2a-IV-1、2a-IV-3、2c-IV-1（健體 p.26），文字和綜合活動不同；健體不在代碼表，代碼表以代碼為鍵，將來要收健體要先改 schema（taxonomy 的綜合活動區塊加了註解）。健體的學習內容 Da-IV-1、Db-IV-1（健體 p.28）沒有科目字首，本點的家 Da-IV-1、輔 Db-IV-1 帶字首，鍵不衝突。
+- 原 curriculum_108.domains 只有綜合活動，本點加上國語文 2-IV-1（適切表情達意），所以 domains 補語文。
+- 議題家庭教育：家庭教育國中實質內涵 家J5「了解與家人溝通互動及相互支持的適切方式。」（p.66）。
+- 原稿的三部分是事件、感受、原因；依高登訓練機構的原文，第三部分改成對我的具體影響（EFFECT），句型的因為後面接影響。
+- 原 idea 的「對方會先防衛」改成容易先防衛、「對方比較聽得進去」改成比較可能聽得進去（不寫成定論）；「這個說法來自心理學家高登的親子溝通」改成來自美國的高登博士：來源只寫 Dr. Thomas Gordon 與 P.E.T. 的作者，沒有寫心理學家。
+- 原 guiding question 的兩句引文拿掉引號；原 goal 的句型拿掉引號（引號內超過 5 個字的句子只放在有出處的地方）；原 review 的 3 句標成示意，原因改成影響。
+- 原 scenario「親子共學：冰箱上貼一張『你訊息 → 我訊息』改寫表，誰說了『你都……』就一起改一句。」保留做法，補上本站建議。內層引號與箭頭拿掉。
+- 原 ai.delegable「把一句指責改寫成我訊息的草稿」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（我訊息（I-message））…」已處理：依 Gordon Training International（高登訓練機構）兩篇文章改寫，英文短句逐字引用，中文說明是本站整理。
+- 兩篇文章是寫給大人（職場、親子）的；本點用在國中生和家人之間的溝通（本站建議）。文章裡的例句含彎引號，本頁不引例句。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites:
 - sk.feelings@es
 links:
@@ -30,7 +61,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：我訊息（I-message）。
+link_notes: 框架：我訊息（I-message，高登）。國語文 2-IV-1；綜合活動 2a-IV-3、家 Da-IV-1。
 competency:
   specialist:
   - 同理溝通
@@ -38,21 +69,193 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 把一句指責改寫成我訊息的草稿
+  - 把一句指責改寫成我訊息的草稿（由老師或家長操作，本站建議）
   human_experience:
   - 在情緒上來時選擇用我訊息
-idea: 「你訊息」聽起來像指責，對方會先防衛。「我訊息」說的是事件、我的感受和原因，對方比較聽得進去（這個說法來自心理學家高登的親子溝通）。
+idea: 「你訊息」聽起來像指責，對方容易先防衛。「我訊息」說的是對方做了什麼、我的感受、對我的影響，對方比較可能聽得進去（這個說法來自美國的高登博士）。
 guiding_questions:
-- 「你都不聽我說」和「我說到一半被打斷，覺得很挫折」，哪一句比較不會吵起來？
-scenario: 親子共學：冰箱上貼一張「你訊息 → 我訊息」改寫表，誰說了「你都……」就一起改一句。
-goal: 把「你都……」改成「當……時，我覺得……，因為……」。
-review: 孩子和家長各把 3 句最近說過的「你訊息」改寫成我訊息，互相檢查每句是否有事件、感受、原因三部分，並在一週內真的用一次。
+- 你都不聽我說，和我說到一半被打斷覺得很挫折，哪一句比較不會吵起來？
+- 我訊息要有哪三部分？
+- 為什麼只說我很生氣還不夠？
+scenario: 親子共學：冰箱上貼一張你訊息改成我訊息的改寫表，誰說了你都……，就一起改一句（本站建議）。
+goal: 把指責別人的你訊息，改成用當……時，我覺得……，因為……說出事、感受和影響的我訊息。
+review: 孩子和家長各把 3 句最近說過的你訊息改寫成我訊息，互相檢查每句有沒有事、感受、影響三部分，並在一週內真的用一次（數字都是示意）。
 formats:
   slides: []
-  exercise: 目標：把「你都……」改成「當……時，我覺得……，因為……」。　檢核：孩子和家長各把 3 句最近說過的「你訊息」改寫成我訊息，互相檢查每句是否有事件、感受、原因三部分，並在一週內真的用一次。
+  exercise: 目標：把指責別人的你訊息，改成用當……時，我覺得……，因為……說出事、感受和影響的我訊息。　檢核：孩子和家長各把 3 句最近說過的你訊息改寫成我訊息，互相檢查每句有沒有事、感受、影響三部分，並在一週內真的用一次（數字都是示意）。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國中七至九年級綜合活動課
+  source: zonghe
+why:
+  heading: 說出感受，不先指責
+  body:
+  - 綜合活動課綱要國中生「覺察自己與家人溝通的方式，增進經營家庭生活能力。」家政的學習內容有「家人溝通與情感表達。」國語課綱也要「掌握生活情境，適切表情達意，分享自身經驗。」家庭教育議題的國中實質內涵，則有「了解與家人溝通互動及相互支持的適切方式。」
+  - 我訊息是美國的高登博士（Thomas Gordon）提出的說法，高登訓練機構寫「The three-part I-Message was created by Thomas Gordon.」。文章說，你訊息「places blame on the other person」，而且「they have the added effect of damaging the relationship.」，也就是把錯推給對方，還會傷到關係（翻譯是本站整理）。
+  qa:
+    question: 為什麼只說我很生氣還不夠？
+    answer: 只說感受，對方不知道是哪件事、對你有什麼影響（本站整理）。高登訓練機構的文章說，只說自己的感覺是「an incomplete confrontation」，因為三個部分只說了一個（翻譯是本站整理）。
+    source: gti-three
+  items_title: 課綱的學習重點
+  items:
+  - title: 適切表情達意
+    text: 國語文 2-IV-1：掌握生活情境，適切表情達意，分享自身經驗。
+    code: 2-IV-1
+  - title: 覺察和家人溝通的方式
+    text: 綜合活動 2a-IV-3：覺察自己與家人溝通的方式，增進經營家庭生活能力。
+    code: 2a-IV-3
+  - title: 家人溝通與表達
+    text: 綜合活動 家 Da-IV-1：家人溝通與情感表達。
+    code: 家 Da-IV-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 想好一句你訊息
+  - 先深呼吸再說
+  figures:
+  - imsg-compare
+  notes:
+  - 國語文的代碼：數字開頭的是學習表現，第一碼是類別（1 聆聽、2 口語表達）；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 綜合活動的代碼：數字開頭的是學習表現；開頭的家、輔是家政、輔導的學習內容；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 總綱把國民中學七、八、九年級定為第四學習階段，所以本頁代碼中間都是 IV。
+  sources:
+  - zonghe
+  - kuoyu
+  - zonggang
+  - issues-handbook
+  - gti-working
+  - gti-three
+how:
+  heading: 三部分：事、感受、影響
+  body:
+  - 第一部分說事：只說對方做了什麼，不加罵人的字（本站建議）。高登訓練機構列的第一部分是「A brief, non-blameful description of the BEHAVIOR you find unacceptable.」，也就是簡短、不責怪地描述那個行為（翻譯是本站整理）。例如：當我說到一半被打斷時（例子是本站整理）。
+  - 第二部分說感受：我覺得挫折、擔心或難過（例子是本站整理）。第三部分說影響：「The tangible and concrete EFFECT of the behavior on you.」，也就是這件事對你具體造成什麼影響，例如因為我會忘了要說什麼（翻譯和例子是本站整理）。可以用這個句型：當……時，我覺得……，因為……（本站建議）。
+  - 練習時先改寫：把最近說過的你都……，改成三部分的我訊息，請對方檢查三部分有沒有齊；一週內挑情緒比較平穩的時候，真的說出口一次（本站建議）。剛開始會覺得不自然，文章說「with practice, they will come much more naturally」（翻譯是本站整理）。太生氣時，可以先離開一下再說（本站建議）。
+  qa:
+    question: 我訊息要有哪三部分？
+    answer: 事、感受、影響：對方做了什麼、你覺得怎樣、對你有什麼具體影響（本站整理）。高登訓練機構寫的三部分是行為（BEHAVIOR）、感受（FEELINGS）和具體影響（EFFECT），第三部分是「The tangible and concrete EFFECT of the behavior on you.」（翻譯是本站整理）。
+    source: gti-three
+  items_title: 四步做
+  items:
+  - title: 說事
+    text: 對方做了什麼，不罵人。
+  - title: 說感受
+    text: 我覺得怎樣。
+  - title: 說影響
+    text: 對我有什麼具體影響。
+  - title: 請對方檢查
+    text: 三部分有沒有齊。
+  checklist_title: 說的時候檢查一下
+  checklist:
+  - 沒有罵人的字
+  - 說出感受
+  - 說出影響
+  activity_figure: imsg-flow
+  sources:
+  - gti-three
+  - gti-working
+what:
+  heading: 不吵也說得出口
+  body:
+  - 學完後，能把指責對方的你訊息，改成有事、感受、影響三部分的我訊息，並挑平靜的時候在生活中試著用。
+  items_title: 學完能做到
+  items:
+  - title: 改寫你訊息
+    text: 改成我訊息。
+  - title: 三部分齊全
+    text: 事、感受、影響。
+  - title: 真的用一次
+    text: 挑平靜的時候說。
+  checklist_title: 家長檢核
+  checklist:
+  - 三部分都有
+  - 沒有罵人的字
+  - 一週內用過
+  notes:
+  - 本點融入家庭教育議題：議題融入說明手冊國中的實質內涵有了解與家人溝通互動及相互支持的適切方式。親子互相改寫我訊息，就是在練習家人之間的溝通。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: imsg-flow
+  type: flow
+  alt: 我訊息五步驟：孩子寫一句你訊息，改成我訊息，家長檢查三部分，兩個人交換再改，孩子一週內用一次。
+  steps:
+  - actor: 孩子
+    text: 寫一句你訊息
+  - actor: 孩子
+    text: 改成我訊息
+  - actor: 家長
+    text: 檢查三部分
+  - actor: 兩個人
+    text: 交換再改
+  - actor: 孩子
+    text: 一週內用一次
+  source: gti-three
+  caption: 流程是本站建議。
+- id: imsg-compare
+  type: compare
+  alt: 比較兩種說法：你訊息像在指責，對方容易先防衛；我訊息說事、感受和影響。
+  source: gti-working
+  relation: versus
+  items:
+  - term: 你訊息
+    note: 像在指責，對方先防衛
+  - term: 我訊息
+    note: 說事、感受和影響
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：2a-IV-3「覺察自己與家人溝通的方式，增進經營家庭生活能力。」（p.19）；家 Da-IV-1「家人溝通與情感表達。」（p.85）；領域核心素養：綜-J-C2「運用合宜的人際互動技巧，經營良好的人際關係，發揮正向影響力，培養利他與合群的態度，提升團隊效能，達成共同目標。」（p.5）；時間分配：「第四學習階段以實施領域教學為原則，包含家政、童軍、輔導，每週 3節課。」（p.2）；代碼說明：「『1a-IV-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 IV是第四學習階段；第三碼 1 是流水號。」（p.8）；學習內容「由家政、童軍和輔導的科目專業發展，以『家』、『童』、『輔』的簡稱示之」（p.8）
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：2-IV-1「掌握生活情境，適切表情達意，分享自身經驗。」（p.8）；領域核心素養：國-J-B1「運用國語文表情達意，增進閱讀理解，進而提升欣賞及評析文本的能力，並能傾聽他人的需求、理解他人的觀點，達到良性的人我溝通與互動。」（p.4）；代碼說明：學習表現「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民中學教育）：J-B1「具備運用各類符號表情達意的素養，能以同理心與人溝通互動，並理解數理、美學等基本概念，應用於日常生活中。」（p.5）；J-C2「具備利他與合群的知能與態度，並培育相互合作及與人和諧互動的素養。」（p.6）；學習階段「國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 家庭教育國中實質內涵 家J5「了解與家人溝通互動及相互支持的適切方式。」（p.66）
+- id: gti-three
+  title: The Three Things You Need for a Confrontive I-Message
+  publisher: Gordon Training International（Michelle Adams，2012 年 5 月 31 日）
+  url: https://www.gordontraining.com/leadership/what-are-the-essential-components-of-an-i-message/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「telling a person only how you feel is an incomplete confrontation」；「A brief, non-blameful description of the BEHAVIOR you find unacceptable.」；「Your FEELINGS.」；「The tangible and concrete EFFECT of the behavior on you.」；「with practice, they will come much more naturally」
+- id: gti-working
+  title: Working Together with I-Messages
+  publisher: Gordon Training International（高登訓練機構）
+  url: https://www.gordontraining.com/free-workplace-articles/working-together-with-i-messages/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「it places blame on the other person」；「they have the added effect of damaging the relationship.」；「The three-part I-Message was created by Thomas Gordon.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

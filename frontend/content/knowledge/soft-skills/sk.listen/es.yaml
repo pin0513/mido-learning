@@ -68,7 +68,7 @@ ai:
   - 事後幫忙整理對話重點（由大人操作，本站建議）
   human_experience:
   - 放下手邊的事，專心看著對方
-idea: 聽的時候放下手上的東西、看著對方；等對方說完，用自己的話說回重點，再問一句對嗎。對方點頭，你就知道自己聽懂了；說錯了，對方通常會幫你更正。
+idea: 聽的時候放下手上的東西、看著對方；等對方說完，用自己的話說回重點，再問一句對嗎。對方點頭，多半表示你抓到了重點；說錯了，對方通常會幫你更正。
 guiding_questions:
 - 怎麼讓對方知道你真的有在聽？
 - 對方說完後，要怎麼確認自己聽懂了？
@@ -92,10 +92,10 @@ why:
   heading: 被聽懂，才願意多說
   body:
   - 國語課綱要三、四年級「聆聽時能讓對方充分表達意見。」綜合活動課綱也要孩子「覺察自己的人際溝通方式，展現合宜的互動與溝通態度和技巧。」家庭教育議題的國小實質內涵，則有「了解家庭中各種關係的互動」。
-  - 美國疾病管制與預防中心（CDC）給家長的建議說，積極聆聽是讓對方說出想法和感受，「without interruption」；對方說完，「try to repeat back to them what you heard in your own words」。這樣做，對方就知道你聽到了，也懂了他的意思（翻譯是本站整理）。
+  - 美國疾病管制與預防中心（CDC）給家長的建議說，積極聆聽是讓對方說出想法和感受，「without interruption」；對方說完，「try to repeat back to them what you heard in your own words」。這樣做，對方比較容易知道你有在聽，也知道你想懂他的意思（翻譯是本站整理）。
   qa:
     question: 怎麼讓對方知道你真的有在聽？
-    answer: 先停下來看著他。CDC 的建議是「Make eye contact and stop other things you are doing.」，也就是看著對方、停下手邊的事（翻譯是本站整理）。等他說完，再用自己的話說回重點，他就知道你懂了（本站建議）。
+    answer: 先停下來看著他。CDC 的建議是「Make eye contact and stop other things you are doing.」，也就是看著對方、停下手邊的事（翻譯是本站整理）。等他說完，再用自己的話說回重點，他比較容易知道你有在聽（本站建議）。
     source: cdc-listen
   items_title: 課綱的學習重點
   items:

@@ -193,7 +193,8 @@ test("開放主線只帶已發布標題", () => {
   // B21 發布 ph.parts@es 後，改用它的下一階草稿 ph.feedback@jh；B22 發布 ph.feedback@jh 後，改用仍是草稿的 ph.science@sh。
   // B23 發布哲學 sh 7 點後，這三個改用同一條路線上仍是草稿的大學點 ph.philsci@uni、ph.formal@uni、ph.complex@uni。
   // B24 發布哲學 uni 6 點後，地圖上沒有草稿；改用接在這條主線上、仍是草稿的軟實力點：sk.issuetree@jh（先備 pm.breakdown@es）、sk.decide@sh（先備 pm.triangle@jh）、sk.a3@uni（links.related pm.business@uni，跟 pm.evm@uni 同一階）。
-  for (const title of ["問題樹：大問題拆成小問題", "選方案：準則、權重、取捨", "一頁問題報告：帶團隊從問題到行動"]) {
+  // B26 發布 sk.issuetree@jh 後拿掉它；sk.decide@sh 也以 sk.issuetree@jh 為先備，仍是草稿。
+  for (const title of ["選方案：準則、權重、取捨", "一頁問題報告：帶團隊從問題到行動"]) {
     assert.equal(blob.includes(title), false, title);
   }
   assert.deepEqual(brief.stops[0].prerequisites, [{ title: "目標：我們想完成什麼？", href: "/kp/pm.goal/es" }]);

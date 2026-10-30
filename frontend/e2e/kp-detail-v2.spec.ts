@@ -29,6 +29,7 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   { path: "/kp/sk.hypo/uni", layer: "本質", verify: true },
   // B14 已轉換並發布 it.blocks@es（to_verify: false）；仍是草稿、to_verify、未轉換的國小點改由 sk.listen@es 覆蓋。
   // B25 已轉換並發布 sk.listen@es（to_verify: false），軟實力國小已沒有草稿；未轉換又待核對的樣本只剩上面的 sk.hypo@uni。
+  // B26：sk.hypo@uni 發布後這一列會變成已轉換；未轉換／待核對的三種組合改由 components/kp/v2/review-state.test.ts 的合成內容守住（不靠真實草稿）。
   { path: "/kp/it.blocks/es", layer: "基礎", verify: false, converted: true },
   { path: "/kp/sk.listen/es", layer: "本質", verify: false, converted: true },
 ];

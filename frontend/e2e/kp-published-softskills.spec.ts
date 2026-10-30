@@ -145,25 +145,36 @@ test.describe("正式 build＋溝通與解決問題旗標打開", () => {
     }
   });
 
-  test("連到軟實力草稿的已發布頁：寫出筆數，不露出草稿標題與網址", async ({ request }) => {
-    test.skip(SAMPLES.length === 0, "沒有已發布點連到軟實力草稿；提示由 hidden-notice.test.ts 守住");
+  // B26（PM）：原本的 expect(SAMPLES.every((sample) => sample.drafts.length > 0)) 由 samples() 的建法保證恆為真，不會失敗。
+  // 拆成兩則：負向檢查（每個樣本的草稿標題與網址不露出）；提示檢查（該有提示的樣本逐筆斷言，至少一筆；沒有這種樣本時明確 skip 並寫原因）。
+  const NOTICE_SAMPLES = SAMPLES.filter((sample) => sample.notices.length > 0);
+
+  test("連到軟實力草稿的已發布頁：不露出草稿標題與網址", async ({ request }) => {
+    test.skip(SAMPLES.length === 0, "沒有已發布點連到軟實力草稿；草稿不露出由 hidden-notice.test.ts 的合成內容守住");
     test.info().annotations.push({ type: "samples", description: SAMPLES.map((s) => `${s.point.id}（${s.notices.join("、") || "不計數"}；${s.drafts.map((d) => d.id).join("、")}）`).join("；") });
-    // 該有提示的樣本，下面逐筆斷言提示要在。剩下的樣本都「不計數」時（例如只剩舊版「把這裡當先備」的草稿後學），
-    // 不算失敗：寫出原因，負向檢查照跑（每個樣本至少有 1 個軟實力草稿，不會空跑）；計數提示另由 hidden-notice.test.ts 的合成內容守住。
-    if (!SAMPLES.some((sample) => sample.notices.length > 0)) {
-      test.info().annotations.push({ type: "no-notice", description: "剩下的樣本都不計數：這一則只做草稿不露出的負向檢查，計數提示由 hidden-notice.test.ts 守住" });
-    }
-    expect(SAMPLES.every((sample) => sample.drafts.length > 0)).toBe(true);
-    for (const { point, notices, drafts } of SAMPLES) {
+    for (const { point, drafts } of SAMPLES) {
       const res = await page(request, href(point));
       expect(res.status, point.id).toBe(200);
       expect(res.html, point.id).toContain(point.title);
-      for (const notice of notices) expect(res.html, `${point.id} ${notice}`).toContain(notice);
       for (const draft of drafts) {
         expect(res.html, `${point.id} ${draft.id}`).not.toContain(`href="${href(draft)}"`);
         expect(res.html, `${point.id} ${draft.id}`).not.toContain(draft.title);
       }
     }
+  });
+
+  test("連到軟實力草稿的已發布頁：寫出筆數", async ({ request }) => {
+    test.skip(NOTICE_SAMPLES.length === 0, "沒有該寫出「另有 N 個尚未發布」的樣本（剩下的只在不計數的清單裡）；計數提示由 hidden-notice.test.ts 的合成內容守住");
+    test.info().annotations.push({ type: "notice-samples", description: NOTICE_SAMPLES.map((s) => `${s.point.id}（${s.notices.join("、")}）`).join("；") });
+    let checked = 0;
+    for (const { point, notices } of NOTICE_SAMPLES) {
+      const res = await page(request, href(point));
+      expect(res.status, point.id).toBe(200);
+      for (const notice of notices) expect(res.html, `${point.id} ${notice}`).toContain(notice);
+      checked += 1;
+    }
+    expect(checked).toBe(NOTICE_SAMPLES.length);
+    expect(checked).toBeGreaterThan(0);
   });
 
   test("含草稿的主線：寫出筆數，草稿不列、不連", async ({ request }) => {
