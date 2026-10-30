@@ -110,6 +110,9 @@ jobs:
       - name: Backfill lists may only shrink
         run: pnpm exec tsx scripts/check-backfill-shrink.ts
 
+      - name: YAML comments may not silently disappear
+        run: pnpm content:comments --base
+
       - name: City map unit tests
         run: pnpm test:unit
 
