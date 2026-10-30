@@ -1,55 +1,235 @@
 id: pm.style@sh
 concept: pm.style
 title: 情境領導
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 領導
+  - 管理
+  - 專案管理與領導
+  - 領導
   layer: essence
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 綜合活動
+  - 綜合活動
   core_competencies:
-    - A2
-    - A3
-    - C2
+  - A2
+  - A3
+  - C2
   issues:
-    - 生涯規劃教育
+  - 生涯規劃教育
+  performances:
+  - 涯 1c-V-1
+  contents:
+  - 涯 Ac-V-1
+  - 涯 Bb-V-1
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 高級中等學校教育的 U-A2、U-A3、U-C2 與綜合活動領綱 p.3、p.5 的綜S-U-A2、綜S-U-A3、綜S-U-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage 不填 grades：綜合活動領綱 p.2 說普通型高中的生命教育、生涯規劃、家政「可在不同年級規劃修習不同科目。」高中的學習重點也沒有分年級；總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段。
+- est_time 寫高中生涯規劃課：綜合活動領綱 p.2 的高中部定必修是生命教育 1 學分、生涯規劃 1 學分、家政 2 學分；本點的代碼出自生涯規劃。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱、科技領綱比 PDF 頁少 4，議題融入說明手冊少 16，NASA 排程手冊少 1，NASA 系統工程手冊少 10；OPM 手冊、教育部 AI 指引與 PDF 頁相同；ADP 6-22 用章節頁碼（例如 1-18）。
+- 新增學習內容代碼的頁碼用附錄二學習內容說明裡代碼所在的頁（同代碼表既有的 家 Ca-V-1 p.100、涯 Cb-V-1 p.99）；學習表現用 p.28–31 學習重點表。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- 議題生涯規劃教育保留：議題融入說明手冊高中的實質內涵 涯U3「分析與統整個人特質、興趣、性向、價值觀、生涯態度及信念的能力。」（p.95）。
+- 原 scenario「回顧自己帶過的活動，分析對新手與老手各該如何帶領。」保留做法，補上本站建議。
+- 原 ai.delegable「提供情境案例讓你練習判斷」補上使用條件（本站建議）。
+- 依成員的經驗、能力和投入調整指導與授權，依美國陸軍領導準則 ADP 6-22 第 1 章第 1-100、1-101 段（p.1-18）；它是軍隊準則，本點只借這個原則。常見的情境領導模型（依能力與意願分四種帶法）研究支持有好有壞，所以不寫成定論，也不引用模型名稱；How 內文寫明這是經驗法則（本站整理）。英文短句引用，中文說明是本站整理。
 prerequisites:
-  - pm.lead@jh
+- pm.lead@jh
 links:
   why: []
   how: []
   related: []
   deeper:
-    - pm.org@uni
-link_notes: 心理學（動機）、綜合活動（生涯規劃）
+  - pm.org@uni
+link_notes: 心理學（動機）、綜合活動（生涯規劃）；綜合活動 涯 1c-V-1、涯 Ac-V-1、涯 Bb-V-1。
 competency:
   specialist:
-    - 領導
+  - 領導
   generalist:
-    - 領導
-    - 溝通
-    - 團隊合作
+  - 領導
+  - 溝通
+  - 團隊合作
 ai:
   delegable:
-    - 提供情境案例讓你練習判斷
+  - 提供情境案例讓你練習判斷（案例用虛構人物，本站建議）
   human_experience:
-    - 實際擔任幹部並接受回饋
+  - 實際擔任幹部並接受回饋
 idea: 沒有一種領導方式適用所有人。依成員的能力與意願，調整指導或授權的程度。
 guiding_questions:
-  - 你喜歡被怎麼帶？這和你帶別人的方式一樣嗎？
-scenario: 回顧自己帶過的活動，分析對新手與老手各該如何帶領。
+- 你喜歡被怎麼帶？這和你帶別人的方式一樣嗎？
+- 新手和老手，各該怎麼帶？
+- 什麼時候可以放手交給對方？
+scenario: 回顧自己帶過的活動，分析對新手與老手各該如何帶領（本站建議）。
 formats:
   slides: []
+  exercise: 目標：回顧一次自己帶過或參與過的活動，挑一位新手和一位老手，寫出兩人的能力和意願、你會給多少指導或授權，並說出理由。　檢核：老師看分析表：新手和老手的能力、意願分開寫，給的指導和授權不一樣，而且說得出理由；學生說得出自己喜歡被怎麼帶、和自己帶人的方式哪裡不同，以及什麼時候可以放手。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 回顧一次自己帶過或參與過的活動，挑一位新手和一位老手，寫出兩人的能力和意願、你會給多少指導或授權，並說出理由。
+review: 老師看分析表：新手和老手的能力、意願分開寫，給的指導和授權不一樣，而且說得出理由；學生說得出自己喜歡被怎麼帶、和自己帶人的方式哪裡不同，以及什麼時候可以放手。
+est_time:
+  school: 高中生涯規劃課
+  source: zonghe
+why:
+  heading: 同一招，不能帶所有人
+  body:
+  - 108 課綱的生涯規劃要高中生「分析與統整個人特質、價值觀、生涯態度及信念。」學「個人能力和興趣。」補充說明要「藉由測驗、自我覺察或重要他人的回饋等」了解自己；也要「培養人際互動與合作共事的能力」。帶人之前，先知道自己和組員各有什麼能力、想不想做（本站整理）。
+  - 美國陸軍的領導準則（ADP 6-22）說：「Inexperienced subordinates and those with limited competence require greater oversight and control. Seasoned, competent subordinates require less oversight and control.」經驗少、能力還不夠的人需要多一點指導和檢查；有經驗、能力夠的人就少管一點（翻譯是本站整理）。準則也說，成員的經驗、能力和投入會「vary with the mission and situation」，同一個人換了工作也會不一樣。
+  qa:
+    question: 新手和老手，各該怎麼帶？
+    answer: 新手要多指導：說清楚做什麼、怎麼做，常常一起檢查；老手能力夠、也願意做，就多授權，說好目標和期限，讓他自己決定做法。準則說有經驗、能力夠的人「require less oversight and control」（說明是本站整理）。
+    source: army-adp
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 分析個人特質
+    text: 綜合活動 涯 1c-V-1：分析與統整個人特質、價值觀、生涯態度及信念。
+    code: 涯 1c-V-1
+  - title: 個人能力和興趣
+    text: 綜合活動 涯 Ac-V-1：個人能力和興趣。
+    code: 涯 Ac-V-1
+  - title: 職業生活與工作倫理
+    text: 綜合活動 涯 Bb-V-1：職業生活與工作倫理。
+    code: 涯 Bb-V-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 想好一次活動
+  - 準備分析表
+  figures:
+  - style-compare
+  notes:
+  - 綜合活動高中的代碼：開頭的涯是生涯規劃、家是家政；接著是數字的是學習表現，是大寫字母的是學習內容；中間的 V 是第五學習階段（高中）。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - zonghe
+  - army-adp
+  - zonggang
+how:
+  heading: 看能力和意願，調整帶法
+  body:
+  - 先回顧：挑一次自己帶過或參與過的活動，例如社團成果展或班際比賽，選一位新手和一位老手（例子是本站整理）。替兩人各寫兩件事：這件工作他會不會做，也就是能力；他想不想做、有沒有信心，也就是意願。能力和意願要分開看：會做但不想做，和想做但還不會，需要的幫忙不一樣（本站整理）。
+  - 再決定帶法：能力還不夠的，多指導，說清楚步驟、示範一次、常常一起檢查；能力夠但意願低的，多聽他的想法、說明這件事為什麼重要，讓他參與決定；能力和意願都高的，就授權，說好目標、期限和什麼時候回報，做法讓他自己決定（本站整理）。準則說，當成員「have greater levels of expertise and commitment」，領導者就「trust and empower them」。什麼時候可以放手：他已經做對過幾次、遇到問題會主動回報，就可以少管一點；放手後也要約好檢查的時間（本站建議）。這是帶人的經驗法則，研究對這類說法的支持有好有壞，用的時候要看對方的反應再調整（本站整理）。
+  - 最後回頭看自己：你喜歡被怎麼帶？很多人會用自己喜歡的方式帶別人。喜歡自由發揮的人帶新手時如果也不多說，新手會不知道從哪裡開始；喜歡被詳細指導的人帶老手時管太細，老手會覺得不被信任（本站整理）。把自己喜歡的帶法和組員需要的帶法寫在一起比較，下次帶人時先問對方需要什麼（本站建議）。
+  qa:
+    question: 你喜歡被怎麼帶？這和你帶別人的方式一樣嗎？
+    answer: 常常一樣，但不一定適合對方。喜歡自由發揮的人帶新手時容易說太少，喜歡被詳細指導的人帶老手時容易管太細，所以要先看對方的能力和意願再決定（本站整理）。準則說成員的經驗、能力和投入會「vary with the mission and situation」。
+    source: army-adp
+  items_title: 四步做
+  items:
+  - title: 挑新手和老手
+    text: 從一次真的活動裡挑。
+  - title: 分開能力和意願
+    text: 會不會做、想不想做。
+  - title: 決定指導或授權
+    text: 每種帶法都寫理由。
+  - title: 比較自己的習慣
+    text: 我喜歡的帶法適合他嗎？
+  checklist_title: 寫完檢查
+  checklist:
+  - 能力意願分開
+  - 帶法有理由
+  - 寫了自己習慣
+  activity_figure: style-flow
+  sources:
+  - army-adp
+  - zonghe
+what:
+  heading: 依對方調整帶人方式
+  body:
+  - 學完後，學生能分開看組員的能力和意願，對新手多指導、對老手多授權，說出什麼時候可以放手，並比較自己喜歡被帶的方式和組員需要的帶法。
+  items_title: 學完能做到
+  items:
+  - title: 分開看能力和意願
+    text: 不只看會不會做。
+  - title: 決定指導或授權
+    text: 新手和老手帶法不同。
+  - title: 反思自己的習慣
+    text: 先問對方需要什麼。
+  checklist_title: 家長檢核
+  checklist:
+  - 新手老手不同
+  - 帶法有理由
+  - 說得出何時放手
+  notes:
+  - 本點融入生涯規劃教育議題：議題融入說明手冊高中的實質內涵有「分析與統整個人特質、興趣、性向、價值觀、生涯態度及信念的能力。」先了解自己和組員，才知道怎麼帶。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - issues-handbook
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: style-flow
+  type: flow
+  alt: 調整帶法五步驟：學生挑一位新手和一位老手，看兩人的能力和意願，決定帶法，和自己的習慣比較；下次帶人時先問對方需要什麼。
+  steps:
+  - actor: 學生
+    text: 挑新手老手
+  - actor: 學生
+    text: 看能力意願
+  - actor: 學生
+    text: 決定帶法
+  - actor: 學生
+    text: 比較自己
+  - actor: 下次
+    text: 先問需要
+  source: army-adp
+  caption: 流程是本站建議。
+- id: style-compare
+  type: compare
+  alt: 比較新手和老手的帶法：新手能力還不夠，多指導，說清楚步驟、常檢查；老手能力和意願都高，多授權，說好目標和期限。
+  source: army-adp
+  relation: versus
+  items:
+  - term: 新手
+    note: 能力還不夠：多指導，說清楚步驟、常檢查
+  - term: 老手
+    note: 能力和意願都高：多授權，說好目標和期限
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：涯 1c-V-1「分析與統整個人特質、價值觀、生涯態度及信念。」（p.28）；涯 Ac-V-1「個人能力和興趣。」（p.98）；涯 Bb-V-1「職業生活與工作倫理。」（p.98）；補充說明 涯 Ac-V-1「能藉由測驗、自我覺察或重要他人的回饋等，有系統的了解個人能力、興趣、價值觀、個人生涯態度與信念。」（p.98）；補充說明 涯 Bb-V-1「培養人際互動與合作共事的能力，並理解工作倫理與職場道德的意義與內涵，做好將來就業的準備。」（p.98）；領域核心素養：綜S-U-A2「確立自我需求與目標，學習批判思考與自主管理的知能，透過具體可行的學習方案與實踐過程，積極面對及處理生活與生命中的各種挑戰。」（p.3）；綜S-U-A3「敏察和因應危險情境，規劃與運用資源，預防及化解可能的危機」（p.3）；綜S-U-C2「具備人際溝通知能，提升在團體生活中共同決策、合作解決問題，學習並善用領導素養，以面對社會變遷的挑戰，營造優質的生活。」（p.5）；時間分配：普通型高級中等學校第五學習階段「部定必修科目包含生命教育（1 學分）、生涯規劃（1 學分）、家政（2 學分）三科，共 4 學分，可在不同年級規劃修習不同科目。」（p.2）；代碼說明：「生命教育、生涯規劃與家政分別以『生』、『涯』、『家』的簡稱示之。」（p.9）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-A3「具備規劃、實踐與檢討反省的素養，並以創新的態度與作為因應新的情境或問題。」（p.5）；U-C2「發展適切的人際互動關係，並展現包容異己、溝通協調及團隊合作的精神與行動。」（p.6）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: army-adp
+  title: ADP 6-22 Army Leadership and the Profession（2019 年 7 月，含 2025 年 2 月 6 日 Change 2）
+  publisher: Headquarters, Department of the Army（美國陸軍部）
+  url: https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN42975-ADP_6-22-002-WEB-8.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 第 1-100 段「Inexperienced subordinates and those with limited competence require greater oversight and control. Seasoned, competent subordinates require less oversight and control.」（p.1-18）；「Experience, competence, and commitment of those led vary with the mission and situation.」（p.1-18）；第 1-101 段「Generally, when subordinates have greater levels of expertise and commitment, leaders trust and empower them.」（p.1-18）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 生涯規劃教育高中實質內涵 涯U3「分析與統整個人特質、興趣、性向、價值觀、生涯態度及信念的能力。」（p.95）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-29'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）

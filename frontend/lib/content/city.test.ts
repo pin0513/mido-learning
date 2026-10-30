@@ -39,7 +39,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
     map.buildings.map((building) => `${building.id}:${building.x}:${building.y}:${building.height}`).join("\n");
   assert.equal(signature(first), signature(second));
   const digest = createHash("sha256").update(signature(first)).digest("hex");
-  assert.equal(digest, "682a27ea04c884ccbbdb19981af46896556bc8b6cc1cdf2a5cf2c50433f4ee77");
+  assert.equal(digest, "ae417a1affd446961e01775f0999ba14ffe8cc1a4c6e4d0924ee3a7d8c83b87d");
   for (const district of first.districts) {
     for (const stage of first.stages) {
       const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;
@@ -90,18 +90,19 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   // B14 發布資訊與 AI es／jh 12 點後，資訊與 AI 的 8 條路線（it.collab、it.creative、it.ct、it.data、it.literacy、it.ml、it.net、it.prog）各有 es＋jh 兩站已發布，也跟著顯示。
   // B17 發布專案管理 es 5 點後，專案管理的 6 條路線（pm.goal、pm.lead、pm.reflect、pm.risk、pm.schedule、pm.team）各有國小一站已發布，也跟著顯示；pm.lead 與 pm.team 都從 pm.roles@es 出發。
   // B18 發布專案管理 jh 5 點後，路線數不變（6 條都已顯示），每條各多國中一站；pm.team 與 pm.reflect 都經過 pm.team@jh。
+  // B19 發布專案管理 sh 5 點後，路線數仍不變，每條各多高中一站（大學站仍是草稿，不顯示）；pm.reflect 與 pm.risk 都接到 pm.agile@sh。
   assert.equal(shown.landmarks.length, 23);
   const shownStops = (id: string) => {
     const found = shown.landmarks.find((landmark) => landmark.id === id);
     assert.ok(found, id);
     return found.stops;
   };
-  assert.deepEqual(shownStops("pm.team"), ["pm.roles@es", "pm.team@jh"]);
-  assert.deepEqual(shownStops("pm.goal"), ["pm.goal@es", "pm.project@jh"]);
-  assert.deepEqual(shownStops("pm.lead"), ["pm.roles@es", "pm.lead@jh"]);
-  assert.deepEqual(shownStops("pm.reflect"), ["pm.retro@es", "pm.team@jh"]);
-  assert.deepEqual(shownStops("pm.risk"), ["pm.planb@es", "pm.risk@jh"]);
-  assert.deepEqual(shownStops("pm.schedule"), ["pm.sequence@es", "pm.gantt@jh"]);
+  assert.deepEqual(shownStops("pm.team"), ["pm.roles@es", "pm.team@jh", "pm.conflict@sh"]);
+  assert.deepEqual(shownStops("pm.goal"), ["pm.goal@es", "pm.project@jh", "pm.stakeholder@sh"]);
+  assert.deepEqual(shownStops("pm.lead"), ["pm.roles@es", "pm.lead@jh", "pm.style@sh"]);
+  assert.deepEqual(shownStops("pm.reflect"), ["pm.retro@es", "pm.team@jh", "pm.agile@sh"]);
+  assert.deepEqual(shownStops("pm.risk"), ["pm.planb@es", "pm.risk@jh", "pm.agile@sh"]);
+  assert.deepEqual(shownStops("pm.schedule"), ["pm.sequence@es", "pm.gantt@jh", "pm.cpm@sh"]);
   const shownEstimate = shown.landmarks.find((landmark) => landmark.id === "pm.estimate");
   assert.ok(shownEstimate);
   assert.deepEqual(shownEstimate.stops, ["pm.breakdown@es", "pm.triangle@jh", "pm.estimate@sh", "pm.evm@uni"]);
@@ -109,11 +110,11 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.ok(shownLogic);
   assert.deepEqual(shownLogic.stops, ["ph.reason@es"]);
   const identified = presentCityMap(map, true);
-  // B18 發布 pm.project@jh 後，有名字的草稿改用 pm.stakeholder@sh（同在 pm.goal 路線上）。
-  const namedDraft = identified.buildings.find((building) => building.id === "pm.stakeholder@sh");
+  // B18 發布 pm.project@jh 後，有名字的草稿改用 pm.stakeholder@sh；B19 發布它後，改用同在 pm.goal 路線上的下一站 pm.business@uni。
+  const namedDraft = identified.buildings.find((building) => building.id === "pm.business@uni");
   assert.ok(namedDraft);
   assert.equal(namedDraft.title, "");
-  assert.equal(namedDraft.href, "/kp/pm.stakeholder/sh");
+  assert.equal(namedDraft.href, "/kp/pm.business/uni");
   assert.equal(map.buildings.filter((building) => building.aesthetics).length, 2);
 });
 
@@ -154,8 +155,8 @@ test("開放主線只帶已發布標題", () => {
   );
   const blob = JSON.stringify(brief);
   // B17 發布 pm.goal@es、pm.sequence@es 後，它們以已發布先備出現；B18 發布 pm.project@jh 後，pm.triangle@jh 的兩個先備都已發布。
-  // 草稿先備只剩 pm.evm@uni 的 pm.schedule@uni，只算筆數；其餘專案管理草稿（sh／uni）的標題也不會出現。
-  for (const title of ["排程與資源", "要徑：決定專案長度的那條路", "利害關係人"]) {
+  // 草稿先備只剩 pm.evm@uni 的 pm.schedule@uni，只算筆數；其餘專案管理草稿的標題也不會出現（B19 發布 sh 5 點後，草稿只剩 uni：排程、商業論證、組織行為等）。
+  for (const title of ["排程與資源", "商業論證與專案治理", "組織行為與心理安全感"]) {
     assert.equal(blob.includes(title), false, title);
   }
   assert.deepEqual(brief.stops[0].prerequisites, [{ title: "目標：我們想完成什麼？", href: "/kp/pm.goal/es" }]);

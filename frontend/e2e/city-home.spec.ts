@@ -6,9 +6,10 @@ import { test, expect } from "@playwright/test";
  */
 const DRAFT_TITLES = [
   "部分與整體",
-  // B11–B13 已發布數學全部 26 點，B14–B16 已發布資訊與 AI 全部 25 點；草稿樣本換成仍是草稿的專案管理點（pm.schedule@uni、pm.cpm@sh 接在 pm.estimate@sh 之後；pm.business@uni、pm.aiteam@uni 由已發布點連過去）。
+  // B11–B13 已發布數學全部 26 點，B14–B16 已發布資訊與 AI 全部 25 點；草稿樣本換成仍是草稿的專案管理點（pm.schedule@uni 接在 pm.estimate@sh 之後；pm.business@uni、pm.aiteam@uni 由已發布點連過去）。
+  // B19 發布 pm.cpm@sh 後，改用由 pm.conflict@sh、pm.style@sh 連過去的草稿 pm.org@uni。
   "排程與資源最佳化",
-  "要徑：決定專案長度的那條路",
+  "組織行為與心理安全感",
   "認知偏誤與思考盲點",
   "商業論證與專案治理",
   "決策、倫理與 AI 協作",
@@ -88,7 +89,8 @@ test.describe("學門總圖", () => {
     await expect(task).toContainText("大事拆成小事");
     await expect(task).not.toContainText("準備中");
     await expect(task.locator("table")).toHaveCount(0);
-    await expect(page.locator("body")).not.toContainText("要徑：決定專案長度的那條路");
+    // B19 發布 pm.cpm@sh 後，改查它的下一階草稿。
+    await expect(page.locator("body")).not.toContainText("排程與資源最佳化");
   });
 
   test("手機上四個學門都不橫向溢出", async ({ page }) => {
