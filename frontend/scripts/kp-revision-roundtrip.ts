@@ -7,10 +7,13 @@
  * 2. Firestore 存得下：只有 JSON 值、沒有陣列直接套陣列。
  * 3. 規則：轉回的物件用 rules 的 checkPoints（資料庫形式）驗證，錯誤與警告和 YAML 相同（訊息開頭換成文件名稱）。
  * 4. 畫面：用轉回的資料建目錄，V2 詳細頁的主欄與側欄 HTML 和原本逐字元相同（含草稿與只看已發布兩種目錄）。
+ * 5. 註解：每個檔的 YAML 註解逐字進了 revision.importNotes。每一行以 # 開頭的行都要抽到；
+ *    抽到的每一筆在原檔的那一行那一欄逐字相同；把抽到的挖掉之後，原文再也找不到註解，資料也不變。
  *
  * 直接執行：pnpm kp:roundtrip（印出各學門結果，有任何不同就 exit 1）。單元測試見 kp-revision-roundtrip.test.ts。
- * render 詳細頁需要 --import ./scripts/node-stubs.mjs（把 server-only 與 .css 換成空模組）。
+ * render 詳細頁要把 server-only 與 .css 換成空模組：第一行 import ./node-stubs（只影響載入這支腳本的行程）。
  */
+import "./node-stubs";
 import { readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,11 +21,12 @@ import { isDeepStrictEqual } from "node:util";
 import Ajv, { type AnySchema } from "ajv";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { parse } from "yaml";
+import { Lexer, parse } from "yaml";
 import { KpDetailV2 } from "../components/kp/v2/KpDetailV2";
 import { catalogFromModel, visibleCatalog, type ContentCatalog } from "../lib/content/catalog";
 import { loadContent, walkYaml } from "../lib/content/load";
 import {
+  blankComments,
   checkRecords,
   circleToMarkdown,
   markdownToCircle,
@@ -53,8 +57,14 @@ export interface RoundTripReport {
   renderedPages: number;
   /** 匯出的 YAML 文字與原檔（去掉註解行）完全相同的檔數。只是參考，不是門檻。 */
   yamlTextIdentical: number;
-  /** 有註解的檔數（註解不是資料，不進修訂版）。 */
+  /** 有註解的檔數。 */
   filesWithComments: number;
+  /** 原檔裡以 # 開頭的行數（不靠 Lexer 數）。 */
+  commentLines: number;
+  /** 逐字抽進 revision.importNotes 的註解筆數。 */
+  commentsCaptured: number;
+  /** 其中行尾註解的筆數。 */
+  inlineComments: number;
   yamlErrors: number;
   yamlWarnings: number;
   revisionErrors: number;
@@ -124,6 +134,9 @@ export function runRoundTrip({ contentDir = CONTENT_DIR, mutate }: RoundTripOpti
   const records: KpRecord[] = [];
   let yamlTextIdentical = 0;
   let filesWithComments = 0;
+  let commentLines = 0;
+  let commentsCaptured = 0;
+  let inlineComments = 0;
 
   const files = walkYaml(join(contentDir, "knowledge"));
   for (const file of files) {
@@ -140,11 +153,20 @@ export function runRoundTrip({ contentDir = CONTENT_DIR, mutate }: RoundTripOpti
 
     let record: KpRecord;
     try {
-      record = yamlToRecord(raw, rel);
+      record = yamlToRecord(raw, rel, { sourceText: text, file: rel });
     } catch (error) {
       fail(`轉不成修訂版：${error instanceof Error ? error.message : String(error)}`);
       continue;
     }
+    const commentProblems = checkComments(text, raw, record);
+    for (const problem of commentProblems) fail(`註解：${problem}`);
+    const comments = record.revision.importNotes?.comments ?? [];
+    const hashLines = text.split("\n").filter((line) => /^\s*#/.test(line)).length;
+    commentLines += hashLines;
+    commentsCaptured += comments.length;
+    inlineComments += comments.filter((comment) => comment.inline).length;
+    if (comments.length > 0) filesWithComments += 1;
+
     const json = JSON.parse(JSON.stringify(record)) as KpRecord;
     const stored = mutate ? mutate(json) : json;
     records.push(stored);
@@ -158,14 +180,16 @@ export function runRoundTrip({ contentDir = CONTENT_DIR, mutate }: RoundTripOpti
     } else {
       if (!isDeepStrictEqual(back.raw, raw)) fail("YAML → 修訂版 → YAML 的資料不同");
       const again = yamlToRecord(back.raw, rel);
-      if (!isDeepStrictEqual(again, record)) fail("第二次轉成的修訂版不同");
+      // 從 YAML 物件轉回來沒有原文，所以沒有 importNotes；其餘要相同。
+      const expected = structuredClone(record);
+      delete expected.revision.importNotes;
+      if (!isDeepStrictEqual(again, expected)) fail("第二次轉成的修訂版不同");
       const exported = yamlText(back.raw);
       if (!isDeepStrictEqual(parse(exported), raw)) fail("匯出的 YAML 文字解析回來不同");
       const withoutComments = text
         .split("\n")
         .filter((line) => !/^\s*#/.test(line))
         .join("\n");
-      if (withoutComments !== text) filesWithComments += 1;
       if (exported === withoutComments) yamlTextIdentical += 1;
     }
     for (const circle of CIRCLES) {
@@ -251,6 +275,9 @@ export function runRoundTrip({ contentDir = CONTENT_DIR, mutate }: RoundTripOpti
     renderedPages,
     yamlTextIdentical,
     filesWithComments,
+    commentLines,
+    commentsCaptured,
+    inlineComments,
     yamlErrors: original.errors.length,
     yamlWarnings: original.warnings.length,
     revisionErrors: checked.errors.length,
@@ -260,11 +287,31 @@ export function runRoundTrip({ contentDir = CONTENT_DIR, mutate }: RoundTripOpti
   };
 }
 
+/** 第 5 項：註解有沒有全部、逐字抽到。 */
+export function checkComments(text: string, raw: unknown, record: KpRecord): string[] {
+  const problems: string[] = [];
+  const comments = record.revision.importNotes?.comments ?? [];
+  const captured = new Set(comments.filter((comment) => !comment.inline).map((comment) => comment.line));
+  text.split("\n").forEach((line, index) => {
+    if (/^\s*#/.test(line) && !captured.has(index + 1)) problems.push(`第 ${index + 1} 行的註解沒抽到`);
+  });
+  let blanked: string;
+  try {
+    blanked = blankComments(text, comments);
+  } catch (error) {
+    return [...problems, error instanceof Error ? error.message : String(error)];
+  }
+  if ([...new Lexer().lex(blanked)].some((token) => token.startsWith("#"))) problems.push("挖掉抽到的註解後，原文還有註解");
+  if (!isDeepStrictEqual(parse(blanked), raw)) problems.push("挖掉註解後資料不同");
+  return problems;
+}
+
 function main() {
   const report = runRoundTrip();
   console.log(`知識點 ${report.total} 筆：資料無損 ${report.dataLossless}、主欄與側欄一字不差 ${report.renderIdentical}（比了 ${report.renderedPages} 頁）。`);
   console.log(`規則：YAML 錯誤 ${report.yamlErrors}／警告 ${report.yamlWarnings}；修訂版錯誤 ${report.revisionErrors}／警告 ${report.revisionWarnings}。`);
-  console.log(`參考：匯出的 YAML 文字與原檔（去掉註解）一字不差 ${report.yamlTextIdentical} 檔；有註解的檔 ${report.filesWithComments} 個（註解不進修訂版）。`);
+  console.log(`註解：${report.filesWithComments} 個檔、${report.commentLines} 行以 # 開頭；逐字抽進 importNotes ${report.commentsCaptured} 筆（行尾註解 ${report.inlineComments}）。`);
+  console.log(`參考：匯出的 YAML 文字與原檔（去掉註解）一字不差 ${report.yamlTextIdentical} 檔。`);
   console.log("學門\t點數\t資料無損\t畫面相同");
   for (const [folder, tally] of [...report.byDiscipline].sort(([a], [b]) => a.localeCompare(b))) {
     console.log(`${folder}\t${tally.points}\t${tally.data}\t${tally.render}`);

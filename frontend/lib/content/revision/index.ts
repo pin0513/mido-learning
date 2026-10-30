@@ -10,6 +10,17 @@ export {
   recordToYamlText,
   yamlText,
   yamlToRecord,
+  type YamlToRecordOptions,
 } from "./convert";
+export { blankComments, extractComments, importAuditEntry, importNotesFor, type ImportAuditEntry } from "./comments";
 export { circleToMarkdown, encodeLine, markdownToCircle } from "./markdown";
-export { ConvertError, type KpLead, type KpRecord, type KpRevisionContent, type KpSource, type KpStructure } from "./types";
+export {
+  ConvertError,
+  type KpImportNotes,
+  type KpLead,
+  type KpRecord,
+  type KpRevisionContent,
+  type KpSource,
+  type KpSourceComment,
+  type KpStructure,
+} from "./types";

@@ -2,8 +2,8 @@
 
 | 項目 | 內容 |
 | --- | --- |
-| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）已合併；P1 第二段（YAML ⇄ 修訂版轉換器）進行中 |
-| 依據 | 「知識點資料重構方案」（2026-10-29，分析 main `8c62d7e`）；本文件對照 main `e9bfd5e`（2026-10-30）的程式重寫 |
+| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）、第二段（YAML ⇄ 修訂版轉換器，#59）已合併；YAML 註解的去處（第 15 節）進行中 |
+| 依據 | 「知識點資料重構方案」（2026-10-29，分析 main `8c62d7e`）；本文件對照 main `e1763c7`（2026-10-30）的程式重寫 |
 | 決定者 | I-PING（admin） |
 | 不做的事 | 本文件與 P1 不碰正式 Firestore、GCP 資源，不改任何旗標 |
 
@@ -18,9 +18,10 @@
 | 2026-10-30 | 課綱代碼與分類 | 維持 Git 參考資料，PR 審查，不在 DB 編輯 | `content/taxonomy/*.yaml`（含 `curriculum-108-codes.yaml`）留在 repo；規則包與前台在部署時打包同一份，修訂版記 `taxonomyVersion` |
 | 2026-10-30 | 承諾用語檢查 | 先當警告，不擋發布 | 規則包 `promise.ts` 只產生 warning；之後要升級只改呼叫端 |
 | 2026-10-30 | 每晚 Git 匯出 | 推到同 repo 的 `content-export` 分支，永不合併 main | 匯出工作只對該分支有寫入權；main 的保護規則不變 |
+| 2026-10-30 | 「無損」的定義 | 解析後的資料相同（PM 審查接受） | 條件：YAML 註解（批次審稿紀錄）在任何學門凍結前要有明確去處，不能消失（第 3.2、8、15 節） |
 | 2026-10-30 | 何時凍結學門 | 該學門所有進行中的 YAML 批次合併後才凍結 | 內容批次 B23–B28 照舊改 YAML、跑 `pnpm validate:content` |
 
-## 2. 現況（main `e9bfd5e`）
+## 2. 現況（main `e1763c7`）
 
 | 項目 | 位置 | 說明 |
 | --- | --- | --- |
@@ -65,6 +66,7 @@
 | `validation` | map | ok、errors[]、warnings[]、checkedAt |
 | `authorUid`、`submittedAt`、`publishedBy`、`publishedAt` | string、timestamp | `publishedBy` 必須是 admin |
 | `changeNote`、`contentHash` | string | 重複匯入不建新版 |
+| `importNotes` | map | 只在匯入產生的 revision 1：file（相對 `frontend/content`）、commit（匯入時的 main）、comments[]＝{line、column、text、inline、path}。text 是原檔註解逐字（含 `#`），line／column 從 1 起算，path 是它附著的欄位（整行註解＝下面第一個鍵，例如 `id`、`why`；行尾註解＝同一行的鍵）。不是知識點資料：不轉回 YAML、不進往返比對、之後的修訂不複製；檔案沒有註解就沒有這個欄位 |
 
 驗證時把修訂版**轉回 schema 形狀的物件**（`lib/content/revision` 的 `recordToYaml`，再交給 `rules`），所以 schema 與規則只有一份。欄位名稱：YAML 的 snake_case 在修訂版改成 camelCase（`curriculum_108` → `curriculum108`、`core_competencies` → `coreCompetencies`、`human_experience` → `humanExperience`、`ai_prompt` → `aiPrompt`、`est_time` → `estTime`、`link_notes` → `linkNotes`、`to_verify` → `toVerify`、`verify_notes` → `verifyNotes`、`guiding_questions` → `guidingQuestions`），其餘同名。選填欄位「沒寫」和「寫了空陣列」分開保存。轉換器的型別在 `lib/content/revision/types.ts`（`KpRecord`＝`kpId`、`status`、`revision`）。
 
@@ -75,7 +77,7 @@
 | `learning_paths/{pathId}` | title、discipline、items[]、version、updatedBy | 取代 `content/paths/*.yaml`；只有 admin 能改 |
 | `kp_material_links/{linkId}` | kpId、revision、role（slides／audio／file／video／link）、section（why／how／what／null）、order、title、note、componentId、materialId、version、url、provider | 頂層集合才查得到「教材用在哪些知識點」；教材型的 `materialId`＋`version` 發布時寫死；`video` 只收允許清單網址 |
 | `materials`（既有，加欄位） | kind（html_bundle／audio／file）、contentType、durationSec、pageCount | 舊資料沒有 `kind` 視為 html_bundle；不收影片 |
-| `audit_log/{id}` | at、uid、action、kpId、fromRevision、toRevision、structureDiff、validationSummary | 只能新增 |
+| `audit_log/{id}` | at、uid、action、kpId、fromRevision、toRevision、structureDiff、validationSummary | 只能新增。匯入那筆 action＝`kp.import`，另帶 file、commit、comments[]（和 revision 1 的 `importNotes` 同一份，`importAuditEntry` 產生），修訂版之後被改也查得到原始註解 |
 | `catalog_snapshots/{discipline}` | publishedAt、catalogVersion、points[]（已發布結構＋內容） | 發布時由 API 寫；依學門分檔避開 1MB 上限；前台只讀這份 |
 
 ## 4. Markdown 寫法
@@ -115,7 +117,7 @@
 - 每個值佔一行。值是空字串、含換行、前後有空白、或開頭是 `# : - > [ \ { * + |` 時，整行寫成 `\` 加 JSON 字串；屬性值一律是 JSON 字串。讀回來一字不差。
 - 輸出用上面的固定順序；讀的時候區塊順序不拘。寫錯（沒有標題、區塊沒收尾、不認得的區塊）回報行號，`checkRecord` 算錯誤。
 - 不允許原始 HTML：渲染沿用 V2 的 `components/kp/v2/text.tsx`（RichText），它只輸出文字節點。
-- 轉換器必須可逆。「可逆」的定義是**資料**：YAML 解析出的物件 → 修訂版 → 物件完全相同（型別、值、陣列順序、選填欄位有沒有寫）。物件的欄位順序不保留（Firestore 的 map 不保留順序），匯出時一律用 schema 的順序；YAML 註解不是資料，不進修訂版（見第 12 節）。
+- 轉換器必須可逆。「可逆」的定義是**資料**：YAML 解析出的物件 → 修訂版 → 物件完全相同（型別、值、陣列順序、選填欄位有沒有寫）。物件的欄位順序不保留（Firestore 的 map 不保留順序），匯出時一律用 schema 的順序；YAML 註解不是資料，不進 structure 與內文，逐字放在 revision 1 的 `importNotes`（第 3.2、15 節）。
 
 ## 5. API（mido-learning-api，新增 `Endpoints/KnowledgePointEndpoints.cs`）
 
@@ -189,9 +191,9 @@
 ## 8. 遷移與凍結
 
 1. **規則包**（P1，本 PR）：檢查改吃記憶體物件，CI 行為不變。
-2. **YAML → 修訂版轉換器**（P1 第二段，`lib/content/revision/`）：結構＋Markdown 可逆；每一點逐點比對 V2 主欄與側欄輸出，一字不差才算過（`scripts/kp-revision-roundtrip.test.ts` 在 `pnpm test:unit` 裡跑；`pnpm kp:roundtrip` 印各學門結果）。
-3. **一次性匯入**（P2）：預設 dry-run，先對 Firestore 模擬器；每點建 `knowledge_points`＋revision 1，主線進 `learning_paths`，`audit_log` 記 gitSha；重跑不重複（`contentHash`）。正式 Firestore 匯入要另外取得 I-PING 同意。
-4. **依學門凍結**（P6）：`frontend/content/db-frozen.yaml` 列出已交給 DB 的學門（只能增加），CI 擋下這些學門的 YAML 修改。條件：該學門沒有未合併的 YAML 批次 PR（B23–B28 照舊走 YAML）；凍結前以當時 main 重新匯入；每晚 Git 匯出與原 YAML 比對一致後，再開 PR 刪掉該學門的 YAML。凍結後的批次改用 API 建草稿。
+2. **YAML → 修訂版轉換器**（P1 第二段，`lib/content/revision/`）：結構＋Markdown 可逆；每一點逐點比對 V2 主欄與側欄輸出，一字不差才算過；每個檔的註解逐字抽進 `importNotes`，以 `#` 開頭的每一行都要抽到（`scripts/kp-revision-roundtrip.test.ts` 在 `pnpm test:unit` 裡跑；`pnpm kp:roundtrip` 印各學門結果）。
+3. **一次性匯入**（P2）：預設 dry-run，先對 Firestore 模擬器；每點建 `knowledge_points`＋revision 1（`yamlToRecord` 帶原文與 commit，註解進 `importNotes`），主線進 `learning_paths`，`audit_log` 每點一筆 `kp.import`（gitSha＋同一份註解）；匯入報表列出每個檔的註解筆數，和原檔以 `#` 開頭的行數相同才算成功；重跑不重複（`contentHash`）。正式 Firestore 匯入要另外取得 I-PING 同意。
+4. **依學門凍結**（P6）：`frontend/content/db-frozen.yaml` 列出已交給 DB 的學門（只能增加），CI 擋下這些學門的 YAML 修改。條件：該學門沒有未合併的 YAML 批次 PR（B23–B28 照舊走 YAML）；凍結前以當時 main 重新匯入；每晚 Git 匯出與原 YAML 比對一致（比資料）後，再開 PR 刪掉該學門的 YAML。**註解的去處是凍結的前提**：(a) 該學門每個檔的註解都已在 DB 的 `importNotes` 與 `audit_log`（從凍結當時的 main 重新抽一次，逐筆相同）；(b) 刪除前在那個 main commit 打標籤 `kp-yaml-final/<學門>`；(c) 刪 YAML 的 PR 說明寫出標籤與完整 sha，原檔與註解永遠留在 Git 歷史。三項缺一項就不凍結。凍結後的批次改用 API 建草稿。
 
 ## 9. 旗標上線（`KP_DB_SOURCE_ENABLED`）
 
@@ -224,7 +226,7 @@
 
 ## 12. 對照程式後，方案要修正的地方
 
-1. 計數已變：方案寫 124 published／117 draft（`8c62d7e`），`e9bfd5e` 是 206 published／35 draft。
+1. 計數已變：方案寫 124 published／117 draft（`8c62d7e`），`e9bfd5e` 是 206 published／35 draft（到 `e1763c7` 不變）。
 2. 「Firestore 規則只讓 API 服務帳號寫」做不到：規則管不到 Admin SDK，Admin SDK 本來就繞過規則。正確做法是這些集合對客戶端 `read, write: if false`，所有寫入走 API。
 3. 「teacher 能編輯」不能直接用 `TeacherOrAdmin`：它包含 `game_admin`。另開 `KpEditor`。
 4. 規則包不是「純函式」一刀切：schema 檢查需要 Ajv 與 schema JSON，分類需要讀好的 `Taxonomy`。兩者由呼叫端讀好放進 `RuleContext`。
@@ -232,8 +234,9 @@
 6. 禁用字清單不在 `load.ts`，在 `scripts/check-no-city-word.test.ts` 與 CI workflow 的 grep。要在 DB 儲存時檢查，得先把清單搬進規則包（下一步）。
 7. 承諾用語在現有內容上 0 命中。這條規則目前只能擋以後的新寫法，不會整理出舊內容裡的問題。
 8. 第 3.2 節原本的 `structure` 少了 `version`、`formats`、`authors`、`updated`，而且修訂版的 `status`（流程）和 YAML 的 `status`（draft／review／published）是兩回事。要無損就得保存；已補進第 3.2 節，YAML 的 `status` 放在 `knowledge_points` 上。
-9. 「YAML → 修訂版 → YAML 一字不差」做不到文字層級：131 個檔有註解（批次審查紀錄，其中 5 個檔中間還有「新增」分隔線），物件欄位順序各檔不同（最常見的兩種順序分別有 67、64 檔），日期字串的引號也是原本工具的寫法。改成以**資料**相同為準（第 4 節）。匯出的 YAML 文字與原檔（去掉註解）完全相同的有 91 檔，其餘只差欄位順序。凍結學門時「Git 匯出與原 YAML 比對一致」也要比資料，不比文字。註解要留的話，匯入時把檔頭註解寫進 `knowledge_points.seed`（P2 決定）。
+9. 「YAML → 修訂版 → YAML 一字不差」做不到文字層級：131 個檔有註解（批次審查紀錄，其中 5 個檔中間還有「新增」分隔線），物件欄位順序各檔不同（最常見的兩種順序分別有 67、64 檔），日期字串的引號也是原本工具的寫法。改成以**資料**相同為準（第 4 節）。匯出的 YAML 文字與原檔（去掉註解）完全相同的有 91 檔，其餘只差欄位順序。凍結學門時「Git 匯出與原 YAML 比對一致」也要比資料，不比文字。註解不算資料，但要保存，見更正 11。
 10. 修訂版裡的圖與來源可以原樣進 Firestore：圖的 `groups[].symbols` 是「陣列裡的物件裡的陣列」，Firestore 允許；沒有陣列直接套陣列。轉換測試會檢查這一點。
+11. 更正 9 原本寫「註解要留的話寫進 `knowledge_points.seed`（P2 決定）」，PM 審查不接受「可能消失」：註解是批次審稿紀錄，凍結前一定要有去處。改成：轉換器逐字抽出每個檔的全部註解（不只檔頭；有 5 個檔在 `why` 前面還有一段「新增」紀錄），放進 revision 1 的 `importNotes`，匯入時同一份寫進 `audit_log`，凍結 PR 引用標籤與 sha，原檔留在 Git 歷史（第 3.2、8 節）。在 `e1763c7`：131 個檔、704 行，全部是整行註解，沒有行尾註解；附著欄位 `id` 699 筆、`why` 5 筆。
 
 ## 13. P1 第一段做了什麼（PR `refactor/kp-rules-p1`）
 
@@ -251,7 +254,7 @@
 | `lib/content/revision/revision.test.ts` | Markdown 固定寫法、跳脫、區塊順序、錯誤行號、不認得的欄位、規則結果一致 |
 | `scripts/kp-revision-roundtrip.ts`（`pnpm kp:roundtrip`） | 全部知識點的往返比對與各學門報表 |
 | `scripts/kp-revision-roundtrip.test.ts` | 同上，掛在 `pnpm test:unit`（CI 的 Validate knowledge points）；另有一個「改一個字就抓得到」的反向測試 |
-| `scripts/node-stubs.mjs` | 讓 Node 直接 render 詳細頁：`server-only` 與 `.css` 換成空模組（只給測試用） |
+| `scripts/node-stubs.ts`（原 `.mjs`，第 15 節改） | 讓 Node 直接 render 詳細頁：`server-only` 與 `.css` 換成空模組；只由 `kp-revision-roundtrip.ts` 第一行 import |
 
 比對內容（每一點）：資料往返（含模擬 Firestore 的 JSON 來回、第二次轉換、匯出 YAML 文字解析回來、Markdown 讀回再寫出）、Firestore 存得下、`checkRecords` 的錯誤與警告和 YAML 相同（訊息開頭換成 `knowledge_points/<id>`）、讀成的 `KnowledgePoint` 相同（`file` 除外）、V2 詳細頁主欄與側欄 HTML 逐字元相同（含草稿的目錄每點一頁，只看已發布的目錄每個已發布點再一頁）。
 
@@ -263,3 +266,17 @@
 2. kp-rules 服務（Cloud Run 內部），對外提供 `checkRecord`／`checkRecords`。
 3. Firestore 集合、`firestore.rules`、API 端點、`KpEditor` 政策、匯入程式（只對模擬器）。
 4. 前台讀取路徑與 `KP_DB_SOURCE_ENABLED`。
+
+## 15. YAML 註解的去處（PR `feat/kp-import-notes`）
+
+PM 審查接受「無損＝解析後的資料相同」，條件是註解要有去處（第 1 節）。
+
+| 檔案 | 內容 |
+| --- | --- |
+| `lib/content/revision/comments.ts` | `extractComments`（用 yaml 的 Lexer 逐字抽，字串裡的 `#` 不算）、`importNotesFor`、`importAuditEntry`（`audit_log` 那筆的純資料）、`blankComments`（測試用：挖掉抽到的註解） |
+| `lib/content/revision/types.ts` | `KpRevisionContent.importNotes`、`KpImportNotes`、`KpSourceComment` |
+| `lib/content/revision/convert.ts` | `yamlToRecord(raw, ref, { sourceText, file, commit })` 帶原文時寫 `importNotes`；`recordToYaml` 認得但不輸出它 |
+| `scripts/kp-revision-roundtrip.ts` | 第 5 項比對：以 `#` 開頭的每一行都抽到（不靠 Lexer 數）；抽到的每筆在原檔那一行那一欄逐字相同；挖掉之後 Lexer 找不到任何註解、資料不變 |
+| `scripts/node-stubs.ts` | 不再由 `test:unit` 整體預先載入；只在需要 render 的腳本第一行 import。`node --test` 每個測試檔各一個行程，其他單元測試誤 import `server-only` 照樣失敗（`revision.test.ts` 有測） |
+
+結果（main `e1763c7`）：註解 131 個檔、704 行，逐字抽到 704 筆（行尾 0）；資料無損 241、畫面相同 241（447 頁）；規則 0 錯誤、140 警告，兩邊相同。

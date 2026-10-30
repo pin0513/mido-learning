@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -9,8 +10,11 @@ import { loadContent } from "../load";
 import { checkPoint, type RuleContext } from "../rules";
 import {
   ConvertError,
+  blankComments,
   checkRecord,
   circleToMarkdown,
+  extractComments,
+  importAuditEntry,
   markdownToCircle,
   recordToYaml,
   yamlToRecord,
@@ -180,4 +184,79 @@ test("checkRecord 和 YAML 的單點規則結果相同（只有訊息開頭不�
   assert.deepEqual([...fromRecord.warnings].sort(), relabel(fromYaml.warnings).sort());
   assert.ok(fromYaml.point && fromRecord.point);
   assert.deepEqual({ ...fromRecord.point, file: fromYaml.point.file }, fromYaml.point);
+});
+
+const SAMPLE = [
+  "# B9 提案：x.y@sh",
+  "#   - 縮排、全形「引號」與 # 井號都原樣保留   ",
+  "id: x.y@sh",
+  "title: 'a # 不是註解'",
+  "why:",
+  "  # 圈內註解",
+  "  heading: 為什麼",
+  "  items:",
+  "  - title: 甲 # 行尾註解",
+  "    text: 乙",
+  "#",
+  "# 檔尾註解",
+  "",
+].join("\n");
+
+test("YAML 註解逐字抽出，帶行號、欄位與附著的欄位路徑", () => {
+  const comments = extractComments(SAMPLE);
+  assert.deepEqual(comments, [
+    { line: 1, column: 1, text: "# B9 提案：x.y@sh", inline: false, path: "id" },
+    { line: 2, column: 1, text: "#   - 縮排、全形「引號」與 # 井號都原樣保留   ", inline: false, path: "id" },
+    { line: 6, column: 3, text: "# 圈內註解", inline: false, path: "why.heading" },
+    { line: 9, column: 14, text: "# 行尾註解", inline: true, path: "why.items[0].title" },
+    { line: 11, column: 1, text: "#", inline: false, path: null },
+    { line: 12, column: 1, text: "# 檔尾註解", inline: false, path: null },
+  ]);
+  // 挖掉之後再也沒有註解，資料不變；位置不對就丟錯。
+  const blanked = blankComments(SAMPLE, comments);
+  assert.deepEqual(extractComments(blanked), []);
+  assert.deepEqual(parse(blanked), parse(SAMPLE));
+  assert.throws(() => blankComments(SAMPLE, [{ ...comments[0], column: 2 }]), /不是這段註解/);
+  assert.deepEqual(extractComments("id: a\n"), []);
+});
+
+test("註解進第一版修訂的 importNotes，不轉回 YAML，也寫得進 audit_log", () => {
+  const text = readFileSync(agileFile, "utf8");
+  const raw = parse(text);
+  const plain = yamlToRecord(raw, "knowledge/pm-leadership/pm.agile/sh.yaml");
+  assert.equal(plain.revision.importNotes, undefined);
+
+  const withSource = "# 審稿紀錄：第一行\n" + text;
+  const record = yamlToRecord(parse(withSource), "knowledge/pm-leadership/pm.agile/sh.yaml", {
+    sourceText: withSource,
+    commit: "e1763c7",
+  });
+  assert.deepEqual(record.revision.importNotes?.file, "knowledge/pm-leadership/pm.agile/sh.yaml");
+  assert.equal(record.revision.importNotes?.commit, "e1763c7");
+  assert.equal(record.revision.importNotes?.comments[0]?.text, "# 審稿紀錄：第一行");
+  assert.equal(Object.keys(record.revision).at(-1), "importNotes");
+
+  const back = recordToYaml(JSON.parse(JSON.stringify(record)) as KpRecord);
+  assert.deepEqual(back.errors, []);
+  assert.deepEqual(back.raw, raw);
+  assert.match(
+    recordToYaml({ ...record, revision: { ...record.revision, importNotes: { file: 1 } as never } }).errors.join(),
+    /importNotes 要有 file 與 comments/,
+  );
+
+  const entry = importAuditEntry(record, {
+    revisionId: "r1",
+    actor: "import",
+    at: "2026-10-30T05:00:00Z",
+    file: "knowledge/pm-leadership/pm.agile/sh.yaml",
+    commit: "e1763c7",
+  });
+  assert.equal(entry.action, "kp.import");
+  assert.deepEqual(entry.comments, record.revision.importNotes?.comments);
+  assert.notEqual(entry.comments, record.revision.importNotes?.comments);
+});
+
+test("單元測試沒有預先載入 node-stubs：誤 import server-only 仍然會失敗", () => {
+  const require = createRequire(import.meta.url);
+  assert.throws(() => require("server-only"));
 });
