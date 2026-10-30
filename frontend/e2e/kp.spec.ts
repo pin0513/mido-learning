@@ -26,7 +26,7 @@ test.describe("知識地圖", () => {
     await expect(page.getByRole("heading", { level: 1, name: "大事拆成小事" })).toBeVisible();
     await expect(page.getByTestId("kp-curriculum")).toBeVisible();
     await expect(page.getByTestId("kp-draft")).toHaveCount(0);
-    // B17 已發布 pm.goal@es，B18 再發布它的下一階 pm.project@jh，B19 再發布 pm.stakeholder@sh；草稿頁改用再下一階 pm.business@uni。
+    // B17 已發布 pm.goal@es，B18 再發布它的下一階 pm.project@jh，B19 再發布 pm.stakeholder@sh，B20 再發布 pm.business@uni；草稿頁改用它 links.why 連到的哲學草稿 ph.applied@uni。
     await page.goto("/kp/pm.goal/es");
     await expect(page.getByTestId("kp-draft")).toHaveCount(0);
     await page.goto("/kp/pm.project/jh");
@@ -34,6 +34,8 @@ test.describe("知識地圖", () => {
     await page.goto("/kp/pm.stakeholder/sh");
     await expect(page.getByTestId("kp-draft")).toHaveCount(0);
     await page.goto("/kp/pm.business/uni");
+    await expect(page.getByTestId("kp-draft")).toHaveCount(0);
+    await page.goto("/kp/ph.applied/uni");
     await expect(page.getByTestId("kp-draft")).toHaveText("草稿");
     await page.goto("/kp/pm.breakdown/es");
     await expect(page.getByRole("link", { name: /我們想完成什麼/ })).toBeVisible();
@@ -101,7 +103,9 @@ test.describe("知識地圖", () => {
     expect(xml).toContain("/kp/pm.goal/es");
     expect(xml).toContain("/kp/pm.project/jh");
     expect(xml).toContain("/kp/pm.stakeholder/sh");
-    expect(xml).not.toContain("/kp/pm.business/uni");
+    // B20 發布 pm.business@uni 後，它進 sitemap；草稿改查 ph.applied@uni。
+    expect(xml).toContain("/kp/pm.business/uni");
+    expect(xml).not.toContain("/kp/ph.applied/uni");
     expect(xml).not.toContain("/kp/sk.");
     expect(xml).not.toContain("/kp/discipline/soft-skills");
     expect(xml).not.toContain("/kp/zh.");

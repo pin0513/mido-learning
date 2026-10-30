@@ -1,47 +1,201 @@
 id: pm.schedule@uni
 concept: pm.schedule
 title: 排程與資源最佳化
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  - 管理
+  - 專案管理與領導
+  - 規劃
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用，當作先學過的內容：運 c-V-2、運 t-V-3 在高中科技領綱（tech108 來源）（頁碼是頁腳印的頁碼，比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點。
+- NASA Schedule Management Handbook 的頁碼是頁腳印的頁碼（PDF 頁 − 1）。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號的句子或片段，省略處用刪節號；中文說明和翻譯是本站整理。
+- 英文 PDF 的引文避開彎引號；PDF 換行處的斷字（例如 per- ceived）照原詞接回，其餘空白照原文。
+- Watt《Project Management》第 11 章由多個開放來源改編；本點引用的兩句在 Techniques for Managing Resources 一節，章末說明這節改寫自 Wikipedia 的 Resource Leveling 條目（CC BY-SA）；本點只短句引用並附出處。
+- 原 scenario「以小型建物施工為例做資源平準化，比較不同排程方案。」保留做法，補上本站建議與做法細節。
+- 原 ai.delegable「執行最佳化與模擬（例如蒙地卡羅模擬）」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- 合併偏誤那句在 NASA 手冊裡是引號內的引文（手冊註 103 註明出處）；本點只引不含彎引號的那一句。
 prerequisites:
-  - pm.cpm@sh
-  - pm.estimate@sh
+- pm.cpm@sh
+- pm.estimate@sh
 links:
   why: []
   how: []
   related:
-    - ma.probmodel@uni
-    - it.ds@sh
+  - ma.probmodel@uni
+  - it.ds@sh
   deeper: []
 link_notes: 數學（線性規劃、機率分布）、資訊（演算法）、土木與營建管理
 competency:
   specialist:
-    - 排程
+  - 排程
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 執行最佳化與模擬（例如蒙地卡羅模擬）
+  - 執行最佳化與模擬（例如蒙地卡羅模擬；輸入的估計自己檢查，結果請現場確認，本站建議）
   human_experience:
-    - 判斷模型與現場的落差、與包商協調
+  - 判斷模型與現場的落差、與包商協調
 idea: 結合 CPM／PERT 與資源限制，用模型找出較好的排程，同時理解模型背後的假設。
 guiding_questions:
-  - 模型算出的「最佳」排程，現場的人做得到嗎？
-scenario: 以小型建物施工為例做資源平準化，比較不同排程方案。
+- 模型算出的「最佳」排程，現場的人做得到嗎？
+- 資源不夠時，排程會怎麼變？
+- 模擬的結果要怎麼讀、怎麼用？
+scenario: 以虛構的小型建物施工為例做資源平準化，比較不同排程方案的完工日和要徑，再寫出模型沒考慮到的現場限制（本站建議）。
 formats:
   slides: []
+  exercise: 目標：用一個虛構的小型施工排程（十項工作、兩種工班，數字是示意），找出資源超量的時段，做出兩個平準化方案，比較完工日和要徑的變化，並寫出模型沒考慮到的現場限制。　檢核：不看本頁，說出資源平準化在做什麼、為什麼它可能讓完工日延後、自動平準化沒有考慮到什麼、排程風險分析的結果要怎麼讀，並說明為什麼平行的工作越多，只用單一估計算出的完工日越不可靠。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 用一個虛構的小型施工排程（十項工作、兩種工班，數字是示意），找出資源超量的時段，做出兩個平準化方案，比較完工日和要徑的變化，並寫出模型沒考慮到的現場限制。
+review: 不看本頁，說出資源平準化在做什麼、為什麼它可能讓完工日延後、自動平準化沒有考慮到什麼、排程風險分析的結果要怎麼讀，並說明為什麼平行的工作越多，只用單一估計算出的完工日越不可靠。
+why:
+  heading: 資源有限，排程要重算
+  body:
+  - 高中學過要徑和三點估算，那時假設人和機具要多少有多少。真實的專案不是這樣：Watt 的教科書說，資源平準化是用來「examine unbalanced use of resources (usually people or equipment) over time and for resolving over-allocations or conflicts.」同一組人被排在兩件同時進行的工作上，就得把工作改成一先一後（說明是本站整理）。
+  - NASA 的排程手冊說，排程定案前沒有排入資源、做平準化分析，等於承擔「a significant risk in achieving P/p completion within budget and on schedule.」（P/p 指計畫和專案，說明是本站整理）。高中資訊科技要學生「能應用運算思維評估解題方法的優劣。」到了大學，要比較的是不同的排程方案，也要知道模型算不到什麼（本站整理）。
+  qa:
+    question: 資源不夠時，排程會怎麼變？
+    answer: 原本同時做的工作要錯開，完工日可能往後。Watt 說「leveling could result in a later project finish date if the tasks affected are in the critical path.」（說明是本站整理）
+    source: watt-ch11
+  items_title: 這一點用到的
+  items:
+  - title: 要徑
+    text: 決定完工日的那條路。
+  - title: 資源平準化
+    text: 把超量的工作錯開。
+  - title: 排程風險分析
+    text: 估計準時完成的機會。
+  - title: 合併偏誤
+    text: 平行的路越多越容易晚。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會找要徑
+  - 會三點估算
+  figures:
+  - schedule-compare
+  sources:
+  - watt-ch11
+  - nasa-smh
+  - tech108
+how:
+  heading: 找出超量，錯開，再驗證
+  body:
+  - 先畫出資源需求：把虛構的小型施工排程，例如十項工作、兩種工班，畫成甘特圖，在每一週下面寫出各工班要幾組人，標出超過可用人數的時段（例子是本站整理）。NASA 的手冊說資源平準化是「the process of moving schedule tasks without violating network logic or constraints in order to achieve a more consistent level of resources throughout the schedule duration.」也就是不打破先後關係，把工作挪開，讓每段時間用的人比較平均（說明是本站整理）。
+  - 再做兩個方案比較：方案一只挪有浮時的工作，完工日不變；方案二連要徑上的工作也挪，或者加派工班（本站建議）。這就是資源不夠時排程的變化：Watt 說「leveling could result in a later project finish date if the tasks affected are in the critical path.」挪到要徑上的工作，完工日就往後，要徑也可能換成另一條（說明是本站整理）。兩個方案各寫完工日、新的要徑和多花的錢，再決定用哪一個（本站建議）。
+  - 最後請現場檢查，並讀懂模擬：模型算出的最佳排程，現場不一定做得到。手冊提醒「automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」結果要由團隊仔細檢查，「not just taken at face value」；所以要問現場的人：這組師傅會不會這項工、誰會請假、材料什麼時候到（說明是本站整理）。排程風險分析是要「evaluate the likelihood that the P/p plan is achievable within the planned finish date constraints」，結果是準時完成的機會有多大，不是保證；可以用它決定要留多少緩衝、先處理哪個風險（說明是本站整理）。手冊也說，蒙地卡羅模擬工具「is simply a mathematical machine that operates on the inputs to produce outputs.」輸入的估計不可靠，結果也不可靠。平行的工作越多越容易晚，因為幾條路在同一點會合時，任何一條晚了都會拖到後面：手冊說「the inclusion of parallel tasks in the schedule will cause the deterministic schedule to be at a low confidence level.」deterministic schedule 是每項工作只用一個估計值算出的排程，它沒算進這種會合造成的延誤，所以平行的路越多，它給的完工日越不可靠（說明是本站整理）。
+  qa:
+    question: 模型算出的「最佳」排程，現場的人做得到嗎？
+    answer: 不一定。手冊提醒「automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」所以要拿排程去問現場的人：誰會做、誰有空、材料什麼時候到，再調整（說明是本站整理）。
+    source: nasa-smh
+  items_title: 四步做
+  items:
+  - title: 畫出資源需求
+    text: 每週每種工班要幾組人。
+  - title: 標出超量時段
+    text: 超過可用人數就標出來。
+  - title: 做兩個方案
+    text: 比較完工日和要徑。
+  - title: 請現場檢查
+    text: 模型沒算到的寫下來。
+  checklist_title: 每次做完勾一下
+  checklist:
+  - 超量已標出
+  - 兩個方案都算
+  - 要徑有重找
+  - 問過現場
+  activity_figure: schedule-flow
+  sources:
+  - nasa-smh
+  - watt-ch11
+what:
+  heading: 會排程，也知道模型的限度
+  body:
+  - 學完後，你能在資源有限時重排排程：標出超量的時段，比較平準化方案的完工日和要徑，讀懂排程風險分析的結果，並說出模型沒考慮到的現場限制。
+  items_title: 學完能做到
+  items:
+  - title: 重排排程
+    text: 不打破先後關係。
+  - title: 比較方案
+    text: 完工日、要徑、成本。
+  - title: 說出模型的限度
+    text: 技能、請假、材料。
+  checklist_title: 自我檢核
+  checklist:
+  - 平準化完成
+  - 方案比較過
+  - 限制寫下來
+  notes:
+  - 本頁的施工排程例子是虛構的，工作數和人數是示意。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: schedule-flow
+  type: flow
+  alt: 資源平準化五步驟：學生畫出資源需求，標出超量時段，做兩個方案；現場檢查可不可行；學生選定方案並說明理由。
+  steps:
+  - actor: 學生
+    text: 畫資源需求
+  - actor: 學生
+    text: 標超量時段
+  - actor: 學生
+    text: 做兩個方案
+  - actor: 現場
+    text: 檢查可行性
+  - actor: 學生
+    text: 選定並說明
+  source: nasa-smh
+  caption: 流程是本站建議。
+- id: schedule-compare
+  type: compare
+  alt: 比較平準化前後：平準化前，同一週要兩組工班，但只有一組；平準化後，工作錯開，人夠用，但完工日可能延後。
+  source: watt-ch11
+  relation: versus
+  items:
+  - term: 平準化前
+    note: 同一週要兩組工班，但只有一組
+  - term: 平準化後
+    note: 工作錯開、人夠用，完工日可能延後
+  caption: 例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：運 c-V-2「能認識專案管理的概念。」（p.7）；運 t-V-3「能應用運算思維評估解題方法的優劣。」（p.7）
+- id: nasa-smh
+  title: NASA Schedule Management Handbook（NASA/SP-2010-3403, Revision 1）
+  publisher: NASA（Office of the Chief Financial Officer；生效日 2020 年 1 月 30 日）
+  url: https://www.nasa.gov/wp-content/uploads/2020/11/nasa_schedule_management_hand_book.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「Resource leveling is the process of moving schedule tasks without violating network logic or constraints in order to achieve a more consistent level of resources throughout the schedule duration.」（p.129）；「Caution. It is important to note that automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」（p.129）；「It is very important that the resulting schedule data be reviewed by the P/p management team carefully, and not just taken at face value.」（p.131）；「To baseline a P/p schedule without first resource loading and conducting leveling analysis is to assume a significant risk in achieving P/p completion within budget and on schedule.」（p.131）；排程風險分析「to evaluate the likelihood that the P/p plan is achievable within the planned finish date constraints」（p.186）；「The Monte Carlo simulation tool used for the analysis is simply a mathematical machine that operates on the inputs to produce outputs.」（p.192）；合併偏誤「Under most circumstances,
+    the inclusion of parallel tasks in the schedule will cause the deterministic schedule to be at a low confidence level.」（p.203）
+- id: watt-ch11
+  title: 'Project Management（第 2 版）Chapter 11: Resource Planning'
+  publisher: Adrienne Watt 著；本章作者 Adrienne Watt、TAP-a-PM、Project Management Open Resources、Merrie Barron、Andrew Barron、David Wiley 等（BCcampus 開放教科書，第 2 版，CC BY-SA 4.0）
+  url: https://opentextbc.ca/projectmanagement/chapter/chapter-11-resource-planning-project-management/
+  accessed: '2026-10-30'
+  kind: textbook
+  supports: 「Resource leveling is used to examine unbalanced use of resources (usually people or equipment) over time and for resolving over-allocations or conflicts.」；「In either definition, leveling could result in a later project finish date if the tasks affected are in the critical path.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

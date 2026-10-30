@@ -1,47 +1,206 @@
 id: pm.complexity@uni
 concept: pm.complexity
 title: 複雜性與不確定性
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 風險
+  - 管理
+  - 專案管理與領導
+  - 風險
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用，當作先學過的內容：涯 Ca-V-2 在高中綜合活動領綱（zonghe 來源）；運 c-V-2 在高中科技領綱（tech108 來源）（頁碼是頁腳印的頁碼，比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點。
+- Kurtz 與 Snowden 2003 的頁碼是期刊頁碼（PDF 頁 + 461）；文中 Cynefin 的領域名稱（known、knowable、complex、chaos）照原文，後來的版本改稱 clear、complicated 等，本點不引用後來的版本。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號的句子或片段，省略處用刪節號；中文說明和翻譯是本站整理。
+- 英文 PDF 的引文避開彎引號；PDF 換行處的斷字（例如 per- ceived）照原詞接回，其餘空白照原文。
+- 原 scenario「比較一個建築案與一個 AI 產品開發案，分析各自適合的管理方法。」保留做法，補上本站建議與做法細節。
+- 原 ai.delegable「整理不同方法論的比較」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- 困難和複雜的區分對應論文的 knowable（可分析）與 complex（複雜）領域；中文用語和判斷問題是本站整理。建築案和 AI 產品案的分析是本站整理的例子，不是論文的內容。
 prerequisites:
-  - pm.agile@sh
-  - pm.risk@jh
+- pm.agile@sh
+- pm.risk@jh
 links:
   why:
-    - ph.epistem@uni
-    - ph.complex@uni
+  - ph.epistem@uni
+  - ph.complex@uni
   how: []
   related: []
   deeper: []
 link_notes: 系統思考、哲學（知識論：我們能知道多少）、資訊與 AI
 competency:
   specialist:
-    - 風險管理
+  - 風險管理
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 整理不同方法論的比較
+  - 整理不同方法論的比較（對照原文查證，本站建議）
   human_experience:
-    - 在模糊中做決定、承擔不確定
+  - 在模糊中做決定、承擔不確定
 idea: 有些問題可以預測，有些高度複雜。先判斷問題的性質，再選擇預測式、敏捷或混合方法。
 guiding_questions:
-  - 你怎麼知道一個問題是「複雜」而不只是「困難」？
-scenario: 比較一個建築案與一個 AI 產品開發案，分析各自適合的管理方法。
+- 你怎麼知道一個問題是「複雜」而不只是「困難」？
+- 建築案和 AI 產品開發案，各適合什麼管理方法？
+- 在複雜的情況下，還需要計畫嗎？
+scenario: 比較一個建築案與一個 AI 產品開發案（兩個都是虛構的），分析各自適合的管理方法（本站建議）。
 formats:
   slides: []
+  exercise: 目標：為一個虛構的建築案和一個虛構的 AI 產品開發案，各列出三件已知和三件未知的事，判斷它們比較接近可以分析的問題還是複雜的問題，並為兩案各選預測式、敏捷或混合方法，寫出理由和第一個要做的分析或小實驗。　檢核：不看本頁，說出困難的問題和複雜的問題差在哪、為什麼複雜的問題要先做小實驗而不是先請專家分析，並用自己的兩個案例說明各選了什麼方法，以及在複雜的情況下計畫還有什麼用。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 為一個虛構的建築案和一個虛構的 AI 產品開發案，各列出三件已知和三件未知的事，判斷它們比較接近可以分析的問題還是複雜的問題，並為兩案各選預測式、敏捷或混合方法，寫出理由和第一個要做的分析或小實驗。
+review: 不看本頁，說出困難的問題和複雜的問題差在哪、為什麼複雜的問題要先做小實驗而不是先請專家分析，並用自己的兩個案例說明各選了什麼方法，以及在複雜的情況下計畫還有什麼用。
+why:
+  heading: 先看問題是哪一種
+  body:
+  - Kurtz 與 Snowden 2003 年的論文把情境分成幾種。可以分析（knowable）的領域裡，「While stable cause and effect relationships exist in this domain, they may not be fully known, or they may be known only by a limited group of people.」只要花時間研究或請專家，就能找出原因和結果（說明是本站整理）。複雜（complex）的領域不一樣：「Emergent patterns can be perceived but not predicted; we call this phenomenon retrospective coherence.」事後看起來有道理，事前卻預測不到（說明是本站整理）。
+  - 所以不同的問題要用不同的方法：可以分析的問題適合先規劃、再照做的預測式方法；複雜的問題要邊做邊學。Scrum 指南說 Scrum 是要用「adaptive solutions for complex problems」創造價值，也說「Empiricism asserts that knowledge comes from experience and making decisions based on what is observed.」（說明是本站整理）。高中生涯規劃要學生「能正向看待不確定性，彈性的因應各種變化」；大學要能判斷不確定從哪裡來，再選方法（本站整理）。
+  qa:
+    question: 在複雜的情況下，還需要計畫嗎？
+    answer: 需要，但計畫要短、要能改。Scrum 用「an iterative, incremental approach to optimize predictability and to control risk.」每一輪都檢視結果再調整下一輪的計畫（說明是本站整理）。
+    source: scrum-guide
+  items_title: 這一點用到的
+  items:
+  - title: 可以分析的問題
+    text: 因果存在，花時間查得清。
+  - title: 複雜的問題
+    text: 模式事後才看得出。
+  - title: 預測式方法
+    text: 先規劃，再照做。
+  - title: 敏捷方法
+    text: 短週期，邊做邊改。
+  checklist_title: 開始前先確認
+  checklist:
+  - 學過風險評估
+  - 學過敏捷迭代
+  figures:
+  - complexity-compare
+  sources:
+  - kurtz-snowden-2003
+  - scrum-guide
+  - zonghe
+  - tech108
+how:
+  heading: 判斷、選方法、先試一小步
+  body:
+  - 先判斷：列出案子裡已知和未知的事，再問三個問題：同樣的事以前做過嗎？請專家、多花時間分析，能不能事先知道結果？做了之後，別人的反應會不會改變結果（本站整理）？如果查得清楚、只是很花力氣，那是困難；如果怎麼分析都要等做了才知道，那是複雜（本站整理）。論文說，可以分析的領域要「sense incoming data, analyze that data, and then respond in accordance with expert advice」；複雜的領域則要「create probes to make the patterns or potential patterns more visible before we take any action.」先做小實驗，讓模式看得見（說明是本站整理）。論文也提醒，在複雜的領域只靠專家依過去穩定的模式判斷，會讓人沒準備好看出和因應意料之外的新模式（本站整理）。
+  - 比較兩個案子：蓋一棟建築，結構、法規、工序大多查得到，請專業技師就能計算，比較接近可以分析的問題，適合預測式的計畫和要徑排程；開發一個 AI 產品，使用者會怎麼用、模型在真實資料上表現如何，常常做了才知道，比較接近複雜的問題，適合敏捷，用短週期做出小版本，看結果再調整（例子是本站整理）。很多案子是混合的：建築案裡的室內規劃要問使用者，AI 產品裡的資訊安全和法規要事先規劃（本站整理）。
+  - 複雜時也要計畫，只是計畫要短、要能改。Scrum 指南說它用「an iterative, incremental approach to optimize predictability and to control risk.」每一輪都當成一次小實驗：先寫下你猜會發生什麼，做了再看，猜錯就改下一輪的計畫（本站建議）。AI 可以幫你整理不同方法論的比較，但案子屬於哪一種、要冒多少風險，要你自己判斷（本站整理）。
+  qa:
+    question: 你怎麼知道一個問題是「複雜」而不只是「困難」？
+    answer: 看能不能事先查清楚：多花時間分析或請專家就能知道結果的，是困難；怎麼分析都要等做了才看得出來的，是複雜。論文說複雜的領域要先「create probes」，讓模式變得看得見（說明是本站整理）。
+    source: kurtz-snowden-2003
+  items_title: 四步做
+  items:
+  - title: 列已知和未知
+    text: 兩個案子各列三件。
+  - title: 判斷問題類型
+    text: 查得清，還是試了才知道？
+  - title: 選方法
+    text: 預測式、敏捷或混合。
+  - title: 設計第一個小實驗
+    text: 先猜結果，再做做看。
+  checklist_title: 寫完檢查
+  checklist:
+  - 已知未知分開
+  - 類型有理由
+  - 兩案都選方法
+  activity_figure: complexity-flow
+  sources:
+  - kurtz-snowden-2003
+  - scrum-guide
+what:
+  heading: 看清問題，再選方法
+  body:
+  - 學完後，你能分辨困難的問題和複雜的問題，為不同的案子選預測式、敏捷或混合方法並說出理由，也能在複雜的情況下用短週期的小實驗來計畫。
+  items_title: 學完能做到
+  items:
+  - title: 分辨困難和複雜
+    text: 查得清，還是試了才知道。
+  - title: 選對方法
+    text: 預測式、敏捷或混合。
+  - title: 用小實驗計畫
+    text: 先猜、再做、再改。
+  checklist_title: 自我檢核
+  checklist:
+  - 兩案都分析
+  - 方法有理由
+  - 小實驗設計好
+  notes:
+  - 本頁的建築案和 AI 產品案是虛構的例子，本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: complexity-flow
+  type: flow
+  alt: 選方法五步驟：學生列出已知和未知，判斷問題類型，選管理方法；團隊做小實驗，看結果再改計畫。
+  steps:
+  - actor: 學生
+    text: 列已知未知
+  - actor: 學生
+    text: 判斷問題類型
+  - actor: 學生
+    text: 選管理方法
+  - actor: 團隊
+    text: 做小實驗
+  - actor: 團隊
+    text: 看結果再改
+  source: kurtz-snowden-2003
+  caption: 流程是本站建議。
+- id: complexity-compare
+  type: compare
+  alt: 比較困難和複雜：困難的問題原因和結果存在，研究或請專家就查得清；複雜的問題模式事後才看得出，要先試再看。兩者不相等。
+  source: kurtz-snowden-2003
+  relation: not_equal
+  items:
+  - term: 困難
+    note: 因果存在，研究或請專家就查得清
+  - term: 複雜
+    note: 模式事後才看得出，要先試再看
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中綜合活動（生涯規劃、家政）先學過的相關學習重點，只當先備：涯 Ca-V-2「生涯反思與變化因應。」（p.99）；補充說明 涯 Ca-V-2「在快速變動而複雜的時代，能正向看待不確定性，彈性的因應各種變化，並以創意創造未來的各種可能性。」（p.99）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：運 c-V-2「能認識專案管理的概念。」（p.7）
+- id: kurtz-snowden-2003
+  title: 'The new dynamics of strategy: Sense-making in a complex and complicated world'
+  publisher: Cynthia F. Kurtz、David J. Snowden 著，IBM Systems Journal 42(3)，2003 年，頁 462–483
+  url: https://bitsavers.trailing-edge.com/pdf/ibm/IBM_Systems_Journal/423/kurtz.pdf
+  accessed: '2026-10-30'
+  kind: peer_reviewed
+  supports: 「While stable cause and effect relationships exist in this domain, they may not be fully known, or they may be known only by a limited group of people.」（p.468）；「Our decision model here is to sense incoming data, analyze that data, and then respond in accordance with expert advice or interpretation of that analysis.」（p.468）；「Emergent patterns can be perceived but not predicted; we call this phenomenon retrospective coherence.」（p.469）；「The decision model in this space is to create probes to make the patterns or potential patterns more visible before we take any action.」（p.469）
+- id: scrum-guide
+  title: The 2020 Scrum Guide
+  publisher: Ken Schwaber、Jeff Sutherland（scrumguides.org，2020 年 11 月，CC BY-SA 4.0）
+  url: https://scrumguides.org/scrum-guide.html
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Scrum is a lightweight framework that helps people, teams and organizations generate value through adaptive solutions for complex problems.」；「Empiricism asserts that knowledge comes from experience and making decisions based on what is observed.」；「Scrum employs an iterative, incremental approach to optimize predictability and to control risk.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

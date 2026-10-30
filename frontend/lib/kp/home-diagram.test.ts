@@ -12,11 +12,12 @@ const DRAFT_TITLES = [
   "認知偏誤與思考盲點",
   "統計推論：用機率檢核說法",
   "從平均變化率到瞬間變化率",
-  // B19 發布 pm.cpm@sh 後，改用仍是草稿的大學點。
-  "商業論證與專案治理",
+  // B19 發布 pm.cpm@sh 後改用仍是草稿的大學點；B20 專案管理全部發布，改用哲學的大學草稿。
+  "知識論與不確定性",
 ];
 
-const DRAFT_SLUGS = ["pm.business", "ph.parts", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "pm.schedule"];
+// B20：原本的 pm.business、pm.schedule 已發布，改用哲學草稿 ph.epistem、ph.aimind。
+const DRAFT_SLUGS = ["ph.epistem", "ph.parts", "ph.bias", "ma.pattern", "ma.algebra", "ma.stats", "ma.rate", "ph.aimind"];
 
 // 已發布的點才有頁面連結：ph.reason@es，B11 發布的數學 es／jh 12 點，B12 發布的數學 sh 7 點，B13 發布的數學 uni 7 點，B14 發布的資訊與 AI es／jh 12 點，B15 發布的資訊與 AI sh 7 點，B16 發布的資訊與 AI uni 6 點，以及 B17 發布的專案管理 es 5 點（專案管理的點另外在第一個測試逐一檢查）。
 const PUBLISHED = new Set([
@@ -32,7 +33,7 @@ const PUBLISHED = new Set([
   "pm.goal@es", "pm.planb@es", "pm.retro@es", "pm.roles@es", "pm.sequence@es",
 ]);
 
-test("四個學門都有學段總圖，專案管理只畫已發布的十九步", () => {
+test("四個學門都有學段總圖，專案管理 24 步全部已發布", () => {
   const model = buildHomeDiagram(loadCatalog());
   assert.deepEqual(publicDisciplineIds(), ["pm-leadership", "philosophy", "math", "it-ai"]);
   assert.deepEqual(
@@ -47,7 +48,7 @@ test("四個學門都有學段總圖，專案管理只畫已發布的十九步",
   assert.equal(model.defaultDisciplineId, "pm-leadership");
   const pm = model.diagrams.find((item) => item.id === "pm-leadership");
   assert.ok(pm);
-  // B17 發布專案管理 es 5 點後，國小多了目標、分工、回顧、先後、B 計畫五步；B18 發布 jh 5 點後，國中多了甘特圖、專案、風險、會議、領導五步；B19 發布 sh 5 點後，高中多了敏捷、要徑、利害關係人、衝突、情境領導五步。
+  // B17 發布專案管理 es 5 點後，國小多了目標、分工、回顧、先後、B 計畫五步；B18 發布 jh 5 點後，國中多了甘特圖、專案、風險、會議、領導五步；B19 發布 sh 5 點後，高中多了敏捷、要徑、利害關係人、衝突、情境領導五步；B20 發布 uni 5 點後，大學多了商業論證、複雜性、AI 協作、組織行為、排程五步，專案管理 24 點全部畫出。
   assert.deepEqual(
     pm.nodes.map((node) => node.title),
     [
@@ -55,6 +56,7 @@ test("四個學門都有學段總圖，專案管理只畫已發布的十九步",
       "甘特圖與里程碑", "什麼是「專案」？", "風險：可能性 × 影響", "團隊溝通與會議", "領導是行為，不是職位",
       "時間、金錢、品質的取捨",
       "敏捷與迭代", "WBS 與三點估算", "要徑：決定專案長度的那條路", "利害關係人", "衝突與協商", "情境領導",
+      "商業論證與專案治理", "複雜性與不確定性", "決策、倫理與 AI 協作", "組織行為與心理安全感", "排程與資源最佳化",
       "實獲值管理（EVM）",
     ],
   );
@@ -83,17 +85,27 @@ test("四個學門都有學段總圖，專案管理只畫已發布的十九步",
   assert.deepEqual(pmNode("pm.conflict@sh").prerequisites.map((item) => item.title), ["團隊溝通與會議", "利害關係人"]);
   assert.deepEqual(pmNode("pm.agile@sh").prerequisites.map((item) => item.title), ["回顧：哪裡好、哪裡可以更好", "甘特圖與里程碑"]);
   assert.equal(pmNode("pm.stakeholder@sh").pageHref, "/kp/pm.stakeholder/sh");
+  assert.deepEqual(pmNode("pm.business@uni").prerequisites.map((item) => item.title), ["利害關係人", "時間、金錢、品質的取捨"]);
+  assert.deepEqual(pmNode("pm.aiteam@uni").prerequisites.map((item) => item.title), ["商業論證與專案治理", "複雜性與不確定性"]);
+  assert.deepEqual(pmNode("pm.evm@uni").prerequisites.map((item) => item.title), ["WBS 與三點估算", "排程與資源最佳化"]);
+  assert.equal(pmNode("pm.org@uni").pageHref, "/kp/pm.org/uni");
   assert.deepEqual(
     pm.edges.map((edge) => `${edge.kind}:${edge.from}->${edge.to}`).sort(),
     [
       "ext:pm.retro@es->pm.team@jh",
       "ext:pm.risk@jh->pm.agile@sh",
       "ext:pm.team@jh->pm.agile@sh",
+      "pre:pm.agile@sh->pm.complexity@uni",
       "pre:pm.breakdown@es->pm.estimate@sh",
       "pre:pm.breakdown@es->pm.roles@es",
       "pre:pm.breakdown@es->pm.sequence@es",
+      "pre:pm.business@uni->pm.aiteam@uni",
+      "pre:pm.complexity@uni->pm.aiteam@uni",
+      "pre:pm.conflict@sh->pm.org@uni",
+      "pre:pm.cpm@sh->pm.schedule@uni",
       "pre:pm.estimate@sh->pm.cpm@sh",
       "pre:pm.estimate@sh->pm.evm@uni",
+      "pre:pm.estimate@sh->pm.schedule@uni",
       "pre:pm.gantt@jh->pm.agile@sh",
       "pre:pm.gantt@jh->pm.cpm@sh",
       "pre:pm.goal@es->pm.breakdown@es",
@@ -103,15 +115,20 @@ test("四個學門都有學段總圖，專案管理只畫已發布的十九步",
       "pre:pm.project@jh->pm.stakeholder@sh",
       "pre:pm.project@jh->pm.triangle@jh",
       "pre:pm.retro@es->pm.agile@sh",
+      "pre:pm.risk@jh->pm.complexity@uni",
       "pre:pm.roles@es->pm.retro@es",
       "pre:pm.roles@es->pm.team@jh",
+      "pre:pm.schedule@uni->pm.evm@uni",
       "pre:pm.sequence@es->pm.gantt@jh",
       "pre:pm.sequence@es->pm.planb@es",
       "pre:pm.sequence@es->pm.triangle@jh",
+      "pre:pm.stakeholder@sh->pm.business@uni",
       "pre:pm.stakeholder@sh->pm.conflict@sh",
+      "pre:pm.style@sh->pm.org@uni",
       "pre:pm.team@jh->pm.conflict@sh",
       "pre:pm.team@jh->pm.lead@jh",
       "pre:pm.team@jh->pm.stakeholder@sh",
+      "pre:pm.triangle@jh->pm.business@uni",
       "pre:pm.triangle@jh->pm.estimate@sh",
     ].sort(),
   );
@@ -139,8 +156,9 @@ test("四個學門都有學段總圖，專案管理只畫已發布的十九步",
   }
   const blob = JSON.stringify(model);
   assert.equal(blob.includes("城市"), false);
-  // B19 發布 sh 5 點後，專案管理的草稿只剩 uni 5 點。
-  for (const title of ["商業論證與專案治理", "組織行為與心理安全感", "排程與資源"]) assert.equal(blob.includes(title), false, title);
+  // B19 時這裡檢查專案管理 uni 草稿的標題不進總圖；B20 專案管理 24 點全部發布，改成檢查 24 點都畫出來、每點都有頁面。草稿不進圖的檢查在下一個測試（只開專案管理時，用哲學、數學草稿的標題和代號）。
+  assert.equal(pm.nodes.length, 24);
+  assert.ok(pm.nodes.every((node) => node.pageHref !== null), "pm 24 點都有頁面");
 });
 
 test("目前任務連到已畫出來的跨學門，沒畫的不帶標題", () => {
@@ -183,7 +201,8 @@ test("虛線只拿掉實線已經到得了的，實線保持原樣", () => {
   // B17：pm.sequence@es 發布後，pm.breakdown@es 經 pm.sequence@es 用實線就到得了 pm.triangle@jh，主線那條虛線因此拿掉。
   // B18：國中 5 點發布後多 6 條實線；pm.reflect 路線的 pm.retro@es → pm.team@jh 不是先備（pm.team@jh 的先備是 pm.roles@es），實線也到不了，畫成虛線。
   // B19：高中 5 點發布後多 9 條實線；pm.risk 與 pm.reflect 路線接到 pm.agile@sh，但 pm.risk@jh、pm.team@jh 都不是它的先備（先備是 pm.retro@es、pm.gantt@jh），實線到不了，各畫一條虛線。
-  assert.equal(count("pm-leadership", "pre"), 24);
+  // B20：大學 5 點發布後多 11 條實線（每點 2 條先備，加上 pm.schedule@uni → pm.evm@uni），虛線不變。
+  assert.equal(count("pm-leadership", "pre"), 35);
   assert.equal(count("pm-leadership", "ext"), 3);
   const pm = model.diagrams.find((item) => item.id === "pm-leadership");
   assert.ok(pm);

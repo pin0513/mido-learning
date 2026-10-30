@@ -39,7 +39,8 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
     map.buildings.map((building) => `${building.id}:${building.x}:${building.y}:${building.height}`).join("\n");
   assert.equal(signature(first), signature(second));
   const digest = createHash("sha256").update(signature(first)).digest("hex");
-  assert.equal(digest, "ae417a1affd446961e01775f0999ba14ffe8cc1a4c6e4d0924ee3a7d8c83b87d");
+  // B20 發布專案管理 uni 5 點後，這 5 棟各多 8（已發布），digest 跟著變；座標不變。
+  assert.equal(digest, "97329da8173c6b7ac1f2a8f213b6773f7b444ce738c040333d518668ea135e93");
   for (const district of first.districts) {
     for (const stage of first.stages) {
       const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;
@@ -91,18 +92,19 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   // B17 發布專案管理 es 5 點後，專案管理的 6 條路線（pm.goal、pm.lead、pm.reflect、pm.risk、pm.schedule、pm.team）各有國小一站已發布，也跟著顯示；pm.lead 與 pm.team 都從 pm.roles@es 出發。
   // B18 發布專案管理 jh 5 點後，路線數不變（6 條都已顯示），每條各多國中一站；pm.team 與 pm.reflect 都經過 pm.team@jh。
   // B19 發布專案管理 sh 5 點後，路線數仍不變，每條各多高中一站（大學站仍是草稿，不顯示）；pm.reflect 與 pm.risk 都接到 pm.agile@sh。
+  // B20 發布專案管理 uni 5 點後，專案管理 24 點全部發布：路線數不變，每條各多大學一站；pm.team 與 pm.lead 都到 pm.org@uni。
   assert.equal(shown.landmarks.length, 23);
   const shownStops = (id: string) => {
     const found = shown.landmarks.find((landmark) => landmark.id === id);
     assert.ok(found, id);
     return found.stops;
   };
-  assert.deepEqual(shownStops("pm.team"), ["pm.roles@es", "pm.team@jh", "pm.conflict@sh"]);
-  assert.deepEqual(shownStops("pm.goal"), ["pm.goal@es", "pm.project@jh", "pm.stakeholder@sh"]);
-  assert.deepEqual(shownStops("pm.lead"), ["pm.roles@es", "pm.lead@jh", "pm.style@sh"]);
-  assert.deepEqual(shownStops("pm.reflect"), ["pm.retro@es", "pm.team@jh", "pm.agile@sh"]);
-  assert.deepEqual(shownStops("pm.risk"), ["pm.planb@es", "pm.risk@jh", "pm.agile@sh"]);
-  assert.deepEqual(shownStops("pm.schedule"), ["pm.sequence@es", "pm.gantt@jh", "pm.cpm@sh"]);
+  assert.deepEqual(shownStops("pm.team"), ["pm.roles@es", "pm.team@jh", "pm.conflict@sh", "pm.org@uni"]);
+  assert.deepEqual(shownStops("pm.goal"), ["pm.goal@es", "pm.project@jh", "pm.stakeholder@sh", "pm.business@uni"]);
+  assert.deepEqual(shownStops("pm.lead"), ["pm.roles@es", "pm.lead@jh", "pm.style@sh", "pm.org@uni"]);
+  assert.deepEqual(shownStops("pm.reflect"), ["pm.retro@es", "pm.team@jh", "pm.agile@sh", "pm.aiteam@uni"]);
+  assert.deepEqual(shownStops("pm.risk"), ["pm.planb@es", "pm.risk@jh", "pm.agile@sh", "pm.complexity@uni"]);
+  assert.deepEqual(shownStops("pm.schedule"), ["pm.sequence@es", "pm.gantt@jh", "pm.cpm@sh", "pm.schedule@uni"]);
   const shownEstimate = shown.landmarks.find((landmark) => landmark.id === "pm.estimate");
   assert.ok(shownEstimate);
   assert.deepEqual(shownEstimate.stops, ["pm.breakdown@es", "pm.triangle@jh", "pm.estimate@sh", "pm.evm@uni"]);
@@ -110,11 +112,12 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.ok(shownLogic);
   assert.deepEqual(shownLogic.stops, ["ph.reason@es"]);
   const identified = presentCityMap(map, true);
-  // B18 發布 pm.project@jh 後，有名字的草稿改用 pm.stakeholder@sh；B19 發布它後，改用同在 pm.goal 路線上的下一站 pm.business@uni。
-  const namedDraft = identified.buildings.find((building) => building.id === "pm.business@uni");
+  // B18 發布 pm.project@jh 後，有名字的草稿改用 pm.stakeholder@sh；B19 發布它後，改用 pm.business@uni；B20 專案管理全部發布，地圖上的草稿只剩哲學，改用 ph.systems@sh。
+  const namedDraft = identified.buildings.find((building) => building.id === "ph.systems@sh");
   assert.ok(namedDraft);
+  assert.equal(namedDraft.status, "draft");
   assert.equal(namedDraft.title, "");
-  assert.equal(namedDraft.href, "/kp/pm.business/uni");
+  assert.equal(namedDraft.href, "/kp/ph.systems/sh");
   assert.equal(map.buildings.filter((building) => building.aesthetics).length, 2);
 });
 
@@ -155,8 +158,8 @@ test("開放主線只帶已發布標題", () => {
   );
   const blob = JSON.stringify(brief);
   // B17 發布 pm.goal@es、pm.sequence@es 後，它們以已發布先備出現；B18 發布 pm.project@jh 後，pm.triangle@jh 的兩個先備都已發布。
-  // 草稿先備只剩 pm.evm@uni 的 pm.schedule@uni，只算筆數；其餘專案管理草稿的標題也不會出現（B19 發布 sh 5 點後，草稿只剩 uni：排程、商業論證、組織行為等）。
-  for (const title of ["排程與資源", "商業論證與專案治理", "組織行為與心理安全感"]) {
+  // B20 發布 pm.schedule@uni 後，這條主線的先備全部已發布；草稿先備只算筆數的情形改用下面的合成目錄檢查。哲學草稿的標題不會出現。
+  for (const title of ["部分與整體", "認知偏誤與思考盲點", "系統思考：槓桿點與非預期後果"]) {
     assert.equal(blob.includes(title), false, title);
   }
   assert.deepEqual(brief.stops[0].prerequisites, [{ title: "目標：我們想完成什麼？", href: "/kp/pm.goal/es" }]);
@@ -166,8 +169,24 @@ test("開放主線只帶已發布標題", () => {
     { title: "先做什麼、後做什麼", href: "/kp/pm.sequence/es" },
   ]);
   assert.equal(brief.stops[1].hiddenPrerequisites, 0);
-  assert.equal(brief.stops[3].hiddenPrerequisites, 1);
+  assert.deepEqual(brief.stops[3].prerequisites, [
+    { title: "WBS 與三點估算", href: "/kp/pm.estimate/sh" },
+    { title: "排程與資源最佳化", href: "/kp/pm.schedule/uni" },
+  ]);
+  assert.equal(brief.stops[3].hiddenPrerequisites, 0);
   assert.equal(brief.stops[2].question.length > 0, true);
   assert.ok(brief.colearn.includes("大事拆成小事"));
   assert.ok(brief.colearn.includes("星星與箭頭"));
+
+  // 先備還是草稿時只算筆數、不帶標題：把 pm.schedule@uni 在合成目錄裡改回草稿（不動內容檔）。
+  const catalog = loadCatalog();
+  const byId = new Map(catalog.indexes.byId);
+  const schedule = byId.get("pm.schedule@uni");
+  assert.ok(schedule);
+  byId.set("pm.schedule@uni", { ...schedule, status: "draft" });
+  const drafted = publishedEstimatePath({ ...catalog, indexes: { ...catalog.indexes, byId } });
+  assert.ok(drafted);
+  assert.deepEqual(drafted.stops[3].prerequisites, [{ title: "WBS 與三點估算", href: "/kp/pm.estimate/sh" }]);
+  assert.equal(drafted.stops[3].hiddenPrerequisites, 1);
+  assert.equal(JSON.stringify(drafted).includes("排程與資源最佳化"), false);
 });
