@@ -1,46 +1,202 @@
 id: pm.business@uni
 concept: pm.business
 title: 商業論證與專案治理
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  - 管理
+  - 專案管理與領導
+  - 規劃
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用，當作先學過的內容：運 c-V-2、運 t-V-3 在高中科技領綱（tech108 來源）（頁碼是頁腳印的頁碼，比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點。
+- 英國財政部 Guidance on developing business cases for projects and programmes（2026 年版）的頁碼是頁腳印的頁碼（PDF 頁 − 8）；它是英國公部門的指引，本點借用其中的五個面向、SMART 目標、以維持現狀當基準、效益的定義、樂觀偏誤、SRO 與委員會；套到校園提案的說明是本站整理。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號的句子或片段，省略處用刪節號；中文說明和翻譯是本站整理。
+- 英文 PDF 的引文避開彎引號；PDF 換行處的斷字（例如 per- ceived）照原詞接回，其餘空白照原文。
+- Watt 第 7 章的淨現值（NPV）一節依章末說明改寫自 Wikipedia（CC BY-SA 3.0）；本點只引用三種財務分析方法的名稱。
+- 原 scenario「為一個校園或社區改善提案寫一頁商業論證，向模擬的指導委員會簡報。」保留做法，補上本站建議與做法細節。
+- 原 ai.delegable「蒐集資料、試算財務指標」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- 校園單車棚的例子是本站整理；產出與效益的區分依英國財政部指引第 7.23–7.24 段（效益要有受益者、衡量方式和基準）。
 prerequisites:
-  - pm.stakeholder@sh
-  - pm.triangle@jh
+- pm.stakeholder@sh
+- pm.triangle@jh
 links:
   why:
-    - ph.applied@uni
+  - ph.applied@uni
   how: []
   related: []
   deeper: []
 link_notes: 經濟學（機會成本、成本效益分析）、管理學、哲學（價值判斷）
 competency:
   specialist:
-    - 專案治理
+  - 專案治理
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 蒐集資料、試算財務指標
+  - 蒐集資料、試算財務指標（數字自己驗算，資料註明出處，本站建議）
   human_experience:
-    - 對價值做判斷，並承擔決策責任
+  - 對價值做判斷，並承擔決策責任
 idea: 先問「值不值得做」：成本、效益、風險與策略是否一致；治理確保每個決策都有人負責。
 guiding_questions:
-  - 如果這個案子做成了卻沒有人受益，算成功嗎？
-scenario: 為一個校園或社區改善提案寫一頁商業論證，向模擬的指導委員會簡報。
+- 如果這個案子做成了卻沒有人受益，算成功嗎？
+- 不做這個案子，情況會怎樣？要拿什麼來比？
+- 誰來決定做不做？做錯了誰負責？
+scenario: 為一個校園或社區改善提案寫一頁商業論證，寫出不做時的情況、幾個可選的方案和受益者，向模擬的指導委員會簡報（本站建議）。
 formats:
   slides: []
+  exercise: 目標：為一個校園改善提案寫一頁商業論證：寫出 SMART 目標和不做時的情況，比較兩到三個方案的成本、效益與風險，寫出每個效益的受益者和衡量方式，並寫清楚誰核准、誰負責交付。　檢核：不看本頁，說出商業論證的五個面向各在回答什麼問題、為什麼要拿不做時的情況來比、為什麼做完了卻沒有人受益不算成功，並說出你的提案裡誰核准、誰負責交付、要防哪一種估算偏誤。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 為一個校園改善提案寫一頁商業論證：寫出 SMART 目標和不做時的情況，比較兩到三個方案的成本、效益與風險，寫出每個效益的受益者和衡量方式，並寫清楚誰核准、誰負責交付。
+review: 不看本頁，說出商業論證的五個面向各在回答什麼問題、為什麼要拿不做時的情況來比、為什麼做完了卻沒有人受益不算成功，並說出你的提案裡誰核准、誰負責交付、要防哪一種估算偏誤。
+why:
+  heading: 先問值不值得做
+  body:
+  - 專案開始前，要先有人寫清楚為什麼要做。Watt 的教科書說，商業論證是用來「define the problem or opportunity in detail and identify a preferred solution for implementation.」內容包括其他可選的方案，以及效益、成本、風險的分析；接著由專案發起人決定：「It is up to the project sponsor to determine if the project is worth undertaking」（翻譯是本站整理）。
+  - 英國財政部的指引把商業論證定義為「The document that provides the information, evidence and options appraisal that a decision maker needs to assess a spending proposal.」也就是給做決定的人看的證據和方案比較。指引要一份論證說明提案「Provides strategic fit」「Provides the best value for money」「Is affordable」，而且「Is set up for successful delivery」（說明是本站整理）。高中資訊科技要學生「能認識專案管理的概念。」也要「能應用運算思維評估解題方法的優劣。」大學再往前一步：用證據說服別人投入資源（本站整理）。
+  qa:
+    question: 如果這個案子做成了卻沒有人受益，算成功嗎？
+    answer: 不算。指引說效益是「the value, or other positive impact, resulting from an outcome, which is perceived as an advantage by one or more stakeholders.」做出了東西卻沒有人得到好處，就沒有效益；所以論證要先寫好受益者和衡量方式（說明是本站整理）。
+    source: hmt-business-case
+  items_title: 論證要回答的問題
+  items:
+  - title: 策略面：為什麼要做
+    text: 跟組織的目標合不合。
+  - title: 經濟面：哪個方案最值得
+    text: 跟維持現狀比，效益和成本。
+  - title: 商務與財務：談得成、付得起
+    text: 跟供應商的合約可行，錢有來源。
+  - title: 管理面：交付得了
+    text: 誰負責、怎麼管。
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好一個提案
+  - 知道利害關係人
+  figures:
+  - business-compare
+  notes:
+  - 英國財政部的指引分成五個面向：策略、經濟、商務、財務、管理；上面把商務和財務併成一項（本站整理）。
+  sources:
+  - watt-ch7
+  - hmt-business-case
+  - tech108
+how:
+  heading: 一頁論證，五個面向
+  body:
+  - 先寫為什麼、跟什麼比：一頁論證可以照指引的五個面向排：策略面說為什麼要做，經濟面比哪個方案最值得，商務面看能不能跟供應商談成可行的合約，財務面看付不付得起，管理面看交付得了嗎（本站整理）。目標要寫成指引說的「specific, measurable, achievable, realistic, and time-limited (SMART)」。接著寫不做時的情況：指引說「Practitioners should not assume that the organisation will do nothing under existing arrangements.」不做新提案，原來的做法還是有成本、效益和風險，要拿它當比較的基準；所以不做會怎樣，要寫成現況接下來會怎麼發展，而不是什麼都不變（說明是本站整理）。
+  - 再比方案、算效益：列出兩到三個方案，維持現狀也算一個，各寫成本、效益、風險（本站建議）。每個效益都寫指引要的「Beneficiary」「Metric」「Baseline」，也就是誰受益、怎麼衡量、跟維持現狀比（說明是本站整理）。這也回答了做成了卻沒人受益算不算成功：蓋好一座單車棚是產出，停車不再擠、違規停車變少才是效益；沒有人受益，產出再漂亮也不算成功（例子是本站整理）。財務可以用 Watt 書裡的「net present value (NPV), rate of return (ROI), and payback analysis」試算。估算時要防樂觀偏誤：指引說它是「the demonstrated systematic tendency for practitioners to be over-optimistic about key assumptions in appraisal」，成本和時間常比預估多、效益常比預估少，所以要先把估計調保守（說明是本站整理）。
+  - 最後寫誰決定、誰負責：治理是讓每個決定都有人負責。指引要記下一位資深負責人（SRO）：「The SRO is accountable for the delivery of the project or programme, and for ensuring that it meets its objectives.」也說「Projects and programmes should be governed by a board.」（說明是本站整理）。在你的提案裡寫清楚：誰核准做不做，例如系上或社區的委員會；誰對交付負責；多久向委員會報告一次。委員會可以要求修改、暫停或否決（本站建議）。AI 可以幫你蒐集資料、試算數字，但值不值得做是人的判斷，做錯了也由核准和負責交付的人承擔（本站整理）。
+  qa:
+    question: 不做這個案子，情況會怎樣？要拿什麼來比？
+    answer: 現況不會停住：指引說「Practitioners should not assume that the organisation will do nothing under existing arrangements.」所以要寫出維持現狀時接下來的成本、效益和風險，拿它當比較每個方案的基準（說明是本站整理）。
+    source: hmt-business-case
+  items_title: 四步寫
+  items:
+  - title: 寫目標和現況
+    text: 目標要 SMART，現況是比較的基準。
+  - title: 列兩到三個方案
+    text: 維持現狀也算一個。
+  - title: 寫效益和受益者
+    text: 每個效益都寫怎麼衡量。
+  - title: 寫清楚誰負責
+    text: 誰核准、誰交付、多久報告。
+  checklist_title: 寫完檢查
+  checklist:
+  - 有比較基準
+  - 效益有受益者
+  - 估計調保守
+  - 負責人寫清楚
+  activity_figure: business-flow
+  sources:
+  - hmt-business-case
+  - watt-ch7
+what:
+  heading: 用證據說服人投入資源
+  body:
+  - 學完後，你能寫一頁商業論證：用 SMART 目標和維持現狀當基準，比較方案的成本、效益與風險，寫出受益者和衡量方式，並說清楚誰核准、誰負責交付。
+  items_title: 學完能做到
+  items:
+  - title: 比較方案
+    text: 維持現狀也要比。
+  - title: 分清產出和效益
+    text: 沒人受益不算成功。
+  - title: 指定負責人
+    text: 每個決定都有人負責。
+  checklist_title: 自我檢核
+  checklist:
+  - 論證一頁寫完
+  - 效益可衡量
+  - 負責人清楚
+  notes:
+  - 本頁的校園單車棚例子是本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: business-flow
+  type: flow
+  alt: 商業論證五步驟：學生寫目標和現況，列方案比較，寫效益和受益者；委員會核准或退回；負責人交付並定期回報。
+  steps:
+  - actor: 學生
+    text: 寫目標現況
+  - actor: 學生
+    text: 列方案比較
+  - actor: 學生
+    text: 寫效益受益
+  - actor: 委員會
+    text: 核准或退回
+  - actor: 負責人
+    text: 交付並回報
+  source: hmt-business-case
+  caption: 流程是本站建議。
+- id: business-compare
+  type: compare
+  alt: 比較產出和效益：產出是做出來的東西，例如一座新的單車棚；效益是有人因此得到好處，例如停車不再擠。兩者不相等。
+  source: hmt-business-case
+  relation: not_equal
+  items:
+  - term: 產出
+    note: 做出來的東西，例如一座新的單車棚
+  - term: 效益
+    note: 有人因此得到好處，例如停車不再擠
+  caption: 例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：運 c-V-2「能認識專案管理的概念。」（p.7）；運 t-V-3「能應用運算思維評估解題方法的優劣。」（p.7）
+- id: hmt-business-case
+  title: Guidance on developing business cases for projects and programmes
+  publisher: HM Treasury（英國財政部；2024 年 5 月 16 日發布，2026 年 6 月 30 日更新）
+  url: https://assets.publishing.service.gov.uk/media/6a4390675b6406df58c14006/Guidance_on_Developing_Business_Cases.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 第 2.2 段「Provides strategic fit and is supported by a compelling case for change」「Provides the best value for money」「Involves viable commercial agreements with suppliers」「Is affordable and has agreed sources of funding」「Is set up for successful delivery」（p.5）；第 3.2 段「The document that provides the information, evidence and options appraisal that a decision maker needs to assess a spending proposal.」（p.8）；第 7.7 段「specific, measurable, achievable, realistic, and time-limited (SMART)」（p.32）；第 7.12 段「Practitioners should not assume that the organisation will do nothing under existing arrangements.」（p.33）；第 7.23 段「A benefit is the value, or other positive impact, resulting from an outcome, which is perceived as an advantage by one or more stakeholders.」（p.34）；第 7.24 段「Beneficiary」「Metric」「Baseline」（p.35）；第 8.59 段「the demonstrated systematic tendency for practitioners to be over-optimistic about key assumptions in appraisal」（p.50）；第 11.8 段「The SRO is accountable for the delivery of
+    the project or programme, and for ensuring that it meets its objectives.」（p.69）；第 11.9 段「Projects and programmes should be governed by a board.」（p.69）
+- id: watt-ch7
+  title: 'Project Management（第 2 版）Chapter 7: Project Initiation'
+  publisher: Adrienne Watt 著；本章作者 Adrienne Watt、Merrie Barron、Andrew Barron（BCcampus 開放教科書，第 2 版，CC BY-SA 4.0）
+  url: https://opentextbc.ca/projectmanagement/chapter/chapter-7-project-initiation-project-management/
+  accessed: '2026-10-30'
+  kind: textbook
+  supports: 「A business case is created to define the problem or opportunity in detail and identify a preferred solution for implementation.」；「It is up to the project sponsor to determine if the project is worth undertaking and whether the project will be profitable to the organization.」；「We do that by using net present value (NPV), rate of return (ROI), and payback analysis.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

@@ -1,22 +1,32 @@
 id: pm.org@uni
 concept: pm.org
 title: 組織行為與心理安全感
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 團隊
+  - 管理
+  - 專案管理與領導
+  - 團隊
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用，當作先學過的內容：涯 Bb-V-1、家 Cb-V-2 在高中綜合活動領綱（zonghe 來源）（頁碼是頁腳印的頁碼，比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點。
+- Edmondson 1999 的頁碼是期刊頁碼（PDF 頁 + 348；PDF 第 1 頁是 JSTOR 封面）；PDF 是掃描檔，文字層有黏字，引文只取文字層完整的句子。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號的句子或片段，省略處用刪節號；中文說明和翻譯是本站整理。
+- Watt《Project Management》第 11 章由多個開放來源改編；本點引用的兩句在 Trust 與 Creating Trust 段落，章末的改編說明沒有列出這兩段，依該章標示的 CC BY-SA 4.0 授權短句引用並附出處。
+- 原 scenario「分析一次失敗的團隊經驗：當時有沒有人看到問題卻沒說？為什麼？」保留做法，補上本站建議與做法細節。
+- 原 ai.delegable「提供研究概念摘要與討論框架」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- 原 idea「高績效團隊常見的特質之一」改成依 re:Work 的說法（Google 的研究把心理安全感排在團隊成效因素的第一位）；那是 Google 內部團隊的研究，不寫成所有團隊的定論。
+- re:Work 列的問卷句子是 Edmondson 量表的七句，本點只引其中三句；領導者行為的說明依 Edmondson 1999 頁 356 的假設段落，用中文轉述（掃描文字層有黏字，不直接引用）。
 prerequisites:
-  - pm.conflict@sh
-  - pm.style@sh
+- pm.conflict@sh
+- pm.style@sh
 links:
   why: []
   how: []
@@ -25,22 +35,173 @@ links:
 link_notes: 心理學（社會心理學）、管理學
 competency:
   specialist:
-    - 領導
+  - 領導
   generalist:
-    - 團隊合作
-    - 溝通
-    - 專案管理
+  - 團隊合作
+  - 溝通
+  - 專案管理
 ai:
   delegable:
-    - 提供研究概念摘要與討論框架
+  - 提供研究概念摘要與討論框架（不輸入同學的名字和團隊細節，摘要對照原文，本站建議）
   human_experience:
-    - 建立信任、示範承認錯誤、真實地帶人
-idea: 高績效團隊常見的特質之一，是成員敢說出問題與錯誤。營造這種環境是領導者的核心工作。
+  - 建立信任、示範承認錯誤、真實地帶人
+idea: Google 的團隊研究把心理安全感排在影響團隊成效的第一位：成員敢說出問題與錯誤。營造這種環境是領導者的核心工作。
 guiding_questions:
-  - 在你的團隊裡，說「我不知道」安全嗎？
-scenario: 分析一次失敗的團隊經驗：當時有沒有人看到問題卻沒說？為什麼？
+- 在你的團隊裡，說「我不知道」安全嗎？
+- 心理安全感是不是就是大家感情好、不吵架？
+- 領導者可以做什麼，讓大家敢說？
+scenario: 分析一次失敗的團隊經驗：當時有沒有人看到問題卻沒說？為什麼？只寫自己的經驗，不寫別人的名字（本站建議）。
 formats:
   slides: []
+  exercise: 目標：回顧一次自己參與過、結果不好的團隊經驗，寫出當時有沒有人看到問題卻沒說和可能的原因，用研究的問卷句子替那個團隊評一次，再提出領導者做得到的兩件事。　檢核：不看本頁，說出心理安全感的定義、它和團隊感情好有什麼不同、怎麼判斷一個團隊裡說「我不知道」安不安全，以及領導者可以做哪些事讓成員敢說。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 回顧一次自己參與過、結果不好的團隊經驗，寫出當時有沒有人看到問題卻沒說和可能的原因，用研究的問卷句子替那個團隊評一次，再提出領導者做得到的兩件事。
+review: 不看本頁，說出心理安全感的定義、它和團隊感情好有什麼不同、怎麼判斷一個團隊裡說「我不知道」安不安全，以及領導者可以做哪些事讓成員敢說。
+why:
+  heading: 敢說出問題的團隊
+  body:
+  - Edmondson 1999 年的研究把團隊心理安全感定義為「a shared belief that the team is safe for interpersonal risk taking.」也就是成員都相信，在這個團隊裡承認錯誤、提問、提出不同意見，不會被羞辱或處罰（說明是本站整理）。她指出，人常常不敢求助、不敢說自己錯了，因為怕看起來無能；大家都不說，團隊就學不到東西（本站整理）。
+  - Google 的 re:Work 整理自家團隊的研究，發現「what really mattered was less about who is on the team, and more about how the team worked together.」排在第一位的就是心理安全感（說明是本站整理）。Watt 的教科書也說，專案出問題時常怪溝通，但「With deeper investigation, the communication breakdown is associated with a breakdown in trust.」高中生涯規劃學過要「培養人際互動與合作共事的能力」；大學要看懂團隊裡看不見的規則（本站整理）。
+  qa:
+    question: 心理安全感是不是就是大家感情好、不吵架？
+    answer: 不是。Edmondson 說它「is not the same as group cohesiveness」，感情太好反而可能讓人不敢唱反調；它也不是放任，而是相信團隊「will not embarrass, reject, or punish someone for speaking up.」（說明是本站整理）
+    source: edmondson-1999
+  items_title: 這一點用到的
+  items:
+  - title: 心理安全感
+    text: 相信說了不會被罰。
+  - title: 學習行為
+    text: 提問、求助、談錯誤。
+  - title: 信任
+    text: 資訊流得動的前提。
+  - title: 領導者的示範
+    text: 先承認自己會錯。
+  checklist_title: 開始前先確認
+  checklist:
+  - 想好一次經驗
+  - 不寫別人名字
+  figures:
+  - org-compare
+  sources:
+  - edmondson-1999
+  - rework-teams
+  - watt-ch11
+  - zonghe
+how:
+  heading: 回顧、評一次、改一件事
+  body:
+  - 先回顧：挑一次自己參與過、結果不好的團隊經驗，只寫自己看到的事，不寫別人的名字（本站建議）。問自己：當時有沒有人看到問題卻沒說？為什麼？常見的原因是怕被當成不懂、怕被說成負面、怕得罪人（本站整理）。re:Work 說，心理安全感高的團隊，成員「feel confident that no one on the team will embarrass or punish anyone else for admitting a mistake, asking a question, or offering a new idea.」反過來，大家都沉默，就是不安全的訊號（說明是本站整理）。
+  - 再評一次：用 re:Work 整理的 Edmondson 問卷句子替那個團隊評分，例如「If you make a mistake on this team, it is often held against you.」「Members of this team are able to bring up problems and tough issues.」「It is safe to take a risk on this team.」（說明是本站整理）。判斷說我不知道安不安全，看的是說了之後發生什麼事：有人幫忙解釋，就是安全；被笑、被記一筆、之後不再被找，就是不安全（本站整理）。也要分清楚：心理安全感的定義是成員共同相信「the team is safe for interpersonal risk taking.」，也就是在團隊裡冒人際上的風險（提問、認錯、唱反調）是安全的，這不等於感情好（說明是本站整理）。Edmondson 說它「is not the same as group cohesiveness」，太在意和氣，反而會讓人不敢反對；它是相信團隊「will not embarrass, reject, or punish someone for speaking up.」（說明是本站整理）
+  - 最後改一件事：Edmondson 的研究認為，成員特別會注意領導者的行為；領導者支持、願意指導，被質疑時不防衛，成員就比較會覺得安全（本站整理）。re:Work 整理她的建議：「Frame the work as a learning problem, not an execution problem.」「Acknowledge your own fallibility.」「Model curiosity and ask lots of questions.」所以領導者可以先說自己哪裡不確定、開會時先問問題、有人說出錯誤時先謝謝他，再一起找原因（本站建議）。Watt 也說「Building trust on a project begins with the project manager.」
+  qa:
+    question: 在你的團隊裡，說「我不知道」安全嗎？
+    answer: 看說了之後發生什麼事：有人幫忙解釋，就是安全；被笑、被記一筆，就是不安全。也可以用問卷句子替團隊評分，例如「It is safe to take a risk on this team.」（說明是本站整理）
+    source: rework-teams
+  items_title: 四步做
+  items:
+  - title: 回顧一次經驗
+    text: 只寫自己看到的事。
+  - title: 找出沒說的原因
+    text: 大家怕的是什麼？
+  - title: 用問卷句子評分
+    text: 逐句寫同意的程度。
+  - title: 提出領導者做法
+    text: 兩件做得到的事。
+  checklist_title: 寫完檢查
+  checklist:
+  - 沒寫別人名字
+  - 原因寫具體
+  - 做法做得到
+  activity_figure: org-flow
+  sources:
+  - rework-teams
+  - edmondson-1999
+  - watt-ch11
+what:
+  heading: 讓團隊敢說真話
+  body:
+  - 學完後，你能說出心理安全感的意思和它與團隊感情好的差別，用問卷句子判斷一個團隊安不安全，並提出領導者做得到的做法，例如先承認自己會錯、多問問題。
+  items_title: 學完能做到
+  items:
+  - title: 判斷安不安全
+    text: 看說了之後發生什麼。
+  - title: 分清和感情好
+    text: 和氣不等於敢說。
+  - title: 示範承認錯誤
+    text: 從領導者自己開始。
+  checklist_title: 自我檢核
+  checklist:
+  - 回顧寫完
+  - 問卷評過
+  - 做法具體
+  notes:
+  - 本頁的團隊例子是本站整理；回顧只寫自己的經驗。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: org-flow
+  type: flow
+  alt: 心理安全感五步驟：學生回顧一次經驗，找出沉默的原因，用問卷句子評分；領導者示範說不知道；團隊下次再評一次。
+  steps:
+  - actor: 學生
+    text: 回顧經驗
+  - actor: 學生
+    text: 找沉默原因
+  - actor: 學生
+    text: 問卷評分
+  - actor: 領導者
+    text: 示範說不知
+  - actor: 團隊
+    text: 下次再評
+  source: rework-teams
+  caption: 流程是本站建議。
+- id: org-compare
+  type: compare
+  alt: 比較心理安全感和感情好：心理安全感是敢說錯、敢唱反調，說了不會被罰；感情好可能為了和氣，大家都不說。兩者不相等。
+  source: edmondson-1999
+  relation: not_equal
+  items:
+  - term: 心理安全感
+    note: 敢說錯、敢唱反調，說了不會被罰
+  - term: 感情好
+    note: 可能為了和氣，大家都不說
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中綜合活動（生涯規劃、家政）先學過的相關學習重點，只當先備：涯 Bb-V-1「職業生活與工作倫理。」（p.98）；家 Cb-V-2「人際互動倫理。」（p.100）；補充說明 涯 Bb-V-1「培養人際互動與合作共事的能力，並理解工作倫理與職場道德的意義與內涵，做好將來就業的準備。」（p.98）；補充說明 家 Cb-V-2「尊重並展現合宜的人際溝通與互動，包含網路禮儀、職場倫理與面試禮儀。」（p.100）
+- id: edmondson-1999
+  title: Psychological Safety and Learning Behavior in Work Teams
+  publisher: Amy Edmondson 著，Administrative Science Quarterly 44(2)，1999 年，頁 350–383（MIT 課程網頁存放的 PDF）
+  url: https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Group_Performance/Edmondson%20Psychological%20safety.pdf
+  accessed: '2026-10-30'
+  kind: peer_reviewed
+  supports: 「Team psychological safety is defined as a shared belief that the team is safe for interpersonal risk taking.」（p.354）；「Team psychological safety is not the same as group cohesiveness」（p.354）；「a sense of confidence that the team will not embarrass, reject, or punish someone for speaking up.」（p.354）；「This confidence stems from mutual respect and trust among team members.」（p.354）
+- id: rework-teams
+  title: 'Guide: Understand team effectiveness（re:Work）'
+  publisher: Google re:Work
+  url: https://rework.withgoogle.com/intl/en/guides/understand-team-effectiveness
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「The researchers found that what really mattered was less about who is on the team, and more about how the team worked together.」；「In order of importance」；「They feel confident that no one on the team will embarrass or punish anyone else for admitting a mistake, asking a question, or offering a new idea.」；Edmondson 的問卷句子「If you make a mistake on this team, it is often held against you.」「Members of this team are able to bring up problems and tough issues.」「It is safe to take a risk on this team.」；她的建議「Frame the work as a learning problem, not an execution problem.」「Acknowledge your own fallibility.」「Model curiosity and ask lots of questions.」
+- id: watt-ch11
+  title: 'Project Management（第 2 版）Chapter 11: Resource Planning'
+  publisher: Adrienne Watt 著；本章作者 Adrienne Watt、TAP-a-PM、Project Management Open Resources、Merrie Barron、Andrew Barron、David Wiley 等（BCcampus 開放教科書，第 2 版，CC BY-SA 4.0）
+  url: https://opentextbc.ca/projectmanagement/chapter/chapter-11-resource-planning-project-management/
+  accessed: '2026-10-30'
+  kind: textbook
+  supports: 「With deeper investigation, the communication breakdown is associated with a breakdown in trust.」；「Building trust on a project begins with the project manager.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

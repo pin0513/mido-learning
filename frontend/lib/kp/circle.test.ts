@@ -85,9 +85,10 @@ test("比較圖的長註記折進卡片，兩欄也有窄螢幕版", () => {
   assert.equal(html.includes(`>${note}</text>`), false);
 });
 
-// B17 發布 pm.retro@es 後改用 pm.gantt@jh；B18 發布 pm.gantt@jh 後改用 pm.cpm@sh；B19 發布 pm.cpm@sh 後，未轉換的點改用它的下一階草稿 pm.schedule@uni（有 scenario、ai，links.related 也有已知的點 it.ds@sh、ma.probmodel@uni）。
+// B17 發布 pm.retro@es 後改用 pm.gantt@jh；B18 發布 pm.gantt@jh 後改用 pm.cpm@sh；B19 發布 pm.cpm@sh 後改用 pm.schedule@uni；B20 專案管理全部發布，未轉換的點改用哲學草稿 ph.epistem@uni（有 scenario、ai，links 有已知的點 pm.complexity@uni、ma.probmodel@uni）。
 test("未轉換的點用既有欄位組三圈", () => {
-  const found = point("pm.schedule@uni");
+  const found = point("ph.epistem@uni");
+  assert.equal(found.status, "draft");
   const built = buildCircles(found, shared);
   assert.equal(built.converted, false);
   assert.deepEqual(built.circles.map((circle) => circle.kind), ["why", "how", "what"]);
@@ -101,7 +102,7 @@ test("未轉換的點用既有欄位組三圈", () => {
 });
 
 test("只補一圈時，那一圈用新欄位，其餘沿用舊欄位", () => {
-  const found = point("pm.schedule@uni");
+  const found = point("ph.epistem@uni");
   const partial: KnowledgePoint = {
     ...found,
     why: {
@@ -124,7 +125,7 @@ test("只補一圈時，那一圈用新欄位，其餘沿用舊欄位", () => {
 });
 
 test("exercise 與目標、檢核相同時不重複，What 空了就放補強句", () => {
-  const found = point("pm.schedule@uni");
+  const found = point("ph.epistem@uni");
   const duplicated: KnowledgePoint = {
     ...found,
     goal: "會做",

@@ -8,11 +8,12 @@ const DRAFT_TITLES = [
   "部分與整體",
   // B11–B13 已發布數學全部 26 點，B14–B16 已發布資訊與 AI 全部 25 點；草稿樣本換成仍是草稿的專案管理點（pm.schedule@uni 接在 pm.estimate@sh 之後；pm.business@uni、pm.aiteam@uni 由已發布點連過去）。
   // B19 發布 pm.cpm@sh 後，改用由 pm.conflict@sh、pm.style@sh 連過去的草稿 pm.org@uni。
-  "排程與資源最佳化",
-  "組織行為與心理安全感",
+  // B20 發布專案管理 uni 5 點後，專案管理全部發布，改用 pm uni 點連過去、仍是草稿的哲學點（ph.epistem、ph.applied、ph.aimind）與 ph.systems。
+  "知識論與不確定性",
+  "應用倫理：科技、商業與專業責任",
   "認知偏誤與思考盲點",
-  "商業論證與專案治理",
-  "決策、倫理與 AI 協作",
+  "AI 時代的思考：人機分工與判斷",
+  "系統思考：槓桿點與非預期後果",
 ];
 
 test.describe("學門總圖", () => {
@@ -89,8 +90,8 @@ test.describe("學門總圖", () => {
     await expect(task).toContainText("大事拆成小事");
     await expect(task).not.toContainText("準備中");
     await expect(task.locator("table")).toHaveCount(0);
-    // B19 發布 pm.cpm@sh 後，改查它的下一階草稿。
-    await expect(page.locator("body")).not.toContainText("排程與資源最佳化");
+    // B19 發布 pm.cpm@sh 後，改查它的下一階草稿；B20 發布 pm.schedule@uni 後，改查 pm.complexity@uni 連過去的哲學草稿。
+    await expect(page.locator("body")).not.toContainText("知識論與不確定性");
   });
 
   test("手機上四個學門都不橫向溢出", async ({ page }) => {
