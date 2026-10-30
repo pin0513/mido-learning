@@ -15,6 +15,8 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   // 待核對補證：zh.zhuyin@es 補上反拼法的出處，to_verify 改為 false；「已轉換＋待核對」的真實樣本改由 zh.syntax@jh（to_verify 維持 true）覆蓋。
   { path: "/kp/zh.zhuyin/es", layer: "基礎", verify: false, converted: true },
   { path: "/kp/zh.syntax/jh", layer: "基礎", verify: true, converted: true },
+  // PM 審查：zh.format@es 的 clreq 撐不起稿紙規定，to_verify 改回 true，也當「已轉換＋待核對」的樣本。
+  { path: "/kp/zh.format/es", layer: "基礎", verify: true, converted: true },
   { path: "/kp/pm.breakdown/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/ph.reason/es", layer: "本質", verify: false, converted: true },
   // B21 已轉換並發布哲學 es 5 點；ph.fair@es 是兩個領域（國語文、綜合活動）的國小點。
