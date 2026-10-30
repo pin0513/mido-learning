@@ -1,57 +1,242 @@
 id: ph.evidence@jh
 concept: ph.evidence
 title: 證據與來源
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 知識論
+  - 哲學
+  - 思考方法
+  - 知識論
   layer: essence
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
-    - 社會
-    - 科技
+  - 社會
+  - 自然科學
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B2
   issues:
-    - 資訊教育
+  - 閱讀素養教育
+  performances:
+  - 社 3b-IV-1
+  - 社 3b-IV-2
+  - ah-IV-1
+  contents: []
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、B2：依總綱 p.4–6 國民中學教育的 J-A2、J-B2 與社會領綱 p.3–4 的社-J-A2、社-J-B2，自然科學領綱 p.4–6 的自-J-A2、自-J-B2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對；跨頁的標 p.a–b）。
+- stage.grades 填 7、8、9：本點的代碼都是第四學習階段（IV），國中的學習重點沒有再分年級；總綱 p.7 說國民中學七、八、九年級為第四學習階段。
+- est_time 依社會領綱 p.2 時間分配表：國民中學七至九年級社會每週 3 節；本點建議在社會課做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，數學領綱少 3，社會、自然科學、綜合活動領綱與總綱少 4，議題融入說明手冊少 16。
+- 新增學習表現代碼 社 3b-IV-1、社 3b-IV-2（p.11）與自然科學 ah-IV-1（p.22）；代碼表原本沒有自然科學區塊，本批新增，網址同 sources 的 sci108。
+- 原 domains 的科技改成自然科學：科技領綱資訊科技國中的學習內容談媒體與資訊科技的社會議題、資訊倫理，沒有以查證來源、評估證據為主的條目；自然科學 ah-IV-1 要學生對報導抱持懷疑、評估證據。link_notes 保留科技（資訊科技），related 保留 it.media@jh。
+- 原 issues 的資訊教育改成閱讀素養教育：議題融入說明手冊的資訊教育實質內涵表（p.87）只列國小，沒有國中的條目；閱讀素養教育國中的實質內涵 閱J7「小心求證資訊來源，判讀文本知識的正確性。」（p.104）正對應本點。
+- 原 scenario 的引號拿掉（查證報告不是引文），補上溫和地告訴家人，並標本站建議；How 補上請大人用 AI 時只貼訊息內容，不貼家人的名字和頭像。
+- 一手、二手來源的分法與例子是本站整理；原想引用美國國會圖書館的一手來源說明，但該網頁拒絕連線（HTTP 403），改用 Civic Online Reasoning 的橫向閱讀。
+- 原 ai.delegable「協助搜尋可能的原始來源」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- Teaching Lateral Reading 是 Digital Inquiry Group（原 Stanford History Education Group）Civic Online Reasoning 的課程頁，英文短句引用，中文說明是本站整理。
 prerequisites:
-  - ph.fact@es
-  - ph.know@es
+- ph.fact@es
+- ph.know@es
 links:
   why: []
   how: []
   related:
-    - it.media@jh
+  - it.media@jh
   deeper:
-    - ph.tok@sh
-    - ph.aijudge@sh
-link_notes: 社會（媒體素養）、科技（資訊科技）
+  - ph.tok@sh
+  - ph.aijudge@sh
+link_notes: 社會（媒體素養）、科技（資訊科技）；社會 社 3b-IV-1、社 3b-IV-2，自然科學 ah-IV-1。
 competency:
   specialist:
-    - 知識論
+  - 知識論
   generalist:
-    - 查證
-    - 跨域思考
+  - 查證
+  - 跨域思考
 ai:
   delegable:
-    - 協助搜尋可能的原始來源
+  - 協助搜尋可能的原始來源（由老師或家長操作，本站建議）
   human_experience:
-    - 判斷來源可不可信，並溫和地告訴家人
+  - 判斷來源可不可信，並溫和地告訴家人
 idea: 好的判斷要有證據。分辨一手與二手來源，查證來源是誰、什麼時候說的、有沒有其他佐證。
 guiding_questions:
-  - 一則訊息被轉傳很多次，會讓它更可信嗎？
-scenario: 查證一則家族群組轉傳的訊息：找出原始出處，寫一段「查證報告」給家人。
+- 一則訊息被轉傳很多次，會讓它更可信嗎？
+- 一手來源和二手來源有什麼不同？
+- 怎麼查一個網站可不可信？
+scenario: 查證一則家族群組轉傳的訊息：找出原始出處，寫一段查證報告，再溫和地告訴家人（本站建議）。
 formats:
   slides: []
+  exercise: 目標：拿到一則轉傳的訊息，能查出原始出處、是誰在什麼時候說的，再找另一個來源比對，寫成一段查證報告。　檢核：家長或老師看查證報告：寫了原始出處、說的人和時間，分得出手上的是一手還是二手來源，也列出另一個來源比對的結果；孩子說得出為什麼轉傳很多次不等於可信，報告的語氣是溫和的。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 拿到一則轉傳的訊息，能查出原始出處、是誰在什麼時候說的，再找另一個來源比對，寫成一段查證報告。
+review: 家長或老師看查證報告：寫了原始出處、說的人和時間，分得出手上的是一手還是二手來源，也列出另一個來源比對的結果；孩子說得出為什麼轉傳很多次不等於可信，報告的語氣是溫和的。
+est_time:
+  school: 國中七至九年級社會課
+  source: social108
+why:
+  heading: 相信之前，先問證據
+  body:
+  - 社會課綱要國中生「適當選用多種管道蒐集與社會領域相關的資料。」還要「整理並檢視所蒐集資料的適切性。」自然課綱也要學生面對報導，甚至權威的解釋，都「能抱持懷疑的態度，評估其推論的證據是否充分且可信賴。」
+  - 轉傳的訊息常常看不出最早是誰說的。研究網路查證的課程說「the best way to learn about a website is lateral reading」，認識一個網站最好的方法是橫向閱讀，也就是離開這個網站，去看其他來源怎麼說它（翻譯是本站整理）。
+  qa:
+    question: 一則訊息被轉傳很多次，會讓它更可信嗎？
+    answer: 不會。轉傳再多次，原始出處還是同一個；轉傳只代表很多人看過，不代表有人查證過（本站整理）。要看的是證據，自然課綱要學生「評估其推論的證據是否充分且可信賴。」
+    source: sci108
+  items_title: 社會與自然領綱的學習重點
+  items:
+  - title: 用多種管道蒐集
+    text: 社會 社 3b-IV-1：適當選用多種管道蒐集與社會領域相關的資料。
+    code: 社 3b-IV-1
+  - title: 檢視資料適切性
+    text: 社會 社 3b-IV-2：利用社會領域相關概念，整理並檢視所蒐集資料的適切性。
+    code: 社 3b-IV-2
+  - title: 評估證據可不可信
+    text: 自然科學 ah-IV-1：對於有關科學發現的報導，甚至權威的解釋（例如：報章雜誌的報導或書本上的解釋），能抱持懷疑的態度，評估其推論的證據是否充分且可信賴。
+    code: ah-IV-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 選一則轉傳訊息
+  - 先不急著回覆
+  figures:
+  - evidence-compare
+  notes:
+  - 社會的代碼：開頭的社是社會領域共同的學習表現；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 自然科學的代碼：小寫字母開頭的是學習表現，ah 是科學的態度與本質裡的養成應用科學思考與探究的習慣；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 總綱把國民中學七、八、九年級定為第四學習階段，所以本頁代碼中間都是 IV。
+  sources:
+  - social108
+  - sci108
+  - cor-lateral
+  - zonggang
+how:
+  heading: 查證三問：誰、何時、佐證
+  body:
+  - 先分一手和二手來源：一手來源是當事人或最早的紀錄，例如機關發布的公告、研究者自己的報告；二手來源是別人轉述、整理的，例如轉述研究或公告的新聞報導、轉傳的圖卡（本站整理）。同一份資料是一手還是二手，要看你查的是什麼事（本站整理）。手上的轉傳訊息多半是二手，要往回找到一手來源。
+  - 再問三件事：是誰說的？什麼時候說的？有沒有其他來源也這樣說？查一個網站可不可信，不要只看它怎麼介紹自己；查證課程說「checking what other websites say about a source is a better evaluation strategy than trusting what the source says about itself」，也就是去看其他網站怎麼說它，比相信它的自我介紹更好（翻譯是本站整理）。
+  - 最後寫查證報告：寫下原始出處、說的人和時間、另一個來源比對的結果，以及結論是可信、不可信，還是還不確定。轉傳很多次不會讓訊息更可信，因為原始出處還是同一個。社會課綱要學生「檢視所蒐集資料的適切性」；告訴家人時先謝謝對方分享，再附上查到的出處；請大人用 AI 幫忙找出處時，只貼訊息內容，不貼家人的名字和頭像（本站建議）。
+  qa:
+    question: 怎麼查一個網站可不可信？
+    answer: 離開這個網站，去看其他網站怎麼說它，這叫橫向閱讀。查證課程說，認識網站的好方法是「leaving a site to see what other digital sources say about it」，也就是離開網站，看其他數位來源怎麼說它（翻譯是本站整理）。
+    source: cor-lateral
+  items_title: 四步做
+  items:
+  - title: 找原始出處
+    text: 往回找到一手來源。
+  - title: 問誰和何時
+    text: 誰說的、什麼時候。
+  - title: 找佐證
+    text: 看其他來源怎麼說。
+  - title: 寫查證報告
+    text: 語氣溫和，附上出處。
+  checklist_title: 查證時檢查一下
+  checklist:
+  - 找到原始出處
+  - 比對另一來源
+  - 語氣溫和
+  activity_figure: evidence-flow
+  sources:
+  - cor-lateral
+  - social108
+what:
+  heading: 查得出出處，說得清楚
+  body:
+  - 學完後，孩子拿到一則轉傳的訊息，能往回查出原始出處、是誰在什麼時候說的，分得出一手和二手來源，找另一個來源比對，再寫成一段語氣溫和的查證報告。
+  items_title: 學完能做到
+  items:
+  - title: 分一手二手
+    text: 知道手上是哪一種。
+  - title: 橫向閱讀
+    text: 看別人怎麼說這個網站。
+  - title: 寫查證報告
+    text: 出處、時間、比對結果。
+  checklist_title: 家長檢核
+  checklist:
+  - 寫了原始出處
+  - 比對另一來源
+  - 語氣是溫和的
+  notes:
+  - 本點融入閱讀素養教育議題：議題融入說明手冊國中的實質內涵有「小心求證資訊來源，判讀文本知識的正確性。」查證轉傳訊息的出處，就是在練習求證資訊來源。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  - 本頁的 AI 活動由老師或家長操作，孩子在旁邊一起看、一起檢查 AI 的回答（本站建議）。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: evidence-flow
+  type: flow
+  alt: 查證四步驟：我找原始出處，我問是誰在何時說的，我找另一個來源比對，我寫查證報告給家人。
+  steps:
+  - actor: 我
+    text: 找原始出處
+  - actor: 我
+    text: 問誰和何時
+  - actor: 我
+    text: 找來源比對
+  - actor: 我
+    text: 寫查證報告
+  source: cor-lateral
+  caption: 流程是本站建議。
+- id: evidence-compare
+  type: compare
+  alt: 比較兩種查網站的方法：只看網站的自我介紹，例如讀它的關於我們頁；橫向閱讀，例如搜尋別人怎麼說這個網站。
+  source: cor-lateral
+  relation: versus
+  items:
+  - term: 看自我介紹
+    note: 讀它的關於我們頁
+  - term: 橫向閱讀
+    note: 搜尋別人怎麼說它
+  caption: 例子是本站整理。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：社 3b-IV-1「適當選用多種管道蒐集與社會領域相關的資料。」（p.11）；社 3b-IV-2「利用社會領域相關概念，整理並檢視所蒐集資料的適切性。」（p.11）；領域核心素養：社-J-A2「覺察人類生活相關議題，進而分析判斷及反思，並嘗試改善或解決問題。」（p.3）；社-J-B2「理解不同時空的科技與媒體發展和應用，增進媒體識讀能力，並思辨其在生活中可能帶來的衝突與影響。」（p.4）；時間分配：「社會領域各教育階段之時間分配及科目組合如下」（p.2），表中國民中學七至九年級每週 3 節；代碼說明：學習表現「國民中學與普通型高級中等學校若為領域共同的學習表現，則第 1碼前以『社』標示，若為各科目內涵則第 1 碼前以『歷』、『地』、『公』標示。」（p.6）
+- id: sci108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：ah-IV-1「對於有關科學發現的報導，甚至權威的解釋（例如：報章雜誌的報導或書本上的解釋），能抱持懷疑的態度，評估其推論的證據是否充分且可信賴。」（p.22）；領域核心素養：自-J-A2「能將所習得的科學知識，連結到自己觀察到的自然現象及實驗數據，學習自我或團體探索證據、回應多元觀點，並能對問題、方法、資訊或數據的可信性抱持合理的懷疑態度或進行檢核，提出問題可能的解決方案。」（p.4–5）；自-J-B2「能操作適合學習階段的科技設備與資源，並從學習活動、日常經驗及科技運用、自然環境、書刊及網路媒體中，培養相關倫理與分辨資訊之可信程度及進行各種有計畫的觀察，以獲得有助於探究和問題解決的資訊。」（p.5–6）；代碼說明：學習表現的項目「思考智能（t）」（p.9）、「問題解決（p）」（p.9）與「科學的態度與本質」（p.9），子項「建立模型（m）」（p.9）、「觀察與定題（o）」（p.9）、「計劃與執行（e）」（p.9）、「養成應用科學思考與探究的習慣（ah）」（p.9），第 2 碼「第四學習階段（七至九年級，國民中學教育階段）」（p.9），領綱用羅馬數字表示，本站整理成拉丁字母 IV；學習內容「14 個主題以大寫英文字母 A~N 表示。」（p.11），次主題「生物體內的恆定性與調節（Dc）」（p.10）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民中學教育）：J-A2「具備理解情境全貌，並做獨立思考與分析的知能，運用適當的策略處理解決生活及生命議題。」（p.4）；J-B2「具備善用科技、資訊與媒體以增進學習的素養，並察覺、思辨人與科技、資訊、媒體的互動關係。」（p.5）；學習階段「國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 閱讀素養教育國中實質內涵 閱J7「小心求證資訊來源，判讀文本知識的正確性。」（p.104）
+- id: cor-lateral
+  title: Teaching Lateral Reading（Civic Online Reasoning）
+  publisher: Digital Inquiry Group（原 Stanford History Education Group）Civic Online Reasoning 課程
+  url: https://cor.inquirygroup.org/curriculum/collections/teaching-lateral-reading/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「the best way to learn about a website is lateral reading」；「leaving a site to see what other digital sources say about it」；「checking what other websites say about a source is a better evaluation strategy than trusting what the source says about itself」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

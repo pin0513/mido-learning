@@ -43,6 +43,12 @@ test.describe("知識地圖", () => {
     await expect(page.getByTestId("kp-curriculum")).toContainText("語文、綜合活動");
     await expect(page.getByTestId("kp-curriculum")).toContainText("品德教育、法治教育");
     await expect(page.getByTestId("kp-curriculum")).not.toContainText("2-III-7");
+    // B22 發布哲學 jh 6 點；ph.evidence@jh 對應社會與自然科學兩個領域（自然科學的學習表現代碼是小寫字母開頭，舊版頁同樣不列）。
+    await page.goto("/kp/ph.evidence/jh");
+    await expect(page.getByTestId("kp-draft")).toHaveCount(0);
+    await expect(page.getByTestId("kp-curriculum")).toContainText("社會、自然科學");
+    await expect(page.getByTestId("kp-curriculum")).toContainText("閱讀素養教育");
+    await expect(page.getByTestId("kp-curriculum")).not.toContainText("ah-IV-1");
     await page.goto("/kp/pm.breakdown/es");
     await expect(page.getByRole("link", { name: /我們想完成什麼/ })).toBeVisible();
     await expect(page.getByText("尚未發布")).toHaveCount(0);

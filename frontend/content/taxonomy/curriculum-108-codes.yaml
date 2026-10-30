@@ -28,6 +28,12 @@
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 7
+    1-IV-3:
+      stage: 4
+      text: 分辨聆聽內容的邏輯性，找出解決問題的方法。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
     1-V-1:
       stage: 5
       text: 面對不同的聆聽情境及文化差異，正確分析話語的訊息，並給予適切的回應。
@@ -482,6 +488,12 @@
     Bd-IV-1:
       stage: 4
       text: 以事實、理論為論據，達到說服、建構、批判等目的。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 17
+    Bd-IV-2:
+      stage: 4
+      text: 論證方式如比較、比喻等。
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 17
@@ -1017,6 +1029,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 16
+    "輔 Dc-IV-1":
+      stage: 4
+      text: 同理心、人際溝通、衝突管理能力的培養與正向經營人際關係。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 93
     "輔 Dc-IV-2":
       stage: 4
       text: 團體溝通、互動與工作效能的提升。
@@ -1025,6 +1043,31 @@
         page: 94
 
 社會:
+  performances:
+    "社 2b-IV-1":
+      stage: 4
+      text: 感受個人或不同群體在社會處境中的經歷與情緒，並了解其抉擇。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+        page: 10
+    "社 3b-IV-1":
+      stage: 4
+      text: 適當選用多種管道蒐集與社會領域相關的資料。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+        page: 11
+    "社 3b-IV-2":
+      stage: 4
+      text: 利用社會領域相關概念，整理並檢視所蒐集資料的適切性。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+        page: 11
+    "社 3c-IV-1":
+      stage: 4
+      text: 聆聽他人意見，表達自我觀點，並能以同理心與他人討論。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+        page: 12
   contents:
     "公 Bl-IV-1":
       stage: 4
@@ -1044,6 +1087,49 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
         page: 31
+
+# 自然科學：十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域（國家教育研究院）。
+# 只收不與其他 108 領綱同號的代碼（代碼表以代碼為鍵）；文字逐字自官方 PDF，頁碼是 PDF 頁腳印的頁碼。
+# https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+自然科學:
+  performances:
+    tm-IV-1:
+      stage: 4
+      text: 能從實驗過程、合作討論中理解較複雜的自然界模型，並能評估不同模型的優點和限制，進能應用在後續的科學理解或生活。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+        page: 21
+    po-IV-2:
+      stage: 4
+      text: 能辨別適合科學探究或適合以科學方式尋求解決的問題（或假說），並能依據觀察、蒐集資料、閱讀、思考、討論等，提出適宜探究之問題。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+        page: 21
+    pe-IV-1:
+      stage: 4
+      text: 能辨明多個自變項、應變項並計劃適當次數的測試、預測活動的可能結果。在教師或教科書的指導或說明下，能了解探究的計畫，並進而能根據問題特性、資源（例如：設備、時間）等因素，規劃具有可信度（例如：多次測量等）的探究活動。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+        page: 21
+    ah-IV-1:
+      stage: 4
+      text: 對於有關科學發現的報導，甚至權威的解釋（例如：報章雜誌的報導或書本上的解釋），能抱持懷疑的態度，評估其推論的證據是否充分且可信賴。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+        page: 22
+  contents:
+    Dc-IV-4:
+      stage: 4
+      text: 人體會藉由各系統的協調，使體內所含的物質以及各種狀態能維持在一定範圍內。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+        page: 24
+    Dc-IV-5:
+      stage: 4
+      text: 生物體能覺察外界環境變化、採取適當的反應以使體內環境維持恆定，這些現象能以觀察或改變自變項的方式來探討。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+        page: 24
 
 # 英語文：十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域－英語文（國家教育研究院）。
 # 只收不與其他 108 領綱同號的代碼（代碼表以代碼為鍵）；文字逐字自官方 PDF，頁碼是 PDF 頁腳印的頁碼。
@@ -1440,6 +1526,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
         page: 9
+    d-IV-1:
+      stage: 4
+      text: 理解常用統計圖表，並能運用簡單統計量分析資料的特性及使用統計軟體的資訊表徵，與人溝通。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+        page: 12
     d-IV-2:
       stage: 4
       text: 理解機率的意義，能以機率表示不確定性和以樹狀圖分析所有的可能性，並能應用機率到簡單的日常生活情境解決問題。

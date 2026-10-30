@@ -333,8 +333,8 @@
     "figureId": { "type": "string", "pattern": "^[a-z0-9-]{2,40}$" },
     "perfCode": {
       "type": "string",
-      "pattern": "^(?:[\\u4e00-\\u9fff] )?[0-9]{1,2}[a-z]?-(?:IV|III|II|V|I)-[0-9]{1,2}$",
-      "description": "學習表現代碼。例：2-II-4、1b-III-1、涯 3b-V-1。羅馬數字用拉丁字母。科目前綴與代碼之間一個空格。必須存在於 taxonomy/curriculum-108-codes.yaml。"
+      "pattern": "^(?:[\\u4e00-\\u9fff] )?(?:[0-9]{1,2}[a-z]?|[a-z]{1,2})-(?:IV|III|II|V|I)-[0-9]{1,2}$",
+      "description": "學習表現代碼。例：2-II-4、1b-III-1、涯 3b-V-1、tm-IV-1（自然科學）、d-IV-1（數學）。羅馬數字用拉丁字母。科目前綴與代碼之間一個空格。必須存在於 taxonomy/curriculum-108-codes.yaml。"
     },
     "contentCode": {
       "type": "string",

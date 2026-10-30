@@ -1,52 +1,216 @@
 id: ph.feedback@jh
 concept: ph.feedback
 title: 因果鏈與回饋迴圈
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 系統思考
+  - 哲學
+  - 思考方法
+  - 系統思考
   layer: essence
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
-    - 自然科學
-    - 綜合活動
+  - 自然科學
   core_competencies:
-    - A2
+  - A2
   issues: []
+  performances:
+  - tm-IV-1
+  contents:
+  - Dc-IV-4
+  - Dc-IV-5
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2：依總綱 p.4–6 國民中學教育的 J-A2 與自然科學領綱 p.4–5 的自-J-A2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對；跨頁的標 p.a–b）。
+- stage.grades 填 7、8、9：本點的代碼都是第四學習階段（IV），國中的學習重點沒有再分年級；總綱 p.7 說國民中學七、八、九年級為第四學習階段。
+- est_time 依自然科學領綱 p.3：國民中學七至九年級自然科學每週 3 節；本點建議在自然課教到人體恆定時做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，數學領綱少 3，社會、自然科學、綜合活動領綱與總綱少 4，議題融入說明手冊少 16。
+- 新增學習表現代碼 tm-IV-1（p.21）與學習內容 Dc-IV-4、Dc-IV-5（p.24）；代碼表原本沒有自然科學區塊，本批新增，網址同 sources 的 sci108。
+- 原 domains 的綜合活動刪除：本點的因果迴圈與恆定性由自然科學 tm-IV-1、Dc-IV-4、Dc-IV-5 支撐；綜合活動國中的學習重點沒有以因果迴圈為主的條目，改變習慣的部分留在 link_notes 的心理學（習慣）。
+- 原 idea 的越來越強或越來越弱改成往同一個方向越走越遠（越來越多或越來越少）的增強迴圈，或把狀態拉回某個目標或範圍的平衡迴圈：依 Meadows，平衡迴圈會自己修正，增強迴圈會自己加強（self-reinforcing，沒有限定方向）。How 的判斷規則與數變少箭頭的小技巧是本站整理（第 3 輪獨立審查第 1 項）；箭頭標示的寫法（前一格變多時，這一格跟著變多還是變少）也是本站整理，小技巧只在這個寫法下成立（第 4 輪獨立審查必修 A）。
+- 原 scenario 的引號拿掉（不是引文），並標本站建議；試一週、手機放在房間外充電是本站建議（試一週在 How 標示意，本站建議；review／exercise 標示意）。
+- 原 ai.delegable「協助整理因果關係」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 'Leverage Points: Places to Intervene in a System 是 Donella Meadows 的文章（The Donella Meadows Project 網站），英文短句引用；增強迴圈、平衡迴圈這兩個中文名稱是本站整理，對應文中的 positive、negative feedback loop。'
 prerequisites:
-  - ph.parts@es
+- ph.parts@es
 links:
   why: []
   how: []
   related: []
   deeper:
-    - ph.systems@sh
-link_notes: 心理學（習慣）、自然科學（生態平衡）
+  - ph.systems@sh
+link_notes: 心理學（習慣）、自然科學（生態平衡）；自然科學 tm-IV-1、Dc-IV-4、Dc-IV-5。
 competency:
   specialist:
-    - 系統思考
+  - 系統思考
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 協助整理因果關係
+  - 協助整理因果關係（由老師或家長操作，本站建議）
   human_experience:
-    - 實際試著改變自己的一個習慣
-idea: 事情的原因常常不只一個，而且結果會回過頭影響原因，形成越來越強或越來越弱的循環。
+  - 實際試著改變自己的一個習慣
+idea: 事情的原因常常不只一個，而且結果會回過頭影響原因，形成往同一個方向越走越遠的增強迴圈（越來越多或越來越少），或把狀態拉回某個目標或範圍的平衡迴圈（本站整理）。
 guiding_questions:
-  - 哪個循環讓你越來越好？哪個讓你越來越糟？
-scenario: 畫出自己「手機越用越晚睡」的因果迴圈圖，找一個可以打斷循環的地方。
+- 哪個循環讓你越來越好？哪個讓你越來越糟？
+- 增強迴圈和平衡迴圈有什麼不同？
+- 要在迴圈的哪裡下手，才打得斷循環？
+scenario: 畫出自己手機越用越晚睡的因果迴圈圖，找一個可以打斷循環的地方（本站建議）。
 formats:
   slides: []
+  exercise: 目標：能畫出一個生活中的因果迴圈圖，說出它是增強迴圈還是平衡迴圈，並找出一個可以打斷或改變循環的地方。　檢核：家長或老師看迴圈圖：每個箭頭旁都寫了變多或變少，最後一個箭頭回到起點；孩子說得出這是增強迴圈還是平衡迴圈，也說得出要在哪一個箭頭下手、打算怎麼試一週（示意）。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 能畫出一個生活中的因果迴圈圖，說出它是增強迴圈還是平衡迴圈，並找出一個可以打斷或改變循環的地方。
+review: 家長或老師看迴圈圖：每個箭頭旁都寫了變多或變少，最後一個箭頭回到起點；孩子說得出這是增強迴圈還是平衡迴圈，也說得出要在哪一個箭頭下手、打算怎麼試一週（示意）。
+est_time:
+  school: 國中七至九年級自然課
+  source: sci108
+why:
+  heading: 結果會回頭影響原因
+  body:
+  - 很多事不是一條直線，而是一個圈：結果會回過頭影響原因。研究系統的 Donella Meadows 把這種圈分成兩種：「A negative feedback loop is self-correcting; a positive feedback loop is self-reinforcing.」，也就是一種會自己修正，一種會自己加強（翻譯是本站整理）。本頁把前者叫平衡迴圈，後者叫增強迴圈。
+  - 自然課也教身體裡的平衡迴圈：「人體會藉由各系統的協調，使體內所含的物質以及各種狀態能維持在一定範圍內。」課綱也要學生「理解較複雜的自然界模型，並能評估不同模型的優點和限制」；因果迴圈圖就是一種模型，能幫我們看懂自己的習慣。
+  qa:
+    question: 哪個循環讓你越來越好？哪個讓你越來越糟？
+    answer: 越練越熟、越熟越想練，是讓你越來越好的增強迴圈；手機越用越晚睡、越晚睡白天越累、越累又越想滑手機，是讓你越來越糟的增強迴圈（例子是本站整理）。Meadows 說增強迴圈是「The more it works, the more it gains power to work some more.」，越轉越有力，好壞都一樣（翻譯是本站整理）。
+    source: meadows-leverage
+  items_title: 自然科學領綱的學習重點
+  items:
+  - title: 理解並評估模型
+    text: 自然科學 tm-IV-1：能從實驗過程、合作討論中理解較複雜的自然界模型，並能評估不同模型的優點和限制，進能應用在後續的科學理解或生活。
+    code: tm-IV-1
+  - title: 人體維持一定範圍
+    text: 自然科學 Dc-IV-4：人體會藉由各系統的協調，使體內所含的物質以及各種狀態能維持在一定範圍內。
+    code: Dc-IV-4
+  - title: 覺察變化維持恆定
+    text: 自然科學 Dc-IV-5：生物體能覺察外界環境變化、採取適當的反應以使體內環境維持恆定，這些現象能以觀察或改變自變項的方式來探討。
+    code: Dc-IV-5
+  checklist_title: 開始前先確認
+  checklist:
+  - 準備紙和筆
+  - 想好一個習慣
+  figures:
+  - feedback-compare
+  notes:
+  - 自然科學的代碼：小寫字母開頭的是學習表現，tm 是思考智能（t）裡的建立模型（m）；大寫字母開頭的是學習內容，Dc 是生物體內的恆定性與調節；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 總綱把國民中學七、八、九年級定為第四學習階段，所以本頁代碼中間都是 IV。
+  sources:
+  - meadows-leverage
+  - sci108
+  - zonggang
+how:
+  heading: 畫迴圈圖：找出下手處
+  body:
+  - 先寫下一個習慣，例如睡前滑手機。問：它讓什麼變多或變少？再問：那件事又讓什麼改變？一格一格寫下去，每個箭頭旁寫：前一格變多的時候，這一格跟著變多，還是變少（本站整理）。就算這個圈實際上越來越少，例如越少運動越沒體力，也照前一格變多來寫：運動變多，體力跟著變多（本站整理）。直到最後一個箭頭回到起點，圈就畫好了。例如滑手機越久就越晚睡，越晚睡白天越累，越累越想滑手機放鬆（例子是本站整理）。
+  - 再判斷是哪一種迴圈：繞一圈下來，起點被推往同一個方向，越來越多或越來越少，是增強迴圈；起點被拉回某個目標或範圍，是平衡迴圈（本站整理）。判斷小技巧：照第一步的寫法（前一格變多時，這一格跟著變多還是變少），數一數圈上寫變少的箭頭，偶數個（沒有也算）是增強迴圈，奇數個是平衡迴圈（本站整理）。平衡迴圈像身體維持體溫，Meadows 舉的例子是「your ability to sweat or shiver to maintain your body temperature」，也就是靠流汗或發抖維持體溫（翻譯是本站整理）。
+  - 最後找下手處：挑一個箭頭，想辦法讓它斷掉或變弱，例如手機放在房間外面充電，滑手機的時間可能就比較不會一直變長（本站建議）。試一週（示意，本站建議），記下睡覺時間有沒有改變；沒有效，就換另一個箭頭再試。
+  qa:
+    question: 增強迴圈和平衡迴圈有什麼不同？
+    answer: 增強迴圈繞一圈會把起點推往同一個方向越走越遠，可能越來越多，也可能越來越少；平衡迴圈繞一圈會把起點拉回某個目標或範圍（本站整理）。Meadows 說「A negative feedback loop is self-correcting; a positive feedback loop is self-reinforcing.」，平衡迴圈會自己修正，增強迴圈會自己加強（翻譯是本站整理）。
+    source: meadows-leverage
+  items_title: 四步做
+  items:
+  - title: 寫下一個習慣
+    text: 例如睡前滑手機。
+  - title: 一格一格連
+    text: 箭頭旁寫變多或變少。
+  - title: 判斷迴圈
+    text: 增強，還是平衡？
+  - title: 找下手處
+    text: 挑一個箭頭讓它變弱。
+  checklist_title: 畫完檢查一下
+  checklist:
+  - 箭頭回到起點
+  - 寫了變多變少
+  - 選好下手處
+  activity_figure: feedback-flow
+  sources:
+  - meadows-leverage
+what:
+  heading: 看得出循環，打得斷
+  body:
+  - 學完後，孩子能把一個生活中的習慣畫成因果迴圈圖，說出它是增強迴圈還是平衡迴圈，找出一個可以下手的箭頭，並實際試著改變自己的一個習慣。
+  items_title: 學完能做到
+  items:
+  - title: 畫迴圈圖
+    text: 最後的箭頭回到起點。
+  - title: 分兩種迴圈
+    text: 增強或平衡。
+  - title: 找下手處
+    text: 試一陣子再調整。
+  checklist_title: 家長檢核
+  checklist:
+  - 迴圈圖畫好了
+  - 說得出哪一種
+  - 選好下手處
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  - 本頁的 AI 活動由老師或家長操作，孩子在旁邊一起看、一起檢查 AI 的回答（本站建議）。
+  sources:
+  - genai-student
+figures:
+- id: feedback-flow
+  type: flow
+  alt: 因果迴圈四步驟：我寫下一個習慣，我一格一格連箭頭，我判斷是哪種迴圈，我找一個下手處試試。
+  steps:
+  - actor: 我
+    text: 寫下一個習慣
+  - actor: 我
+    text: 一格一格連
+  - actor: 我
+    text: 判斷迴圈
+  - actor: 我
+    text: 找下手處
+  source: meadows-leverage
+  caption: 流程是本站建議。
+- id: feedback-compare
+  type: compare
+  alt: 比較兩種迴圈：增強迴圈往同一個方向越走越遠，例如越晚睡越想滑手機；平衡迴圈拉回一定範圍，例如太熱就流汗降溫。
+  source: meadows-leverage
+  relation: not_equal
+  items:
+  - term: 增強迴圈
+    note: 越晚睡越想滑手機
+  - term: 平衡迴圈
+    note: 太熱就流汗降溫
+  caption: 例子是本站整理。
+sources:
+- id: sci108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：tm-IV-1「能從實驗過程、合作討論中理解較複雜的自然界模型，並能評估不同模型的優點和限制，進能應用在後續的科學理解或生活。」（p.21）；Dc-IV-4「人體會藉由各系統的協調，使體內所含的物質以及各種狀態能維持在一定範圍內。」（p.24）；Dc-IV-5「生物體能覺察外界環境變化、採取適當的反應以使體內環境維持恆定，這些現象能以觀察或改變自變項的方式來探討。」（p.24）；領域核心素養：自-J-A2「能將所習得的科學知識，連結到自己觀察到的自然現象及實驗數據，學習自我或團體探索證據、回應多元觀點，並能對問題、方法、資訊或數據的可信性抱持合理的懷疑態度或進行檢核，提出問題可能的解決方案。」（p.4–5）；時間分配：「國民中學教育階段（七至九年級）自然科學領域學習節數為每週3節」（p.3）；代碼說明：學習表現的項目「思考智能（t）」（p.9）、「問題解決（p）」（p.9）與「科學的態度與本質」（p.9），子項「建立模型（m）」（p.9）、「觀察與定題（o）」（p.9）、「計劃與執行（e）」（p.9）、「養成應用科學思考與探究的習慣（ah）」（p.9），第 2 碼「第四學習階段（七至九年級，國民中學教育階段）」（p.9），領綱用羅馬數字表示，本站整理成拉丁字母 IV；學習內容「14 個主題以大寫英文字母 A~N 表示。」（p.11），次主題「生物體內的恆定性與調節（Dc）」（p.10）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民中學教育）：J-A2「具備理解情境全貌，並做獨立思考與分析的知能，運用適當的策略處理解決生活及生命議題。」（p.4）；學習階段「國民中學七、八、九年級為第四學習階段」（p.7）
+- id: meadows-leverage
+  title: 'Leverage Points: Places to Intervene in a System'
+  publisher: Donella Meadows（The Donella Meadows Project 網站）
+  url: https://donellameadows.org/archives/leverage-points-places-to-intervene-in-a-system/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「A negative feedback loop is self-correcting; a positive feedback loop is self-reinforcing.」；「The more it works, the more it gains power to work some more.」；「your ability to sweat or shiver to maintain your body temperature」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
