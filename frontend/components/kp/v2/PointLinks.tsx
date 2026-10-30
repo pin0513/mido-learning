@@ -15,6 +15,7 @@ export function PointLinks({
   ids: string[];
   all: ContentCatalog;
   visible: ContentCatalog;
+  /** 目前頁面的學門。同學門的點一律連（shownPoint），即使那個學門的旗標在 build 時關掉，例如軟實力頁連軟實力點。 */
   currentFolder: string;
   empty: string;
   /** 清單的標題（例如 SeqPanel 的「先學」「後學」）。和清單一起畫；清單不畫時標題也不畫，不留孤零零的標題。 */
@@ -45,6 +46,8 @@ export function PointLinks({
     );
   }
   if (list === null || !label) return list;
+  // 標題和清單是 fragment 裡的兩個兄弟節點，不包一層容器：它們直接當 SeqPanel 的 .v2-seq（單欄 grid，detail.css）的子元素，
+  // 靠那個扁平的 grid 排版與 gap。要包容器或改 .v2-seq 的版型時，兩邊要一起改。
   return (
     <>
       <span className="v2-lbl">{label}</span>
