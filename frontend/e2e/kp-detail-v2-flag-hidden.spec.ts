@@ -114,6 +114,12 @@ test.describe("V2＋旗標關的 build（正式站執行時旗標）", () => {
       // 提示的則數與每則的數字都要對；修正前被擋的已發布點會多算一則或把數字加大。
       expect(count(seq, "尚未發布"), `${point.id}：${expected.join("、") || "不該有提示"}`).toBe(expected.length);
       for (const notice of expected) expect(seq, `${point.id} ${notice}`).toContain(notice);
+      // 標題跟著清單：清單裡只有被旗標擋掉的點（沒有可連的點、也沒有草稿）時，清單不畫，「先學」「後學」也不畫。
+      ["先學", "後學"].forEach((label, i) => {
+        const row = lists[i];
+        const skipped = row.shown.length === 0 && row.drafts.length === 0 && row.flagHidden.length > 0;
+        expect(count(seq, `<span class="v2-lbl">${label}</span>`), `${point.id} ${label}${skipped ? "（清單略過）" : ""}`).toBe(skipped ? 0 : 1);
+      });
       for (const row of lists) {
         for (const q of row.shown) expect(seq, `${point.id} → ${q.id}`).toContain(`href="${href(q)}"`);
         for (const q of row.flagHidden) expect(seq, `${point.id} → ${q.id}`).not.toContain(`href="${href(q)}"`);

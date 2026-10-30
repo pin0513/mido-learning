@@ -283,7 +283,7 @@ test("V2：學門旗標關時，已發布但被旗標擋掉的點不算「尚未
     assert.equal(seq.includes(`href="${href(skNextPub)}"`), false);
     assertNoDraft(seq, [skNextDraft]);
 
-    // 清單裡只有被旗標擋掉的已發布點：不寫「尚未發布」，也不寫 empty（「沒有」不是事實），整段不畫。
+    // 清單裡只有被旗標擋掉的已發布點：不寫「尚未發布」，也不寫 empty（「沒有」不是事實），清單不畫。
     const onlyFlagged = renderToStaticMarkup(
       createElement(PointLinks, { ids: [skPub.id], all: flagAll, visible: flagVisible, currentFolder: "math", empty: "沒有，這是起點。" }),
     );
@@ -297,6 +297,48 @@ test("V2：學門旗標關時，已發布但被旗標擋掉的點不算「尚未
     assert.equal(count(on, "另有 1 個尚未發布"), 1);
     assertShown(on, [skPub]);
     assertNoDraft(on, [skDraft]);
+  } finally {
+    if (saved.kp === undefined) delete process.env.KP_ENABLED;
+    else process.env.KP_ENABLED = saved.kp;
+    if (saved.soft === undefined) delete process.env.KP_SOFTSKILLS_ENABLED;
+    else process.env.KP_SOFTSKILLS_ENABLED = saved.soft;
+  }
+});
+
+/**
+ * SeqPanel 的「先學」「後學」標題跟著清單：清單裡只有被旗標擋掉的已發布點時，清單不畫，標題也不畫。
+ * 修正前標題寫死在 SeqPanel，會留下一個下面沒有東西的「後學」，這則會失敗。
+ */
+test("V2 SeqPanel：後學只有被旗標擋掉的點時，「後學」標題也不畫；旗標開時標題和連結都在", () => {
+  const saved = { kp: process.env.KP_ENABLED, soft: process.env.KP_SOFTSKILLS_ENABLED };
+  process.env.KP_ENABLED = "true";
+  delete process.env.KP_SOFTSKILLS_ENABLED;
+  try {
+    const soft = template("soft-skills");
+    const prev = synth(math, { concept: "ma.zzlblprev", stage: "es", title: "合成已發布數學先學", status: "published" });
+    const hub = synth(math, { concept: "ma.zzlblhub", stage: "jh", title: "合成標題中心點", status: "published", prerequisites: [prev.id] });
+    const skNext = synth(soft, { concept: "sk.zzlblnext", stage: "sh", title: "合成已發布軟實力後學乙", status: "published", prerequisites: [hub.id] });
+    const lblAll = catalog([prev, hub, skNext]);
+    const lblVisible = publishedOnly(lblAll);
+
+    const off = renderToStaticMarkup(createElement(SeqPanel, { point: hub, all: lblAll, visible: lblVisible }));
+    assert.equal(count(off, ">先學<"), 1);
+    assertShown(off, [prev]);
+    assert.equal(off.includes(">後學<"), false, "後學清單不畫，標題也不畫");
+    assert.equal(off.includes("尚未發布"), false);
+    assert.equal(off.includes("還沒有往下接的知識點。"), false);
+    assert.equal(off.includes(`href="${href(skNext)}"`), false);
+
+    // 沒有任何後學（不是被旗標擋掉）：標題和 empty 都在。
+    const none = renderToStaticMarkup(createElement(SeqPanel, { point: hub, all: catalog([prev, hub]), visible: publishedOnly(catalog([prev, hub])) }));
+    assert.equal(count(none, ">後學<"), 1);
+    assert.equal(count(none, "還沒有往下接的知識點。"), 1);
+
+    process.env.KP_SOFTSKILLS_ENABLED = "true";
+    const on = renderToStaticMarkup(createElement(SeqPanel, { point: hub, all: lblAll, visible: lblVisible }));
+    assert.equal(count(on, ">先學<"), 1);
+    assert.equal(count(on, ">後學<"), 1);
+    assertShown(on, [prev, skNext]);
   } finally {
     if (saved.kp === undefined) delete process.env.KP_ENABLED;
     else process.env.KP_ENABLED = saved.kp;
