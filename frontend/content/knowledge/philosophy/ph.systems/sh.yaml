@@ -1,53 +1,230 @@
 id: ph.systems@sh
 concept: ph.systems
 title: 系統思考：槓桿點與非預期後果
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 系統思考
+  - 哲學
+  - 思考方法
+  - 系統思考
   layer: essence
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 社會
-    - 自然科學
+  - 社會
+  - 自然科學
   core_competencies:
-    - A2
+  - A2
   issues: []
+  performances:
+  - 地 2b-V-3
+  - 公 3d-V-1
+  - tm-Vc-1
+  contents: []
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2：依總綱 p.4–6 高級中等學校教育的 U-A2 與社會領綱的社-U-A2、自然科學領綱的自S-U-A2 原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對；跨頁的標 p.a–b）。
+- stage 不填 grades：高中的學習重點沒有再分年級，總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段；本點的代碼都是第五學習階段（V）。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，數學領綱少 3，社會、自然科學、綜合活動、科技領綱與總綱少 4，議題融入說明手冊少 16，Heuer 的 Psychology of Intelligence Analysis 少 28，NIST AI 600-1 少 4；教育部 AI 指引與 PDF 頁相同。
+- est_time 寫高中社會課：社會領綱 p.2 說普通型高中以歷史、地理、公民與社會分科教學為原則，部定必修每科 6 學分。
+- 自然科學高中必修的學習表現代碼第 2 碼是羅馬數字 V 加小寫 c（必修；加 a 是加深加廣選修），本站整理成拉丁字母 Vc；B23 的 schema 與 load.ts 補收 Vc（視為第五學習階段），只收必修，不收 Va。
+- 新增學習表現代碼 地 2b-V-3（社會領綱 p.10）、公 3d-V-1（p.13）、tm-Vc-1（自然科學領綱 p.32）。
+- 原 scenario 的括號例子改寫進句子，並標本站建議；觀察只站在人行道或校內安全處，不走進車道。
+- 原 ai.delegable「產生可能的因果關係供你檢查」補上使用條件（本站建議）。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15、B19 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- 'Leverage Points: Places to Intervene in a System 是 Donella Meadows 的文章（The Donella Meadows Project 網站）；英文短句引用，中文說明是本站整理。'
 prerequisites:
-  - ph.feedback@jh
+- ph.feedback@jh
 links:
   why: []
   how:
-    - pm.stakeholder@sh
+  - pm.stakeholder@sh
   related: []
   deeper:
-    - ph.complex@uni
-link_notes: 社會（地理）、自然科學、專案管理（利害關係人）
+  - ph.complex@uni
+link_notes: 社會（地理、公民與社會）、自然科學、專案管理（利害關係人）；社會 地 2b-V-3、公 3d-V-1、自然科學 tm-Vc-1。
 competency:
   specialist:
-    - 系統思考
+  - 系統思考
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 產生可能的因果關係供你檢查
+  - 產生可能的因果關係供你檢查（只描述情境，不輸入真實姓名，本站建議）
   human_experience:
-    - 訪談當事人，修正系統圖
+  - 訪談當事人，修正系統圖
 idea: 在系統中，用力最多的地方不一定最有效；好意的改變也可能帶來意想不到的副作用。
 guiding_questions:
-  - 有沒有哪個「解決方法」反而讓問題更嚴重？
-scenario: 分析一個社區問題（例如上學時段交通），畫系統圖，找出可能的槓桿點與副作用。
+- 有沒有哪個「解決方法」反而讓問題更嚴重？
+- 什麼是槓桿點？
+- 為什麼調整數字常常沒什麼用？
+scenario: 分析一個社區問題，例如上學時段校門口的交通，畫系統圖，找出可能的槓桿點與副作用（本站建議）。
 formats:
   slides: []
+  exercise: 目標：能把上學時段校門口的交通畫成系統圖，找出回饋環和可能的槓桿點，說出調整參數為什麼常常沒力，並為每個方案寫出副作用。　檢核：老師看系統圖：會變的東西都用箭頭連起來並標了方向，至少找出一個回饋環，每個改善方案都寫了副作用和會影響誰；學生說得出槓桿點是什麼、為什麼調整數字常常沒什麼用。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 能把上學時段校門口的交通畫成系統圖，找出回饋環和可能的槓桿點，說出調整參數為什麼常常沒力，並為每個方案寫出副作用。
+review: 老師看系統圖：會變的東西都用箭頭連起來並標了方向，至少找出一個回饋環，每個改善方案都寫了副作用和會影響誰；學生說得出槓桿點是什麼、為什麼調整數字常常沒什麼用。
+est_time:
+  school: 高中社會課
+  source: social108
+why:
+  heading: 好意也會有副作用
+  body:
+  - 系統是彼此影響的一群東西，改一個地方，別的地方也會跟著變（本站整理）。系統思考學者梅多斯說，槓桿點是系統裡「where a small shift in one thing can produce big changes in everything.」的地方，也就是一個小改變可以帶來全面的大改變（翻譯是本站整理）。她也說，槓桿點「are not intuitive」，我們常常用反了，反而讓問題更糟（翻譯是本站整理）。
+  - 地理課綱要高中生「理解地理環境的系統運作，體認環境倫理的內涵。」公民課要學生「規劃具有公共性或利他性的行動方案並評估其影響。」自然科學課則要學生建立模型來描述系統化的現象，「進而了解模型有其局限性。」
+  qa:
+    question: 有沒有哪個「解決方法」反而讓問題更嚴重？
+    answer: 有。例如校門口早上很塞，學校多開一塊讓家長臨時停車的地方，結果更多家長開車來，反而更塞（例子是本站整理）。梅多斯說，我們常常直覺地把槓桿點用反了：「we intuitively use them backward, systematically worsening whatever problems we are trying to solve.」（翻譯是本站整理：用反了，反而讓想解決的問題更糟）。
+    source: meadows-leverage
+  items_title: 課綱裡的系統
+  items:
+  - title: 地理系統運作
+    text: 社會 地 2b-V-3：理解地理環境的系統運作，體認環境倫理的內涵。
+    code: 地 2b-V-3
+  - title: 行動方案評估影響
+    text: 社會 公 3d-V-1：規劃具有公共性或利他性的行動方案並評估其影響。
+    code: 公 3d-V-1
+  - title: 建立模型知局限
+    text: 自然科學 tm-Vc-1：能依據科學問題自行運思或經由合作討論來建立模型，並能使用例如：「比擬或抽象」的形式來描述一個系統化的科學現象，進而了解模型有其局限性。
+    code: tm-Vc-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好觀察時段
+  - 準備大張白紙
+  figures:
+  - systems-compare
+  notes:
+  - 社會的代碼：開頭的地、公是地理、公民與社會的學習表現；中間的 V 是第五學習階段（高中）。
+  - 自然科學的代碼：小寫字母開頭的是學習表現（tm 建立模型、ah 養成應用科學思考與探究的習慣、an 認識科學本質）；中間的 Vc 是高中必修。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - meadows-leverage
+  - social108
+  - sci108
+  - zonggang
+how:
+  heading: 畫系統圖找槓桿點
+  body:
+  - 先畫系統圖：觀察上學時段校門口的交通，寫下會變多變少的東西，例如車輛數、等待時間、走路上學的同學，再用箭頭連起來，標上同向（一個變多，另一個也跟著變多；變少也跟著變少）或反向（一個變多，另一個反而變少）（本站建議）。觀察時站在人行道或校內安全的地方，不走進車道。箭頭繞一圈回到起點的環，就是回饋環（本站整理）。
+  - 再找槓桿點，也就是小改變能帶來大改變的地方（本站整理）。梅多斯把調整數字放在最後：「Parameters are dead last on my list of powerful interventions.」，調整參數，例如多派一位導護，通常最沒力（翻譯是本站整理）。比較有力的常是資訊和回饋，她說「Missing feedback is one of the most common causes of system malfunction.」，缺少回饋是系統失靈最常見的原因之一（翻譯是本站整理）。例如讓家長看到每天各時段的等待時間，可能比多派人更有用（例子是本站整理）。
+  - 最後寫副作用：每個方案問一句，它會讓箭頭另一頭的東西變多還是變少？誰會受影響？再訪談導護志工或同學，修正系統圖（本站建議）。
+  qa:
+    question: 為什麼調整數字常常沒什麼用？
+    answer: 因為參數改了，系統的結構沒變（本站整理）。梅多斯說「Parameters are dead last on my list of powerful interventions.」（翻譯是本站整理：在她列的有力介入清單上，參數排最後）。改變回饋、資訊或規則，常常更有力。
+    source: meadows-leverage
+  items_title: 系統圖要有
+  items:
+  - title: 會變的東西
+    text: 車輛數、等待時間。
+  - title: 箭頭與方向
+    text: 同向或反向。
+  - title: 回饋環
+    text: 繞回起點的環。
+  - title: 副作用
+    text: 方案會影響誰。
+  checklist_title: 畫完檢查一下
+  checklist:
+  - 箭頭都有方向
+  - 找出回饋環
+  - 每案寫副作用
+  activity_figure: systems-flow
+  sources:
+  - meadows-leverage
+what:
+  heading: 看得見連鎖反應
+  body:
+  - 學完後，學生能把上學時段的交通畫成系統圖，找出回饋環和可能的槓桿點，說出為什麼調整數字常常沒什麼用，並為每個改善方案寫出可能的副作用。
+  items_title: 學完能做到
+  items:
+  - title: 畫出系統圖
+    text: 會變的東西和箭頭。
+  - title: 找槓桿點
+    text: 小改變、大影響。
+  - title: 寫出副作用
+    text: 方案會影響誰。
+  checklist_title: 家長檢核
+  checklist:
+  - 系統圖畫好
+  - 標出槓桿點
+  - 每案有副作用
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: systems-flow
+  type: flow
+  alt: 系統圖四步驟：我列出會變的東西，我用箭頭連起來，我找出回饋環和槓桿點，再訪談同學修正。
+  steps:
+  - actor: 我
+    text: 列會變的東西
+  - actor: 我
+    text: 畫箭頭
+  - actor: 我
+    text: 找槓桿點
+  - actor: 同學
+    text: 訪談修正
+  source: meadows-leverage
+  caption: 流程是本站建議。
+- id: systems-compare
+  type: compare
+  alt: 比較調整參數與改變回饋：調整參數是改數字，例如多派一位導護；改變回饋是讓人看到結果，例如公布每天各時段的等待時間。
+  source: meadows-leverage
+  relation: versus
+  items:
+  - term: 調整參數
+    note: 改數字，通常力量小
+  - term: 改變回饋
+    note: 讓人看到結果
+  caption: 例子是本站整理。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：地 2b-V-3「理解地理環境的系統運作，體認環境倫理的內涵。」（p.10）；公 3d-V-1「規劃具有公共性或利他性的行動方案並評估其影響。」（p.13）；領域核心素養：社-U-A2「對人類生活相關議題，具備探索、思考、推理、分析、批判、統整與後設思考的素養，並能提出解決各種問題的可能策略。」（p.3）；時間分配：普通型高級中等學校「在領域課程架構下，以實施歷史、地理、公民與社會的分科教學為原則」（p.2）；「部定必修課程每科目總學分數6學分，可在不同年級規劃修習不同科目」（p.2）；代碼說明：學習表現「國民中學與普通型高級中等學校若為領域共同的學習表現，則第 1碼前以『社』標示，若為各科目內涵則第 1 碼前以『歷』、『地』、『公』標示。」（p.6）
+- id: sci108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：tm-Vc-1「能依據科學問題自行運思或經由合作討論來建立模型，並能使用例如：『比擬或抽象』的形式來描述一個系統化的科學現象，進而了解模型有其局限性。」（p.32）；領域核心素養：自S-U-A2「能從一系列的觀察、實驗中取得自然科學數據，並依據科學理論、數理演算公式等方法，進行比較與判斷科學資料於方法及程序上的合理性，進而以批判的論點來檢核資料的真實性與可信性，提出創新與前瞻的思維來解決問題。」（p.4–5）；代碼說明：「第 1 碼：選擇以項目與子項具代表性之小寫英文字母表示」（p.9），子項「建立模型（m）」（p.9）、「養成應用科學思考與探究的習慣（ah）」（p.9）、「認識科學本質（an）」（p.9）；第 2 碼「第五學習階段（十至十二年級，高級中等學校教育階段）則以」…「表示普通型高級中等學校必修」（p.9），領綱用羅馬數字加 c 表示，本站整理成拉丁字母 Vc
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: meadows-leverage
+  title: 'Leverage Points: Places to Intervene in a System'
+  publisher: Donella Meadows（The Donella Meadows Project 網站）
+  url: https://donellameadows.org/archives/leverage-points-places-to-intervene-in-a-system/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Leverage points are not intuitive. Or if they are, we intuitively use them backward, systematically worsening whatever problems we are trying to solve.」；「where a small shift in one thing can produce big changes in everything.」；「Parameters are dead last on my list of powerful interventions.」；「Missing feedback is one of the most common causes of system malfunction.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-30'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）

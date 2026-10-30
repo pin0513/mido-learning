@@ -1,56 +1,243 @@
 id: ph.aijudge@sh
 concept: ph.aijudge
 title: 判斷 AI 的回答
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - AI 時代判斷
+  - 哲學
+  - 思考方法
+  - AI 時代判斷
   layer: essence
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 科技
-    - 語文
+  - 科技
+  - 語文
   core_competencies:
-    - A2
-    - B2
+  - A2
+  - B2
   issues:
-    - 資訊教育
+  - 資訊教育
+  performances:
+  - 運 a-V-2
+  - 5-V-4
+  contents:
+  - 資 D-V-2
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、B2：依總綱 p.4–6 高級中等學校教育的 U-A2、U-B2 與科技領綱的科S-U-A2、科S-U-B2、國語文領綱的國S-U-A2、國S-U-B2 原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對；跨頁的標 p.a–b）。
+- stage 不填 grades：高中的學習重點沒有再分年級，總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段；本點的代碼都是第五學習階段（V）。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，數學領綱少 3，社會、自然科學、綜合活動、科技領綱與總綱少 4，議題融入說明手冊少 16，Heuer 的 Psychology of Intelligence Analysis 少 28，NIST AI 600-1 少 4；教育部 AI 指引與 PDF 頁相同。
+- est_time 寫高中資訊科技課：科技領綱 p.2 說高中資訊科技部定必修 2 學分。
+- 代碼都在代碼表：運 a-V-2（科技領綱 p.7）、資 D-V-2（p.11）、5-V-4（國語文領綱 p.11）；運 a-V-2 依 B22 schema 放進 curriculum_108.performances。
+- 議題 資訊教育 保留：議題融入說明手冊 p.86 說國中與高中的資訊教育建議參考科技領綱，手冊只列國小的實質內涵，所以本點不引議題實質內涵代碼，改用科技領綱高中的學習重點，並在 What 的 notes 說明。
+- 原 scenario 保留請 AI 回答三個問題再逐句查證，補上用自主學習主題，並標本站建議。
+- 原 ai.delegable「提供初步答案與可能來源」補上使用條件（本站建議）。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15、B19 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- NIST AI 600-1 是美國國家標準與技術研究院 2024 年 7 月發布的生成式 AI 風險管理框架附錄；PDF 用 fi 連字，引文只取沒有連字的句子；英文短句引用，中文說明是本站整理。
 prerequisites:
-  - ph.evidence@jh
-  - ph.bias@sh
+- ph.evidence@jh
+- ph.bias@sh
 links:
   why: []
   how: []
   related:
-    - it.llm@sh
+  - it.llm@sh
   deeper:
-    - ph.aimind@uni
-link_notes: 資訊與 AI、科技（資訊科技）
+  - ph.aimind@uni
+link_notes: 資訊與 AI、科技（資訊科技）、語文；科技 運 a-V-2、資 D-V-2、國語文 5-V-4。
 competency:
   specialist:
-    - 批判思考
+  - 批判思考
   generalist:
-    - 查證
-    - 跨域思考
+  - 查證
+  - 跨域思考
 ai:
   delegable:
-    - 提供初步答案與可能來源
+  - 提供初步答案與可能來源（只問自己的學習主題，不輸入個人資料，本站建議）
   human_experience:
-    - 查證並決定要不要相信、相信多少
+  - 查證並決定要不要相信、相信多少
 idea: AI 的回答可能很流暢卻是錯的。要追問來源、交叉比對，並分辨它是在給事實、推論還是猜測。
 guiding_questions:
-  - AI 說得很有把握時，你會比較相信它嗎？
-scenario: 請 AI 回答你自主學習主題的三個問題，逐句查證，標出正確、可疑與錯誤。
+- AI 說得很有把握時，你會比較相信它嗎？
+- AI 為什麼會說出流暢卻錯的話？
+- AI 附上的理由和出處，就一定可信嗎？
+scenario: 請 AI 回答你自主學習主題的三個問題，逐句查證，標出正確、可疑與錯誤（本站建議）。
 formats:
   slides: []
+  exercise: 目標：能把 AI 對自主學習主題的回答拆成句子，分辨事實、推論與猜測，逐句找來源查證並標出正確、可疑與錯誤，說得出為什麼語氣有把握不代表可信。　檢核：老師看查證表：每一句都標了事實、推論或猜測，事實句都寫了查證用的來源，AI 附的出處也查過，最後標出正確、可疑與錯誤；學生說得出 AI 為什麼會說出流暢卻錯的話，也說得出為什麼看查證結果，不看語氣。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 能把 AI 對自主學習主題的回答拆成句子，分辨事實、推論與猜測，逐句找來源查證並標出正確、可疑與錯誤，說得出為什麼語氣有把握不代表可信。
+review: 老師看查證表：每一句都標了事實、推論或猜測，事實句都寫了查證用的來源，AI 附的出處也查過，最後標出正確、可疑與錯誤；學生說得出 AI 為什麼會說出流暢卻錯的話，也說得出為什麼看查證結果，不看語氣。
+est_time:
+  school: 高中資訊科技課
+  source: tech108
+why:
+  heading: 流暢不等於正確
+  body:
+  - 生成式 AI 會一本正經地說錯話。美國國家標準與技術研究院的報告說，這種現象和模型的設計方式有關：「Confabulations are a natural result of the way generative models are designed」（翻譯是本站整理：編造是生成式模型設計方式的自然結果）。報告說，統計預測可以產生正確的內容，但「it can also produce outputs that are factually inaccurate or internally inconsistent.」（翻譯是本站整理：也可能產生與事實不符或前後矛盾的內容）。
+  - 科技課綱要高中生「能使用多元的觀點思辨資訊科技相關議題。」並認識「資料探勘與機器學習的基本概念。」國語課要學生「廣泛運用工具書及資訊網絡蒐集、分析資料，提高綜合學習和應用能力。」查證 AI 的回答，兩邊一起練。
+  qa:
+    question: AI 為什麼會說出流暢卻錯的話？
+    answer: 因為生成式 AI 是照訓練資料的統計規律產生內容，通常不是先查證再回答（本站整理）。報告說，統計預測「can produce factually accurate and consistent outputs」，但也可能產生與事實不符或前後矛盾的內容（翻譯是本站整理）。所以流暢只代表像，不代表對。
+    source: nist-genai
+  items_title: 課綱裡的資訊判斷
+  items:
+  - title: 多元觀點思辨
+    text: 科技 運 a-V-2：能使用多元的觀點思辨資訊科技相關議題。
+    code: 運 a-V-2
+  - title: 機器學習基本概念
+    text: 科技 資 D-V-2：資料探勘與機器學習的基本概念。
+    code: 資 D-V-2
+  - title: 蒐集分析資料
+    text: 國語文 5-V-4：廣泛運用工具書及資訊網絡蒐集、分析資料，提高綜合學習和應用能力。
+    code: 5-V-4
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好學習主題
+  - 準備三色筆
+  figures:
+  - aijudge-compare
+  notes:
+  - 科技的代碼：開頭的資是資訊科技的學習內容，運是運算思維的學習表現；中間的 V 是第五學習階段（高中），本頁只列高中必修的條目。
+  - 國語文的代碼：數字開頭的是學習表現，第一碼 5 是閱讀；中間的 V 是第五學習階段（高中）。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - nist-genai
+  - tech108
+  - kuoyu
+  - zonggang
+how:
+  heading: 逐句查證 AI 的回答
+  body:
+  - 先把回答拆成句子，每一句標出它在給什麼：事實（可以查證的）、推論（從事實推出來的）、還是猜測（沒有根據的）（本站建議）。
+  - 再逐句查證：事實去找可靠的來源核對，兩個彼此獨立的來源說法一致才算確認；推論檢查前提對不對、推得過去嗎（本站建議）。AI 附上的理由和出處也要查：報告說，AI 可能給出「confabulated logic or citations」，用編造的推理或出處來替答案辯護；也說「LLMs sometimes provide logical steps for how they arrived at an answer even when the answer itself is incorrect.」（翻譯是本站整理：答案錯了，也可能附上推理步驟）。
+  - 最後用三色標記：正確、可疑、錯誤。AI 說得很有把握，不代表比較可信；報告提醒，使用者常因為回答的語氣很有自信而相信錯誤內容（本站整理），所以標記只看查證結果，不看語氣（本站建議）。依教育部指引，學生要「主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」
+  qa:
+    question: AI 說得很有把握時，你會比較相信它嗎？
+    answer: 不該因此比較相信。報告說，風險會出現在使用者相信了錯誤內容的時候：「Risks from confabulations may arise when users believe false content」，而這常跟回答的自信語氣有關（翻譯是本站整理）。判斷可信度要看查證結果，不看語氣（本站建議）。
+    source: nist-genai
+  items_title: 每句這樣查
+  items:
+  - title: 事實推論猜測
+    text: 這句在給什麼？
+  - title: 找來源核對
+    text: 兩個獨立來源一致。
+  - title: 查理由與出處
+    text: 出處真的存在嗎？
+  - title: 三色標記
+    text: 正確、可疑、錯誤。
+  checklist_title: 查完檢查一下
+  checklist:
+  - 每句都有標記
+  - 出處都查過
+  - 記下查證來源
+  activity_figure: aijudge-flow
+  sources:
+  - nist-genai
+  - moe-ai-guide
+what:
+  heading: 決定信不信、信多少
+  body:
+  - 學完後，學生能把 AI 的回答拆成句子，分辨事實、推論和猜測，逐句找來源查證，標出正確、可疑與錯誤，並說得出為什麼 AI 說得很有把握也不代表比較可信。
+  items_title: 學完能做到
+  items:
+  - title: 拆句分類
+    text: 事實、推論、猜測。
+  - title: 逐句查證
+    text: 找獨立來源核對。
+  - title: 決定信多少
+    text: 看查證結果，不看語氣。
+  checklist_title: 家長檢核
+  checklist:
+  - 每句都有標記
+  - 查證來源有記
+  - 說得出為什麼
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  - 本點融入資訊教育議題：議題融入說明手冊說，資訊教育在國中與高中「已經規劃有科技領域課程，因此建議參考十二年國民基本教育科技領域課程綱要」，所以本點的學習重點用科技領綱高中的條目。
+  sources:
+  - genai-student
+  - moe-ai-guide
+  - issues-handbook
+figures:
+- id: aijudge-flow
+  type: flow
+  alt: 查證 AI 回答的四步驟：我把回答拆成句子，我標出事實、推論或猜測，我逐句找來源核對，最後用三色標記。
+  steps:
+  - actor: 我
+    text: 拆成句子
+  - actor: 我
+    text: 標句子類型
+  - actor: 我
+    text: 找來源核對
+  - actor: 我
+    text: 三色標記
+  source: nist-genai
+  caption: 流程是本站建議。
+- id: aijudge-compare
+  type: compare
+  alt: 比較流暢與正確：流暢是讀起來通順、語氣肯定，例如回答附了看起來很正式的出處；正確是內容和可靠來源一致，例如查得到那個出處，而且說法相同。
+  source: nist-genai
+  relation: not_equal
+  items:
+  - term: 流暢
+    note: 讀起來通順、語氣肯定
+  - term: 正確
+    note: 和可靠來源一致
+  caption: 例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：運 a-V-2「能使用多元的觀點思辨資訊科技相關議題。」（p.7）；資 D-V-2「資料探勘與機器學習的基本概念。」（p.11）；資訊科技學習內容說明「高級中等學校教育階段則更重視整合運用，藉由資訊科學的初步探索，讓學生進一步理解運算思維之相關原理，以培養整合資訊科技與運算思維以有效解決問題之能力。」（p.10）；時間分配「高級中等學校教育階段資訊科技與生活科技之部定必修課程各為 2 學分，建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；核心素養：科S-U-A2「運用科技工具與策略進行系統思考與分析探索，並有效解決問題。」（p.3）；科S-U-B2「理解科技與資訊的原理及發展趨勢，整合運用科技、資訊及媒體，並能分析思辨人與科技、社會、環境的關係。」（p.4）
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：5-V-4「廣泛運用工具書及資訊網絡蒐集、分析資料，提高綜合學習和應用能力。」（p.11）；領域核心素養：國S-U-A2「透過統整文本的意義和規律，培養深度思辨及系統思維的能力，體會文化底蘊，進而感知人生的困境，積極面對挑戰，以有效處理及解決人生的各種問題。」（p.3）；國S-U-B2「善用科技、資訊與各類媒體所提供的素材，進行閱讀思考，整合資訊，激發省思及批判媒體倫理與社會議題的能力。」（p.4）；代碼說明：學習表現「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習內容「編碼說明，第一碼為『主題及項目』，以大寫英文及小寫英文編號」（p.12）；文本表述「可分為『記敘文本』、『抒情文本』、『說明文本』、『議論文本』及『應用文本』五項。」（p.12）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-B2「具備適當運用科技、資訊與媒體之素養，進行各類媒體識讀與批判，並能反思科技、資訊與媒體倫理的議題。」（p.5）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: nist-genai
+  title: 'Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile（NIST AI 600-1）'
+  publisher: 美國國家標準與技術研究院 NIST（2024 年 7 月）
+  url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「Confabulations are a natural result of the way generative models are designed」（p.6）；「While such statistical prediction can produce factually accurate and consistent outputs, it can also produce outputs that are factually inaccurate or internally inconsistent.」（p.6）；「Risks from confabulations may arise when users believe false content」（p.6）；「confabulated logic or citations」（p.6）；「LLMs sometimes provide logical steps for how they arrived at an answer even when the answer itself is incorrect.」（p.6）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 資訊教育「國民中學與高中教育階段已經規劃有科技領域課程，因此建議參考十二年國民基本教育科技領域課程綱要」（p.86）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-30'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）
