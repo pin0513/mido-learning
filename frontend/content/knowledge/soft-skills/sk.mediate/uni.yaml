@@ -98,7 +98,7 @@ why:
 how:
   heading: 輪流說、複述，找需要
   body:
-  - 先說好規則：兩方都同意才談，談的內容不外傳，除非談到有人可能受傷，一次一個人說，不打斷（本站建議）；Model Standards 說調解人要保密所有在調解中得知的資訊（翻譯是本站整理）。接著請甲方說，說完請乙方用自己的話複述甲方在乎什麼，甲方確認聽對了再換人；PON 的建議是「Practice active listening」、「Clarify misunderstandings」（翻譯是本站整理）。
+  - 先說好規則：兩方都同意才談，談的內容不外傳，除非談到有人可能受傷，一次一個人說，不打斷（本站建議）；Model Standards 說調解人要保密所有在調解中得知的資訊，例外是兩方另有約定或法律要求：「unless otherwise agreed to by the parties or required by applicable law.」（翻譯是本站整理）。接著請甲方說，說完請乙方用自己的話複述甲方在乎什麼，甲方確認聽對了再換人；PON 的建議是「Practice active listening」、「Clarify misunderstandings」（翻譯是本站整理）。
   - 立場和需要不一樣：PON 說「Positions are surface-level statements.」，而「Beneath them lie interests—the underlying needs, motivations, and concerns driving those demands.」（翻譯是本站整理）。例如室友爭冷氣：立場是開到幾度，需要可能是一個怕熱睡不著、一個怕電費太高（例子是本站整理）。找到需要後，請兩方一起想選項，由他們自己選；調解人不替他們決定（本站建議）。
   - 什麼情況不該自己調解：有暴力、威脅、騷擾，或一方怕另一方時，不要再談，停止並陪當事人找學校或專業人員；遇到家庭暴力、性侵害或性騷擾，可以撥 113 保護專線（24 小時免付費），有立即危險就打 110（本站建議；電話是本站整理）。衛福部說 113 是「24小時全年無休的服務專線」。Model Standards 說遇到暴力時要停止，「including, if necessary, postponing, withdrawing from or terminating the mediation.」（翻譯是本站整理）；自己做不到中立時也要退出。會後請兩方各用一到五分評覺得對方懂自己在乎什麼，兩方都四分以上才算彼此聽懂；有一方不到四分，就再輪流複述一次（分數是示意）。AI 只能在兩方都同意後幫忙整理雙方說法的重點，不輸入姓名和可辨認的細節（本站建議）。
   qa:
@@ -183,7 +183,7 @@ sources:
   url: https://icdr.org/sites/default/files/document_repository/Model_Standards_of_Conduct_for_Mediators.pdf
   accessed: '2026-10-30'
   kind: reference
-  supports: 「Mediation is a process in which an impartial third party facilitates communication and negotiation and promotes voluntary decision making by the parties to the dispute.」（p.2）；「If at any time a mediator is unable to conduct a mediation in an impartial manner, the mediator shall withdraw.」（p.4）；「A mediator shall maintain the confidentiality of all information obtained by the mediator in mediation」（p.6）；「If a mediator is made aware of domestic abuse or violence among the parties, the mediator shall take appropriate steps including, if necessary, postponing, withdrawing from or terminating the mediation.」（p.8）
+  supports: 「Mediation is a process in which an impartial third party facilitates communication and negotiation and promotes voluntary decision making by the parties to the dispute.」（p.2）；「If at any time a mediator is unable to conduct a mediation in an impartial manner, the mediator shall withdraw.」（p.4）；「A mediator shall maintain the confidentiality of all information obtained by the mediator in mediation, unless otherwise agreed to by the parties or required by applicable law.」（p.6）；「If a mediator is made aware of domestic abuse or violence among the parties, the mediator shall take appropriate steps including, if necessary, postponing, withdrawing from or terminating the mediation.」（p.8）
 - id: un-mediation
   title: United Nations Guidance for Effective Mediation
   publisher: 聯合國（2012 年）

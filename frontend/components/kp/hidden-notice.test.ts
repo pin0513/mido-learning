@@ -346,3 +346,32 @@ test("V2 SeqPanel：後學只有被旗標擋掉的點時，「後學」標題也
     else process.env.KP_SOFTSKILLS_ENABLED = saved.soft;
   }
 });
+
+/**
+ * PointLinks 的 currentFolder：同學門的點一律連，即使那個學門的旗標在 build 時關掉（例如軟實力頁連軟實力點）。
+ * 拿掉 currentFolder（只看 isFolderLaunched）時這則會失敗。
+ */
+test("V2 PointLinks：學門旗標關時，同學門的已發布點照連，別學門的不連", () => {
+  const saved = { kp: process.env.KP_ENABLED, soft: process.env.KP_SOFTSKILLS_ENABLED };
+  process.env.KP_ENABLED = "true";
+  delete process.env.KP_SOFTSKILLS_ENABLED;
+  try {
+    const soft = template("soft-skills");
+    const skA = synth(soft, { concept: "sk.zzsameA", stage: "jh", title: "合成已發布軟實力丙", status: "published" });
+    const sameAll = catalog([skA]);
+    const sameVisible = publishedOnly(sameAll);
+    const fromSoft = renderToStaticMarkup(
+      createElement(PointLinks, { ids: [skA.id], all: sameAll, visible: sameVisible, currentFolder: "soft-skills", empty: "" }),
+    );
+    assertShown(fromSoft, [skA]);
+    const fromMath = renderToStaticMarkup(
+      createElement(PointLinks, { ids: [skA.id], all: sameAll, visible: sameVisible, currentFolder: "math", empty: "" }),
+    );
+    assert.equal(fromMath, "");
+  } finally {
+    if (saved.kp === undefined) delete process.env.KP_ENABLED;
+    else process.env.KP_ENABLED = saved.kp;
+    if (saved.soft === undefined) delete process.env.KP_SOFTSKILLS_ENABLED;
+    else process.env.KP_SOFTSKILLS_ENABLED = saved.soft;
+  }
+});
