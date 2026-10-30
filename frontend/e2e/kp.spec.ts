@@ -37,6 +37,12 @@ test.describe("知識地圖", () => {
     await expect(page.getByTestId("kp-draft")).toHaveCount(0);
     await page.goto("/kp/ph.applied/uni");
     await expect(page.getByTestId("kp-draft")).toHaveText("草稿");
+    // B21 發布哲學 es 5 點；ph.fair@es 對應語文與綜合活動兩個領域（舊版頁的課綱區塊只列領域、核心素養與議題，不列學習表現代碼）。
+    await page.goto("/kp/ph.fair/es");
+    await expect(page.getByTestId("kp-draft")).toHaveCount(0);
+    await expect(page.getByTestId("kp-curriculum")).toContainText("語文、綜合活動");
+    await expect(page.getByTestId("kp-curriculum")).toContainText("品德教育、法治教育");
+    await expect(page.getByTestId("kp-curriculum")).not.toContainText("2-III-7");
     await page.goto("/kp/pm.breakdown/es");
     await expect(page.getByRole("link", { name: /我們想完成什麼/ })).toBeVisible();
     await expect(page.getByText("尚未發布")).toHaveCount(0);

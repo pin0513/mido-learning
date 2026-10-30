@@ -1,55 +1,237 @@
 id: ph.fair@es
 concept: ph.fair
 title: 怎樣才公平？
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 倫理
+  - 哲學
+  - 思考方法
+  - 倫理
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
-    - 綜合活動
+  - 語文
+  - 綜合活動
   core_competencies:
-    - C1
-    - A2
+  - C1
+  - A2
   issues:
-    - 品德教育
+  - 品德教育
+  - 法治教育
+  performances:
+  - 2-III-7
+  contents:
+  - Ba-III-2
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 C1、A2：依總綱 p.4–6 國民小學教育的 E-C1、E-A2 與國語文領綱 p.3、p.5 的國-E-A2、國-E-C1，綜合活動領綱 p.3–4 的綜-E-A2、綜-E-C1原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 5、6：本點的代碼都是第三學習階段（國語文 2-III-7、綜合活動 Ba-III-2），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，綜合活動領綱、總綱、社會領綱比 PDF 頁少 4，議題融入說明手冊少 16。
+- 原 domains 只有綜合活動，加上語文：投票前後說理由、聽不同理由對應國語文 2-III-7。
+- 議題品德教育：議題融入說明手冊國小的實質內涵 品E6「同理分享。」（p.75）；議題法治教育：法E1「認識公平。」（p.83），手冊說「社會生活中有許多公平性的問題，例如在資源、責任的分配（分配正義）」（p.82）。
+- 原 scenario「分點心情境：有人特別餓、有人出力最多，全班討論三種分法並投票，再說說投票理由。」保留做法，改用畫的點心卡，不用真的食物（避免過敏，本站建議）。
+- 原 ai.delegable「整理每種分法的優缺點」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- Equality 是 Stanford Encyclopedia of Philosophy 的條目（Stefan Gosepath），英文短句引用，中文說明是本站整理；一樣多、照需要、照付出三種分法的名稱是本站整理。
 prerequisites:
-  - ph.reason@es
+- ph.reason@es
 links:
   why: []
   how:
-    - pm.roles@es
+  - pm.roles@es
   related:
-    - ma.fraction@es
+  - ma.fraction@es
   deeper:
-    - ph.ethics@jh
-link_notes: 數學（分數與平分）、專案管理（分工與說到做到）
+  - ph.ethics@jh
+link_notes: 數學（分數與平分）、專案管理（分工與說到做到）；國語文 2-III-7；綜合活動 Ba-III-2。
 competency:
   specialist:
-    - 倫理推理
+  - 倫理推理
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 整理每種分法的優缺點
+  - 整理每種分法的優缺點（由大人操作，本站建議）
   human_experience:
-    - 站在別人的位置感受「不公平」
+  - 站在別人的位置感受「不公平」
 idea: 每個人分一樣多是一種公平；照需要分、照付出分也是。公平不只有一種答案。
 guiding_questions:
-  - 如果你是最餓的那個人，你會選哪一種分法？
-scenario: 分點心情境：有人特別餓、有人出力最多，全班討論三種分法並投票，再說說投票理由。
+- 如果你是最餓的那個人，你會選哪一種分法？
+- 什麼時候可以不分一樣多？
+- 大家選的分法不同時，怎麼決定？
+scenario: 分點心情境（用畫的點心卡，不用真的食物）：有人特別餓、有人出力最多，全班討論三種分法並投票，再說說投票理由（本站建議）。
 formats:
   slides: []
+  exercise: 目標：遇到東西要分給大家時，能說出一樣多、照需要、照付出三種分法，選一種並說出大家都能接受的理由。　檢核：家長或老師看討論紀錄：孩子說得出三種分法各適合什麼情況；說得出站在最餓的人或出力最多的人的位置，會覺得哪種分法不公平；投票後，能複述一個和自己不同的理由。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 遇到東西要分給大家時，能說出一樣多、照需要、照付出三種分法，選一種並說出大家都能接受的理由。
+review: 家長或老師看討論紀錄：孩子說得出三種分法各適合什麼情況；說得出站在最餓的人或出力最多的人的位置，會覺得哪種分法不公平；投票後，能複述一個和自己不同的理由。
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 公平不只一種分法
+  body:
+  - 分東西時常常吵架，因為大家心裡的公平不一樣。議題融入說明手冊說「社會生活中有許多公平性的問題，例如在資源、責任的分配」，國小法治教育就要認識公平。綜合活動課綱也要五、六年級練習「同理心的增進與實踐。」
+  - 哲學家整理過幾種常見的分法。最基本的是一樣多：除非有大家都能接受的理由，否則「everyone should get an equal share」。常被當成理由的，有「need or differing natural disadvantages」，也就是需要不同；還有「desert, efforts, or sacrifices」，也就是付出不同（翻譯是本站整理）。
+  qa:
+    question: 什麼時候可以不分一樣多？
+    answer: 有大家都能接受的理由時。哲學家說，一樣多是預設，除非差別「are relevant and justify, through universally acceptable reasons, unequal shares」，也就是差別有關係，又有大家都能接受的理由（翻譯是本站整理）。例如有人沒吃早餐特別餓，或有人搬了最多桌椅，大家同意了，就可以多分一點（例子是本站整理）。
+    source: sep-equality
+  items_title: 課綱的學習重點
+  items:
+  - title: 尊重不同意見
+    text: 國語文 2-III-7：與他人溝通時能尊重不同意見。
+    code: 2-III-7
+  - title: 增進同理心
+    text: 綜合活動 Ba-III-2：同理心的增進與實踐。
+    code: Ba-III-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 畫好點心卡
+  - 想好情境角色
+  figures:
+  - fair-compare
+  notes:
+  - 國語文的代碼：第一碼是類別（1 聆聽、2 口語表達、5 閱讀），第二碼是學習階段，第三碼是流水號。
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - issues-handbook
+  - zonghe
+  - kuoyu
+  - sep-equality
+  - zonggang
+how:
+  heading: 分點心卡：三種分法
+  body:
+  - 準備畫的點心卡，不用真的食物，避免有人過敏（本站建議）。設定情境：小組裡有一人沒吃早餐特別餓，一人搬了最多桌椅。先試一樣多，每人拿一樣的張數；再試照需要，最餓的多拿；再試照付出，出力最多的多拿。大家條件差不多時適合一樣多，有人特別需要時適合照需要，有人付出特別多時適合照付出；不分一樣多時，要說得出大家都能接受的理由（本站整理）。
+  - 換位子想：輪流站到最餓的人、出力最多的人和其他人的位置，說說在這個位置，哪種分法讓你覺得不公平、為什麼（本站建議）。綜合活動課綱說的「同理心的增進與實踐」，就是練習感受別人的處境。
+  - 最後投票並說理由：投票前，每個人先說自己選哪種、為什麼；投票後，請大家複述一個和自己不同的理由。國語課綱要學生「與他人溝通時能尊重不同意見。」票少的那一方的理由也記下來，下次情況不同時可以再想（本站建議）。
+  qa:
+    question: 如果你是最餓的那個人，你會選哪一種分法？
+    answer: 很多人會選照需要，因為自己最需要（本站整理）。但換到出力最多的人的位置，可能就想選照付出。發現自己的選擇會跟著位置改變，就是在練習同理；綜合活動課綱要五、六年級練習「同理心的增進與實踐。」
+    source: zonghe
+  items_title: 四步做
+  items:
+  - title: 準備點心卡
+    text: 用畫的，不用真的食物。
+  - title: 試三種分法
+    text: 一樣多、照需要、照付出。
+  - title: 換位子想
+    text: 哪種讓你覺得不公平？
+  - title: 投票說理由
+    text: 複述一個不同的理由。
+  checklist_title: 討論時檢查一下
+  checklist:
+  - 三種分法都試過
+  - 說出自己的理由
+  - 複述別人的理由
+  activity_figure: fair-flow
+  sources:
+  - zonghe
+  - kuoyu
+what:
+  heading: 選分法，也說得出理由
+  body:
+  - 學完後，孩子遇到東西要分給大家時，能說出一樣多、照需要、照付出三種分法各適合什麼情況，站在別人的位置想想哪種會讓人覺得不公平，選一種並說出大家都能接受的理由。
+  items_title: 學完能做到
+  items:
+  - title: 說出三種分法
+    text: 一樣多、照需要、照付出。
+  - title: 換位子想
+    text: 說出誰會覺得不公平。
+  - title: 說理由也聽理由
+    text: 複述一個不同的理由。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出三種分法
+  - 說得出誰不公平
+  - 複述不同理由
+  notes:
+  - 本點融入品德教育與法治教育議題：議題融入說明手冊國小的實質內涵有同理分享和認識公平。換位子想、一起決定怎麼分，就是在練習這兩件事。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: fair-flow
+  type: flow
+  alt: 分點心卡四步驟：全班準備點心卡，小組試三種分法，每個人換位子想，全班投票並說理由。
+  steps:
+  - actor: 全班
+    text: 準備點心卡
+  - actor: 小組
+    text: 試三種分法
+  - actor: 每個人
+    text: 換位子想
+  - actor: 全班
+    text: 投票說理由
+  source: sep-equality
+  caption: 流程是本站建議。
+- id: fair-compare
+  type: compare
+  alt: 比較三種分法：一樣多，每人兩張；照需要，最餓的多一張；照付出，出力最多的多一張。
+  source: sep-equality
+  relation: not_equal
+  items:
+  - term: 一樣多
+    note: 每人兩張
+  - term: 照需要
+    note: 最餓的多一張
+  - term: 照付出
+    note: 出力最多的多一張
+  caption: 例子是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：2-III-7「與他人溝通時能尊重不同意見。」（p.7）；領域核心素養：國-E-A2「透過國語文學習，掌握文本要旨、發展學習及解決問題策略、初探邏輯思維，並透過體驗與實踐，處理日常生活問題。」（p.3）；國-E-C1「閱讀各類文本，從中培養是非判斷的能力，以了解自己與所處社會的關係，培養同理心與責任感，關懷自然生態與增進公民意識。」（p.5）；時間分配：「國語文各教育階段之時間分配如下」（p.2），表中國民小學三至六年級每週 5 節；代碼說明：「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：Ba-III-2「同理心的增進與實踐。」（p.14）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-C1「關懷生態環境與周遭人事物，體驗服務歷程與樂趣，理解並遵守道德規範，培養公民意識。」（p.4）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-C1「具備個人生活道德的知識與是非判斷的能力，理解並遵守社會道德規範，培養公民意識，關懷生態環境。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 品德教育國小實質內涵 品E6「同理分享。」（p.75）；法治教育「社會生活中有許多公平性的問題，例如在資源、責任的分配（分配正義）」（p.82）；國小實質內涵 法E1「認識公平。」（p.83）
+- id: sep-equality
+  title: Equality（Stanford Encyclopedia of Philosophy）
+  publisher: Stefan Gosepath（Stanford Encyclopedia of Philosophy；2001 年首次發表，2021 年 4 月 26 日實質修訂）
+  url: https://plato.stanford.edu/entries/equality/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「the presumption of equality requires that everyone should get an equal share in the distribution unless certain types of differences are relevant and justify, through universally acceptable reasons, unequal shares.」；「(a) need or differing natural disadvantages (e.g. disabilities)」；「(c) differences in the performance of special services (e.g. desert, efforts, or sacrifices)」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

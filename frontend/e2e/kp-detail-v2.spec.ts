@@ -12,6 +12,8 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
   { path: "/kp/zh.zhuyin/es", layer: "基礎", verify: true, converted: true },
   { path: "/kp/pm.breakdown/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/ph.reason/es", layer: "本質", verify: false, converted: true },
+  // B21 已轉換並發布哲學 es 5 點；ph.fair@es 是兩個領域（國語文、綜合活動）的國小點。
+  { path: "/kp/ph.fair/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/sk.voice/es", layer: "本質", verify: false, converted: true },
   { path: "/kp/en.abc/es", layer: "基礎", verify: false, converted: true },
   // B11 已轉換並發布 ma.number@es（to_verify: false）；B16 已轉換並發布 it.nn@uni（進階層，to_verify: false）。

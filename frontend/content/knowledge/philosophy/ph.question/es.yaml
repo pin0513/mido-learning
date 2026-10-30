@@ -1,53 +1,225 @@
 id: ph.question@es
 concept: ph.question
 title: 好問題從「為什麼」開始
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 提問與探究
+  - 哲學
+  - 思考方法
+  - 提問與探究
   layer: essence
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
 curriculum_108:
   domains:
-    - 語文
-    - 綜合活動
+  - 語文
   core_competencies:
-    - A2
-    - B1
-    - C1
-  issues: []
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+  performances:
+  - 1-II-1
+  - 2-II-4
+  - 5-II-8
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、B1：依總綱 p.4–6 國民小學教育的 E-A2、E-B1 與國語文領綱 p.3–4 的國-E-A2、國-E-B1原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 3、4：本點的國語文代碼都是第二學習階段（II），總綱 p.7 說國民小學三、四年級為第二學習階段。
+- est_time 依國語文領綱 p.2 時間分配表：國民小學三、四年級國語文每週 5 節；本點建議在國語課讀完繪本後做。
+- 頁碼都是頁腳印的頁碼：國語文領綱比 PDF 頁少 2，綜合活動領綱、總綱、社會領綱比 PDF 頁少 4，議題融入說明手冊少 16。
+- 原 core_competencies 的 C1（道德實踐與公民意識）刪除：本點練的是提問與討論，對應總綱 E-A2 的探索問題與 E-B1 的語文素養，和國語文 國-E-A2、國-E-B1；C1 沒有對應的學習重點。
+- 原 domains 的綜合活動刪除：本點沒有綜合活動第二學習階段的代碼；探究圈的討論改由國語文 1-II-1、2-II-4 支撐。
+- 議題閱讀素養教育：議題融入說明手冊國小的實質內涵 閱E6「發展向文本提問的能力。」（p.103）；讀完繪本提出問題，就是在向文本提問。
+- 原 scenario「讀完一本繪本後，全班圍成探究圈提問，把問題分成『查得到』和『要討論』兩堆，挑一題來討論。」保留做法，引號拿掉，改成每人提出一個問題，並標本站建議。
+- 原 ai.delegable「回答『查得到』的問題」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- Philosophy for Children 是 Stanford Encyclopedia of Philosophy 的條目（Michael Pritchard），英文短句引用，中文說明是本站整理。
 prerequisites: []
 links:
   why: []
   how: []
   related: []
   deeper:
-    - ph.hypothesis@jh
-link_notes: 語文（閱讀與聆聽）、自然科學（好奇心）
+  - ph.hypothesis@jh
+link_notes: 語文（閱讀與聆聽）、自然科學（好奇心）；國語文 1-II-1、2-II-4、5-II-8。
 competency:
   specialist:
-    - 探究
+  - 探究
   generalist:
-    - 提問
-    - 溝通
+  - 提問
+  - 溝通
 ai:
   delegable:
-    - 回答「查得到」的問題
+  - 回答「查得到」的問題（由大人操作，本站建議）
   human_experience:
-    - 在探究圈裡說出自己的問題，聽別人怎麼想
+  - 在探究圈裡說出自己的問題，聽別人怎麼想
 idea: 問題有兩種：一種查得到答案，一種需要大家一起想。會問第二種問題，就是思考的開始。
 guiding_questions:
-  - 哪一個問題，就算問了大人也沒有標準答案？
-scenario: 讀完一本繪本後，全班圍成探究圈提問，把問題分成「查得到」和「要討論」兩堆，挑一題來討論。
+- 哪一個問題，就算問了大人也沒有標準答案？
+- 怎麼分辨一個問題是查得到，還是要討論？
+- 別人的想法和你不一樣時，你可以怎麼接著問？
+scenario: 讀完一本繪本後，大家圍成探究圈，每人提出一個問題，把問題分成查得到和要討論兩堆，再挑一題要討論的問題來談（本站建議）。
 formats:
   slides: []
+  exercise: 目標：讀完一篇故事後，能提出一個查得到的問題和一個要討論的問題，並說出兩者哪裡不一樣。　檢核：家長或老師看孩子寫下的兩個問題：查得到的那題，說得出去哪裡查；要討論的那題，說得出為什麼大家可能有不同答案。討論時，孩子能等別人說完，再問對方為什麼這樣想。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 讀完一篇故事後，能提出一個查得到的問題和一個要討論的問題，並說出兩者哪裡不一樣。
+review: 家長或老師看孩子寫下的兩個問題：查得到的那題，說得出去哪裡查；要討論的那題，說得出為什麼大家可能有不同答案。討論時，孩子能等別人說完，再問對方為什麼這樣想。
+est_time:
+  school: 國小三、四年級國語課
+  source: kuoyu
+why:
+  heading: 會問問題，才會開始想
+  body:
+  - 國語課綱要三、四年級學生「運用預測、推論、提問等策略，增進對文本的理解。」讀故事時一邊讀一邊問，是讀懂的方法。議題融入說明手冊的閱讀素養教育，也要國小學生「發展向文本提問的能力。」
+  - 問題可以分成兩種：查得到答案的，例如這本書的作者是誰；需要大家一起想的，例如故事裡的主角做得對不對（例子是本站整理）。介紹兒童哲學的文章說，哲學探究提出的問題「more often than not resist definitive answers」，意思是常常沒有一個確定的答案（翻譯是本站整理）。正因為沒有標準答案，才需要大家一起想。
+  qa:
+    question: 哪一個問題，就算問了大人也沒有標準答案？
+    answer: 像主角該不該說謊、怎樣才算好朋友這類問題，大人也會有不同想法，因為答案和每個人看重什麼有關（例子是本站整理）。兒童哲學的教室裡，孩子常提出這樣的問題：「Thoughtful and insightful questions like this are not unusual for children when they are given the opportunity to express them.」
+    source: sep-p4c
+  items_title: 國語文領綱的學習重點
+  items:
+  - title: 用提問讀懂文本
+    text: 國語文 5-II-8：運用預測、推論、提問等策略，增進對文本的理解。
+    code: 5-II-8
+  - title: 樂於參加討論
+    text: 國語文 2-II-4：樂於參加討論，提供個人的觀點和意見。
+    code: 2-II-4
+  - title: 讓對方說完
+    text: 國語文 1-II-1：聆聽時能讓對方充分表達意見。
+    code: 1-II-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好一本繪本
+  - 大家圍成一圈
+  figures:
+  - question-compare
+  notes:
+  - 國語文的代碼：第一碼是類別（1 聆聽、2 口語表達、5 閱讀），第二碼是學習階段，第三碼是流水號。
+  - 總綱把國民小學三、四年級定為第二學習階段，所以本頁國語文代碼中間是 II。
+  sources:
+  - kuoyu
+  - issues-handbook
+  - sep-p4c
+  - zonggang
+how:
+  heading: 探究圈：先問，再分，再談
+  body:
+  - 讀完繪本，每個人想一個問題，輪流說出來，老師或家長寫在紙卡上。輪到別人時先聽完，不打斷；課綱要學生「聆聽時能讓對方充分表達意見。」等對方說完，再問：你為什麼這樣想？（本站建議）
+  - 再把紙卡分成兩堆。問自己：這題去書裡、字典裡找，或請大人幫忙查，找得到大家都同意的答案嗎？找得到，就放查得到，並說出要去哪裡查。不同的人回答會不一樣，而且都說得出理由，就放要討論；像主角該不該說謊，連大人的想法也會不同（本站整理）。
+  - 最後挑一題要討論的來談。兒童哲學的教室是探究的社群，學生在裡面「openly and respectfully exchange ideas」。每個人說出自己的想法和理由，也聽聽和自己不一樣的想法；課綱要學生「樂於參加討論，提供個人的觀點和意見。」
+  qa:
+    question: 怎麼分辨一個問題是查得到，還是要討論？
+    answer: 問自己兩件事：書裡、字典裡或請大人幫忙查，找得到大家都同意的答案嗎？不同的人回答，會不會不一樣、又都說得出理由？第一題答找得到，就是查得到；第二題答會，就是要討論（本站整理）。課綱說提問是增進理解的策略：「運用預測、推論、提問等策略，增進對文本的理解。」
+    source: kuoyu
+  items_title: 四步做
+  items:
+  - title: 每人想一題
+    text: 讀完繪本，想一個問題。
+  - title: 輪流說
+    text: 先聽完，不打斷。
+  - title: 分成兩堆
+    text: 查得到一堆，要討論一堆。
+  - title: 挑一題來談
+    text: 說想法，也說理由。
+  checklist_title: 討論時檢查一下
+  checklist:
+  - 等別人說完
+  - 說出理由
+  - 問你為什麼
+  activity_figure: question-flow
+  sources:
+  - kuoyu
+  - sep-p4c
+what:
+  heading: 兩種問題都會問
+  body:
+  - 學完後，孩子讀完一篇故事，能提出一個查得到的問題和一個要討論的問題，說出查得到的去哪裡查、要討論的為什麼大家會有不同答案，並在討論時等別人說完再接著問。
+  items_title: 學完能做到
+  items:
+  - title: 問查得到的
+    text: 說得出去哪裡查。
+  - title: 問要討論的
+    text: 說得出為什麼答案會不同。
+  - title: 聽完再問
+    text: 問別人為什麼這樣想。
+  checklist_title: 家長檢核
+  checklist:
+  - 兩個問題都寫好
+  - 說得出去哪裡查
+  - 說得出為何不同
+  notes:
+  - 本點融入閱讀素養教育議題：議題融入說明手冊國小的實質內涵有「發展向文本提問的能力。」讀完繪本提出問題，就是在練習向文本提問。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: question-flow
+  type: flow
+  alt: 探究圈四步驟：每個人想一個問題，輪流說出來，全班分成兩堆，挑一題要討論的來談。
+  steps:
+  - actor: 每個人
+    text: 想一個問題
+  - actor: 每個人
+    text: 輪流說出來
+  - actor: 全班
+    text: 分成兩堆
+  - actor: 全班
+    text: 挑一題來談
+  source: sep-p4c
+  caption: 流程是本站建議。
+- id: question-compare
+  type: compare
+  alt: 比較兩種問題：查得到的問題，例如這本書的作者是誰；要討論的問題，例如主角做得對不對。
+  source: sep-p4c
+  relation: versus
+  items:
+  - term: 查得到
+    note: 這本書的作者是誰？
+  - term: 要討論
+    note: 主角做得對不對？
+  caption: 例子是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：1-II-1「聆聽時能讓對方充分表達意見。」（p.7）；2-II-4「樂於參加討論，提供個人的觀點和意見。」（p.7）；5-II-8「運用預測、推論、提問等策略，增進對文本的理解。」（p.10）；領域核心素養：國-E-A2「透過國語文學習，掌握文本要旨、發展學習及解決問題策略、初探邏輯思維，並透過體驗與實踐，處理日常生活問題。」（p.3）；國-E-B1「理解與運用國語文在日常生活中學習體察他人的感受，並給予適當的回應，以達成溝通及互動的目標。」（p.4）；時間分配：「國語文各教育階段之時間分配如下」（p.2），表中國民小學三至六年級每週 5 節；代碼說明：「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-B1「具備『聽、說、讀、寫、作』的基本語文素養，並具有生活所需的基礎數理、肢體及藝術等符號知能，能以同理心應用在生活與人際溝通。」（p.5）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 閱讀素養教育國小實質內涵 閱E6「發展向文本提問的能力。」（p.103）
+- id: sep-p4c
+  title: Philosophy for Children（Stanford Encyclopedia of Philosophy）
+  publisher: Michael Pritchard（Stanford Encyclopedia of Philosophy；2002 年首次發表，2022 年 5 月 27 日實質修訂）
+  url: https://plato.stanford.edu/entries/children/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「philosophical inquiry raises questions that more often than not resist definitive answers」；「Thoughtful and insightful questions like this are not unusual for children when they are given the opportunity to express them.」；「in which students openly and respectfully exchange ideas」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

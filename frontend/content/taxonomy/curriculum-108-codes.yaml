@@ -4,6 +4,18 @@
 # https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
 語文/國文:
   performances:
+    1-II-1:
+      stage: 2
+      text: 聆聽時能讓對方充分表達意見。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    1-III-3:
+      stage: 3
+      text: 判斷聆聽內容的合理性，並分辨事實或意見。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
     1-IV-1:
       stage: 4
       text: 以同理心，聆聽各項發言，並加以記錄、歸納。
@@ -55,6 +67,12 @@
     2-II-4:
       stage: 2
       text: 樂於參加討論，提供個人的觀點和意見。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 7
+    2-III-2:
+      stage: 3
+      text: 從聽聞內容進行判斷和提問，並做合理的應對。
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 7
@@ -223,6 +241,12 @@
     5-III-1:
       stage: 3
       text: 流暢朗讀各類文本，並表現抑揚頓挫的變化。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+        page: 10
+    5-III-4:
+      stage: 3
+      text: 區分文本中的客觀事實與主觀判斷之間的差別。
       source:
         url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
         page: 10
@@ -842,6 +866,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 29
+    3d-III-1:
+      stage: 3
+      text: 實踐環境友善行動，珍惜生態資源與環境。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 16
   contents:
     "童 Aa-IV-2":
       stage: 4
@@ -861,6 +891,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 98
+    Ba-III-2:
+      stage: 3
+      text: 同理心的增進與實踐。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 14
     Bb-III-1:
       stage: 3
       text: 團體中的角色探索。
@@ -975,6 +1011,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 99
+    Cd-III-1:
+      stage: 3
+      text: 生態資源及其與環境的相關。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 16
     "輔 Dc-IV-2":
       stage: 4
       text: 團體溝通、互動與工作效能的提升。
