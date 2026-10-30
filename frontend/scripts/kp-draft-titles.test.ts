@@ -8,16 +8,16 @@ import { readHead, scan, unquote } from "./kp-draft-titles.mjs";
 
 const CONTENT = join(process.cwd(), "content");
 
-test("kp-draft-titles 讀到的 id、title、status 和正式 loader 一致（每個點）", () => {
+test("kp-draft-titles 讀到的 id、title、status、學門資料夾和正式 loader 一致（每個點）", () => {
   const { model, errors } = loadContent(CONTENT);
   assert.deepEqual(errors, []);
   assert.ok(model);
   const { points, errors: scanErrors } = scan(join(CONTENT, "knowledge"));
   assert.deepEqual(scanErrors, []);
-  const got = new Map(points.map((p) => [p.id, { title: p.title, status: p.status }]));
+  const got = new Map(points.map((p) => [p.id, { title: p.title, status: p.status, folder: p.folder }]));
   assert.equal(got.size, model.points.length);
   for (const point of model.points) {
-    assert.deepEqual(got.get(point.id), { title: point.title, status: point.status }, point.id);
+    assert.deepEqual(got.get(point.id), { title: point.title, status: point.status, folder: point.folder }, point.id);
   }
 });
 
@@ -30,8 +30,8 @@ test("有草稿時列出它；沒有 status／title 的檔要報錯，不是當�
     writeFileSync(join(dir, "x", "x.a", "sh.yaml"), "id: x.a@sh\n  title: 縮排的不算\n");
     const { points, errors } = scan(dir);
     assert.deepEqual(
-      points.filter((p) => p.status === "draft").map((p) => [p.id, p.title]),
-      [["x.a@es", "草稿：別露出"]],
+      points.filter((p) => p.status === "draft").map((p) => [p.id, p.folder, p.title]),
+      [["x.a@es", "x", "草稿：別露出"]],
     );
     assert.equal(points.length, 2);
     assert.equal(errors.length, 1);
