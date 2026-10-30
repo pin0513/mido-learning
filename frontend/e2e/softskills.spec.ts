@@ -6,22 +6,17 @@ import { test, expect, type Page } from "@playwright/test";
  */
 // B25 發布同理、解題的國小 6 點：標題移到 PUBLISHED_BRANCHES，在自己那條線上要看得到（talk 頁的 sk.discuss@jh 先學會帶出「專心聽，再說回來」，所以不再當草稿查）。
 // B26 發布同理、解題的國中 6 點：同樣移到 PUBLISHED_BRANCHES；草稿只剩高中、大學 10 點。
+// B27 發布同理、解題的高中 6 點：同樣移到 PUBLISHED_BRANCHES；草稿只剩大學 4 點。
 const DRAFT_TITLES = [
-  "困難對話：先處理情緒，再處理事情",
-  "同理訪談：問開放式問題",
-  "給回饋，也收回饋",
   "教練式對話：用提問陪對方找答案",
   "當調解人：幫兩方聽懂彼此",
-  "用資料找真正原因",
-  "選方案：準則、權重、取捨",
-  "設計思考：從同理到原型",
   "一頁問題報告：帶團隊從問題到行動",
   "假說驅動：先猜答案，再用資料檢驗",
 ];
 
 const PUBLISHED_BRANCHES: [string, string, string[]][] = [
-  ["emp", "同理與溝通", ["說出感覺：我覺得……因為……", "專心聽，再說回來", "換個位置想", "同理心地圖：說、想、做、感受", "我訊息：說感受，不指責", "非暴力溝通：觀察、感受、需要、請求"]],
-  ["solve", "解決問題", ["問題是什麼？現在和想要", "問五次為什麼", "解題四步：看懂、想法、動手、回頭看", "PDCA：計畫、執行、檢查、改進", "問題樹：大問題拆成小問題", "魚骨圖：把原因分類找"]],
+  ["emp", "同理與溝通", ["說出感覺：我覺得……因為……", "專心聽，再說回來", "換個位置想", "同理心地圖：說、想、做、感受", "我訊息：說感受，不指責", "非暴力溝通：觀察、感受、需要、請求", "困難對話：先處理情緒，再處理事情", "同理訪談：問開放式問題", "給回饋，也收回饋"]],
+  ["solve", "解決問題", ["問題是什麼？現在和想要", "問五次為什麼", "解題四步：看懂、想法、動手、回頭看", "PDCA：計畫、執行、檢查、改進", "問題樹：大問題拆成小問題", "魚骨圖：把原因分類找", "用資料找真正原因", "選方案：準則、權重、取捨", "設計思考：從同理到原型"]],
 ];
 
 const BANNED = ["城市", "街道", "市區", "地標", "廣場", "環路"];
@@ -101,8 +96,10 @@ test.describe("溝通與解決問題", () => {
       if (width === 1280) expect(rows.length).toBe(1);
       else expect(rows.length).toBe(2);
 
+      // B27 起三條線上的先學全部已發布，首頁沒有「準備中」的先學；「準備中」不能點改由 home-diagram.test.ts 的合成測試守住（只查資料層的 href）。
+      // 所以下面的迴圈目前跑 0 次。瀏覽器層「prior-pending 不在 <a> 裡」的檢查要等再有草稿先學、或改用合成內容的 build 時補回（列在 B27 PR 的後續）。
       const pending = page.getByTestId("prior-pending");
-      expect(await pending.count()).toBeGreaterThan(0);
+      expect(await pending.count()).toBe(0);
       for (const tag of await pending.all()) {
         expect(await tag.evaluate((node) => node.tagName === "A" || node.closest("a") != null)).toBe(false);
       }

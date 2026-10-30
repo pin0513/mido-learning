@@ -1,8 +1,13 @@
+# B27 提案：sk.hardtalk@sh
+# - 補 est_time、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（高中）。
+# - 課綱：綜合活動 家 4b-V-2（精進家人互動與溝通策略）、家 Db-V-2（家庭系統與家人互動）、家 Cb-V-2（人際互動倫理）；議題家庭教育（家U7）。
+# - 依據：CICMH 的 Curious and Courageous Conversations 工作單（開場五步：道謝、事實、猜想、影響、請求；情緒先處理）與 UC 的非暴力溝通講義。
+# - 家 4b-V-2、家 Db-V-2 是新加進代碼表的代碼（見 taxonomy patch）；核心素養 A1 改成 A2。
 id: sk.hardtalk@sh
 concept: sk.hardtalk
 title: 困難對話：先處理情緒，再處理事情
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -16,12 +21,34 @@ curriculum_108:
   - 綜合活動
   core_competencies:
   - C2
-  - A1
-  issues: []
-to_verify: true
+  - A2
+  issues:
+  - 家庭教育
+  performances:
+  - 家 4b-V-2
+  contents:
+  - 家 Db-V-2
+  - 家 Cb-V-2
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（非暴力溝通、困難對話），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 C2、A2：依總綱 p.4–6 高級中等學校教育的 U-C2、U-A2 與綜合活動領綱的綜S-U-A2、綜S-U-C2 原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage 不填 grades：綜合活動領綱 p.2 說普通型高中的生命教育、生涯規劃、家政「可在不同年級規劃修習不同科目。」高中的學習重點也沒有分年級；總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段。
+- est_time 寫高中家政課：綜合活動領綱 p.2 的高中部定必修是生命教育 1 學分、生涯規劃 1 學分、家政 2 學分；本點的綜合活動代碼出自家政。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱與總綱比 PDF 頁少 4，議題融入說明手冊少 16；教育部 AI 指引與學生版注意事項的 PDF 頁就是頁腳印的頁碼；CICMH 工作單、UC NVC 講義沒有印頁碼或印的就是 PDF 頁，用 PDF 頁。
+- 新增代碼的頁碼：學習表現用綜合活動領綱 p.28–32 學習重點表，學習內容用附錄二學習內容說明裡代碼所在的頁（同代碼表既有的 家 Ca-V-1 p.100、家 Cb-V-2 p.100）。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15、B19、B23 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- 綜合活動 家 4b-V-2（p.32 學習重點表）、家 Db-V-2（p.101 附錄二）原本不在代碼表，本批依原文加入（taxonomy patch）；家 Cb-V-2 沿用代碼表的文字與頁碼。
+- 健康與體育領綱也有同號的代碼（文字不同）：學習表現 3a-V-1、4b-V-2（健體 p.30）、3c-V-1（p.31），學習內容 Ca-V-1、Db-V-2（p.31）、Cc-V-1（p.32）；國語文也有學習內容 Ca-V-1（國語文 p.18）、Cc-V-1（p.19）；綜合活動高中本身也有 生 3a-V-1、生 Ca-V-1、生 Db-V-2、涯 3c-V-1、涯 Cc-V-1。本點的代碼都帶科目字首（涯、家），代碼表的鍵不衝突（taxonomy 的綜合活動區塊加了註解；領綱用羅馬數字，本站整理成拉丁字母 V）。
+- 原 core_competencies 是 C2、A1：A1 是身心素質與自我精進，和困難對話的連結較弱；改成 C2、A2，依綜S-U-A2 的積極面對及處理生活與生命中的各種挑戰。
+- 議題家庭教育：家庭教育高中實質內涵 家U7「解析個人與家人的互動並能適切地調適。」（p.66）；和家人談一件難開口的事，就是在練習。
+- 原 guiding question 保留，另加兩題，答案寫在 Why 的問答、How 內文與 How 的問答；原 review 的例子（向教練說想退出校隊）保留並標成示意，另加和家人談的例子，對應家政的家人互動；四項勾選的做法都寫在 How。
+- 原 scenario「親子共學：大人分享一次自己工作上的困難對話，孩子幫忙找出『哪一句是評價、哪一句是事實』。」保留做法，內層引號拿掉，補上不提對方的名字（本站建議）。
+- 原 ai.delegable「陪你演練對方可能的反應」補上使用條件（本站建議）。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（非暴力溝通、困難對話）…」已處理：困難對話依加拿大 Centre for Innovation in Campus Mental Health（CICMH）的 Curious and Courageous Conversations Worksheet（西安大略大學監察人室網站提供，參考 Stone、Patton、Heen《Difficult Conversations》）；非暴力溝通依加州大學監察人室的 NVC 講義（改編自 Marshall Rosenberg）。英文短句逐字引用，中文說明是本站整理。
+- CICMH 工作單每頁印的頁碼（[ n ]）和 PDF 頁相同；工作單是寫給大專校院學生與職員的，本點用在高中生和家人、老師、教練之間（本站建議）。工作單的例句含彎引號或撇號，本頁不引。
+- 英文 PDF 的引文避開彎引號與撇號；PDF 換行處的斷字照原詞接回，其餘空白照原文；中文說明和翻譯是本站整理。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）與《高級中等以下學校人工智慧使用和學習指引》；supports 逐段標頁碼。
 prerequisites:
 - sk.nvc@jh
 links:
@@ -31,7 +58,7 @@ links:
   - pm.conflict@sh
   deeper:
   - sk.mediate@uni
-link_notes: 框架：非暴力溝通、困難對話。
+link_notes: 框架：非暴力溝通（UC 監察人室講義）、困難對話（CICMH 工作單）。綜合活動 家 4b-V-2、家 Db-V-2、家 Cb-V-2。
 competency:
   specialist:
   - 同理溝通
@@ -39,21 +66,193 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 陪你演練對方可能的反應
+  - 陪你演練對方可能的反應（只用虛構情境，不輸入真實姓名，本站建議）
   human_experience:
   - 真的去談，承擔對話的結果
 idea: 困難對話會卡住，常是因為情緒還沒被接住。先說出你看到的對方感受，再講事實；用非暴力溝通的四步提出請求，也先想好對方說不的時候怎麼辦。
 guiding_questions:
 - 要跟老師爭取延後交作業，第一句話要說什麼？
-scenario: 親子共學：大人分享一次自己工作上的困難對話，孩子幫忙找出「哪一句是評價、哪一句是事實」。
+- 對話中情緒上來了，怎麼辦？
+- 對方說不，要怎麼回應？
+scenario: 親子共學：大人分享一次自己工作上的困難對話（不提對方的名字），孩子幫忙找出哪一句是評價、哪一句是事實（本站建議）。
 goal: 準備並進行一次困難對話：先承認對方的感受，再談事實和請求。
-review: 家長扮演對方演練一次（例如向教練說想退出校隊），家長勾：開頭承認對方感受、事實與評價分開、有具體請求、被拒絕時沒有翻臉；演練後再真的去談。
+review: 家長扮演對方演練一次（例如向教練說想退出校隊，或跟家人談想減少一門補習，例子是示意），家長勾：開頭承認對方感受、事實與評價分開、有具體請求、被拒絕時沒有翻臉；演練後再真的去談。
 formats:
   slides: []
-  exercise: 目標：準備並進行一次困難對話：先承認對方的感受，再談事實和請求。　檢核：家長扮演對方演練一次（例如向教練說想退出校隊），家長勾：開頭承認對方感受、事實與評價分開、有具體請求、被拒絕時沒有翻臉；演練後再真的去談。
+  exercise: 目標：準備並進行一次困難對話：先承認對方的感受，再談事實和請求。　檢核：家長扮演對方演練一次（例如向教練說想退出校隊，或跟家人談想減少一門補習，例子是示意），家長勾：開頭承認對方感受、事實與評價分開、有具體請求、被拒絕時沒有翻臉；演練後再真的去談。
 audience:
 - kid
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 高中家政課
+  source: zonghe
+why:
+  heading: 先接住情緒，再談事情
+  body:
+  - 108 課綱的家政要高中生「探究家庭系統與個人的關聯，精進互動與溝通策略，增進家人互動關係。」學習內容「家庭系統與家人互動。」的補充說明也要「精進互動與溝通策略」；家庭教育議題的高中實質內涵是「解析個人與家人的互動並能適切地調適。」難開口的話，常常是要對家人、老師或教練說的（本站整理）。
+  - 加拿大校園心理健康創新中心（CICMH）的困難對話工作單提醒「Intentions are different from impact.」，也就是你的本意和對方感受到的不一定一樣；又說「When a conversation becomes emotional, it is important to pause and address the emotion(s).」，對話一有情緒，要先停下來處理情緒（翻譯是本站整理）。
+  qa:
+    question: 要跟老師爭取延後交作業，第一句話要說什麼？
+    answer: 先謝謝對方願意聽，再說事實，不先說評價或要求（本站建議）。工作單的開場第一步是「Thank them for meeting with you.」，第二步是「Start by describing the facts as you see them」，也就是先說你看到的事實（翻譯是本站整理）。例如：謝謝老師願意聽我說，這週我有三科報告要交，進度落後了（例子是示意）。
+    source: cicmh-conversations
+  items_title: 課綱的學習重點
+  items:
+  - title: 精進家人互動與溝通
+    text: 綜合活動 家 4b-V-2：探究家庭系統與個人的關聯，精進互動與溝通策略，增進家人互動關係。
+    code: 家 4b-V-2
+  - title: 家庭系統與家人互動
+    text: 綜合活動 家 Db-V-2：家庭系統與家人互動。
+    code: 家 Db-V-2
+  - title: 人際互動倫理
+    text: 綜合活動 家 Cb-V-2：人際互動倫理。
+    code: 家 Cb-V-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 想好要談的事
+  - 約好時間和地點
+  figures:
+  - hardtalk-compare
+  notes:
+  - 綜合活動高中的代碼：開頭的涯是生涯規劃、家是家政；接著是數字的是學習表現，是大寫字母的是學習內容；中間的 V 是第五學習階段（高中）。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - zonghe
+  - issues-handbook
+  - cicmh-conversations
+  - zonggang
+how:
+  heading: 先準備，再照順序說
+  body:
+  - 準備：先約好時間和地點，UC 的非暴力溝通講義寫「Make a time to talk and in the appropriate place」（翻譯是本站整理），例如等練習結束、旁邊沒有別人的時候（例子是本站整理）。把想說的先寫下來，事實和評價分開：事實是看得到、聽得到的事，評價是自己的看法；講義說「Observe the behavior without evaluating or judging.」（翻譯是本站整理）。也先想想對方的感受，工作單問「What emotions do you think they might be experiencing?」（翻譯是本站整理）；再想好對方說不的時候怎麼回；也可以先請家長扮演對方演練一次，再真的去談（本站建議）。
+  - 開口照順序（整理自工作單的開場五步）：先謝謝對方，並說出你看到的對方感受，例如我知道教練很看重比賽前的出席（例子是本站整理）；再說事實，「Start by describing the facts as you see them, understanding that the other person likely see things differently.」；接著說你的猜想，並願意被更正；然後「Talk about how the situation impacted you.」；最後「Ask for what you need.」，工作單說「The key is to be specific about what you need and want moving forward.」（翻譯是本站整理）。講義也說請求要「Phrase a specific request positively」，具體、正面地說（翻譯是本站整理）。
+  - 情緒上來時，先停一下，說出你看到的情緒，例如你看起來有點失望，我們先停一下好嗎？（例子是本站整理）。對方說不時，不翻臉、不威脅；工作單建議事先準備好回應，「have a response ready that respects their space while keeping the door open for future dialogue.」，也就是尊重對方，也留下之後再談的機會（翻譯是本站整理）。談完不論結果，都對自己寬容一點：「Demonstrate compassion for yourself as you reflect.」（翻譯是本站整理）。
+  qa:
+    question: 對方說不，要怎麼回應？
+    answer: 先接受對方現在的答案，不翻臉；謝謝他聽完，問問有沒有別的做法，或約下次再談（本站建議）。工作單說要事先準備一個「respects their space while keeping the door open for future dialogue」的回應（翻譯是本站整理）。
+    source: cicmh-conversations
+  items_title: 四步做
+  items:
+  - title: 約好時間地點
+    text: 旁邊沒有別人的時候。
+  - title: 先謝謝再說事實
+    text: 事實和評價分開。
+  - title: 說影響和請求
+    text: 請求要具體、正面。
+  - title: 情緒上來先停
+    text: 被拒絕也不翻臉。
+  checklist_title: 開口前檢查一下
+  checklist:
+  - 事實不是評價
+  - 想過對方感受
+  - 請求夠具體
+  - 想好被拒絕時
+  activity_figure: hardtalk-flow
+  sources:
+  - cicmh-conversations
+  - uc-nvc
+what:
+  heading: 難開口的話，也說得出口
+  body:
+  - 學完後，能準備並進行一次困難對話：先謝謝並承認對方的感受，把事實和評價分開，說出影響和具體的請求；情緒上來時先停，被拒絕時也不翻臉。
+  items_title: 學完能做到
+  items:
+  - title: 先承認感受
+    text: 說出看到的對方感受。
+  - title: 分開事實和評價
+    text: 只說看得到的事。
+  - title: 提出具體請求
+    text: 被拒絕也不翻臉。
+  checklist_title: 家長檢核
+  checklist:
+  - 開頭承認感受
+  - 事實評價分開
+  - 請求具體
+  - 被拒絕沒翻臉
+  notes:
+  - 本點融入家庭教育議題：議題融入說明手冊高中的實質內涵有「解析個人與家人的互動並能適切地調適。」和家人談一件難開口的事，就是在練習。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - issues-handbook
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: hardtalk-flow
+  type: flow
+  alt: 困難對話開場五步驟：先道謝並承認對方的感受，說出事實，說出自己的猜想，說出影響，最後提出請求。
+  steps:
+  - actor: 自己
+    text: 道謝並承認感受
+  - actor: 自己
+    text: 說出事實
+  - actor: 自己
+    text: 說出猜想
+  - actor: 自己
+    text: 說出影響
+  - actor: 自己
+    text: 提出請求
+  source: cicmh-conversations
+  caption: 流程是本站建議。
+- id: hardtalk-compare
+  type: compare
+  alt: 比較事實和評價：事實是看得到、聽得到的事，例如這週練球遲到兩次（例子是示意）；評價是自己的看法，例如他根本不在乎。
+  source: uc-nvc
+  relation: versus
+  items:
+  - term: 事實
+    note: 看得到、聽得到的事，例如這週練球遲到兩次（例子是示意）
+  - term: 評價
+    note: 自己的看法，例如他根本不在乎
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：家 4b-V-2「探究家庭系統與個人的關聯，精進互動與溝通策略，增進家人互動關係。」（p.32）；家 Db-V-2「家庭系統與家人互動。」（p.101）；家 Cb-V-2「人際互動倫理。」（p.100）；補充說明 家 Db-V-2「剖析家庭系統與個人生活的關聯，精進互動與溝通策略，促進系統間平衡。」（p.101）；補充說明 家 Cb-V-2「尊重並展現合宜的人際溝通與互動，包含網路禮儀、職場倫理與面試禮儀。」（p.100）；領域核心素養：綜S-U-A2「確立自我需求與目標，學習批判思考與自主管理的知能，透過具體可行的學習方案與實踐過程，積極面對及處理生活與生命中的各種挑戰。」（p.3）；綜S-U-C2「具備人際溝通知能，提升在團體生活中共同決策、合作解決問題，學習並善用領導素養，以面對社會變遷的挑戰，營造優質的生活。」（p.5）；時間分配：普通型高級中等學校第五學習階段「部定必修科目包含生命教育（1 學分）、生涯規劃（1 學分）、家政（2 學分）三科，共 4 學分，可在不同年級規劃修習不同科目。」（p.2）；代碼說明：「生命教育、生涯規劃與家政分別以『生』、『涯』、『家』的簡稱示之。」（p.9）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-C2「發展適切的人際互動關係，並展現包容異己、溝通協調及團隊合作的精神與行動。」（p.6）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 家庭教育高中實質內涵 家U7「解析個人與家人的互動並能適切地調適。」（p.66）
+- id: cicmh-conversations
+  title: Curious and Courageous Conversations Worksheet
+  publisher: 加拿大 Centre for Innovation in Campus Mental Health（CICMH）工作單，西安大略大學（Western University）監察人室網站提供；參考 Stone、Patton、Heen《Difficult Conversations》
+  url: https://www.uwo.ca/ombuds/cicmh_curiouscourageousconversations-worksheet.pdf
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Intentions are different from impact.」（p.3）；「What emotions do you think they might be experiencing?」（p.5）；「When a conversation becomes emotional, it is important to pause and address the emotion(s).」（p.5）；「have a response ready that respects their space while keeping the door open for future dialogue.」（p.7）；「Thank them for meeting with you.」（p.7）；「Start by describing the facts as you see them, understanding that the other person likely see things differently.」（p.7）；「Talk about how the situation impacted you.」（p.8）；「Ask for what you need.」（p.8）；「The key is to be specific about what you need and want moving forward.」（p.8）；「Describe your assumptions, while being open to learning which of ones may be off the mark.」（p.8）；「Demonstrate compassion for yourself as you reflect.」（p.9）
+- id: uc-nvc
+  title: Non-Violent Communication (NVC) Model
+  publisher: '加州大學總校辦公室監察人室（UCOP Office of the Ombuds）講義；頁首為 UC Santa Cruz Campus Conflict Resolution Services，註明改編自 Marshall Rosenberg《Nonviolent Communication: A Language of Life》'
+  url: https://www.ucop.edu/ombuds/_files/nvc-model-requesting-change-remove.pdf
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Make a time to talk and in the appropriate place」（p.1）；「Observe the behavior without evaluating or judging.」（p.1）；「separate observation from evaluation」（p.1）；「Phrase a specific request positively」（p.2）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-30'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）

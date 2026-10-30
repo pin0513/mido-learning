@@ -130,7 +130,7 @@ how:
   heading: 計畫、執行、檢查、改進
   body:
   - 計畫（P）：寫下要試什麼、要量什麼、預測會怎樣（本站整理）。CMS 的範本問「What do you predict will happen and why?」，也建議「Plan a small test of change.」，先試一個小小的改變（翻譯是本站整理）。例如兩週內每天睡前複習英文單字，記下每天小考的對題數（例子是本站整理）。
-  - 執行（D）：照計畫做，CMS 寫「Carry out the test on a small scale.」，每天記在紀錄表上（翻譯是本站整理）。檢查（C）：把結果和原本的數字、和預測比一比，CMS 要寫下「Describe the measured results and how they compared to the predictions.」（翻譯是本站整理）。CMS、AHRQ 把這一步寫成 Study（研究），所以叫 PDSA；本頁把 PDCA 和 PDSA 當成同一個循環來教（本站整理）。
+  - 執行（D）：照計畫做，CMS 寫「Carry out the test on a small scale.」，每天記在紀錄表上（翻譯是本站整理）。檢查（C）：把結果和原本的數字、和預測比一比，CMS 要寫下「Describe the measured results and how they compared to the predictions.」（翻譯是本站整理）。前後的數字變了，也可能是別的原因造成的，例如那段時間剛好比較不忙；所以也記下那段時間還有什麼不一樣（例子是本站整理）。CMS、AHRQ 把這一步寫成 Study（研究），所以叫 PDSA；本頁把 PDCA 和 PDSA 當成同一個循環來教（本站整理）。
   - 改進（A）：依結果決定保留、修改或放棄，CMS 寫成 Adopt、「Adapt – modify the changes and repeat PDSA cycle.」和「Abandon – change your approach and repeat PDSA cycle.」（翻譯是本站整理）。結果不如預期也是有用的結果，寫下下一輪要改什麼再試一次；AHRQ 說「Each time you make an adjustment and test it again, you will do another cycle.」（翻譯是本站整理）。
   qa:
     question: PDCA 和 PDSA 有什麼不同？

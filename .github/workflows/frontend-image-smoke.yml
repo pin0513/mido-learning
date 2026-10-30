@@ -178,7 +178,8 @@ jobs:
             fi
           done
           # B25 發布 sk.feelings@es 後，改查仍是草稿的 sk.nvc@jh；B26 發布 sk.nvc@jh 後，改查仍是草稿的 sk.hardtalk@sh（同一條線的下一階）。
-          if grep -F "困難對話：先處理情緒" /tmp/sk-on.html >/dev/null; then
+          # B27 發布 sk.hardtalk@sh 後，改查仍是草稿的 sk.coach@uni（同一條線的大學點，先備 sk.interview@sh）。
+          if grep -F "教練式對話：用提問陪對方找答案" /tmp/sk-on.html >/dev/null; then
             echo "soft-skills homepage leaked a draft title"
             exit 1
           fi

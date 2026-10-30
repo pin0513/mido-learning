@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { loadCatalog } from "../content/catalog";
+import { buildIndexes, loadCatalog } from "../content/catalog";
 import { buildHomeDiagram } from "./home-diagram";
 import { publicDisciplineIds } from "./home-public";
 import { routeWires } from "./home-wires";
@@ -312,7 +312,7 @@ test("先學的點都排在依賴它的點上面", () => {
   assert.ok(junior.indexOf("坐標與直線") < junior.indexOf("二次函數與拋物線"));
 });
 
-test("溝通與解決問題預設不進學門切換，打開後口語表達全線、同理與解題只有國小點", () => {
+test("溝通與解決問題預設不進學門切換，打開後口語表達全線、同理與解題發布國小到高中點", () => {
   const closed = buildHomeDiagram(loadCatalog());
   assert.equal(closed.disciplines.some((item) => item.id === "soft-skills" || item.id === "language"), false);
   assert.equal(closed.branches.length, 0);
@@ -350,23 +350,33 @@ test("溝通與解決問題預設不進學門切換，打開後口語表達全�
   assert.ok(discuss);
   assert.ok(discuss.priors.some((prior) => prior.label.startsWith("專心聽，再說回來") && prior.href?.includes("kp=sk.listen%40es")));
   assert.equal(discuss.priors.some((prior) => prior.label.includes("準備中")), false);
+  // B27 發布 sk.hardtalk@sh 後，sk.facilitate@uni 的先學全部已發布，變成可點的連結；「準備中」不能點改在下面的合成測試查。
   const facilitate = talk.nodes.find((node) => node.id === "sk.facilitate@uni");
   assert.ok(facilitate);
-  assert.ok(facilitate.priors.some((prior) => prior.href == null && prior.label.includes("準備中")));
-  // B25：同理與解題各發布 3 個國小點。B26：再各發布 3 個國中點，排在國小點之後；高中以上仍是草稿，不進圖。
+  assert.ok(facilitate.priors.some((prior) => prior.label.startsWith("困難對話") && prior.href?.includes("kp=sk.hardtalk%40sh")));
+  assert.equal(facilitate.priors.some((prior) => prior.href == null), false);
+  // B25：同理與解題各發布 3 個國小點。B26：再各發布 3 個國中點。B27：再各發布 3 個高中點，排在國中點之後；大學仍是草稿，不進圖。
   const emp = open.diagrams.find((item) => item.branchId === "emp");
   const solve = open.diagrams.find((item) => item.branchId === "solve");
-  assert.deepEqual(emp?.nodes.map((node) => node.id), ["sk.feelings@es", "sk.listen@es", "sk.otherside@es", "sk.empmap@jh", "sk.imsg@jh", "sk.nvc@jh"]);
-  assert.deepEqual(solve?.nodes.map((node) => node.id), ["sk.problem@es", "sk.why5@es", "sk.polya@es", "sk.pdca@jh", "sk.issuetree@jh", "sk.fishbone@jh"]);
+  assert.deepEqual(emp?.nodes.map((node) => node.id), [
+    "sk.feelings@es", "sk.listen@es", "sk.otherside@es", "sk.empmap@jh", "sk.imsg@jh", "sk.nvc@jh",
+    "sk.hardtalk@sh", "sk.interview@sh", "sk.feedback@sh",
+  ]);
+  assert.deepEqual(solve?.nodes.map((node) => node.id), [
+    "sk.problem@es", "sk.why5@es", "sk.polya@es", "sk.pdca@jh", "sk.issuetree@jh", "sk.fishbone@jh",
+    "sk.rootcause@sh", "sk.decide@sh", "sk.design@sh",
+  ]);
   assert.equal([...(emp?.nodes ?? []), ...(solve?.nodes ?? [])].every((node) => node.pageHref?.startsWith("/kp/sk.")), true);
   const openBlob = JSON.stringify(open);
   assert.equal(openBlob.includes("說出感覺：我覺得……因為……"), true);
   assert.equal(openBlob.includes("問五次為什麼"), true);
-  // B26 發布的國中點標題出現；仍是草稿的標題不露出（同一條線的高中點：sk.hardtalk@sh 的先備是 sk.nvc@jh，sk.rootcause@sh 的先備是 sk.fishbone@jh）。
+  // B26 發布的國中點、B27 發布的高中點標題出現；仍是草稿的標題不露出（同一條線的大學點：sk.coach@uni 的先備是 sk.interview@sh，sk.hypo@uni 的先備是 sk.rootcause@sh）。
   assert.equal(openBlob.includes("非暴力溝通：觀察、感受、需要、請求"), true);
   assert.equal(openBlob.includes("魚骨圖：把原因分類找"), true);
-  assert.equal(openBlob.includes("困難對話：先處理情緒，再處理事情"), false);
-  assert.equal(openBlob.includes("用資料找真正原因"), false);
+  assert.equal(openBlob.includes("困難對話：先處理情緒，再處理事情"), true);
+  assert.equal(openBlob.includes("用資料找真正原因"), true);
+  assert.equal(openBlob.includes("教練式對話：用提問陪對方找答案"), false);
+  assert.equal(openBlob.includes("假說驅動：先猜答案，再用資料檢驗"), false);
   assert.equal(open.branches.find((item) => item.id === "talk")?.task?.title, "從開口到說服");
   assert.equal(open.disciplines.find((item) => item.id === "language")?.ready, false);
   assert.equal(open.branches.some((item) => item.disciplineId === "language"), false);
@@ -399,4 +409,20 @@ test("語文打開後十一條線都有點，關掉時不進圖", () => {
   assert.equal(open.branches.find((item) => item.id === "basic")?.task?.id, "zh.basics");
   const talk = open.diagrams.find((item) => item.id === "soft-skills" && item.branchId === "talk");
   assert.equal(talk?.nodes[0]?.id, "sk.voice@es");
+});
+
+test("合成：先學仍是草稿時只寫「準備中」、不給連結，草稿本身不進圖", () => {
+  // B27 起溝通與解決問題三條線上已沒有草稿先學；把 sk.hardtalk@sh 合成為草稿，守住 sk.facilitate@uni 的「準備中」不能點。
+  const base = loadCatalog();
+  const points = base.points.map((point) => (point.id === "sk.hardtalk@sh" ? { ...point, status: "draft" as const } : point));
+  const catalog = { ...base, points, indexes: buildIndexes(base.taxonomy, points, base.paths) };
+  const open = buildHomeDiagram(catalog, publicDisciplineIds(), true);
+  const talk = open.diagrams.find((item) => item.branchId === "talk");
+  const emp = open.diagrams.find((item) => item.branchId === "emp");
+  assert.ok(talk && emp);
+  const facilitate = talk.nodes.find((node) => node.id === "sk.facilitate@uni");
+  assert.ok(facilitate);
+  assert.ok(facilitate.priors.some((prior) => prior.href == null && prior.label.includes("準備中")));
+  assert.equal(emp.nodes.some((node) => node.id === "sk.hardtalk@sh"), false);
+  assert.equal(JSON.stringify(open).includes("困難對話：先處理情緒，再處理事情"), false);
 });
