@@ -1,32 +1,31 @@
 /**
- * 讀取 frontend/content 的 YAML，並做與 P1 相同的驗證。
+ * 讀取 frontend/content 的 YAML，交給規則包（./rules）驗證。
+ * 這裡只負責讀檔：分類參考資料、schema、補件清單、知識點與主線 YAML；
+ * 每一條規則都在 ./rules，吃記憶體物件，之後資料庫的修訂版也用同一份。
  * 這個檔案不 import server-only：驗證腳本用 tsx 直接跑，server-only 在 Node 會丟錯。
  * Next 的 server component 請改由 lib/content/index.ts 進入。
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
-import Ajv, { type AnySchema, type ErrorObject, type ValidateFunction } from "ajv";
+import Ajv, { type AnySchema, type ValidateFunction } from "ajv";
 import { parse } from "yaml";
+import { checkPaths, checkPoints, type KpDocument, type PathDocument, type RuleContext } from "./rules";
 import {
   CORE_CODES,
   LAYER_IDS,
   STAGE_IDS,
-  type AudienceId,
-  type CirclePart,
   type ContentModel,
   type CoreCompetencyInfo,
   type CurriculumCode,
   type DisciplineNode,
-  type KnowledgeFigure,
-  type KnowledgeSource,
   type LayerInfo,
-  type KnowledgeLinks,
   type KnowledgePoint,
-  type KnowledgeStatus,
   type LearningPath,
   type StageInfo,
   type Taxonomy,
 } from "./types";
+
+export { EXCLUDED_DOMAINS } from "./rules";
 
 const DOMAINS = ["語文", "數學", "自然科學", "社會", "藝術", "綜合活動", "科技", "健康與體育"] as const;
 const ISSUES = [
@@ -51,24 +50,14 @@ const ISSUES = [
   "原住民族教育",
 ] as const;
 
+// 下面三個常數已搬到 rules/point.ts。B23（Vc 代碼）會改到緊接著的 ROMAN_STAGE，等它合併後再刪，避免衝突。
 const AUDIENCE = new Set<string>(["kid", "adult", "family"]);
 const A_LEVEL_KINDS = new Set(["curriculum", "government", "exam"]);
 const CIRCLE_KEYS = ["why", "how", "what"] as const;
 const ROMAN_STAGE: Record<string, number> = { I: 1, II: 2, III: 3, IV: 4, V: 5 };
 
-/**
- * 交接文件要求擋掉某些網域，但沒有列出網域。
- * 先留空集合，之後補上域名就會生效，這一輪不自行假設要擋哪些站。
- */
-export const EXCLUDED_DOMAINS = new Set<string>();
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function asStringArray(value: unknown): string[] | null {
-  if (!Array.isArray(value) || value.some((item) => typeof item !== "string")) return null;
-  return value;
 }
 
 function sameSet(actual: string[], expected: readonly string[]): boolean {
@@ -92,19 +81,6 @@ function stageFromCode(code: string): number | null {
   if (year <= 6) return 3;
   if (year <= 9) return 4;
   return 5;
-}
-
-function excludedHost(url: string): string | null {
-  let host = "";
-  try {
-    host = new URL(url).hostname.toLowerCase();
-  } catch {
-    return null;
-  }
-  for (const domain of EXCLUDED_DOMAINS) {
-    if (host === domain || host.endsWith(`.${domain}`)) return domain;
-  }
-  return null;
 }
 
 function loadIdList(contentDir: string, fileName: string, errors: string[]): Set<string> {
@@ -186,203 +162,6 @@ function loadCurriculumCodes(contentDir: string, errors: string[]): Map<string, 
   return map;
 }
 
-function readSources(value: unknown): KnowledgeSource[] | undefined {
-  if (!Array.isArray(value)) return undefined;
-  const sources: KnowledgeSource[] = [];
-  for (const item of value) {
-    if (!isRecord(item) || typeof item.title !== "string") continue;
-    const source: KnowledgeSource = {
-      title: item.title,
-      publisher: typeof item.publisher === "string" ? item.publisher : "",
-      url: typeof item.url === "string" ? item.url : "",
-      accessed: typeof item.accessed === "string" ? item.accessed : "",
-      kind: typeof item.kind === "string" ? item.kind : "",
-      supports: typeof item.supports === "string" ? item.supports : "",
-    };
-    if (typeof item.id === "string") source.id = item.id;
-    sources.push(source);
-  }
-  return sources;
-}
-
-function readOptionalText(value: unknown): string | undefined {
-  return typeof value === "string" && value.length > 0 ? value : undefined;
-}
-
-function readFigure(item: Record<string, unknown>): KnowledgeFigure | null {
-  if (typeof item.id !== "string" || typeof item.type !== "string") return null;
-  const alt = typeof item.alt === "string" ? item.alt : "";
-  const source = readOptionalText(item.source);
-  const title = readOptionalText(item.title);
-  const caption = readOptionalText(item.caption);
-  const unknown = (): KnowledgeFigure => {
-    const figure: KnowledgeFigure = { id: item.id as string, type: "unknown", rawType: item.type as string, alt };
-    if (source) figure.source = source;
-    return figure;
-  };
-  if (item.type === "compare" && Array.isArray(item.items)) {
-    const relation = item.relation === "equal" || item.relation === "versus" || item.relation === "not_equal" ? item.relation : "not_equal";
-    const items: CompareItems = [];
-    for (const row of item.items) {
-      if (!isRecord(row) || typeof row.term !== "string") continue;
-      const parsed: CompareItems[number] = { term: row.term };
-      const reading = readOptionalText(row.reading);
-      const note = readOptionalText(row.note);
-      if (reading) parsed.reading = reading;
-      if (note) parsed.note = note;
-      items.push(parsed);
-    }
-    const figure: KnowledgeFigure = { id: item.id, type: "compare", alt, relation, items };
-    if (source) figure.source = source;
-    if (title) figure.title = title;
-    if (caption) figure.caption = caption;
-    return figure;
-  }
-  if (item.type === "flow" && Array.isArray(item.steps)) {
-    const steps: { actor?: string; text: string }[] = [];
-    for (const step of item.steps) {
-      if (!isRecord(step) || typeof step.text !== "string") continue;
-      const parsed: { actor?: string; text: string } = { text: step.text };
-      const actor = readOptionalText(step.actor);
-      if (actor) parsed.actor = actor;
-      steps.push(parsed);
-    }
-    const figure: KnowledgeFigure = { id: item.id, type: "flow", alt, steps };
-    if (source) figure.source = source;
-    if (title) figure.title = title;
-    if (caption) figure.caption = caption;
-    return figure;
-  }
-  if (item.type === "spelling" && Array.isArray(item.rows)) {
-    const tones = new Set(["", "ˊ", "ˇ", "ˋ", "˙"]);
-    const rows: SpellingRows = [];
-    for (const row of item.rows) {
-      if (!isRecord(row) || typeof row.kind !== "string" || typeof row.result !== "string") continue;
-      const tone = typeof row.tone === "string" && tones.has(row.tone) ? row.tone : "";
-      rows.push({
-        kind: row.kind,
-        initial: typeof row.initial === "string" ? row.initial : "",
-        medial: typeof row.medial === "string" ? row.medial : "",
-        final: typeof row.final === "string" ? row.final : "",
-        tone: tone as SpellingRows[number]["tone"],
-        result: row.result,
-      });
-    }
-    const figure: KnowledgeFigure = { id: item.id, type: "spelling", alt, rows };
-    if (source) figure.source = source;
-    if (title) figure.title = title;
-    if (caption) figure.caption = caption;
-    return figure;
-  }
-  if (item.type === "tone_chart" && Array.isArray(item.tones)) {
-    const marks = new Set(["ˉ", "ˊ", "ˇ", "ˋ", "˙"]);
-    const contours = new Set(["high_level", "rising", "dipping", "falling", "neutral"]);
-    const tones: ToneRows = [];
-    for (const tone of item.tones) {
-      if (!isRecord(tone) || typeof tone.name !== "string" || typeof tone.example !== "string" || typeof tone.reading !== "string") continue;
-      if (typeof tone.mark !== "string" || !marks.has(tone.mark)) continue;
-      if (typeof tone.contour !== "string" || !contours.has(tone.contour)) continue;
-      const parsed: ToneRows[number] = {
-        name: tone.name,
-        mark: tone.mark as ToneRows[number]["mark"],
-        contour: tone.contour as ToneRows[number]["contour"],
-        example: tone.example,
-        reading: tone.reading,
-      };
-      const alias = readOptionalText(tone.alias);
-      if (alias) parsed.alias = alias;
-      tones.push(parsed);
-    }
-    const figure: KnowledgeFigure = { id: item.id, type: "tone_chart", alt, tones };
-    if (source) figure.source = source;
-    if (title) figure.title = title;
-    if (caption) figure.caption = caption;
-    return figure;
-  }
-  if (item.type === "symbol_grid" && Array.isArray(item.groups)) {
-    const groups: { name: string; symbols: string[] }[] = [];
-    for (const group of item.groups) {
-      if (!isRecord(group) || typeof group.name !== "string" || !Array.isArray(group.symbols)) continue;
-      const symbols = group.symbols.filter((symbol): symbol is string => typeof symbol === "string");
-      groups.push({ name: group.name, symbols });
-    }
-    const figure: KnowledgeFigure = { id: item.id, type: "symbol_grid", alt, groups };
-    if (source) figure.source = source;
-    if (title) figure.title = title;
-    if (caption) figure.caption = caption;
-    if (isRecord(item.highlight) && Array.isArray(item.highlight.symbols) && typeof item.highlight.label === "string") {
-      figure.highlight = {
-        symbols: item.highlight.symbols.filter((symbol): symbol is string => typeof symbol === "string"),
-        label: item.highlight.label,
-      };
-    }
-    return figure;
-  }
-  return unknown();
-}
-
-type CompareItems = Extract<KnowledgeFigure, { type: "compare" }>["items"];
-type SpellingRows = Extract<KnowledgeFigure, { type: "spelling" }>["rows"];
-type ToneRows = Extract<KnowledgeFigure, { type: "tone_chart" }>["tones"];
-
-function readFigures(value: unknown): KnowledgeFigure[] | undefined {
-  if (!Array.isArray(value)) return undefined;
-  const figures: KnowledgeFigure[] = [];
-  for (const item of value) {
-    if (!isRecord(item)) continue;
-    const figure = readFigure(item);
-    if (figure) figures.push(figure);
-  }
-  return figures;
-}
-
-function readCircle(value: unknown): CirclePart | undefined {
-  if (!isRecord(value) || typeof value.heading !== "string") return undefined;
-  const items: CirclePart["items"] = [];
-  if (Array.isArray(value.items)) {
-    for (const item of value.items) {
-      if (!isRecord(item) || typeof item.title !== "string" || typeof item.text !== "string") continue;
-      const parsed: CirclePart["items"][number] = { title: item.title, text: item.text };
-      if (typeof item.example === "string") parsed.example = item.example;
-      if (typeof item.code === "string") parsed.code = item.code;
-      items.push(parsed);
-    }
-  }
-  const circle: CirclePart = {
-    heading: value.heading,
-    body: asStringArray(value.body) ?? [],
-    sources: asStringArray(value.sources) ?? [],
-    items,
-    checklist: asStringArray(value.checklist) ?? [],
-    figures: asStringArray(value.figures) ?? [],
-    notes: asStringArray(value.notes) ?? [],
-  };
-  const itemsTitle = readOptionalText(value.items_title);
-  const checklistTitle = readOptionalText(value.checklist_title);
-  if (itemsTitle) circle.itemsTitle = itemsTitle;
-  if (checklistTitle) circle.checklistTitle = checklistTitle;
-  if (typeof value.activity_figure === "string") circle.activityFigure = value.activity_figure;
-  if (
-    isRecord(value.qa) &&
-    typeof value.qa.question === "string" &&
-    typeof value.qa.answer === "string" &&
-    typeof value.qa.source === "string"
-  ) {
-    circle.qa = { question: value.qa.question, answer: value.qa.answer, source: value.qa.source };
-  }
-  return circle;
-}
-
-function circleHasContent(raw: Record<string, unknown>): boolean {
-  return (
-    (Array.isArray(raw.body) && raw.body.length > 0) ||
-    (Array.isArray(raw.items) && raw.items.length > 0) ||
-    (Array.isArray(raw.checklist) && raw.checklist.length > 0) ||
-    (Array.isArray(raw.figures) && raw.figures.length > 0) ||
-    (Array.isArray(raw.notes) && raw.notes.length > 0)
-  );
-}
-
 function readYamlFile(file: string): { value?: unknown; error?: string } {
   try {
     return { value: parse(readFileSync(file, "utf8")) };
@@ -405,13 +184,6 @@ export function walkYaml(dir: string): string[] {
 function loadSchema(contentDir: string): AnySchema {
   const file = join(contentDir, "schema", "knowledge-point.schema.json");
   return JSON.parse(readFileSync(file, "utf8")) as AnySchema;
-}
-
-function ajvMessages(file: string, errors: ErrorObject[] | null | undefined): string[] {
-  return (errors ?? []).map((error) => {
-    const where = error.instancePath || "(root)";
-    return `${file}: ${where} ${error.message ?? "不符合 schema"}`;
-  });
 }
 
 function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
@@ -623,179 +395,12 @@ function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
   };
 }
 
-function resolvePath(roots: DisciplineNode[], segments: string[]): { node: DisciplineNode; root: DisciplineNode; idPrefix?: string } | null {
-  let level = roots;
-  let root: DisciplineNode | null = null;
-  let current: DisciplineNode | null = null;
-  let idPrefix: string | undefined;
-  for (const segment of segments) {
-    const found = level.find((node) => node.name === segment);
-    if (!found) return null;
-    if (!root) root = found;
-    if (found.idPrefix) idPrefix = found.idPrefix;
-    current = found;
-    level = found.children;
-  }
-  if (!current || !root) return null;
-  return { node: current, root, idPrefix };
-}
-
-function optionalString(value: unknown): string | undefined {
-  return typeof value === "string" && value.length > 0 ? value : undefined;
-}
-
-function codeInBand(stageNumber: number, band: number[], allowLater: boolean): boolean {
-  if (band.length === 0) return false;
-  const min = Math.min(...band);
-  const max = Math.max(...band);
-  if (stageNumber < min) return false;
-  if (stageNumber > max) return allowLater;
-  return true;
-}
-
-function citeCode(
-  rel: string,
-  where: string,
-  code: string,
-  taxonomy: Taxonomy,
-  band: number[],
-  allowLater: boolean,
-  errors: string[],
-): void {
-  const entry = taxonomy.curriculumCodes.get(code);
-  if (!entry) {
-    errors.push(`${rel}: ${where} 的代碼「${code}」不在 curriculum-108-codes.yaml，不可自編`);
-    return;
-  }
-  if (!codeInBand(entry.stage, band, allowLater)) {
-    errors.push(`${rel}: ${where} 的代碼「${code}」學習階段 ${entry.stage} 不在這個學段`);
-  }
-}
-
-function checkDetail(
-  rel: string,
-  id: string,
-  raw: Record<string, unknown>,
-  stage: string,
-  strict: boolean,
-  guiding: string[],
-  taxonomy: Taxonomy,
-  sourcesBackfill: Set<string>,
-  circleBackfill: Set<string>,
-  errors: string[],
-  warnings: string[],
-): void {
-  const sources = readSources(raw.sources) ?? [];
-  const hasSources = sources.length > 0;
-  const sourceProblems: string[] = [];
-  if (!hasSources) {
-    sourceProblems.push(`${rel}: 缺少 sources`);
-  } else {
-    if (sources.length < 2) sourceProblems.push(`${rel}: 來源至少要 2 筆`);
-    if (sources.every((source) => source.kind === "aux")) sourceProblems.push(`${rel}: 來源不能全部是 aux`);
-    if ((stage === "es" || stage === "jh" || stage === "sh") && !sources.some((source) => A_LEVEL_KINDS.has(source.kind))) {
-      sourceProblems.push(`${rel}: 至少要有一筆 A 級來源（curriculum、government、exam）`);
-    }
-    const urls = new Set<string>();
-    for (const source of sources) {
-      if (urls.has(source.url)) sourceProblems.push(`${rel}: 來源網址重複（${source.url}）`);
-      urls.add(source.url);
-      const banned = excludedHost(source.url);
-      if (banned) sourceProblems.push(`${rel}: 來源網域在排除清單（${banned}）`);
-    }
-  }
-  if (sourcesBackfill.has(id) && sourceProblems.length === 0) {
-    errors.push(`${rel}: 已符合來源規則，請從 sources-backfill.yaml 移出 ${id}`);
-  } else if (sourceProblems.length > 0) {
-    const target = strict && !sourcesBackfill.has(id) ? errors : warnings;
-    target.push(...sourceProblems);
-  }
-
-  const seenSourceIds = new Set<string>();
-  for (const source of sources) {
-    if (!source.id) {
-      const message = `${rel}: 來源「${source.title}」缺少 id`;
-      (strict ? errors : warnings).push(message);
-      continue;
-    }
-    if (seenSourceIds.has(source.id)) errors.push(`${rel}: sources id 重複（${source.id}）`);
-    seenSourceIds.add(source.id);
-  }
-
-  const circleProblems: string[] = [];
-  for (const key of CIRCLE_KEYS) {
-    const circle = raw[key];
-    if (!isRecord(circle)) {
-      circleProblems.push(`${rel}: 缺少黃金圈的 ${key}`);
-      continue;
-    }
-    if (!circleHasContent(circle)) circleProblems.push(`${rel}: ${key} 的 body、items、checklist、figures、notes 至少要有一項`);
-  }
-  if (circleBackfill.has(id) && circleProblems.length === 0) {
-    errors.push(`${rel}: 已符合黃金圈規則，請從 golden-circle-backfill.yaml 移出 ${id}`);
-  } else if (circleProblems.length > 0) {
-    const target = strict && !circleBackfill.has(id) ? errors : warnings;
-    target.push(...circleProblems);
-  }
-
-  const figureIds = new Set<string>();
-  for (const figure of readFigures(raw.figures) ?? []) {
-    if (figureIds.has(figure.id)) errors.push(`${rel}: figures id 重複（${figure.id}）`);
-    figureIds.add(figure.id);
-    if (figure.source && !seenSourceIds.has(figure.source)) {
-      errors.push(`${rel}: figures.source 指向不存在的來源（${figure.source}）`);
-    }
-  }
-  if (isRecord(raw.est_time) && typeof raw.est_time.source === "string" && !seenSourceIds.has(raw.est_time.source)) {
-    errors.push(`${rel}: est_time.source 指向不存在的來源（${raw.est_time.source}）`);
-  }
-
-  const band = taxonomy.stages.get(stage)?.learningStages ?? [];
-  for (const key of CIRCLE_KEYS) {
-    const circle = raw[key];
-    if (!isRecord(circle)) continue;
-    for (const sourceId of asStringArray(circle.sources) ?? []) {
-      if (!seenSourceIds.has(sourceId)) errors.push(`${rel}: ${key}.sources 指向不存在的來源（${sourceId}）`);
-    }
-    if (isRecord(circle.qa)) {
-      if (typeof circle.qa.question === "string" && !guiding.includes(circle.qa.question)) {
-        errors.push(`${rel}: ${key}.qa.question 不在 guiding_questions`);
-      }
-      if (typeof circle.qa.source === "string" && !seenSourceIds.has(circle.qa.source)) {
-        errors.push(`${rel}: ${key}.qa.source 指向不存在的來源（${circle.qa.source}）`);
-      }
-    }
-    for (const figureId of asStringArray(circle.figures) ?? []) {
-      if (!figureIds.has(figureId)) errors.push(`${rel}: ${key}.figures 指向不存在的圖（${figureId}）`);
-    }
-    if (typeof circle.activity_figure === "string" && !figureIds.has(circle.activity_figure)) {
-      errors.push(`${rel}: ${key}.activity_figure 指向不存在的圖（${circle.activity_figure}）`);
-    }
-    if (Array.isArray(circle.items)) {
-      for (const item of circle.items) {
-        if (isRecord(item) && typeof item.code === "string") citeCode(rel, `${key}.items`, item.code, taxonomy, band, key === "why", errors);
-      }
-    }
-  }
-
-  if (isRecord(raw.curriculum_108)) {
-    for (const code of asStringArray(raw.curriculum_108.performances) ?? []) {
-      citeCode(rel, "performances", code, taxonomy, band, false, errors);
-    }
-    for (const code of asStringArray(raw.curriculum_108.contents) ?? []) {
-      citeCode(rel, "contents", code, taxonomy, band, false, errors);
-    }
-  }
-}
 
 function loadKnowledgePoints(
   contentDir: string,
-  taxonomy: Taxonomy,
-  validate: ValidateFunction,
+  ctx: RuleContext,
   errors: string[],
   warnings: string[],
-  sourcesBackfill: Set<string>,
-  circleBackfill: Set<string>,
 ): KnowledgePoint[] {
   const knowledgeDir = join(contentDir, "knowledge");
   let files: string[] = [];
@@ -807,8 +412,7 @@ function loadKnowledgePoints(
   }
   if (files.length === 0) errors.push("knowledge/: 沒有任何知識點檔案");
 
-  const points: KnowledgePoint[] = [];
-  const seen = new Map<string, string>();
+  const docs: KpDocument[] = [];
   for (const file of files) {
     const rel = relative(contentDir, file);
     const parsed = readYamlFile(file);
@@ -816,331 +420,48 @@ function loadKnowledgePoints(
       errors.push(`${rel}: 無法解析 YAML（${parsed.error}）`);
       continue;
     }
-    if (!validate(parsed.value)) {
-      errors.push(...ajvMessages(rel, validate.errors));
-      continue;
-    }
-    if (!isRecord(parsed.value) || !isRecord(parsed.value.discipline) || !isRecord(parsed.value.stage) || !isRecord(parsed.value.links)) {
-      errors.push(`${rel}: 欄位形狀不對`);
-      continue;
-    }
-    const id = String(parsed.value.id);
-    const concept = String(parsed.value.concept);
-    const stage = String(parsed.value.stage.level);
-    const pathSegments = asStringArray(parsed.value.discipline.path) ?? [];
-    const prerequisites = asStringArray(parsed.value.prerequisites) ?? [];
-    const links: KnowledgeLinks = {
-      why: asStringArray(parsed.value.links.why) ?? [],
-      how: asStringArray(parsed.value.links.how) ?? [],
-      related: asStringArray(parsed.value.links.related) ?? [],
-      deeper: asStringArray(parsed.value.links.deeper) ?? [],
-    };
     const parts = rel.split("/");
-    if (parts.length !== 4 || parts[0] !== "knowledge" || !parts[3]?.endsWith(".yaml")) {
-      errors.push(`${rel}: 路徑必須是 knowledge/<學門>/<concept>/<階段>.yaml`);
-    }
-    const folder = parts[1] ?? "";
-    const conceptDir = parts[2] ?? "";
-    const stageFile = (parts[3] ?? "").replace(/\.yaml$/, "");
-    if (conceptDir !== concept || stageFile !== stage) {
-      errors.push(`${rel}: 檔名必須是 ${concept}/${stage}.yaml`);
-    }
-    if (!id.endsWith(`@${stage}`) || id.slice(0, id.length - stage.length - 1) !== concept) {
-      errors.push(`${rel}: id 必須是 ${concept}@${stage}`);
-    }
-    const previous = seen.get(id);
-    if (previous) errors.push(`${rel}: id 重複（${id}），另一份在 ${previous}`);
-    seen.set(id, rel);
-
-    const resolved = resolvePath(taxonomy.roots, pathSegments);
-    if (!resolved) {
-      errors.push(`${rel}: discipline.path 不在學科樹裡（${pathSegments.join(" / ")}）`);
-    } else {
-      if (parsed.value.discipline.layer !== resolved.node.layer) {
-        errors.push(`${rel}: layer 應為 ${resolved.node.layer}，目前是 ${String(parsed.value.discipline.layer)}`);
-      }
-      if (!resolved.root.idPrefix || !resolved.root.contentFolder) {
-        errors.push(`${rel}: 學門「${resolved.root.name}」還沒有 id 前綴或內容資料夾`);
-      } else {
-        if (folder !== resolved.root.contentFolder) {
-          errors.push(`${rel}: 應放在 knowledge/${resolved.root.contentFolder}/`);
-        }
-        if (!id.startsWith(`${resolved.idPrefix}.`)) {
-          errors.push(`${rel}: id 前綴應為 ${resolved.idPrefix}`);
-        }
-      }
-    }
-    if (!taxonomy.stages.has(stage)) errors.push(`${rel}: 未知階段 ${stage}`);
-    const stageInfo = taxonomy.stages.get(stage);
-    if (stageInfo && Array.isArray(parsed.value.stage.grades)) {
-      for (const grade of parsed.value.stage.grades) {
-        if (typeof grade !== "number" || !stageInfo.grades.includes(grade)) {
-          errors.push(`${rel}: 年級 ${String(grade)} 不在${stageInfo.name}的範圍`);
-        }
-      }
-    }
-    let curriculum108: KnowledgePoint["curriculum108"];
-    if (isRecord(parsed.value.curriculum_108)) {
-      if (stageInfo && !stageInfo.curriculum108) errors.push(`${rel}: ${stageInfo.name}不填 curriculum_108`);
-      const domains = asStringArray(parsed.value.curriculum_108.domains) ?? [];
-      const codes = asStringArray(parsed.value.curriculum_108.core_competencies) ?? [];
-      const issueList = asStringArray(parsed.value.curriculum_108.issues) ?? [];
-      for (const domain of domains) {
-        if (!taxonomy.domains.has(domain)) errors.push(`${rel}: 未知領域「${domain}」`);
-      }
-      for (const code of codes) {
-        if (!taxonomy.coreCodes.has(code)) errors.push(`${rel}: 核心素養代碼只能是 A1–C3（${code}）`);
-      }
-      for (const issue of issueList) {
-        if (!taxonomy.issues.has(issue)) errors.push(`${rel}: 未知議題「${issue}」`);
-      }
-      curriculum108 = { domains, coreCompetencies: codes, issues: issueList };
-      const performances = asStringArray(parsed.value.curriculum_108.performances);
-      const contents = asStringArray(parsed.value.curriculum_108.contents);
-      if (performances) curriculum108.performances = performances;
-      if (contents) curriculum108.contents = contents;
-    } else if (stageInfo?.curriculum108) {
-      errors.push(`${rel}: ${stageInfo.name}必須填 curriculum_108`);
-    }
-    const crosscutting = asStringArray(parsed.value.discipline.crosscutting) ?? [];
-    for (const item of crosscutting) {
-      if (!taxonomy.crosscutting.has(item)) errors.push(`${rel}: 未知的貫穿主題「${item}」`);
-    }
-    const specialist = isRecord(parsed.value.competency) ? (asStringArray(parsed.value.competency.specialist) ?? []) : [];
-    const generalist = isRecord(parsed.value.competency) ? (asStringArray(parsed.value.competency.generalist) ?? []) : [];
-    for (const name of specialist) {
-      if (!taxonomy.specialist.has(name)) errors.push(`${rel}: 未知專才標籤「${name}」`);
-    }
-    for (const name of generalist) {
-      if (!taxonomy.generalist.has(name)) errors.push(`${rel}: 未知通才標籤「${name}」`);
-    }
-    const linkBuckets: Array<[string, string[]]> = [
-      ["why", links.why],
-      ["how", links.how],
-      ["related", links.related],
-      ["deeper", links.deeper],
-      ["prerequisites", prerequisites],
-    ];
-    const used = new Map<string, string>();
-    for (const [bucket, list] of linkBuckets) {
-      for (const target of list) {
-        if (target === id) errors.push(`${rel}: ${bucket} 不能指向自己`);
-        const prior = used.get(target);
-        if (prior) errors.push(`${rel}: ${target} 同時出現在 ${prior} 與 ${bucket}`);
-        used.set(target, bucket);
-      }
-    }
-    const ownRank = taxonomy.stages.get(stage)?.rank ?? -1;
-    for (const target of links.deeper) {
-      const targetStage = target.split("@")[1] ?? "";
-      const targetRank = taxonomy.stages.get(targetStage)?.rank;
-      if (targetRank === undefined || targetRank <= ownRank) {
-        errors.push(`${rel}: deeper ${target} 的階段必須比 ${stage} 後面`);
-      }
-    }
-
-    const title = String(parsed.value.title ?? "");
-    if (title.includes(":")) errors.push(`${rel}: 標題請用全形冒號（：）`);
-
-    const status = parsed.value.status;
-    const knowledgeStatus: KnowledgeStatus =
-      status === "published" || status === "review" || status === "draft" ? status : "draft";
-    const formats = isRecord(parsed.value.formats) ? parsed.value.formats : {};
-    const slides = asStringArray(formats.slides) ?? [];
-    const audienceRaw = asStringArray(parsed.value.audience) ?? [];
-    const audience = audienceRaw.filter((item): item is AudienceId => AUDIENCE.has(item));
-    const ai = isRecord(parsed.value.ai) ? parsed.value.ai : {};
-    const grades = Array.isArray(parsed.value.stage.grades)
-      ? parsed.value.stage.grades.filter((grade): grade is number => typeof grade === "number")
-      : [];
-    const guidingQuestions = asStringArray(parsed.value.guiding_questions) ?? [];
-    checkDetail(
-      rel,
-      id,
-      parsed.value,
-      stage,
-      knowledgeStatus === "review" || knowledgeStatus === "published",
-      guidingQuestions,
-      taxonomy,
-      sourcesBackfill,
-      circleBackfill,
-      errors,
-      warnings,
-    );
-
-    const point: KnowledgePoint = {
-      file: rel,
-      id,
-      concept,
-      title,
-      status: knowledgeStatus,
-      version: String(parsed.value.version ?? ""),
-      disciplinePath: pathSegments,
-      layer: String(parsed.value.discipline.layer ?? ""),
-      crosscutting,
-      folder,
-      stage,
-      grades,
-      curriculum108,
-      toVerify: parsed.value.to_verify === true,
-      verifyNotes: asStringArray(parsed.value.verify_notes) ?? [],
-      prerequisites,
-      links,
-      linkNotes: String(parsed.value.link_notes ?? ""),
-      specialist,
-      generalist,
-      delegable: asStringArray(ai.delegable) ?? [],
-      humanExperience: asStringArray(ai.human_experience) ?? [],
-      idea: String(parsed.value.idea ?? ""),
-      goal: optionalString(parsed.value.goal),
-      review: optionalString(parsed.value.review),
-      guidingQuestions,
-      scenario: String(parsed.value.scenario ?? ""),
-      slides,
-      article: optionalString(formats.article),
-      exercise: optionalString(formats.exercise),
-      project: optionalString(formats.project),
-      aiPrompt: optionalString(formats.ai_prompt),
-      game: optionalString(formats.game),
-      audience,
-      authors: asStringArray(parsed.value.authors) ?? [],
-      updated: String(parsed.value.updated ?? ""),
-    };
-    if (isRecord(parsed.value.est_time) && typeof parsed.value.est_time.school === "string" && typeof parsed.value.est_time.source === "string") {
-      point.estTime = { school: parsed.value.est_time.school, source: parsed.value.est_time.source };
-    }
-    const why = readCircle(parsed.value.why);
-    const how = readCircle(parsed.value.how);
-    const what = readCircle(parsed.value.what);
-    if (why) point.why = why;
-    if (how) point.how = how;
-    if (what) point.what = what;
-    const figures = readFigures(parsed.value.figures);
-    const sourceList = readSources(parsed.value.sources);
-    if (figures) point.figures = figures;
-    if (sourceList) point.sources = sourceList;
-    points.push(point);
+    docs.push({
+      ref: rel,
+      raw: parsed.value,
+      location: {
+        wellFormed: parts.length === 4 && parts[0] === "knowledge" && parts[3]?.endsWith(".yaml") === true,
+        folder: parts[1] ?? "",
+        conceptDir: parts[2] ?? "",
+        stageFile: (parts[3] ?? "").replace(/\.yaml$/, ""),
+      },
+    });
   }
-  for (const listed of sourcesBackfill) {
-    if (!seen.has(listed)) errors.push(`sources-backfill.yaml: 未知的 id（${listed}）`);
-  }
-  for (const listed of circleBackfill) {
-    if (!seen.has(listed)) errors.push(`golden-circle-backfill.yaml: 未知的 id（${listed}）`);
-  }
-  return points;
-}
-
-function findCycles(points: KnowledgePoint[]): string[] {
-  const adjacent = new Map<string, string[]>();
-  for (const point of points) adjacent.set(point.id, []);
-  for (const point of points) {
-    for (const prereq of point.prerequisites) {
-      adjacent.get(prereq)?.push(point.id);
-    }
-  }
-  const color = new Map<string, number>();
-  const errors: string[] = [];
-  const visit = (id: string, stack: string[]): void => {
-    color.set(id, 1);
-    for (const next of adjacent.get(id) ?? []) {
-      if (color.get(next) === 1) {
-        const start = stack.indexOf(next);
-        errors.push(`先備循環：${[...stack.slice(start), next].join(" → ")}`);
-      } else if ((color.get(next) ?? 0) === 0) {
-        visit(next, [...stack, next]);
-      }
-    }
-    color.set(id, 2);
-  };
-  for (const point of points) {
-    if ((color.get(point.id) ?? 0) === 0) visit(point.id, [point.id]);
-  }
-  return errors;
-}
-
-function checkReferences(points: KnowledgePoint[], errors: string[]): void {
-  const ids = new Set(points.map((point) => point.id));
-  for (const point of points) {
-    const refs = [
-      ...point.prerequisites.map((id) => ["先備", id] as const),
-      ...point.links.why.map((id) => ["why", id] as const),
-      ...point.links.how.map((id) => ["how", id] as const),
-      ...point.links.related.map((id) => ["related", id] as const),
-      ...point.links.deeper.map((id) => ["deeper", id] as const),
-    ];
-    for (const [kind, id] of refs) {
-      if (!ids.has(id)) errors.push(`${point.file}: ${kind} 指向不存在的 id（${id}）`);
-    }
-  }
-  errors.push(...findCycles(points));
+  const result = checkPoints(docs, ctx);
+  errors.push(...result.errors);
+  warnings.push(...result.warnings);
+  return result.points;
 }
 
 function loadPaths(contentDir: string, taxonomy: Taxonomy, points: KnowledgePoint[], errors: string[]): LearningPath[] {
-  const ids = new Set(points.map((point) => point.id));
-  const byId = new Map(points.map((point) => [point.id, point]));
   const pathsDir = join(contentDir, "paths");
-  const loaded: LearningPath[] = [];
   let files: string[] = [];
   try {
     files = walkYaml(pathsDir);
   } catch {
     errors.push("paths/: 找不到主線目錄");
-    return loaded;
+    return [];
   }
-  const pathIds = new Set<string>();
+  const docs: PathDocument[] = [];
   for (const file of files) {
     const rel = relative(contentDir, file);
     const parsed = readYamlFile(file);
-    if (parsed.error || !isRecord(parsed.value)) {
+    if (parsed.error) {
       errors.push(`${rel}: 無法解析主線`);
       continue;
     }
-    const fileId = rel.split("/").pop()?.replace(/\.yaml$/, "");
-    if (parsed.value.id !== fileId) errors.push(`${rel}: id 必須與檔名相同（${fileId ?? ""}）`);
-    const disciplineFolder = typeof parsed.value.id === "string" ? parsed.value.id : fileId ?? "";
-    const disciplineTitle = typeof parsed.value.title === "string" ? parsed.value.title : disciplineFolder;
-    if (!Array.isArray(parsed.value.paths)) {
-      errors.push(`${rel}: 缺少 paths`);
-      continue;
-    }
-    for (const raw of parsed.value.paths) {
-      if (!isRecord(raw) || typeof raw.id !== "string" || typeof raw.title !== "string") {
-        errors.push(`${rel}: 主線缺少 id 或 title`);
-        continue;
-      }
-      if (pathIds.has(raw.id)) errors.push(`${rel}: 主線 id 重複（${raw.id}）`);
-      pathIds.add(raw.id);
-      const list = asStringArray(raw.knowledge_points);
-      if (!list || list.length < 2) {
-        errors.push(`${rel}: 主線 ${raw.id} 至少要有兩個知識點`);
-        continue;
-      }
-      let previousRank = -1;
-      const local = new Set<string>();
-      for (const id of list) {
-        if (local.has(id)) errors.push(`${rel}: 主線 ${raw.id} 重複列入 ${id}`);
-        local.add(id);
-        if (!ids.has(id)) {
-          errors.push(`${rel}: 主線 ${raw.id} 指向不存在的 id（${id}）`);
-          continue;
-        }
-        const rank = taxonomy.stages.get(byId.get(id)?.stage ?? "")?.rank ?? -1;
-        if (rank <= previousRank) errors.push(`${rel}: 主線 ${raw.id} 的階段必須一路往後（${id}）`);
-        previousRank = rank;
-      }
-      const colearn = typeof raw.colearn === "string" && raw.colearn.trim().length > 0 ? raw.colearn.trim() : undefined;
-      loaded.push({
-        id: raw.id,
-        title: raw.title,
-        disciplineFolder,
-        disciplineTitle,
-        knowledgePointIds: list,
-        colearn,
-      });
-    }
+    docs.push({ ref: rel, docId: rel.split("/").pop()?.replace(/\.yaml$/, ""), raw: parsed.value });
   }
-  return loaded;
+  const result = checkPaths(docs, taxonomy, points);
+  errors.push(...result.errors);
+  return result.paths;
 }
+
 
 export function loadContent(contentDir: string): { errors: string[]; warnings: string[]; model: ContentModel | null } {
   const errors: string[] = [];
@@ -1157,8 +478,8 @@ export function loadContent(contentDir: string): { errors: string[]; warnings: s
   }
   const sourcesBackfill = loadIdList(contentDir, "sources-backfill.yaml", errors);
   const circleBackfill = loadIdList(contentDir, "golden-circle-backfill.yaml", errors);
-  const points = loadKnowledgePoints(contentDir, taxonomy, validate, errors, warnings, sourcesBackfill, circleBackfill);
-  checkReferences(points, errors);
+  const ctx: RuleContext = { taxonomy, validateSchema: validate, sourcesBackfill, circleBackfill };
+  const points = loadKnowledgePoints(contentDir, ctx, errors, warnings);
   const paths = loadPaths(contentDir, taxonomy, points, errors);
   return { errors, warnings, model: { taxonomy, points, paths } };
 }

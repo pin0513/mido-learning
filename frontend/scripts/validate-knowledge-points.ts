@@ -2,7 +2,7 @@
  * 驗證 frontend/content 的知識點。
  * 從 frontend 目錄執行：pnpm validate:content
  *
- * 讀取與檢查看 lib/content/load.ts，和頁面共用同一份。
+ * 讀檔在 lib/content/load.ts，規則在 lib/content/rules/（記憶體物件，之後資料庫文件共用），和頁面共用同一份。
  */
 import { appendFileSync, cpSync, mkdtempSync, mkdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
