@@ -307,7 +307,7 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 
 ## 17. 旗標的前提（`KP_SOFTSKILLS_ENABLED`、`KP_DETAIL_V2_ENABLED`）
 
-#64 加了「旗標開的正式 build」e2e 之後，對照程式找到兩個問題。兩個都還沒修，打開 `KP_SOFTSKILLS_ENABLED`（或在旗標關的 build 上打開 `KP_DETAIL_V2_ENABLED`）之前要先處理。`KP_YUWEN_ENABLED` 走同一條路（`isFolderLaunched("language")`），問題相同。
+#64 加了「旗標開的正式 build」e2e 之後，對照程式找到兩個問題。問題 2 的 V2 部分已由第 17.6 節的 PR 修好，其餘還沒修，打開 `KP_SOFTSKILLS_ENABLED`（或在旗標關的 build 上打開 `KP_DETAIL_V2_ENABLED`）之前要先處理。`KP_YUWEN_ENABLED` 走同一條路（`isFolderLaunched("language")`），問題相同。
 
 **任何正式環境的旗標切換（打開或關掉，含帶標籤、0% 流量的 revision）都要 I-PING 本人明確同意**，不能由 AI 批次、teacher 或自動流程自行切換。這和第 9 節 `KP_DB_SOURCE_ENABLED` 是同一個原則。下面的做法與檢查清單都是同意之前要準備好的東西，不代表可以自行切換。
 
@@ -328,6 +328,7 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
    - 旗標關的時候，已發布的軟實力點也不連，就被寫成「尚未發布」。
    - 例：`ph.argument@jh` 的後學是 `ph.fallacy@jh`、`ph.logic@sh`，另有「另有 1 個尚未發布」，那一筆是已發布的 `sk.speech@jh`。在 `484b512` 上，旗標關的 build＋執行時打開 `KP_SOFTSKILLS_ENABLED`、`KP_DETAIL_V2_ENABLED` 實測，`/kp/sk.speech/jh` 回 200，`ph.argument@jh` 卻寫它「尚未發布」。
    - 目前其他這類的組合是 `ph.reason@es → sk.point@es`、`pm.conflict@sh → sk.facilitate@uni`、`pm.team@jh → sk.consensus@sh`。B25–B28 發布更多軟實力點後會變多。
+   - 2026-10-30 補註：軟實力與語文在 build 時都關（正式站現況）時，實際是 11 個點，見第 17.6 節。V2 已修好（第 17.6 節）；舊版頁的 `LinkedIds` 還沒改。
    - 舊版詳細頁的 `LinkedIds` 也是同一個算法（先備與四種 links）。只開軟實力時沒有實例；但軟實力與語文都在執行時打開、build 時全關（正式站現況，第 17.5 節），舊版頁就會把對方學門的已發布點算成「尚未發布」，例如 `sk.present@sh` 寫「另有 2 個知識點尚未發布」，那兩筆是已發布的 `zh.explain@sh`、`en.present@sh`。舊版的「把這裡當先備」只列看得到的點，不計數。
 
 ### 17.2 做法
@@ -349,7 +350,7 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 5. 取得 I-PING 本人明確同意後才切流量；切完在正式網址再看一次第 4 項。
 6. 回滾：切回前一個 revision（它的 image 與旗標值一致）；不要只改環境變數。
 
-`KP_DETAIL_V2_ENABLED` 本身只是 middleware 改寫，執行時切換就生效；但 V2 頁裡的連結一樣是 build 時的旗標值，所以在旗標關的 build 上打開 V2 時，問題 2 會直接出現在正式站。B 合併之前，打開 V2 也要走上面的清單。
+`KP_DETAIL_V2_ENABLED` 本身只是 middleware 改寫，執行時切換就生效；但 V2 頁裡的連結一樣是 build 時的旗標值，所以在旗標關的 build 上打開 V2 時，問題 2 會直接出現在正式站。B 合併之前，打開 V2 也要走上面的清單。B 的 V2 部分合併後（第 17.6 節），V2 不再誤報「尚未發布」，但跨學門連結仍是 build 時的值（問題 1），打開 V2 仍屬旗標切換，要 I-PING 本人明確同意。
 
 ### 17.4 做法 A 第一步：旗標集中到部署 workflow，值照現況
 
@@ -386,3 +387,29 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 
 - 量法：在本機用正式 Dockerfile build `main`（`f4a394f`）、做法 A 分支（`KP_BUILD_FLAGS` 全關）、和「build 也全開」三張 image，執行時都用正式站的四個 `true`，爬 528 條路由（首頁、`/kp`、`/kp/map`、所有 `/kp/概念` 與 `/kp/概念/學段`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`、`/kp/discipline/*`、`/kp/path/*`、`/kp/index.json`、sitemap），去掉 build id、雜湊與時間後比對 HTML。`main` 對分支：0 條不同。`main` 對「build 也全開」：上表 20 條。另抽 39 條路由對照正式網址的可見 HTML，與本機 `main` image 一致。
 
+### 17.6 做法 B（V2）：「尚未發布」只算草稿
+
+- `components/kp/v2/refs.ts` 新增 `hiddenDraftCount(known, shown)`：不連出去的點裡，只算 `status` 不是 `published` 的。`PointLinks` 改用它。已發布、只因學門旗標沒上線而不連的點整筆不出現，也不算數。
+- 清單裡只有這種點（沒有可連的點、也沒有草稿）時，整段不畫，不寫「沒有，這是起點。」這類空清單的話（那句話只在清單本來就空時才對）。
+- 舊版詳細頁（`KnowledgePointView` 的 `LinkedIds`）**沒改**。它也會把旗標擋掉的已發布點算成「尚未發布」（第 17.1 節問題 2，正式站 6 個點、12 條路由，見第 17.5 節的表），所以不是「正確」的參考。這個 PR 只改 V2，正式站（`KP_DETAIL_V2_ENABLED` 關）的頁面一條都不變；舊版要另開 PR，那會改變正式內容。
+- 旗標的值都沒改（workflow、env、Dockerfile 都不動）。`lib/kp/flags.ts`、`content/README.md`、`docs/specs/rollback.md` 的說明改成：「不用重新 build」只對請求時算的頁面（middleware、首頁、`/api/kp-launch`、`/kp/index.json`、sitemap、`/kp`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`）成立；靜態詳細頁要重新 build。另外，請求時的清單頁與 `/kp/index.json` 也讀 `KP_INCLUDE_DRAFTS`（`visibleCatalog` 的預設值），不只 build 時。
+- 渲染比對（本機用正式 Dockerfile build `main`（`70d03c0`）與分支兩張 image，build 時 `KP_*` 全關，執行時用正式站的四個 `true`，爬 552 條路由，去掉 build id、雜湊與時間後比對 HTML）：
+  - `KP_DETAIL_V2_ENABLED` 關（正式站現況）：0 條不同。
+  - `KP_DETAIL_V2_ENABLED` 開：22 條不同，是下表 11 個點的 `/kp/概念`（轉址到唯一學段）與 `/kp/概念/學段`。去掉 `<script>` 後的可見 HTML 只差「尚未發布」那一行；其餘差異是 RSC payload 的編號與切段位置。
+
+| 頁面（V2 後學） | 被旗標擋掉的已發布點 | 之前 | 之後 |
+| --- | --- | --- | --- |
+| `ma.data@es` | `sk.rootcause@sh` | 另有 1 個尚未發布 | — |
+| `ph.argument@jh` | `sk.speech@jh` | 另有 1 個尚未發布 | — |
+| `ph.fact@es` | `sk.nvc@jh` | 另有 1 個尚未發布 | — |
+| `ph.hypothesis@jh` | `sk.pdca@jh` | 另有 1 個尚未發布 | — |
+| `ph.parts@es` | `sk.fishbone@jh` | 另有 1 個尚未發布 | — |
+| `ph.question@es` | `sk.interview@sh` | 另有 1 個尚未發布 | — |
+| `ph.reason@es` | `sk.point@es`、`sk.why5@es` | 另有 2 個尚未發布 | — |
+| `pm.breakdown@es` | `sk.issuetree@jh` | 另有 1 個尚未發布 | — |
+| `pm.conflict@sh` | `sk.facilitate@uni`（`sk.mediate@uni` 是草稿，照算） | 另有 2 個尚未發布 | 另有 1 個尚未發布 |
+| `pm.team@jh` | `sk.consensus@sh` | 另有 1 個尚未發布 | — |
+| `pm.triangle@jh` | `sk.decide@sh` | 另有 1 個尚未發布 | — |
+
+- 測試：`components/kp/hidden-notice.test.ts` 加一則（學門旗標關時只算草稿；只有旗標擋掉的點時整段不畫；旗標開時連出去、草稿照算），在舊的 `PointLinks` 上會失敗。新的 `e2e/kp-detail-v2-flag-hidden.spec.ts` 由 `content/` 算出所有受影響的點，在 CI 的「Published-only pages, V2 with production runtime flags」步驟（不含草稿、`KP_*` 全關的 build，執行時用正式站的旗標加 V2）檢查；對 `main` 的 image 會失敗（1 個多餘的「尚未發布」），對分支通過。`e2e/kp-published-softskills.spec.ts` 的 V2 輪改成只算草稿。
+- 回滾：revert 這個 PR 的 squash commit，或回到 PM 建的 pre-tag。
