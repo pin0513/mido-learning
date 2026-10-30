@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "eslint",
     "validate:content": "tsx scripts/validate-knowledge-points.ts",
-    "test:unit": "tsx --test lib/content/city.test.ts lib/content/load.test.ts lib/content/rules/rules.test.ts lib/content/revision/revision.test.ts lib/kp/home-diagram.test.ts lib/kp/home-state.test.ts lib/kp/flags.test.ts lib/kp/circle.test.ts components/kp/city/progress.test.ts scripts/check-no-city-word.test.ts scripts/kp-revision-roundtrip.test.ts lib/content/comment-lock.test.ts components/kp/hidden-notice.test.ts components/kp/v2/review-state.test.ts",
+    "test:unit": "tsx --test lib/content/city.test.ts lib/content/load.test.ts lib/content/rules/rules.test.ts lib/content/revision/revision.test.ts lib/kp/home-diagram.test.ts lib/kp/home-state.test.ts lib/kp/flags.test.ts lib/kp/circle.test.ts lib/kp/folder-flags.test.ts components/kp/city/progress.test.ts scripts/check-no-city-word.test.ts scripts/kp-revision-roundtrip.test.ts lib/content/comment-lock.test.ts components/kp/hidden-notice.test.ts components/kp/v2/review-state.test.ts",
     "kp:roundtrip": "tsx scripts/kp-revision-roundtrip.ts",
     "content:comments": "tsx scripts/check-yaml-comments.ts",
     "content:comments:lock": "tsx scripts/check-yaml-comments.ts --write"

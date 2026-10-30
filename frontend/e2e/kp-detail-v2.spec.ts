@@ -2,6 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { join } from "node:path";
 import { loadContent } from "../lib/content/load";
+import { folderLaunched } from "./folder-flags";
 
 /**
  * 詳細頁 V2。視覺斷言只在 KP_DETAIL_V2_ENABLED=true 時跑。
@@ -41,10 +42,8 @@ const PAGES: { path: string; layer: string; verify: boolean; converted?: boolean
 const { errors, model } = loadContent(join(process.cwd(), "content"));
 if (errors.length > 0 || !model) throw new Error(errors.join("\n") || "content 載入失敗");
 const UNCONVERTED = model.points.filter((point) => !(point.why && point.how && point.what));
-// 學門旗標，同 lib/content/catalog.ts 的 isFolderLaunched（spec 不直接 import，lib/content/catalog.ts 在 Playwright 的轉譯下載入失敗）。
-const FOLDER_FLAG: Record<string, string> = { "soft-skills": "KP_SOFTSKILLS_ENABLED", language: "KP_YUWEN_ENABLED" };
-const folderLaunched = (folder: string) =>
-  process.env.KP_ENABLED === "true" && (!FOLDER_FLAG[folder] || process.env[FOLDER_FLAG[folder]] === "true");
+// 學門旗標在 e2e/folder-flags.ts（照 isFolderLaunched 寫，lib/kp/folder-flags.test.ts 守住兩邊一致）。
+const DRAFTS_BUILT = process.env.KP_INCLUDE_DRAFTS === "true";
 
 test("直連 /kp-v2 是 404，sitemap 也不列", async ({ request }) => {
   expect((await request.get("/kp-v2/zh.zhuyin/es")).status()).toBe(404);
@@ -203,8 +202,9 @@ test.describe("黃金圈詳細頁", () => {
     let checked = 0;
     for (const point of UNCONVERTED) {
       const response = await page.goto(`/kp/${point.concept}/${point.stage}`);
-      // B28 第 3 輪：只有草稿（status 不是 published）或學門旗標關閉時才允許 404；已發布又在開著的學門卻 404 就是錯。
-      if (response?.status() === 404 && (point.status !== "published" || !folderLaunched(point.folder))) continue;
+      // B28：只有學門旗標關閉，或草稿而這個 build 沒帶草稿（KP_INCLUDE_DRAFTS 不是 true）時才允許 404；
+      // 已發布、或帶草稿 build 的草稿，在開著的學門卻 404 就是錯。
+      if (response?.status() === 404 && (!folderLaunched(point.folder) || (point.status !== "published" && !DRAFTS_BUILT))) continue;
       expect(response?.status(), point.id).toBe(200);
       const root = page.getByTestId("kp-detail-v2");
       await expect(root, point.id).toContainText("內容補強中");
