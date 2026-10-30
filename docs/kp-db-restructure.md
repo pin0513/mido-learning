@@ -2,7 +2,7 @@
 
 | 項目 | 內容 |
 | --- | --- |
-| 狀態 | P0 規格（本文件）＋ P1 第一段（規則包抽出）進行中 |
+| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）已合併；P1 第二段（YAML ⇄ 修訂版轉換器）進行中 |
 | 依據 | 「知識點資料重構方案」（2026-10-29，分析 main `8c62d7e`）；本文件對照 main `e9bfd5e`（2026-10-30）的程式重寫 |
 | 決定者 | I-PING（admin） |
 | 不做的事 | 本文件與 P1 不碰正式 Firestore、GCP 資源，不改任何旗標 |
@@ -55,18 +55,18 @@
 
 | 欄位 | 型別 | 說明 |
 | --- | --- | --- |
-| `n`、`status` | int；`draft`／`in_review`／`published`／`archived` | 從 1 遞增，發布後整份不可改 |
-| `structure` | map | concept、title、discipline（path、layer、crosscutting）、stage（level、grades）、curriculum108（只存代碼）、prerequisites、links、linkNotes、competency、ai、audience、toVerify、verifyNotes、estTime |
+| `n`、`status` | int；`draft`／`in_review`／`published`／`archived` | 從 1 遞增，發布後整份不可改。這個 `status` 是修訂版的流程狀態；YAML 的 `status`（draft／review／published）存在 `knowledge_points/{kpId}.status` |
+| `structure` | map | concept、title、version、discipline（path、layer、crosscutting）、stage（level、grades）、curriculum108（domains、coreCompetencies、issues、performances、contents，只存代碼）、prerequisites、links（why、how、related、deeper）、linkNotes、competency（specialist、generalist）、ai（delegable、humanExperience）、audience、toVerify、verifyNotes、estTime（school、source）、formats（slides、article、exercise、project、aiPrompt、game）、authors、updated |
 | `lead` | map | idea、goal、scenario、review、guidingQuestions |
-| `why`、`how`、`what` | Markdown string | 見第 4 節 |
-| `figures` | array | 沿用現有圖的 JSON 結構 |
-| `sources` | array | id、title、publisher、url、accessed、kind、supports；verifiedBy、verifiedAt |
+| `why`、`how`、`what` | Markdown string | 見第 4 節；YAML 沒有這一圈就沒有這個欄位 |
+| `figures` | array | 沿用現有圖的 JSON 結構，原樣保存 |
+| `sources` | array | id、title、publisher、url、accessed、kind、supports；verifiedBy、verifiedAt 由發布時寫入 |
 | `taxonomyVersion`、`rulesVersion` | string | 驗證時的分類 git sha 與規則版本 |
 | `validation` | map | ok、errors[]、warnings[]、checkedAt |
 | `authorUid`、`submittedAt`、`publishedBy`、`publishedAt` | string、timestamp | `publishedBy` 必須是 admin |
 | `changeNote`、`contentHash` | string | 重複匯入不建新版 |
 
-驗證時把修訂版**轉回 schema 形狀的物件**（第 6 節），所以 schema 與規則只有一份。
+驗證時把修訂版**轉回 schema 形狀的物件**（`lib/content/revision` 的 `recordToYaml`，再交給 `rules`），所以 schema 與規則只有一份。欄位名稱：YAML 的 snake_case 在修訂版改成 camelCase（`curriculum_108` → `curriculum108`、`core_competencies` → `coreCompetencies`、`human_experience` → `humanExperience`、`ai_prompt` → `aiPrompt`、`est_time` → `estTime`、`link_notes` → `linkNotes`、`to_verify` → `toVerify`、`verify_notes` → `verifyNotes`、`guiding_questions` → `guidingQuestions`），其餘同名。選填欄位「沒寫」和「寫了空陣列」分開保存。轉換器的型別在 `lib/content/revision/types.ts`（`KpRecord`＝`kpId`、`status`、`revision`）。
 
 ### 3.3 其他集合
 
@@ -80,10 +80,42 @@
 
 ## 4. Markdown 寫法
 
-- 每段一份 Markdown，第一行 `## 標題` 對應 `heading`，段落對應 `body`。
-- 結構塊用指令：`:::qa`、`:::items{title="國中課綱怎麼說"}`、`:::checklist`；項目可帶 `{code=6-IV-2}`。
-- 圖 `::figure{#how-flow}`，來源 `[^cap-writing]`；不允許原始 HTML。
-- 渲染沿用 V2 的 `components/kp/v2/text.tsx`（RichText）。轉換器必須可逆：YAML → 修訂版 → YAML 一字不差。
+每一圈一份 Markdown（實作：`lib/content/revision/markdown.ts`）：
+
+```
+## 標題                                  ← heading
+
+第一段                                   ← body（每段一行，空行分隔）
+
+:::qa{source="scrum-guide"}              ← qa（source 必填）
+### 問題
+回答
+:::
+
+:::items{title="四步做"}                 ← items_title＋items
+- 項目標題 {code="涯 Ca-V-2"}            ← title、code（選填）
+  項目內容                               ← text（兩格縮排）
+  > 例子                                 ← example（選填）
+:::
+
+:::checklist{title="每輪檢查"}           ← checklist_title＋checklist
+- 檢查項目
+:::
+
+::figure{#agile-flow role="activity"}    ← activity_figure
+::figure{#agile-compare}                 ← figures（`::figure{}` 表示空陣列）
+
+:::notes                                 ← notes（每則一段）
+補充說明
+:::
+
+[^scrum-guide] [^zonghe]                 ← sources
+```
+
+- 每個值佔一行。值是空字串、含換行、前後有空白、或開頭是 `# : - > [ \ { * + |` 時，整行寫成 `\` 加 JSON 字串；屬性值一律是 JSON 字串。讀回來一字不差。
+- 輸出用上面的固定順序；讀的時候區塊順序不拘。寫錯（沒有標題、區塊沒收尾、不認得的區塊）回報行號，`checkRecord` 算錯誤。
+- 不允許原始 HTML：渲染沿用 V2 的 `components/kp/v2/text.tsx`（RichText），它只輸出文字節點。
+- 轉換器必須可逆。「可逆」的定義是**資料**：YAML 解析出的物件 → 修訂版 → 物件完全相同（型別、值、陣列順序、選填欄位有沒有寫）。物件的欄位順序不保留（Firestore 的 map 不保留順序），匯出時一律用 schema 的順序；YAML 註解不是資料，不進修訂版（見第 12 節）。
 
 ## 5. API（mido-learning-api，新增 `Endpoints/KnowledgePointEndpoints.cs`）
 
@@ -157,7 +189,7 @@
 ## 8. 遷移與凍結
 
 1. **規則包**（P1，本 PR）：檢查改吃記憶體物件，CI 行為不變。
-2. **YAML → 修訂版轉換器**（P1）：結構＋Markdown 可逆；241 點逐點比對 V2 主欄與側欄輸出，一字不差才算過。
+2. **YAML → 修訂版轉換器**（P1 第二段，`lib/content/revision/`）：結構＋Markdown 可逆；每一點逐點比對 V2 主欄與側欄輸出，一字不差才算過（`scripts/kp-revision-roundtrip.test.ts` 在 `pnpm test:unit` 裡跑；`pnpm kp:roundtrip` 印各學門結果）。
 3. **一次性匯入**（P2）：預設 dry-run，先對 Firestore 模擬器；每點建 `knowledge_points`＋revision 1，主線進 `learning_paths`，`audit_log` 記 gitSha；重跑不重複（`contentHash`）。正式 Firestore 匯入要另外取得 I-PING 同意。
 4. **依學門凍結**（P6）：`frontend/content/db-frozen.yaml` 列出已交給 DB 的學門（只能增加），CI 擋下這些學門的 YAML 修改。條件：該學門沒有未合併的 YAML 批次 PR（B23–B28 照舊走 YAML）；凍結前以當時 main 重新匯入；每晚 Git 匯出與原 YAML 比對一致後，再開 PR 刪掉該學門的 YAML。凍結後的批次改用 API 建草稿。
 
@@ -167,6 +199,7 @@
 - 開：`loadCatalog` 與詳細頁讀 API 的 `catalog_snapshots`；關：讀 image 內打包的 YAML。V2 版面不變。
 - 順序：本機正式 image（`frontend/Dockerfile`）＋Firestore 模擬器＋本機 API，旗標開與關各跑 Playwright（含 390px），輸出相同 → Cloud Run 帶標籤、0% 流量的 revision 打開旗標實測 → 切流量；有問題切回前一個 revision。
 - `/kp` 頁改 ISR，快取上限 300 秒；發布時 API 呼叫受保護的 revalidate；API 失敗時繼續給舊快取。
+- **打開 `KP_DB_SOURCE_ENABLED` 要 I-PING 本人明確同意**：任何正式環境（含帶標籤、0% 流量的 revision）都一樣，不能由 AI 批次、teacher 或自動流程自行打開；和第 8 節「正式 Firestore 匯入要另外取得 I-PING 同意」是同一個原則。
 
 ## 10. 匯出與備份
 
@@ -182,7 +215,7 @@
 | 期 | 內容 | 大小 | 使用者看得到 |
 | --- | --- | --- | --- |
 | P0 | 規格（本文件） | S | 否 |
-| P1 | 規則包（本 PR 第一段）→ YAML 轉修訂版、241 點比對 → kp-rules 服務 | M | 否 |
+| P1 | 規則包（第一段，#58）→ YAML 轉修訂版、逐點比對（第二段）→ kp-rules 服務 | M | 否 |
 | P2 | Firestore 集合與規則、API、匯入程式（模擬器） | L | 否 |
 | P3 | 前台讀 `catalog_snapshots`、`/kp` ISR、教材區、本機 image 測試 | M | 旗標開才看得到 |
 | P4 | 管理介面：結構表單、Markdown、教材連結、差異檢視、發布 | L | 管理者 |
@@ -198,6 +231,9 @@
 5. 檔名、資料夾、`knowledge/<學門>/<concept>/<學段>.yaml` 的檢查只對 YAML 有意義。資料庫文件不帶位置，學門資料夾由學科樹推出。
 6. 禁用字清單不在 `load.ts`，在 `scripts/check-no-city-word.test.ts` 與 CI workflow 的 grep。要在 DB 儲存時檢查，得先把清單搬進規則包（下一步）。
 7. 承諾用語在現有內容上 0 命中。這條規則目前只能擋以後的新寫法，不會整理出舊內容裡的問題。
+8. 第 3.2 節原本的 `structure` 少了 `version`、`formats`、`authors`、`updated`，而且修訂版的 `status`（流程）和 YAML 的 `status`（draft／review／published）是兩回事。要無損就得保存；已補進第 3.2 節，YAML 的 `status` 放在 `knowledge_points` 上。
+9. 「YAML → 修訂版 → YAML 一字不差」做不到文字層級：131 個檔有註解（批次審查紀錄，其中 5 個檔中間還有「新增」分隔線），物件欄位順序各檔不同（最常見的兩種順序分別有 67、64 檔），日期字串的引號也是原本工具的寫法。改成以**資料**相同為準（第 4 節）。匯出的 YAML 文字與原檔（去掉註解）完全相同的有 91 檔，其餘只差欄位順序。凍結學門時「Git 匯出與原 YAML 比對一致」也要比資料，不比文字。註解要留的話，匯入時把檔頭註解寫進 `knowledge_points.seed`（P2 決定）。
+10. 修訂版裡的圖與來源可以原樣進 Firestore：圖的 `groups[].symbols` 是「陣列裡的物件裡的陣列」，Firestore 允許；沒有陣列直接套陣列。轉換測試會檢查這一點。
 
 ## 13. P1 第一段做了什麼（PR `refactor/kp-rules-p1`）
 
@@ -205,10 +241,25 @@
 - 證明行為不變：`pnpm validate:content` 輸出逐字相同（0 錯誤、140 警告）；`loadContent` 的整份結果（含 Map／Set）序列化後 sha256 相同；原樣加 15 種壞樣本（壞 id、重複 id、放錯資料夾、YAML／schema 壞掉、拿掉來源、先備循環、主線壞掉、分類壞掉、自編代碼等）的錯誤與警告在新舊版完全相同。
 - 為了好和 B23（`Vc` 代碼）rebase，代碼格式相關的行（`ROMAN_STAGE`、`CODE_ROMAN`、`stageFromCode`、schema、`text.tsx`、自我測試）一行都沒動，仍在原位。`load.ts` 頂端的 `AUDIENCE`、`A_LEVEL_KINDS`、`CIRCLE_KEYS` 已複製到 `rules/point.ts`，緊鄰 B23 改的那行，等 B23 合併後再刪。
 
+## 14. P1 第二段：YAML ⇄ 修訂版轉換器（PR `feat/kp-revision-converter`）
+
+| 檔案 | 內容 |
+| --- | --- |
+| `lib/content/revision/types.ts` | `KpRecord`（kpId、status、revision）、`KpRevisionContent`（structure、lead、why／how／what、figures、sources）、`ConvertError` |
+| `lib/content/revision/markdown.ts` | 一圈 ⇄ Markdown（第 4 節） |
+| `lib/content/revision/convert.ts` | `yamlToRecord`、`recordToYaml`、`recordToYamlText`（每晚匯出用）、`checkRecord`／`checkRecords`（轉回物件後跑 `rules`） |
+| `lib/content/revision/revision.test.ts` | Markdown 固定寫法、跳脫、區塊順序、錯誤行號、不認得的欄位、規則結果一致 |
+| `scripts/kp-revision-roundtrip.ts`（`pnpm kp:roundtrip`） | 全部知識點的往返比對與各學門報表 |
+| `scripts/kp-revision-roundtrip.test.ts` | 同上，掛在 `pnpm test:unit`（CI 的 Validate knowledge points）；另有一個「改一個字就抓得到」的反向測試 |
+| `scripts/node-stubs.mjs` | 讓 Node 直接 render 詳細頁：`server-only` 與 `.css` 換成空模組（只給測試用） |
+
+比對內容（每一點）：資料往返（含模擬 Firestore 的 JSON 來回、第二次轉換、匯出 YAML 文字解析回來、Markdown 讀回再寫出）、Firestore 存得下、`checkRecords` 的錯誤與警告和 YAML 相同（訊息開頭換成 `knowledge_points/<id>`）、讀成的 `KnowledgePoint` 相同（`file` 除外）、V2 詳細頁主欄與側欄 HTML 逐字元相同（含草稿的目錄每點一頁，只看已發布的目錄每個已發布點再一頁）。
+
+結果（main `a8aba8c`）：241 點資料無損 241、畫面相同 241（比了 447 頁）；規則 0 錯誤、140 警告，兩邊相同。
+
 ### 下一步（不在這個 PR）
 
-1. YAML → 修訂版轉換器與 241 點逐字比對。
-2. 禁用字清單搬進規則包，掃每個字串欄位。
-3. kp-rules 服務（Cloud Run 內部）。
-4. Firestore 集合、`firestore.rules`、API 端點、`KpEditor` 政策、匯入程式（只對模擬器）。
-5. 前台讀取路徑與 `KP_DB_SOURCE_ENABLED`。
+1. 禁用字清單搬進規則包，掃每個字串欄位。
+2. kp-rules 服務（Cloud Run 內部），對外提供 `checkRecord`／`checkRecords`。
+3. Firestore 集合、`firestore.rules`、API 端點、`KpEditor` 政策、匯入程式（只對模擬器）。
+4. 前台讀取路徑與 `KP_DB_SOURCE_ENABLED`。
