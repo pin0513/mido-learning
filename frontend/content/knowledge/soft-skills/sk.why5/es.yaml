@@ -1,8 +1,13 @@
+# B25 提案：sk.why5@es
+# - 補 grades（五、六年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：綜合活動 2c-III-1、Bc-III-3（規劃策略解決日常生活問題）；沒有議題。
+# - 依據：美國聯邦醫療保險與補助服務中心（CMS）的五個為什麼工具與根本原因分析指引（追問到改掉就不再發生、看做法不看個人）。
+# - idea 的豐田拿掉（找不到可引用的官方原文）；link_notes 的巢狀引號改寫。
 id: sk.why5@es
 concept: sk.why5
 title: 問五次為什麼
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,17 +16,36 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 綜合活動
   core_competencies:
   - A2
-  issues:
-  - 家庭教育
-to_verify: true
+  issues: []
+  performances:
+  - 2c-III-1
+  contents:
+  - Bc-III-3
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（5 Whys（五個為什麼）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 A2：依總綱 p.4–6 國民小學教育的 E-A2 與綜合活動領綱 p.3 的綜-E-A2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 5、6：本點的代碼都是第三學習階段（2c-III-1、Bc-III-3），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 原 idea 的豐田刪除：五個為什麼常說源自豐田，但本輪找不到豐田官方頁面的原文可以引用；做法改依 CMS 的五個為什麼工具（本站整理）。
+- 原 link_notes 的哲學先學用了巢狀引號，改寫成跨學門先學：哲學（說出理由）。
+- 原 review 的第 3–5 層標成示意，補上改掉後問題還會不會再發生；早上常遲到、作業忘了帶的內層引號拿掉。
+- 沒有議題：議題融入說明手冊國小的實質內涵，沒有對應追問原因的條目（本站建議）。
+- 原 scenario 的為什麼小偵探保留做法，拿掉內層引號，補上本站建議。
+- 原 ai.delegable「提出可能的原因供參考」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（5 Whys（五個為什麼））…」已處理：依 CMS 的五個為什麼工具與根本原因分析指引改寫，英文短句逐字引用，中文說明是本站整理。
+- CMS 的教材原本寫給醫療機構的品質改善團隊；本點只借用追問原因、看做法不看個人的做法，用在國小五、六年級（本站建議）。
+- 英文 PDF 的引文避開彎引號；PDF 換行處照原詞接回，其餘空白照原文。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites:
 - sk.problem@es
 - ph.reason@es
@@ -31,7 +55,7 @@ links:
   related: []
   deeper:
   - sk.fishbone@jh
-link_notes: 框架：5 Whys（五個為什麼）。跨學門先學：哲學「說出理由：「因為……所以……」」。
+link_notes: 框架：五個為什麼（5 Whys）。跨學門先學：哲學（說出理由）；綜合活動 2c-III-1、Bc-III-3。
 competency:
   specialist:
   - 問題解決
@@ -39,21 +63,171 @@ competency:
   - 提問
 ai:
   delegable:
-  - 提出可能的原因供參考
+  - 提出可能的原因供參考（由大人操作，本站建議）
   human_experience:
   - 誠實面對自己的習慣
-idea: 第一個想到的原因常常只是表面。一直問「為什麼會這樣？」問三到五次，就會找到更根本、自己改得動的原因（豐田的「五個為什麼」）。要問「為什麼」，不要問「是誰的錯」。
+idea: 第一個想到的原因常常只是表面。一直問為什麼會這樣，常常要問三到五次，才找得到更根本、自己改得動的原因。要問為什麼，不要問是誰的錯。
 guiding_questions:
 - 早上常常遲到，真正的原因是起不來，還是別的？
-scenario: 親子共學：大人也挑一個自己的問題（例如常忘記帶鑰匙），請孩子當「為什麼小偵探」一直追問。
-goal: 對一個問題連續問「為什麼」，找到自己改得動的原因。
-review: 對「早上常遲到」或「作業忘了帶」一起問到第 3–5 層，畫成一串；家長檢查最後一個原因是「我們改得動的事」，而且沒有變成責怪某個人。
+- 問到第幾次可以停？
+- 為什麼不要問是誰的錯？
+scenario: 親子共學：大人也挑一個自己的問題（例如常忘記帶鑰匙），請孩子當為什麼小偵探一直追問（本站建議）。
+goal: 對一個生活小問題一層一層問為什麼，問到改掉這個原因、問題就不容易再發生，而且是自己改得動的事。
+review: 對早上常遲到或作業忘了帶，一起問到第 3–5 層（示意），畫成一串；家長檢查最後一個原因是我們改得動的事、改掉後問題不容易再發生，而且沒有變成責怪某個人。
 formats:
   slides: []
-  exercise: 目標：對一個問題連續問「為什麼」，找到自己改得動的原因。　檢核：對「早上常遲到」或「作業忘了帶」一起問到第 3–5 層，畫成一串；家長檢查最後一個原因是「我們改得動的事」，而且沒有變成責怪某個人。
+  exercise: 目標：對一個生活小問題一層一層問為什麼，問到改掉這個原因、問題就不容易再發生，而且是自己改得動的事。　檢核：對早上常遲到或作業忘了帶，一起問到第 3–5 層（示意），畫成一串；家長檢查最後一個原因是我們改得動的事、改掉後問題不容易再發生，而且沒有變成責怪某個人。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 找到根本原因，才改得動
+  body:
+  - 綜合活動課綱要五、六年級「分析與判讀各類資源，規劃策略以解決日常生活的問題。」學習內容也有「運用各類資源解決問題的規劃。」要規劃解決的辦法，先要找到真正的原因（本站整理）。
+  - 美國聯邦醫療保險與補助服務中心（CMS）的品質改善教材介紹五個為什麼：「The Five Whys is a simple problem-solving technique that helps to get to the root of a problem quickly.」，也就是很快找到問題根本的簡單方法（翻譯是本站整理）。
+  qa:
+    question: 早上常常遲到，真正的原因是起不來，還是別的？
+    answer: 起不來常常只是第一層。再問為什麼起不來，可能是太晚睡；再問為什麼太晚睡，可能是睡前還在看平板（例子是本站整理）。CMS 說「It often takes three to five whys」，常常要多問幾層（翻譯是本站整理）。
+    source: cms-5why
+  items_title: 課綱的學習重點
+  items:
+  - title: 規劃策略解決問題
+    text: 綜合活動 2c-III-1：分析與判讀各類資源，規劃策略以解決日常生活的問題。
+    code: 2c-III-1
+  - title: 規劃解決問題
+    text: 綜合活動 Bc-III-3：運用各類資源解決問題的規劃。
+    code: Bc-III-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 先說清楚問題
+  - 準備紙和筆
+  figures:
+  - why5-compare
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - cms-5why
+  - zonggang
+how:
+  heading: 一層一層問為什麼
+  body:
+  - 先把問題說清楚：寫成看得到的事實，例如這星期有三天遲到（本站建議）。CMS 的步驟第一步是寫下問題，提醒要「Be clear and specific.」（翻譯是本站整理）。
+  - 再一層一層問：在紙上寫下問題，往下畫箭頭，問為什麼會這樣，寫下答案；再對答案問為什麼，畫成一串（本站建議）。每寫一個答案，就用 CMS 的檢查問題：「If the most recent response were corrected, is it likely the problem would recur?」，也就是改掉這個原因，問題還會再發生嗎？會的話就繼續問（翻譯是本站整理）。最後的原因要是自己改得動的事（本站建議）。
+  - 問事情，不怪人：CMS 說「The RCA process should focus on systems rather than individual performance.」，重點放在做事的方法，不是某個人的表現（翻譯是本站整理）。答案出現誰很懶、都是誰害的，就改問那時發生了什麼事（本站建議）。大人也挑一個自己的問題讓孩子追問，大家輪流當小偵探（本站建議）。
+  qa:
+    question: 問到第幾次可以停？
+    answer: 不看次數，看改掉這個原因後，問題還會不會再發生（本站整理）。CMS 說常常要三到五次，「but it can take more than five!」（翻譯是本站整理）。答案已經是自己改得動、改了就不容易再發生的事，就可以停下來想辦法（本站建議）。
+    source: cms-5why
+  items_title: 四步做
+  items:
+  - title: 說清楚問題
+    text: 寫成看得到的事實。
+  - title: 一層層問為什麼
+    text: 畫成一串。
+  - title: 檢查會不會再發生
+    text: 會就繼續問。
+  - title: 問事情不怪人
+    text: 找改得動的原因。
+  checklist_title: 問完檢查一下
+  checklist:
+  - 問了三層以上
+  - 原因改得動
+  - 沒有責怪人
+  activity_figure: why5-flow
+  sources:
+  - cms-5why
+  - cms-rca
+what:
+  heading: 找到改得動的原因
+  body:
+  - 學完後，孩子遇到生活小問題，能一層一層問為什麼並畫成一串，找到改掉後問題就不容易再發生、自己改得動的原因；問的是事情，不是責怪人。
+  items_title: 學完能做到
+  items:
+  - title: 連續問為什麼
+    text: 畫成一串原因。
+  - title: 知道何時停
+    text: 改掉後不再發生。
+  - title: 問事情不怪人
+    text: 找改得動的原因。
+  checklist_title: 家長檢核
+  checklist:
+  - 問了三層以上
+  - 原因改得動
+  - 沒有責怪人
+  notes:
+  - 原因不只一條時，到國中可以學魚骨圖，從不同類別一起找原因（本站建議）。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: why5-flow
+  type: flow
+  alt: 問為什麼五步驟：孩子寫下問題、問為什麼、寫下答案，大家檢查會不會再發生，找出改得動的原因。
+  steps:
+  - actor: 孩子
+    text: 寫下問題
+  - actor: 孩子
+    text: 問為什麼
+  - actor: 孩子
+    text: 寫下答案
+  - actor: 大家
+    text: 會再發生嗎
+  - actor: 大家
+    text: 找改得動的
+  source: cms-5why
+  caption: 流程是本站建議。
+- id: why5-compare
+  type: compare
+  alt: 比較兩層原因：表面原因是起不來；更深的原因是睡前看平板、太晚睡。
+  source: cms-5why
+  relation: not_equal
+  items:
+  - term: 表面原因
+    note: 起不來
+  - term: 更深的原因
+    note: 睡前看平板，太晚睡
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：2c-III-1「分析與判讀各類資源，規劃策略以解決日常生活的問題。」（p.15）；Bc-III-3「運用各類資源解決問題的規劃。」（p.75）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: cms-5why
+  title: Five Whys Tool for Root Cause Analysis
+  publisher: 美國聯邦醫療保險與補助服務中心（CMS），QAPI 品質改善工具
+  url: https://www.cms.gov/Medicare/Provider-Enrollment-and-Certification/QAPI/downloads/FiveWhys.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「The Five Whys is a simple problem-solving technique that helps to get to the root of a problem quickly.」；「Be clear and specific.」；「If the most recent response were corrected, is it likely the problem would recur?」；「It often takes three to five whys, but it can take more than five!」（p.1）
+- id: cms-rca
+  title: Guidance for Performing Root Cause Analysis (RCA) with Performance Improvement Projects (PIPs)
+  publisher: 美國聯邦醫療保險與補助服務中心（CMS），QAPI 品質改善工具
+  url: https://www.cms.gov/medicare/provider-enrollment-and-certification/qapi/downloads/guidanceforrca.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「The RCA process should focus on systems rather than individual performance.」（p.2）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

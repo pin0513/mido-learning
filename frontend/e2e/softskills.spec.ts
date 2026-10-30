@@ -4,10 +4,8 @@ import { test, expect, type Page } from "@playwright/test";
  * KP_SOFTSKILLS_ENABLED=true 且 KP_HOME_ENABLED=true 時才跑（E2E_SOFTSKILLS=1）。
  * 旗標關掉的四格切換在 city-home.spec.ts。
  */
+// B25 發布同理、解題的國小 6 點：標題移到 PUBLISHED_BRANCHES，在自己那條線上要看得到（talk 頁的 sk.discuss@jh 先學會帶出「專心聽，再說回來」，所以不再當草稿查）。
 const DRAFT_TITLES = [
-  "說出感覺：我覺得……因為……",
-  "專心聽，再說回來",
-  "換個位置想",
   "同理心地圖：說、想、做、感受",
   "我訊息：說感受，不指責",
   "非暴力溝通：觀察、感受、需要、請求",
@@ -16,9 +14,6 @@ const DRAFT_TITLES = [
   "給回饋，也收回饋",
   "教練式對話：用提問陪對方找答案",
   "當調解人：幫兩方聽懂彼此",
-  "問題是什麼？現在和想要",
-  "問五次為什麼",
-  "解題四步：看懂、想法、動手、回頭看",
   "PDCA：計畫、執行、檢查、改進",
   "問題樹：大問題拆成小問題",
   "魚骨圖：把原因分類找",
@@ -27,6 +22,11 @@ const DRAFT_TITLES = [
   "設計思考：從同理到原型",
   "一頁問題報告：帶團隊從問題到行動",
   "假說驅動：先猜答案，再用資料檢驗",
+];
+
+const PUBLISHED_BRANCHES: [string, string, string[]][] = [
+  ["emp", "同理與溝通", ["說出感覺：我覺得……因為……", "專心聽，再說回來", "換個位置想"]],
+  ["solve", "解決問題", ["問題是什麼？現在和想要", "問五次為什麼", "解題四步：看懂、想法、動手、回頭看"]],
 ];
 
 const BANNED = ["城市", "街道", "市區", "地標", "廣場", "環路"];
@@ -111,14 +111,17 @@ test.describe("溝通與解決問題", () => {
       for (const tag of await pending.all()) {
         expect(await tag.evaluate((node) => node.tagName === "A" || node.closest("a") != null)).toBe(false);
       }
+      // B25：同理、解題兩條線都有已發布的國小點，切換列不再有鎖住的格子。
       const locked = page.getByTestId("branch-switch").locator("[aria-disabled='true']");
-      await expect(locked).toHaveCount(2);
-      expect(await locked.evaluateAll((nodes) => nodes.every((node) => node.tagName !== "A"))).toBe(true);
+      await expect(locked).toHaveCount(0);
+      await expect(page.getByTestId("branch-switch").locator("a")).toHaveCount(3);
 
-      await page.goto("/?d=soft-skills&b=emp", { waitUntil: "networkidle" });
-      await expect(page.getByRole("heading", { name: "同理與溝通正在準備中" })).toBeVisible();
-      await page.goto("/?d=soft-skills&b=solve", { waitUntil: "networkidle" });
-      await expect(page.getByRole("heading", { name: "解決問題正在準備中" })).toBeVisible();
+      for (const [branch, name, titles] of PUBLISHED_BRANCHES) {
+        await page.goto(`/?d=soft-skills&b=${branch}`, { waitUntil: "networkidle" });
+        await expect(page.getByRole("heading", { name: `${name}正在準備中` })).toHaveCount(0);
+        for (const title of titles) await expect(page.getByText(title, { exact: true }).first(), `${branch} ${title}`).toBeVisible();
+        await assertLabelsClear(page);
+      }
 
       await page.goto("/?d=soft-skills&b=talk", { waitUntil: "networkidle" });
       await assertLabelsClear(page);

@@ -1,8 +1,13 @@
+# B25 提案：sk.polya@es
+# - 補 grades（五、六年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：數學 n-III-2（解決三步驟以上的應用問題）、綜合活動 2c-III-1（規劃策略解決日常生活問題）；沒有議題。
+# - 依據：G. Polya《How to Solve It》的四個階段（Princeton University Press 目次）與加州大學河濱分校的摘要講義。
+# - domains 加上數學；數學 n-III-2 是新加進代碼表的代碼（見 taxonomy patch）。
 id: sk.polya@es
 concept: sk.polya
 title: 解題四步：看懂、想法、動手、回頭看
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,6 +16,9 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 數學
@@ -19,10 +27,26 @@ curriculum_108:
   - A2
   - A3
   issues: []
-to_verify: true
+  performances:
+  - n-III-2
+  - 2c-III-1
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（Polya 解題四步驟），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 A2、A3：依總綱 p.4–6 國民小學教育的 E-A2、E-A3 與數學領綱 p.3–4 的數-E-A2、數-E-A3，綜合活動領綱 p.3 的綜-E-A2、綜-E-A3原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 5、6：本點的代碼都是第三學習階段（n-III-2、2c-III-1），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，數學領綱少 3；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 數學 n-III-2 原本不在代碼表，本批依數學領綱 p.9 原文加入（taxonomy patch）。
+- 原 domains 沒有數學，加上數學：應用題的四步對應數學 n-III-2。
+- 原 idea 的回顧改成回頭看（和標題一致），想三個辦法改成想幾個辦法；原 review 的 3 個、1 個標成示意，補上數學題的代回檢查。
+- 沒有議題：議題融入說明手冊國小的實質內涵，沒有對應解題步驟的條目（本站建議）。
+- 原 scenario「親子共學：把一道數學應用題和一個生活問題並排，親子一起用同樣四步走一次。」保留做法，補上本站建議。
+- 原 ai.delegable「幫忙想更多辦法」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（Polya 解題四步驟）…」已處理：依 Polya《How to Solve It》的目次（四個階段的名稱）與加州大學河濱分校的摘要講義改寫，英文短句逐字引用，中文名稱與說明是本站整理。
+- 加州大學河濱分校的講義是課程用的《How to Solve It》摘要，不是出版社原文；四個階段的名稱另以 Princeton University Press 公開的目次核對（目次 PDF 的 OCR 有錯字，只引用拼字正確的片段）。
+- 英文 PDF 的引文避開彎引號；PDF 換行處照原詞接回，其餘空白照原文。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites:
 - sk.why5@es
 links:
@@ -32,7 +56,7 @@ links:
   - pm.retro@es
   deeper:
   - sk.pdca@jh
-link_notes: 框架：Polya 解題四步驟。
+link_notes: 框架：Polya 解題四步驟。專案管理（回顧）；數學 n-III-2；綜合活動 2c-III-1。
 competency:
   specialist:
   - 問題解決
@@ -41,21 +65,180 @@ competency:
   - 建模
 ai:
   delegable:
-  - 幫忙想更多辦法
+  - 幫忙想更多辦法（由大人操作，本站建議）
   human_experience:
   - 真的去試，並誠實記錄結果
-idea: 數學家波利亞把解題分成四步：了解問題、擬定計畫、執行計畫、回顧。這四步不只用在數學題，也能用在生活：想三個辦法挑一個試，試完回頭看有沒有變好，沒有就換一個。
+idea: 數學家波利亞把解題分成四步：看懂問題、想出計畫、照計畫做、回頭看。這四步不只用在數學題，也能用在生活：想幾個辦法挑一個試，試完回頭看有沒有變好，沒有就換一個。
 guiding_questions:
 - 試了一個辦法沒成功，下一步該怎麼辦？
-scenario: 親子共學：把一道數學應用題和一個生活問題並排，親子一起用同樣四步走一次。
-goal: 遇到問題照四步走：先看懂、想辦法、試試看、回頭檢查有沒有變好。
-review: 針對「五個為什麼」找到的原因，想 3 個辦法、挑 1 個試一週，用貼紙表記錄每天有沒有做到；週末一起回頭看，決定繼續或換辦法。
+- 看懂一道題，要先找出哪幾樣？
+- 回頭看時，要檢查什麼？
+scenario: 親子共學：把一道數學應用題和一個生活問題並排，親子一起用同樣四步走一次（本站建議）。
+goal: 遇到數學應用題或生活問題，照四步走：看懂問題、想辦法、動手做、回頭檢查答案或結果，沒變好就換辦法。
+review: 針對五個為什麼找到的原因，想 3 個辦法、挑 1 個試一週（示意），用貼紙表記錄每天有沒有做到，週末一起回頭看有沒有變好，決定繼續或換辦法；再拿一道三步驟的應用題，孩子說出要求什麼、知道什麼，算完把答案代回題目檢查。
 formats:
   slides: []
-  exercise: 目標：遇到問題照四步走：先看懂、想辦法、試試看、回頭檢查有沒有變好。　檢核：針對「五個為什麼」找到的原因，想 3 個辦法、挑 1 個試一週，用貼紙表記錄每天有沒有做到；週末一起回頭看，決定繼續或換辦法。
+  exercise: 目標：遇到數學應用題或生活問題，照四步走：看懂問題、想辦法、動手做、回頭檢查答案或結果，沒變好就換辦法。　檢核：針對五個為什麼找到的原因，想 3 個辦法、挑 1 個試一週（示意），用貼紙表記錄每天有沒有做到，週末一起回頭看有沒有變好，決定繼續或換辦法；再拿一道三步驟的應用題，孩子說出要求什麼、知道什麼，算完把答案代回題目檢查。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 解題有步驟，卡住不慌
+  body:
+  - 數學課綱要五、六年級「在具體情境中，解決三步驟以上之常見應用問題。」綜合活動課綱也要孩子「分析與判讀各類資源，規劃策略以解決日常生活的問題。」
+  - 數學家波利亞（G. Polya）在《How to Solve It》把解題分成四個階段：「Understanding the problem」、「Devising a plan」、「Carrying out the plan」、「Looking back」，也就是看懂問題、想出計畫、照計畫做、回頭看（中文名稱是本站整理）。
+  qa:
+    question: 試了一個辦法沒成功，下一步該怎麼辦？
+    answer: 回頭看：辦法哪裡沒用、問題有沒有看懂，再換一個辦法試（本站整理）。波利亞的第四步是「Examine the solution obtained.」，檢查得到的結果（翻譯是本站整理）。沒變好也不是白做，你知道了這個辦法不適合（本站建議）。
+    source: ucr-polya
+  items_title: 課綱的學習重點
+  items:
+  - title: 解多步驟應用題
+    text: 數學 n-III-2：在具體情境中，解決三步驟以上之常見應用問題。
+    code: n-III-2
+  - title: 規劃策略解決問題
+    text: 綜合活動 2c-III-1：分析與判讀各類資源，規劃策略以解決日常生活的問題。
+    code: 2c-III-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好一道應用題
+  - 選好一個生活問題
+  figures:
+  - polya-compare
+  notes:
+  - 數學的代碼：第一碼 n 是數與量，第二碼 III 是國民小學高年級，第三碼是流水號。
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - math108
+  - zonghe
+  - pup-toc
+  - ucr-polya
+  - zonggang
+how:
+  heading: 四步走：看懂、想法、動手、回頭看
+  body:
+  - 看懂，再想辦法：先說出要求什麼、知道什麼；波利亞問「What is the unknown?」，也要找出題目給了哪些資料（翻譯是本站整理）。再想辦法，他問「Have you seen it before?」，有沒有做過類似的題目（翻譯是本站整理）。生活問題就先想幾個辦法，挑一個最容易先試的（本站建議）。
+  - 動手做：照計畫一步一步做，波利亞說「Carrying out your plan of the solution, check each step.」，每一步都要檢查（翻譯是本站整理）。數學題就一步一步寫算式；生活的辦法就試一週，用貼紙表記下每天有沒有做到（本站建議）。
+  - 回頭看：數學題把答案代回題目，看合不合理，因為波利亞問「Can you check the result?」（翻譯是本站整理）。生活的辦法在週末看貼紙表，看問題有沒有變好：變好就繼續，沒有就回到想辦法那一步換一個（本站建議）。
+  qa:
+    question: 回頭看時，要檢查什麼？
+    answer: 檢查結果對不對、合不合理：數學題把答案代回題目，生活問題看有沒有變好（本站整理）。波利亞問「Can you check the result?」，還問「Can you use the result, or the method, for some other problem?」，看這個方法下次能不能再用（翻譯是本站整理）。
+    source: ucr-polya
+  items_title: 四步做
+  items:
+  - title: 看懂
+    text: 要求什麼、知道什麼。
+  - title: 想辦法
+    text: 想幾個，挑一個先試。
+  - title: 動手做
+    text: 一步一步做，每步檢查。
+  - title: 回頭看
+    text: 檢查結果，再決定。
+  checklist_title: 做完檢查一下
+  checklist:
+  - 說出要求什麼
+  - 想過幾個辦法
+  - 答案代回檢查
+  activity_figure: polya-flow
+  sources:
+  - ucr-polya
+what:
+  heading: 卡住時，照四步走
+  body:
+  - 學完後，孩子遇到數學應用題或生活問題，能照看懂、想辦法、動手做、回頭看四步走：說出要求什麼和知道什麼，做完把結果拿回來檢查，沒變好就換一個辦法。
+  items_title: 學完能做到
+  items:
+  - title: 看懂問題
+    text: 要求什麼、知道什麼。
+  - title: 試一個辦法
+    text: 一步一步做。
+  - title: 回頭檢查
+    text: 繼續或換辦法。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出要求什麼
+  - 想過幾個辦法
+  - 做完有回頭看
+  notes:
+  - 同樣四步可以用在數學題和生活問題：數學題回頭看是把答案代回檢查，生活問題回頭看是看有沒有變好（本站整理）。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: polya-flow
+  type: flow
+  alt: 解題五步驟：孩子看懂問題、想幾個辦法、動手試，全家回頭看，再決定繼續或換辦法。
+  steps:
+  - actor: 孩子
+    text: 看懂問題
+  - actor: 孩子
+    text: 想幾個辦法
+  - actor: 孩子
+    text: 動手試
+  - actor: 全家
+    text: 回頭看
+  - actor: 全家
+    text: 繼續或換
+  source: ucr-polya
+  caption: 流程是本站建議。
+- id: polya-compare
+  type: compare
+  alt: 比較兩種回頭看：數學應用題，把答案代回題目檢查；生活問題，看貼紙表有沒有變好。
+  source: ucr-polya
+  relation: versus
+  items:
+  - term: 數學應用題
+    note: 答案代回題目檢查
+  - term: 生活問題
+    note: 看貼紙表有沒有變好
+  caption: 例子是本站整理。
+sources:
+- id: math108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—數學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/815/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E6%95%B8%E5%AD%B8%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：n-III-2「在具體情境中，解決三步驟以上之常見應用問題。」（p.9）；領域核心素養：數-E-A2「具備基本的算術操作能力、並能指認基本的形體與相對關係，在日常生活情境中，用數學表述與解決問題。」（p.3–4）；數-E-A3「能觀察出日常生活問題和數學的關聯，並能嘗試與擬訂解決問題的計畫。在解決問題之後，能轉化數學解答於日常生活的應用。」（p.4）；代碼說明：「第 1 碼為『表現類別』，分別以英文小寫字母 n（數與量）」…「第 2 碼為『學習階段』別，依序為 I（國民小學低年級）、II（國民小學中年級）、III（國民小學高年級）、IV（國民中學）、V（普通型高級中等學校）。」（p.8）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：2c-III-1「分析與判讀各類資源，規劃策略以解決日常生活的問題。」（p.15）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-A3「規劃、執行學習及生活計畫，運用資源或策略，預防危機、保護自己，並以創新思考方式，因應日常生活情境。」（p.3）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-A3「具備擬定計畫與實作的能力，並以創新思考方式，因應日常生活情境。」（p.5）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: pup-toc
+  title: 'How to Solve It: A New Aspect of Mathematical Method（目次）'
+  publisher: G. Polya 著，Princeton University Press
+  url: https://assets.press.princeton.edu/chapters/c669.pdf
+  accessed: '2026-10-30'
+  kind: textbook
+  supports: 目次的四個階段（頁碼是目次 PDF 的頁）「Understanding the problem」（p.1）、「Devising a plan」（p.1）、「Carrying out the plan」（p.1）、「Looking back」（p.2）
+- id: ucr-polya
+  title: G. Pólya, How to Solve It（摘要講義）
+  publisher: 加州大學河濱分校數學系課程講義（摘自 G. Polya, How to Solve It, 2nd ed., Princeton University Press, 1957）
+  url: https://math.ucr.edu/~res/math153/polya.pdf
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「You have to understand the problem.」；「What is the unknown?」；「Have you seen it before?」；「Carrying out your plan of the solution, check each step.」；「Examine the solution obtained.」；「Can you check the result?」；「Can you use the result, or the method, for some other problem?」（p.1）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

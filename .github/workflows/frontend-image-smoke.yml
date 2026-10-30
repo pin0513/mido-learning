@@ -177,7 +177,8 @@ jobs:
               exit 1
             fi
           done
-          if grep -F "說出感覺：我覺得" /tmp/sk-on.html >/dev/null; then
+          # B25 發布 sk.feelings@es 後，改查仍是草稿的 sk.nvc@jh。
+          if grep -F "非暴力溝通：觀察" /tmp/sk-on.html >/dev/null; then
             echo "soft-skills homepage leaked a draft title"
             exit 1
           fi

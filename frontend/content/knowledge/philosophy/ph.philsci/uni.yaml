@@ -101,7 +101,7 @@ how:
     question: 新聞說研究發現，你要回去查原始研究的哪些地方？
     answer: 查研究對象、樣本、有沒有對照組、是觀察還是實驗，再對照新聞有沒有把相關說成因果、把動物結果說成人、多加了建議。這三種誇大就是 Sumner 等人檢查的「causal statements drawn from correlational research」等（說明是本站整理）。
     source: sumner-2014
-  items_title: 四步做
+  items_title: 本站建議的步驟
   items:
   - title: 找原始研究
     text: 作者、期刊、對象、樣本。

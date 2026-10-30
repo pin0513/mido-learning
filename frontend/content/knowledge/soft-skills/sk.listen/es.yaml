@@ -1,8 +1,13 @@
+# B25 提案：sk.listen@es
+# - 補 grades（三、四年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：國語文 1-II-1（讓對方充分表達）、綜合活動 2a-II-1、Ba-II-3（人際溝通的態度與技巧）；議題家庭教育 家E5。
+# - 依據：美國疾病管制與預防中心（CDC）給家長的積極聆聽建議（看著對方、停下手邊的事、說回內容與感覺、問自己聽得對不對）。
+# - 綜合活動 2a-II-1、Ba-II-3 是新加進代碼表的代碼（見 taxonomy patch）。
 id: sk.listen@es
 concept: sk.listen
 title: 專心聽，再說回來
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,6 +16,9 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 綜合活動
@@ -20,10 +28,28 @@ curriculum_108:
   - B1
   issues:
   - 家庭教育
-to_verify: true
+  performances:
+  - 1-II-1
+  - 2a-II-1
+  contents:
+  - Ba-II-3
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（積極聆聽），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 C2、B1：依總綱 p.4–6 國民小學教育的 E-C2、E-B1 與國語文領綱 p.4 的國-E-B1、綜合活動領綱 p.5 的綜-E-C2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 3、4：本點的代碼都是第二學習階段（1-II-1、2a-II-1、Ba-II-3），總綱 p.7 說國民小學三、四年級為第二學習階段。
+- est_time 依綜合活動領綱 p.2：第二學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，國語文領綱少 2，議題融入說明手冊少 16；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 綜合活動 2a-II-1、Ba-II-3 原本不在代碼表，本批依綜合活動領綱 p.14 原文加入（taxonomy patch）；綜合活動學習內容 Ba-II-1 和代碼表裡已有的國語文學習內容同號，放不進以代碼為鍵的代碼表；Ba-II-2 也和國語文領綱同號（代碼表目前沒有），為保留國語文將來擴充一併避開，所以選 Ba-II-3。
+- 議題家庭教育：家庭教育國小實質內涵 家E5「了解家庭中各種關係的互動(親子、手足、祖孫及其他親屬等)。」（p.66）。
+- 原 idea 的「你是說……對嗎？」拿掉引號改寫（引號內超過 5 個字的句子只放在有出處的地方）；原 goal 補上放下手邊的事、說回人事感覺、問對不對；原 review 的 1 分鐘標成示意，補上問對不對。
+- 原 scenario「親子共學：吃飯時手機放旁邊，輪流說一件今天的小事，下一個人先說回上一個人的重點再說自己的。」保留做法，補上本站建議。
+- 原 ai.delegable「事後幫忙整理對話重點」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（積極聆聽）…」已處理：依 CDC 兩頁給家長的積極聆聽建議改寫，英文短句逐字引用，中文說明是本站整理。
+- Tips for Active Listening 是 CDC 給幼兒與學齡前兒童家長的頁面，原文是家長聽孩子說話時的建議；本點只借用其中聆聽的做法（看著對方、停下手邊的事、說回內容與感覺），轉用到國小三、四年級的孩子練習聽別人（本站建議）。說回的三樣（人、事、感覺）沿用原稿 review，是本站整理。
+- CDC 網站會擋自動讀取（回應 403），引文對照 Internet Archive 的存檔：Connecting Conversations 用 2026-07-25 的存檔，Tips for Active Listening 用 2025-06-10 的存檔；source 的 url 是 CDC 原網址（自動檢查會得到 403）。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁或其存檔；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites: []
 links:
   why: []
@@ -31,7 +57,7 @@ links:
   related: []
   deeper:
   - sk.discuss@jh
-link_notes: 框架：積極聆聽。
+link_notes: 框架：積極聆聽（active listening）。國語文 1-II-1；綜合活動 2a-II-1、Ba-II-3。
 competency:
   specialist:
   - 同理溝通
@@ -39,21 +65,195 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 事後幫忙整理對話重點
+  - 事後幫忙整理對話重點（由大人操作，本站建議）
   human_experience:
   - 放下手邊的事，專心看著對方
-idea: 聽的時候放下手上的東西、看著對方、點頭；等他說完，用「你是說……對嗎？」說回重點。對方說「對！」，才算真的聽懂了。
+idea: 聽的時候放下手上的東西、看著對方；等對方說完，用自己的話說回重點，再問一句對嗎。對方點頭，你就知道自己聽懂了；說錯了，對方通常會幫你更正。
 guiding_questions:
 - 怎麼讓對方知道你真的有在聽？
-scenario: 親子共學：吃飯時手機放旁邊，輪流說一件今天的小事，下一個人先說回上一個人的重點再說自己的。
-goal: 別人說話時看著對方、不插嘴，聽完用「你是說……」說回重點。
-review: 家長說一件 1 分鐘的小煩惱，孩子聽完複述；家長判斷「人、事、感覺」三樣有沒有說對，再交換角色。
+- 對方說完後，要怎麼確認自己聽懂了？
+- 說回重點時，要說哪三樣？
+scenario: 親子共學：吃飯時手機放旁邊，輪流說一件今天的小事，下一個人先說回上一個人的重點再說自己的（本站建議）。
+goal: 別人說話時放下手邊的事、看著對方、不插嘴，等對方說完，用自己的話說回人、事、感覺，再問對方說得對不對。
+review: 家長說一件約 1 分鐘的小煩惱（示意），孩子聽完用自己的話說回；家長確認人、事、感覺三樣有沒有說對，孩子有沒有問對不對，再交換角色。
 formats:
   slides: []
-  exercise: 目標：別人說話時看著對方、不插嘴，聽完用「你是說……」說回重點。　檢核：家長說一件 1 分鐘的小煩惱，孩子聽完複述；家長判斷「人、事、感覺」三樣有沒有說對，再交換角色。
+  exercise: 目標：別人說話時放下手邊的事、看著對方、不插嘴，等對方說完，用自己的話說回人、事、感覺，再問對方說得對不對。　檢核：家長說一件約 1 分鐘的小煩惱（示意），孩子聽完用自己的話說回；家長確認人、事、感覺三樣有沒有說對，孩子有沒有問對不對，再交換角色。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國小三、四年級綜合活動課
+  source: zonghe
+why:
+  heading: 被聽懂，才願意多說
+  body:
+  - 國語課綱要三、四年級「聆聽時能讓對方充分表達意見。」綜合活動課綱也要孩子「覺察自己的人際溝通方式，展現合宜的互動與溝通態度和技巧。」家庭教育議題的國小實質內涵，則有「了解家庭中各種關係的互動」。
+  - 美國疾病管制與預防中心（CDC）給家長的建議說，積極聆聽是讓對方說出想法和感受，「without interruption」；對方說完，「try to repeat back to them what you heard in your own words」。這樣做，對方就知道你聽到了，也懂了他的意思（翻譯是本站整理）。
+  qa:
+    question: 怎麼讓對方知道你真的有在聽？
+    answer: 先停下來看著他。CDC 的建議是「Make eye contact and stop other things you are doing.」，也就是看著對方、停下手邊的事（翻譯是本站整理）。等他說完，再用自己的話說回重點，他就知道你懂了（本站建議）。
+    source: cdc-listen
+  items_title: 課綱的學習重點
+  items:
+  - title: 讓對方說完
+    text: 國語文 1-II-1：聆聽時能讓對方充分表達意見。
+    code: 1-II-1
+  - title: 合宜的溝通態度
+    text: 綜合活動 2a-II-1：覺察自己的人際溝通方式，展現合宜的互動與溝通態度和技巧。
+    code: 2a-II-1
+  - title: 溝通的態度與技巧
+    text: 綜合活動 Ba-II-3：人際溝通的態度與技巧。
+    code: Ba-II-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 手機放旁邊
+  - 想好一件小事
+  figures:
+  - listen-compare
+  notes:
+  - 國語文的代碼：第一碼是類別（1 聆聽、2 口語表達、5 閱讀），第二碼是學習階段，第三碼是流水號。
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 II 是第二學習階段（國小三、四年級）。
+  - 總綱把國民小學三、四年級定為第二學習階段，所以本頁代碼中間都是 II。
+  sources:
+  - kuoyu
+  - zonghe
+  - issues-handbook
+  - cdc-conv
+  - cdc-listen
+  - zonggang
+how:
+  heading: 停下來聽，再說回來
+  body:
+  - 先停下來：放下手上的東西、手機放旁邊，看著對方（本站建議）。CDC 的建議是「Make eye contact and stop other things you are doing.」對方說的時候不插嘴，讓他說完；國語課綱要「聆聽時能讓對方充分表達意見。」
+  - 再說回來：用自己的話說回三樣重點，人（誰）、事（發生什麼事）、感覺（他覺得怎樣）（本站整理）。CDC 建議「Reflect or repeat back what they are saying and what they may be feeling to make sure you understand.」，說回對方說的事，也說回他可能的感覺（翻譯是本站整理）。可以這樣開頭：你是說……，你覺得……（本站建議）。
+  - 最後問對不對：說完問一句對嗎。CDC 也提醒，先說回聽到的，「ask if you have it right」，再問別的或說自己的想法（翻譯是本站整理）。對方說不對，就請他再說一次，你再說回一次（本站建議）。練習時大人先說、孩子說回，再交換角色（本站建議）。
+  qa:
+    question: 說回重點時，要說哪三樣？
+    answer: 人、事、感覺：誰、發生什麼事、他覺得怎樣（本站整理）。CDC 說說回時，要包括對方說的事和「what they may be feeling」，所以感覺也要說回（翻譯是本站整理）。
+    source: cdc-listen
+  items_title: 四步做
+  items:
+  - title: 停下來看著他
+    text: 放下手上的東西和手機。
+  - title: 讓對方說完
+    text: 說的時候不插嘴。
+  - title: 說回三樣
+    text: 人、事、感覺。
+  - title: 問對不對
+    text: 說錯了就再聽一次。
+  checklist_title: 聽的時候檢查一下
+  checklist:
+  - 看著對方
+  - 沒有插嘴
+  - 說回人事感覺
+  - 問了對不對
+  activity_figure: listen-flow
+  sources:
+  - cdc-listen
+  - cdc-conv
+  - kuoyu
+what:
+  heading: 聽完說得回來
+  body:
+  - 學完後，孩子在別人說話時，會放下手邊的事、看著對方、讓對方說完，再用自己的話說回人、事、感覺，並問對方說得對不對。
+  items_title: 學完能做到
+  items:
+  - title: 專心聽
+    text: 放下手邊的事、看著對方。
+  - title: 說回三樣
+    text: 人、事、感覺。
+  - title: 確認聽懂
+    text: 問對方說得對不對。
+  checklist_title: 家長檢核
+  checklist:
+  - 看著對方聽
+  - 說回人事感覺
+  - 問了對不對
+  notes:
+  - 本點融入家庭教育議題：議題融入說明手冊國小的實質內涵有了解家庭中各種關係的互動。吃飯時輪流說、輪流聽，就是在練習家人之間的互動。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: listen-flow
+  type: flow
+  alt: 說回來五步驟：說的人說一件小事，聽的人停下來看著他、說回人事感覺，說的人說對或補充，兩個人再交換角色。
+  steps:
+  - actor: 說的人
+    text: 說一件小事
+  - actor: 聽的人
+    text: 停下來看著他
+  - actor: 聽的人
+    text: 說回人事感覺
+  - actor: 說的人
+    text: 說對或補充
+  - actor: 兩個人
+    text: 交換角色
+  source: cdc-conv
+  caption: 流程是本站建議。
+- id: listen-compare
+  type: compare
+  alt: 比較兩種聽法：邊做事邊聽，對方不確定你懂了沒；停下來說回重點，對方可以說對，或幫你更正。
+  source: cdc-listen
+  relation: versus
+  items:
+  - term: 邊做事邊聽
+    note: 對方不確定你懂了沒
+  - term: 停下來說回
+    note: 對方說對，或幫你更正
+  caption: 例子是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：1-II-1「聆聽時能讓對方充分表達意見。」（p.7）；領域核心素養：國-E-B1「理解與運用國語文在日常生活中學習體察他人的感受，並給予適當的回應，以達成溝通及互動的目標。」（p.4）；代碼說明：「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：2a-II-1「覺察自己的人際溝通方式，展現合宜的互動與溝通態度和技巧。」（p.14）；Ba-II-3「人際溝通的態度與技巧。」（p.14）；領域核心素養：綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：第二學習階段綜合活動「第二學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-B1「具備『聽、說、讀、寫、作』的基本語文素養，並具有生活所需的基礎數理、肢體及藝術等符號知能，能以同理心應用在生活與人際溝通。」（p.5）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 家庭教育國小實質內涵 家E5「了解家庭中各種關係的互動(親子、手足、祖孫及其他親屬等)。」（p.66）
+- id: cdc-conv
+  title: Conversation Tips for Connecting Conversations
+  publisher: 美國疾病管制與預防中心（CDC），Adolescent and School Health
+  url: https://www.cdc.gov/healthy-youth/connecting-conversations/
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「Active listening is letting your child share their thoughts and feelings—without interruption. Once they are finished sharing, try to repeat back to them what you heard in your own words. This shows you heard what they had to say and understood what they meant.」；「Repeat back what you are hearing and ask if you have it right before asking more questions」
+- id: cdc-listen
+  title: Tips for Active Listening（Essentials for Parenting Toddlers and Preschoolers）
+  publisher: 美國疾病管制與預防中心（CDC），Parenting Toddlers
+  url: https://www.cdc.gov/parenting-toddlers/communication/active-listening.html
+  accessed: '2026-10-30'
+  kind: government
+  supports: 原文是寫給家長、聽孩子說話時的建議，這裡轉用到孩子練習聽別人（本站整理）：「Make eye contact and stop other things you are doing.」；「Reflect or repeat back what they are saying and what they may be feeling to make sure you understand.」；「If your child corrects you, try again.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
