@@ -179,10 +179,9 @@ jobs:
           done
           # B25 發布 sk.feelings@es 後，改查仍是草稿的 sk.nvc@jh；B26 發布 sk.nvc@jh 後，改查仍是草稿的 sk.hardtalk@sh（同一條線的下一階）。
           # B27 發布 sk.hardtalk@sh 後，改查仍是草稿的 sk.coach@uni（同一條線的大學點，先備 sk.interview@sh）。
-          if grep -F "教練式對話：用提問陪對方找答案" /tmp/sk-on.html >/dev/null; then
-            echo "soft-skills homepage leaked a draft title"
-            exit 1
-          fi
+          # B28 發布 sk.coach@uni 等大學 4 點後，溝通與解決問題 33 點全部發布，已沒有草稿標題可查；明確印出略過的原因，不靜靜通過。
+          # 草稿標題不露出改由單元測試（home-diagram.test.ts、city.test.ts、hidden-notice.test.ts 的合成內容）守住；之後再有草稿時，把它的標題加回這裡。
+          echo "skip: soft-skills draft-title leak check (no soft-skills drafts since B28; guarded by synthetic unit tests)"
           if grep -F "城市" /tmp/sk-on.html >/dev/null; then
             echo "soft-skills homepage contains 城市"
             exit 1

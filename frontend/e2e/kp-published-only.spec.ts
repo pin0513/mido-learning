@@ -14,6 +14,7 @@ import { test, expect } from "@playwright/test";
 // 旗標打開、只靠草稿過濾的那一輪在 kp-published-softskills.spec.ts（CI「Published-only pages, soft-skills on」）。
 // B25 發布 sk.problem@es 後，改用仍是草稿的 sk.interview@sh（先備 ph.question@es）。
 // B26 發布 sk.issuetree@jh 後，改用仍是草稿的 sk.feedback@sh（先備 pm.retro@es；zh.editing@uni 的 links 也連到它）。
+// B28 發布這大學 4 點後，全站 241 點都已發布、沒有草稿。這支檔案在溝通與解決問題旗標關閉的行程跑，下面的 DRAFT_TITLES、PM_PAGES 負向檢查、sk.a3@uni 404 都留著，改當「已發布、只靠旗標不露出」的真實樣本；草稿不露出改由單元測試的合成內容守住。
 // B27 發布軟實力高中 6 點後，草稿樣本只剩大學 4 點（sk.a3、sk.mediate、sk.hypo、sk.coach）；PM_PAGES 裡 sk.decide、sk.rootcause、sk.feedback、sk.interview、sk.design 的標題與網址留著，理由同下（各列註明）。
 // 下面 PM_PAGES 裡 B26 發布的 sk.empmap、sk.nvc、sk.fishbone、sk.issuetree、sk.pdca 的標題與網址也留著，理由同下（各列註明）。
 // 下面 PM_PAGES 裡 sk.problem、sk.otherside、sk.why5 的標題與網址留著：它們已發布，這個行程只因旗標關閉不露出（已發布的軟實力點在別學門頁上，旗標開時有連結，見 kp-published-softskills.spec.ts 第一則）。
@@ -102,6 +103,7 @@ test.describe("正式 build", () => {
 
     // B19 發布 pm.stakeholder@sh 後，404 頁改用它的下一階草稿 pm.business@uni；B20 發布 pm.business@uni 後，404 頁改用它 links.why 連到的哲學草稿 ph.applied@uni。
     // B24 發布 ph.applied@uni 後，404 頁改用 pm.business@uni links.related 連到的軟實力草稿 sk.a3@uni（這個行程也沒開溝通與解決問題旗標）；ph.applied@uni 改查 200 與標題。
+    // B28 發布 sk.a3@uni 後，404 只因這個行程沒開溝通與解決問題旗標（不再是草稿）。
     const a3 = await request.get("/kp/sk.a3/uni");
     expect(a3.status()).toBe(404);
     expect(await a3.text()).not.toContain("一頁問題報告：帶團隊從問題到行動");
@@ -194,6 +196,7 @@ test.describe("正式 build", () => {
       // 專案管理已沒有草稿；哲學圖本來就畫草稿（不在只畫已發布的圖裡），所以不露出的改用只畫已發布的軟實力圖裡仍是草稿的 sk.mediate@uni。
       expect(html, path).toContain("利害關係人");
       expect(html, path).toContain("商業論證與專案治理");
+      // B28 發布 sk.mediate@uni 後，它不露出只靠這個行程沒開溝通與解決問題旗標。
       expect(html, path).not.toContain("當調解人：幫兩方聽懂彼此");
       expect(html, path).not.toContain("draft-");
       expect(html, path).not.toContain("城市");
