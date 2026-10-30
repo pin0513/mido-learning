@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { knowledgePointPath } from "@/lib/kp/routes";
-import { shownPoint } from "./refs";
+import { hiddenDraftCount, shownPoint } from "./refs";
 
 export function PointLinks({
   ids,
@@ -20,8 +20,13 @@ export function PointLinks({
     .map((id) => all.indexes.byId.get(id))
     .filter((item): item is KnowledgePoint => Boolean(item));
   const links = known.filter((item) => shownPoint(item, currentFolder, visible));
-  const hidden = known.length - links.length;
-  if (links.length === 0 && hidden === 0) return empty ? <p className="v2-none">{empty}</p> : null;
+  // 只有真的草稿（status 不是 published）才算「尚未發布」。已發布但學門旗標在 build 時關掉的點
+  // 不連、也不計數，否則會把已上線的點寫成尚未發布（docs/kp-db-restructure.md 第 17.1 節問題 2）。
+  const hidden = hiddenDraftCount(known, links);
+  if (links.length === 0 && hidden === 0) {
+    // 清單本來就空才寫 empty（「沒有，這是起點。」）。清單裡只有旗標擋掉的已發布點時，那句話不對，整段不畫。
+    return empty && known.length === 0 ? <p className="v2-none">{empty}</p> : null;
+  }
   return (
     <div className="v2-seq-list">
       {links.map((item) => (

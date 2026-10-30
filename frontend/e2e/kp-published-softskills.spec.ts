@@ -13,7 +13,7 @@ import type { KnowledgePoint } from "../lib/content/types";
  * 不靠真實草稿的長期守門在 components/kp/hidden-notice.test.ts（合成內容）。
  *
  * 同一份 build 跑兩次：舊版詳細頁，以及 E2E_DETAIL_V2=1（行程多開 KP_DETAIL_V2_ENABLED，/kp/概念/學段 改寫到 V2）。
- * 語文旗標關閉，language 的點在別的學門頁上也算「尚未發布」，跟正式頁同一套規則。
+ * 語文旗標關閉：舊版詳細頁把 language 的已發布點也算「尚未發布」；V2 只算草稿（kp-detail-v2-flag-hidden.spec.ts 守住正式站的組合）。
  */
 const enabled = process.env.E2E_PUBLISHED_SOFTSKILLS === "1";
 const v2 = process.env.E2E_DETAIL_V2 === "1";
@@ -73,7 +73,9 @@ function samples(): Sample[] {
     const drafts = new Map<string, KnowledgePoint>();
     for (const ids of lists) {
       const hidden = hiddenIn(ids, point.folder);
-      if (hidden.length > 0) notices.push(v2 ? `另有 ${hidden.length} 個尚未發布` : `另有 ${hidden.length} 個知識點尚未發布`);
+      // V2 只把草稿算進筆數；已發布但學門沒上線（這裡是語文）的點不連也不算。舊版仍兩種都算（第 17.1 節問題 2）。
+      const counted = v2 ? hidden.filter((q) => q.status !== "published") : hidden;
+      if (counted.length > 0) notices.push(v2 ? `另有 ${counted.length} 個尚未發布` : `另有 ${counted.length} 個知識點尚未發布`);
       for (const q of hidden) if (q.status === "draft") drafts.set(q.id, q);
     }
     // 舊版的「把這裡當先備」只列看得到的點，草稿後學不計數；但它們的標題與網址也不能出現。

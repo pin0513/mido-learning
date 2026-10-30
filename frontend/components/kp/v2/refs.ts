@@ -10,6 +10,15 @@ export function shownPoint(point: KnowledgePoint, currentFolder: string, visible
 }
 
 /**
+ * 「另有 N 個尚未發布」的 N：沒連出去的點裡，status 不是 published 的筆數。
+ * 已發布、只因學門旗標沒上線而不連的點不算（它們已經上線，不是「尚未發布」），整筆不出現。
+ */
+export function hiddenDraftCount(known: KnowledgePoint[], shown: KnowledgePoint[]): number {
+  const shownIds = new Set(shown.map((point) => point.id));
+  return known.filter((point) => !shownIds.has(point.id) && point.status !== "published").length;
+}
+
+/**
  * 內文裡寫到的知識點 id 對到標題與連結。concept@stage 指定階段；只寫 concept 時，
  * 一個階段就連那一頁，多個階段連 concept 總覽頁。沒有可連的頁面時只顯示標題。
  */
