@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "eslint",
     "validate:content": "tsx scripts/validate-knowledge-points.ts",
-    "test:unit": "tsx --test lib/content/city.test.ts lib/content/load.test.ts lib/content/rules/rules.test.ts lib/kp/home-diagram.test.ts lib/kp/home-state.test.ts lib/kp/flags.test.ts lib/kp/circle.test.ts components/kp/city/progress.test.ts scripts/check-no-city-word.test.ts"
+    "test:unit": "tsx --import ./scripts/node-stubs.mjs --test lib/content/city.test.ts lib/content/load.test.ts lib/content/rules/rules.test.ts lib/content/revision/revision.test.ts lib/kp/home-diagram.test.ts lib/kp/home-state.test.ts lib/kp/flags.test.ts lib/kp/circle.test.ts components/kp/city/progress.test.ts scripts/check-no-city-word.test.ts scripts/kp-revision-roundtrip.test.ts",
+    "kp:roundtrip": "tsx --import ./scripts/node-stubs.mjs scripts/kp-revision-roundtrip.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
