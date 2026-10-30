@@ -1,47 +1,212 @@
+# B24 提案：ph.applied@uni
+# - 補 goal、review、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（大學）；沒有 curriculum_108、est_time。
+# - 主要依據：Floridi 等人 2018 AI4People（Minds and Machines，同儕審查；AI 倫理五原則）＋ ACM Code of Ethics and Professional Conduct（專業倫理守則）。
+# - 高中綜合活動 生 4a-V-1、生 Da-V-2、社會 公 1c-V-2 只在 zonghe、social108 來源當先備。
+# - AI 產品是虛構例子，標成本站整理；三個 guiding question 的答案寫在 How 內文。
 id: ph.applied@uni
 concept: ph.applied
 title: 應用倫理：科技、商業與專業責任
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 倫理
+  - 哲學
+  - 思考方法
+  - 倫理
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用（代碼表與頁碼同 B23），當作先學過的內容：生 4a-V-1、生 Da-V-2 在高中綜合活動領綱（zonghe 來源）；公 1c-V-2 在高中社會領綱（social108 來源）（頁碼是頁腳印的頁碼：高中綜合活動領綱比 PDF 頁少 4；高中社會領綱比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
+- AI4People（Floridi 等人 2018）發表於 Minds and Machines（同儕審查），引文對照 PubMed Central 全文；五項原則的中文譯名是本站整理。
+- ACM Code of Ethics 官網會擋自動讀取，引文對照 Internet Archive 2025-01-02 的存檔（web.archive.org/web/20250102/https://www.acm.org/code-of-ethics）；只取不含撇號的句子；它是專業學會的倫理守則（kind 標成 reference）。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 原 scenario「案例分析：一個 AI 產品上線前的倫理審查，提出風險與調整建議。」保留做法，補上本站建議。
+- 原 ai.delegable「列出常見倫理風險與相關原則」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- 法律和倫理的區分用 ACM 守則 2.3 的話（規則可能不合倫理、應先透過既有管道挑戰）；合法只是最低標準是本站整理的說法，不是守則的主張。
+- 第 2 輪：原則衝突改引 ACM 守則序言（多項原則要一起考慮、公共利益最重要），不再用 2.3 不照規則做的那句；2.5 改引完整句子，條件是未來風險無法可靠預測，並先要經常重新評估；How 用一句話帶過五項原則各問什麼。第 3 輪選改：2.3 照原文的 should consider 改成「可以考慮先」，並引完整句子。
 prerequisites:
-  - ph.ethicstheory@sh
+- ph.ethicstheory@sh
 links:
   why: []
   how:
-    - pm.business@uni
-    - pm.aiteam@uni
+  - pm.business@uni
+  - pm.aiteam@uni
   related:
-    - it.governance@uni
+  - it.governance@uni
   deeper: []
 link_notes: 專案管理（商業論證、決策倫理與 AI 協作）、資訊與 AI
 competency:
   specialist:
-    - 倫理推理
+  - 倫理推理
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 列出常見倫理風險與相關原則
+  - 列出常見倫理風險與相關原則（對照守則原文查證，本站建議）
   human_experience:
-    - 在利益衝突中做出並承擔判斷
+  - 在利益衝突中做出並承擔判斷
 idea: 專業工作常面對倫理抉擇：隱私、公平、安全與利益如何取捨，誰該負責。
 guiding_questions:
-  - 法律沒禁止的事，就可以做嗎？
-scenario: 案例分析：一個 AI 產品上線前的倫理審查，提出風險與調整建議。
+- 法律沒禁止的事，就可以做嗎？
+- 倫理原則互相衝突時，怎麼決定？
+- AI 產品出了問題，誰該負責？
+scenario: 案例分析：一個虛構的 AI 產品上線前的倫理審查，提出風險與調整建議（本站建議）。
 formats:
   slides: []
+  exercise: 目標：為一個虛構的 AI 產品做上線前的倫理審查：列出受影響的人和可能的傷害，用五項原則逐一檢查，找出原則衝突的地方，提出調整建議，並寫出誰要為哪個決定負責。　檢核：不看本頁，說出合法和合乎倫理差在哪、五項 AI 倫理原則各在問什麼、原則互相衝突時怎麼做決定，並用自己的審查說明提出了哪些調整、由誰負責。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 為一個虛構的 AI 產品做上線前的倫理審查：列出受影響的人和可能的傷害，用五項原則逐一檢查，找出原則衝突的地方，提出調整建議，並寫出誰要為哪個決定負責。
+review: 不看本頁，說出合法和合乎倫理差在哪、五項 AI 倫理原則各在問什麼、原則互相衝突時怎麼做決定，並用自己的審查說明提出了哪些調整、由誰負責。
+why:
+  heading: 合法不等於應該
+  body:
+  - 專業工作常碰到法律沒有規定、或規定跟良心衝突的情況。ACM 的電腦專業倫理守則說，守則「is not an algorithm for solving ethical problems; rather it serves as a basis for ethical decision-making.」也說「Rules that are judged unethical should be challenged.」規則本身也要接受倫理檢視（說明是本站整理）。
+  - Floridi 等人 2018 年整理 AI 倫理文件，提出五項原則：前四項是生命倫理學的「beneficence, non-maleficence, autonomy, and justice」（行善、不傷害、自主、公正），再加上可解釋性（說明是本站整理）。高中生命教育學過「判斷行為者善惡及行為對錯時應考慮的因素」；大學要把這些原則用在真實的專業決定上（本站整理）。
+  qa:
+    question: 法律沒禁止的事，就可以做嗎？
+    answer: 不一定。法律只是最低標準（本站整理）。ACM 的電腦專業倫理守則也提醒，規則本身也可能不合倫理：「Rules that are judged unethical should be challenged.」法律沒禁止，還要問會不會傷害人、公不公平（說明是本站整理）。
+    source: acm-code
+  items_title: 這一點用到的
+  items:
+  - title: 行善
+    text: 讓人受益。
+  - title: 不傷害
+    text: 避免隱私、安全的傷害。
+  - title: 自主
+    text: 讓人保有自己決定的權利。
+  - title: 公正與可解釋
+    text: 公平分配，說得出怎麼決定。
+  checklist_title: 開始前先確認
+  checklist:
+  - 學過倫理學理論
+  - 會分析利害關係人
+  figures:
+  - applied-compare
+  sources:
+  - acm-code
+  - ai4people
+  - zonghe
+  - social108
+how:
+  heading: 上線前做一次倫理審查
+  body:
+  - 以一個虛構的 AI 產品為例：一個依學生作業紀錄預測誰會被當掉的系統（例子是本站整理）。先列出受影響的人：學生、老師、學校、家人；再寫出可能的傷害：資料外洩、預測不準被貼標籤、某些群體被誤判得特別多（本站整理）。ACM 守則說「Extraordinary care should be taken to identify and mitigate potential risks in machine learning systems.」（說明是本站整理）。
+  - 接著用五項原則逐一檢查，並找出原則衝突的地方：例如要提早幫助學生（行善），就要用更多資料，卻可能侵犯隱私（不傷害、自主）（本站整理）。五項原則各問一件事（本站整理）：行善問對人有沒有好處，AI4People 的標題是「Promoting Well-Being, Preserving Dignity, and Sustaining the Planet」；不傷害問會不會侵犯隱私、危及安全；自主問人能不能自己決定，標題是「The Power to Decide (Whether to Decide)」；公正問好處和風險分得公不公平，論文說它「is typically invoked in relation to the distribution of resources」；可解釋問說不說得出怎麼決定、誰負責（說明是本站整理）。衝突時，先找能同時照顧兩邊的設計，例如只用必要的資料、讓學生知道並能拒絕；真的不能兼顧，就寫出選擇的理由（本站建議）。ACM 守則的序言說，專業人員可能會發現「multiple principles should be taken into account」，這時要記得「the public good is the paramount consideration」（說明是本站整理）。
+  - 法律沒禁止的做法，也要過這一輪檢查：合法只是最低標準（本站整理）。守則說規則本身也要檢視，覺得規則不合倫理時，「should consider challenging the rule through existing channels before violating the rule」，也就是可以考慮先透過既有管道提出挑戰，再決定要不要不照做（說明是本站整理）。最後寫出誰負責。AI4People 說可解釋性包含「both intelligibility and accountability」：說得出系統怎麼運作，也說得出誰要為它負責（說明是本站整理）。每一個調整建議，都寫上由誰決定、出了問題由誰處理；守則還說「A system for which future risks cannot be reliably predicted requires frequent reassessment of risk as the system evolves in use, or it should not be deployed.」也就是未來風險無法可靠預測的系統，要在使用中經常重新評估風險，否則就不該部署（說明是本站整理）。AI 可以列出常見風險和原則，但在利益衝突中怎麼取捨、由誰承擔，要人來判斷（本站整理）。
+  qa:
+    question: 倫理原則互相衝突時，怎麼決定？
+    answer: 先找能同時照顧兩邊的設計；真的不能兼顧，就寫出選擇的理由，並接受檢視。ACM 守則的序言說可能會發現「multiple principles should be taken into account」，並提醒「the public good is the paramount consideration」（說明是本站整理）。
+    source: acm-code
+  items_title: 本站建議的步驟
+  items:
+  - title: 列受影響的人
+    text: 誰受益，誰可能受傷？
+  - title: 用五原則檢查
+    text: 逐項寫出風險。
+  - title: 處理原則衝突
+    text: 先找兩全，再寫理由。
+  - title: 寫出誰負責
+    text: 每個決定都有人負責。
+  checklist_title: 寫完檢查
+  checklist:
+  - 受影響的人列全
+  - 衝突有寫理由
+  - 每項有負責人
+  activity_figure: applied-flow
+  sources:
+  - acm-code
+  - ai4people
+what:
+  heading: 把原則用在專業決定上
+  body:
+  - 學完後，你能分辨合法和合乎倫理，用五項 AI 倫理原則檢查一個產品，處理原則互相衝突的情況並寫出理由，也能說清楚每一個決定由誰負責。
+  items_title: 學完能做到
+  items:
+  - title: 分辨合法和倫理
+    text: 法律是最低標準。
+  - title: 用原則做審查
+    text: 五項原則逐一檢查。
+  - title: 說清誰負責
+    text: 決定和後果都有人承擔。
+  checklist_title: 自我檢核
+  checklist:
+  - 五原則都檢查
+  - 衝突有取捨
+  - 負責人寫出
+  notes:
+  - 本頁的 AI 產品是虛構的例子，本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: applied-flow
+  type: flow
+  alt: 倫理審查五步驟：學生列受影響的人，用五原則檢查，處理原則衝突；團隊提出調整，寫出誰負責。
+  steps:
+  - actor: 學生
+    text: 列受影響的人
+  - actor: 學生
+    text: 用五原則檢查
+  - actor: 學生
+    text: 處理原則衝突
+  - actor: 團隊
+    text: 提出調整
+  - actor: 團隊
+    text: 寫出誰負責
+  source: ai4people
+  caption: 流程是本站建議。
+- id: applied-compare
+  type: compare
+  alt: 比較合法和合乎倫理：合法是法律沒禁止，是最低標準；合乎倫理還要問會不會傷害人、公不公平、誰負責。兩者不相等。
+  source: acm-code
+  relation: not_equal
+  items:
+  - term: 合法
+    note: 法律沒禁止，是最低標準
+  - term: 合乎倫理
+    note: 還要問傷害、公平、誰負責
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中綜合活動（生命教育）先學過的相關學習重點，只當先備：生 4a-V-1「具備對道德、個人行為及公共議題進行價值思辨的素養。」（p.26）；生 Da-V-2「判斷行為者善惡及行為對錯時應考慮的因素。」（p.96）；補充說明「運用實例說明道德判斷的重要性與必要性，例如發生道德衝突面臨抉擇的難題等等。」（p.96）
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中社會（公民與社會）先學過的相關學習重點，只當先備：公 1c-V-2「整合公民知識，論述自己的主張，並能提出合理的論證。」（p.10）
+- id: ai4people
+  title: 'AI4People—An Ethical Framework for a Good AI Society: Opportunities, Risks, Principles, and Recommendations'
+  publisher: Luciano Floridi 等著，Minds and Machines 28(4)，2018 年，頁 689–707（PubMed Central 全文，CC BY 4.0）
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC6404626/
+  accessed: '2026-10-30'
+  kind: peer_reviewed
+  supports: 「beneficence, non-maleficence, autonomy, and justice」；「Promoting Well-Being, Preserving Dignity, and Sustaining the Planet」；「The Power to Decide (Whether to Decide)」；「The last of the four classic bioethics principles is justice, which is typically invoked in relation to the distribution of resources」；「understood as incorporating both intelligibility and accountability」；「a factual, direct, and clear explanation of the decision-making process」
+- id: acm-code
+  title: ACM Code of Ethics and Professional Conduct
+  publisher: Association for Computing Machinery（2018 年 6 月 22 日 ACM 理事會通過）
+  url: https://www.acm.org/code-of-ethics
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「is not an algorithm for solving ethical problems; rather it serves as a basis for ethical decision-making.」；「When thinking through a particular issue, a computing professional may find that multiple principles should be taken into account, and that different principles will have different relevance to the issue.」；「understanding that the public good is the paramount consideration」；「Rules that are judged unethical should be challenged.」；「A computing professional should consider challenging the rule through existing channels before violating the rule.」；「Extraordinary care should be taken to identify and mitigate potential risks in machine learning systems.」；「A system for which future risks cannot be reliably predicted requires frequent reassessment of risk as the system evolves in use, or it should not be deployed.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

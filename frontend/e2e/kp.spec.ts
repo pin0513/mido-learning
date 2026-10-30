@@ -35,8 +35,9 @@ test.describe("知識地圖", () => {
     await expect(page.getByTestId("kp-draft")).toHaveCount(0);
     await page.goto("/kp/pm.business/uni");
     await expect(page.getByTestId("kp-draft")).toHaveCount(0);
+    // B24 發布 ph.applied@uni 後，這個行程（沒開溝通與解決問題旗標）已沒有草稿頁；它改查沒有草稿標記。「草稿」標記改由 softskills.spec.ts 的 sk.hypo@uni 檢查。
     await page.goto("/kp/ph.applied/uni");
-    await expect(page.getByTestId("kp-draft")).toHaveText("草稿");
+    await expect(page.getByTestId("kp-draft")).toHaveCount(0);
     // B21 發布哲學 es 5 點；ph.fair@es 對應語文與綜合活動兩個領域（舊版頁的課綱區塊只列領域、核心素養與議題，不列學習表現代碼）。
     await page.goto("/kp/ph.fair/es");
     await expect(page.getByTestId("kp-draft")).toHaveCount(0);
@@ -62,8 +63,9 @@ test.describe("知識地圖", () => {
 
     // B16 已發布資訊與 AI 大學 6 點（含 it.nn@uni）；仍是草稿、沒有課綱對應的大學點改用 ph.aimind@uni（to_verify: false）。
     // to_verify 的大學草稿只剩溝通與解決問題（這個行程旗標關閉，頁面 404），「課綱對應待核對」改在 softskills.spec.ts 用 sk.hypo@uni 檢查。
+    // B24 發布 ph.aimind@uni 後，它改查已發布的大學點：沒有草稿標記、沒有課綱區塊、沒有待核對。「草稿＋不待核對」的組合已沒有真實樣本（剩下的草稿都是 to_verify: true 的軟實力點）。
     await page.goto("/kp/ph.aimind/uni");
-    await expect(page.getByTestId("kp-draft")).toHaveText("草稿");
+    await expect(page.getByTestId("kp-draft")).toHaveCount(0);
     await expect(page.getByTestId("kp-curriculum")).toHaveCount(0);
     await expect(page.getByTestId("kp-to-verify")).toHaveCount(0);
     await expect(page.getByTestId("kp-license-body")).toBeEmpty();
@@ -122,8 +124,9 @@ test.describe("知識地圖", () => {
     expect(xml).toContain("/kp/pm.project/jh");
     expect(xml).toContain("/kp/pm.stakeholder/sh");
     // B20 發布 pm.business@uni 後，它進 sitemap；草稿改查 ph.applied@uni。
+    // B24 發布 ph.applied@uni 後，它也進 sitemap；這個行程的草稿只剩軟實力點，由下面的 /kp/sk. 檢查（同時也因旗標關閉不列）。
     expect(xml).toContain("/kp/pm.business/uni");
-    expect(xml).not.toContain("/kp/ph.applied/uni");
+    expect(xml).toContain("/kp/ph.applied/uni");
     expect(xml).not.toContain("/kp/sk.");
     expect(xml).not.toContain("/kp/discipline/soft-skills");
     expect(xml).not.toContain("/kp/zh.");

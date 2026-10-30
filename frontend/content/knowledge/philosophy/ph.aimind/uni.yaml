@@ -1,47 +1,203 @@
+# B24 提案：ph.aimind@uni
+# - 補 goal、review、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（大學）；沒有 curriculum_108、est_time。
+# - 主要依據：Lee 等人 2025（CHI，同儕審查；生成式 AI 讓批判思考轉向查證、整合與監督）＋ NIST AI 600-1（自動化偏誤）。
+# - 高中科技 運 a-V-2、資 D-V-2 只在 tech108 來源當先備。
+# - 原 scenario 的引號拿掉；三個 guiding question 的答案寫在 How 內文。
 id: ph.aimind@uni
 concept: ph.aimind
 title: AI 時代的思考：人機分工與判斷
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - AI 時代判斷
+  - 哲學
+  - 思考方法
+  - AI 時代判斷
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用（代碼表與頁碼同 B23），當作先學過的內容：運 a-V-2、資 D-V-2 在高中科技領綱（tech108 來源）（頁碼是頁腳印的頁碼：高中科技領綱比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
+- Lee 等人 2025 年論文的 PDF 沒有印頁碼，頁碼是 PDF 頁；這是 319 位知識工作者的自陳問卷研究，結果是相關，不是因果；CHI 論文經同儕審查，本點把 kind 標成 peer_reviewed（B16 的 it.hcai@uni 標成 reference，兩者都可）。
+- NIST AI 600-1 的頁碼是頁腳印的頁碼（PDF 頁 − 4）；它是美國政府的生成式 AI 風險框架，本點只借用自動化偏誤的說法。
+- 英文 PDF 的引文避開彎引號；PDF 換行處的斷字照原詞接回，其餘空白照原文。
+- 原 scenario 的引號拿掉（是本頁自己的名稱，不是引文），保留設計審查清單、用在期末報告、記錄分工的做法，並補上本站建議。
+- 原 ai.delegable「大量產出、整理、比較資料」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- 第 2 輪：qa 補上 Lee 2025 是自陳問卷的相關、不是因果；How 不再把相關寫成機制，也不寫成效承諾（改成比較不會）。第 3 輪選改：guiding question、qa 問題和 review 改成不讀成因果的問法。
 prerequisites:
-  - ph.aijudge@sh
-  - ph.epistem@uni
+- ph.aijudge@sh
+- ph.epistem@uni
 links:
   why: []
   how:
-    - pm.aiteam@uni
+  - pm.aiteam@uni
   related:
-    - it.hcai@uni
+  - it.hcai@uni
   deeper: []
 link_notes: 資訊與 AI、專案管理（決策、倫理與 AI 協作）
 competency:
   specialist:
-    - 批判思考
+  - 批判思考
   generalist:
-    - 查證
-    - 跨域思考
+  - 查證
+  - 跨域思考
 ai:
   delegable:
-    - 大量產出、整理、比較資料
+  - 大量產出、整理、比較資料（結果和出處自己查證，本站建議）
   human_experience:
-    - 定義問題、價值判斷、對結果負責
+  - 定義問題、價值判斷、對結果負責
 idea: AI 擅長產出與整理，人仍要負責定義問題、判斷價值與承擔後果；理解不等於能產出答案。
 guiding_questions:
-  - 如果答案都能問 AI，你還需要真正理解嗎？
-scenario: 設計自己的「AI 輸出審查清單」，用在一份期末報告上，記錄哪些部分交給 AI、哪些自己判斷。
+- 如果答案都能問 AI，你還需要真正理解嗎？
+- 太相信 AI 時，為什麼容易少想一步？
+- 交給 AI 的部分出錯，誰負責？
+scenario: 設計自己的 AI 輸出審查清單，用在一份期末報告上，記錄哪些部分交給 AI、哪些自己判斷（本站建議）。
 formats:
   slides: []
+  exercise: 目標：為一份期末報告設計自己的 AI 輸出審查清單：先定義報告要回答的問題，寫下哪些部分交給 AI、哪些自己判斷，逐項查證 AI 的輸出，記錄改了什麼，最後說明自己為哪些結論負責。　檢核：不看本頁，說出 AI 能做和人要負責的事差在哪、什麼是自動化偏誤、為什麼調查裡越相信 AI 的人自評的批判思考越少只能算相關、審查清單要查哪些項目，並用自己的報告說明哪些交給 AI、哪些自己判斷、改了什麼。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 為一份期末報告設計自己的 AI 輸出審查清單：先定義報告要回答的問題，寫下哪些部分交給 AI、哪些自己判斷，逐項查證 AI 的輸出，記錄改了什麼，最後說明自己為哪些結論負責。
+review: 不看本頁，說出 AI 能做和人要負責的事差在哪、什麼是自動化偏誤、為什麼調查裡越相信 AI 的人自評的批判思考越少只能算相關、審查清單要查哪些項目，並用自己的報告說明哪些交給 AI、哪些自己判斷、改了什麼。
+why:
+  heading: AI 能產出，判斷還是你的
+  body:
+  - Lee 等人 2025 年調查 319 位知識工作者，發現「higher confidence in GenAI is associated with less critical thinking, while higher self-confidence is associated with more critical thinking.」這是自陳問卷的相關結果，不是因果（說明是本站整理）。NIST 的生成式 AI 風險框架也提醒「automation bias, or excessive deference to automated systems」，太相信機器會少想一步（說明是本站整理）。
+  - AI 讓思考的重點移動：論文說生成式 AI 讓批判思考轉向「information verification, response integration, and task stewardship」（說明是本站整理）。高中資訊科技學過「資料探勘與機器學習的基本概念」，也要「能使用多元的觀點思辨資訊科技相關議題」；大學要能自己分配人和 AI 的工作，並為結果負責（本站整理）。
+  qa:
+    question: 太相信 AI 時，為什麼容易少想一步？
+    answer: 太相信機器時，人會不再檢查。NIST 把這叫作「automation bias, or excessive deference to automated systems」；Lee 等人的自陳問卷也發現，越相信 AI 的人，自評的批判思考越少（這是相關，不是因果；說明是本站整理）。
+    source: nist-genai
+  items_title: 這一點用到的
+  items:
+  - title: 自動化偏誤
+    text: 太相信機器，不再檢查。
+  - title: 查證
+    text: 對照出處，確認是真的。
+  - title: 整合
+    text: 把 AI 的輸出接進自己的論點。
+  - title: 監督
+    text: 決定工作，也為結果負責。
+  checklist_title: 開始前先確認
+  checklist:
+  - 學過判斷 AI 輸出
+  - 學過依證據調整
+  figures:
+  - aimind-compare
+  sources:
+  - lee-chi25
+  - nist-genai
+  - tech108
+how:
+  heading: 設計自己的 AI 輸出審查清單
+  body:
+  - 先自己定義問題：報告要回答什麼、怎樣才算答好（本站建議）。這一步不交給 AI，因為問題問錯了，答案再多也沒用（本站整理）。再分工：找資料、整理、比較、改文字可以交給 AI；選題、判斷證據、下結論、價值取捨自己做（本站建議）。如果答案都能問 AI，你還是要理解，因為不理解就看不出 AI 錯在哪（本站整理）。
+  - 接著設計審查清單，逐項查 AI 的輸出：事實和數字對嗎、引用的資料真的存在嗎、有沒有漏掉反方、跟自己的論點接得上嗎（本站建議）。論文說使用者「increasingly move from task execution to oversight when using GenAI.」審查清單就是把監督寫成具體的步驟（說明是本站整理）。太相信機器、照單全收，NIST 稱為自動化偏誤（本站整理）。把檢查寫成固定的步驟，比較不會因為 AI 看起來很有把握就跳過（本站建議）。
+  - 最後記錄分工和修改：哪些段落用了 AI、改了什麼、為什麼改，並在報告註明使用的工具和用途（本站建議）。論文也說使用者會「trade hands-on engagement for the challenge of verifying and editing AI outputs」；交給 AI 的部分出錯，負責的還是交報告的人（說明是本站整理）。
+  qa:
+    question: 如果答案都能問 AI，你還需要真正理解嗎？
+    answer: 需要。不理解就看不出 AI 錯在哪，也沒辦法為結論負責。論文說使用 AI 時，工作會「move from task execution to oversight」，監督要靠理解（說明是本站整理）。
+    source: lee-chi25
+  items_title: 本站建議的步驟
+  items:
+  - title: 定義問題
+    text: 自己決定要回答什麼。
+  - title: 分工
+    text: 哪些交給 AI，哪些自己做。
+  - title: 逐項審查
+    text: 事實、出處、反方、接得上。
+  - title: 記錄並負責
+    text: 寫出用了什麼、改了什麼。
+  checklist_title: 寫完檢查
+  checklist:
+  - 問題自己定義
+  - 輸出逐項查過
+  - 分工有記錄
+  activity_figure: aimind-flow
+  sources:
+  - lee-chi25
+  - nist-genai
+what:
+  heading: 分工、審查、負責
+  body:
+  - 學完後，你能自己定義問題，分配哪些工作交給 AI、哪些自己判斷，用自己設計的審查清單逐項查 AI 的輸出，記錄修改，並為報告的結論負責。
+  items_title: 學完能做到
+  items:
+  - title: 分配人機工作
+    text: 產出交給 AI，判斷自己做。
+  - title: 審查 AI 輸出
+    text: 用自己的清單逐項查。
+  - title: 為結論負責
+    text: 記錄分工，註明用途。
+  checklist_title: 自我檢核
+  checklist:
+  - 清單自己設計
+  - 輸出查證過
+  - 分工寫清楚
+  notes:
+  - 本頁的期末報告是本站整理的例子。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: aimind-flow
+  type: flow
+  alt: AI 輸出審查五步驟：學生定義問題，分配人和 AI 的工作，用清單逐項審查 AI 的輸出，記錄修改，為結論負責。
+  steps:
+  - actor: 學生
+    text: 定義問題
+  - actor: 學生
+    text: 分配工作
+  - actor: 學生
+    text: 逐項審查
+  - actor: 學生
+    text: 記錄修改
+  - actor: 學生
+    text: 為結論負責
+  source: lee-chi25
+  caption: 流程是本站建議。
+- id: aimind-compare
+  type: compare
+  alt: 比較交給 AI 和自己判斷：產出、整理、比較資料可以交給 AI；定義問題、價值判斷、為結果負責要自己做。兩者是不同的工作。
+  source: lee-chi25
+  relation: versus
+  items:
+  - term: 交給 AI
+    note: 產出、整理、比較資料
+  - term: 自己判斷
+    note: 定義問題、價值取捨、負責
+  caption: 例子是本站整理。
+sources:
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：運 a-V-2「能使用多元的觀點思辨資訊科技相關議題。」（p.7）；資 D-V-2「資料探勘與機器學習的基本概念。」（p.11）
+- id: lee-chi25
+  title: 'The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers'
+  publisher: Hao-Ping (Hank) Lee 等著，CHI 2025 論文（ACM，CC BY 4.0；第二作者 Advait Sarkar 網站存放的 PDF）
+  url: https://advait.org/files/lee_2025_ai_critical_thinking_survey.pdf
+  accessed: '2026-10-30'
+  kind: peer_reviewed
+  supports: 「higher confidence in GenAI is associated with less critical thinking, while higher self-confidence is associated with more critical thinking.」（p.1）；「GenAI shifts the nature of critical thinking toward information verification, response integration, and task stewardship.」（p.1）；「increasingly move from task execution to oversight when using GenAI.」（p.2）；「trade hands-on engagement for the challenge of verifying and editing AI outputs」（p.2）
+- id: nist-genai
+  title: 'Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile（NIST AI 600-1）'
+  publisher: 美國國家標準與技術研究院 NIST（2024 年 7 月）
+  url: https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「This phenomenon is an example of automation bias, or excessive deference to automated systems.」（p.9）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
