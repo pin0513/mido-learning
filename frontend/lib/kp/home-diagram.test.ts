@@ -6,6 +6,7 @@ import { publicDisciplineIds } from "./home-public";
 import { routeWires } from "./home-wires";
 
 // B21 發布 ph.parts@es 後，改用它的下一階草稿 ph.feedback@jh；B22 發布 ph.feedback@jh 後，改用仍是草稿的 ph.science@sh；B23 發布哲學 sh 7 點後，改用仍是草稿的 ph.philsci@uni、ph.formal@uni。
+// B24 發布哲學 uni 6 點後，這裡的哲學標題與代號也都已發布。它們只用在「只開專案管理」的檢查（沒開的學門不進圖），跟是不是草稿無關，所以照舊保留（數學的本來就是已發布標題）。
 const DRAFT_TITLES = [
   "研究設計與科學方法的限制",
   "規律與關係",
@@ -25,6 +26,7 @@ const PUBLISHED = new Set([
   "ph.reason@es", "ph.question@es", "ph.fact@es", "ph.know@es", "ph.fair@es", "ph.parts@es",
   "ph.argument@jh", "ph.fallacy@jh", "ph.evidence@jh", "ph.feedback@jh", "ph.hypothesis@jh", "ph.ethics@jh",
   "ph.logic@sh", "ph.science@sh", "ph.tok@sh", "ph.bias@sh", "ph.aijudge@sh", "ph.systems@sh", "ph.ethicstheory@sh",
+  "ph.epistem@uni", "ph.philsci@uni", "ph.formal@uni", "ph.applied@uni", "ph.complex@uni", "ph.aimind@uni",
   "ma.number@es", "ma.pattern@es", "ma.data@es", "ma.measure@es", "ma.shape@es", "ma.fraction@es",
   "ma.algebra@jh", "ma.coord@jh", "ma.prob@jh", "ma.pythag@jh", "ma.quadratic@jh", "ma.similar@jh",
   "ma.function@sh", "ma.proof@sh", "ma.rate@sh", "ma.sequence@sh", "ma.stats@sh", "ma.trig@sh", "ma.vector@sh",

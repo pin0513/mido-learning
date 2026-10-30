@@ -1,46 +1,209 @@
+# B24 提案：ph.formal@uni
+# - 補 goal、review、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（大學）；沒有 curriculum_108、est_time。
+# - 主要依據：Rebus 開放教科書 Introduction to Philosophy: Logic 第 2 章（Smith；有效、健全、反例）與第 3 章（Assadian；邏輯形式、形式謬誤、肯定後件）。
+# - 高中國語文 Bd-V-2、綜合活動 生 Aa-V-2 只在 kuoyu、zonghe 來源當先備。
+# - 菸稅論證是虛構例子，標成本站整理；三個 guiding question 的答案寫在 How 內文。
 id: ph.formal@uni
 concept: ph.formal
 title: 形式邏輯與論證分析
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 邏輯與論證
+  - 哲學
+  - 思考方法
+  - 邏輯與論證
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用（代碼表與頁碼同 B23），當作先學過的內容：Bd-V-2 在高中國語文領綱（kuoyu 來源）；生 Aa-V-2 在高中綜合活動領綱（zonghe 來源）（頁碼是頁腳印的頁碼：高中國語文領綱比 PDF 頁少 2；高中綜合活動領綱比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
+- Rebus Community 的 Introduction to Philosophy 系列是開放教科書（CC BY 4.0），每章由不同作者撰寫；網頁版沒有頁碼，引文對照章節網頁。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 教科書網頁的邏輯符號是 LaTeX 原始碼（如 \therefore），引文只取英文句子，不引符號；How 的若 P 則 Q 寫法是本站整理。
+- 原 scenario「把一篇政策論述形式化，評估它是否有效、是否健全。」保留做法，補上本站建議。
+- 原 ai.delegable「協助轉換符號、檢查推導」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- 原 idea 的有效、健全說明與教科書第 2 章的定義一致，保留；第 2 輪把原 idea 的「命題與述詞邏輯」改成「命題邏輯」，因為本頁只教命題邏輯（若 P 則 Q、肯定後件、反例），沒有教量詞。
 prerequisites:
-  - ph.logic@sh
+- ph.logic@sh
 links:
   why: []
   how: []
   related:
-    - ma.proof@sh
-    - it.prog@jh
+  - ma.proof@sh
+  - it.prog@jh
   deeper: []
 link_notes: 數學（離散數學）、資訊（程式邏輯）
 competency:
   specialist:
-    - 論證
+  - 論證
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 協助轉換符號、檢查推導
+  - 協助轉換符號、檢查推導（每一步推導自己再檢查，本站建議）
   human_experience:
-    - 決定哪些前提值得接受
-idea: 用命題與述詞邏輯把論證形式化，區分「有效」（推理正確）與「健全」（推理正確且前提為真）。
+  - 決定哪些前提值得接受
+idea: 用命題邏輯把論證形式化，區分「有效」（推理正確）與「健全」（推理正確且前提為真）。
 guiding_questions:
-  - 一個有效的論證，結論一定是真的嗎？
-scenario: 把一篇政策論述形式化，評估它是否有效、是否健全。
+- 一個有效的論證，結論一定是真的嗎？
+- 怎麼證明一個論證無效？
+- 把論證寫成符號，有什麼用？
+scenario: 把一篇政策論述形式化，評估它是否有效、是否健全（本站建議）。
 formats:
   slides: []
+  exercise: 目標：選一段政策論述，拆成前提和結論並補出沒寫出來的前提，寫成符號，判斷形式是否有效，無效時舉出反例，再逐條檢查前提，說出它是否健全。　檢核：不看本頁，說出有效和健全差在哪、為什麼有效的論證結論不一定是真的、怎麼用反例證明論證無效，並用自己選的政策論述說明它的形式和前提各有什麼問題。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 選一段政策論述，拆成前提和結論並補出沒寫出來的前提，寫成符號，判斷形式是否有效，無效時舉出反例，再逐條檢查前提，說出它是否健全。
+review: 不看本頁，說出有效和健全差在哪、為什麼有效的論證結論不一定是真的、怎麼用反例證明論證無效，並用自己選的政策論述說明它的形式和前提各有什麼問題。
+why:
+  heading: 有效不等於健全
+  body:
+  - 'Smith 在開放教科書《Introduction to Philosophy: Logic》第 2 章說「A valid argument is an argument whose premises guarantee the truth of the conclusion.」；前提又都是真的，才叫健全：「A valid deductive argument whose premises are all true is called a sound argument」（說明是本站整理）。他也說「Deductive arguments are either valid or invalid because of the form or structure of the argument.」有效只看形式，健全還要看內容（說明是本站整理）。'
+  - 高中國語文學過「論證方式如歸納、演繹、因果論證等」，生命教育的補充說明提到「簡單的語句有效推論形式或三段論的基本推論形式」；大學要把論證寫成符號，分開檢查形式和前提（本站整理）。
+  qa:
+    question: 一個有效的論證，結論一定是真的嗎？
+    answer: 不一定。有效只確定前提都真時結論必真；只要有一個前提是假的，結論就可能是假的。教科書說這種論證是「the structure is good, but the evidence is bad」（說明是本站整理）。
+    source: rebus-logic-ch2
+  items_title: 這一點用到的
+  items:
+  - title: 有效
+    text: 前提都真時，結論不可能假。
+  - title: 健全
+    text: 有效，而且前提都真。
+  - title: 邏輯形式
+    text: 論證的結構，和內容分開。
+  - title: 反例
+    text: 前提都真、結論卻假的情況。
+  checklist_title: 開始前先確認
+  checklist:
+  - 學過演繹和歸納
+  - 會分前提和結論
+  figures:
+  - formal-compare
+  sources:
+  - rebus-logic-ch2
+  - kuoyu
+  - zonghe
+how:
+  heading: 寫成符號，先查形式再查前提
+  body:
+  - 先把論述拆成前提和結論，補出沒寫出來的前提，再用一個字母代表一個簡單句子，例如 P 代表菸稅提高、Q 代表吸菸的人變少，寫成：若 P 則 Q；P；所以 Q（例子是本站整理）。寫成符號，是為了把形式和內容分開看：Assadian 在第 3 章討論「the explanation of validity in terms of logical form」，也說形式謬誤是「mistakes in an argument due to its logical form」（說明是本站整理）。
+  - 接著查形式。常見的錯誤是肯定後件：若 P 則 Q；Q；所以 P。第 3 章的練習要學生用真值表證明「the fallacy of affirming the consequent」是無效的（說明是本站整理）。看不出是哪一種形式時，就找反例：「A counterexample is a scenario in which the premises of the argument are true while the conclusion is clearly false.」找得到反例，論證就無效（說明是本站整理）。
+  - 最後查前提。有效的論證只確定一件事：前提都真時，結論必真；只要有一個前提是假的，結論就可能是假的（本站整理）。所以形式有效以後，再逐條問前提是不是真的、有沒有證據；政策論述常把有爭議的前提藏起來，要先補出來再檢查（本站整理）。形式有效、前提又都站得住，才是健全（本站整理）。AI 可以協助轉換符號、檢查推導，但哪些前提值得接受，要你自己判斷（本站整理）。
+  qa:
+    question: 怎麼證明一個論證無效？
+    answer: 找反例：想出一個前提都真、結論卻假的情況，找得到就證明無效。教科書說反例是「a scenario in which the premises of the argument are true while the conclusion is clearly false」（說明是本站整理）。
+    source: rebus-logic-ch2
+  items_title: 本站建議的步驟
+  items:
+  - title: 拆前提和結論
+    text: 補出沒寫出來的前提。
+  - title: 寫成符號
+    text: 一個簡單句子一個字母。
+  - title: 查形式
+    text: 有效嗎？找得到反例嗎？
+  - title: 查前提
+    text: 每條前提都真嗎？
+  checklist_title: 寫完檢查
+  checklist:
+  - 前提結論分開
+  - 形式有判斷
+  - 前提有檢查
+  activity_figure: formal-flow
+  sources:
+  - rebus-logic-ch2
+  - rebus-logic-ch3
+what:
+  heading: 分開檢查形式和前提
+  body:
+  - 學完後，你能把一段論述拆成前提和結論、寫成符號，判斷它的形式是否有效，用反例說明無效的論證，再檢查前提是否為真，說出它是否健全。
+  items_title: 學完能做到
+  items:
+  - title: 寫成符號
+    text: 一個簡單句子一個字母。
+  - title: 判斷有效
+    text: 用形式或反例。
+  - title: 判斷健全
+    text: 有效，前提也都真。
+  checklist_title: 自我檢核
+  checklist:
+  - 符號寫出
+  - 有效有理由
+  - 健全有判斷
+  notes:
+  - 本頁的菸稅論證是虛構的例子，本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: formal-flow
+  type: flow
+  alt: 分析論證五步驟：學生拆前提和結論，寫成符號，查形式，查前提，判斷是否健全。
+  steps:
+  - actor: 學生
+    text: 拆前提結論
+  - actor: 學生
+    text: 寫成符號
+  - actor: 學生
+    text: 查形式
+  - actor: 學生
+    text: 查前提
+  - actor: 學生
+    text: 判斷健全
+  source: rebus-logic-ch2
+  caption: 流程是本站建議。
+- id: formal-compare
+  type: compare
+  alt: 比較有效和健全：有效是前提都真時結論不可能假，只看形式；健全是有效而且前提都真，形式和內容都要看。兩者不相等。
+  source: rebus-logic-ch2
+  relation: not_equal
+  items:
+  - term: 有效
+    note: 只看形式，前提真則結論真
+  - term: 健全
+    note: 有效，而且前提都真
+  caption: 例子是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中國語文先學過的相關學習重點，只當先備：Bd-V-2「論證方式如歸納、演繹、因果論證等。」（p.17）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中綜合活動（生命教育）先學過的相關學習重點，只當先備：生 Aa-V-2「正確思考的基本邏輯。」（p.95）；補充說明「基本邏輯推理僅需讓學生了解基本原理即可，如：簡單的語句有效推論形式或三段論的基本推論形式等。」（p.95）
+- id: rebus-logic-ch2
+  title: 'Introduction to Philosophy: Logic，Chapter 2: Evaluating Arguments'
+  publisher: Nathan Smith 著（Benjamin Martin 編，Christina Hendricks 系列主編，Rebus Community 開放教科書，CC BY 4.0）
+  url: https://press.rebus.community/intro-to-phil-logic/chapter/chapter-2-evaluating-arguments/
+  accessed: '2026-10-30'
+  kind: textbook
+  supports: 「A valid argument is an argument whose premises guarantee the truth of the conclusion.」；「A valid deductive argument whose premises are all true is called a sound argument」；「In the case of these arguments, the structure is good, but the evidence is bad.」；「Deductive arguments are either valid or invalid because of the form or structure of the argument.」；「A counterexample is a scenario in which the premises of the argument are true while the conclusion is clearly false.」
+- id: rebus-logic-ch3
+  title: 'Introduction to Philosophy: Logic，Chapter 3: Formal Logic in Philosophy'
+  publisher: Bahram Assadian 著（Benjamin Martin 編，Christina Hendricks 系列主編，Rebus Community 開放教科書，CC BY 4.0）
+  url: https://press.rebus.community/intro-to-phil-logic/chapter/chapter-3-formal-logic-in-philosophy/
+  accessed: '2026-10-30'
+  kind: textbook
+  supports: 「the explanation of validity in terms of logical form」；「formal fallacies, which are mistakes in an argument due to its logical form」；「the fallacy of affirming the consequent」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

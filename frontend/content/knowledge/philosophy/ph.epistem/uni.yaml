@@ -1,46 +1,201 @@
+# B24 提案：ph.epistem@uni
+# - 補 goal、review、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（大學）；沒有 curriculum_108、est_time。
+# - 主要依據：Lopez〈Epistemology, Probability, and Science〉（Rebus 開放教科書 Introduction to Philosophy: Epistemology 第 6 章；信心程度、條件化、基本比率謬誤）＋ SEP Bayesian Epistemology（Regularity）。
+# - 高中社會 歷 3b-V-3、歷 1c-V-2 只在 social108 來源當先備。
+# - 檢驗例子標成本站整理；三個 guiding question 的答案寫在 How 內文。
 id: ph.epistem@uni
 concept: ph.epistem
 title: 知識論與不確定性
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 知識論
+  - 哲學
+  - 思考方法
+  - 知識論
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用（代碼表與頁碼同 B23），當作先學過的內容：歷 3b-V-3、歷 1c-V-2 在高中社會領綱（social108 來源）（頁碼是頁腳印的頁碼：高中社會領綱比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
+- Rebus Community 的 Introduction to Philosophy 系列是開放教科書（CC BY 4.0），每章由不同作者撰寫；網頁版沒有頁碼，引文對照章節網頁。
+- Stanford Encyclopedia of Philosophy 的條目是同行審稿的線上百科（kind 標成 reference）；英文短句引用，中文說明是本站整理。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 原 scenario「選一個你的判斷，寫下目前的信心程度，蒐集新證據後說明你調整了多少、為什麼。」保留做法，補上本站建議。
+- 原 ai.delegable「整理證據、試算機率」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- SEP 條目寫明 Regularity 仍有反對意見（與條件化的衝突等），How 說成一條仍有爭論的規範；罕見情況的檢驗例子是本站整理，不是教科書的內容（教科書用疫苗與自閉症、廣義相對論的例子）；一千人、99%、5% 是示意數字，0.99 ÷（0.99 ＋ 0.05 × 999）約 1.9%。
+- 第 2 輪：意見會合（merging-of-opinions）改寫成有前提的說法，依 SEP Bayesian Epistemology 的定理敘述與長期可能太長的提醒；先前機率是 0 動不了，和同頁的 Regularity 一致。第 3 輪選改：前提補上大家對證據的解讀（likelihood）也要一致，依 Rebus 對 likelihood 的說明，是本站整理。
 prerequisites:
-  - ph.tok@sh
+- ph.tok@sh
 links:
   why: []
   how:
-    - pm.complexity@uni
+  - pm.complexity@uni
   related:
-    - ma.probmodel@uni
+  - ma.probmodel@uni
   deeper: []
 link_notes: 數學（機率與統計）、專案管理（複雜性與不確定性）
 competency:
   specialist:
-    - 知識論
+  - 知識論
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 整理證據、試算機率
+  - 整理證據、試算機率（算式和結果自己驗算，本站建議）
   human_experience:
-    - 願意承認自己可能錯，並說出改變的理由
+  - 願意承認自己可能錯，並說出改變的理由
 idea: 很多信念不是全有或全無，而是有程度的。看到新證據時，合理地調整信心。
 guiding_questions:
-  - 什麼樣的證據會讓你改變最堅持的看法？
-scenario: 選一個你的判斷，寫下目前的信心程度，蒐集新證據後說明你調整了多少、為什麼。
+- 什麼樣的證據會讓你改變最堅持的看法？
+- 一個很準的檢驗呈陽性，為什麼還要看這種事本來有多常見？
+- 信心可以調到完全確定嗎？
+scenario: 選一個你的判斷，寫下目前的信心程度，蒐集新證據後說明你調整了多少、為什麼（本站建議）。
 formats:
   slides: []
+  exercise: 目標：選一個自己的判斷，寫下目前的信心程度和理由，列出我對和我錯時各會看到什麼證據，查這種事本來有多常見，蒐集新證據後說出信心調了多少、為什麼。　檢核：不看本頁，說出有程度的信念和全有全無的相信差在哪、什麼樣的證據最該讓人改變看法、為什麼只看證據不看基本比率會出錯，並用自己的判斷說明信心調了多少、理由是什麼。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 選一個自己的判斷，寫下目前的信心程度和理由，列出我對和我錯時各會看到什麼證據，查這種事本來有多常見，蒐集新證據後說出信心調了多少、為什麼。
+review: 不看本頁，說出有程度的信念和全有全無的相信差在哪、什麼樣的證據最該讓人改變看法、為什麼只看證據不看基本比率會出錯，並用自己的判斷說明信心調了多少、理由是什麼。
+why:
+  heading: 相信有程度，證據會改變它
+  body:
+  - 'Lopez 在開放教科書《Introduction to Philosophy: Epistemology》第 6 章說，相信可以有程度：「your degree of belief in a proposition is the degree of confidence you have in that proposition」，可以放在 0 到 1 之間；形式知識論把它叫作 credence，也就是信心程度（說明是本站整理）。Stanford 哲學百科的 Bayesian Epistemology 條目也說，「Bayesian epistemologists study norms governing degrees of beliefs」，研究信心程度看到證據時該怎麼調整（說明是本站整理）。'
+  - 高中歷史課要學生分辨史料證據與歷史解釋，並「檢視證據的適切性」；大學再往前一步：把我相信換成我有多相信，看到新證據時說得出要調多少、為什麼（本站整理）。
+  qa:
+    question: 什麼樣的證據會讓你改變最堅持的看法？
+    answer: 如果我對就不太會出現、我錯了才容易出現的證據，最該讓人改變。教科書說，證據若是「easily obtained by chance」，就不該因此提高信心（說明是本站整理）。
+    source: rebus-epist-prob
+  items_title: 這一點用到的
+  items:
+  - title: 信心程度
+    text: 多相信一件事，放在 0 到 1 之間。
+  - title: 先前機率
+    text: 還沒看新證據時的信心。
+  - title: 條件化
+    text: 依新證據更新信心。
+  - title: 基本比率謬誤
+    text: 只看證據，忘了先前機率。
+  checklist_title: 開始前先確認
+  checklist:
+  - 學過知識與理由
+  - 會算簡單機率
+  figures:
+  - epistem-compare
+  sources:
+  - rebus-epist-prob
+  - sep-bayes
+  - social108
+how:
+  heading: 寫下信心、找證據、再調整
+  body:
+  - 先選一個自己的判斷，寫下現在的信心（0 到 1 或百分比）和理由（本站建議）。這和全有全無的相信不同：教科書說，貝氏知識論先「discarding the traditional view of belief as an all-or-nothing affair」，不只問信不信，而是問有多相信（說明是本站整理）。再問兩個問題：如果我對，會看到什麼？如果我錯，會看到什麼？只有在一種情況下才容易出現的證據最有分量；兩種情況都很容易看到的證據，幾乎不該改變信心（本站整理）。教科書說貝氏定理「gives you the rules to follow to update your credences based on incoming evidence」，這種依證據更新的做法叫作條件化（說明是本站整理）。
+  - 接著查先前機率：這種事本來有多常見？教科書提醒，「ignoring prior probabilities and focusing exclusively on the conditional probabilities is the notorious base-rate fallacy」（說明是本站整理）。算一次就看得出來：假設一千人裡只有 1 人有某種情況，檢驗對有的人 99% 會呈陽性，對沒有的人也有 5% 會誤判成陽性；一千人裡大約 51 人陽性，真的有的不到 1 人，陽性時真的有的機率只有約 2%（例子是本站整理，數字是示意）。起點不同的人，教科書說「enough evidence will wash out erroneous priors」，但也說短期內「subjective Bayesianism would allow someone to believe in unrealistic priors until enough evidence comes in.」（說明是本站整理）。Stanford 哲學百科說，這類意見會合的定理只在「under such and such contingent initial conditions」下成立，而且是在「the shared evidence accumulates indefinitely」時；條目也提醒「And the long run might be too long.」所以要先前機率不是 0 或 1、大家看到同樣的證據，而且對證據怎麼解讀的看法也一致（同一個證據在各假設下有多可能，教科書叫 likelihood，是在量「how well your hypothesis predicts the evidence」），信心才可能在長期靠近；先前機率是 0 的人，再多證據也動不了（說明是本站整理）。
+  - 最後說出調整：信心調了多少、為什麼（本站建議）。不要把信心調到完全確定或完全不可能：教科書說「no matter how much evidence accrues, you will never be able to raise your credence to」1，也就是「absolute certainty」（說明是本站整理）。Stanford 哲學百科介紹的 Regularity 規範說，「if one has a credence in a logically consistent proposition, it is greater than 0」，這條規範在哲學上仍有爭論，但保留一點可能，才有被新證據改變的空間（說明是本站整理）。AI 可以幫你整理證據、試算機率，但信心該調多少、理由站不站得住，要你自己判斷（本站整理）。
+  qa:
+    question: 一個很準的檢驗呈陽性，為什麼還要看這種事本來有多常見？
+    answer: 因為先前機率會大大影響結果：情況本來很少見時，陽性也可能多半是誤判。教科書說忽略先前機率、只看條件機率，是有名的「base-rate fallacy」（說明是本站整理）。
+    source: rebus-epist-prob
+  items_title: 四步做
+  items:
+  - title: 寫下信心和理由
+    text: 先記下現在多相信。
+  - title: 比較兩種情況
+    text: 我對或我錯，各會看到什麼？
+  - title: 查先前機率
+    text: 這種事本來有多常見？
+  - title: 說出調整
+    text: 調了多少、為什麼。
+  checklist_title: 寫完檢查
+  checklist:
+  - 信心有數字
+  - 有寫理由
+  - 調整有說明
+  activity_figure: epistem-flow
+  sources:
+  - rebus-epist-prob
+  - sep-bayes
+what:
+  heading: 依證據調整信心
+  body:
+  - 學完後，你能用信心程度描述自己的判斷，比較證據在我對和我錯時出現的可能，記得先看先前機率，並說出看到新證據後信心調了多少、為什麼。
+  items_title: 學完能做到
+  items:
+  - title: 說出信心程度
+    text: 不只說相信或不相信。
+  - title: 判斷證據分量
+    text: 我對或我錯時會不會出現。
+  - title: 避開基本比率謬誤
+    text: 先看這種事有多常見。
+  checklist_title: 自我檢核
+  checklist:
+  - 信心寫成數字
+  - 比較兩種情況
+  - 說出調整理由
+  notes:
+  - 本頁的檢驗例子是虛構的，本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: epistem-flow
+  type: flow
+  alt: 調整信心四步驟：學生寫下信心和理由，比較我對和我錯時會看到什麼，查先前機率，看到證據後說出調整。
+  steps:
+  - actor: 學生
+    text: 寫下信心
+  - actor: 學生
+    text: 比較兩種情況
+  - actor: 學生
+    text: 查先前機率
+  - actor: 學生
+    text: 說出調整
+  source: rebus-epist-prob
+  caption: 流程是本站建議。
+- id: epistem-compare
+  type: compare
+  alt: 比較全有全無和有程度的信念：全有全無只有相信或不相信；有程度的信念說出多相信，看到證據就調整。兩者不相等。
+  source: rebus-epist-prob
+  relation: not_equal
+  items:
+  - term: 全有全無
+    note: 只有相信或不相信
+  - term: 有程度
+    note: 說出多相信，隨證據調整
+  caption: 例子是本站整理。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中社會（歷史）先學過的相關學習重點，只當先備：歷 3b-V-3「分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。」（p.11–12）；歷 1c-V-2「綜合歷史知識與史料證據，提出個人的分析與詮釋。」（p.9）
+- id: rebus-epist-prob
+  title: 'Introduction to Philosophy: Epistemology，Chapter 6: Epistemology, Probability, and Science'
+  publisher: Jonathan Lopez 著（Brian C. Barnett 編，Christina Hendricks 系列主編，Rebus Community 開放教科書，CC BY 4.0）
+  url: https://press.rebus.community/intro-to-phil-epistemology/chapter/epistemology-probability-and-science/
+  accessed: '2026-10-30'
+  kind: textbook
+  supports: 「Basically, it measures how well your hypothesis predicts the evidence.」；「your degree of belief in a proposition is the degree of confidence you have in that proposition」；「This theorem gives you the rules to follow to update your credences based on incoming evidence.」；「If the evidence is easily obtained by chance, it would not be a good idea to increase your confidence in the hypothesis.」；「ignoring prior probabilities and focusing exclusively on the conditional probabilities is the notorious base-rate fallacy」；「Our example also demonstrates that Bayesianism has some mechanism for correcting prior probabilities, since enough evidence will wash out erroneous priors.」；「In the short term, however, subjective Bayesianism would allow someone to believe in unrealistic priors until enough evidence comes in.」；「discarding the traditional view of belief as an all-or-nothing affair」；「no matter how much evidence accrues, you will never be able to raise your credence to」；「absolute certainty」
+- id: sep-bayes
+  title: Bayesian Epistemology（Stanford Encyclopedia of Philosophy）
+  publisher: Hanti Lin；2022 年 6 月 13 日首次發表（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/epistemology-bayesian/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Bayesian epistemologists study norms governing degrees of beliefs」；「Regularity. It ought to be that, if one has a credence in a logically consistent proposition, it is greater than 0.」；「There is a more serious objection to Regularity.」；「Such a theorem states that, under such and such contingent initial conditions together with such and such coherence norms, two agents must be certain that their credences in the hypotheses under consideration will merge with each other in the long run as the shared evidence accumulates indefinitely.」；「And the long run might be too long.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

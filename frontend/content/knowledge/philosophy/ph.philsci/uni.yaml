@@ -1,46 +1,199 @@
+# B24 提案：ph.philsci@uni
+# - 補 goal、review、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（大學）；沒有 curriculum_108、est_time。
+# - 主要依據：Sumner 等人 2014（BMJ，同儕審查；新聞稿與新聞的三種誇大）＋ SEP Reproducibility of Scientific Results（再現性危機、事先登記）。
+# - 高中自然科學 an-Vc-2、ah-Vc-1 只在 sci108 來源當先備。
+# - 冰淇淋與溺水是常見教學例子，標成本站整理；三個 guiding question 的答案寫在 How 內文。
 id: ph.philsci@uni
 concept: ph.philsci
 title: 研究設計與科學方法的限制
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 哲學
-    - 思考方法
-    - 提問與探究
+  - 哲學
+  - 思考方法
+  - 提問與探究
   layer: essence
   crosscutting: []
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用（代碼表與頁碼同 B23），當作先學過的內容：an-Vc-2、ah-Vc-1 在高中自然科學領綱（sci108 來源）（頁碼是頁腳印的頁碼：高中自然科學領綱比 PDF 頁少 4）。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
+- Stanford Encyclopedia of Philosophy 的條目是同行審稿的線上百科（kind 標成 reference）；英文短句引用，中文說明是本站整理。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- Sumner 等人 2014 是回溯性的觀察研究（BMJ，同儕審查，PubMed Central 全文）；作者寫的是新聞稿誇大與新聞誇大相關（associated），Why 內文照這個說法，不寫成新聞稿造成新聞誇大。
+- 原 scenario「評讀一則『研究發現』新聞，回到原始研究，指出設計限制與新聞誇大之處。」保留做法，補上本站建議。
+- 原 ai.delegable「摘要研究內容、說明統計方法」補上使用條件（本站建議）。
+- guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
+- 冰淇淋與溺水的例子是常見的教學例子（本站整理），不是 Sumner 論文的內容；論文舉的是喝酒與疾病的例子。
 prerequisites:
-  - ph.science@sh
-  - ph.bias@sh
+- ph.science@sh
+- ph.bias@sh
 links:
   why: []
   how: []
   related:
-    - ma.stats@sh
+  - ma.stats@sh
   deeper: []
 link_notes: 數學（統計）、心理學（研究方法）
 competency:
   specialist:
-    - 科學探究
+  - 科學探究
   generalist:
-    - 跨域思考
-    - 溝通
+  - 跨域思考
+  - 溝通
 ai:
   delegable:
-    - 摘要研究內容、說明統計方法
+  - 摘要研究內容、說明統計方法（摘要要對照原文查證，本站建議）
   human_experience:
-    - 判斷研究能不能支持新聞的說法
+  - 判斷研究能不能支持新聞的說法
 idea: 相關不等於因果；樣本、對照、可重現性都會影響結論的可信度。
 guiding_questions:
-  - 冰淇淋賣得多時溺水的人也多，代表吃冰淇淋會溺水嗎？
-scenario: 評讀一則「研究發現」新聞，回到原始研究，指出設計限制與新聞誇大之處。
+- 冰淇淋賣得多時溺水的人也多，代表吃冰淇淋會溺水嗎？
+- 新聞說研究發現，你要回去查原始研究的哪些地方？
+- 為什麼一個研究的結果，要有別人重做才比較可信？
+scenario: 評讀一則「研究發現」新聞，回到原始研究，指出設計限制與新聞誇大之處（本站建議）。
 formats:
   slides: []
+  exercise: 目標：選一則研究發現新聞，找到原始研究，寫出研究對象、樣本、有沒有對照組、是觀察還是實驗，指出新聞說法比原文更強的地方，並查這個結果有沒有別人重做過。　檢核：不看本頁，說出相關和因果差在哪、冰淇淋和溺水一起變多可能是什麼原因、讀研究新聞要回原文查哪些地方，並用自己找的新聞說明它誇大了什麼、為什麼一個研究不夠。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-30'
+goal: 選一則研究發現新聞，找到原始研究，寫出研究對象、樣本、有沒有對照組、是觀察還是實驗，指出新聞說法比原文更強的地方，並查這個結果有沒有別人重做過。
+review: 不看本頁，說出相關和因果差在哪、冰淇淋和溺水一起變多可能是什麼原因、讀研究新聞要回原文查哪些地方，並用自己找的新聞說明它誇大了什麼、為什麼一個研究不夠。
+why:
+  heading: 相關不等於因果
+  body:
+  - 天氣熱時冰淇淋賣得多，去游泳的人也多，溺水的人跟著變多；兩者一起變多，很可能是因為都跟天氣有關，不是吃冰淇淋造成溺水（例子是本站整理）。Sumner 等人 2014 年在 BMJ 的研究說「It is notoriously difficult to ascertain cause from correlational results.」，並舉例：喝酒和某種疾病相關，可能是酒增加風險、疾病讓人多喝，或兩者都和另一個因素有關（說明是本站整理）。
+  - 這份研究比對英國大學的新聞稿、論文和新聞，發現新聞稿中有「33% (26% to 40%) contained exaggerated causal claims」，而且「Exaggeration in news is strongly associated with exaggeration in press releases.」（說明是本站整理）。它本身是回溯性的觀察研究，作者也只說相關（本站整理）。高中自然科學要學生了解科學「講求經驗證據性、合乎邏輯性、存疑和反覆檢視」；大學要能回到原始研究，檢查設計撐不撐得起結論（本站整理）。
+  qa:
+    question: 冰淇淋賣得多時溺水的人也多，代表吃冰淇淋會溺水嗎？
+    answer: 不代表。兩者一起變多，很可能是天氣熱這個第三個因素同時影響兩者。Sumner 等人說「It is notoriously difficult to ascertain cause from correlational results.」（說明是本站整理）。
+    source: sumner-2014
+  items_title: 這一點用到的
+  items:
+  - title: 相關
+    text: 兩件事一起變多或變少。
+  - title: 因果
+    text: 一件事造成另一件事。
+  - title: 干擾因素
+    text: 同時影響兩者的第三件事。
+  - title: 誇大
+    text: 說得比研究結果更強。
+  checklist_title: 開始前先確認
+  checklist:
+  - 學過科學的可檢驗
+  - 認識認知偏誤
+  figures:
+  - philsci-compare
+  sources:
+  - sumner-2014
+  - sci108
+how:
+  heading: 回到原始研究檢查設計
+  body:
+  - 拿到一則研究發現新聞，先找原始研究：作者、期刊、研究對象是人還是動物、樣本有多少、有沒有對照組、是觀察還是實驗（本站建議）。Sumner 等人檢查的三種誇大是「Advice to readers to change behaviour, causal statements drawn from correlational research, and inference to humans from animal research」（說明是本站整理）。
+  - 再逐句對照新聞和原文。一起變多不代表一個造成另一個：冰淇淋和溺水一起變多，很可能是因為天氣熱同時影響兩者（例子是本站整理）。所以要問：原文說相關，新聞說會造成嗎？原文做的是動物，新聞說人嗎？原文沒有給建議，新聞卻叫你改變習慣嗎（本站整理）？找到的每一處，都寫下原文怎麼說、新聞怎麼說（本站建議）。
+  - 最後看有沒有別人重做過。Stanford 哲學百科的再現性條目說，再現性危機包括「widespread failure to reproduce results of published studies in large systematic replication projects」和「evidence of publication bias」（說明是本站整理）。所以一個研究不夠：要看有沒有獨立團隊重做，研究是不是事先公開登記假設；條目說「pre-registration involves making a public, date-stamped statement of predictions and/or hypotheses」（說明是本站整理）。AI 可以摘要研究、說明統計方法，但研究能不能支持新聞的說法，要你對照原文自己判斷（本站整理）。
+  qa:
+    question: 新聞說研究發現，你要回去查原始研究的哪些地方？
+    answer: 查研究對象、樣本、有沒有對照組、是觀察還是實驗，再對照新聞有沒有把相關說成因果、把動物結果說成人、多加了建議。這三種誇大就是 Sumner 等人檢查的「causal statements drawn from correlational research」等（說明是本站整理）。
+    source: sumner-2014
+  items_title: 四步做
+  items:
+  - title: 找原始研究
+    text: 作者、期刊、對象、樣本。
+  - title: 看研究設計
+    text: 觀察還是實驗？有對照嗎？
+  - title: 對照新聞說法
+    text: 因果、人或動物、建議。
+  - title: 看有沒有重做
+    text: 有人重做嗎？事先登記嗎？
+  checklist_title: 寫完檢查
+  checklist:
+  - 有找到原文
+  - 設計限制列出
+  - 誇大處有對照
+  activity_figure: philsci-flow
+  sources:
+  - sumner-2014
+  - sep-repro
+what:
+  heading: 讀研究新聞先查原文
+  body:
+  - 學完後，你能分辨相關和因果，回到原始研究檢查樣本、對照和研究對象，指出新聞比研究說得更強的地方，也說得出為什麼一個結果要有別人重做才比較可信。
+  items_title: 學完能做到
+  items:
+  - title: 分辨相關和因果
+    text: 找出可能的第三個因素。
+  - title: 檢查研究設計
+    text: 樣本、對照、人或動物。
+  - title: 指出誇大
+    text: 新聞說得比原文強的地方。
+  checklist_title: 自我檢核
+  checklist:
+  - 原文找到了
+  - 設計限制寫出
+  - 誇大處標出
+  notes:
+  - 本頁的冰淇淋例子是常見的教學例子，本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: philsci-flow
+  type: flow
+  alt: 評讀研究新聞四步驟：學生找原始研究，看研究設計，對照新聞說法，查有沒有別人重做。
+  steps:
+  - actor: 學生
+    text: 找原始研究
+  - actor: 學生
+    text: 看研究設計
+  - actor: 學生
+    text: 對照新聞
+  - actor: 學生
+    text: 查有無重做
+  source: sumner-2014
+  caption: 流程是本站建議。
+- id: philsci-compare
+  type: compare
+  alt: 比較相關和因果：相關是兩件事一起變化，可能有第三個因素；因果是一件事造成另一件事，要更嚴格的設計才能說。兩者不相等。
+  source: sumner-2014
+  relation: not_equal
+  items:
+  - term: 相關
+    note: 一起變化，可能有第三個因素
+  - term: 因果
+    note: 一件造成另一件，要更嚴格的設計
+  caption: 例子是本站整理。
+sources:
+- id: sci108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 大學不屬於 108 課綱；以下是高中自然科學先學過的相關學習重點，只當先備：an-Vc-2「了解科學的認知方式講求經驗證據性、合乎邏輯性、存疑和反覆檢視。」（p.33）；ah-Vc-1「了解科學知識是人們理解現象的一種解釋，但不是唯一的解釋。」（p.33）
+- id: sumner-2014
+  title: 'The association between exaggeration in health related science news and academic press releases: retrospective observational study'
+  publisher: Petroc Sumner 等著，BMJ 349:g7015，2014 年（PubMed Central 全文，CC BY-NC 3.0）
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC4262123/
+  accessed: '2026-10-30'
+  kind: peer_reviewed
+  supports: 「Advice to readers to change behaviour, causal statements drawn from correlational research, and inference to humans from animal research」；「33% (26% to 40%) contained exaggerated causal claims」；「Exaggeration in news is strongly associated with exaggeration in press releases.」；「It is notoriously difficult to ascertain cause from correlational results.」
+- id: sep-repro
+  title: Reproducibility of Scientific Results（Stanford Encyclopedia of Philosophy）
+  publisher: Fiona Fidler、John Wilcox；2018 年 12 月 3 日首次發表（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/scientific-reproducibility/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「widespread failure to reproduce results of published studies in large systematic replication projects」；「evidence of publication bias」；「In its simplest form, pre-registration involves making a public, date-stamped statement of predictions and/or hypotheses, either before data is collected, viewed or analysed.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
