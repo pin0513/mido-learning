@@ -16,6 +16,7 @@ import { checkPoints } from "../rules/catalog";
 import { checkPoint } from "../rules/point";
 import type { KpDocument, PointResult, PointsResult, RuleContext } from "../rules/types";
 import { isRecord } from "../rules/util";
+import { importNotesFor } from "./comments";
 import { circleToMarkdown, markdownToCircle } from "./markdown";
 import { ConvertError, type KpRecord } from "./types";
 
@@ -117,8 +118,17 @@ function ordered(value: Record<string, unknown>, order: readonly string[]): Reco
   return out;
 }
 
+export interface YamlToRecordOptions {
+  /** YAML 原文。給了就逐字抽出註解，放在 revision.importNotes（見 ./comments）。 */
+  sourceText?: string;
+  /** importNotes.file；預設用 ref。 */
+  file?: string;
+  /** importNotes.commit：匯入時 main 的 commit。 */
+  commit?: string;
+}
+
 /** YAML 解析出的物件 → KpRecord。ref 只用在錯誤訊息（例如 knowledge/pm-leadership/pm.agile/sh.yaml）。 */
-export function yamlToRecord(raw: unknown, ref: string): KpRecord {
+export function yamlToRecord(raw: unknown, ref: string, options: YamlToRecordOptions = {}): KpRecord {
   const problems: string[] = [];
   if (!isRecord(raw)) throw new ConvertError([`${ref}: 不是物件`]);
   const known = new Set(TOP.map((slot) => slot.yaml));
@@ -152,9 +162,13 @@ export function yamlToRecord(raw: unknown, ref: string): KpRecord {
   if (typeof raw.status !== "string") problems.push(`${ref}: 沒有 status`);
   if (problems.length > 0) throw new ConvertError(problems);
 
+  if (options.sourceText !== undefined) {
+    const notes = importNotesFor(options.sourceText, options.file ?? ref, options.commit);
+    if (notes) revision.importNotes = notes;
+  }
   const content = ordered(
     { structure: ordered(structure, STRUCTURE_ORDER), lead: ordered(lead, LEAD_ORDER), ...revision },
-    ["structure", "lead", "why", "how", "what", "figures", "sources"],
+    ["structure", "lead", "why", "how", "what", "figures", "sources", "importNotes"],
   );
   return { kpId: raw.id as string, status: raw.status as KpRecord["status"], revision: content as unknown as KpRecord["revision"] };
 }
@@ -177,12 +191,20 @@ export function recordToYaml(record: KpRecord): { raw: Record<string, unknown> |
   }
   const structure = revision.structure;
   const lead = revision.lead;
-  const knownTop = new Set(["structure", "lead", "why", "how", "what", "figures", "sources"]);
+  // importNotes 是匯入時的審稿註解，不是知識點資料，不轉回 YAML。
+  const knownTop = new Set(["structure", "lead", "why", "how", "what", "figures", "sources", "importNotes"]);
   for (const key of Object.keys(revision)) if (!knownTop.has(key)) errors.push(`${ref}: 修訂版有轉換器不認得的欄位 ${key}`);
   const structureKeys = new Set(TOP.flatMap((slot) => (slot.kind === "structure" ? [slot.key] : [])));
   const leadKeys = new Set(TOP.flatMap((slot) => (slot.kind === "lead" ? [slot.key] : [])));
   for (const key of Object.keys(structure)) if (!structureKeys.has(key)) errors.push(`${ref}: structure 有轉換器不認得的欄位 ${key}`);
   for (const key of Object.keys(lead)) if (!leadKeys.has(key)) errors.push(`${ref}: lead 有轉換器不認得的欄位 ${key}`);
+
+  if (revision.importNotes !== undefined) {
+    const notes = revision.importNotes;
+    if (!isRecord(notes) || typeof notes.file !== "string" || !Array.isArray(notes.comments)) {
+      errors.push(`${ref}: importNotes 要有 file 與 comments`);
+    }
+  }
 
   const raw: Record<string, unknown> = {};
   for (const slot of TOP) {
