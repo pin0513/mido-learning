@@ -27,11 +27,18 @@
 
 都不要加 `NEXT_PUBLIC_`。
 
+正式站的值只放在 `.github/workflows/deploy-frontend.yml`：`KP_BUILD_FLAGS` 在 `docker build` 時進 image，`KP_RUNTIME_FLAGS` 在部署時設成 Cloud Run 環境變數。不要在 Cloud Run 主控台或 `gcloud` 直接改。
+
+哪些頁面在請求時讀、哪些在 build 時讀（`docs/kp-db-restructure.md` 第 17 節）：
+
+- 請求時：middleware、首頁、`/kp`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`、`/kp/index.json`、sitemap。這幾頁也用 `isFolderLaunched`，但會呼叫 `headers()`，是請求時才算的動態頁，重啟行程就跟著變。
+- build 時：靜態詳細頁 `/kp/概念/學段`、`/kp/概念`、`/kp-v2/概念/學段`。跨學門連結與「另有 N 個尚未發布」寫死在頁面裡，要重新 build 才會變。
+
 | 變數 | 何時讀 | 預設 | 作用 |
 | --- | --- | --- | --- |
-| `KP_ENABLED` | 每次請求（middleware、`/api/kp-launch`、sitemap） | 關 | `/kp` 上線開關。關的時候 `/kp` 全部 404，導覽列沒有「知識地圖」。改值要重啟行程，**不用重新 build**。Cloud Run 用同一張 image 開新 revision 即可。 |
+| `KP_ENABLED` | 每次請求（middleware、`/api/kp-launch`、sitemap） | 關 | `/kp` 上線開關。關的時候 `/kp` 全部 404，導覽列沒有「知識地圖」。middleware 每次請求讀，重啟行程就開關 `/kp`；但詳細頁的跨學門連結在 build 時也看它，**切換要重新 build＋重新部署**（第 17 節）。 |
 | `KP_HOME_ENABLED` | 每次請求（middleware、`/api/kp-launch` 的 `home`） | 關 | 首頁開關，跟上面分開。關的時候 `/` 是原本的靜態首頁，`/city-home` 404。開的時候 middleware 把 `/` 改寫到 `/city-home`（網址仍是 `/`）。同樣不用重新 build，要重啟行程。知識點連結仍要 `KP_ENABLED` 才開得了。 |
-| `KP_SOFTSKILLS_ENABLED` | 每次請求（middleware、首頁、sitemap） | 關 | 打開六格學門切換，含「溝通與解決問題」。只有 `KP_ENABLED` 也是 true 才算開。關的時候學門切換維持四格，`/kp/sk.*` 是 404，sitemap 不列 `sk`。學門清單、首頁與 sitemap 不用重新 build；**詳細頁裡跨學門的連結是 build 時決定的，切換要重新 build**，V2 的「後學」在旗標關的 build 上還會把已發布的軟實力點算成「尚未發布」（見 `docs/kp-db-restructure.md` 第 17 節）。「語文」那一格要上線，還要開 `KP_YUWEN_ENABLED`。 |
+| `KP_SOFTSKILLS_ENABLED` | 每次請求（middleware、首頁、sitemap） | 關 | 打開六格學門切換，含「溝通與解決問題」。只有 `KP_ENABLED` 也是 true 才算開。關的時候學門切換維持四格，`/kp/sk.*` 是 404，sitemap 不列 `sk`。middleware、首頁、學門清單、`/kp/layer`、`/kp/stage` 與 sitemap 是請求時讀；**詳細頁裡跨學門的連結是 build 時決定的，切換要重新 build**，V2 的「後學」在旗標關的 build 上還會把已發布的軟實力點算成「尚未發布」（見 `docs/kp-db-restructure.md` 第 17 節）。「語文」那一格要上線，還要開 `KP_YUWEN_ENABLED`。 |
 | `KP_YUWEN_ENABLED` | 每次請求（middleware、首頁、sitemap） | 關 | 打開語文（國文、外語）。只有 `KP_ENABLED` 也是 true 才算開。關的時候「語文」維持準備中，`/kp/zh.*`、`/kp/en.*`、`/kp/ja.*`、`/kp/lg.*` 是 404，sitemap 不列這些網址。和 `KP_SOFTSKILLS_ENABLED` 一樣，詳細頁的跨學門連結要重新 build（第 17 節）。 |
 | `KP_INCLUDE_DRAFTS` | `next build` / `next dev` | 關（只生成 `published`） | 草稿與 `review` 要不要變成頁面。正式站預設不生成。改值必須重新 build。 |
 
@@ -153,7 +160,7 @@ pnpm content:comments:lock
 
 | 變數 | 何時讀 | 說明 |
 | --- | --- | --- |
-| `KP_ENABLED` | 每次請求 | 上線開關。不是 `"true"` 時 `/kp` 不開放。 |
+| `KP_ENABLED` | 每次請求＋build（詳細頁） | 上線開關。不是 `"true"` 時 `/kp` 不開放。正式值見上面「環境變數」。 |
 | `KP_INCLUDE_DRAFTS` | build | `"true"` 才把 draft 知識點生成成頁面。 |
 | `KP_SLIDES_PREVIEW` | build | `"true"` 才生成 `/kp/preview/slides`。 |
 | `KP_SLIDES_FIXTURE` | build / dev | 測試用。格式 `<知識點 id>:<componentId>`，把該知識點的投影片換成這一個既有教材。 |

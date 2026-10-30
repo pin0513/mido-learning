@@ -12,6 +12,17 @@ env:
   PROJECT_ID: mido-learning
   REGION: asia-east1
   SERVICE_NAME: mido-learning-frontend
+  # 知識地圖旗標的唯一來源（docs/kp-db-restructure.md 第 17 節做法 A）。只改這裡，不要在 Cloud Run 主控台或 gcloud 直接改。
+  # KP_BUILD_FLAGS：docker build 時當 build arg 進 image。靜態詳細頁（/kp/概念/學段、/kp/概念、/kp-v2）在 build 時讀。
+  # KP_RUNTIME_FLAGS：部署時用 --update-env-vars 設成 Cloud Run 的環境變數。middleware、首頁、/kp、
+  #   /kp/layer、/kp/stage、/kp/competency、/kp/index.json、sitemap 在請求時讀。
+  # 兩行都照 2026-10-30 正式站的實際值寫，合併後正式內容不變：
+  #   現行 build 不帶 KP_*（等於全關）；Cloud Run 從 00166（10-27）起軟實力開、00168（10-28）起語文開。
+  #   兩行不一致就是第 17.1 節的問題 1、2，Check KP flags 會發警告。改成一致是另一個 PR，會改變正式內容，要 I-PING 本人明確同意。
+  # 切換旗標＝改這兩行的 PR＋重新部署；回滾＝切回前一個 revision。任何正式環境的旗標切換都要 I-PING 本人明確同意。
+  # KP_INCLUDE_DRAFTS、KP_SLIDES_PREVIEW、KP_SLIDES_FIXTURE 正式站一律不設，不放進這裡。
+  KP_BUILD_FLAGS: KP_ENABLED=false,KP_HOME_ENABLED=false,KP_SOFTSKILLS_ENABLED=false,KP_YUWEN_ENABLED=false,KP_DETAIL_V2_ENABLED=false
+  KP_RUNTIME_FLAGS: KP_ENABLED=true,KP_HOME_ENABLED=true,KP_SOFTSKILLS_ENABLED=true,KP_YUWEN_ENABLED=true,KP_DETAIL_V2_ENABLED=false
 
 jobs:
   build-and-deploy:
@@ -42,10 +53,37 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
+      - name: Check KP flags
+        working-directory: ./frontend
+        run: |
+          set -euo pipefail
+          check() {
+            local label="$1" list="$2" pair name value
+            for pair in ${list//,/ }; do
+              name="${pair%%=*}"
+              value="${pair#*=}"
+              case "$name" in KP_*) ;; *) echo "$label 只能放 KP_*：$name"; exit 1 ;; esac
+              case "$value" in true|false) ;; *) echo "$label 的 $name 只能是 true 或 false：$value"; exit 1 ;; esac
+              # 沒有 ARG 的 build arg 會被丟掉，靜態頁就照「關」build。
+              grep -qx "ARG $name" Dockerfile || { echo "Dockerfile 缺 ARG $name"; exit 1; }
+            done
+          }
+          check KP_BUILD_FLAGS "$KP_BUILD_FLAGS"
+          check KP_RUNTIME_FLAGS "$KP_RUNTIME_FLAGS"
+          build_names=$(tr ',' '\n' <<<"$KP_BUILD_FLAGS" | cut -d= -f1 | sort)
+          runtime_names=$(tr ',' '\n' <<<"$KP_RUNTIME_FLAGS" | cut -d= -f1 | sort)
+          [ "$build_names" = "$runtime_names" ] || { echo "KP_BUILD_FLAGS 與 KP_RUNTIME_FLAGS 要列同一組旗標"; exit 1; }
+          if [ "$KP_BUILD_FLAGS" != "$KP_RUNTIME_FLAGS" ]; then
+            echo "::warning title=KP flags::build 與執行時的旗標不一致（docs/kp-db-restructure.md 第 17.1 節）。build：$KP_BUILD_FLAGS；執行時：$KP_RUNTIME_FLAGS"
+          fi
+
       - name: Build and Push Docker image
         working-directory: ./frontend
         run: |
+          kp_build_args=()
+          for pair in ${KP_BUILD_FLAGS//,/ }; do kp_build_args+=(--build-arg "$pair"); done
           docker build \
+            "${kp_build_args[@]}" \
             --build-arg NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }} \
             --build-arg NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }} \
             --build-arg NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ env.PROJECT_ID }} \
@@ -70,4 +108,5 @@ jobs:
             --memory 512Mi \
             --cpu 1 \
             --min-instances 0 \
-            --max-instances 10
+            --max-instances 10 \
+            --update-env-vars "$KP_RUNTIME_FLAGS"

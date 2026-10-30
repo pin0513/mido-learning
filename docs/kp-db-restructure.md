@@ -2,7 +2,7 @@
 
 | 項目 | 內容 |
 | --- | --- |
-| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）、第二段（YAML ⇄ 修訂版轉換器，#59）已合併；YAML 註解的去處（第 15 節，#61）已合併；註解守門與主線、分類的註解（第 16 節，#62）已合併；旗標的前提（第 17 節）進行中 |
+| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）、第二段（YAML ⇄ 修訂版轉換器，#59）已合併；YAML 註解的去處（第 15 節，#61）已合併；註解守門與主線、分類的註解（第 16 節，#62）已合併；旗標的前提（第 17 節，#65）已合併；做法 A 第一步（旗標集中到部署 workflow，第 17.4 節）進行中 |
 | 依據 | 「知識點資料重構方案」（2026-10-29，分析 main `8c62d7e`）；本文件對照 main `e1763c7`（2026-10-30）的程式重寫 |
 | 決定者 | I-PING（admin） |
 | 不做的事 | 本文件與 P1 不碰正式 Firestore、GCP 資源，不改任何旗標 |
@@ -316,23 +316,25 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 1. **詳細頁在 build 時就決定好了，執行時切換 `KP_SOFTSKILLS_ENABLED` 不會加上跨學門的軟實力連結。**
    - `/kp/概念/學段` 與 `/kp-v2/概念/學段` 都是 `generateStaticParams`＋`dynamicParams = false` 的靜態頁。
    - 頁面裡「這個點連不連得出去」用 `isFolderLaunched(folder)`，它讀 `KP_ENABLED`＋`KP_SOFTSKILLS_ENABLED`，但讀的是 `next build` 當時的值。
-   - middleware、`/kp/index.json`、首頁與 sitemap 是每次請求讀，所以執行時打開旗標，`/kp/sk.*` 會回 200，首頁會出現六格。
+   - 請求時讀的有：middleware、首頁（`/city-home`）、`/kp`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`、`/kp/index.json`、sitemap。所以執行時打開旗標，`/kp/sk.*` 會回 200，首頁會出現六格。
+   - `/kp`、`/kp/layer/[id]`（`page.tsx:34`）、`/kp/stage/[id]`（`page.tsx:35`）、`/kp/competency/[code]` 也用 `isFolderLaunched`，但它們先呼叫 `await headers()`，在 build 輸出裡是 `ƒ`（請求時才算），不是靜態頁。全關與全開兩張 build 在同一組執行時旗標下渲染比對，這幾頁的差異是 0。
+   - build 時讀、寫死在頁面裡的只有靜態詳細頁：`/kp/概念/學段`、`/kp/概念`、`/kp-v2/概念/學段`（`KnowledgePointView`、`components/kp/v2/refs.ts`）。`/kp/map` 是靜態頁，但不看學門旗標，本來就只畫四個領域。
    - 但別學門的頁面還是旗標關時的樣子。例如 `pm.team@jh` 的「把這裡當先備」不會列出 `sk.consensus@sh`，`ph.argument@jh` 不會連到 `sk.speech@jh`。
    - 反過來，旗標開著 build、執行時關掉，別學門的頁面會連到 middleware 回 404 的 `/kp/sk.*`。所以關掉旗標同樣要重新 build，不能只重啟行程。
    - #64 的反向對照證實了這點：旗標關的 build 只在執行時打開旗標，`ph.argument@jh → sk.speech@jh` 的連結不在。
-   - `frontend/content/README.md` 的旗標表與 `lib/kp/flags.ts` 的說明原本寫「不用重新 build」，對學門清單與首頁成立，對詳細頁不成立。
+   - `frontend/content/README.md` 的旗標表與 `lib/kp/flags.ts` 的說明原本寫「不用重新 build」，只對上面列的請求時頁面成立，對詳細頁不成立。兩處都已改寫（第 17.4 節的 PR）。
 2. **旗標關的 build 上，V2 的「後學」把已發布的軟實力點算成「尚未發布」。**
    - `SeqPanel` 的後學讀完整內容的 `requiredBy`。`PointLinks` 對每一筆用 `shownPoint`（可見而且學門已上線，或同學門）決定連不連；不連的就算進「另有 N 個尚未發布」。
    - 旗標關的時候，已發布的軟實力點也不連，就被寫成「尚未發布」。
    - 例：`ph.argument@jh` 的後學是 `ph.fallacy@jh`、`ph.logic@sh`，另有「另有 1 個尚未發布」，那一筆是已發布的 `sk.speech@jh`。在 `484b512` 上，旗標關的 build＋執行時打開 `KP_SOFTSKILLS_ENABLED`、`KP_DETAIL_V2_ENABLED` 實測，`/kp/sk.speech/jh` 回 200，`ph.argument@jh` 卻寫它「尚未發布」。
    - 目前其他這類的組合是 `ph.reason@es → sk.point@es`、`pm.conflict@sh → sk.facilitate@uni`、`pm.team@jh → sk.consensus@sh`。B25–B28 發布更多軟實力點後會變多。
-   - 舊版詳細頁的 `LinkedIds` 也是同一個算法（先備與四種 links），只是目前沒有已發布的跨學門軟實力點落在這些清單裡；舊版的「把這裡當先備」只列看得到的點，不計數。
+   - 舊版詳細頁的 `LinkedIds` 也是同一個算法（先備與四種 links）。只開軟實力時沒有實例；但軟實力與語文都在執行時打開、build 時全關（正式站現況，第 17.5 節），舊版頁就會把對方學門的已發布點算成「尚未發布」，例如 `sk.present@sh` 寫「另有 2 個知識點尚未發布」，那兩筆是已發布的 `zh.explain@sh`、`en.present@sh`。舊版的「把這裡當先備」只列看得到的點，不計數。
 
 ### 17.2 做法
 
 | 做法 | 內容 | 好處 | 代價 |
 | --- | --- | --- | --- |
-| A. 旗標綁 build | `deploy-frontend.yml` 的 `docker build` 帶 `KP_ENABLED`、`KP_SOFTSKILLS_ENABLED`（與 `KP_YUWEN_ENABLED`）build arg，Dockerfile 在 builder 階段設成 ENV；`gcloud run deploy` 用同一組值 `--set-env-vars`。旗標的值放在 repo 裡一個檔（或 workflow 的 env），切換＝改值的 PR＋重新部署 | build 與執行時永遠一致；切換有 PR 紀錄，回滾＝重新部署前一張 image | 切換要跑一次部署（約數分鐘）；不能只在 Cloud Run 主控台改環境變數 |
+| A. 旗標綁 build | `deploy-frontend.yml` 的 `docker build` 帶 `KP_ENABLED`、`KP_SOFTSKILLS_ENABLED`（與 `KP_YUWEN_ENABLED`）build arg，Dockerfile 在 builder 階段設成 ENV；`gcloud run deploy` 用同一組值 `--update-env-vars`。旗標的值放在 workflow 的 env，切換＝改值的 PR＋重新部署 | build 與執行時永遠一致；切換有 PR 紀錄，回滾＝重新部署前一張 image | 切換要跑一次部署（約數分鐘）；不能只在 Cloud Run 主控台改環境變數 |
 | B. V2／舊版不把旗標擋掉的已發布點算成未發布 | `PointLinks` 與 `LinkedIds` 只把「不在 `visible` 裡」的點（草稿）算進筆數；已發布但學門沒上線的點整筆不出現 | 「尚未發布」的字面永遠正確；旗標關的 build 不再誤報 | 不解決問題 1：旗標打開後仍要重新 build 才有跨學門連結 |
 | C. 詳細頁改成每次請求重算 | 跨學門連結的區塊改由請求時讀旗標（`headers()` 或 ISR），像 `/kp` 的 index 頁 | 執行時切換就生效 | 數百個靜態頁變成動態或 ISR，影響效能與快取；和第 9 節 `/kp` ISR 一起規劃比較合理 |
 
@@ -341,10 +343,46 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 ### 17.3 切換前的檢查清單（每一項都做完，才請 I-PING 同意）
 
 1. 已合併 A 與 B（或 I-PING 明確接受不做的風險）。
-2. 用要上線的旗標值重新 build 正式 image（`frontend/Dockerfile`，不帶 `KP_INCLUDE_DRAFTS`）。
+2. 在 `deploy-frontend.yml` 把 `KP_BUILD_FLAGS` 與 `KP_RUNTIME_FLAGS` 改成要上線的值（同一個 PR），用 `KP_BUILD_FLAGS` 重新 build 正式 image（`frontend/Dockerfile`，不帶 `KP_INCLUDE_DRAFTS`）。
 3. 在這張正式 image 上跑旗標開的正式 build e2e：`e2e/kp-published-softskills.spec.ts`，舊版與 V2 各一輪（`E2E_PUBLISHED_SOFTSKILLS=1`，V2 再加 `KP_DETAIL_V2_ENABLED=true`、`E2E_DETAIL_V2=1`），跟 CI「Published-only pages, soft-skills on」同一組設定，但對象是正式 image，不是 CI 的 `next build`。第 1 則（旗標在 build 與執行時都開）必須通過。
 4. 部署成帶標籤、0% 流量的 revision，對它的網址再跑一次第 3 項，並人工看：首頁六格、`/kp/sk.facilitate/uni`、`pm.team@jh` 列出 `sk.consensus@sh`、`ph.argument@jh` 的後學連到 `sk.speech@jh` 且沒有「尚未發布」誤報。
 5. 取得 I-PING 本人明確同意後才切流量；切完在正式網址再看一次第 4 項。
 6. 回滾：切回前一個 revision（它的 image 與旗標值一致）；不要只改環境變數。
 
 `KP_DETAIL_V2_ENABLED` 本身只是 middleware 改寫，執行時切換就生效；但 V2 頁裡的連結一樣是 build 時的旗標值，所以在旗標關的 build 上打開 V2 時，問題 2 會直接出現在正式站。B 合併之前，打開 V2 也要走上面的清單。
+
+### 17.4 做法 A 第一步：旗標集中到部署 workflow，值照現況
+
+- `.github/workflows/deploy-frontend.yml` 的 `env` 是正式旗標的唯一來源，分兩行：
+  - `KP_BUILD_FLAGS`：`docker build` 時逐一當 `--build-arg` 傳進去；`frontend/Dockerfile` 在 builder 階段有對應的 `ARG`／`ENV`，不進最後的 image。
+  - `KP_RUNTIME_FLAGS`：`gcloud run deploy --update-env-vars` 設成 Cloud Run 環境變數。
+- 兩行都照 2026-10-30 正式站的實際值寫（見第 17.5 節），合併後正式內容不變：`KP_BUILD_FLAGS` 全是 `false`（現行 workflow 的 build 不帶 `KP_*`，等於全關），`KP_RUNTIME_FLAGS` 是 `KP_ENABLED`、`KP_HOME_ENABLED`、`KP_SOFTSKILLS_ENABLED`、`KP_YUWEN_ENABLED` 為 `true`，`KP_DETAIL_V2_ENABLED` 為 `false`。
+  - Cloud Run 會多一個 `KP_DETAIL_V2_ENABLED=false`。旗標只認 `"true"`，和沒設一樣。
+- `Check KP flags` 步驟：每個名字都要是 `KP_*`、值只能是 `true`／`false`、Dockerfile 要有對應的 `ARG`、兩行要列同一組旗標；兩行的值不一致時發 `::warning::`。
+- 第二步（另一個 PR）：把 `KP_BUILD_FLAGS` 改成和 `KP_RUNTIME_FLAGS` 一致。這會改變正式內容（下面 20 條路由），屬於旗標切換，要先走第 17.3 節的清單，並取得 I-PING 本人明確同意。
+
+### 17.5 正式站現況（2026-10-30，`f4a394f`，revision `00203-5fb`）
+
+- build 時：`deploy-frontend.yml` 只傳 `NEXT_PUBLIC_*` build arg，Dockerfile 沒有 `KP_*` 的 `ARG`，`.dockerignore` 排除 `.env*`。所以每一張正式 image 都是在 `KP_*` 全關下 build 的。
+- 執行時（Cloud Run 環境變數）：`KP_ENABLED`、`KP_HOME_ENABLED`、`KP_SOFTSKILLS_ENABLED`、`KP_YUWEN_ENABLED` 都是 `true`；`KP_DETAIL_V2_ENABLED` 沒設。
+  - `KP_SOFTSKILLS_ENABLED=true` 從 revision `00166-25r`（2026-10-27 16:18，台北時間）起；`KP_YUWEN_ENABLED=true` 從 `00168-rvp`（2026-10-28 08:56，台北時間）起。兩個 revision 都是 `pin0513@gmail.com` 用 `gcloud` 在 CI 部署後一分鐘內另外建的；部署 workflow 沒有設環境變數，之後的部署沿用。
+- 所以正式站現在：
+  - middleware 放行：已發布的 `/kp/sk.*` 與語文點回 200、內容完整（例如 `/kp/sk.listen/es`、`/kp/sk.speech/jh`），`/kp/discipline/soft-skills` 回 200，首頁六格，sitemap 與 `/kp/index.json` 列出軟實力點。草稿（例如 `sk.hypo/uni`）沒有生成頁面，回 404。
+  - 本機「旗標關」的 e2e 預期 `/kp/sk.*` 是 404，是因為本機執行時也關；正式站執行時是開的。
+  - 靜態詳細頁還是全關時 build 的樣子：10 個點、20 條路由（含 `/kp/概念`）缺跨學門連結，其中 6 個點在舊版頁上寫「另有 N 個知識點尚未發布」，其實那些點都已發布、上線：
+
+| 頁面 | build 與執行時一致後會多出的連結 | 現在的誤報 |
+| --- | --- | --- |
+| `en.emi@uni` | `sk.discuss@jh` | 另有 1 個尚未發布 |
+| `en.present@sh` | `sk.present@sh` | 另有 1 個尚未發布 |
+| `ph.argument@jh` | `sk.speech@jh` | — |
+| `ph.reason@es` | `sk.point@es`、`sk.why5@es` | — |
+| `pm.conflict@sh` | `sk.facilitate@uni` | — |
+| `pm.team@jh` | `sk.consensus@sh` | — |
+| `sk.audience@jh` | `zh.audience@uni` | 另有 1 個尚未發布 |
+| `sk.present@sh` | `zh.explain@sh`、`en.present@sh` | 另有 2 個尚未發布 |
+| `zh.audience@uni` | `sk.audience@jh` | 另有 1 個尚未發布 |
+| `zh.explain@sh` | `sk.present@sh` | 另有 1 個尚未發布 |
+
+- 量法：在本機用正式 Dockerfile build `main`（`f4a394f`）、做法 A 分支（`KP_BUILD_FLAGS` 全關）、和「build 也全開」三張 image，執行時都用正式站的四個 `true`，爬 528 條路由（首頁、`/kp`、`/kp/map`、所有 `/kp/概念` 與 `/kp/概念/學段`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`、`/kp/discipline/*`、`/kp/path/*`、`/kp/index.json`、sitemap），去掉 build id、雜湊與時間後比對 HTML。`main` 對分支：0 條不同。`main` 對「build 也全開」：上表 20 條。另抽 39 條路由對照正式網址的可見 HTML，與本機 `main` image 一致。
+
