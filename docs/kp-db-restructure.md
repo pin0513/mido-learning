@@ -2,7 +2,7 @@
 
 | 項目 | 內容 |
 | --- | --- |
-| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）、第二段（YAML ⇄ 修訂版轉換器，#59）已合併；YAML 註解的去處（第 15 節，#61）已合併；註解守門與主線、分類的註解（第 16 節，#62）已合併；旗標的前提（第 17 節，#65）已合併；做法 A 第一步（旗標集中到部署 workflow，第 17.4 節）進行中 |
+| 狀態 | P0 規格（本文件）；P1 第一段（規則包抽出，#58）、第二段（YAML ⇄ 修訂版轉換器，#59）已合併；YAML 註解的去處（第 15 節，#61）已合併；註解守門與主線、分類的註解（第 16 節，#62）已合併；旗標的前提（第 17 節，#65）已合併；做法 A 第一步（旗標集中到部署 workflow，第 17.4 節，#67）已合併；第二步（build 旗標與執行時一致）等 I-PING 同意 |
 | 依據 | 「知識點資料重構方案」（2026-10-29，分析 main `8c62d7e`）；本文件對照 main `e1763c7`（2026-10-30）的程式重寫 |
 | 決定者 | I-PING（admin） |
 | 不做的事 | 本文件與 P1 不碰正式 Firestore、GCP 資源，不改任何旗標 |
@@ -351,7 +351,9 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 
 `KP_DETAIL_V2_ENABLED` 本身只是 middleware 改寫，執行時切換就生效；但 V2 頁裡的連結一樣是 build 時的旗標值，所以在旗標關的 build 上打開 V2 時，問題 2 會直接出現在正式站。B 合併之前，打開 V2 也要走上面的清單。
 
-### 17.4 做法 A 第一步：旗標集中到部署 workflow，值照現況
+### 17.4 做法 A：旗標集中到部署 workflow
+
+第一步（#67，`c8866ba`，revision `00204-8qc`）已合併，值照現況。第二步的 PR 是草稿，等 I-PING 本人明確同意才合併。
 
 - `.github/workflows/deploy-frontend.yml` 的 `env` 是正式旗標的唯一來源，分兩行：
   - `KP_BUILD_FLAGS`：`docker build` 時逐一當 `--build-arg` 傳進去；`frontend/Dockerfile` 在 builder 階段有對應的 `ARG`／`ENV`，不進最後的 image。
@@ -359,9 +361,11 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 - 兩行都照 2026-10-30 正式站的實際值寫（見第 17.5 節），合併後正式內容不變：`KP_BUILD_FLAGS` 全是 `false`（現行 workflow 的 build 不帶 `KP_*`，等於全關），`KP_RUNTIME_FLAGS` 是 `KP_ENABLED`、`KP_HOME_ENABLED`、`KP_SOFTSKILLS_ENABLED`、`KP_YUWEN_ENABLED` 為 `true`，`KP_DETAIL_V2_ENABLED` 為 `false`。
   - Cloud Run 會多一個 `KP_DETAIL_V2_ENABLED=false`。旗標只認 `"true"`，和沒設一樣。
 - `Check KP flags` 步驟：每個名字都要是 `KP_*`、值只能是 `true`／`false`、Dockerfile 要有對應的 `ARG`、兩行要列同一組旗標；兩行的值不一致時發 `::warning::`。
-- 第二步（另一個 PR）：把 `KP_BUILD_FLAGS` 改成和 `KP_RUNTIME_FLAGS` 一致。這會改變正式內容（下面 20 條路由），屬於旗標切換，要先走第 17.3 節的清單，並取得 I-PING 本人明確同意。
+- 第二步（草稿 PR）：只改 `KP_BUILD_FLAGS` 一行，改成和 `KP_RUNTIME_FLAGS` 一致（四個 `true`、`KP_DETAIL_V2_ENABLED=false`），執行時的值不動。
+  - 會改變第 17.5 節表上的 20 條路由，其他路由不變（528 條比對）。屬於旗標切換，要先走第 17.3 節的清單，並取得 I-PING 本人明確同意。
+  - 回滾：revert 這個 PR 讓 CI 重新部署，或直接把流量切回前一個 revision（`00204-8qc` 或當時的前一個）。兩種都會回到全關 build 的詳細頁；執行時的值一樣，不受影響。
 
-### 17.5 正式站現況（2026-10-30，`f4a394f`，revision `00203-5fb`）
+### 17.5 正式站現況（2026-10-30，`f4a394f`／`00203-5fb`；#67 合併後的 `c8866ba`／`00204-8qc` 相同）
 
 - build 時：`deploy-frontend.yml` 只傳 `NEXT_PUBLIC_*` build arg，Dockerfile 沒有 `KP_*` 的 `ARG`，`.dockerignore` 排除 `.env*`。所以每一張正式 image 都是在 `KP_*` 全關下 build 的。
 - 執行時（Cloud Run 環境變數）：`KP_ENABLED`、`KP_HOME_ENABLED`、`KP_SOFTSKILLS_ENABLED`、`KP_YUWEN_ENABLED` 都是 `true`；`KP_DETAIL_V2_ENABLED` 沒設。
@@ -369,7 +373,7 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 - 所以正式站現在：
   - middleware 放行：已發布的 `/kp/sk.*` 與語文點回 200、內容完整（例如 `/kp/sk.listen/es`、`/kp/sk.speech/jh`），`/kp/discipline/soft-skills` 回 200，首頁六格，sitemap 與 `/kp/index.json` 列出軟實力點。草稿（例如 `sk.hypo/uni`）沒有生成頁面，回 404。
   - 本機「旗標關」的 e2e 預期 `/kp/sk.*` 是 404，是因為本機執行時也關；正式站執行時是開的。
-  - 靜態詳細頁還是全關時 build 的樣子：10 個點、20 條路由（含 `/kp/概念`）缺跨學門連結，其中 6 個點在舊版頁上寫「另有 N 個知識點尚未發布」，其實那些點都已發布、上線：
+  - 靜態詳細頁還是全關時 build 的樣子（第 17.4 節第二步合併並部署前都是這樣）：10 個點、20 條路由（含 `/kp/概念`）缺跨學門連結，其中 6 個點在舊版頁上寫「另有 N 個知識點尚未發布」，其實那些點都已發布、上線：
 
 | 頁面 | build 與執行時一致後會多出的連結 | 現在的誤報 |
 | --- | --- | --- |
