@@ -11,6 +11,7 @@ import { test, expect } from "@playwright/test";
 // B24 發布哲學 uni 6 點後，四個公開學門都沒有草稿；6 個哲學標題改用仍是草稿的軟實力點，跟 sk.issuetree、sk.hypo 一樣接在已發布點上：
 // sk.decide@sh（先備 pm.triangle@jh）、sk.a3@uni（links.related pm.business@uni、ph.systems@sh）、sk.mediate@uni（先備 pm.conflict@sh）、sk.rootcause@sh（先備 ma.data@es）、sk.coach@uni（links.related pm.style@sh、pm.org@uni）、sk.problem@es（links.related pm.goal@es、ph.question@es）。
 // 這個行程沒開溝通與解決問題旗標，所以這 8 筆同時因「草稿」與「旗標關閉」兩個原因不露出；只靠草稿這個原因的樣本已經沒有了（地圖的草稿匿名改在 city.test.ts 用合成內容查）。
+// 旗標打開、只靠草稿過濾的那一輪在 kp-published-softskills.spec.ts（CI「Published-only pages, soft-skills on」）。
 const DRAFT_TITLES = [
   "選方案：準則、權重、取捨",
   "一頁問題報告：帶團隊從問題到行動",
@@ -135,6 +136,7 @@ test.describe("正式 build", () => {
     const systems = await (await request.get("/kp/ph.systems/sh")).text();
     // B24 發布 ph.complex@uni 後，ph.systems@sh 的連結都已發布：改成帶出它的標題與網址，不再有「尚未發布」。
     // 四個公開學門已沒有連到草稿的已發布點，「另有 N 個尚未發布」在這個行程沒有真實樣本（見 B24 README 的待決事項）。
+    // 這則提示改由 kp-published-softskills.spec.ts（旗標開，樣本從內容算）與 components/kp/hidden-notice.test.ts（合成內容）查。
     expect(systems).not.toContain("尚未發布");
     expect(systems).toContain("/kp/ph.complex/uni");
     expect(systems).toContain("複雜性思維與模型的限度");
