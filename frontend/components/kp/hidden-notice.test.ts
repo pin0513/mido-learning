@@ -244,3 +244,105 @@ test("溝通與解決問題旗標打開時，跨學門的軟實力草稿仍只�
     else process.env.KP_SOFTSKILLS_ENABLED = saved.soft;
   }
 });
+
+/**
+ * 旗標關的 build（正式站現況：KP_BUILD_FLAGS 全關，docs/kp-db-restructure.md 第 17.5 節）。
+ * 已發布的軟實力點不連（學門沒上線），但它已經上線，不能算進 V2 的「另有 N 個尚未發布」；只有真的草稿算。
+ * 修正前 V2 會寫「另有 2 個尚未發布」（已發布＋草稿各一），這幾則會失敗。
+ */
+test("V2：學門旗標關時，已發布但被旗標擋掉的點不算「尚未發布」，只算草稿", () => {
+  const saved = { kp: process.env.KP_ENABLED, soft: process.env.KP_SOFTSKILLS_ENABLED };
+  process.env.KP_ENABLED = "true";
+  delete process.env.KP_SOFTSKILLS_ENABLED;
+  try {
+    const soft = template("soft-skills");
+    const hub = synth(math, { concept: "ma.zzflaghub", stage: "jh", title: "合成旗標中心點", status: "published" });
+    const skPub = synth(soft, { concept: "sk.zzflagpub", stage: "jh", title: "合成已發布軟實力甲", status: "published" });
+    const skDraft = synth(soft, { concept: "sk.zzflagdraft", stage: "sh", title: "合成草稿軟實力甲", status: "draft" });
+    const skNextPub = synth(soft, { concept: "sk.zzflagnext", stage: "sh", title: "合成已發布軟實力後學", status: "published", prerequisites: [hub.id] });
+    const skNextDraft = synth(soft, { concept: "sk.zzflagnextdraft", stage: "uni", title: "合成草稿軟實力後學", status: "draft", prerequisites: [hub.id] });
+    const mathNext = synth(math, { concept: "ma.zzflagnext", stage: "sh", title: "合成已發布數學後學", status: "published", prerequisites: [hub.id] });
+    const hubWithLinks: KnowledgePoint = { ...hub, links: { ...hub.links, related: [skPub.id, skDraft.id] } };
+    const flagAll = catalog([hubWithLinks, skPub, skDraft, skNextPub, skNextDraft, mathNext]);
+    const flagVisible = publishedOnly(flagAll);
+
+    // 相關：已發布軟實力 1 筆（不連、不算）＋草稿 1 筆（算）。
+    const related = renderToStaticMarkup(
+      createElement(PointLinks, { ids: hubWithLinks.links.related, all: flagAll, visible: flagVisible, currentFolder: "math", empty: "" }),
+    );
+    assert.equal(count(related, "另有 1 個尚未發布"), 1);
+    assert.equal(related.includes("另有 2 個尚未發布"), false);
+    assert.equal(related.includes(`href="${href(skPub)}"`), false, "旗標關，已發布軟實力點不連");
+    assertNoDraft(related, [skDraft]);
+
+    // 後學：數學已發布（連）＋軟實力已發布（不連、不算）＋軟實力草稿（算）。
+    const seq = renderToStaticMarkup(createElement(SeqPanel, { point: hubWithLinks, all: flagAll, visible: flagVisible }));
+    assert.equal(count(seq, "尚未發布"), 1);
+    assert.equal(count(seq, "另有 1 個尚未發布"), 1);
+    assertShown(seq, [mathNext]);
+    assert.equal(seq.includes(`href="${href(skNextPub)}"`), false);
+    assertNoDraft(seq, [skNextDraft]);
+
+    // 清單裡只有被旗標擋掉的已發布點：不寫「尚未發布」，也不寫 empty（「沒有」不是事實），清單不畫。
+    const onlyFlagged = renderToStaticMarkup(
+      createElement(PointLinks, { ids: [skPub.id], all: flagAll, visible: flagVisible, currentFolder: "math", empty: "沒有，這是起點。" }),
+    );
+    assert.equal(onlyFlagged, "");
+
+    // 同一份內容、旗標打開：已發布軟實力點連出去，數字一樣只算草稿。
+    process.env.KP_SOFTSKILLS_ENABLED = "true";
+    const on = renderToStaticMarkup(
+      createElement(PointLinks, { ids: hubWithLinks.links.related, all: flagAll, visible: flagVisible, currentFolder: "math", empty: "" }),
+    );
+    assert.equal(count(on, "另有 1 個尚未發布"), 1);
+    assertShown(on, [skPub]);
+    assertNoDraft(on, [skDraft]);
+  } finally {
+    if (saved.kp === undefined) delete process.env.KP_ENABLED;
+    else process.env.KP_ENABLED = saved.kp;
+    if (saved.soft === undefined) delete process.env.KP_SOFTSKILLS_ENABLED;
+    else process.env.KP_SOFTSKILLS_ENABLED = saved.soft;
+  }
+});
+
+/**
+ * SeqPanel 的「先學」「後學」標題跟著清單：清單裡只有被旗標擋掉的已發布點時，清單不畫，標題也不畫。
+ * 修正前標題寫死在 SeqPanel，會留下一個下面沒有東西的「後學」，這則會失敗。
+ */
+test("V2 SeqPanel：後學只有被旗標擋掉的點時，「後學」標題也不畫；旗標開時標題和連結都在", () => {
+  const saved = { kp: process.env.KP_ENABLED, soft: process.env.KP_SOFTSKILLS_ENABLED };
+  process.env.KP_ENABLED = "true";
+  delete process.env.KP_SOFTSKILLS_ENABLED;
+  try {
+    const soft = template("soft-skills");
+    const prev = synth(math, { concept: "ma.zzlblprev", stage: "es", title: "合成已發布數學先學", status: "published" });
+    const hub = synth(math, { concept: "ma.zzlblhub", stage: "jh", title: "合成標題中心點", status: "published", prerequisites: [prev.id] });
+    const skNext = synth(soft, { concept: "sk.zzlblnext", stage: "sh", title: "合成已發布軟實力後學乙", status: "published", prerequisites: [hub.id] });
+    const lblAll = catalog([prev, hub, skNext]);
+    const lblVisible = publishedOnly(lblAll);
+
+    const off = renderToStaticMarkup(createElement(SeqPanel, { point: hub, all: lblAll, visible: lblVisible }));
+    assert.equal(count(off, ">先學<"), 1);
+    assertShown(off, [prev]);
+    assert.equal(off.includes(">後學<"), false, "後學清單不畫，標題也不畫");
+    assert.equal(off.includes("尚未發布"), false);
+    assert.equal(off.includes("還沒有往下接的知識點。"), false);
+    assert.equal(off.includes(`href="${href(skNext)}"`), false);
+
+    // 沒有任何後學（不是被旗標擋掉）：標題和 empty 都在。
+    const none = renderToStaticMarkup(createElement(SeqPanel, { point: hub, all: catalog([prev, hub]), visible: publishedOnly(catalog([prev, hub])) }));
+    assert.equal(count(none, ">後學<"), 1);
+    assert.equal(count(none, "還沒有往下接的知識點。"), 1);
+
+    process.env.KP_SOFTSKILLS_ENABLED = "true";
+    const on = renderToStaticMarkup(createElement(SeqPanel, { point: hub, all: lblAll, visible: lblVisible }));
+    assert.equal(count(on, ">先學<"), 1);
+    assert.equal(count(on, ">後學<"), 1);
+    assertShown(on, [prev, skNext]);
+  } finally {
+    if (saved.kp === undefined) delete process.env.KP_ENABLED;
+    else process.env.KP_ENABLED = saved.kp;
+    if (saved.soft === undefined) delete process.env.KP_SOFTSKILLS_ENABLED;
+    else process.env.KP_SOFTSKILLS_ENABLED = saved.soft;
+  }
+});
