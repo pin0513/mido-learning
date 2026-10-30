@@ -770,6 +770,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 67
+    "涯 1c-V-1":
+      stage: 5
+      text: 分析與統整個人特質、價值觀、生涯態度及信念。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 28
     2b-III-1:
       stage: 3
       text: 參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。
@@ -788,6 +794,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 20
+    "涯 2b-V-1":
+      stage: 5
+      text: 具備職業道德與工作倫理，以適應未來職涯生活。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 29
     2c-III-1:
       stage: 3
       text: 分析與判讀各類資源，規劃策略以解決日常生活的問題。
@@ -843,6 +855,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 67
+    "涯 Ac-V-1":
+      stage: 5
+      text: 個人能力和興趣。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 98
     Bb-III-1:
       stage: 3
       text: 團體中的角色探索。
@@ -867,6 +885,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 87
+    "涯 Bb-V-1":
+      stage: 5
+      text: 職業生活與工作倫理。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 98
     Bc-III-3:
       stage: 3
       text: 運用各類資源解決問題的規劃。
@@ -903,6 +927,12 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 100
+    "涯 Ca-V-2":
+      stage: 5
+      text: 生涯反思與變化因應。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 99
     "童 Cb-IV-2":
       stage: 4
       text: 露營活動組織分工、計畫、執行、檢討與反思。
@@ -927,12 +957,24 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 99
+    "家 Cb-V-2":
+      stage: 5
+      text: 人際互動倫理。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 100
     "童 Cc-IV-1":
       stage: 4
       text: 戶外休閒活動的安全、風險管理與緊急事件的處理。
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
         page: 89
+    "涯 Cc-V-1":
+      stage: 5
+      text: 生涯願景與行動方案。
+      source:
+        url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+        page: 99
     "輔 Dc-IV-2":
       stage: 4
       text: 團體溝通、互動與工作效能的提升。

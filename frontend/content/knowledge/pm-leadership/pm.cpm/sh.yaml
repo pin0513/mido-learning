@@ -1,57 +1,239 @@
 id: pm.cpm@sh
 concept: pm.cpm
 title: 要徑：決定專案長度的那條路
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 規劃
+  - 管理
+  - 專案管理與領導
+  - 規劃
   layer: essence
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 綜合活動
-    - 數學
-    - 科技
+  - 綜合活動
+  - 科技
   core_competencies:
-    - A2
-    - A3
-    - C2
+  - A2
+  - A3
+  - C2
   issues: []
+  performances:
+  - 家 3a-V-1
+  contents:
+  - 家 Ca-V-1
+  - 資 A-V-1
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 高級中等學校教育的 U-A2、U-A3、U-C2 與綜合活動領綱 p.3、p.5 的綜S-U-A2、綜S-U-A3、綜S-U-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage 不填 grades：綜合活動領綱 p.2 說普通型高中的生命教育、生涯規劃、家政「可在不同年級規劃修習不同科目。」高中的學習重點也沒有分年級；總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段。
+- est_time 寫高中家政或資訊科技課：綜合活動領綱 p.2 的高中部定必修是生命教育 1 學分、生涯規劃 1 學分、家政 2 學分；本點的代碼出自家政、資訊科技。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱、科技領綱比 PDF 頁少 4，議題融入說明手冊少 16，NASA 排程手冊少 1，NASA 系統工程手冊少 10；OPM 手冊、教育部 AI 指引與 PDF 頁相同；ADP 6-22 用章節頁碼（例如 1-18）。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- 運算思維學習表現（運 c-V-2）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（代碼表已有），curriculum_108 只列資訊科技學習內容（同 B15）。
+- 原 curriculum_108.domains 的數學刪除：本點的網路圖與要徑對應科技領綱 資 A-V-1（說明列出「圖的表示法。」和「樹與圖於問題解決之應用。」）與家政 家 3a-V-1、家 Ca-V-1，沒有引用數學代碼；link_notes 仍保留數學（圖與路徑的概念）當跨科提示，related 的 it.ds@sh 不變。
+- 原 scenario「為校慶舞台搭建畫網路圖，手算要徑，討論哪些工作能平行進行。」保留做法，補上本站建議。
+- 原 ai.delegable「用程式計算要徑、模擬延誤的影響」補上使用條件（本站建議）。
+- 要徑、總浮時、趕工（crashing）與平行進行（fast tracking）的說法依 NASA Schedule Management Handbook；手冊的 P/p 是 program/project（計畫或專案）。英文短句引用，中文說明是本站整理；校慶舞台的任務、先後與天數是示意。
 prerequisites:
-  - pm.gantt@jh
-  - pm.estimate@sh
+- pm.gantt@jh
+- pm.estimate@sh
 links:
   why: []
   how: []
   related:
-    - it.ds@sh
+  - it.ds@sh
   deeper:
-    - pm.schedule@uni
-link_notes: 數學（圖與路徑的概念）、資訊（演算法）、土木與建築（施工排程）
+  - pm.schedule@uni
+link_notes: 數學（圖與路徑的概念）、資訊（演算法）、土木與建築（施工排程）；綜合活動 家 3a-V-1、家 Ca-V-1；科技 資 A-V-1、運 c-V-2。
 competency:
   specialist:
-    - 排程
+  - 排程
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 用程式計算要徑、模擬延誤的影響
+  - 用程式計算要徑、模擬延誤的影響（先手算一次再對照，本站建議）
   human_experience:
-    - 理解為何要徑上的人最需要支援，並實際協調
+  - 理解為何要徑上的人最需要支援，並實際協調
 idea: 任務依賴形成網路，最長的那條路決定最快完工時間；要徑上的任務一延誤，整個專案就延誤。
 guiding_questions:
-  - 如果多一個人手，放在哪個任務上最有用？
-scenario: 為校慶舞台搭建畫網路圖，手算要徑，討論哪些工作能平行進行。
+- 如果多一個人手，放在哪個任務上最有用？
+- 為什麼最長的那條路，決定最快多久能完成？
+- 不在要徑上的任務，可以晚幾天開始？
+scenario: 為校慶舞台搭建畫網路圖，手算要徑，討論哪些工作能平行進行（本站建議）。
 formats:
   slides: []
+  exercise: 目標：替校慶舞台搭建畫出至少六件任務的網路圖，手算每條路的總天數，找出要徑和每件任務能晚幾天開始，並說出多一個人手該放在哪裡。　檢核：老師看網路圖和計算：每件任務都有天數，箭頭畫出先後，每條路的總天數算對了，要徑有標出來；學生說得出為什麼最長的路決定最快完工的時間、不在要徑上的任務能晚幾天開始，以及多一個人手放在哪個任務上最有用、為什麼。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 替校慶舞台搭建畫出至少六件任務的網路圖，手算每條路的總天數，找出要徑和每件任務能晚幾天開始，並說出多一個人手該放在哪裡。
+review: 老師看網路圖和計算：每件任務都有天數，箭頭畫出先後，每條路的總天數算對了，要徑有標出來；學生說得出為什麼最長的路決定最快完工的時間、不在要徑上的任務能晚幾天開始，以及多一個人手放在哪個任務上最有用、為什麼。
+est_time:
+  school: 高中家政或資訊科技課
+  source: zonghe
+why:
+  heading: 最長的那條路決定完工日
+  body:
+  - 108 課綱的家政要高中生「善用科技、資訊，管理個人與家庭重要事務。」學習「時間、精力管理與生活品質。」補充說明要「善用資源與管理技巧，提高時間密度、妥善分配精力與適度休閒。」資訊科技也要學生「能認識專案管理的概念。」並學「重要資料結構的概念與應用。」說明裡有「樹與圖於問題解決之應用。」把任務和先後畫成網路圖，就是一種圖（本站整理）。
+  - NASA 的排程手冊說，要徑是「A sequential path of activities in a network logic schedule that represents the longest overall duration」，它決定了專案最短要多久；而且「Any slippage of the tasks in the critical path will increase the P/p duration and slip the P/p finish date.」要徑上任何一件延誤，整個專案就跟著延誤（P/p 是計畫或專案；翻譯是本站整理）。
+  qa:
+    question: 為什麼最長的那條路，決定最快多久能完成？
+    answer: 因為最後一件事要等所有前面的路都走完才能開始。短的路先做完也只能等，最慢走完的那條路什麼時候結束，專案最快就什麼時候結束。手冊說要徑「determines the shortest possible P/p duration」（說明是本站整理）。
+    source: nasa-smh
+  items_title: 課綱的學習重點
+  items:
+  - title: 管理重要事務
+    text: 綜合活動 家 3a-V-1：善用科技、資訊，管理個人與家庭重要事務。
+    code: 家 3a-V-1
+  - title: 時間與精力管理
+    text: 綜合活動 家 Ca-V-1：時間、精力管理與生活品質。
+    code: 家 Ca-V-1
+  - title: 重要資料結構
+    text: 高中科技領綱 資 A-V-1：重要資料結構的概念與應用。
+    code: 資 A-V-1
+  - title: 專案管理的概念
+    text: 高中科技領綱 運 c-V-2：能認識專案管理的概念。
+    code: 運 c-V-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 任務已經列好
+  - 每件估好天數
+  figures:
+  - cpm-compare
+  notes:
+  - 綜合活動高中的代碼：開頭的涯是生涯規劃、家是家政；接著是數字的是學習表現，是大寫字母的是學習內容；中間的 V 是第五學習階段（高中）。
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 V 是第五學習階段（高中），本頁只列高中必修的條目，不含標「※」的加深加廣選修。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - zonghe
+  - tech108
+  - nasa-smh
+  - zonggang
+how:
+  heading: 畫網路圖，手算要徑
+  body:
+  - 列任務和先後：把搭舞台要做的事列出來，每件估天數，寫出要等哪一件做完。例如設計舞台圖 2 天；借器材 3 天、做背板 4 天，都要等設計圖；搭骨架 2 天要等器材；裝燈光音響 1 天要等骨架；彩排 1 天要等背板和燈光音響都好（天數是示意，例子是本站整理）。每件任務畫成一個方塊，用箭頭連起先後，就是網路圖。
+  - 算每條路：從開始走到彩排有兩條路。設計圖 → 借器材 → 搭骨架 → 燈光音響 → 彩排，共 2 + 3 + 2 + 1 + 1 = 9 天；設計圖 → 做背板 → 彩排，共 2 + 4 + 1 = 7 天。彩排要等兩條路都走完才能開始，短的那條先做完也只能等，所以最長的那條 9 天就是要徑，舞台最快 9 天完成（本站整理）。做背板不在要徑上，晚 9 − 7 = 2 天開始也不影響完工，這 2 天叫總浮時；手冊說總浮時是「the amount of time an activity can be delayed before impacting the overall P/p completion」（說明是本站整理）。要徑上的設計圖、借器材、搭骨架、燈光音響和彩排總浮時都是 0，一天都不能晚（本站整理）。借器材和做背板都只等設計圖，可以同時做；手冊把原本先後做的事改成同時做叫「fast tracking」。
+  - 多一個人手放哪：放在要徑上、而且多一個人真的能做快的任務，例如搭骨架從 2 天縮成 1 天，舞台就能 8 天完成；放在做背板，背板提早做完也只能等，完工日不會變（本站整理）。手冊把加人加資源趕工叫 crashing，說它「adds extra resources to perform the work in a shorter period of time」，也要多花錢。縮短之後要重算：縮太多時，另一條路可能變成最長，要徑就換了（本站整理）。
+  qa:
+    question: 如果多一個人手，放在哪個任務上最有用？
+    answer: 放在要徑上、而且多一個人真的能做快的任務，例如搭骨架；放在不在要徑上的任務，例如做背板，完工日不會提早。縮短後要重算，要徑可能換成另一條。手冊說要徑上的任務一延誤，就會「slip the P/p finish date」（說明是本站整理）。
+    source: nasa-smh
+  items_title: 四步做
+  items:
+  - title: 列任務和先後
+    text: 每件估天數，寫要等誰。
+  - title: 畫網路圖
+    text: 方塊是任務，箭頭是先後。
+  - title: 算每條路
+    text: 把天數加起來，最長的是要徑。
+  - title: 決定人手放哪
+    text: 放在要徑上、做得快的任務。
+  checklist_title: 算完檢查
+  checklist:
+  - 每件有天數
+  - 箭頭有先後
+  - 標出要徑
+  activity_figure: cpm-flow
+  sources:
+  - nasa-smh
+  - zonghe
+what:
+  heading: 找得出要徑，也會放人手
+  body:
+  - 學完後，學生能把一個活動的任務畫成網路圖，手算每條路的天數，找出要徑和總浮時，說出最長的路為什麼決定完工日，並判斷多一個人手放在哪裡最有用、縮短後要重算。
+  items_title: 學完能做到
+  items:
+  - title: 畫網路圖
+    text: 任務和先後都畫清楚。
+  - title: 找出要徑和浮時
+    text: 算得出每條路的天數。
+  - title: 判斷人手放哪
+    text: 說得出為什麼。
+  checklist_title: 家長檢核
+  checklist:
+  - 要徑有標出
+  - 浮時算對了
+  - 說得出人手放哪
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: cpm-flow
+  type: flow
+  alt: 找要徑五步驟：每組列任務和先後，畫網路圖，算每條路的天數，找出要徑，全組再決定多的人手放哪。
+  steps:
+  - actor: 每組
+    text: 列任務和先後
+  - actor: 每組
+    text: 畫網路圖
+  - actor: 每組
+    text: 算每條路
+  - actor: 每組
+    text: 找出要徑
+  - actor: 全組
+    text: 決定人手放哪
+  source: nasa-smh
+  caption: 流程是本站建議。
+- id: cpm-compare
+  type: compare
+  alt: 比較要徑上的任務和有浮時的任務：要徑上的延誤一天，完工就晚一天，例如搭骨架；有浮時的晚幾天開始也不影響完工，例如做背板。
+  source: nasa-smh
+  relation: versus
+  items:
+  - term: 要徑上
+    note: 延誤一天，完工就晚一天，例如搭骨架
+  - term: 有浮時
+    note: 晚幾天開始也不影響完工，例如做背板
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：家 3a-V-1「善用科技、資訊，管理個人與家庭重要事務。」（p.31）；家 Ca-V-1「時間、精力管理與生活品質。」（p.100）；補充說明 家 Ca-V-1「善用資源與管理技巧，提高時間密度、妥善分配精力與適度休閒。」（p.100）；領域核心素養：綜S-U-A2「確立自我需求與目標，學習批判思考與自主管理的知能，透過具體可行的學習方案與實踐過程，積極面對及處理生活與生命中的各種挑戰。」（p.3）；綜S-U-A3「敏察和因應危險情境，規劃與運用資源，預防及化解可能的危機」（p.3）；綜S-U-C2「具備人際溝通知能，提升在團體生活中共同決策、合作解決問題，學習並善用領導素養，以面對社會變遷的挑戰，營造優質的生活。」（p.5）；時間分配：普通型高級中等學校第五學習階段「部定必修科目包含生命教育（1 學分）、生涯規劃（1 學分）、家政（2 學分）三科，共 4 學分，可在不同年級規劃修習不同科目。」（p.2）；代碼說明：「生命教育、生涯規劃與家政分別以『生』、『涯』、『家』的簡稱示之。」（p.9）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：資 A-V-1「重要資料結構的概念與應用。」（p.11）；運 c-V-2「能認識專案管理的概念。」（p.7）；資訊科技學習內容說明「高級中等學校教育階段則更重視整合運用，藉由資訊科學的初步探索，讓學生進一步理解運算思維之相關原理，以培養整合資訊科技與運算思維以有效解決問題之能力。」（p.10）；時間分配「高級中等學校教育階段資訊科技與生活科技之部定必修課程各為 2 學分，建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）；說明 資 A-V-1「圖的表示法。」（p.44）；「樹與圖於問題解決之應用。」（p.44）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-A3「具備規劃、實踐與檢討反省的素養，並以創新的態度與作為因應新的情境或問題。」（p.5）；U-C2「發展適切的人際互動關係，並展現包容異己、溝通協調及團隊合作的精神與行動。」（p.6）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: nasa-smh
+  title: NASA Schedule Management Handbook（NASA/SP-2010-3403, Revision 1）
+  publisher: NASA（Office of the Chief Financial Officer；生效日 2020 年 1 月 30 日）
+  url: https://www.nasa.gov/wp-content/uploads/2020/11/nasa_schedule_management_hand_book.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 要徑「Critical Path. A sequential path of activities in a network logic schedule that represents the longest overall duration from the status date through P/p completion, which determines the shortest possible P/p duration (i.e., least amount of float) and earliest possible P/p finish date.」（p.114）；「Any slippage of the tasks in the critical path will increase the P/p duration and slip the P/p finish date.」（p.114）；總浮時「Total Float is the amount of time an activity can be delayed before impacting the overall P/p completion」（p.118）；趕工「Schedule crashing is a schedule acceleration technique that adds extra resources to perform the work in a shorter period of time.」（p.330）；平行進行「Fast tracking is a schedule acceleration technique where activities that would have been performed sequentially are performed in parallel.」（p.331）；「performing tasks in parallel (fast tracking), adding resources (crashing)」（p.337）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-29'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）

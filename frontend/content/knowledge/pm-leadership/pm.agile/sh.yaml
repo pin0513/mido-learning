@@ -1,57 +1,262 @@
 id: pm.agile@sh
 concept: pm.agile
 title: 敏捷與迭代
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
-    - 管理
-    - 專案管理與領導
-    - 回顧
+  - 管理
+  - 專案管理與領導
+  - 回顧
   layer: essence
   crosscutting: []
 stage:
   level: sh
 curriculum_108:
   domains:
-    - 綜合活動
+  - 綜合活動
+  - 科技
   core_competencies:
-    - A2
-    - A3
-    - C2
-  issues: []
+  - A2
+  - A3
+  - C2
+  issues:
+  - 生涯規劃教育
+  performances: []
+  contents:
+  - 涯 Ca-V-2
+  - 涯 Cc-V-1
+  - 資 T-V-1
 to_verify: false
-verify_notes: []
+verify_notes:
+- 核心素養 A2、A3、C2 保留：依總綱 p.4–6 高級中等學校教育的 U-A2、U-A3、U-C2 與綜合活動領綱 p.3、p.5 的綜S-U-A2、綜S-U-A3、綜S-U-C2 原文確認（表格窄欄分散對齊，字距大，文字已用頁面影像核對）。
+- stage 不填 grades：綜合活動領綱 p.2 說普通型高中的生命教育、生涯規劃、家政「可在不同年級規劃修習不同科目。」高中的學習重點也沒有分年級；總綱 p.7 說高級中等學校十、十一、十二年級為第五學習階段。
+- est_time 寫高中生涯規劃或資訊科技課：綜合活動領綱 p.2 的高中部定必修是生命教育 1 學分、生涯規劃 1 學分、家政 2 學分；本點的代碼出自生涯規劃、資訊科技。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱、科技領綱比 PDF 頁少 4，議題融入說明手冊少 16，NASA 排程手冊少 1，NASA 系統工程手冊少 10；OPM 手冊、教育部 AI 指引與 PDF 頁相同；ADP 6-22 用章節頁碼（例如 1-18）。
+- 新增學習內容代碼的頁碼用附錄二學習內容說明裡代碼所在的頁（同代碼表既有的 家 Ca-V-1 p.100、涯 Cb-V-1 p.99）；學習表現用 p.28–31 學習重點表。
+- 高中的 ai.delegable 不改成由老師或家長操作：教育部《高級中等以下學校人工智慧使用和學習指引》讓高中生在規則內自己使用（同 B15 高中的做法），每條補上使用條件（本站建議），What 加上注意事項（學生版）與指引的使用規則。
+- 運算思維學習表現（運 c-V-3）的代碼開頭是中文字加小寫字母，schema 的 curriculum_108.performances 只收數字開頭的代碼，所以只在項目的 code 引用（代碼表已有），curriculum_108 只列資訊科技學習內容（同 B15）。
+- curriculum_108.domains 加科技：資訊科技 運 c-V-3「能整合適當的資訊科技與他人合作完成專題製作。」與 資 T-V-1「數位合作共創的概念與工具使用。」正是分衝刺合作做專題；related 的 it.build@sh 也用這兩個代碼。
+- 議題加生涯規劃教育：議題融入說明手冊高中的實質內涵 涯U9「確認生涯目標，擬訂生涯行動方案，並在實踐中反思與修正。」（p.96）。
+- curriculum_108.performances 留空：綜合活動高中沒有直接對應迭代開發的學習表現，學習內容 涯 Ca-V-2、涯 Cc-V-1 的補充說明（正向看待不確定性、根據結果修正行動計畫）已對應；運 c-V-3 只在項目引用。
+- 原 scenario「專題製作分成 3 個兩週的衝刺，每次結束都展示成果給同學回饋。」的 3 改成三（scenario 不放沒有標示的阿拉伯數字），補上決定下一輪要改什麼與本站建議。
+- 原 ai.delegable「快速產生原型、整理回饋」補上使用條件（本站建議）。
+- The 2020 Scrum Guide 以 CC BY-SA 4.0 發布；《敏捷軟體開發宣言》網站說宣言可以自由複製但須完整，本點只短句引用並附出處。英文短句引用，中文說明是本站整理；專題、首頁和畢業典禮的例子是本站整理。
 prerequisites:
-  - pm.retro@es
-  - pm.gantt@jh
+- pm.retro@es
+- pm.gantt@jh
 links:
   why: []
   how: []
   related:
-    - ph.hypothesis@jh
-    - it.build@sh
+  - ph.hypothesis@jh
+  - it.build@sh
   deeper:
-    - pm.complexity@uni
-    - pm.aiteam@uni
-link_notes: 科學方法（假設與驗證）、資訊（軟體開發）、藝術（創作的反覆修改）
+  - pm.complexity@uni
+  - pm.aiteam@uni
+link_notes: 科學方法（假設與驗證）、資訊（軟體開發）、藝術（創作的反覆修改）；綜合活動 涯 Ca-V-2、涯 Cc-V-1；科技 資 T-V-1、運 c-V-3。
 competency:
   specialist:
-    - 敏捷
+  - 敏捷
   generalist:
-    - 專案管理
-    - 溝通
+  - 專案管理
+  - 溝通
 ai:
   delegable:
-    - 快速產生原型、整理回饋
+  - 快速產生原型、整理回饋（回饋不放同學姓名，作品註明 AI 的用途，本站建議）
   human_experience:
-    - 面對批評調整方向、判斷何時該停
+  - 面對批評調整方向、判斷何時該停
 idea: 需求不確定時，與其一次規劃到底，不如先做小版本、拿回饋、再改進。
 guiding_questions:
-  - 什麼樣的專案適合一次規劃到底？什麼樣的適合邊做邊改？
-scenario: 專題製作分成 3 個兩週的衝刺，每次結束都展示成果給同學回饋。
+- 什麼樣的專案適合一次規劃到底？什麼樣的適合邊做邊改？
+- 一個衝刺結束時，要拿出什麼給別人看？
+- 回饋要怎麼變成下一輪的計畫？
+scenario: 專題製作分成三個兩週的衝刺，每次結束都展示可以用的成果給同學回饋，再決定下一輪要改什麼（本站建議）。
 formats:
   slides: []
+  exercise: 目標：把一個專題分成三個衝刺，每個衝刺開始前定好要做出的小版本，結束時展示給同學、記下回饋，並寫出下一輪要改什麼。　檢核：老師看衝刺紀錄：三個衝刺都有目標、展示和回饋紀錄，下一輪的計畫看得出是依回饋改的；學生說得出這個專題為什麼適合邊做邊改，什麼樣的專案適合一次規劃到底。
 authors:
-  - I-PING Huang
-updated: 2026-10-26
+- I-PING Huang
+updated: '2026-10-29'
+goal: 把一個專題分成三個衝刺，每個衝刺開始前定好要做出的小版本，結束時展示給同學、記下回饋，並寫出下一輪要改什麼。
+review: 老師看衝刺紀錄：三個衝刺都有目標、展示和回饋紀錄，下一輪的計畫看得出是依回饋改的；學生說得出這個專題為什麼適合邊做邊改，什麼樣的專案適合一次規劃到底。
+est_time:
+  school: 高中生涯規劃或資訊科技課
+  source: zonghe
+why:
+  heading: 先做小版本，再一路改進
+  body:
+  - 108 課綱的生涯規劃要高中生學「生涯反思與變化因應。」補充說明要「能正向看待不確定性，彈性的因應各種變化」；學「生涯願景與行動方案。」要「根據結果適時修正行動計畫」。資訊科技也要學生「能整合適當的資訊科技與他人合作完成專題製作。」並學「數位合作共創的概念與工具使用。」
+  - 《敏捷軟體開發宣言》說「回應變化 重於 遵循計劃」，也說「雖然右側項目有其價值」，計畫還是有用。Scrum 指南說 Scrum「employs an iterative, incremental approach to optimize predictability and to control risk.」一輪一輪做、每次多做出一塊，讓進度更好預測、風險更小（翻譯是本站整理）。
+  qa:
+    question: 什麼樣的專案適合一次規劃到底？什麼樣的適合邊做邊改？
+    answer: 要做什麼、怎麼做都很清楚，而且做到一半很難改的，適合一次規劃到底，例如畢業典禮的流程；不確定使用者要什麼、做了才知道好不好的，適合邊做邊改，例如給同學用的小工具或一支宣傳影片。Scrum 指南說它是為「complex problems」設計的（說明是本站整理）。
+    source: scrum-guide
+  items_title: 課綱的學習重點
+  items:
+  - title: 生涯反思與變化因應
+    text: 綜合活動 涯 Ca-V-2：生涯反思與變化因應。
+    code: 涯 Ca-V-2
+  - title: 生涯願景與行動方案
+    text: 綜合活動 涯 Cc-V-1：生涯願景與行動方案。
+    code: 涯 Cc-V-1
+  - title: 數位合作共創
+    text: 高中科技領綱 資 T-V-1：數位合作共創的概念與工具使用。
+    code: 資 T-V-1
+  - title: 合作完成專題
+    text: 高中科技領綱 運 c-V-3：能整合適當的資訊科技與他人合作完成專題製作。
+    code: 運 c-V-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 專題題目定了
+  - 組員分好工
+  figures:
+  - agile-compare
+  notes:
+  - 綜合活動高中的代碼：開頭的涯是生涯規劃、家是家政；接著是數字的是學習表現，是大寫字母的是學習內容；中間的 V 是第五學習階段（高中）。
+  - 代碼開頭的「資」是科技領綱的資訊科技學習內容，「運」是運算思維的學習表現；中間的 V 是第五學習階段（高中），本頁只列高中必修的條目，不含標「※」的加深加廣選修。
+  - 總綱把高級中等學校十、十一、十二年級定為第五學習階段，所以本頁代碼中間都是 V。
+  sources:
+  - zonghe
+  - tech108
+  - agile-manifesto
+  - scrum-guide
+  - zonggang
+how:
+  heading: 三個衝刺，每輪都展示
+  body:
+  - 先排衝刺：把專題分成三個兩週的衝刺（週數是示意）。Scrum 指南說衝刺是「fixed length events of one month or less」，每個衝刺都可以看成「a short project」（說明是本站整理）。每個衝刺開始前，全組定好這一輪要做出什麼：要是別人真的能用、能看的小版本，例如第一輪只做出能操作的首頁，不是只寫完一份計畫（例子是本站整理）。
+  - 衝刺結束時展示：一個衝刺結束時，拿出這一輪做好、可以用的小版本給同學試用，記下他們做了什麼、卡在哪裡、說了什麼。指南說衝刺檢視是要「inspect the outcome of the Sprint and determine future adaptations」（說明是本站整理）。記回饋時寫事實，不寫同學的姓名（本站建議）。
+  - 回饋變成下一輪的計畫：把回饋分成要改、可以晚點改、不改三類，挑最重要的放進下一輪的目標，並寫下為什麼這樣選（本站建議）。每輪最後也回顧團隊合作得怎麼樣，三輪做完，比較第一版和最後一版差在哪裡。不是每個專案都要這樣做：目標和做法都很清楚、中途很難改的，例如畢業典禮的流程，一次規劃好再照著做比較好；做了才知道好不好的專題，才適合邊做邊改（本站整理）。
+  qa:
+    question: 回饋要怎麼變成下一輪的計畫？
+    answer: 把回饋分成要改、可以晚點改、不改三類，挑最重要的放進下一輪的目標，寫下為什麼這樣選（本站建議）。Scrum 指南說衝刺檢視是要「determine future adaptations」。
+    source: scrum-guide
+  items_title: 四步做
+  items:
+  - title: 排三個衝刺
+    text: 每個衝刺一樣長。
+  - title: 定這輪的小版本
+    text: 要能用、能看。
+  - title: 展示拿回饋
+    text: 記下事實，不寫姓名。
+  - title: 回饋改成計畫
+    text: 挑最重要的放進下一輪。
+  checklist_title: 每輪檢查
+  checklist:
+  - 有可用的版本
+  - 回饋有記下
+  - 下一輪有改
+  activity_figure: agile-flow
+  sources:
+  - scrum-guide
+  - zonghe
+what:
+  heading: 邊做邊改，也知道何時不用
+  body:
+  - 學完後，學生能把專題分成幾個衝刺，每輪做出可以用的小版本、展示給別人並記下回饋，把回饋變成下一輪的計畫，也能判斷什麼樣的專案適合一次規劃到底、什麼樣的適合邊做邊改。
+  items_title: 學完能做到
+  items:
+  - title: 做出小版本
+    text: 每輪都有能用的成果。
+  - title: 用回饋改計畫
+    text: 下一輪看得出改了什麼。
+  - title: 判斷適合的做法
+    text: 一次規劃或邊做邊改。
+  checklist_title: 家長檢核
+  checklist:
+  - 每輪有展示
+  - 回饋有用上
+  - 說得出差別
+  notes:
+  - 本點融入生涯規劃教育議題：議題融入說明手冊高中的實質內涵有「確認生涯目標，擬訂生涯行動方案，並在實踐中反思與修正。」每輪拿回饋再修正，就是在練習。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。依教育部《高級中等以下學校人工智慧使用和學習指引》，高中生的作品若用了生成式 AI，要「標註所使用的工具名稱、版本與使用方式」，不提供真實姓名、學校名稱、帳號密碼等個人資料。
+  sources:
+  - issues-handbook
+  - genai-student
+  - moe-ai-guide
+figures:
+- id: agile-flow
+  type: flow
+  alt: 一個衝刺的五步驟：全組定這一輪的目標，做出小版本，同學試用給回饋，全組把回饋改成計畫，回顧後再出發。
+  steps:
+  - actor: 全組
+    text: 定這輪目標
+  - actor: 全組
+    text: 做出小版本
+  - actor: 同學
+    text: 試用給回饋
+  - actor: 全組
+    text: 回饋改計畫
+  - actor: 全組
+    text: 回顧再出發
+  source: scrum-guide
+  caption: 流程是本站建議。
+- id: agile-compare
+  type: compare
+  alt: 比較一次規劃和邊做邊改：目標和做法清楚、很難中途改的，適合一次規劃，例如畢業典禮流程；做了才知道好不好的，適合邊做邊改，例如給同學用的小工具。
+  source: scrum-guide
+  relation: versus
+  items:
+  - term: 一次規劃
+    note: 目標和做法清楚、很難中途改，例如畢業典禮流程
+  - term: 邊做邊改
+    note: 做了才知道好不好，例如給同學用的小工具
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：涯 Ca-V-2「生涯反思與變化因應。」（p.99）；涯 Cc-V-1「生涯願景與行動方案。」（p.99）；補充說明 涯 Ca-V-2「在快速變動而複雜的時代，能正向看待不確定性，彈性的因應各種變化，並以創意創造未來的各種可能性。」（p.99）；補充說明 涯 Cc-V-1「深入探索與覺察自我與環境的互動關係，建構個人生涯願景，據以擬定短中長期的學習計畫，並根據結果適時修正行動計畫。」（p.99）；領域核心素養：綜S-U-A2「確立自我需求與目標，學習批判思考與自主管理的知能，透過具體可行的學習方案與實踐過程，積極面對及處理生活與生命中的各種挑戰。」（p.3）；綜S-U-A3「敏察和因應危險情境，規劃與運用資源，預防及化解可能的危機」（p.3）；綜S-U-C2「具備人際溝通知能，提升在團體生活中共同決策、合作解決問題，學習並善用領導素養，以面對社會變遷的挑戰，營造優質的生活。」（p.5）；時間分配：普通型高級中等學校第五學習階段「部定必修科目包含生命教育（1 學分）、生涯規劃（1 學分）、家政（2 學分）三科，共 4 學分，可在不同年級規劃修習不同科目。」（p.2）；代碼說明：「生命教育、生涯規劃與家政分別以『生』、『涯』、『家』的簡稱示之。」（p.9）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 學習重點：資 T-V-1「數位合作共創的概念與工具使用。」（p.11）；運 c-V-3「能整合適當的資訊科技與他人合作完成專題製作。」（p.7）；資訊科技學習內容說明「高級中等學校教育階段則更重視整合運用，藉由資訊科學的初步探索，讓學生進一步理解運算思維之相關原理，以培養整合資訊科技與運算思維以有效解決問題之能力。」（p.10）；時間分配「高級中等學校教育階段資訊科技與生活科技之部定必修課程各為 2 學分，建議依學期開設，採資訊科技與生活科技上下學期對開，每週連排 2 節課。」（p.2）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 核心素養（高級中等學校教育）：U-A2「具備系統思考、分析與探索的素養，深化後設思考，並積極面對挑戰以解決人生的各種問題。」（p.4）；U-A3「具備規劃、實踐與檢討反省的素養，並以創新的態度與作為因應新的情境或問題。」（p.5）；U-C2「發展適切的人際互動關係，並展現包容異己、溝通協調及團隊合作的精神與行動。」（p.6）；學習階段「高級中等學校十、十一、十二年級為第五學習階段」（p.7）
+- id: agile-manifesto
+  title: 敏捷軟體開發宣言（繁體中文版）
+  publisher: Kent Beck 等 17 位作者（agilemanifesto.org，2001 年）
+  url: https://agilemanifesto.org/iso/zhcht/manifesto.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「回應變化 重於 遵循計劃」；「也就是說，雖然右側項目有其價值，但我們更重視左側項目。」
+- id: scrum-guide
+  title: The 2020 Scrum Guide
+  publisher: Ken Schwaber、Jeff Sutherland（scrumguides.org，2020 年 11 月，CC BY-SA 4.0）
+  url: https://scrumguides.org/scrum-guide.html
+  accessed: '2026-10-29'
+  kind: reference
+  supports: 「Scrum employs an iterative, incremental approach to optimize predictability and to control risk.」；「Scrum is simple. Try it as is and determine if its philosophy, theory, and structure help to achieve goals and create value.」；「adaptive solutions for complex problems」；「They are fixed length events of one month or less to create consistency.」；「Each Sprint may be considered a short project.」；「The purpose of the Sprint Review is to inspect the outcome of the Sprint and determine future adaptations.」
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-29'
+  kind: curriculum
+  supports: 生涯規劃教育高中實質內涵 涯U9「確認生涯目標，擬訂生涯行動方案，並在實踐中反思與修正。」（p.96）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-29'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
+- id: moe-ai-guide
+  title: 高級中等以下學校人工智慧使用和學習指引
+  publisher: 教育部（中華民國 115 年 6 月 5 日臺教資（一）字第 1152701618 號函核定）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_e95ebf079184cfec530145b1f5985407.pdf&old=upload
+  accessed: '2026-10-29'
+  kind: government
+  supports: 學生學習方面（二）人類自主「不應只是複製貼上系統產出，而要主動提問、比較多方資料並做出自己的判斷，為最終決定負責。」（p.10）；（三）隱私保護與資料治理「應避免提供真實姓名、地址、電話、學校名稱、帳號密碼等個人敏感資訊」（p.10）；（五）正確使用、透明與可解釋「應主動在作品中標註所使用的工具名稱、版本與使用方式，不得將人工智慧生成內容直接作為個人原創成果繳交」（p.11）
