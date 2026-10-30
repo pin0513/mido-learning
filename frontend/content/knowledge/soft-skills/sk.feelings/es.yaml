@@ -1,8 +1,13 @@
+# B25 提案：sk.feelings@es
+# - 補 grades（三、四年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：綜合活動 1a-II-1、1d-II-1、Aa-II-3（表達與覺察想法和感受）；議題家庭教育 家E4、生命教育 生E3。
+# - 依據：CDC 給家長的積極聆聽建議（幫孩子說出感覺、不叫孩子停止感覺）、CASEL 的自我覺察。
+# - domains 刪掉健康與體育（本點沒有健康與體育的代碼）；三個綜合活動代碼是新加進代碼表的代碼（見 taxonomy patch）。
 id: sk.feelings@es
 concept: sk.feelings
 title: 說出感覺：我覺得……因為……
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,19 +16,42 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 綜合活動
-  - 健康與體育
   core_competencies:
   - A1
   - C2
   issues:
-  - 生命教育
   - 家庭教育
-to_verify: true
+  - 生命教育
+  performances:
+  - 1a-II-1
+  - 1d-II-1
+  contents:
+  - Aa-II-3
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
+- 核心素養 A1、C2：依總綱 p.4–6 國民小學教育的 E-A1、E-C2 與綜合活動領綱 p.3、p.5 的綜-E-A1、綜-E-C2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 3、4：本點的代碼都是第二學習階段（1a-II-1、1d-II-1、Aa-II-3），總綱 p.7 說國民小學三、四年級為第二學習階段。
+- est_time 依綜合活動領綱 p.2：第二學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，議題融入說明手冊少 16；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 綜合活動 1a-II-1、1d-II-1、Aa-II-3 原本不在代碼表，本批依綜合活動領綱 p.13–14 原文加入（taxonomy patch）。和情緒最直接的學習內容 Ad-II-1 和代碼表裡已有的國語文學習內容同號，放不進以代碼為鍵的代碼表，所以學習內容改用 Aa-II-3。
+- 原 curriculum_108.domains 的健康與體育刪除：本點的代碼都是綜合活動；健康與體育的學習表現代碼格式（如 1a-II-1）和綜合活動相同，不能同時放進以代碼為鍵的代碼表。link_notes 保留健康與體育當跨科提示（本站建議）。
+- 議題家庭教育：家庭教育國小實質內涵 家E4「覺察個人情緒並適切表達，與家人及同儕適切互動。」（p.66）；議題生命教育：生命教育國小實質內涵 生E3「理解人是會思考、有情緒、能進行自主決定的個體。」（p.79）。
+- 原 goal 的 8 種、原 review 的 8 種與 3 次標成示意；review 補上說出原因、說得更精確。
+- 原 scenario 的心情溫度計保留做法，拿掉內層引號，補上本站建議；不評論別人的感覺移到 How 教。
+- 原 ai.delegable「提供更多情緒詞彙」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原 link_notes「框架：—。」改成自我覺察（CASEL）；做法依 CDC 給家長的積極聆聽建議與 CASEL 的自我覺察改寫，英文短句逐字引用，中文說明是本站整理。
+- Tips for Active Listening 是 CDC 給幼兒與學齡前兒童家長的頁面；本點只借用其中幫孩子說出感覺、不叫孩子停止感覺的做法，用在國小三、四年級（本站建議）。情緒卡上的詞是本站整理。
+- CASEL 是美國推動社會情緒學習的非營利組織；引文取自其網站的 CASEL 5 核心能力說明。
+- CDC 網站會擋自動讀取（回應 403），引文對照 Internet Archive 的存檔：Connecting Conversations 用 2026-07-25 的存檔，Tips for Active Listening 用 2025-06-10 的存檔；source 的 url 是 CDC 原網址（自動檢查會得到 403）。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁或其存檔；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites: []
 links:
   why: []
@@ -31,7 +59,7 @@ links:
   related: []
   deeper:
   - sk.nvc@jh
-link_notes: 框架：—。
+link_notes: 框架：自我覺察（CASEL）。健康與體育（情緒）；綜合活動 1a-II-1、1d-II-1、Aa-II-3。
 competency:
   specialist:
   - 同理溝通
@@ -39,21 +67,182 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 提供更多情緒詞彙
+  - 提供更多情緒詞彙（由大人操作，本站建議）
   human_experience:
   - 察覺自己身上的感覺
-idea: 感覺不只開心和生氣，還有失望、擔心、委屈、害羞、興奮……。說得出更精確的感覺，別人才知道怎麼幫你，你也比較不會用發脾氣代替說話。
+idea: 感覺不只開心和生氣，還有失望、擔心、委屈、害羞、興奮……。說得出更準確的感覺和原因，別人比較知道發生了什麼事、可以怎麼幫你。
 guiding_questions:
-- 「不爽」裡面，可能藏著哪些不一樣的感覺？
-scenario: 親子共學：睡前「心情溫度計」：每人說一個今天的感覺和原因，大人也要說，不評論別人的感覺。
-goal: 分辨並說出至少 8 種感覺，用「我覺得……因為……」說出來。
-review: 用情緒卡或表情圖，孩子能說出 8 種感覺的名字；一週內，家長記錄孩子主動用「我覺得……因為……」說出 3 次。
+- 「不開心」裡面，可能藏著哪些不一樣的感覺？
+- 說感覺時，為什麼要加上因為？
+- 別人的感覺跟你不一樣時，怎麼辦？
+scenario: 親子共學：睡前用心情溫度計，每人說一個今天的感覺和原因，大人也說自己的（本站建議）。
+goal: 分辨並說出至少 8 種感覺的名字（數字是示意），用我覺得……因為……說出自己的感覺和原因。
+review: 用情緒卡或表情圖，孩子說得出 8 種感覺的名字（示意）；一週內，家長記下孩子自己用我覺得……因為……說出感覺和原因至少 3 次（示意），看有沒有說出原因、有沒有把感覺說得更準確。
 formats:
   slides: []
-  exercise: 目標：分辨並說出至少 8 種感覺，用「我覺得……因為……」說出來。　檢核：用情緒卡或表情圖，孩子能說出 8 種感覺的名字；一週內，家長記錄孩子主動用「我覺得……因為……」說出 3 次。
+  exercise: 目標：分辨並說出至少 8 種感覺的名字（數字是示意），用我覺得……因為……說出自己的感覺和原因。　檢核：用情緒卡或表情圖，孩子說得出 8 種感覺的名字（示意）；一週內，家長記下孩子自己用我覺得……因為……說出感覺和原因至少 3 次（示意），看有沒有說出原因、有沒有把感覺說得更準確。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國小三、四年級綜合活動課
+  source: zonghe
+why:
+  heading: 說得出感覺，別人才懂
+  body:
+  - 綜合活動課綱要三、四年級「表達自己的想法和感受」，也要「覺察情緒的變化」。家庭教育議題的國小實質內涵有「覺察個人情緒並適切表達」；生命教育也要孩子「理解人是會思考、有情緒、能進行自主決定的個體。」
+  - CASEL（美國推動社會情緒學習的組織）列出的自我覺察能力，包括「Linking feelings, values, and thoughts」，也就是把感覺、看重的事（價值）和想法連起來（翻譯是本站整理）。說出感覺，再說出因為什麼，就是在練習這件事（本站整理）。
+  qa:
+    question: 說感覺時，為什麼要加上因為？
+    answer: 說出原因，別人才知道發生了什麼事、可以怎麼幫你（本站整理）。CASEL 的自我覺察包括「Linking feelings, values, and thoughts」，把感覺、看重的事（價值）和想法連起來（翻譯是本站整理）。
+    source: casel-framework
+  items_title: 課綱的學習重點
+  items:
+  - title: 表達想法和感受
+    text: 綜合活動 1a-II-1：展現自己能力、興趣與長處，並表達自己的想法和感受。
+    code: 1a-II-1
+  - title: 覺察情緒變化
+    text: 綜合活動 1d-II-1：覺察情緒的變化，培養正向思考的態度。
+    code: 1d-II-1
+  - title: 探索想法與感受
+    text: 綜合活動 Aa-II-3：自我探索的想法與感受。
+    code: Aa-II-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 準備情緒卡
+  - 大人也一起說
+  figures:
+  - feel-compare
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 II 是第二學習階段（國小三、四年級）。
+  - 總綱把國民小學三、四年級定為第二學習階段，所以本頁代碼中間都是 II。
+  sources:
+  - zonghe
+  - issues-handbook
+  - casel-framework
+  - zonggang
+how:
+  heading: 情緒卡：找到更準的詞
+  body:
+  - 先做情緒卡：大人和孩子一起在卡片上寫感覺的名字，像開心、生氣、失望、擔心、委屈、害羞、興奮、緊張，旁邊畫表情（本站建議）。玩法是大人說一個情境，孩子挑出最接近的卡；一張不夠就挑兩張，因為 CDC 說孩子「may have several emotions at the same time」，同時可能有好幾種感覺（翻譯是本站整理）。
+  - 再用一句話說出來：我覺得（感覺），因為（發生的事）（本站建議）。把不開心拆開想：是失望、委屈，還是生氣？越說越準確（本站建議）。大人可以先示範，CDC 說幫孩子說出感覺，「gives your child a word for the emotion」，讓孩子有詞可以用（翻譯是本站整理）。
+  - 睡前心情溫度計：每人說一個今天的感覺和原因，大人也說；聽的人不評論，也不說不要難過（本站建議）。CDC 提醒「Telling your child to stop feeling a particular way does not show your child you are trying to understand how they feel.」（翻譯是本站整理）。家長可以在一週裡記下孩子自己說出感覺和原因的次數（本站建議）。
+  qa:
+    question: 別人的感覺跟你不一樣時，怎麼辦？
+    answer: 先聽，不評論，也不叫他不要那樣覺得；CDC 說叫孩子停止某種感覺，「does not show your child you are trying to understand how they feel」（翻譯是本站整理）。可以問他：你覺得怎樣？因為什麼？每個人的感覺都可以說出來（本站建議）。
+    source: cdc-listen
+  items_title: 四步做
+  items:
+  - title: 做情緒卡
+    text: 寫名字、畫表情。
+  - title: 挑最接近的卡
+    text: 一張不夠就挑兩張。
+  - title: 說一句完整的
+    text: 我覺得……因為……
+  - title: 不評論別人
+    text: 每種感覺都可以說。
+  checklist_title: 說的時候檢查一下
+  checklist:
+  - 說出感覺名字
+  - 說出原因
+  - 沒有評論別人
+  activity_figure: feel-flow
+  sources:
+  - cdc-listen
+what:
+  heading: 我覺得……因為……
+  body:
+  - 學完後，孩子能分辨並說出多種感覺的名字，用我覺得……因為……說出自己的感覺和原因；聽別人說感覺時，先聽、不評論。
+  items_title: 學完能做到
+  items:
+  - title: 說出感覺名字
+    text: 開心、生氣以外的詞。
+  - title: 說出原因
+    text: 我覺得……因為……
+  - title: 尊重別人的感覺
+    text: 先聽，不評論。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出多種感覺
+  - 會說因為
+  - 不評論別人
+  notes:
+  - 本點融入家庭教育與生命教育議題：議題融入說明手冊國小的實質內涵有覺察個人情緒並適切表達，以及理解人是有情緒的個體。睡前輪流說感覺，就是在練習這兩件事。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: feel-flow
+  type: flow
+  alt: 情緒卡四步驟：大人說一個情境，孩子挑情緒卡、說我覺得因為，大家先聽、不評論。
+  steps:
+  - actor: 大人
+    text: 說一個情境
+  - actor: 孩子
+    text: 挑情緒卡
+  - actor: 孩子
+    text: 說我覺得因為
+  - actor: 大家
+    text: 先聽不評論
+  source: cdc-listen
+  caption: 流程是本站建議。
+- id: feel-compare
+  type: compare
+  alt: 比較說感覺的詞：不開心，說不清楚；失望，像比賽輸了；委屈，像被誤會了。
+  source: casel-framework
+  relation: not_equal
+  items:
+  - term: 不開心
+    note: 說不清楚
+  - term: 失望
+    note: 像比賽輸了
+  - term: 委屈
+    note: 像被誤會了
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：1a-II-1「展現自己能力、興趣與長處，並表達自己的想法和感受。」（p.13）；1d-II-1「覺察情緒的變化，培養正向思考的態度。」（p.14）；Aa-II-3「自我探索的想法與感受。」（p.13）；領域核心素養：綜-E-A1「認識個人特質，初探生涯發展，覺察生命變化歷程，激發潛能，促進身心健全發展。」（p.3）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：第二學習階段綜合活動「第二學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A1「具備良好的生活習慣，促進身心健全發展，並認識個人特質，發展生命潛能。」（p.4）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 家庭教育國小實質內涵 家E4「覺察個人情緒並適切表達，與家人及同儕適切互動。」（p.66）；生命教育國小實質內涵 生E3「理解人是會思考、有情緒、能進行自主決定的個體。」（p.79）
+- id: cdc-listen
+  title: Tips for Active Listening（Essentials for Parenting Toddlers and Preschoolers）
+  publisher: 美國疾病管制與預防中心（CDC），Parenting Toddlers
+  url: https://www.cdc.gov/parenting-toddlers/communication/active-listening.html
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「Children may have several emotions at the same time.」；「This gives your child a word for the emotion and helps them learn that it is ok to talk about feelings.」；「Telling your child to stop feeling a particular way does not show your child you are trying to understand how they feel.」
+- id: casel-framework
+  title: What Is SEL?（CASEL 5 核心能力說明）
+  publisher: CASEL（Collaborative for Academic, Social, and Emotional Learning）
+  url: https://casel.org/fundamentals-of-sel/what-is-the-casel-framework/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 自我覺察（Self-awareness）的例子「Linking feelings, values, and thoughts」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

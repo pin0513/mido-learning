@@ -1,8 +1,13 @@
+# B25 提案：sk.problem@es
+# - 補 grades（三、四年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：綜合活動 2c-II-1（處理個人日常生活問題）；議題家庭教育刪除（沒有對應的實質內涵）。
+# - 依據：美國醫療研究與品質局（AHRQ）的差距分析（現在在哪裡、想到哪裡、可量的目標）、美國聯邦醫療保險與補助服務中心（CMS）的根本原因分析指引（先寫問題、不寫辦法）。
+# - 綜合活動 2c-II-1 是新加進代碼表的代碼（見 taxonomy patch）；scenario、goal、review 的內層引號拿掉改寫。
 id: sk.problem@es
 concept: sk.problem
 title: 問題是什麼？現在和想要
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,17 +16,33 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 3
+  - 4
 curriculum_108:
   domains:
   - 綜合活動
   core_competencies:
   - A2
-  issues:
-  - 家庭教育
-to_verify: true
+  issues: []
+  performances:
+  - 2c-II-1
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（問題＝現況與目標的差距），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 A2：依總綱 p.4–6 國民小學教育的 E-A2 與綜合活動領綱 p.3 的綜-E-A2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 3、4：本點的代碼都是第二學習階段（2c-II-1），總綱 p.7 說國民小學三、四年級為第二學習階段。
+- est_time 依綜合活動領綱 p.2：第二學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 綜合活動 2c-II-1 原本不在代碼表，本批依綜合活動領綱 p.14 原文加入（taxonomy patch）。對應的學習內容 Bc-II-1～3 和國語文領綱的學習內容同號；代碼表目前沒有這幾個國語文代碼，為保留國語文將來擴充先避開，所以本點只放學習表現。
+- 原 issues 的家庭教育刪除：議題融入說明手冊國小家庭教育的實質內涵，沒有對應把問題說清楚的條目；家裡的小問題只是練習情境（本站建議）。
+- 原 scenario、goal、review 的現在……，我希望……句型保留，內層引號拿掉，改成現在和我希望兩句；review 補上現在那句是事實、還沒寫辦法。
+- 原 ai.delegable「幫忙把模糊的描述改得具體」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（問題＝現況與目標的差距）…」已處理：依 AHRQ 差距分析教材與 CMS 根本原因分析指引改寫，英文短句逐字引用，中文說明是本站整理。
+- AHRQ、CMS 的教材原本寫給醫療品質改善團隊；本點只借用把問題寫成現況與目標的差距、先寫問題不寫辦法的做法，用在國小三、四年級（本站建議）。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁或其存檔；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 英文 PDF 的引文避開彎引號；PDF 換行處照原詞接回，其餘空白照原文。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites: []
 links:
   why: []
@@ -30,7 +51,7 @@ links:
   - pm.goal@es
   - ph.question@es
   deeper: []
-link_notes: 框架：問題＝現況與目標的差距。
+link_notes: 框架：問題 ＝ 現況與目標的差距（差距分析）。專案管理（目標）、哲學（好問題）；綜合活動 2c-II-1。
 competency:
   specialist:
   - 問題解決
@@ -38,21 +59,169 @@ competency:
   - 提問
 ai:
   delegable:
-  - 幫忙把模糊的描述改得具體
+  - 幫忙把模糊的描述改得具體（由大人操作，本站建議）
   human_experience:
   - 說出自己真正在意的是什麼
-idea: 問題就是「現在的樣子」和「想要的樣子」之間的差距。把兩邊都說清楚，才知道要解決什麼，也才知道什麼時候算解決了。
+idea: 問題就是現在的樣子和想要的樣子之間的差距。把兩邊都說清楚，才知道要解決什麼，也才知道什麼時候算解決了。
 guiding_questions:
 - 「房間好亂」是問題，還是一種感覺？
-scenario: 親子共學：全家各寫一張「現在……，我希望……」便利貼貼在冰箱，一週後看哪幾張做到了。
-goal: 用「現在……，我希望……」把一個問題說清楚。
-review: 孩子挑家裡一個小問題，用「現在……，我希望……」寫在便利貼上；家長檢查「希望」是看得到、能確認的（例如「書都在書架上」，不是「變整齊」）。
+- 怎樣的希望才算說清楚？
+- 為什麼先不要急著說要怎麼做？
+scenario: 親子共學：全家各寫一張便利貼，寫下現在怎樣、我希望怎樣，貼在冰箱，一週後看哪幾張做到了（本站建議）。
+goal: 用兩句話把一個生活小問題說清楚：「現在……」說看得到的事實，「我希望……」說做到時看得到、能確認的樣子。
+review: 孩子挑家裡一個小問題，寫成「現在……」和「我希望……」兩句貼在便利貼上；家長檢查現在那句是看得到的事實，希望那句看得到、能確認（例如書都在書架上，不是變整齊），而且還沒有寫要怎麼做。
 formats:
   slides: []
-  exercise: 目標：用「現在……，我希望……」把一個問題說清楚。　檢核：孩子挑家裡一個小問題，用「現在……，我希望……」寫在便利貼上；家長檢查「希望」是看得到、能確認的（例如「書都在書架上」，不是「變整齊」）。
+  exercise: 目標：用兩句話把一個生活小問題說清楚：「現在……」說看得到的事實，「我希望……」說做到時看得到、能確認的樣子。　檢核：孩子挑家裡一個小問題，寫成「現在……」和「我希望……」兩句貼在便利貼上；家長檢查現在那句是看得到的事實，希望那句看得到、能確認（例如書都在書架上，不是變整齊），而且還沒有寫要怎麼做。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國小三、四年級綜合活動課
+  source: zonghe
+why:
+  heading: 說清楚問題，才知道往哪走
+  body:
+  - 綜合活動課綱要三、四年級「蒐集與整理各類資源，處理個人日常生活問題。」要處理問題，先要知道問題是什麼（本站整理）。
+  - 美國醫療研究與品質局（AHRQ）的品質改善教材說，差距分析是找出「the difference between your current performance, or where you are now, and the ideal state, or where you want to be」，也就是現在在哪裡、想到哪裡（翻譯是本站整理）。把它說成兩句，就是現在怎樣、我希望怎樣（本站整理）。
+  qa:
+    question: 「房間好亂」是問題，還是一種感覺？
+    answer: 比較像感覺。好亂沒有說清楚現在是什麼樣子，也沒有說想要什麼樣子（本站整理）。美國聯邦醫療保險與補助服務中心（CMS）的教材提醒，寫問題要客觀說出「what went wrong」（翻譯是本站整理）。可以改成：現在書和衣服堆在床上，我希望書都在書架上（例子是本站整理）。
+    source: cms-rca
+  items_title: 課綱的學習重點
+  items:
+  - title: 處理生活問題
+    text: 綜合活動 2c-II-1：蒐集與整理各類資源，處理個人日常生活問題。
+    code: 2c-II-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 準備便利貼
+  - 想好一個小問題
+  figures:
+  - problem-compare
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 II 是第二學習階段（國小三、四年級）。
+  - 總綱把國民小學三、四年級定為第二學習階段，所以本頁代碼中間都是 II。
+  sources:
+  - zonghe
+  - ahrq-gap
+  - cms-rca
+  - zonggang
+how:
+  heading: 兩句話：現在和我希望
+  body:
+  - 先寫現在：寫下看得到的事實，例如書和衣服堆在床上；不寫好亂、好煩這種感覺的詞（本站建議）。CMS 的教材說，寫問題要「objectively state what went wrong, not why, or how」，所以先不寫原因，也先不寫要怎麼做（翻譯是本站整理）。
+  - 再寫我希望：寫一個看得到、能確認的樣子，例如書都在書架上，而不是變整齊（本站建議）。AHRQ 建議找出「a measurable goal」，也就是做到沒有，能量得出來、看得出來的目標（翻譯是本站整理）。
+  - 最後檢查兩句：問自己，別人看了這兩句，能不能知道現在怎樣、做到時是什麼樣子（本站建議）。CMS 也提醒「Be sure to start with a problem and not the solution.」，所以像要買收納盒這類辦法先不寫（翻譯是本站整理）。貼在冰箱，一週後一起看希望那句做到了沒有（本站建議）。
+  qa:
+    question: 怎樣的希望才算說清楚？
+    answer: 看得到、能確認：別人來看，也能說出做到了沒有（本站整理）。AHRQ 建議找出「a measurable goal」（翻譯是本站整理）。像書都在書架上，一看就知道；變整齊每個人想的不一樣（例子是本站整理）。
+    source: ahrq-gap
+  items_title: 四步做
+  items:
+  - title: 寫現在
+    text: 看得到的事實。
+  - title: 寫我希望
+    text: 看得到、能確認。
+  - title: 先不寫辦法
+    text: 先說問題，再想辦法。
+  - title: 貼起來看
+    text: 一週後看做到沒有。
+  checklist_title: 寫完檢查一下
+  checklist:
+  - 現在是事實
+  - 希望能確認
+  - 還沒寫辦法
+  activity_figure: problem-flow
+  sources:
+  - cms-rca
+  - ahrq-gap
+what:
+  heading: 把問題說成兩句話
+  body:
+  - 學完後，孩子能用現在和我希望兩句話，把一個生活小問題說清楚：現在那句是看得到的事實，希望那句是做到時看得到、能確認的樣子，而且先不急著寫辦法。
+  items_title: 學完能做到
+  items:
+  - title: 說出現在
+    text: 看得到的事實。
+  - title: 說出希望
+    text: 做到時能確認。
+  - title: 分開問題和辦法
+    text: 先說問題，再想辦法。
+  checklist_title: 家長檢核
+  checklist:
+  - 現在是事實
+  - 希望能確認
+  - 還沒寫辦法
+  notes:
+  - 問題說清楚之後，下一步可以學問五次為什麼，找出問題的原因（本站建議）。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: problem-flow
+  type: flow
+  alt: 兩句話四步驟：孩子寫現在、寫我希望，大人檢查兩句，全家一週後一起看。
+  steps:
+  - actor: 孩子
+    text: 寫現在
+  - actor: 孩子
+    text: 寫我希望
+  - actor: 大人
+    text: 檢查兩句
+  - actor: 全家
+    text: 一週後一起看
+  source: ahrq-gap
+  caption: 流程是本站建議。
+- id: problem-compare
+  type: compare
+  alt: 比較三種寫法：好亂，是感覺，說不清楚；書堆在床上，是現在，看得到；書都在書架上，是希望，能確認。
+  source: ahrq-gap
+  relation: not_equal
+  items:
+  - term: 好亂
+    note: 感覺，說不清楚
+  - term: 書堆在床上
+    note: 現在，看得到
+  - term: 書都在書架上
+    note: 希望，能確認
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：2c-II-1「蒐集與整理各類資源，處理個人日常生活問題。」（p.14）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；時間分配：第二學習階段綜合活動「第二學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: ahrq-gap
+  title: 'Action Plan for Translating Research Into Practice: Gap Analysis and Tests of Change: Facilitator Guide'
+  publisher: 美國衛生及公共服務部 醫療研究與品質局（AHRQ），Content last reviewed February 2017
+  url: https://www.ahrq.gov/hai/tools/mvp/modules/cusp/action-plan-trip-fac-guide.html
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「gap analysis is defining the difference between your current performance, or where you are now, and the ideal state, or where you want to be.」；「Identify a measurable goal of your proposed change.」
+- id: cms-rca
+  title: Guidance for Performing Root Cause Analysis (RCA) with Performance Improvement Projects (PIPs)
+  publisher: 美國聯邦醫療保險與補助服務中心（CMS），QAPI 品質改善工具
+  url: https://www.cms.gov/medicare/provider-enrollment-and-certification/qapi/downloads/guidanceforrca.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「The problem statement should objectively state what went wrong, not why, or how.」；「Be sure to start with a problem and not the solution.」（p.2）
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

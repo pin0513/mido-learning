@@ -312,7 +312,7 @@ test("先學的點都排在依賴它的點上面", () => {
   assert.ok(junior.indexOf("坐標與直線") < junior.indexOf("二次函數與拋物線"));
 });
 
-test("溝通與解決問題預設不進學門切換，打開後只有口語表達", () => {
+test("溝通與解決問題預設不進學門切換，打開後口語表達全線、同理與解題只有國小點", () => {
   const closed = buildHomeDiagram(loadCatalog());
   assert.equal(closed.disciplines.some((item) => item.id === "soft-skills" || item.id === "language"), false);
   assert.equal(closed.branches.length, 0);
@@ -329,8 +329,8 @@ test("溝通與解決問題預設不進學門切換，打開後只有口語表�
   assert.equal(open.disciplines.find((item) => item.id === "language")?.title, "語文");
   assert.deepEqual(open.branches.map((item) => [item.id, item.ready]), [
     ["talk", true],
-    ["emp", false],
-    ["solve", false],
+    ["emp", true],
+    ["solve", true],
   ]);
   const talk = open.diagrams.find((item) => item.branchId === "talk");
   assert.ok(talk);
@@ -345,17 +345,26 @@ test("溝通與解決問題預設不進學門切換，打開後只有口語表�
   assert.ok(point);
   assert.equal(point.priors.some((prior) => prior.label.includes("說出理由") && prior.href), true);
   assert.equal(point.priors.some((prior) => prior.href == null && prior.label.startsWith("準備中")), false);
+  // B25 發布 sk.listen@es 後，sk.discuss@jh 的先學變成可點的連結；仍是草稿的先學（sk.mediate@uni）照舊只寫「準備中」。
   const discuss = talk.nodes.find((node) => node.id === "sk.discuss@jh");
   assert.ok(discuss);
-  assert.ok(discuss.priors.some((prior) => prior.href == null && prior.label.includes("準備中")));
-  assert.equal(JSON.stringify(discuss.priors).includes("專心聽，再說回來"), false);
+  assert.ok(discuss.priors.some((prior) => prior.label.startsWith("專心聽，再說回來") && prior.href?.includes("kp=sk.listen%40es")));
+  assert.equal(discuss.priors.some((prior) => prior.label.includes("準備中")), false);
+  const facilitate = talk.nodes.find((node) => node.id === "sk.facilitate@uni");
+  assert.ok(facilitate);
+  assert.ok(facilitate.priors.some((prior) => prior.href == null && prior.label.includes("準備中")));
+  // B25：同理與解題各發布 3 個國小點；國中以上仍是草稿，不進圖。
   const emp = open.diagrams.find((item) => item.branchId === "emp");
   const solve = open.diagrams.find((item) => item.branchId === "solve");
-  assert.equal(emp?.nodes.length, 0);
-  assert.equal(solve?.nodes.length, 0);
+  assert.deepEqual(emp?.nodes.map((node) => node.id), ["sk.feelings@es", "sk.listen@es", "sk.otherside@es"]);
+  assert.deepEqual(solve?.nodes.map((node) => node.id), ["sk.problem@es", "sk.why5@es", "sk.polya@es"]);
+  assert.equal([...(emp?.nodes ?? []), ...(solve?.nodes ?? [])].every((node) => node.pageHref?.startsWith("/kp/sk.")), true);
   const openBlob = JSON.stringify(open);
-  assert.equal(openBlob.includes("說出感覺：我覺得……因為……"), false);
-  assert.equal(openBlob.includes("問五次為什麼"), false);
+  assert.equal(openBlob.includes("說出感覺：我覺得……因為……"), true);
+  assert.equal(openBlob.includes("問五次為什麼"), true);
+  // 仍是草稿的標題不露出（同一條線的國中點）。
+  assert.equal(openBlob.includes("非暴力溝通：觀察、感受、需要、請求"), false);
+  assert.equal(openBlob.includes("魚骨圖：把原因分類找"), false);
   assert.equal(open.branches.find((item) => item.id === "talk")?.task?.title, "從開口到說服");
   assert.equal(open.disciplines.find((item) => item.id === "language")?.ready, false);
   assert.equal(open.branches.some((item) => item.disciplineId === "language"), false);

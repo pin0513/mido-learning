@@ -53,7 +53,7 @@ ai:
 idea: AI 擅長產出與整理，人仍要負責定義問題、判斷價值與承擔後果；理解不等於能產出答案。
 guiding_questions:
 - 如果答案都能問 AI，你還需要真正理解嗎？
-- 太相信 AI 時，為什麼容易少想一步？
+- 太相信 AI 時，可能會少做哪一步？
 - 交給 AI 的部分出錯，誰負責？
 scenario: 設計自己的 AI 輸出審查清單，用在一份期末報告上，記錄哪些部分交給 AI、哪些自己判斷（本站建議）。
 formats:
@@ -70,13 +70,13 @@ why:
   - Lee 等人 2025 年調查 319 位知識工作者，發現「higher confidence in GenAI is associated with less critical thinking, while higher self-confidence is associated with more critical thinking.」這是自陳問卷的相關結果，不是因果（說明是本站整理）。NIST 的生成式 AI 風險框架也提醒「automation bias, or excessive deference to automated systems」，太相信機器會少想一步（說明是本站整理）。
   - AI 讓思考的重點移動：論文說生成式 AI 讓批判思考轉向「information verification, response integration, and task stewardship」（說明是本站整理）。高中資訊科技學過「資料探勘與機器學習的基本概念」，也要「能使用多元的觀點思辨資訊科技相關議題」；大學要能自己分配人和 AI 的工作，並為結果負責（本站整理）。
   qa:
-    question: 太相信 AI 時，為什麼容易少想一步？
-    answer: 太相信機器時，人會不再檢查。NIST 把這叫作「automation bias, or excessive deference to automated systems」；Lee 等人的自陳問卷也發現，越相信 AI 的人，自評的批判思考越少（這是相關，不是因果；說明是本站整理）。
+    question: 太相信 AI 時，可能會少做哪一步？
+    answer: 太相信機器時，人容易少檢查。NIST 把這叫作「automation bias, or excessive deference to automated systems」；Lee 等人的自陳問卷也發現，越相信 AI 的人，自評的批判思考越少（這是相關，不是因果；說明是本站整理）。
     source: nist-genai
   items_title: 這一點用到的
   items:
   - title: 自動化偏誤
-    text: 太相信機器，不再檢查。
+    text: 太相信機器，容易少檢查。
   - title: 查證
     text: 對照出處，確認是真的。
   - title: 整合

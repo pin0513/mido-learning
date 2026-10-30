@@ -84,7 +84,8 @@ test.describe("語文", () => {
       await page.goto("/?d=language&b=xyz", { waitUntil: "networkidle" });
       await expect(page.getByTestId("branch-switch").locator("[aria-pressed='true']")).toContainText("基礎");
       await page.goto("/?d=soft-skills&b=talk", { waitUntil: "networkidle" });
-      await expect(page.getByTestId("branch-switch").locator("a")).toHaveCount(1);
+      // B25 發布同理、解題的國小點後，三條線（口語、同理、解題）都能點。
+      await expect(page.getByTestId("branch-switch").locator("a")).toHaveCount(3);
       await expect(page.getByRole("heading", { name: "溝通與解決問題的學段總圖" })).toBeVisible();
       expect(errors, errors.join("\n")).toEqual([]);
     });

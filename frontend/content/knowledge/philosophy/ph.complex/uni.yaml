@@ -105,7 +105,7 @@ how:
     question: 所有模型都是錯的，那為什麼還要用模型？
     answer: 因為簡化才讓人看懂機制。Epstein 說好的模型「are fruitfully wrong. They are illuminating abstractions.」它能解釋，不一定能準確預測（說明是本站整理）。
     source: epstein-why-model
-  items_title: 四步做
+  items_title: 本站建議的步驟
   items:
   - title: 寫下個體規則
     text: 每個個體怎麼行動。

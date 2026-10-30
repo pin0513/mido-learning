@@ -1,8 +1,13 @@
+# B25 提案：sk.otherside@es
+# - 補 grades（五、六年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：國語文 2-III-7（尊重不同意見）、綜合活動 Ba-III-2（同理心的增進與實踐）；議題品德教育 品E6。
+# - 依據：CASEL 的社會覺察（理解別人的觀點、同理別人）。
+# - domains 加上語文（2-III-7）；scenario 的引號拿掉。
 id: sk.otherside@es
 concept: sk.otherside
 title: 換個位置想
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,18 +16,38 @@ discipline:
   crosscutting: []
 stage:
   level: es
+  grades:
+  - 5
+  - 6
 curriculum_108:
   domains:
   - 綜合活動
+  - 語文
   core_competencies:
   - C2
   - C1
   issues:
   - 品德教育
-to_verify: true
+  performances:
+  - 2-III-7
+  contents:
+  - Ba-III-2
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（觀點取替），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 C2、C1：依總綱 p.4–6 國民小學教育的 E-C2、E-C1 與國語文領綱 p.5 的國-E-C1、綜合活動領綱 p.4–5 的綜-E-C1、綜-E-C2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 5、6：本點的代碼都是第三學習階段（2-III-7、Ba-III-2），總綱 p.7 說國民小學五、六年級為第三學習階段。
+- est_time 依綜合活動領綱 p.2：第三學習階段綜合活動每週 2 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱、總綱比 PDF 頁少 4，國語文領綱少 2，議題融入說明手冊少 16；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 原 domains 只有綜合活動，加上語文：換位子後說自己同不同意、尊重不同的想法，對應國語文 2-III-7。
+- 議題品德教育：品德教育國小實質內涵 品E6「同理分享。」（p.75）。
+- 原 scenario 在暫停時問的那句話用了引號，本版拿掉引號改寫，壞人改成另一邊的角色（不先替角色貼標籤，本站建議）。
+- 原 review 的看到、想到、感覺保留，補上從角色的角度說、分開懂和同意。
+- 原 ai.delegable「提供不同角色的觀點當參考」補上由大人操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（觀點取替）…」已處理：依 CASEL 的社會覺察說明改寫，英文短句逐字引用，中文說明是本站整理；看到、想到、感覺三句沿用原稿 review，是本站整理。
+- CASEL 是美國推動社會情緒學習的非營利組織；引文取自其網站的 CASEL 5 核心能力說明。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁或其存檔；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites:
 - sk.feelings@es
 - sk.listen@es
@@ -33,7 +58,7 @@ links:
   - ph.fair@es
   deeper:
   - sk.empmap@jh
-link_notes: 框架：觀點取替。
+link_notes: 框架：觀點取替（perspective taking）。哲學（怎樣才公平）；國語文 2-III-7；綜合活動 Ba-III-2。
 competency:
   specialist:
   - 同理溝通
@@ -41,21 +66,182 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 提供不同角色的觀點當參考
+  - 提供不同角色的觀點當參考（由大人操作，本站建議）
   human_experience:
   - 真心想像別人的處境
-idea: 同一件事，站的位置不同，看到的就不同。想像自己是對方：他看到什麼？他在擔心什麼？這不代表要同意他，而是先懂他。
+idea: 同一件事，站的位置不同，看到的就不同。想像自己是對方：他看到什麼？他想到什麼？他覺得怎樣？懂了他，不代表要同意他，而是先試著懂他。
 guiding_questions:
 - 你覺得好玩的玩笑，被開玩笑的人也覺得好玩嗎？
-scenario: 親子共學：看卡通或繪本時暫停，問：「如果你是壞人那一邊，你會怎麼想？」大人也回答一次。
-goal: 說出故事裡另一個角色看到什麼、想什麼、覺得怎麼樣。
-review: 讀完一本繪本，孩子挑一個跟自己想法不同的角色，說出他的「看到、想到、感覺」三句；家長確認三句都是那個角色的角度。
+- 換到對方的位置時，要想哪三件事？
+- 懂了對方的想法，就一定要同意他嗎？
+scenario: 親子共學：看卡通或繪本時暫停，問如果你是另一邊的角色，你會怎麼想；大人也回答一次（本站建議）。
+goal: 說出故事或生活裡另一個人看到什麼、想到什麼、感覺怎樣，並分清楚懂他和同意他不一樣。
+review: 讀完一本繪本，孩子挑一個跟自己想法不同的角色，說出他看到什麼、想到什麼、感覺怎樣三句；家長確認三句都是從那個角色的角度說，再請孩子說自己同不同意這個角色、為什麼。
 formats:
   slides: []
-  exercise: 目標：說出故事裡另一個角色看到什麼、想什麼、覺得怎麼樣。　檢核：讀完一本繪本，孩子挑一個跟自己想法不同的角色，說出他的「看到、想到、感覺」三句；家長確認三句都是那個角色的角度。
+  exercise: 目標：說出故事或生活裡另一個人看到什麼、想到什麼、感覺怎樣，並分清楚懂他和同意他不一樣。　檢核：讀完一本繪本，孩子挑一個跟自己想法不同的角色，說出他看到什麼、想到什麼、感覺怎樣三句；家長確認三句都是從那個角色的角度說，再請孩子說自己同不同意這個角色、為什麼。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 先懂對方，再說自己
+  body:
+  - 綜合活動課綱要五、六年級練習「同理心的增進與實踐。」國語課綱也要孩子「與他人溝通時能尊重不同意見。」品德教育議題的國小實質內涵，則有「同理分享。」
+  - CASEL（美國推動社會情緒學習的組織）把社會覺察列為核心能力，說明是「The abilities to understand the perspectives of and empathize with others, including those from diverse backgrounds, cultures, and contexts.」，也就是理解別人的觀點、感受別人的處境，包括和自己背景不同的人（翻譯是本站整理）。
+  qa:
+    question: 你覺得好玩的玩笑，被開玩笑的人也覺得好玩嗎？
+    answer: 不一定。開玩笑的人站在旁邊看，被開玩笑的人站在中間被大家看（本站整理）。換到他的位置想，他可能覺得丟臉或難過；CASEL 說的社會覺察也包括「Showing concern for the feelings of others」，關心別人的感受（翻譯是本站整理）。
+    source: casel-framework
+  items_title: 課綱的學習重點
+  items:
+  - title: 尊重不同意見
+    text: 國語文 2-III-7：與他人溝通時能尊重不同意見。
+    code: 2-III-7
+  - title: 增進同理心
+    text: 綜合活動 Ba-III-2：同理心的增進與實踐。
+    code: Ba-III-2
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好一本繪本
+  - 想好暫停的地方
+  figures:
+  - other-compare
+  notes:
+  - 國語文的代碼：第一碼是類別（1 聆聽、2 口語表達、5 閱讀），第二碼是學習階段，第三碼是流水號。
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - kuoyu
+  - issues-handbook
+  - casel-framework
+  - zonggang
+how:
+  heading: 換位子：看到、想到、感覺
+  body:
+  - 先選角色：讀繪本或看卡通時，在角色吵架或做決定的地方暫停，挑一個跟自己想法不同的角色（本站建議）。
+  - 再換位子說三句：他看到什麼（他知道哪些事）、他想到什麼（他在擔心或希望什麼）、他感覺怎樣（本站整理）。說的時候主角是他，像他看到……、他覺得……；如果句子變成我覺得他很壞，就是又回到自己的位置了（本站建議）。綜合活動課綱說的「同理心的增進與實踐」，就是練習這樣想。
+  - 最後分開懂和同意：說完三句，再說自己同不同意他、為什麼（本站建議）。懂他不等於同意他；國語課綱要「與他人溝通時能尊重不同意見。」大人也換位子說一次，比比看同一個角色，兩個人是不是想得不一樣（本站建議）。
+  qa:
+    question: 換到對方的位置時，要想哪三件事？
+    answer: 看到、想到、感覺：他看到什麼、想到什麼、覺得怎樣（本站整理）。三句的主角都是他，不是我；綜合活動課綱要五、六年級練習的，就是「同理心的增進與實踐。」
+    source: zonghe
+  items_title: 四步做
+  items:
+  - title: 暫停選角色
+    text: 挑一個想法不同的。
+  - title: 說他看到的
+    text: 他知道哪些事？
+  - title: 說他想的和感覺
+    text: 主角是他，不是我。
+  - title: 再說自己的看法
+    text: 懂他不等於同意他。
+  checklist_title: 說的時候檢查一下
+  checklist:
+  - 三句都說了
+  - 主角是他
+  - 分開懂和同意
+  activity_figure: other-flow
+  sources:
+  - zonghe
+  - kuoyu
+what:
+  heading: 換個位置，看見不同
+  body:
+  - 學完後，孩子能站到另一個人的位置，說出他看到什麼、想到什麼、感覺怎樣，也分得清楚懂他和同意他是兩回事。
+  items_title: 學完能做到
+  items:
+  - title: 說出三句
+    text: 看到、想到、感覺。
+  - title: 用他的角度說
+    text: 主角是他，不是我。
+  - title: 分開懂和同意
+    text: 再說自己的看法。
+  checklist_title: 家長檢核
+  checklist:
+  - 說得出三句
+  - 三句都是他的角度
+  - 說得出同不同意
+  notes:
+  - 本點融入品德教育議題：議題融入說明手冊國小的實質內涵有同理分享。換位子想、說出別人的感受，就是在練習同理。
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - issues-handbook
+  - genai-student
+figures:
+- id: other-flow
+  type: flow
+  alt: 換位子五步驟：大人暫停故事，孩子選一個角色、說看到想到感覺、說自己的看法，大人也換位子說一次。
+  steps:
+  - actor: 大人
+    text: 暫停故事
+  - actor: 孩子
+    text: 選一個角色
+  - actor: 孩子
+    text: 說看到想到感覺
+  - actor: 孩子
+    text: 說自己的看法
+  - actor: 大人
+    text: 也換位子說
+  source: casel-framework
+  caption: 流程是本站建議。
+- id: other-compare
+  type: compare
+  alt: 比較同一個玩笑的兩個位置：開玩笑的人覺得好玩；被開玩笑的人可能覺得丟臉。
+  source: casel-framework
+  relation: versus
+  items:
+  - term: 開玩笑的人
+    note: 覺得好玩
+  - term: 被開玩笑的人
+    note: 可能覺得丟臉
+  caption: 例子是本站整理。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：2-III-7「與他人溝通時能尊重不同意見。」（p.7）；領域核心素養：國-E-C1「閱讀各類文本，從中培養是非判斷的能力，以了解自己與所處社會的關係，培養同理心與責任感，關懷自然生態與增進公民意識。」（p.5）；代碼說明：「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：Ba-III-2「同理心的增進與實踐。」（p.14）；領域核心素養：綜-E-C1「關懷生態環境與周遭人事物，體驗服務歷程與樂趣，理解並遵守道德規範，培養公民意識。」（p.4）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：第三學習階段綜合活動「第三學習階段實施領域教學，每週 2 節課。」（p.2）；代碼說明：「『1a-II-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 II 是第二學習階段；第三碼 1 是流水號。」（p.7）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-C1「具備個人生活道德的知識與是非判斷的能力，理解並遵守社會道德規範，培養公民意識，關懷生態環境。」（p.6）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: issues-handbook
+  title: 十二年國民基本教育課程綱要 議題融入說明手冊（定稿版）
+  publisher: 國家教育研究院（中華民國一○九年十月）
+  url: https://www.naer.edu.tw/upload/1/16/doc/2062/%E8%AD%B0%E9%A1%8C%E8%9E%8D%E5%85%A5%E8%AA%AA%E6%98%8E%E6%89%8B%E5%86%8A(%E5%AE%9A%E7%A8%BF%E7%89%88).pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 品德教育國小實質內涵 品E6「同理分享。」（p.75）
+- id: casel-framework
+  title: What Is SEL?（CASEL 5 核心能力說明）
+  publisher: CASEL（Collaborative for Academic, Social, and Emotional Learning）
+  url: https://casel.org/fundamentals-of-sel/what-is-the-casel-framework/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 社會覺察（Social awareness）「The abilities to understand the perspectives of and empathize with others, including those from diverse backgrounds, cultures, and contexts.」；例子「Demonstrating empathy and compassion」、「Showing concern for the feelings of others」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

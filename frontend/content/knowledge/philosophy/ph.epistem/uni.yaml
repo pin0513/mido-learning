@@ -103,7 +103,7 @@ how:
     question: 一個很準的檢驗呈陽性，為什麼還要看這種事本來有多常見？
     answer: 因為先前機率會大大影響結果：情況本來很少見時，陽性也可能多半是誤判。教科書說忽略先前機率、只看條件機率，是有名的「base-rate fallacy」（說明是本站整理）。
     source: rebus-epist-prob
-  items_title: 四步做
+  items_title: 本站建議的步驟
   items:
   - title: 寫下信心和理由
     text: 先記下現在多相信。
