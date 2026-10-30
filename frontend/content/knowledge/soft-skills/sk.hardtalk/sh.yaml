@@ -197,12 +197,12 @@ figures:
   caption: 流程是本站建議。
 - id: hardtalk-compare
   type: compare
-  alt: 比較事實和評價：事實是看得到、聽得到的事，例如這週練球遲到兩次；評價是自己的看法，例如他根本不在乎。
+  alt: 比較事實和評價：事實是看得到、聽得到的事，例如這週練球遲到兩次（例子是示意）；評價是自己的看法，例如他根本不在乎。
   source: uc-nvc
   relation: versus
   items:
   - term: 事實
-    note: 看得到、聽得到的事，例如這週練球遲到兩次
+    note: 看得到、聽得到的事，例如這週練球遲到兩次（例子是示意）
   - term: 評價
     note: 自己的看法，例如他根本不在乎
   caption: 例子是本站整理。

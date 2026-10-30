@@ -40,7 +40,7 @@ verify_notes:
 - 原 core_competencies 是 C2、A2：訪談重在從對方的角度聽懂他，改成 C2、B1，依總綱 U-B1 的能以同理心與他人溝通並解決問題與國S-U-B1 的學會從他人的角度思考問題。
 - 原 idea、guiding question、scenario 裡的問句拿掉引號（那是本站整理的問句，不是引文）；另加兩題，答案寫在 Why 的問答、How 內文與 How 的問答。
 - 原 goal 的 20 分鐘、原 review 的至少一半、至少 3 次、少於三分之一標成示意，做法都寫在 How；review 補上錄音前先徵得對方同意（本站建議），一個「沒想到」的發現拿掉引號。
-- 原 ai.delegable「把錄音轉成逐字稿、初步分類」改成把自己打好、刪去姓名的逐字稿初步分類：錄音是受訪者的聲音，屬於個人資料，依教育部注意事項不輸入他人的個人資料，所以不交給 AI（本站建議）。
+- 原 ai.delegable「把錄音轉成逐字稿、初步分類」改成把自己打好、刪去姓名的逐字稿初步分類：錄音是受訪者的聲音，屬於個人資料，依教育部注意事項不輸入他人的個人資料，所以不交給 AI（本站建議）；逐字稿交給 AI 前也先問過受訪者同意，對方不同意錄音就改成手寫重點（本站建議）。
 - 原 link_notes 的跨學門先學拿掉引號，改寫成哲學的好問題從為什麼開始（ph.question@es）。
 - 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
 - 原有草稿說明「引用的框架只寫名稱（設計思考：同理階段、開放式問題）…」已處理：依史丹佛大學設計學院（d.school）Design Thinking Bootleg（2018，CC BY-NC-SA 4.0）的 Interview for Empathy 與訪談準備卡改寫，英文短句逐字引用，中文說明是本站整理。
@@ -65,7 +65,7 @@ competency:
   - 溝通
 ai:
   delegable:
-  - 把自己打好、已刪去姓名等個人資料的逐字稿初步分類（不上傳錄音，本站建議）
+  - 把自己打好、已刪去姓名等個人資料的逐字稿初步分類（先問過受訪者同意，不上傳錄音，本站建議）
   human_experience:
   - 面對面聽，察覺對方沒說出口的事
 idea: 設計思考的第一步是同理：去問、去看真正會用的人。問像是上次……的時候發生什麼事這樣的開放式問題，再追問為什麼；不推銷自己的點子，多聽少說。
@@ -123,9 +123,9 @@ why:
 how:
   heading: 問開放題，多追問、多聽
   body:
-  - 準備：先寫下想問的題目，再分成幾個主題、排好順序；d.school 說「Write down as many potential questions as your team can generate.」，接著「Identify and order themes.」（翻譯是本站整理）。題目多用開放式問題：是非題只能回答是或不是，例如你喜歡上學嗎；開放式問題要對方說經過，例如上次下雨天你怎麼去上學（例子是本站整理）。約好時間，先問對方能不能錄音，同意了才錄（本站建議）。
+  - 準備：先寫下想問的題目，再分成幾個主題、排好順序；d.school 說「Write down as many potential questions as your team can generate.」，接著「Identify and order themes.」（翻譯是本站整理）。題目多用開放式問題：是非題只能回答是或不是，例如你喜歡上學嗎；開放式問題要對方說經過，例如上次下雨天你怎麼去上學（例子是本站整理）。約好時間，先問對方能不能錄音，同意了才錄；對方不想被錄音，就改成手寫重點，訪談完馬上補寫成逐字稿（本站建議）。
   - 訪談時：問具體的某一次，「Instead, ask about a specific occurrence.」；請對方說故事，「Encourage stories.」；聽到重點就追問為什麼，d.school 說「Ask why.」，而且「Even when you think you know the answer.」（翻譯是本站整理）。例如一次訪談追問 3 次以上（數字是示意）。不推銷自己的點子，問題要中立，「Ask questions neutrally」（翻譯是本站整理）。
-  - 多聽少說：自己說話的時間最好少於三分之一（比例是本站建議）；對方停下來時先等一下，d.school 說「When you allow for silence, you give users time to reflect on their answers」（翻譯是本站整理）。也留意說和做不一樣的地方，「What users say and do can be different.」，以及「Pay attention to nonverbal cues.」，例如表情和動作（翻譯是本站整理）。訪談完整理逐字稿，數一數開放式問題有沒有佔一半（比例是示意），再寫下一個沒想到的發現（本站建議）。
+  - 多聽少說：自己說話的時間最好少於三分之一（比例是示意）；對方停下來時先等一下，d.school 說「When you allow for silence, you give users time to reflect on their answers」（翻譯是本站整理）。也留意說和做不一樣的地方，「What users say and do can be different.」，以及「Pay attention to nonverbal cues.」，例如表情和動作（翻譯是本站整理）。訪談完整理逐字稿，數一數開放式問題有沒有佔一半（比例是示意），再寫下一個沒想到的發現（本站建議）。
   qa:
     question: 開放式問題和是非題差在哪裡？
     answer: 是非題只能得到是或不是；開放式問題讓對方說出經過和原因，才聽得到你沒想到的事（本站整理）。d.school 說開放式問題「allow for stories and stories lead to insights for design solutions.」（翻譯是本站整理）。

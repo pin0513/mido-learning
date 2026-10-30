@@ -312,7 +312,7 @@ test("先學的點都排在依賴它的點上面", () => {
   assert.ok(junior.indexOf("坐標與直線") < junior.indexOf("二次函數與拋物線"));
 });
 
-test("溝通與解決問題預設不進學門切換，打開後口語表達全線、同理與解題只有國小點", () => {
+test("溝通與解決問題預設不進學門切換，打開後口語表達全線、同理與解題發布國小到高中點", () => {
   const closed = buildHomeDiagram(loadCatalog());
   assert.equal(closed.disciplines.some((item) => item.id === "soft-skills" || item.id === "language"), false);
   assert.equal(closed.branches.length, 0);

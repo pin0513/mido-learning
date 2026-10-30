@@ -96,7 +96,8 @@ test.describe("溝通與解決問題", () => {
       if (width === 1280) expect(rows.length).toBe(1);
       else expect(rows.length).toBe(2);
 
-      // B27 起三條線上的先學全部已發布，首頁沒有「準備中」的先學；「準備中」不能點改由 home-diagram.test.ts 的合成測試守住。
+      // B27 起三條線上的先學全部已發布，首頁沒有「準備中」的先學；「準備中」不能點改由 home-diagram.test.ts 的合成測試守住（只查資料層的 href）。
+      // 所以下面的迴圈目前跑 0 次。瀏覽器層「prior-pending 不在 <a> 裡」的檢查要等再有草稿先學、或改用合成內容的 build 時補回（列在 B27 PR 的後續）。
       const pending = page.getByTestId("prior-pending");
       expect(await pending.count()).toBe(0);
       for (const tag of await pending.all()) {
