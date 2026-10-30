@@ -11,10 +11,10 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
 - 大學不對應 108 課綱，以學門路徑對應。
-- 無法驗證：「收斂不了時，先決定下一步（補資料或組小組研議）」沒有找到可引用的出處，目前標為本站建議。
+- 已補出處：內政部《會議規範》第四十條「延期討論動議 議案進行中，得提出延期討論動議，如得可決，議案應俟指定時間重行處理。」、第六十二條「議案全部或其一部，得經大會決議，交付委員會處理之。」（2026-10-30 讀取）。本點把「收斂不了時先決定下一步」寫成延到約定時間再談、或交給小組研議，對應這兩種做法；「先補資料」是本站建議的例子。
 prerequisites:
 - sk.consensus@sh
 - sk.hardtalk@sh
@@ -25,7 +25,7 @@ links:
   related:
   - pm.org@uni
   deeper: []
-link_notes: 框架：會議引導（國際引導者協會 IAF 倫理守則：對過程負責、對內容中立）、利益與立場（《Getting to Yes》原則式談判）。
+link_notes: 框架：會議引導（國際引導者協會 IAF 倫理守則：對過程負責、對內容中立）、利益與立場（《Getting to Yes》原則式談判）、議事程序（內政部《會議規範》延期討論、付委）。
 competency:
   specialist:
   - 口語表達
@@ -38,7 +38,7 @@ ai:
   - 會議紀錄、整理各方論點
   human_experience:
   - 在衝突現場維持公平，承受壓力
-idea: 立場對立時，主持人對內容保持中立、對過程負責：維持規則與公平，讓每一方說出背後在乎的事（利益），把各自的「立場」轉成「大家要一起解決的問題」。收斂不了時，本站建議先決定下一步，例如補資料或組小組研議。
+idea: 立場對立時，主持人對內容保持中立、對過程負責：維持規則與公平，讓每一方說出背後在乎的事（利益），把各自的「立場」轉成「大家要一起解決的問題」。收斂不了時，先決定下一步：約好時間再談，或交給小組研議（《會議規範》的延期討論與付委）；先補資料是本站建議的例子。
 guiding_questions:
 - 兩派吵起來時，主持人該先處理事情還是情緒？
 scenario: 親子共學：家族聚會要決定一件有爭議的事時，由大人主持、孩子記錄，會後一起檢討哪一句話讓氣氛轉好。
@@ -51,7 +51,7 @@ audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-28'
+updated: '2026-10-30'
 why:
   heading: 吵的是立場，要談的是利益
   body:
@@ -77,6 +77,7 @@ how:
   body:
   - 開場先說規則（以下規則是本站建議）：一次一人發言、對事不對人、每一方都會輪到。接著請每一方說「你最擔心什麼、最在乎什麼」，主持人把它寫成利益，而不是要求。
   - 最後把各方利益並排，改寫成一個共同的問題：「怎樣才能同時顧到……和……？」原則式談判也建議，雙方先同意用哪些客觀標準來比較選項。
+  - 當場收斂不了，也要先決定下一步。內政部《會議規範》有兩種做法：延期討論，「議案應俟指定時間重行處理」；或付委，「交付委員會處理之」。日常會議可以約好時間再談，或請幾個人組小組研議（本站建議）。
   items:
   - title: 定規則
     example: 一次一人、對事不對人、每方都輪到。
@@ -94,15 +95,17 @@ how:
   sources:
   - iaf-ethics
   - pon-principled
+  - moi-meeting
 what:
   heading: 立場和利益的差別
   figures:
   - what-compare
   notes:
-  - 「收斂不了時先決定下一步」是本站建議，尚未找到可引用的出處。
+  - 收斂不了時的兩種下一步（延期討論、付委）依內政部《會議規範》第四十條、第六十二條；用在家族或社團會議、先補資料再談，是本站建議。
   - 「平均 4 分以上」是示意的檢核標準。
   sources:
   - pon-principled
+  - moi-meeting
 figures:
 - id: how-flow
   type: flow
@@ -143,3 +146,10 @@ sources:
   accessed: '2026-10-28'
   kind: reference
   supports: 前言：引導者「fill an impartial role in helping groups become more effective」、在參與與成果之間取得平衡；第 5 條（Respect, Safety, Equity, and Trust）：「elicit and honour the perspectives of all」，確保所有參與者都有機會表達想法；第 6 條：對過程負責（stewardship of process），對內容保持中立（impartiality toward content）
+- id: moi-meeting
+  title: 會議規範
+  publisher: 內政部（民國 54 年 7 月 20 日內民字第 178628 號公布施行）
+  url: https://ws.moi.gov.tw/001/Upload/OldFile/civil_law_file/%E6%9C%83%E8%AD%B0%E8%A6%8F%E7%AF%84.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 第一條「三人以上，循一定之規則，研究事理，達成決議，解決問題，以收群策群力之效者，謂之會議。」（p.1）；第四十條「延期討論動議 議案進行中，得提出延期討論動議，如得可決，議案應俟指定時間重行處理。」（p.7）；第六十二條「議案全部或其一部，得經大會決議，交付委員會處理之。」（p.12）
