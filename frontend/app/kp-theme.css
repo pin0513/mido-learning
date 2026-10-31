@@ -46,6 +46,8 @@
 .kp-root,.kp-root *{box-sizing:border-box}
 @media (max-width:767px){
   .kp-root .lbl{display:none}
+  /* 手機版小地圖太小，家人名牌讀不清楚：只留標記點，名字看圖例與清單。 */
+  .kp-root .city .person-tag{display:none}
   .kp-root .card-body{align-items:flex-start;text-align:left;padding:32px 20px 24px}
   .kp-root .card-body p{max-width:16em}
 }
