@@ -302,13 +302,18 @@ export function viewBoxString(view: CityMapData["view"]): string {
   return view.map((value) => value.toFixed(1)).join(" ");
 }
 
-export function focusViewBox(data: Pick<CityMapData, "cx" | "cy" | "plaza" | "rings" | "view" | "districts">, districtIndex: number | null, stageIndex: number | null, withLabels = true): string {
-  // withLabels：學門標籤畫得出來時（桌機）才把標籤框進視野；手機版的小地圖不畫標籤，不用留位置。
+/** 手機小地圖：只框住整個圓（外圈色環再留 12），正方形，標籤在手機上本來就藏起來。 */
+export function wheelViewBox(data: Pick<CityMapData, "cx" | "cy" | "rim">): string {
+  const radius = data.rim[1] + 12;
+  return viewBoxString([data.cx - radius, data.cy - radius, radius * 2, radius * 2]);
+}
+
+export function focusViewBox(data: Pick<CityMapData, "cx" | "cy" | "plaza" | "rings" | "view" | "districts">, districtIndex: number | null, stageIndex: number | null): string {
   if (districtIndex === null && stageIndex === null) return viewBoxString(data.view);
   if (districtIndex === null && stageIndex !== null) {
     const radius = data.rings[stageIndex][1] + 24;
     // 最外圈（大學）貼著學門標籤：把六個標籤也框進來，不然標籤會被切掉或藏起來。
-    if (withLabels && stageIndex === data.rings.length - 1) {
+    if (stageIndex === data.rings.length - 1) {
       const boxes = data.districts.map((district) => district.label.box);
       return fitAspect(
         data.view,
@@ -340,7 +345,7 @@ export function focusViewBox(data: Pick<CityMapData, "cx" | "cy" | "plaza" | "ri
     }
   }
   // 只選學區時，把它自己的學門標籤也框進來（標籤不會被切掉）。
-  if (withLabels && stageIndex === null) {
+  if (stageIndex === null) {
     const [lx, ly, lw, lh] = district.label.box;
     xs.push(lx - 8, lx + lw + 8);
     ys.push(ly - 8, ly + lh + 8);
@@ -652,7 +657,31 @@ export interface CityTag {
   box: [number, number, number, number];
   textX: number;
   textY: number;
-  leader: [number, number, number, number] | null;
+  /** 引線的折線點（第一點在節點邊緣、最後一點在名牌邊上）；名牌貼著節點時是 null。 */
+  leader: [number, number][] | null;
+}
+
+/** 線段 (x1,y1)-(x2,y2) 到點的最短距離。 */
+export function segmentDistance(segment: [number, number, number, number], x: number, y: number): number {
+  const [x1, y1, x2, y2] = segment;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const length = dx * dx + dy * dy;
+  const t = length === 0 ? 0 : Math.max(0, Math.min(1, ((x - x1) * dx + (y - y1) * dy) / length));
+  return Math.hypot(x1 + dx * t - x, y1 + dy * t - y);
+}
+
+/** 線段到外框（[x, y, w, h]）的最短距離；每 1px 取樣，名牌的引線很短，夠用。 */
+export function segmentBoxDistance(segment: [number, number, number, number], box: [number, number, number, number]): number {
+  const [x1, y1, x2, y2] = segment;
+  const steps = Math.max(1, Math.ceil(Math.hypot(x2 - x1, y2 - y1)));
+  let nearest = Infinity;
+  for (let index = 0; index <= steps; index += 1) {
+    const x = x1 + ((x2 - x1) * index) / steps;
+    const y = y1 + ((y2 - y1) * index) / steps;
+    nearest = Math.min(nearest, Math.hypot(Math.max(box[0] - x, 0, x - (box[0] + box[2])), Math.max(box[1] - y, 0, y - (box[1] + box[3]))));
+  }
+  return nearest;
 }
 
 function boxHitsCircle(box: [number, number, number, number], circle: { x: number; y: number; r: number }, pad: number): boolean {
@@ -662,9 +691,42 @@ function boxHitsCircle(box: [number, number, number, number], circle: { x: numbe
   return Math.hypot(dx, dy) < circle.r + pad;
 }
 
+/** 節點畫出來的半徑（跟 CityMapView 一致）：有標題的節點 7 + 被依賴數（最多 +3），草稿 6。 */
+export function cityNodeRadius(node: { title: string; dependents: number }): number {
+  if (!node.title) return 6;
+  return 7 + Math.min(node.dependents, 3);
+}
+
 /**
- * 範例家人的名牌：從節點旁邊開始，依 8 個方向、由近而遠找一個不壓到任何節點、標籤、其他名牌的位置。
- * 找不到時退回最後一個候選（理論上不會發生，測試會檢查）。
+ * 地圖上名牌要避開的東西，含畫出來的外框與描邊：
+ * 家庭空間、有外圈的本質層節點（圓，r + 3 外圈 + 1 描邊）、方形節點（外擴 1 描邊）、學門標籤、階段名。
+ */
+export function tagObstacles(data: Pick<CityMapData, "cx" | "cy" | "plaza" | "buildings" | "districts" | "stageLabels">): {
+  circles: { x: number; y: number; r: number }[];
+  boxes: [number, number, number, number][];
+} {
+  const circles = [{ x: data.cx, y: data.cy, r: data.plaza }];
+  const boxes: [number, number, number, number][] = [];
+  for (const building of data.buildings) {
+    const r = cityNodeRadius(building);
+    if (building.pointedRoof && building.title) circles.push({ x: building.x, y: building.y, r: r + 4 });
+    else boxes.push([building.x - r - 1, building.y - r - 1, r * 2 + 2, r * 2 + 2]);
+  }
+  boxes.push(...data.districts.map((district) => district.label.box), ...data.stageLabels.map((stage) => stageLabelBox(stage)));
+  return { circles, boxes };
+}
+
+/** 名牌與節點、標籤之間至少留這麼多；引線離其他節點外緣至少 LEADER_CLEAR。 */
+export const TAG_CLEAR = 4;
+export const LEADER_CLEAR = 5;
+
+/**
+ * 範例家人的名牌。先在節點周圍 ±170 的格點上由近而遠找「名牌不壓到任何節點、家庭空間、學門標籤、階段名、
+ * 另一個名牌，而且直線引線不碰到其他節點」的位置；名牌貼著節點（距離 ≤ 8）時不畫引線。
+ * 內圈很擠、直線出不去時，在 4px 的格子上從節點邊緣往外找最短的空路（離每個節點外緣至少 LEADER_CLEAR），
+ * 走到第一個放得下名牌的地方，引線畫成折線（拉直成最少段）。
+ * obstacles.circles 是圓形的東西（有外圈的節點、家庭空間、標記點），obstacles.boxes 是方形的東西（方形節點、標籤、名牌）。
+ * 節點自己（中心等於 anchor 的圓或方框）不算障礙物。
  */
 export function placeTag(
   anchor: { x: number; y: number; r: number },
@@ -674,26 +736,125 @@ export function placeTag(
 ): CityTag {
   const width = textWidth(text, size) + 14;
   const height = size + 8;
-  // 先試斜上、斜下，再試正上下左右，最後每 15° 一個方向；距離由近而遠，越遠越晚選（引線越長越難看）。
-  const directions = [-45, -135, 45, 135, -90, 90, 0, 180, -22.5, -67.5, -112.5, -157.5, 22.5, 67.5, 112.5, 157.5, -15, -75, -105, -165, 15, 75, 105, 165, -30, -60, -120, -150, 30, 60, 120, 150];
-  let fallback: CityTag | null = null;
-  for (let gap = 4; gap <= 200; gap += 4) {
-    for (const deg of directions) {
-      const cos = Math.cos(rad(deg));
-      const sin = Math.sin(rad(deg));
-      // 名牌中心沿方向往外放，讓外框最靠近節點的一邊離節點 gap。half 是中心到外框邊的距離（沿這個方向）。
-      const half = Math.min(Math.abs(width / 2 / (cos || 1e-9)), Math.abs(height / 2 / (sin || 1e-9)));
-      const reach = anchor.r + gap + half;
-      const cx = anchor.x + cos * reach;
-      const cy = anchor.y + sin * reach;
-      const box: [number, number, number, number] = [round(cx - width / 2), round(cy - height / 2), round(width), round(height)];
-      const leader: CityTag["leader"] = gap > 10 ? [round(anchor.x + cos * anchor.r), round(anchor.y + sin * anchor.r), round(cx - cos * half), round(cy - sin * half)] : null;
-      const tag: CityTag = { box, textX: round(cx), textY: round(cy + size * 0.36), leader };
-      fallback ??= tag;
-      if (obstacles.circles.some((circle) => boxHitsCircle(box, circle, 3))) continue;
-      if (obstacles.boxes.some((other) => boxesOverlap(box, other, 3))) continue;
-      return tag;
+  const own = (x: number, y: number) => Math.abs(x - anchor.x) < 0.5 && Math.abs(y - anchor.y) < 0.5;
+  const circles = obstacles.circles.filter((circle) => !own(circle.x, circle.y));
+  const boxes = obstacles.boxes.filter((box) => !own(box[0] + box[2] / 2, box[1] + box[3] / 2));
+  const boxFree = (box: [number, number, number, number]) =>
+    !circles.some((circle) => boxHitsCircle(box, circle, TAG_CLEAR)) && !boxes.some((other) => boxesOverlap(box, other, TAG_CLEAR));
+  const lineFree = (line: [number, number, number, number]) =>
+    !circles.some((circle) => segmentDistance(line, circle.x, circle.y) < circle.r + LEADER_CLEAR) &&
+    !boxes.some((other) => segmentBoxDistance(line, other) < LEADER_CLEAR);
+  // 名牌跟引線也不能壓回自己這棟（自己不在障礙物裡，要另外擋）。
+  const awayFromSelf = (box: [number, number, number, number]) =>
+    Math.hypot(Math.max(box[0] - anchor.x, 0, anchor.x - (box[0] + box[2])), Math.max(box[1] - anchor.y, 0, anchor.y - (box[1] + box[3]))) >= anchor.r + TAG_CLEAR - 0.01;
+  const pathFree = (line: [number, number, number, number]) => segmentDistance(line, anchor.x, anchor.y) >= anchor.r - 0.5 && lineFree(line);
+  const makeTag = (cx: number, cy: number, leader: [number, number][] | null): CityTag => ({
+    box: [round(cx - width / 2), round(cy - height / 2), round(width), round(height)],
+    textX: round(cx),
+    textY: round(cy + size * 0.36),
+    leader: leader ? leader.map(([x, y]) => [round(x), round(y)] as [number, number]) : null,
+  });
+
+  // 1. 直線（或不用引線）。
+  const candidates: { cx: number; cy: number; near: [number, number]; gap: number }[] = [];
+  for (let dx = -170; dx <= 170; dx += 3) {
+    for (let dy = -170; dy <= 170; dy += 3) {
+      const cx = anchor.x + dx;
+      const cy = anchor.y + dy;
+      const near: [number, number] = [Math.max(cx - width / 2, Math.min(anchor.x, cx + width / 2)), Math.max(cy - height / 2, Math.min(anchor.y, cy + height / 2))];
+      const gap = Math.hypot(near[0] - anchor.x, near[1] - anchor.y) - anchor.r;
+      if (gap >= TAG_CLEAR) candidates.push({ cx, cy, near, gap });
     }
   }
-  return fallback as CityTag;
+  // 同樣近的時候，偏好在節點上方，再偏好右邊。
+  candidates.sort((a, b) => a.gap - b.gap || (a.cy - anchor.y) - (b.cy - anchor.y) || (b.cx - anchor.x) - (a.cx - anchor.x));
+  for (const { cx, cy, near, gap } of candidates) {
+    const tag = makeTag(cx, cy, null);
+    if (!boxFree(tag.box)) continue;
+    if (gap <= 8) return tag;
+    const angle = Math.atan2(near[1] - anchor.y, near[0] - anchor.x);
+    const start: [number, number] = [anchor.x + Math.cos(angle) * anchor.r, anchor.y + Math.sin(angle) * anchor.r];
+    if (lineFree([start[0], start[1], near[0], near[1]])) return makeTag(cx, cy, [start, near]);
+  }
+
+  // 2. 折線：4px 格子上做 BFS，從節點邊緣往外走空的格子。
+  const step = 4;
+  const span = 40; // ±160
+  const key = (i: number, j: number) => (i + span) * (span * 2 + 1) + (j + span);
+  const point = (i: number, j: number): [number, number] => [anchor.x + i * step, anchor.y + j * step];
+  const free = new Map<number, boolean>();
+  const isFree = (i: number, j: number) => {
+    const k = key(i, j);
+    let value = free.get(k);
+    if (value === undefined) {
+      const [x, y] = point(i, j);
+      value =
+        !circles.some((circle) => Math.hypot(circle.x - x, circle.y - y) < circle.r + LEADER_CLEAR) &&
+        !boxes.some((box) => Math.hypot(Math.max(box[0] - x, 0, x - (box[0] + box[2])), Math.max(box[1] - y, 0, y - (box[1] + box[3]))) < LEADER_CLEAR);
+      free.set(k, value);
+    }
+    return value;
+  };
+  const edgePoint = (i: number, j: number): [number, number] => {
+    const angle = Math.atan2(j, i);
+    return [anchor.x + Math.cos(angle) * anchor.r, anchor.y + Math.sin(angle) * anchor.r];
+  };
+  const previous = new Map<number, number>();
+  const queue: [number, number][] = [];
+  for (let i = -span; i <= span; i += 1) {
+    for (let j = -span; j <= span; j += 1) {
+      const distance = Math.hypot(i * step, j * step);
+      if (distance >= anchor.r && distance < anchor.r + step && isFree(i, j) && pathFree([...edgePoint(i, j), ...point(i, j)])) {
+        queue.push([i, j]);
+        previous.set(key(i, j), -1);
+      }
+    }
+  }
+  const unpack = (k: number): [number, number] => [Math.floor(k / (span * 2 + 1)) - span, (k % (span * 2 + 1)) - span];
+  for (let head = 0; head < queue.length; head += 1) {
+    const [i, j] = queue[head];
+    const [x, y] = point(i, j);
+    // 名牌放在這一格的上、下、左、右、四個斜角，外框最靠近這一格的那一點就在這一格旁邊。
+    for (const [ux, uy] of [[0, -1], [0, 1], [1, 0], [-1, 0], [1, -1], [-1, -1], [1, 1], [-1, 1]]) {
+      const cx = x + ux * (width / 2 + 1);
+      const cy = y + uy * (height / 2 + 1);
+      const tag = makeTag(cx, cy, null);
+      if (!boxFree(tag.box) || !awayFromSelf(tag.box)) continue;
+      // 從這一格回推到節點邊緣，再把路拉直成最少段（每段都要是空的）。
+      const path: [number, number][] = [];
+      for (let k: number = key(i, j); k !== -1; k = previous.get(k) ?? -1) path.unshift(point(...unpack(k)));
+      const [i0, j0] = [Math.round((path[0][0] - anchor.x) / step), Math.round((path[0][1] - anchor.y) / step)];
+      path.unshift(edgePoint(i0, j0));
+      // 引線停在這一格（離名牌 1px），整條線都在空的格子上。
+      const pulled: [number, number][] = [path[0]];
+      let from = 0;
+      while (from < path.length - 1) {
+        let to = path.length - 1;
+        while (to > from + 1 && !pathFree([path[from][0], path[from][1], path[to][0], path[to][1]])) to -= 1;
+        pulled.push(path[to]);
+        from = to;
+      }
+      // 拉直後每一段都要是空的（格點之間、頭尾兩段也一樣），不然換下一個位置。
+      let clear = true;
+      // 也不能穿過自己的名牌：最後一段停在名牌外 1px，前面幾段離名牌至少 LEADER_CLEAR。
+      for (let index = 1; index < pulled.length && clear; index += 1) {
+        const line: [number, number, number, number] = [pulled[index - 1][0], pulled[index - 1][1], pulled[index][0], pulled[index][1]];
+        clear = pathFree(line) && segmentBoxDistance(line, tag.box) >= (index === pulled.length - 1 ? 0.9 : LEADER_CLEAR);
+      }
+      if (!clear) continue;
+      return makeTag(cx, cy, pulled);
+    }
+    for (const [di, dj] of [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]) {
+      const ni = i + di;
+      const nj = j + dj;
+      if (Math.abs(ni) > span || Math.abs(nj) > span) continue;
+      const k = key(ni, nj);
+      // 相鄰兩格都空，中間那一小段也要空（斜走會擦過方塊的角）。
+      if (previous.has(k) || !isFree(ni, nj) || !pathFree([x, y, ...point(ni, nj)])) continue;
+      previous.set(k, key(i, j));
+      queue.push([ni, nj]);
+    }
+  }
+  // 理論上走不到這裡（測試會檢查每一棟）；真的找不到就貼著節點上方放，不畫引線。
+  return makeTag(anchor.x, anchor.y - anchor.r - height / 2 - TAG_CLEAR, null);
 }

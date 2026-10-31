@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { annulus, boxInside, focusViewBox, placeTag, stageLabelBox, viewBoxString, type CityMapData, type CityTag } from "@/lib/content/city";
+import { annulus, boxInside, cityNodeRadius, focusViewBox, placeTag, stageLabelBox, tagObstacles, viewBoxString, wheelViewBox, type CityMapData, type CityTag } from "@/lib/content/city";
 import { CityList, LayerOverview, MobileDistricts, parseCityView, readRememberedView, ViewSwitch, writeRememberedView, type CityView } from "./views";
 import {
   clearStoredProgress,
@@ -99,10 +99,7 @@ function shortName(name: string): string {
   return chars.length > 6 ? `${chars.slice(0, 5).join("")}…` : name;
 }
 
-function nodeRadius(node: { title: string; dependents: number }): number {
-  if (!node.title) return 6;
-  return 7 + Math.min(node.dependents, 3);
-}
+const nodeRadius = cityNodeRadius;
 
 /** Right-angle pipe: horizontal, then vertical, then horizontal. Joints are the elbows. */
 function schematicPath(points: { x: number; y: number }[]): { d: string; joints: [number, number][] } {
@@ -169,25 +166,26 @@ export function CityMapView({
   const childName = snapshot.child.name;
   const adultName = snapshot.adult.name;
   const tags = useMemo(() => {
-    // 中央的家庭空間也是障礙物（名牌不蓋住「家庭空間」四個字）。
-    const circles = [{ x: data.cx, y: data.cy, r: data.plaza }, ...data.buildings.map((building) => ({ x: building.x, y: building.y, r: nodeRadius(building) + 3 }))];
-    const boxes: [number, number, number, number][] = [
-      ...data.districts.map((district) => district.label.box),
-      ...data.stageLabels.map((stage) => stageLabelBox(stage)),
-    ];
-    const out: Partial<Record<"child" | "adult", CityTag>> = {};
-    for (const [role, at, name] of [["child", childAt, childName], ["adult", adultAt, adultName]] as const) {
+    // 節點、家庭空間、學門標籤、階段名都是障礙物（名牌與引線都不碰）。
+    const { circles, boxes } = tagObstacles(data);
+    const people = ([["child", childAt, childName], ["adult", adultAt, adultName]] as const).flatMap(([role, at, name]) => {
       const place = at ? byId.get(at) : undefined;
-      if (!place?.title) continue;
+      return place?.title ? [{ role, place, name }] : [];
+    });
+    // 兩個人的標記點（孩子在節點右上角、大人在左上角，含描邊約 8）先全部放進障礙物，名牌與引線都不碰。
+    for (const { role, place } of people) {
       const r = nodeRadius(place) + 2;
-      // 標記點本身也是障礙物（孩子在右上角、大人在左上角）。
-      circles.push({ x: place.x + (role === "child" ? r : -r), y: place.y - r, r: 6 });
+      circles.push({ x: place.x + (role === "child" ? r : -r), y: place.y - r, r: 8 });
+    }
+    const out: Partial<Record<"child" | "adult", CityTag>> = {};
+    for (const { role, place, name } of people) {
+      const r = nodeRadius(place) + 2;
       const tag = placeTag({ x: place.x, y: place.y, r: r + 4 }, shortName(name), { circles, boxes });
       boxes.push(tag.box);
       out[role] = tag;
     }
     return out;
-  }, [data.cx, data.cy, data.plaza, data.buildings, data.districts, data.stageLabels, byId, childAt, adultAt, childName, adultName]);
+  }, [data, byId, childAt, adultAt, childName, adultName]);
   const pathStops = path?.stops.filter((id) => byId.has(id)) ?? [];
 
   const choosePath = (id: string) => {
@@ -204,14 +202,12 @@ export function CityMapView({
     writeStoredProgress(next);
   };
 
-  // 手機版（< 768px）的小地圖不畫學門標籤，放大時不用替標籤留位置。
+  // 手機版（< 768px）的小地圖永遠顯示整個圓（置中、不放大）：選到的學區、階段靠淡化其他節點來標出來，
+  // 不會因為放大到某個扇形而把圓切掉一角。
   const narrow = useSyncExternalStore(subscribeNarrow, readNarrow, () => false);
-  const targetBox = focusViewBox(
-    data,
-    districtIndex >= 0 ? districtIndex : null,
-    stageIndex >= 0 ? stageIndex : null,
-    !narrow,
-  );
+  const targetBox = narrow
+    ? wheelViewBox(data)
+    : focusViewBox(data, districtIndex >= 0 ? districtIndex : null, stageIndex >= 0 ? stageIndex : null);
 
   const go = useCallback((patch: Partial<Level>, historyMode: "push" | "replace") => {
     const next = { ...levelRef.current, ...patch };
@@ -351,7 +347,8 @@ export function CityMapView({
 
   const lot = data.lots.find((item) => item.id === lotId);
 
-  const zoomed = Boolean(level.district || level.stage);
+  // 手機版小地圖不放大，也就不攔觸控（讓頁面可以照常上下捲）。
+  const zoomed = !narrow && Boolean(level.district || level.stage);
   const zoomRing = (districtKey: string, stageId: string | null) => {
     go({ district: districtKey, stage: stageId, kp: null }, "push");
   };
@@ -764,9 +761,10 @@ export function CityMapView({
                 <g key={role} role="img" data-testid="city-person" data-role={role} aria-label={`${person.name}目前在${place.title}（範例資料）`}>
                   <title>{`${person.name}目前在${place.title}（範例資料）`}</title>
                   <circle cx={place.x + (dot ? r : -r)} cy={place.y - r} r={dot ? 6 : 5.5} fill={dot ? fill : "#1c2621"} stroke={dot ? "#1c2621" : fill} strokeWidth={dot ? 2.5 : 3} pointerEvents="none" />
+                  {/* 放大後名牌不在畫面裡就整個藏起來，不留一截被切掉的引線；標記點還在，名字看圖例。 */}
                   {tag ? (
-                    <g className="person-tag" data-testid="city-person-tag" pointerEvents="none" aria-hidden="true">
-                      {tag.leader ? <line x1={tag.leader[0]} y1={tag.leader[1]} x2={tag.leader[2]} y2={tag.leader[3]} stroke="#fffdf8" strokeWidth={2} /> : null}
+                    <g className="person-tag" data-testid="city-person-tag" pointerEvents="none" aria-hidden="true" visibility={boxInside(tag.box, currentView) && (tag.leader ?? []).every(([x, y]) => boxInside([x, y, 0, 0], currentView)) ? undefined : "hidden"}>
+                      {tag.leader ? <polyline points={tag.leader.map(([x, y]) => `${x},${y}`).join(" ")} fill="none" stroke="#fffdf8" strokeWidth={2} strokeLinejoin="round" data-testid="city-person-leader" /> : null}
                       <rect x={tag.box[0]} y={tag.box[1]} width={tag.box[2]} height={tag.box[3]} rx={4} fill="#fffdf8" stroke={dot ? fill : "#1c2621"} strokeWidth={2} />
                       <text x={tag.textX} y={tag.textY} textAnchor="middle" fontSize={14} fontWeight={800} fill="#1a1614">{shortName(person.name)}</text>
                     </g>

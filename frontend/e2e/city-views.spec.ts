@@ -73,6 +73,32 @@ test.describe("學習城市的三種檢視", () => {
       return boxes.reduce((count, box) => count + others.filter((other) => ov(box, other)).length, 0) + (ov(boxes[0], boxes[1]) ? 1 : 0);
     });
     expect(hits).toBe(0);
+    // 引線（如果有）每一段都不碰到別的節點：沿線每 1px 取一點，離節點外框至少 2px。
+    const leaderHits = await page.evaluate(() => {
+      const svg = document.querySelector('[data-testid="city-map"]');
+      if (!svg) return ["no map"];
+      const nodes = [...svg.querySelectorAll(".bld, .bld-d")].map((node) => node.getBoundingClientRect());
+      const out: string[] = [];
+      for (const line of svg.querySelectorAll<SVGPolylineElement>('[data-testid="city-person-leader"]')) {
+        const matrix = line.getScreenCTM();
+        if (!matrix) continue;
+        const points = [...line.points].map((point) => new DOMPoint(point.x, point.y).matrixTransform(matrix));
+        const length = line.getTotalLength();
+        const start = points[0];
+        // 起點那棟（自己）不算。
+        const own = nodes.filter((box) => start.x > box.left - 12 && start.x < box.right + 12 && start.y > box.top - 12 && start.y < box.bottom + 12);
+        for (let distance = 0; distance <= length; distance += 1) {
+          const local = line.getPointAtLength(distance);
+          const point = new DOMPoint(local.x, local.y).matrixTransform(matrix);
+          for (const box of nodes) {
+            if (own.includes(box)) continue;
+            if (point.x > box.left - 2 && point.x < box.right + 2 && point.y > box.top - 2 && point.y < box.bottom + 2) out.push(`${Math.round(point.x)},${Math.round(point.y)}`);
+          }
+        }
+      }
+      return out;
+    });
+    expect(leaderHits).toEqual([]);
   });
 
   test("放大到一圈或一個學區時，學門標籤不會被切一半", async ({ page }) => {
@@ -112,6 +138,28 @@ test.describe("學習城市的三種檢視", () => {
     const listBox = await mobile.boundingBox();
     expect(mapBox && listBox && mapBox.y + mapBox.height <= listBox.y + 1).toBe(true);
     expect(mapBox && mapBox.x >= 0 && mapBox.x + mapBox.width <= 390 + 1).toBe(true);
+    // 整個輪子都在小地圖與畫面裡（留白至少 8px），左右置中；小地圖上不放名牌。
+    const wheel = await page.evaluate(() => {
+      const svg = document.querySelector('[data-testid="city-map"]');
+      if (!svg) return null;
+      const frame = svg.getBoundingClientRect();
+      const boxes = [...svg.querySelectorAll(".bld, .bld-d, .plaza, circle")].map((node) => node.getBoundingClientRect()).filter((box) => box.width > 0);
+      const left = Math.min(...boxes.map((box) => box.left));
+      const right = Math.max(...boxes.map((box) => box.right));
+      const top = Math.min(...boxes.map((box) => box.top));
+      const bottom = Math.max(...boxes.map((box) => box.bottom));
+      const tags = [...svg.querySelectorAll('[data-testid="city-person-tag"]')].filter((node) => getComputedStyle(node).display !== "none").length;
+      return { left, right, top, bottom, frame: { left: frame.left, right: frame.right, top: frame.top, bottom: frame.bottom }, width: window.innerWidth, tags };
+    });
+    expect(wheel).not.toBeNull();
+    if (wheel) {
+      expect(wheel.left).toBeGreaterThanOrEqual(Math.max(wheel.frame.left, 8) - 0.5);
+      expect(wheel.right).toBeLessThanOrEqual(Math.min(wheel.frame.right, wheel.width - 8) + 0.5);
+      expect(wheel.top).toBeGreaterThanOrEqual(wheel.frame.top - 0.5);
+      expect(wheel.bottom).toBeLessThanOrEqual(wheel.frame.bottom + 0.5);
+      expect(Math.abs(wheel.left - (wheel.width - wheel.right))).toBeLessThanOrEqual(12);
+      expect(wheel.tags).toBe(0);
+    }
     const stages = mobile.getByTestId("city-mobile-stage");
     await expect(stages.locator("button[aria-expanded]")).toHaveCount(4);
     await expect(stages.locator('button[aria-expanded="true"]')).toHaveCount(1);
