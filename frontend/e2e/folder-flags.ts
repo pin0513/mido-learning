@@ -10,3 +10,18 @@ export function folderLaunched(folder: string, env: Record<string, string | unde
   const flag = FOLDER_FLAG[folder];
   return !flag || (env.KP_ENABLED === "true" && env[flag] === "true");
 }
+
+/**
+ * 把「KP_A=true,KP_B=false」（deploy-frontend.yml 的 KP_BUILD_FLAGS 格式）變成 env 物件；沒給或空字串就是 {}（旗標全關）。
+ * spec 用它表示「這份 build 是用哪些旗標 build 的」（E2E_BUILD_FLAGS），和執行時的 process.env 分開。
+ */
+export function flagEnv(list: string | undefined): Record<string, string> {
+  if (!list) return {};
+  return Object.fromEntries(
+    list.split(",").map((pair) => {
+      const match = /^(KP_[A-Z0-9_]+)=(true|false)$/.exec(pair.trim());
+      if (!match) throw new Error(`E2E_BUILD_FLAGS 格式要是 KP_*=true|false：${pair}`);
+      return [match[1], match[2]];
+    }),
+  );
+}

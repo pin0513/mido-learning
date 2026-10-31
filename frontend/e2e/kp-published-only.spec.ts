@@ -1,9 +1,33 @@
 import { test, expect } from "@playwright/test";
+import { join } from "node:path";
+import { loadContent } from "../lib/content/load";
+import { flagEnv, folderLaunched } from "./folder-flags";
 
 /**
  * 不帶 KP_INCLUDE_DRAFTS 的 build，並以 KP_ENABLED=true 啟動。
  * E2E_PUBLISHED_COUNT 是這份內容裡 status: published 的筆數。
+ * E2E_BUILD_FLAGS 是 build 時用的旗標（格式同 deploy-frontend.yml 的 KP_BUILD_FLAGS）；沒給就是 build 時 KP_* 全關。
+ * 執行時（middleware、首頁、/kp/index.json、地圖）照這個行程的 process.env；靜態詳細頁照 build 時的旗標。
  */
+const BUILD_ENV = flagEnv(process.env.E2E_BUILD_FLAGS);
+const loaded = loadContent(join(process.cwd(), "content"));
+if (loaded.errors.length > 0 || !loaded.model) throw new Error(loaded.errors.join("\n") || "content 載入失敗");
+/** 標題或網址 → 學門資料夾。 */
+const FOLDER_OF = new Map<string, string>();
+for (const point of loaded.model.points) {
+  FOLDER_OF.set(point.title, point.folder);
+  FOLDER_OF.set(`/kp/${point.concept}/${point.stage}`, point.folder);
+}
+
+/**
+ * 靜態詳細頁上「不露出」的檢查：下面的樣本都是已發布、只因學門旗標關閉不露出的軟實力點。
+ * build 時那個學門旗標開（正式 image），詳細頁本來就會連到它們（#68），這筆不再當負向檢查（連結本身由 kp-detail-v2-flag-hidden.spec.ts 從內容算著查）。
+ * 對不到知識點的字串一律照負向檢查。
+ */
+function hiddenOnStaticPage(text: string): boolean {
+  const folder = FOLDER_OF.get(text);
+  return folder === undefined || !folderLaunched(folder, BUILD_ENV);
+}
 // B19 發布專案管理 sh 5 點後，原本的 sh 草稿樣本（衝突、敏捷、要徑、利害關係人）改用仍是草稿的 uni 與哲學點。
 // B20 發布專案管理 uni 5 點後，專案管理 24 點全部發布，草稿樣本只剩哲學點（pm uni 5 點的 links 連到的 ph.applied、ph.epistem、ph.complex、ph.aimind 都還是草稿）。
 // B21 發布哲學 es 5 點後，ph.parts@es 改用它的下一階草稿 ph.feedback@jh；B22 發布哲學 jh 6 點後，改用仍是草稿的 ph.science@sh。
@@ -143,7 +167,7 @@ test.describe("正式 build", () => {
     expect(systems).not.toContain("尚未發布");
     expect(systems).toContain("/kp/ph.complex/uni");
     expect(systems).toContain("複雜性思維與模型的限度");
-    for (const title of DRAFT_TITLES) {
+    for (const title of DRAFT_TITLES.filter(hiddenOnStaticPage)) {
       expect(html, title).not.toContain(title);
       expect(flight, title).not.toContain(title);
     }
@@ -152,7 +176,7 @@ test.describe("正式 build", () => {
       expect(res.status(), path).toBe(200);
       const page = await res.text();
       for (const title of titles) expect(page, `${path} ${title}`).toContain(title);
-      for (const draft of drafts) expect(page, `${path} ${draft}`).not.toContain(draft);
+      for (const draft of drafts.filter(hiddenOnStaticPage)) expect(page, `${path} ${draft}`).not.toContain(draft);
     }
   });
 
