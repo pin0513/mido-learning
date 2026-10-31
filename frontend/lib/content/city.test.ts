@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { boxesOverlap, buildCityMap, DISTRICT_COLORS, focusViewBox, footprintsOverlap, presentCityMap, viewBoxString } from "./city";
+import { boxesOverlap, boxInside, boxNearestRadius, buildCityMap, DISTRICT_COLORS, focusViewBox, footprintsOverlap, cityNodeRadius, LABEL_CLEAR, LEADER_CLEAR, placeTag, segmentBoxDistance, segmentDistance, TAG_CLEAR, tagObstacles, wheelViewBox, presentCityMap, stageLabelBox, viewBoxString } from "./city";
 import { launchedCatalog, loadCatalog } from "./catalog";
 import { loadContent } from "./load";
 import { publishedEstimatePath } from "../kp/open-path";
@@ -145,6 +145,92 @@ test("六個扇形不重疊、角度跟點數走，學門標籤在圖外而且�
       assert.equal(boxesOverlap(label.box, map.districts[j].label.box, 4), false, `${map.districts[i].key} × ${map.districts[j].key}`);
     }
   }
+});
+
+test("學門標籤離色環外緣至少 LABEL_CLEAR，而且整個落在自己扇形的角度裡（數學不貼哲學的邊）", () => {
+  const map = buildCityMap(content());
+  for (const district of map.districts) {
+    const [x, y, w, h] = district.label.box;
+    assert.ok(boxNearestRadius(district.label.box, map.cx, map.cy) >= map.rim[1] + LABEL_CLEAR, `${district.key} too close to rim`);
+    const mid = district.start + district.span / 2;
+    for (const [px, py] of [[x, y], [x + w, y], [x, y + h], [x + w, y + h]]) {
+      const deg = (Math.atan2(py - map.cy, px - map.cx) * 180) / Math.PI;
+      const off = ((deg - mid + 540) % 360) - 180;
+      // 外框四角都在扇形兩側邊界內，至少留 2°。
+      assert.ok(Math.abs(off) <= district.span / 2 - 2, `${district.key} corner at ${deg.toFixed(1)}° outside ${district.start.toFixed(1)}..${(district.start + district.span).toFixed(1)}`);
+    }
+  }
+});
+
+test("放大到單一階段、單一學區時，學門標籤與階段名不會被切一半：要嘛整個在視野裡，要嘛整個藏起來", () => {
+  const map = buildCityMap(content());
+  const box = (value: string) => value.split(" ").map(Number) as [number, number, number, number];
+  // 只選學區：它自己的學門標籤一定整個在視野裡。
+  for (let index = 0; index < map.districts.length; index += 1) {
+    const view = box(focusViewBox(map, index, null));
+    assert.ok(boxInside(map.districts[index].label.box, view), `${map.districts[index].key} label clipped`);
+  }
+  // 只選一圈：顯示規則是 boxInside，這裡確認至少不是全部都看不到，且總覽時全部可見。
+  for (const label of [...map.districts.map((district) => district.label.box), ...map.stageLabels.map((stage) => stageLabelBox(stage))]) {
+    assert.ok(boxInside(label, map.view));
+  }
+  // 最外圈（大學）：六個學門標籤都整個在視野裡。
+  const outer = box(focusViewBox(map, null, map.rings.length - 1));
+  for (const district of map.districts) assert.ok(boxInside(district.label.box, outer), `${district.key} label clipped at the outer ring`);
+  for (let stage = 0; stage < map.stages.length; stage += 1) {
+    const view = box(focusViewBox(map, null, stage));
+    assert.ok(map.stageLabels.some((label) => boxInside(stageLabelBox(label), view)), `stage ${stage} hides every stage name`);
+  }
+});
+
+test("範例家人的名牌不壓到任何節點、家庭空間、學門標籤、階段名、另一個名牌；引線不穿過也不碰到別的節點", () => {
+  const map = buildCityMap(content());
+  const base = tagObstacles(map);
+  const radius = (place: { title: string; dependents: number }) => cityNodeRadius(place) + 2;
+  let leaders = 0;
+  // 每一棟都當一次「孩子在這裡」，再在下一棟放「大人」；用跟 CityMapView 一樣的障礙物。
+  for (let index = 0; index < map.buildings.length; index += 1) {
+    const child = map.buildings[index];
+    const adult = map.buildings[(index + 1) % map.buildings.length];
+    const circles = [...base.circles, { x: child.x + radius(child), y: child.y - radius(child), r: 8 }, { x: adult.x - radius(adult), y: adult.y - radius(adult), r: 8 }];
+    const boxes = [...base.boxes];
+    for (const [place, name] of [[child, "孩子"], [adult, "爸爸媽媽"]] as const) {
+      const anchor = { x: place.x, y: place.y, r: radius(place) + 4 };
+      const tag = placeTag(anchor, name, { circles, boxes });
+      const own = (x: number, y: number) => Math.abs(x - place.x) < 0.5 && Math.abs(y - place.y) < 0.5;
+      const otherCircles = circles.filter((circle) => !own(circle.x, circle.y));
+      const otherBoxes = boxes.filter((box) => !own(box[0] + box[2] / 2, box[1] + box[3] / 2));
+      for (const circle of otherCircles) {
+        const dx = Math.max(tag.box[0] - circle.x, 0, circle.x - (tag.box[0] + tag.box[2]));
+        const dy = Math.max(tag.box[1] - circle.y, 0, circle.y - (tag.box[1] + tag.box[3]));
+        assert.ok(Math.hypot(dx, dy) >= circle.r + TAG_CLEAR - 0.01, `${place.id} tag on a node at ${circle.x},${circle.y}`);
+      }
+      for (const box of otherBoxes) assert.equal(boxesOverlap(tag.box, box, TAG_CLEAR - 0.01), false, `${place.id} tag on ${box.join(",")}`);
+      // 也不壓回自己這棟。
+      const selfGap = Math.hypot(Math.max(tag.box[0] - place.x, 0, place.x - (tag.box[0] + tag.box[2])), Math.max(tag.box[1] - place.y, 0, place.y - (tag.box[1] + tag.box[3])));
+      assert.ok(selfGap >= anchor.r + TAG_CLEAR - 0.05, `${place.id} tag on its own node`);
+      assert.ok(boxInside(tag.box, map.view), `${place.id} tag outside view`);
+      if (tag.leader) {
+        leaders += 1;
+        // 折線每一段都離其他節點、標籤、名牌至少 LEADER_CLEAR（四捨五入到 0.01，容許 0.05 的誤差）。
+        for (let k = 1; k < tag.leader.length; k += 1) {
+          const line: [number, number, number, number] = [...tag.leader[k - 1], ...tag.leader[k]];
+          for (const circle of otherCircles) assert.ok(segmentDistance(line, circle.x, circle.y) >= circle.r + LEADER_CLEAR - 0.05, `${place.id} leader touches ${circle.x},${circle.y}`);
+          for (const box of otherBoxes) assert.ok(segmentBoxDistance(line, box) >= LEADER_CLEAR - 0.05, `${place.id} leader touches ${box.join(",")}`);
+          assert.ok(segmentDistance(line, place.x, place.y) >= anchor.r - 0.55, `${place.id} leader cuts back through its own node`);
+          // 不穿過自己的名牌：最後一段只在終點碰到名牌（去掉最後 1.5px 再量）。
+          const last = k === tag.leader.length - 1;
+          const length = Math.hypot(line[2] - line[0], line[3] - line[1]);
+          const cut = last ? Math.max(0, (length - 1.5) / length) : 1;
+          const trimmed: [number, number, number, number] = [line[0], line[1], line[0] + (line[2] - line[0]) * cut, line[1] + (line[3] - line[1]) * cut];
+          assert.ok(segmentBoxDistance(trimmed, tag.box) >= (last ? 0.3 : LEADER_CLEAR - 0.05), `${place.id} leader crosses its own tag`);
+        }
+      }
+      boxes.push(tag.box);
+    }
+  }
+  // 大多數名牌貼著節點、不用引線（兩個名牌 × 每一棟）。
+  assert.ok(leaders < (map.buildings.length * 2) / 3, `${leaders} leaders`);
 });
 
 test("主線站序跟內容一致，高度等於被依賴數", () => {
@@ -319,4 +405,16 @@ test("開放主線只帶已發布標題", () => {
   assert.deepEqual(drafted.stops[3].prerequisites, [{ title: "WBS 與三點估算", href: "/kp/pm.estimate/sh" }]);
   assert.equal(drafted.stops[3].hiddenPrerequisites, 1);
   assert.equal(JSON.stringify(drafted).includes("排程與資源最佳化"), false);
+});
+
+test("手機小地圖框住整個圓：每個節點跟外圈色環都在裡面，左右上下留白一樣", () => {
+  const map = buildCityMap(content());
+  const [x, y, w, h] = wheelViewBox(map).split(" ").map(Number);
+  assert.equal(w, h);
+  assert.ok(Math.abs(x + w / 2 - map.cx) < 0.1 && Math.abs(y + h / 2 - map.cy) < 0.1);
+  assert.ok(map.rim[1] + 8 <= w / 2);
+  for (const building of map.buildings) {
+    const r = cityNodeRadius(building) + 3;
+    assert.ok(building.x - r >= x && building.x + r <= x + w && building.y - r >= y && building.y + r <= y + h, building.id);
+  }
 });
