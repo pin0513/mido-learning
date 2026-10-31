@@ -54,7 +54,9 @@ export async function expectMapSectors(page: Page, expected: { buildings: number
   await page.goto("/kp/map", { waitUntil: "networkidle" });
   const mobile = page.getByTestId("city-mobile");
   for (const name of await labels.evaluateAll((nodes) => nodes.map((node) => node.querySelector("text")?.textContent ?? ""))) {
-    await expect(mobile.getByRole("button", { name, exact: true }).first()).toBeVisible();
+    // 手機版的學門按鈕寫成「名稱（層級，點數）」。
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    await expect(mobile.getByRole("button", { name: new RegExp(`^${escaped}（`) })).toBeVisible();
   }
   expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(1);
 }
