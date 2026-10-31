@@ -8,7 +8,7 @@
   
   --accent:#ff5b22; --accent-ink:#1a1614; --accent-deep:#a83a0f;
   
-  --d-philosophy:#9cc3d5; --d-math:#e6d27a; --d-pm:#eba79c; --d-it:#a6cf96;
+  --d-philosophy:#9cc3d5; --d-math:#e6d27a; --d-pm:#eba79c; --d-it:#a6cf96; --d-sk:#dca6cc; --d-lang:#b4aae6;
   
   --s-es:#1c2621; --s-jh:#2f4a3e; --s-sh:#527565; --s-uni:#a9c4b6;
 
@@ -128,3 +128,12 @@
 .kp-root .menu-cat h3{font-size:var(--step-lead)}
 .kp-root .fcols{margin-top:0}
 .kp-root .credits{max-width:70em}
+/* /kp/map：預留空間與圖例在紙色底上，字用墨色（.legend 預設是深底用的粉筆色）。 */
+.kp-root .city-legend{color:var(--ink);padding:10px 16px 0}
+.kp-root .city-legend + .city-legend{padding-bottom:18px}
+.kp-root .city-lots{flex-wrap:wrap;align-items:center;gap:8px 10px;padding:14px 16px 4px;font-size:var(--step-small)}
+.kp-root .city-lots-h{font-weight:700;color:var(--ink-2);margin-right:4px}
+.kp-root .city-lot{min-height:44px;padding:0 16px;border:2px dashed #6f8279;background:transparent;color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.kp-root .city-lot:hover,.kp-root .city-lot[aria-pressed="true"]{background:var(--paper-2);border-color:var(--ink)}
+.kp-root .city-lot:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.kp-root .city path[role="button"]:focus-visible{outline:none;stroke:var(--accent);stroke-width:4;stroke-opacity:1}

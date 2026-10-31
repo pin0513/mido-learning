@@ -3,8 +3,8 @@ import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { buildCityMap, focusViewBox, footprintsOverlap, presentCityMap } from "./city";
-import { loadCatalog } from "./catalog";
+import { boxesOverlap, buildCityMap, DISTRICT_COLORS, focusViewBox, footprintsOverlap, presentCityMap, viewBoxString } from "./city";
+import { launchedCatalog, loadCatalog } from "./catalog";
 import { loadContent } from "./load";
 import { publishedEstimatePath } from "../kp/open-path";
 import type { ContentModel, KnowledgePoint } from "./types";
@@ -18,18 +18,71 @@ function content(): ContentModel {
   return model;
 }
 
-test("城市索引有 100 棟、142 條先備路、29 個地標、18 塊預定地", () => {
+const SIX = ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai", "language"];
+
+test("六個學門全開：241 棟、328 條先備路、49 個地標、17 塊預定地", () => {
   const map = buildCityMap(content());
-  assert.equal(map.buildings.length, 100);
-  assert.equal(map.roads.length, 142);
-  assert.equal(map.landmarks.length, 29);
-  assert.equal(map.lots.length, 18);
-  assert.equal(map.lots.filter((lot) => lot.featured).length, 5);
-  assert.equal(map.districts.length, 4);
+  assert.equal(map.buildings.length, 241);
+  assert.equal(map.roads.length, 328);
+  assert.equal(map.landmarks.length, 49);
+  // 語文已經有點，不再是預定地。
+  assert.equal(map.lots.length, 17);
+  assert.equal(map.lots.filter((lot) => lot.featured).length, 4);
+  assert.equal(map.lots.some((lot) => lot.id === "language"), false);
+  assert.equal(map.districts.length, 6);
+  assert.deepEqual(map.districts.map((district) => district.key), SIX);
   assert.deepEqual(
-    map.districts.map((district) => district.key),
-    ["philosophy", "math", "pm-leadership", "it-ai"],
+    Object.fromEntries(map.districts.map((district) => [district.key, district.count])),
+    { philosophy: 25, math: 26, "pm-leadership": 24, "soft-skills": 33, "it-ai": 25, language: 108 },
   );
+  // 每個學門有自己的顏色，而且跟學門綁定、不隨排序改變。
+  for (const district of map.districts) assert.equal(district.color, DISTRICT_COLORS[district.key]);
+  assert.equal(new Set(map.districts.map((district) => district.color)).size, 6);
+});
+
+function withFlags(flags: Record<string, string | undefined>, run: () => void) {
+  const keys = ["KP_ENABLED", "KP_SOFTSKILLS_ENABLED", "KP_YUWEN_ENABLED"];
+  const saved = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+  try {
+    for (const key of keys) {
+      if (flags[key] === undefined) delete process.env[key];
+      else process.env[key] = flags[key];
+    }
+    run();
+  } finally {
+    for (const key of keys) {
+      if (saved[key] === undefined) delete process.env[key];
+      else process.env[key] = saved[key];
+    }
+  }
+}
+
+test("學門旗標關閉時，那個學區整塊不出現（頁面先套 launchedCatalog）", () => {
+  const cases: [Record<string, string>, string[], number, number, number][] = [
+    [{}, ["philosophy", "math", "pm-leadership", "it-ai"], 100, 29, 18],
+    [{ KP_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai"], 100, 29, 18],
+    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai"], 133, 35, 18],
+    [{ KP_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai", "language"], 208, 43, 17],
+    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, SIX, 241, 49, 17],
+    // KP_ENABLED 沒開時，學門旗標單獨打開也不算。
+    [{ KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai"], 100, 29, 18],
+  ];
+  for (const [flags, keys, buildings, landmarks, lots] of cases) {
+    withFlags(flags, () => {
+      const map = presentCityMap(buildCityMap(launchedCatalog(loadCatalog())));
+      const label = JSON.stringify(flags);
+      assert.deepEqual(map.districts.map((district) => district.key), keys, label);
+      assert.equal(map.buildings.length, buildings, label);
+      assert.equal(map.landmarks.length, landmarks, label);
+      assert.equal(map.lots.length, lots, label);
+      const folders = new Set(keys);
+      assert.ok(map.buildings.every((building) => folders.has(building.folder)), label);
+      const ids = new Set(map.buildings.map((building) => building.id));
+      assert.ok(map.roads.every((road) => ids.has(road.from) && ids.has(road.to)), label);
+      assert.ok(map.landmarks.every((landmark) => landmark.stops.every((stop) => ids.has(stop))), label);
+      assert.equal(footprintsOverlap(map.buildings), false, label);
+    });
+  }
 });
 
 test("兩次建置座標相同，而且同一格的建築不重疊", () => {
@@ -44,14 +97,54 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
   // B22 發布哲學 jh 6 點後，這 6 棟也各多 8，digest 再變；座標不變。
   // B23 發布哲學 sh 7 點後，這 7 棟也各多 8，digest 再變；座標不變。
   // B24 發布哲學 uni 6 點後，這 6 棟也各多 8，digest 再變；座標不變。
-  assert.equal(digest, "9f5387e1fdb292bcd4210427d54c5d129f9441fe16e76b52fd743d6d94f728eb");
-  for (const district of first.districts) {
-    for (const stage of first.stages) {
-      const count = first.buildings.filter((building) => building.folder === district.key && building.stage === stage.id).length;
-      assert.ok(count <= 8, `${district.key}/${stage.id} has ${count}`);
-    }
+  // 地圖加上語文與溝通與解決問題（六個學區、扇形依點數分配角度）後，座標全部重排，digest 重算。
+  assert.equal(digest, "31a9a8b2d14caaec96affe87fa7242b772ce8035c69cef8f12cc5f4a577f4743");
+  // 每棟都在自己學區的扇形與自己階段的環裡（離邊至少半個節點）。
+  const stageIndex = new Map(first.stages.map((stage, index) => [stage.id, index]));
+  for (const building of first.buildings) {
+    const district = first.districts.find((item) => item.key === building.folder);
+    assert.ok(district, building.id);
+    const dx = building.x - first.cx;
+    const dy = building.y - first.cy;
+    const radius = Math.hypot(dx, dy);
+    const [r0, r1] = first.rings[stageIndex.get(building.stage) ?? -1];
+    assert.ok(radius > r0 + 10 && radius < r1 - 10, `${building.id} r=${radius}`);
+    let angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+    while (angle < district.start) angle += 360;
+    const offset = angle - district.start;
+    const margin = (10 / radius) * (180 / Math.PI);
+    assert.ok(offset > margin && offset < district.span - margin, `${building.id} angle ${offset} of ${district.span}`);
   }
   assert.equal(footprintsOverlap(first.buildings), false);
+});
+
+test("六個扇形不重疊、角度跟點數走，學門標籤在圖外而且互不重疊", () => {
+  const map = buildCityMap(content());
+  const total = map.districts.reduce((sum, district) => sum + district.span, 0);
+  assert.ok(total < 360 - map.spine + 1e-9);
+  for (let index = 1; index < map.districts.length; index += 1) {
+    const prev = map.districts[index - 1];
+    assert.ok(map.districts[index].start >= prev.start + prev.span - 1e-9);
+  }
+  const language = map.districts.find((district) => district.key === "language");
+  assert.ok(language);
+  assert.ok(map.districts.every((district) => district.key === "language" || district.span < language.span));
+  const [vx, vy, vw, vh] = map.view;
+  for (let i = 0; i < map.districts.length; i += 1) {
+    const label = map.districts[i].label;
+    const [x, y, w, h] = label.box;
+    // 標籤外框完全在學門色環外面（不壓到節點與扇形），也在 viewBox 裡。
+    const corners = [[x, y], [x + w, y], [x, y + h], [x + w, y + h]];
+    const nearest = Math.hypot(
+      Math.max(x - map.cx, 0, map.cx - (x + w)),
+      Math.max(y - map.cy, 0, map.cy - (y + h)),
+    );
+    assert.ok(nearest > map.rim[1], `${map.districts[i].key} label inside rim`);
+    for (const [cx, cy] of corners) assert.ok(cx >= vx && cx <= vx + vw && cy >= vy && cy <= vy + vh, map.districts[i].key);
+    for (let j = i + 1; j < map.districts.length; j += 1) {
+      assert.equal(boxesOverlap(label.box, map.districts[j].label.box, 4), false, `${map.districts[i].key} × ${map.districts[j].key}`);
+    }
+  }
 });
 
 test("主線站序跟內容一致，高度等於被依賴數", () => {
@@ -65,12 +158,12 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.ok(breakdown);
   assert.equal(
     breakdown.dependents,
-    source.points.filter((point) => point.folder !== "soft-skills" && point.prerequisites.includes("pm.breakdown@es")).length,
+    source.points.filter((point) => point.prerequisites.includes("pm.breakdown@es")).length,
   );
   assert.equal(breakdown.height, 16 + breakdown.dependents * 9 + 8);
   assert.equal(breakdown.href, "/kp/pm.breakdown/es");
   const shown = presentCityMap(map);
-  // B24 發布哲學 uni 6 點後，地圖上的 100 棟全部已發布，真地圖沒有草稿可查。
+  // B24 發布哲學 uni 6 點後，地圖上的 100 棟全部已發布（六個學區全開時 241 棟也全部已發布），真地圖沒有草稿可查。
   // 草稿外洩與匿名的檢查改在合成內容上跑：把這 6 點在記憶體裡改回草稿（不動內容檔），其餘斷言照舊。
   assert.equal(map.buildings.filter((building) => building.status !== "published").length, 0);
   assert.equal(shown.buildings.filter((building) => building.status === "draft").length, 0);
@@ -116,7 +209,8 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   // B22 發布哲學 jh 6 點後，路線數不變，7 條哲學路線各多國中一站；ph.ai 與 ph.epistemology 都經過 ph.evidence@jh。
   // B23 發布哲學 sh 7 點後，路線數不變，7 條哲學路線各多高中一站（大學站仍是草稿，不顯示）。
   // B24 發布哲學 uni 6 點後，路線數不變，7 條哲學路線各多大學一站；ph.critical 與 ph.inquiry 都到 ph.philsci@uni。
-  assert.equal(shown.landmarks.length, 29);
+  // 六個學區全開後，加上溝通與解決問題 6 條、語文 14 條，共 49 條（旗標關閉時仍是 29 條，見上面的旗標測試）。
+  assert.equal(shown.landmarks.length, 49);
   const shownStops = (id: string) => {
     const found = shown.landmarks.find((landmark) => landmark.id === id);
     assert.ok(found, id);
@@ -154,7 +248,7 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
 
 test("只選環路時視野縮到那一圈", () => {
   const map = buildCityMap(content());
-  assert.equal(focusViewBox(map, null, null), "0 0 1100 1100");
+  assert.equal(focusViewBox(map, null, null), viewBoxString(map.view));
   const ring = focusViewBox(map, null, 0).split(" ").map(Number);
   assert.ok(ring[2] < 1000);
   assert.ok(ring[0] > 0 && ring[1] > 0);
@@ -175,7 +269,7 @@ test("新增一筆知識點不用改程式就會排上地圖", () => {
     file: "extra.yaml",
   };
   const map = buildCityMap({ ...source, points: [...source.points, extra] });
-  assert.equal(map.buildings.length, 101);
+  assert.equal(map.buildings.length, 242);
   assert.ok(map.buildings.some((building) => building.id === "ma.extra@es"));
   assert.equal(footprintsOverlap(map.buildings), false);
 });

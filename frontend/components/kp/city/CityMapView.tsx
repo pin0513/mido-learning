@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { annulus, focusViewBox, sectorStart, type CityMapData } from "@/lib/content/city";
+import { annulus, focusViewBox, viewBoxString, type CityMapData } from "@/lib/content/city";
 import { CityList, LayerOverview, MobileDistricts, parseCityView, readRememberedView, ViewSwitch, writeRememberedView, type CityView } from "./views";
 import {
   clearStoredProgress,
@@ -80,9 +80,10 @@ function parseViewBox(value: string): [number, number, number, number] {
   return [x, y, w, h];
 }
 
+/** 被依賴越多越大，上限 10；本質層外圈再加 3。lib/content/city.ts 的排距以 13 為最大半徑。 */
 function nodeRadius(node: { title: string; dependents: number }): number {
   if (!node.title) return 6;
-  return 8 + Math.min(node.dependents, 4);
+  return 7 + Math.min(node.dependents, 3);
 }
 
 /** Right-angle pipe: horizontal, then vertical, then horizontal. Joints are the elbows. */
@@ -126,7 +127,7 @@ export function CityMapView({
   const [pathId, setPathId] = useState("");
   const [mode, setMode] = useState<"demo" | "local">("demo");
   const [stored, setStored] = useState<StoredProgress>(emptyStoredProgress);
-  const [viewBox, setViewBox] = useState(`0 0 ${data.size} ${data.size}`);
+  const [viewBox, setViewBox] = useState(viewBoxString(data.view));
   const depth = useRef(0);
   const levelRef = useRef(level);
   levelRef.current = level;
@@ -245,8 +246,8 @@ export function CityMapView({
       event.preventDefault();
       const [x, y, w, h] = parseViewBox(viewBox);
       const scale = event.deltaY > 0 ? 1.08 : 0.92;
-      const nextW = Math.min(data.size * 1.4, Math.max(140, w * scale));
-      const nextH = nextW;
+      const nextW = Math.min(data.view[2] * 1.4, Math.max(140, w * scale));
+      const nextH = nextW * (h / w);
       const rect = svg.getBoundingClientRect();
       const px = (event.clientX - rect.left) / rect.width;
       const py = (event.clientY - rect.top) / rect.height;
@@ -256,7 +257,7 @@ export function CityMapView({
     };
     svg.addEventListener("wheel", onWheel, { passive: false });
     return () => svg.removeEventListener("wheel", onWheel);
-  }, [data.size, viewBox]);
+  }, [data.view, viewBox]);
 
   const onPointerDown = (event: React.PointerEvent<SVGSVGElement>) => {
     if ((event.target as Element).closest("a, button, [role='button']")) return;
@@ -529,7 +530,7 @@ export function CityMapView({
             data-building-count={data.buildings.length}
             viewBox={viewBox}
             role="group"
-            aria-label="知識地圖。四個領域是空間，階段從國小到大學。節點是知識點。"
+            aria-label={`知識地圖。${data.districts.length} 個領域各是一塊扇形，點越多扇形越大；由內而外是國小到大學。節點是知識點。`}
             className={`city h-auto w-full max-w-full ${zoomed ? "touch-none" : ""}`}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
@@ -550,7 +551,7 @@ export function CityMapView({
               data.rings.map((ring, sIndex) => (
                 <path
                   key={`${district.key}-${sIndex}`}
-                  d={annulus(data.cx, data.cy, ring[0], ring[1], sectorStart(district.sector, data.sector) + 1, sectorStart(district.sector, data.sector) + data.sector - 1)}
+                  d={annulus(data.cx, data.cy, ring[0], ring[1], district.start, district.start + district.span)}
                   fill={district.color}
                   fillOpacity={level.district === district.key && level.stage === data.stages[sIndex]?.id ? 0.28 : 0.12 + sIndex * 0.02}
                   stroke="#f4f7f2"
@@ -583,30 +584,31 @@ export function CityMapView({
                   fillOpacity={0.16}
                   fillRule="evenodd"
                   opacity={level.stage === stage.id ? 1 : 0}
+                  pointerEvents="none"
                   aria-hidden="true"
                 />
               );
             })}
             <g aria-hidden="true">
               <circle cx={data.cx} cy={data.cy} r={data.plaza - 6} fill="#eef0ea" />
-              <text x={data.cx} y={data.cy - 2} textAnchor="middle" fontSize={18} fontWeight={900} fill="#1a1614">家庭</text>
-              <text x={data.cx} y={data.cy + 20} textAnchor="middle" fontSize={18} fontWeight={900} fill="#1a1614">空間</text>
-              {data.districts.map((district) => {
-                const spots: Record<string, [number, number, "start" | "end"]> = {
-                  philosophy: [data.size - 16, 56, "end"],
-                  math: [data.size - 16, data.size - 70, "end"],
-                  "pm-leadership": [16, data.size - 70, "start"],
-                  "it-ai": [16, 56, "start"],
-                };
-                const spot = spots[district.key];
-                if (!spot) return null;
-                return (
-                  <g key={district.key} className="lbl">
-                    <text x={spot[0]} y={spot[1]} textAnchor={spot[2]} fontSize={22} fontWeight={900} fill={district.color}>{district.name}</text>
-                    <text x={spot[0]} y={spot[1] + 26} textAnchor={spot[2]} fontSize={14} fill="#c3cbc5">{district.layerName}</text>
-                  </g>
-                );
-              })}
+              <text x={data.cx} y={data.cy - 5} textAnchor="middle" fontSize={17} fontWeight={900} fill="#1a1614">家庭</text>
+              <text x={data.cx} y={data.cy + 19} textAnchor="middle" fontSize={17} fontWeight={900} fill="#1a1614">空間</text>
+              {data.districts.map((district) => (
+                <path key={`rim-${district.key}`} d={annulus(data.cx, data.cy, data.rim[0], data.rim[1], district.start, district.start + district.span)} fill={district.color} />
+              ))}
+              <g className="ringlbl">
+                {data.stageLabels.map((stage) => (
+                  <text key={stage.id} x={stage.x} y={stage.y + 5} textAnchor="middle" fontSize={14} fontWeight={700} fill="#c3cbc5">
+                    {stage.name}
+                  </text>
+                ))}
+              </g>
+              {data.districts.map((district) => (
+                <g key={district.key} className="lbl" data-testid="city-district-label" data-district={district.key}>
+                  <text x={district.label.x} y={district.label.nameY} textAnchor={district.label.anchor} fontSize={22} fontWeight={900} fill="#1a1614">{district.name}</text>
+                  <text x={district.label.x} y={district.label.subY} textAnchor={district.label.anchor} fontSize={14} fill="#47413b">{district.layerName}・{district.count} 個</text>
+                </g>
+              ))}
             </g>
             {selected ? (
               <g data-testid="city-links" aria-hidden="true">
@@ -642,30 +644,6 @@ export function CityMapView({
                 ))}
               </g>
             ) : null}
-            {data.lots
-              .filter((item) => item.featured)
-              .map((item) => (
-                <g key={item.id}>
-                  <g
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`預留空間：${item.name}（下一輪）`}
-                    className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1a1614]"
-                    onClick={() => setLotId(item.id)}
-                    onKeyDown={(event) => {
-                      if (event.key !== "Enter" && event.key !== " ") return;
-                      event.preventDefault();
-                      setLotId(item.id);
-                    }}
-                  >
-                    <rect x={item.x - 46} y={item.y - 26} width={92} height={52} fill="#24312b" stroke="#6f8279" strokeWidth={2} strokeDasharray="6 6" />
-                    <title>{`預留空間：${item.name}（下一輪）`}</title>
-                  </g>
-                  <text className="lbl" x={item.x} y={item.y + 48} textAnchor="middle" fontSize={14} fill="#c3cbc5" aria-hidden="true" pointerEvents="none">
-                    {item.name}
-                  </text>
-                </g>
-              ))}
             {data.buildings.map((building) => {
               const district = data.districts.find((item) => item.key === building.folder);
               const color = district?.color ?? "#eef0ea";
@@ -678,7 +656,7 @@ export function CityMapView({
               const mark = active || linked ? "#ff5b22" : "#1c2621";
               const shape = building.pointedRoof && !draft ? (
                 <>
-                  <circle cx={building.x} cy={building.y} r={r + 4} fill="none" stroke={color} strokeWidth={2} />
+                  <circle cx={building.x} cy={building.y} r={r + 3} fill="none" stroke={color} strokeWidth={2} />
                   <circle cx={building.x} cy={building.y} r={r} fill={body} stroke={mark} strokeWidth={active || linked ? 3 : 1.5} />
                 </>
               ) : (
@@ -717,9 +695,9 @@ export function CityMapView({
               const place = byId.get(id);
               if (!place) return null;
               return (
-                <g key={id} aria-hidden="true" data-testid="city-stop" data-stop={index + 1}>
-                  <circle cx={place.x} cy={place.y - nodeRadius(place) - 14} r={8} fill="#1c2621" />
-                  <text x={place.x} y={place.y - nodeRadius(place) - 11} textAnchor="middle" fontSize={10} fontWeight={700} fill="#eef0ea">
+                <g key={id} aria-hidden="true" data-testid="city-stop" data-stop={index + 1} pointerEvents="none">
+                  <circle cx={place.x} cy={place.y} r={12} fill="#ff5b22" stroke="#1c2621" strokeWidth={2} />
+                  <text x={place.x} y={place.y + 4.5} textAnchor="middle" fontSize={13} fontWeight={900} fill="#1a1614">
                     {index + 1}
                   </text>
                 </g>
@@ -730,13 +708,11 @@ export function CityMapView({
               const place = byId.get(person.at);
               if (!place?.title) return null;
               const dot = role === "child";
-              const r = nodeRadius(place);
+              const r = nodeRadius(place) + 2;
               return (
                 <g key={role} role="img" aria-label={`${person.name}目前在${place.title}（範例資料）`}>
-                  <circle cx={place.x + r + 12} cy={place.y - r} r={dot ? 8 : 7} fill={dot ? fill : "#1c2621"} stroke={dot ? "#1c2621" : fill} strokeWidth={dot ? 3 : 4} />
-                  <text className="lbl" x={place.x + r + 24} y={place.y - r + 4} fontSize={14} fontWeight={900} fill={dot ? "#ff8a5c" : "#eef0ea"}>
-                    {person.name}
-                  </text>
+                  <title>{`${person.name}目前在${place.title}（範例資料）`}</title>
+                  <circle cx={place.x + (dot ? r : -r)} cy={place.y - r} r={dot ? 6 : 5.5} fill={dot ? fill : "#1c2621"} stroke={dot ? "#1c2621" : fill} strokeWidth={dot ? 2.5 : 3} pointerEvents="none" />
                 </g>
               );
             })}
@@ -748,8 +724,28 @@ export function CityMapView({
             </p>
           ) : null}
         </div>
-        <div className="legend" aria-label="圖例">
-          <span className="it"><span className="sw" style={{ background: "var(--chalk)", borderRadius: 2 }} />已開放</span>
+        {data.lots.some((item) => item.featured) ? (
+          <div className="city-lots hidden md:flex" data-testid="city-lots">
+            <span className="city-lots-h">下一輪預留</span>
+            {data.lots
+              .filter((item) => item.featured)
+              .map((item) => (
+                <button key={item.id} type="button" className="city-lot" aria-pressed={lotId === item.id} aria-label={`預留空間：${item.name}（下一輪）`} onClick={() => setLotId(item.id)}>
+                  {item.name}
+                </button>
+              ))}
+          </div>
+        ) : null}
+        <div className="legend city-legend" aria-label="領域">
+          {data.districts.map((district) => (
+            <span key={district.key} className="it" data-testid="city-legend-district">
+              <span className="sw" style={{ background: district.color }} />
+              {district.name}
+            </span>
+          ))}
+        </div>
+        <div className="legend city-legend" aria-label="圖例">
+          <span className="it"><span className="sw" style={{ background: "var(--chalk)", borderRadius: 2, boxShadow: "inset 0 0 0 1.5px #47413b" }} />已開放</span>
           <span className="it"><span className="sw" style={{ background: "#46594f", borderRadius: 2 }} />尚未接上</span>
           <span className="it"><svg width="28" height="10" aria-hidden="true" viewBox="0 0 28 10"><path d="M1 5 H27" stroke="currentColor" strokeWidth="2" /><circle cx="14" cy="5" r="2.2" fill="currentColor" /></svg>先備</span>
           <span className="it"><svg width="28" height="10" aria-hidden="true" viewBox="0 0 28 10"><path d="M1 5 H27" stroke="currentColor" strokeWidth="2" strokeDasharray="4 3" /></svg>延伸</span>
@@ -864,7 +860,7 @@ export function CityMapView({
         ) : (
           <div>
             <h2 className="text-xl font-bold">知識地圖</h2>
-            <p className="mt-2 text-sm leading-6">四個領域是空間，由內而外是國小到大學。點一個領域放大，再點階段，然後點節點。實線是先備，虛線是延伸。</p>
+            <p className="mt-2 text-sm leading-6">每個領域是一塊扇形，知識點越多扇形越大；由內而外是國小到大學。點一個領域放大，再點階段，然後點節點。實線是先備，虛線是延伸。</p>
             <p className="mt-3 text-sm leading-6">下一輪預留 {data.lots.filter((item) => item.featured).length} 個空間，這一輪還沒有節點。</p>
             <button
               type="button"
