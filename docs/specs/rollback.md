@@ -75,6 +75,8 @@ gcloud run services update-traffic mido-learning-frontend \
 
 結論：`KP_ENABLED` 是**執行期**開關。改它要重啟行程（Cloud Run 會為新的 env 開一個 revision），**不用**重新 build image。本機重啟不到 1 秒；Cloud Run 新 revision 通常一分鐘內接流量，這次沒有對正式服務計時。
 
+> 2026-10-30 補註（`docs/kp-db-restructure.md` 第 17 節）：「不用重新 build」只對請求時算的頁面成立：middleware、首頁、`/api/kp-launch`、`/kp/index.json`、sitemap，以及先 `await headers()` 的 `/kp`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`。靜態詳細頁（`/kp/概念/學段`、`/kp/概念`、`/kp-v2/概念/學段`）的跨學門連結在 build 時讀 `KP_ENABLED` 與學門旗標，要重新 build。正式旗標現在只從 `deploy-frontend.yml` 的 `KP_BUILD_FLAGS`／`KP_RUNTIME_FLAGS` 改。
+
 `next start` 會警告 `output: "standalone"` 應改跑 `node .next/standalone/server.js`。正式 Dockerfile 的 `CMD` 就是 `node server.js`。兩種進入點都讀得到行程上的 `KP_ENABLED`。
 
 另外兩個變數是 **build 期**，關掉上線開關不會改變它們：
@@ -111,6 +113,8 @@ gcloud run services update mido-learning-frontend \
 | `node .next/standalone/server.js`（`PORT=3000`）先不設、再設兩個旗標 | 關：約 271ms 就緒，`/` 200，`/city-home` 與 `/kp` 404。開：約 265ms 就緒，`/` 與 `/kp/map` 都是 200，首頁 HTML 有 100 棟建築。 |
 
 結論：`KP_HOME_ENABLED` 和 `KP_ENABLED` 都是執行期開關。關掉任一個只要重啟行程（Cloud Run 開新 revision），不用重新 build。草稿要不要進 image 才需要重新 build。
+
+> 2026-10-30 補註（`docs/kp-db-restructure.md` 第 17 節）：「不用重新 build」只對請求時算的頁面成立：middleware、首頁、`/api/kp-launch`、`/kp/index.json`、sitemap，以及先 `await headers()` 的 `/kp`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`。靜態詳細頁（`/kp/概念/學段`、`/kp/概念`、`/kp-v2/概念/學段`）的跨學門連結在 build 時讀 `KP_ENABLED` 與學門旗標，要重新 build。正式旗標現在只從 `deploy-frontend.yml` 的 `KP_BUILD_FLAGS`／`KP_RUNTIME_FLAGS` 改。
 
 ## 3. 第二道：Cloud Run 回到上一版
 
@@ -200,7 +204,7 @@ revert 之後要重新部署，流量才會離開含 `/kp` 的 image。只 rever
 
 - `main` 已含上述 PR，並且打了 `pre-kp-launch`（這份文件沒有代打）。
 - 確認這張 image 是不是草稿 build。正式 Dockerfile **沒有** `KP_INCLUDE_DRAFTS`。已發布的只有主線 `pm.estimate` 四站：`pm.breakdown@es`、`pm.triangle@jh`、`pm.estimate@sh`、`pm.evm@uni`。正式 image 的細節頁與地圖只含這四棟；其餘草稿要另建 `KP_INCLUDE_DRAFTS=true` 的 image 才看得到。不要把那個變數寫進正式 workflow。
-- `KP_HOME_ENABLED` 預設不要設，而且只有 `KP_ENABLED` 也是 `true` 時才生效。關掉任一個都是 `gcloud run services update ... --remove-env-vars`，**不用**重新 build。不要用 `--set-env-vars`，那個會清掉服務上其他環境變數。下一次正常的 `gcloud run deploy`（workflow 沒帶 env 旗標）會保留已經設上的變數。若先前用 `--to-revisions` 鎖過流量，恢復正常部署前要先 `--to-latest`（見第 3 節）。
+- `KP_HOME_ENABLED` 預設不要設，而且只有 `KP_ENABLED` 也是 `true` 時才生效。關掉任一個都是 `gcloud run services update ... --remove-env-vars`，**不用**重新 build。不要用 `--set-env-vars`，那個會清掉服務上其他環境變數。下一次正常的 `gcloud run deploy`（workflow 沒帶 env 旗標）會保留已經設上的變數。（2026-10-30 補註：#67 之後部署 workflow 會用 `KP_RUNTIME_FLAGS` 帶 `--update-env-vars`，下一次部署會把 `KP_*` 設回 workflow 裡的值；要長期關掉，改 workflow 的值，見 `docs/kp-db-restructure.md` 第 17.4 節。）若先前用 `--to-revisions` 鎖過流量，恢復正常部署前要先 `--to-latest`（見第 3 節）。
 - D09 授權仍是空的。頁面文案是「授權文字尚未公告」，`data-testid="kp-license-body"` 是空的。不要在回滾或上線時補上 CC 條文。
 - 草稿網址不進 sitemap。只有一個已發布階段的 concept 不放會轉址的 `/kp/{concept}`。主線只放至少有一站 published 的。`/kp/map` 是 noindex，不進 sitemap。`KP_ENABLED` 關掉時整份是空的。筆數不寫死。
 - `to_verify` 的「課綱對應待核對」在正式站也會出現，含大學頁。

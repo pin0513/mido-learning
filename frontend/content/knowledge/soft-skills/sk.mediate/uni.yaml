@@ -1,8 +1,13 @@
+# B28 提案：sk.mediate@uni
+# - 補 goal、review、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（大學）；沒有 curriculum_108、est_time。
+# - 依據：Model Standards of Conduct for Mediators 2005（調解的定義、自願決定、中立、保密、做不到中立就退出、遇到暴力要停止）＋聯合國調解指引（同意、平衡、傾聽）＋ Harvard PON（立場與需要）。
+# - 安全：有暴力、威脅或騷擾時不自己調解，停止並陪當事人找學校或專業協助（本站建議）。
+# - 原 review 的 1–5 分、4 分以上標成示意；角色扮演和真實衝突都要兩方同意。
 id: sk.mediate@uni
 concept: sk.mediate
 title: 當調解人：幫兩方聽懂彼此
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,10 +16,21 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 草稿：大學不對應 108 課綱，以學門路徑對應。
-- 引用的框架只寫名稱（調解、利益與立場），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼，以學門路徑對應（同 main 已發布的 sk.facilitate@uni、sk.persuade@uni）；軟實力大學沒有對應的高中先備代碼，所以也不列 108 先備來源。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
+- 英文 PDF 的引文避開彎引號與撇號；PDF 換行處的斷字照原詞接回，其餘空白照原文；中文說明和翻譯是本站整理。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- Model Standards of Conduct for Mediators 是美國 AAA、ABA、ACR 給專業調解人的行為準則（ICDR 網站提供，PDF 沒有印頁碼，頁碼用 PDF 頁）；聯合國指引是寫給國際和平調解的（印的頁碼是 PDF 頁減 2）。本點只借調解的定義與原則，用在大學生協助室友、社團或同事的意見衝突（本站建議）。
+- 安全界線：How 第三段寫明有暴力、威脅、騷擾，或自己做不到中立時，不自己調解，停止並陪當事人找學校、專業人員；遇到家庭暴力、性侵害或性騷擾可以撥 113 保護專線（24 小時免付費），有立即危險就打 110（本站建議；電話是本站整理）；113 依衛福部保護服務司是「24小時全年無休的服務專線」，受理家庭暴力、性侵害、性騷擾的通報與求助。How 第一段先說保密的例外：談到有人可能受傷時不在保密範圍（本站建議）。依據 Model Standards 的 withdraw 與 domestic abuse or violence 兩條。
+- 原 review 的 1–5 分、4 分以上標成示意（分數是示意）；原 review 的我覺得對方懂我在乎什麼拿掉引號，改成兩方各評一到五分。真實衝突或角色扮演都要先徵得兩方同意（本站建議）。
+- PON 部落格（Katie Shonk，2026 年 6 月 30 日）講的是談判；本點借它的立場與需要（positions／interests）區分，用在調解人幫兩方說出需要（本站建議）。
+- 原有草稿說明「草稿：大學不對應 108 課綱，以學門路徑對應。」已處理：見第一條，大學點維持不對應 108 課綱。
+- 原有草稿說明「引用的框架只寫名稱（調解、利益與立場）…」已處理：依 Model Standards of Conduct for Mediators 2005、聯合國調解指引與 Harvard PON 的部落格改寫，英文短句逐字引用，中文說明是本站整理。
+- guiding_questions 補到三題，三題的答案都寫在 Why 或 How 內文（qa 只是摘要）。
+- 原 scenario「親子共學：手足吵架時，大人改當調解人：不判誰對，只請兩人輪流複述對方在乎的事。」大學點改成家人之間有意見不同時，由大學生當調解人，補上本站建議；有暴力時不適用，見安全界線。
+- 原 ai.delegable「整理雙方說法的重點」補上使用條件（本站建議）。
 prerequisites:
 - sk.hardtalk@sh
 - pm.conflict@sh
@@ -23,7 +39,7 @@ links:
   how: []
   related: []
   deeper: []
-link_notes: 框架：調解、利益與立場。跨學門先學：專案管理「衝突與協商」。
+link_notes: 框架：調解（Model Standards of Conduct for Mediators）、利益與立場（Harvard PON）。
 competency:
   specialist:
   - 同理溝通
@@ -32,20 +48,167 @@ competency:
   - 領導
 ai:
   delegable:
-  - 整理雙方說法的重點
+  - 整理雙方說法的重點（先徵得兩方同意，不輸入姓名和可辨認的細節，本站建議）
   human_experience:
-  - 保持中立，在場陪兩方把話說完
-idea: 調解人不判對錯，而是讓兩方輪流說，請一方複述「你聽到他在乎什麼」，把立場轉成需要，再一起想選項。調解人要中立，也要知道什麼時候該請專業的人。
+  - 保持中立，讓兩方都覺得被聽見
+idea: 調解人不判對錯，而是讓兩方輪流說，請一方複述對方在乎什麼，把立場轉成需要，再一起想選項。調解人要中立，也要知道什麼時候該停下來，請專業的人協助。
 guiding_questions:
 - 兩個朋友吵架都來找你，你要先站哪一邊？
-scenario: 親子共學：手足吵架時，大人改當調解人：不判誰對，只請兩人輪流複述對方在乎的事。
-goal: 協助兩個有衝突的人輪流說、互相複述，找到雙方都在乎的事。
-review: 在社團或工作中協助一次真實的意見衝突（或做角色扮演），會後請兩方各回答「我覺得對方懂我在乎什麼」1–5 分，兩方都 4 分以上。
+- 立場和需要差在哪裡？
+- 什麼情況不該自己調解？
+scenario: 親子共學：家人之間對一件事意見不同時，大學生改當調解人：不判誰對，只請兩人輪流複述對方在乎的事（本站建議）。
+goal: 協助有衝突的兩方輪流說、互相複述，從各自的立場找到雙方都在乎的需要，再由他們自己選做法。
+review: 不看本頁，說出調解人為什麼不選邊、立場和需要差在哪、什麼情況要停下來找專業協助；並在兩方都同意下，協助一次社團或工作中的真實意見衝突，或做一次角色扮演，會後請兩方各用一到五分評覺得對方懂自己在乎什麼，兩方都四分以上（分數是示意）。
 formats:
   slides: []
-  exercise: 目標：協助兩個有衝突的人輪流說、互相複述，找到雙方都在乎的事。　檢核：在社團或工作中協助一次真實的意見衝突（或做角色扮演），會後請兩方各回答「我覺得對方懂我在乎什麼」1–5 分，兩方都 4 分以上。
+  exercise: 目標：協助有衝突的兩方輪流說、互相複述，從各自的立場找到雙方都在乎的需要，再由他們自己選做法。　檢核：不看本頁，說出調解人為什麼不選邊、立場和需要差在哪、什麼情況要停下來找專業協助；並在兩方都同意下，協助一次社團或工作中的真實意見衝突，或做一次角色扮演，會後請兩方各用一到五分評覺得對方懂自己在乎什麼，兩方都四分以上（分數是示意）。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+why:
+  heading: 調解人不判誰對
+  body:
+  - Model Standards 這樣定義調解：「Mediation is a process in which an impartial third party facilitates communication and negotiation and promotes voluntary decision making by the parties to the dispute.」也就是中立的第三方幫兩方溝通，決定由兩方自己做（翻譯是本站整理）。聯合國的指引也說調解是「a voluntary process that requires the consent of the conflict parties to be effective.」（翻譯是本站整理）。
+  - 所以兩個朋友都來找你，你不先站任何一邊。調解人要能「run a balanced process that treats all actors fairly」（翻譯是本站整理）；Model Standards 也說，做不到中立就要退出：「If at any time a mediator is unable to conduct a mediation in an impartial manner, the mediator shall withdraw.」（翻譯是本站整理）。你一選邊，另一方可能就不願再說真話（本站整理）。
+  qa:
+    question: 兩個朋友吵架都來找你，你要先站哪一邊？
+    answer: 不站任何一邊。調解人的工作是讓兩方都能好好說、好好聽，由他們自己決定；Model Standards 說調解人是「an impartial third party」（翻譯是本站整理）。做不到中立就請別人協助。
+    source: msc-2005
+  items_title: 這一點用到的
+  items:
+  - title: 中立
+    text: 不選邊，兩方一樣對待。
+  - title: 自願
+    text: 要不要談、怎麼決定由兩方定。
+  - title: 立場與需要
+    text: 說出來的要求，和背後在乎的事。
+  - title: 保密
+    text: 不外傳，除非有人可能受傷。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會處理困難對話
+  - 會處理衝突協商
+  figures:
+  - mediate-compare
+  sources:
+  - msc-2005
+  - un-mediation
+how:
+  heading: 輪流說、複述，找需要
+  body:
+  - 先說好規則：兩方都同意才談，談的內容不外傳，除非談到有人可能受傷，一次一個人說，不打斷（本站建議）；Model Standards 說調解人要保密所有在調解中得知的資訊，例外是兩方另有約定或法律要求：「unless otherwise agreed to by the parties or required by applicable law.」（翻譯是本站整理）。接著請甲方說，說完請乙方用自己的話複述甲方在乎什麼，甲方確認聽對了再換人；PON 的建議是「Practice active listening」、「Clarify misunderstandings」（翻譯是本站整理）。
+  - 立場和需要不一樣：PON 說「Positions are surface-level statements.」，而「Beneath them lie interests—the underlying needs, motivations, and concerns driving those demands.」（翻譯是本站整理）。例如室友爭冷氣：立場是開到幾度，需要可能是一個怕熱睡不著、一個怕電費太高（例子是本站整理）。找到需要後，請兩方一起想選項，由他們自己選；調解人不替他們決定（本站建議）。
+  - 什麼情況不該自己調解：有暴力、威脅、騷擾，或一方怕另一方時，不要再談，停止並陪當事人找學校或專業人員；遇到家庭暴力、性侵害或性騷擾，可以撥 113 保護專線（24 小時免付費），有立即危險就打 110（本站建議；電話是本站整理）。衛福部說 113 是「24小時全年無休的服務專線」。Model Standards 說遇到暴力時要停止，「including, if necessary, postponing, withdrawing from or terminating the mediation.」（翻譯是本站整理）；自己做不到中立時也要退出。會後請兩方各用一到五分評覺得對方懂自己在乎什麼，兩方都四分以上才算彼此聽懂；有一方不到四分，就再輪流複述一次（分數是示意）。AI 只能在兩方都同意後幫忙整理雙方說法的重點，不輸入姓名和可辨認的細節（本站建議）。
+  qa:
+    question: 立場和需要差在哪裡？
+    answer: 立場是說出來的要求，需要是要求背後在乎的事。PON 說「Positions are surface-level statements.」（翻譯是本站整理）；兩方的立場常常對立，需要卻可能找得到一起滿足的做法。
+    source: pon-principled
+  items_title: 四步做
+  items:
+  - title: 說好規則
+    text: 兩方同意、保密、一次一人說。
+  - title: 輪流說與複述
+    text: 說完請對方用自己的話複述。
+  - title: 找出需要
+    text: 問立場背後在乎什麼。
+  - title: 一起想選項
+    text: 由兩方自己選做法。
+  checklist_title: 寫完檢查
+  checklist:
+  - 兩方都同意談
+  - 沒有選邊
+  - 兩方都被複述過
+  - 做法由兩方選
+  activity_figure: mediate-flow
+  sources:
+  - msc-2005
+  - pon-principled
+  - mohw-113
+what:
+  heading: 陪兩方找到共同需要
+  body:
+  - 學完後，你能在兩方同意下，協助一次意見衝突：保持中立，請兩方輪流說、互相複述，把立場轉成需要，由兩方自己選做法，也知道什麼時候該停下來找專業協助。
+  items_title: 學完能做到
+  items:
+  - title: 保持中立
+    text: 不選邊，兩方一樣對待。
+  - title: 把立場轉成需要
+    text: 問出要求背後在乎的事。
+  - title: 知道何時停下
+    text: 有暴力或做不到中立就停。
+  checklist_title: 自我檢核
+  checklist:
+  - 兩方輪流說過
+  - 找到共同需要
+  - 知道何時停下
+  notes:
+  - 本頁的室友爭冷氣例子是本站整理；調解原則取自 Model Standards of Conduct for Mediators 與聯合國調解指引，立場與需要取自 Harvard PON，中文說明是本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: mediate-flow
+  type: flow
+  alt: 調解五步驟：調解人說好規則，甲方說、乙方複述，乙方說、甲方複述，調解人問出雙方的需要，最後由雙方一起選做法。
+  steps:
+  - actor: 調解人
+    text: 說好規則
+  - actor: 甲方
+    text: 說，乙方複述
+  - actor: 乙方
+    text: 說，甲方複述
+  - actor: 調解人
+    text: 問出需要
+  - actor: 雙方
+    text: 一起選做法
+  source: msc-2005
+  caption: 流程是本站建議。
+- id: mediate-compare
+  type: compare
+  alt: 比較立場和需要：立場是說出來的要求，例如冷氣開到幾度；需要是背後在乎的事，例如睡得好、電費不要太高（例子是本站整理）。兩者不相等。
+  source: pon-principled
+  relation: not_equal
+  items:
+  - term: 立場
+    note: 說出來的要求，例如冷氣開幾度
+  - term: 需要
+    note: 背後在乎的事，例如睡得好、省電費
+  caption: 例子是本站整理。
+sources:
+- id: msc-2005
+  title: Model Standards of Conduct for Mediators（2005 年版）
+  publisher: 美國仲裁協會 AAA（2005 年 9 月 8 日通過）、美國律師協會 ABA（2005 年 8 月 9 日通過）、Association for Conflict Resolution（2005 年 8 月 22 日通過）；ICDR 網站提供
+  url: https://icdr.org/sites/default/files/document_repository/Model_Standards_of_Conduct_for_Mediators.pdf
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Mediation is a process in which an impartial third party facilitates communication and negotiation and promotes voluntary decision making by the parties to the dispute.」（p.2）；「If at any time a mediator is unable to conduct a mediation in an impartial manner, the mediator shall withdraw.」（p.4）；「A mediator shall maintain the confidentiality of all information obtained by the mediator in mediation, unless otherwise agreed to by the parties or required by applicable law.」（p.6）；「If a mediator is made aware of domestic abuse or violence among the parties, the mediator shall take appropriate steps including, if necessary, postponing, withdrawing from or terminating the mediation.」（p.8）
+- id: un-mediation
+  title: United Nations Guidance for Effective Mediation
+  publisher: 聯合國（2012 年）
+  url: https://peacemaker.un.org/sites/default/files/document/files/2022/09/guidanceeffectivemediationundpa2012english0.pdf
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Mediation is a voluntary process that requires the consent of the conflict parties to be effective.」（p.8）；「A mediator should be able to run a balanced process that treats all actors fairly and should not have a material interest in the outcome.」（p.10）
+- id: pon-principled
+  title: 'Principled Negotiation: Focus on Interests to Create Value'
+  publisher: Katie Shonk（Harvard Law School Program on Negotiation 每日部落格，2026 年 6 月 30 日）
+  url: https://www.pon.harvard.edu/daily/negotiation-skills-daily/principled-negotiation-focus-interests-create-value/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「Practice active listening」；「Clarify misunderstandings」；「Positions are surface-level statements.」；「Beneath them lie interests—the underlying needs, motivations, and concerns driving those demands.」
+- id: mohw-113
+  title: 113保護專線介紹
+  publisher: 衛生福利部保護服務司
+  url: https://dep.mohw.gov.tw/dops/cp-1183-6499-105.html
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「24小時全年無休的服務專線」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

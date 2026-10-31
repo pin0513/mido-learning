@@ -20,6 +20,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 草稿標題檢查用 frontend/scripts/kp-draft-titles.mjs（只用 Node 內建模組，不需要 pnpm install）。
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Build production image
         working-directory: frontend
         run: |
@@ -177,11 +183,7 @@ jobs:
               exit 1
             fi
           done
-          # B25 發布 sk.feelings@es 後，改查仍是草稿的 sk.nvc@jh。
-          if grep -F "非暴力溝通：觀察" /tmp/sk-on.html >/dev/null; then
-            echo "soft-skills homepage leaked a draft title"
-            exit 1
-          fi
+          # 草稿標題不露出改在下一步（四個執行時旗標全開）逐筆查各草稿所屬學門的清單頁。
           if grep -F "城市" /tmp/sk-on.html >/dev/null; then
             echo "soft-skills homepage contains 城市"
             exit 1
@@ -281,6 +283,37 @@ jobs:
           if ! curl -sf http://127.0.0.1:3002/sitemap.xml | grep -F "/kp/zh.punct/es" >/dev/null; then
             echo "sitemap missing a language point"
             exit 1
+          fi
+          # 草稿標題不露出：草稿從 content/knowledge 的 status: draft 算出來（scripts/kp-draft-titles.mjs，輸出 id、學門資料夾、標題），不手寫標題。
+          # 這一步四個執行時旗標（KP_ENABLED、KP_HOME_ENABLED、KP_SOFTSKILLS_ENABLED、KP_YUWEN_ENABLED）全開，每個學門的清單頁都會畫出來。
+          # 有草稿就逐筆查它所屬學門的清單頁（首頁 /?d=學門、/kp/discipline/學門）：要 200、不含草稿標題；草稿詳細頁要 404。
+          # 沒有草稿才略過，並印出原因，不靜靜通過；讀不到 id／title／status 的檔會讓腳本失敗（exit 2），這一步跟著失敗。
+          # 沒有草稿時，草稿不露出由單元測試（home-diagram.test.ts、city.test.ts、hidden-notice.test.ts 的合成內容）守住。
+          node frontend/scripts/kp-draft-titles.mjs frontend/content/knowledge > /tmp/kp-drafts.tsv
+          draft_count="$(grep -c . /tmp/kp-drafts.tsv || true)"
+          if [ "$draft_count" -eq 0 ]; then
+            echo "skip: draft-title leak check (0 drafts under content/knowledge; guarded by synthetic unit tests)"
+          else
+            echo "draft-title leak check: ${draft_count} drafts"
+            while IFS="$(printf '\t')" read -r draft_id draft_folder draft_title; do
+              for listing in "/?d=${draft_folder}" "/kp/discipline/${draft_folder}"; do
+                code="$(curl -sS -o /tmp/draft-listing.html -w '%{http_code}' "http://127.0.0.1:3002${listing}")"
+                if [ "$code" != "200" ]; then
+                  echo "GET ${listing} returned ${code}, expected 200 (listing for draft ${draft_id})"
+                  exit 1
+                fi
+                if sed 's/<!-- -->//g' /tmp/draft-listing.html | grep -F "$draft_title" >/dev/null; then
+                  echo "${listing} shows draft title ${draft_title} (${draft_id})"
+                  exit 1
+                fi
+              done
+              draft_path="/kp/${draft_id%@*}/${draft_id#*@}"
+              code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:3002${draft_path}")"
+              if [ "$code" != "404" ]; then
+                echo "GET ${draft_path} returned ${code}, expected 404 for draft ${draft_id}"
+                exit 1
+              fi
+            done < /tmp/kp-drafts.tsv
           fi
 
       - name: Run image with detail v2 flag

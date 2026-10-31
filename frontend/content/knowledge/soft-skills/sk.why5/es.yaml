@@ -186,14 +186,14 @@ figures:
   caption: 流程是本站建議。
 - id: why5-compare
   type: compare
-  alt: 比較兩層原因：表面原因是起不來；更深的原因是睡前看平板、太晚睡。
+  alt: 比較兩層原因：表面原因是起不來；更深的原因可能是睡前看平板、太晚睡。
   source: cms-5why
   relation: not_equal
   items:
   - term: 表面原因
     note: 起不來
   - term: 更深的原因
-    note: 睡前看平板，太晚睡
+    note: 可能是睡前看平板，太晚睡
   caption: 例子是本站整理。
 sources:
 - id: zonghe

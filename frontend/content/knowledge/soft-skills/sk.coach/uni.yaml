@@ -1,8 +1,13 @@
+# B28 提案：sk.coach@uni
+# - 補 goal、review、Why/How/What、兩張圖、來源；status 改 published；stage 只有 level（大學）；沒有 curriculum_108、est_time。
+# - 依據：加拿大公共服務學院的 GROW 工作單（教練的定義、四步各自的問題）＋ Imperial College 的 GROW 說明（Whitmore 提出、以學習者為中心）。
+# - 原 review 的 20 分鐘、1–5 分標成示意；錄音改成先徵得對方同意，不同意就談完馬上寫紀錄；提問多於建議的數法寫在 How。
+# - 安全：教練式對話不是心理諮商；對方談到傷害自己或他人、受到暴力時停止練習，陪他找專業協助（本站建議）。
 id: sk.coach@uni
 concept: sk.coach
 title: 教練式對話：用提問陪對方找答案
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,10 +16,21 @@ discipline:
   crosscutting: []
 stage:
   level: uni
-to_verify: true
+to_verify: false
 verify_notes:
-- 草稿：大學不對應 108 課綱，以學門路徑對應。
-- 引用的框架只寫名稱（GROW 教練模式），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼，以學門路徑對應（同 main 已發布的 sk.facilitate@uni、sk.persuade@uni）；軟實力大學沒有對應的高中先備代碼，所以也不列 108 先備來源。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
+- 英文 PDF 的引文避開彎引號與撇號；PDF 換行處的斷字照原詞接回，其餘空白照原文；中文說明和翻譯是本站整理。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 加拿大公共服務學院的工作單是寫給公務員領導課程的；Imperial College 的頁面是寫給大學部學生的學習指南。本點借它們的定義與四步問題，用在大學生陪同學或同事談（本站建議）。工作單印的頁碼就是 PDF 頁。
+- 原 review 的 20 分鐘、1–5 分標成示意；原 review 的錄音改成先徵得對方同意才錄，不同意就談完馬上寫下記得的提問和建議（本站建議）；錄音與談話內容是對方的個人資料，不交給 AI（本站建議）。原 review 的下一步是我自己想出來的拿掉引號。
+- 安全界線：教練式對話不是心理諮商或治療；How 第三段寫明對方談到傷害自己或他人、受到暴力或長期情緒低落時，停止練習，陪他找學校諮商中心或專業人員，也可以撥 1925 安心專線（24 小時免付費），有立即危險就打 110 或 119（本站建議；電話是本站整理）；1925 依衛福部心理健康司「提供24小時免付費心理諮詢服務」。How 第一段先說保密的例外：談到有人可能受傷時不在保密範圍（本站建議）。
+- 原 idea 的對方自己想出來的行動比較會真的去做，改成讓下一步由對方自己決定，不寫成保證的效果。
+- 原有草稿說明「草稿：大學不對應 108 課綱，以學門路徑對應。」已處理：見第一條，大學點維持不對應 108 課綱。
+- 原有草稿說明「引用的框架只寫名稱（GROW 教練模式）…」已處理：依加拿大公共服務學院 GROW 工作單與 Imperial College 的 GROW 說明改寫，英文短句逐字引用，中文說明是本站整理。ICF 的網站會擋自動讀取，本點不引 ICF。
+- guiding_questions 補到三題，三題的答案都寫在 Why 或 How 內文（qa 只是摘要）。
+- 原 scenario「親子共學：孩子遇到煩惱時，大人只用 GROW 四類問題陪他談，忍住不給答案；之後換孩子陪大人談。」大學點改成大學生陪家人談、再換家人陪大學生談，補上本站建議。
+- 原 ai.delegable「提供可以問的問題清單」補上使用條件（本站建議）。
 prerequisites:
 - sk.interview@sh
 - sk.feedback@sh
@@ -25,7 +41,7 @@ links:
   - pm.style@sh
   - pm.org@uni
   deeper: []
-link_notes: 框架：GROW 教練模式。
+link_notes: 框架：GROW 教練模式（Whitmore 提出）。
 competency:
   specialist:
   - 同理溝通
@@ -35,20 +51,159 @@ competency:
   - 提問
 ai:
   delegable:
-  - 提供可以問的問題清單
+  - 提供可以問的問題清單（不輸入對方姓名和談話內容，問題要自己挑過，本站建議）
   human_experience:
   - 忍住不給答案，陪對方想
-idea: 教練式對話常用 GROW 四步：目標（你想要什麼）、現況（現在怎樣）、選項（有哪些做法）、行動（你要先做哪一步）。多問少給答案，對方自己想出來的行動，比較會真的去做。
+idea: 教練式對話常用 GROW 四步：目標（你想要什麼）、現況（現在怎樣）、選項（有哪些做法）、行動（你要先做哪一步）。多問少給答案，讓下一步由對方自己決定。
 guiding_questions:
 - 朋友來問你意見，直接給建議和多問幾個問題，哪個對他比較有用？
-scenario: 親子共學：孩子遇到煩惱時，大人只用 GROW 四類問題陪他談，忍住不給答案；之後換孩子陪大人談。
-goal: 用目標、現況、選項、行動四類問題陪一個人談，讓下一步由他自己決定。
-review: 用 GROW 陪一位朋友或同事談 20 分鐘他想解決的事；錄音中你的提問多於建議，事後請對方評「下一步是我自己想出來的」1–5 分。
+- 四個步驟各可以問什麼問題？
+- 對方的煩惱超出你能陪的範圍時，怎麼辦？
+scenario: 親子共學：家人遇到想解決的事時，大學生只用 GROW 四類問題陪他談，忍住不給答案；之後換家人陪大學生談（本站建議）。
+goal: 用目標、現況、選項、行動四類問題，陪一個人談他想解決的事，讓下一步由他自己決定。
+review: 不看本頁，說出 GROW 四步各是什麼、各舉一個可以問的問題、什麼情況要停下來陪對方找專業協助；並用 GROW 陪一位朋友或同學談約二十分鐘（時間是示意）他想解決的事，談完寫下你問了幾個問題、給了幾個建議，提問要比建議多；再請對方用一到五分評下一步是不是自己想出來的（分數是示意）。錄音要先徵得對方同意（本站建議）。
 formats:
   slides: []
-  exercise: 目標：用目標、現況、選項、行動四類問題陪一個人談，讓下一步由他自己決定。　檢核：用 GROW 陪一位朋友或同事談 20 分鐘他想解決的事；錄音中你的提問多於建議，事後請對方評「下一步是我自己想出來的」1–5 分。
+  exercise: 目標：用目標、現況、選項、行動四類問題，陪一個人談他想解決的事，讓下一步由他自己決定。　檢核：不看本頁，說出 GROW 四步各是什麼、各舉一個可以問的問題、什麼情況要停下來陪對方找專業協助；並用 GROW 陪一位朋友或同學談約二十分鐘（時間是示意）他想解決的事，談完寫下你問了幾個問題、給了幾個建議，提問要比建議多；再請對方用一到五分評下一步是不是自己想出來的（分數是示意）。錄音要先徵得對方同意（本站建議）。
 audience:
 - adult
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+why:
+  heading: 用提問陪對方找答案
+  body:
+  - 加拿大公共服務學院的教練工作單這樣定義：「Coaching is a confidential process that meets a person where they are and uses a process of questioning and personal discovery to support growth and sustainable change in achieving professional and personal goals.」也就是保密、從對方現在的狀況出發，用提問陪他自己發現（翻譯是本站整理）。
+  - Imperial College 的學習指南說「One of the earliest models is the GROW model, developed by Sir John Whitmore.」，它是「a learner-centred approach to structuring a conversation」（翻譯是本站整理）。給建議，是把你的答案交給對方；提問，是讓對方說出只有他知道的情況和在乎的事，再自己選（本站整理）。如果對方缺的只是資訊，例如報名截止日，就直接告訴他（本站建議）。
+  qa:
+    question: 朋友來問你意見，直接給建議和多問幾個問題，哪個對他比較有用？
+    answer: 看情況。缺資訊就直接告訴他；要他自己做決定的事，多問幾個問題通常比較有用，因為只有他知道自己的情況。工作單說教練是用「a process of questioning and personal discovery」陪對方（翻譯是本站整理）。
+    source: csps-grow
+  items_title: 這一點用到的
+  items:
+  - title: 目標
+    text: 對方想要達到什麼。
+  - title: 現況
+    text: 現在怎樣、卡在哪裡。
+  - title: 選項
+    text: 有哪些可能的做法。
+  - title: 行動
+    text: 第一步是什麼、何時做。
+  checklist_title: 開始前先確認
+  checklist:
+  - 會問開放式問題
+  - 會給回饋也收回饋
+  figures:
+  - coach-compare
+  sources:
+  - csps-grow
+  - imperial-grow
+how:
+  heading: 四類問題陪對方談
+  body:
+  - 開始前先說好：我會多問少給答案，談的內容不外傳，除非談到有人可能受傷；要錄音先問對方，同意才錄，不同意就談完馬上寫下記得的內容（本站建議）。先問目標，工作單的例子是「What do you want to achieve?」、「What does success look like?」；再問現況，例如「What is the current situation?」、「What are the internal/external obstacles?」（翻譯是本站整理）。
+  - 接著問選項：「What are your options?」、「What else could you do?」；Imperial 說這一步要「generate as many options as possible relating to your goal」（翻譯是本站整理）。最後問行動：「What is the first, next step?」、「When will you do it by?」，也可以問「On a scale of 1 to 10, what is your level of commitment to this action?」（翻譯是本站整理）。想給建議時，先把它改成問題，例如你想過先問助教嗎（例子是本站整理），選不選由對方決定（本站建議）。
+  - 談完馬上寫下你問了幾個問題、給了幾個建議，數一數提問有沒有比建議多；再請對方用一到五分評下一步是不是自己想出來的（分數是示意）。教練式對話不是心理諮商：對方談到想傷害自己或他人、受到暴力，或長期情緒低落，就停止練習，陪他找學校諮商中心或專業人員，也可以撥 1925 安心專線（24 小時免付費）；有立即危險就打 110 或 119（本站建議；電話是本站整理）。衛福部說 1925 安心專線「提供24小時免付費心理諮詢服務」。AI 可以提供問題清單，但不輸入對方姓名和談話內容（本站建議）。
+  qa:
+    question: 四個步驟各可以問什麼問題？
+    answer: 目標問想達到什麼，現況問現在怎樣、卡在哪，選項問還有什麼做法，行動問第一步和何時做。工作單的例子有「What do you want to achieve?」和「What is the first, next step?」（翻譯是本站整理）。
+    source: csps-grow
+  items_title: 四步做
+  items:
+  - title: 說好規則
+    text: 多問少答、保密、錄音先問。
+  - title: 問目標和現況
+    text: 想達到什麼？卡在哪？
+  - title: 問選項
+    text: 還有什麼做法？
+  - title: 問第一步
+    text: 先做什麼？何時做？
+  checklist_title: 寫完檢查
+  checklist:
+  - 提問比建議多
+  - 下一步對方定
+  - 錄音有同意
+  activity_figure: coach-flow
+  sources:
+  - csps-grow
+  - imperial-grow
+  - mohw-1925
+what:
+  heading: 讓下一步由對方決定
+  body:
+  - 學完後，你能用目標、現況、選項、行動四類問題陪一個人談，忍住不給答案，讓他自己決定第一步，也知道什麼時候該停下來陪他找專業協助。
+  items_title: 學完能做到
+  items:
+  - title: 問出目標
+    text: 幫對方說清楚想要什麼。
+  - title: 陪對方想選項
+    text: 多問還有什麼做法。
+  - title: 讓對方定第一步
+    text: 做什麼、何時做由他決定。
+  checklist_title: 自我檢核
+  checklist:
+  - 忍住沒給答案
+  - 對方定了下一步
+  - 知道何時轉介
+  notes:
+  - 本頁的問助教例子是本站整理；GROW 四步的英文問題取自加拿大公共服務學院的工作單，中文說明是本站整理。
+  - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
+  sources:
+  - genai-student
+figures:
+- id: coach-flow
+  type: flow
+  alt: 教練式對話五步驟：教練先說好規則，問目標，問現況，問選項，最後由對方決定第一步。
+  steps:
+  - actor: 教練
+    text: 說好規則
+  - actor: 教練
+    text: 問目標
+  - actor: 教練
+    text: 問現況
+  - actor: 教練
+    text: 問選項
+  - actor: 對方
+    text: 決定第一步
+  source: csps-grow
+  caption: 流程是本站建議。
+- id: coach-compare
+  type: compare
+  alt: 比較給建議和教練式提問：給建議是把你的答案交給對方；教練式提問是讓對方說出自己的情況和在乎的事，再自己選。兩種做法互相對照。
+  source: csps-grow
+  relation: versus
+  items:
+  - term: 給建議
+    note: 你的答案，對方照做或不做
+  - term: 教練式提問
+    note: 對方說出情況，自己選下一步
+  caption: 例子是本站整理。
+sources:
+- id: csps-grow
+  title: 'Job Aid: Using the GROW Model in a Coaching Approach'
+  publisher: 加拿大公共服務學院 Canada School of Public Service（加拿大政府）
+  url: https://ecolecanada.gc.ca/tools/jobaids/pdfs/grow-model-approach-eng.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「Coaching is a confidential process that meets a person where they are and uses a process of questioning and personal discovery to support growth and sustainable change in achieving professional and personal goals.」（p.1）；「What do you want to achieve?」（p.3）；「What does success look like?」（p.3）；「What is the current situation?」（p.4）；「What are the internal/external obstacles?」（p.4）；「What are your options?」（p.5）；「What else could you do?」（p.5）；「What is the first, next step?」（p.6）；「When will you do it by?」（p.6）；「On a scale of 1 to 10, what is your level of commitment to this action?」（p.6）
+- id: imperial-grow
+  title: The GROW coaching model（Success Guide）
+  publisher: Imperial College London（Arti Maini 撰寫，Imperial Coaching Academy）
+  url: https://www.imperial.ac.uk/students/success-guide/ug/effective-study/coaching/the-grow-coaching-model/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「One of the earliest models is the GROW model, developed by Sir John Whitmore.」；「a learner-centred approach to structuring a conversation」；「generate as many options as possible relating to your goal」
+- id: mohw-1925
+  title: 1925安心專線（依舊愛我）
+  publisher: 衛生福利部心理健康司
+  url: https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「提供24小時免付費心理諮詢服務」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

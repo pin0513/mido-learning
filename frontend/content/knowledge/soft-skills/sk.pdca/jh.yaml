@@ -1,8 +1,13 @@
+# B26 提案：sk.pdca@jh
+# - 補 grades（七至九年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：綜合活動 2c-IV-1（計畫與執行）、自然科學 pe-IV-1（計劃測試、預測結果）。
+# - 依據：美國 CMS 的 PDSA 範本與 AHRQ 的 PDSA 說明（先想好怎麼量、小規模試、和預測比較、Adopt/Adapt/Abandon）。
+# - domains 的科技改成自然科學；標題維持 PDCA，說明 CMS、AHRQ 寫成 PDSA（見 verify_notes）。
 id: sk.pdca@jh
 concept: sk.pdca
 title: PDCA：計畫、執行、檢查、改進
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,18 +16,41 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 綜合活動
-  - 科技
+  - 自然科學
   core_competencies:
   - A2
   - A3
   issues: []
-to_verify: true
+  performances:
+  - 2c-IV-1
+  - pe-IV-1
+  contents: []
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（PDCA 循環），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 A2、A3：依總綱 p.4–6 國民中學教育的 J-A2、J-A3 與綜合活動領綱 p.3 的綜-J-A2、綜-J-A3，自然科學領綱 p.4–5 的自-J-A2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 7、8、9：本點的代碼都是第四學習階段（IV），國中的學習重點沒有再分年級；總綱 p.7 說國民中學七、八、九年級為第四學習階段。
+- est_time 依綜合活動領綱 p.2：第四學習階段綜合活動每週 3 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱與總綱比 PDF 頁少 4，自然科學領綱少 4；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 綜合活動 2c-IV-1、自然科學 pe-IV-1 都沿用代碼表的文字與頁碼。
+- 健康與體育領綱也有同號的學習表現：1b-IV-2、2a-IV-1、2a-IV-3、2c-IV-1（健體 p.26），文字和綜合活動不同；健體不在代碼表，代碼表以代碼為鍵，將來要收健體要先改 schema（taxonomy 的綜合活動區塊加了註解）。健體的學習內容 Da-IV-1、Db-IV-1（健體 p.28）沒有科目字首，本點的家 Da-IV-1、輔 Db-IV-1 帶字首，鍵不衝突。
+- 原 curriculum_108.domains 是綜合活動、科技；本點引的是自然科學 pe-IV-1（計劃適當次數的測試、預測活動的可能結果），科技領綱沒有對應計畫、測試、檢討改進的條目被引用，所以科技改成自然科學。
+- 標題維持 PDCA（原稿）。CMS、AHRQ 的工具都寫成 PDSA（Study），第三步看結果、和預測比較；本頁把兩種寫法當成同一個循環教，並在 How 說明（本站整理）。Act 依 CMS 寫成 Adopt、Adapt、Abandon（保留、修改或放棄）。
+- 原 review 的兩週紀錄表、P 欄、C 欄、A 欄保留；goal、review、What 的兩週都標成天數是示意。
+- 原 scenario「親子共學：親子各跑一輪自己的 PDCA（孩子：讀書方法；大人：運動或睡眠），兩週後互相報告數字。」保留做法，補上本站建議。
+- 原 ai.delegable「整理紀錄、畫成圖表」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（PDCA 循環）…」已處理：依美國聯邦醫療保險與補助服務中心（CMS）QAPI 的 PDSA 範本與 AHRQ 健康識能工具包的 PDSA 說明改寫，英文短句逐字引用（頁碼見來源），中文說明是本站整理。
+- 原 link_notes 的跨學門提示改寫成 ph.hypothesis 加標題，拿掉長引號。CMS、AHRQ 的工具是寫給醫療照護機構的；本點用在國中生改善讀書、作息（本站建議）。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 英文 PDF 的引文避開彎引號；PDF 換行處照原詞接回，其餘空白照原文。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites:
 - sk.polya@es
 - ph.hypothesis@jh
@@ -33,7 +61,7 @@ links:
   - pm.agile@sh
   deeper:
   - sk.design@sh
-link_notes: 框架：PDCA 循環。跨學門先學：哲學「假設與實驗：把問題變成可以檢驗的」。
+link_notes: 框架：PDCA 循環（CMS、AHRQ 的工具寫成 PDSA）。綜合活動 2c-IV-1；自然科學 pe-IV-1。跨學門先學：哲學 ph.hypothesis（假設與實驗）。
 competency:
   specialist:
   - 問題解決
@@ -42,21 +70,181 @@ competency:
   - 建模
 ai:
   delegable:
-  - 整理紀錄、畫成圖表
+  - 整理紀錄、畫成圖表（由老師或家長操作，本站建議）
   human_experience:
-  - 持續執行，誠實記錄
+  - 真的照計畫做，並誠實記錄
 idea: PDCA 是一個改進循環：計畫（要試什麼、怎麼量）、執行、檢查（用數字比較前後）、改進（保留、修改或放棄）。它跟科學實驗很像：先有假設，再用結果檢驗。
 guiding_questions:
 - 你怎麼知道新的讀書方法真的比較有效？
-scenario: 親子共學：親子各跑一輪自己的 PDCA（孩子：讀書方法；大人：運動或睡眠），兩週後互相報告數字。
-goal: 用兩週跑一輪 PDCA，用數字檢查辦法有沒有效，再決定怎麼改。
-review: 交一張兩週的 PDCA 紀錄表：P 欄寫清楚要量什麼、C 欄有前後的數字、A 欄寫出下一輪要改什麼；家長檢查 C 欄真的有數字。
+- PDCA 和 PDSA 有什麼不同？
+- 結果不如預期怎麼辦？
+scenario: 親子共學：親子各跑一輪自己的 PDCA（孩子：讀書方法；大人：運動或睡眠），兩週後互相報告數字（本站建議）。
+goal: 用兩週（天數是示意）跑一輪 PDCA，用數字檢查辦法有沒有效，再決定怎麼改。
+review: 交一張兩週（天數是示意）的 PDCA 紀錄表：P 欄寫清楚要量什麼、C 欄有前後的數字、A 欄寫出下一輪要改什麼；家長檢查 C 欄真的有數字。
 formats:
   slides: []
-  exercise: 目標：用兩週跑一輪 PDCA，用數字檢查辦法有沒有效，再決定怎麼改。　檢核：交一張兩週的 PDCA 紀錄表：P 欄寫清楚要量什麼、C 欄有前後的數字、A 欄寫出下一輪要改什麼；家長檢查 C 欄真的有數字。
+  exercise: 目標：用兩週（天數是示意）跑一輪 PDCA，用數字檢查辦法有沒有效，再決定怎麼改。　檢核：交一張兩週（天數是示意）的 PDCA 紀錄表：P 欄寫清楚要量什麼、C 欄有前後的數字、A 欄寫出下一輪要改什麼；家長檢查 C 欄真的有數字。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國中七至九年級綜合活動課
+  source: zonghe
+why:
+  heading: 先小小試，再看數字
+  body:
+  - 綜合活動課綱要國中生「善用各項資源，妥善計畫與執行個人生活中重要事務。」核心素養也提到要「檢核、評估學習及生活計畫」。自然科學課綱則要學生「計劃適當次數的測試、預測活動的可能結果。」
+  - 美國聯邦醫療保險與補助服務中心（CMS）的改善範本有一個先問的問題：「How will we know that change is an improvement (measures)?」，也就是先想好用什麼數字判斷有沒有變好（翻譯是本站整理）。美國醫療研究與品質局（AHRQ）也說，這個方法是「a way to test a change that is implemented.」，用來檢驗一個改變（翻譯是本站整理）。
+  qa:
+    question: 你怎麼知道新的讀書方法真的比較有效？
+    answer: 先決定要量什麼，例如每天小考的對題數；試之前先記下原本的數字，試完再比較（例子是本站建議）。CMS 的範本在計畫時就要問「What data need to be collected?」，也就是要收集哪些資料（翻譯是本站整理）。
+    source: cms-pdsa
+  items_title: 課綱的學習重點
+  items:
+  - title: 計畫與執行重要事務
+    text: 綜合活動 2c-IV-1：善用各項資源，妥善計畫與執行個人生活中重要事務。
+    code: 2c-IV-1
+  - title: 計劃測試、預測結果
+    text: 自然科學 pe-IV-1：能辨明多個自變項、應變項並計劃適當次數的測試、預測活動的可能結果。在教師或教科書的指導或說明下，能了解探究的計畫，並進而能根據問題特性、資源（例如：設備、時間）等因素，規劃具有可信度（例如：多次測量等）的探究活動。
+    code: pe-IV-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 選一件想改的事
+  - 準備紀錄表
+  figures:
+  - pdca-compare
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現；開頭的家、輔是家政、輔導的學習內容；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 自然科學的代碼：小寫字母開頭的是學習表現（pa 分析與發現、pe 計劃與執行）；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 總綱把國民中學七、八、九年級定為第四學習階段，所以本頁代碼中間都是 IV。
+  sources:
+  - zonghe
+  - sci108
+  - zonggang
+  - cms-pdsa
+  - ahrq-pdsa
+how:
+  heading: 計畫、執行、檢查、改進
+  body:
+  - 計畫（P）：寫下要試什麼、要量什麼、預測會怎樣（本站整理）。CMS 的範本問「What do you predict will happen and why?」，也建議「Plan a small test of change.」，先試一個小小的改變（翻譯是本站整理）。例如兩週內每天睡前複習英文單字，記下每天小考的對題數（例子是本站整理）。
+  - 執行（D）：照計畫做，CMS 寫「Carry out the test on a small scale.」，每天記在紀錄表上（翻譯是本站整理）。檢查（C）：把結果和原本的數字、和預測比一比，CMS 要寫下「Describe the measured results and how they compared to the predictions.」（翻譯是本站整理）。前後的數字變了，也可能是別的原因造成的，例如那段時間剛好比較不忙；所以也記下那段時間還有什麼不一樣（例子是本站整理）。CMS、AHRQ 把這一步寫成 Study（研究），所以叫 PDSA；本頁把 PDCA 和 PDSA 當成同一個循環來教（本站整理）。
+  - 改進（A）：依結果決定保留、修改或放棄，CMS 寫成 Adopt、「Adapt – modify the changes and repeat PDSA cycle.」和「Abandon – change your approach and repeat PDSA cycle.」（翻譯是本站整理）。結果不如預期也是有用的結果，寫下下一輪要改什麼再試一次；AHRQ 說「Each time you make an adjustment and test it again, you will do another cycle.」（翻譯是本站整理）。
+  qa:
+    question: PDCA 和 PDSA 有什麼不同？
+    answer: 第三步的名字不同：PDCA 寫檢查（Check），PDSA 寫研究（Study），都是看結果、和預測比較（本站整理）。AHRQ 的說明是「After implementation you will study the results.」，做完之後研究結果（翻譯是本站整理）。
+    source: ahrq-pdsa
+  items_title: 四步做
+  items:
+  - title: 計畫 P
+    text: 要試什麼、量什麼。
+  - title: 執行 D
+    text: 小小試，每天記。
+  - title: 檢查 C
+    text: 和原本、和預測比。
+  - title: 改進 A
+    text: 保留、修改或放棄。
+  checklist_title: 做的時候檢查一下
+  checklist:
+  - 寫了要量什麼
+  - 每天有記錄
+  - 有前後數字
+  - 寫了下一輪
+  activity_figure: pdca-flow
+  sources:
+  - cms-pdsa
+  - ahrq-pdsa
+what:
+  heading: 用數字決定下一步
+  body:
+  - 學完後，能用兩週（天數是示意）跑一輪 PDCA：計畫時寫好要量什麼，檢查時用前後的數字比較，再決定下一輪要保留、修改或放棄。
+  items_title: 學完能做到
+  items:
+  - title: 寫好計畫
+    text: 要試什麼、量什麼。
+  - title: 用數字檢查
+    text: 有前後的數字。
+  - title: 決定下一輪
+    text: 保留、修改或放棄。
+  checklist_title: 家長檢核
+  checklist:
+  - P 欄寫了要量什麼
+  - C 欄有前後數字
+  - A 欄寫了下一輪
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - genai-student
+figures:
+- id: pdca-flow
+  type: flow
+  alt: PDCA 五步驟：孩子寫計畫和預測、照做並記錄、比前後數字、決定怎麼改，親子互相報告。
+  steps:
+  - actor: 孩子
+    text: 寫計畫和預測
+  - actor: 孩子
+    text: 照做並記錄
+  - actor: 孩子
+    text: 比前後數字
+  - actor: 孩子
+    text: 決定怎麼改
+  - actor: 親子
+    text: 互相報告
+  source: cms-pdsa
+  caption: 流程是本站建議。
+- id: pdca-compare
+  type: compare
+  alt: 比較兩種判斷方式：憑感覺，不知道有沒有變好；看前後數字，知道要保留還是修改。
+  source: cms-pdsa
+  relation: versus
+  items:
+  - term: 憑感覺
+    note: 不知道有沒有變好
+  - term: 看前後數字
+    note: 知道要保留或修改
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：2c-IV-1「善用各項資源，妥善計畫與執行個人生活中重要事務。」（p.20）；領域核心素養：綜-J-A2「釐清學習目標，探究多元的思考與學習方法，養成自主學習的能力，運用適當的策略，解決生活議題。」（p.3）；綜-J-A3「因應社會變遷與環境風險，檢核、評估學習及生活計畫，發揮創新思維，運用最佳策略，保護自我與他人。」（p.3）；時間分配：「第四學習階段以實施領域教學為原則，包含家政、童軍、輔導，每週 3節課。」（p.2）；代碼說明：「『1a-IV-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 IV是第四學習階段；第三碼 1 是流水號。」（p.8）；學習內容「由家政、童軍和輔導的科目專業發展，以『家』、『童』、『輔』的簡稱示之」（p.8）
+- id: sci108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：pe-IV-1「能辨明多個自變項、應變項並計劃適當次數的測試、預測活動的可能結果。在教師或教科書的指導或說明下，能了解探究的計畫，並進而能根據問題特性、資源（例如：設備、時間）等因素，規劃具有可信度（例如：多次測量等）的探究活動。」（p.21）；領域核心素養：自-J-A2「能將所習得的科學知識，連結到自己觀察到的自然現象及實驗數據，學習自我或團體探索證據、回應多元觀點，並能對問題、方法、資訊或數據的可信性抱持合理的懷疑態度或進行檢核，提出問題可能的解決方案。」（p.4–5）；時間分配：「國民中學教育階段（七至九年級）自然科學領域學習節數為每週3節」（p.3）；代碼說明：學習表現的項目「問題解決（p）」（p.9），子項「分析與發現（a）」（p.9）、「計劃與執行（e）」（p.9），第 2 碼「第四學習階段（七至九年級，國民中學教育階段）」（p.9），領綱用羅馬數字表示，本站整理成拉丁字母 IV
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民中學教育）：J-A2「具備理解情境全貌，並做獨立思考與分析的知能，運用適當的策略處理解決生活及生命議題。」（p.4）；J-A3「具備善用資源以擬定計畫，有效執行，並發揮主動學習與創新求變的素養。」（p.5）；學習階段「國民中學七、八、九年級為第四學習階段」（p.7）
+- id: cms-pdsa
+  title: Plan-Do-Study-Act (PDSA) Cycle Template
+  publisher: 美國聯邦醫療保險與補助服務中心（CMS），QAPI 品質改善工具
+  url: https://www.cms.gov/medicare/provider-enrollment-and-certification/qapi/downloads/pdsacycledebedits.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「How will we know that change is an improvement (measures)?」（p.1）；「What do you predict will happen and why?」（p.2）；「Plan a small test of change.」（p.2）；「What data need to be collected?」（p.2）；「Carry out the test on a small scale.」（p.2）；「Describe the measured results and how they compared to the predictions.」（p.3）；「Adapt – modify the changes and repeat PDSA cycle.」（p.3）；「Abandon – change your approach and repeat PDSA cycle.」（p.3）；「Adopt – consider expanding the changes in your organization to additional residents, staff, and units.」（p.3）
+- id: ahrq-pdsa
+  title: Plan-Do-Study-Act Worksheet, Directions, and Examples（Health Literacy Universal Precautions Toolkit, 3rd Edition）
+  publisher: 美國衛生及公共服務部 醫療研究與品質局（AHRQ），Content last reviewed March 2024
+  url: https://www.ahrq.gov/health-literacy/improve/precautions/tool2b.html
+  accessed: '2026-10-30'
+  kind: government
+  supports: 「The Plan-Do-Study-Act (PDSA) method is a way to test a change that is implemented.」；「Each time you make an adjustment and test it again, you will do another cycle.」；「After implementation you will study the results.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）

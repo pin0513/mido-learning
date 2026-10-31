@@ -1,8 +1,13 @@
+# B26 提案：sk.empmap@jh
+# - 補 grades（七至九年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
+# - 課綱：國語文 1-IV-1（以同理心聆聽並記錄）、綜合活動 2a-IV-1、輔 Dc-IV-1（人際溝通、同理心）。
+# - 依據：Nielsen Norman Group 的同理心地圖說明（說、想、做、感受四格；分清證據與假設）。
+# - 綜合活動 2a-IV-1 是新加進代碼表的代碼（見 taxonomy patch）；domains 加上語文。
 id: sk.empmap@jh
 concept: sk.empmap
 title: 同理心地圖：說、想、做、感受
-status: draft
-version: "0.1"
+status: published
+version: '0.2'
 discipline:
   path:
   - 溝通與解決問題
@@ -11,17 +16,40 @@ discipline:
   crosscutting: []
 stage:
   level: jh
+  grades:
+  - 7
+  - 8
+  - 9
 curriculum_108:
   domains:
   - 綜合活動
+  - 語文
   core_competencies:
   - C2
   - A2
   issues: []
-to_verify: true
+  performances:
+  - 1-IV-1
+  - 2a-IV-1
+  contents:
+  - 輔 Dc-IV-1
+to_verify: false
 verify_notes:
-- 草稿：課綱對應只到領域、核心素養與議題，上線前請以教育部課綱與各科課綱核對。
-- 引用的框架只寫名稱（同理心地圖（設計思考）），教材內容是改寫的入門說明，上線前請核對原始出處的用語。
+- 核心素養 C2、A2：依總綱 p.4–6 國民中學教育的 J-C2、J-A2 與綜合活動領綱 p.3、p.5 的綜-J-A2、綜-J-C2，國語文領綱 p.5 的國-J-C2原文確認（表格窄欄分散對齊，字距大，文字用 pdftotext 原始順序層與頁面文字塊核對）。
+- stage.grades 填 7、8、9：本點的代碼都是第四學習階段（IV），國中的學習重點沒有再分年級；總綱 p.7 說國民中學七、八、九年級為第四學習階段。
+- est_time 依綜合活動領綱 p.2：第四學習階段綜合活動每週 3 節課；本點建議在綜合活動課上做，也可以親子一起練（本站建議）。
+- 頁碼都是頁腳印的頁碼：綜合活動領綱與總綱比 PDF 頁少 4，國語文領綱少 2；教育部學生版的 PDF 頁就是頁腳印的頁碼。
+- 綜合活動 2a-IV-1 原本不在代碼表，本批依綜合活動領綱 p.19 學習表現表原文加入（taxonomy patch）；國語文 1-IV-1、輔 Dc-IV-1 沿用代碼表的文字與頁碼。
+- 健康與體育領綱也有同號的學習表現：1b-IV-2、2a-IV-1、2a-IV-3、2c-IV-1（健體 p.26），文字和綜合活動不同；健體不在代碼表，代碼表以代碼為鍵，將來要收健體要先改 schema（taxonomy 的綜合活動區塊加了註解）。健體的學習內容 Da-IV-1、Db-IV-1（健體 p.28）沒有科目字首，本點的家 Da-IV-1、輔 Db-IV-1 帶字首，鍵不衝突。
+- 原 curriculum_108.domains 只有綜合活動，本點加上國語文 1-IV-1（以同理心聆聽、記錄、歸納），所以 domains 補語文；核心素養維持 C2、A2。
+- 原 guiding question 保留；原 goal 補上標出哪些是推測；原 review 的 3 格標成示意。
+- 原 scenario「親子共學：親子互畫：孩子畫爸媽的一天，爸媽畫孩子的一天，交換後只說『哪一格最像、哪一格猜錯』。」保留做法，補上本站建議。內層引號拿掉。
+- 原 ai.delegable「整理觀察紀錄」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
+- 原有草稿說明「課綱對應只到領域、核心素養與議題…」已處理：本點已逐條對照官方領綱與議題融入說明手冊原文（頁碼見來源）。
+- 原有草稿說明「引用的框架只寫名稱（同理心地圖（設計思考））…」已處理：依 Nielsen Norman Group 的同理心地圖文章改寫（說、想、做、感受四格，分清證據與假設），英文短句逐字引用，中文說明是本站整理。
+- Nielsen Norman Group 是美國的使用者經驗研究與顧問公司；原文是給設計團隊的方法，本點把對象換成家人，用在國中生練習同理（本站建議）。四格的中文名稱（說、想、做、感受）沿用原稿。
+- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號、撇號的句子或片段；中文說明和翻譯是本站整理。
+- 生成式 AI 的使用規則依教育部注意事項（學生版）；supports 逐段標頁碼（學生版的 PDF 頁就是頁腳印的頁碼）。
 prerequisites:
 - sk.otherside@es
 links:
@@ -31,7 +59,7 @@ links:
   - pm.stakeholder@sh
   deeper:
   - sk.interview@sh
-link_notes: 框架：同理心地圖（設計思考）。
+link_notes: 框架：同理心地圖（設計思考，Nielsen Norman Group）。國語文 1-IV-1；綜合活動 2a-IV-1、輔 Dc-IV-1。
 competency:
   specialist:
   - 同理溝通
@@ -40,21 +68,175 @@ competency:
   - 提問
 ai:
   delegable:
-  - 整理觀察紀錄
+  - 整理觀察紀錄（由老師或家長操作，本站建議）
   human_experience:
   - 去問本人、確認自己有沒有猜錯
 idea: 同理心地圖把一個人分成四格：說了什麼、做了什麼（看得到），可能在想什麼、可能有什麼感受（要推測）。看得到的寫事實，推測的要標出來，之後再去問本人確認。
 guiding_questions:
 - 一個人說「沒關係」的時候，心裡想的也是沒關係嗎？
-scenario: 親子共學：親子互畫：孩子畫爸媽的一天，爸媽畫孩子的一天，交換後只說「哪一格最像、哪一格猜錯」。
-goal: 為一個真實的人畫同理心地圖，分開寫出他說的、做的、想的和感受。
-review: 為一位家人畫同理心地圖（例如每天準備晚餐的爸爸），請本人在每格打勾或打叉「像不像我」；至少 3 格打勾，打叉的格子寫下自己猜錯的原因。
+- 哪兩格看得到，哪兩格要推測？
+- 猜錯了怎麼辦？
+scenario: 親子共學：親子互畫，孩子畫爸媽的一天，爸媽畫孩子的一天，交換後只說哪一格最像、哪一格猜錯（本站建議）。
+goal: 為一位真實的人畫同理心地圖，分開寫出他說的、做的、想的和感受，並標出哪些是推測。
+review: 為一位家人畫同理心地圖（例如每天準備晚餐的爸爸），請本人在每格打勾或打叉，看像不像他；至少 3 格打勾（數字是示意），打叉的格子寫下自己猜錯的原因。
 formats:
   slides: []
-  exercise: 目標：為一個真實的人畫同理心地圖，分開寫出他說的、做的、想的和感受。　檢核：為一位家人畫同理心地圖（例如每天準備晚餐的爸爸），請本人在每格打勾或打叉「像不像我」；至少 3 格打勾，打叉的格子寫下自己猜錯的原因。
+  exercise: 目標：為一位真實的人畫同理心地圖，分開寫出他說的、做的、想的和感受，並標出哪些是推測。　檢核：為一位家人畫同理心地圖（例如每天準備晚餐的爸爸），請本人在每格打勾或打叉，看像不像他；至少 3 格打勾（數字是示意），打叉的格子寫下自己猜錯的原因。
 audience:
 - kid
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-27'
+updated: '2026-10-30'
+est_time:
+  school: 國中七至九年級綜合活動課
+  source: zonghe
+why:
+  heading: 先看見對方，再猜他的心
+  body:
+  - 綜合活動課綱要國中生「體認人際關係的重要性，學習人際溝通技巧，以正向的態度經營人際關係。」輔導的學習內容也有「同理心、人際溝通、衝突管理能力的培養與正向經營人際關係。」國語課綱則要「以同理心，聆聽各項發言，並加以記錄、歸納。」
+  - 同理心地圖是設計思考常用的工具。美國的使用者經驗研究機構 Nielsen Norman Group 說，傳統的同理心地圖分成說（Says）、想（Thinks）、做（Does）、感受（Feels）四格，「The four quadrants of an empathy map surround the persona at the center.」，也就是四格圍著中間那個人（翻譯是本站整理）。把看到的和猜的分開寫，比較不會把自己的想法硬套在別人身上（本站整理）。
+  qa:
+    question: 一個人說「沒關係」的時候，心裡想的也是沒關係嗎？
+    answer: 不一定。說出口的話寫在說那一格，心裡的想法只能先猜，寫在想那一格並標出是猜的（本站建議）。Nielsen Norman Group 也提醒，四格有時會互相矛盾，「You may encounter positive actions next to negative emotions.」，而且「Those contradictions are worth investigating」，例如嘴上說好、看起來卻很累，就值得再去問清楚（翻譯和例子是本站整理）。
+    source: nng-empathy
+  items_title: 課綱的學習重點
+  items:
+  - title: 用同理心聆聽
+    text: 國語文 1-IV-1：以同理心，聆聽各項發言，並加以記錄、歸納。
+    code: 1-IV-1
+  - title: 學習人際溝通技巧
+    text: 綜合活動 2a-IV-1：體認人際關係的重要性，學習人際溝通技巧，以正向的態度經營人際關係。
+    code: 2a-IV-1
+  - title: 培養同理心
+    text: 綜合活動 輔 Dc-IV-1：同理心、人際溝通、衝突管理能力的培養與正向經營人際關係。
+    code: 輔 Dc-IV-1
+  checklist_title: 開始前先確認
+  checklist:
+  - 選好一位家人
+  - 準備紙和筆
+  figures:
+  - empmap-compare
+  notes:
+  - 國語文的代碼：數字開頭的是學習表現，第一碼是類別（1 聆聽、2 口語表達）；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 綜合活動的代碼：數字開頭的是學習表現；開頭的家、輔是家政、輔導的學習內容；中間的 IV 是第四學習階段（國中七至九年級）。
+  - 總綱把國民中學七、八、九年級定為第四學習階段，所以本頁代碼中間都是 IV。
+  sources:
+  - zonghe
+  - kuoyu
+  - zonggang
+  - nng-empathy
+how:
+  heading: 四格分開寫，再問本人
+  body:
+  - 先寫看得到的兩格（本站建議）。說：寫他真的說過的話，Nielsen Norman Group 說這一格最好是「verbatim, direct quotes」，也就是原話（翻譯是本站整理）。做：寫他做了什麼，文章建議「ask what the user actually does and how they go about it.」，也就是看他實際上做什麼、怎麼做（翻譯是本站整理）。
+  - 再寫要推測的兩格：想（他心裡可能在想什麼）、感受（他可能覺得怎樣），寫的時候標出是猜的（本站建議）。文章說，資料不夠也可以先畫，只要「the team is honest and clearly distinguishes evidence from assumptions.」，也就是誠實分清楚哪些是證據、哪些是猜測（翻譯是本站整理）。
+  - 最後問本人：拿給對方看，請他每格打勾（像）或打叉（不像）（本站建議）。打叉的格子，寫下自己猜錯的原因，例如只看到一次就下結論（例子是本站整理）。地圖只拿來確認自己懂了沒，不拿來評論對方；猜錯了就改，再問一次（本站建議）。
+  qa:
+    question: 哪兩格看得到，哪兩格要推測？
+    answer: 說和做看得到，寫你真的聽到、看到的事；想和感受要推測，寫的時候標出是猜的（本站整理）。文章說做這一格要問「what the user actually does」，也就是他實際上做了什麼（翻譯是本站整理）。
+    source: nng-empathy
+  items_title: 四步做
+  items:
+  - title: 寫說的話
+    text: 只寫真的聽到的。
+  - title: 寫做的事
+    text: 只寫真的看到的。
+  - title: 猜想法和感受
+    text: 標出是猜的。
+  - title: 請本人打勾
+    text: 打叉的寫原因。
+  checklist_title: 畫的時候檢查一下
+  checklist:
+  - 說的是原話
+  - 做的是看到的
+  - 猜的有標出
+  - 請本人看過
+  activity_figure: empmap-flow
+  sources:
+  - nng-empathy
+what:
+  heading: 分得清看到的和猜的
+  body:
+  - 學完後，能為一位真實的人畫同理心地圖，把他說的、做的（看得到）和想的、感受（要推測）分開寫，請本人確認，並說出自己哪裡猜錯。
+  items_title: 學完能做到
+  items:
+  - title: 分開四格
+    text: 說、做、想、感受。
+  - title: 標出推測
+    text: 想和感受標出是猜的。
+  - title: 請本人確認
+    text: 寫下猜錯的原因。
+  checklist_title: 家長檢核
+  checklist:
+  - 四格都有寫
+  - 推測有標出
+  - 本人打過勾叉
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。作業若用了 AI，要依規定註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊。
+  sources:
+  - genai-student
+figures:
+- id: empmap-flow
+  type: flow
+  alt: 同理心地圖五步驟：孩子寫說和做、猜想法和感受，家人每格打勾或打叉，孩子寫猜錯的原因，兩個人交換再畫。
+  steps:
+  - actor: 孩子
+    text: 寫說和做
+  - actor: 孩子
+    text: 猜想法和感受
+  - actor: 家人
+    text: 每格打勾打叉
+  - actor: 孩子
+    text: 寫猜錯原因
+  - actor: 兩個人
+    text: 交換再畫
+  source: nng-empathy
+  caption: 流程是本站建議。
+- id: empmap-compare
+  type: compare
+  alt: 比較同理心地圖的兩種格子：說和做看得到，寫事實；想和感受要推測，標出是猜的。
+  source: nng-empathy
+  relation: versus
+  items:
+  - term: 說、做
+    note: 看得到，寫事實
+  - term: 想、感受
+    note: 要推測，標出是猜的
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習重點：2a-IV-1「體認人際關係的重要性，學習人際溝通技巧，以正向的態度經營人際關係。」（p.19）；輔 Dc-IV-1「同理心、人際溝通、衝突管理能力的培養與正向經營人際關係。」（p.93）；領域核心素養：綜-J-A2「釐清學習目標，探究多元的思考與學習方法，養成自主學習的能力，運用適當的策略，解決生活議題。」（p.3）；綜-J-C2「運用合宜的人際互動技巧，經營良好的人際關係，發揮正向影響力，培養利他與合群的態度，提升團隊效能，達成共同目標。」（p.5）；時間分配：「第四學習階段以實施領域教學為原則，包含家政、童軍、輔導，每週 3節課。」（p.2）；代碼說明：「『1a-IV-1』中第一碼的 1 是第一個主題軸，a 是第一個主題項目；第二碼 IV是第四學習階段；第三碼 1 是流水號。」（p.8）；學習內容「由家政、童軍和輔導的科目專業發展，以『家』、『童』、『輔』的簡稱示之」（p.8）
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 學習表現：1-IV-1「以同理心，聆聽各項發言，並加以記錄、歸納。」（p.7）；領域核心素養：國-J-C2「在國語文學習情境中，與他人合作學習，增進理解、溝通與包容的能力，在生活中建立友善的人際關係。」（p.5）；代碼說明：學習表現「編碼說明，第一碼為『類別』，以阿拉伯數字編號。第二碼為『學習階段』，以羅馬數字編號」…「第三碼則為『流水號』。」（p.6）；學習表現類別「國語文之學習表現分為『聆聽』、『口語表達』、『標音符號與運用』、『識字與寫字』、『閱讀』與『寫作』六個類別」（p.6）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-10-30'
+  kind: curriculum
+  supports: 核心素養（國民中學教育）：J-A2「具備理解情境全貌，並做獨立思考與分析的知能，運用適當的策略處理解決生活及生命議題。」（p.4）；J-C2「具備利他與合群的知能與態度，並培育相互合作及與人和諧互動的素養。」（p.6）；學習階段「國民中學七、八、九年級為第四學習階段」（p.7）
+- id: nng-empathy
+  title: 'Empathy Mapping: The First Step in Design Thinking'
+  publisher: Nielsen Norman Group（Rachel Krause、Sarah Gibbons；2026 年 10 月 2 日版）
+  url: https://www.nngroup.com/articles/empathy-mapping/
+  accessed: '2026-10-30'
+  kind: reference
+  supports: 「The four quadrants of an empathy map surround the persona at the center.」；「verbatim, direct quotes」；「ask what the user actually does and how they go about it.」；「a map can be sketched even if research is lacking, as long as the team is honest and clearly distinguishes evidence from assumptions.」；「You may encounter positive actions next to negative emotions.」；「Those contradictions are worth investigating」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-10-30'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」（p.1）；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」（p.2）；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」（p.3）；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」（p.1）；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」（p.3）；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」（p.3）
