@@ -119,6 +119,11 @@ jobs:
           done
           check "/kp" /tmp/kp.html
           check "/kp/map" /tmp/kp-map.html
+          # 溝通與解決問題、語文旗標都沒設：地圖只有四個學區、100 個節點。
+          if ! grep -F 'data-building-count="100"' /tmp/kp-map.html >/dev/null; then
+            echo "/kp/map should have 100 points while soft-skills and yuwen are unset"
+            exit 1
+          fi
           if grep -F "溝通與解決問題" /tmp/home.html >/dev/null; then
             echo "homepage shows soft-skills while the flag is unset"
             exit 1
@@ -206,6 +211,12 @@ jobs:
             echo "GET /kp/zh.punct/es returned ${code}, expected 404 while yuwen is unset"
             exit 1
           fi
+          # 只開溝通與解決問題：地圖五個學區、133 個節點。
+          code="$(curl -sS -o /tmp/map-soft.html -w '%{http_code}' http://127.0.0.1:3001/kp/map)"
+          if [ "$code" != "200" ] || ! grep -F 'data-building-count="133"' /tmp/map-soft.html >/dev/null; then
+            echo "/kp/map returned ${code} or does not have 133 points with soft-skills on"
+            exit 1
+          fi
 
       - name: Run image with yuwen flag
         run: |
@@ -263,6 +274,11 @@ jobs:
           fi
           check "/kp"
           check "/kp/map"
+          # 六個學門全開：地圖六個學區、241 個節點。
+          if ! grep -F 'data-building-count="241"' /tmp/yuwen-body.html >/dev/null; then
+            echo "/kp/map should have 241 points with soft-skills and yuwen on"
+            exit 1
+          fi
           check "/kp/zh.punct/es"
           check "/kp/en.gept1/jh"
           check "/kp/ja.hira/es"

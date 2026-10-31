@@ -318,7 +318,7 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
    - 頁面裡「這個點連不連得出去」用 `isFolderLaunched(folder)`，它讀 `KP_ENABLED`＋`KP_SOFTSKILLS_ENABLED`，但讀的是 `next build` 當時的值。
    - 請求時讀的有：middleware、首頁（`/city-home`）、`/kp`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`、`/kp/index.json`、sitemap。所以執行時打開旗標，`/kp/sk.*` 會回 200，首頁會出現六格。
    - `/kp`、`/kp/layer/[id]`（`page.tsx:34`）、`/kp/stage/[id]`（`page.tsx:35`）、`/kp/competency/[code]` 也用 `isFolderLaunched`，但它們先呼叫 `await headers()`，在 build 輸出裡是 `ƒ`（請求時才算），不是靜態頁。全關與全開兩張 build 在同一組執行時旗標下渲染比對，這幾頁的差異是 0。
-   - build 時讀、寫死在頁面裡的只有靜態詳細頁：`/kp/概念/學段`、`/kp/概念`、`/kp-v2/概念/學段`（`KnowledgePointView`、`components/kp/v2/refs.ts`）。`/kp/map` 是靜態頁，但不看學門旗標，本來就只畫四個領域。
+   - build 時讀、寫死在頁面裡的只有靜態詳細頁：`/kp/概念/學段`、`/kp/概念`、`/kp-v2/概念/學段`（`KnowledgePointView`、`components/kp/v2/refs.ts`）。`/kp/map` 原本是靜態頁、只畫四個領域；加上語文與溝通與解決問題後改為先 `await headers()`、請求時套 `launchedCatalog`，旗標關的學門整塊不畫（全開六個學區 241 點，全關四個學區 100 點）。
    - 但別學門的頁面還是旗標關時的樣子。例如 `pm.team@jh` 的「把這裡當先備」不會列出 `sk.consensus@sh`，`ph.argument@jh` 不會連到 `sk.speech@jh`。
    - 反過來，旗標開著 build、執行時關掉，別學門的頁面會連到 middleware 回 404 的 `/kp/sk.*`。所以關掉旗標同樣要重新 build，不能只重啟行程。
    - #64 的反向對照證實了這點：旗標關的 build 只在執行時打開旗標，`ph.argument@jh → sk.speech@jh` 的連結不在。
