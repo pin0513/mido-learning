@@ -17,6 +17,7 @@ on:
       - "frontend/e2e/kp-published-only.spec.ts"
       - "frontend/e2e/kp-published-softskills.spec.ts"
       - "frontend/e2e/kp-detail-v2-flag-hidden.spec.ts"
+      - "frontend/e2e/folder-flags.ts"
       - "frontend/e2e/city-progress.spec.ts"
       - "frontend/e2e/city-views.spec.ts"
       - "frontend/e2e/city-home.spec.ts"
@@ -41,6 +42,7 @@ on:
       - "frontend/next.config.ts"
       - "frontend/.dockerignore"
       - ".github/workflows/validate-knowledge-points.yml"
+      - ".github/workflows/deploy-frontend.yml"
       - "frontend/components/layout/Header.tsx"
   push:
     branches: [main]
@@ -59,6 +61,7 @@ on:
       - "frontend/e2e/kp-published-only.spec.ts"
       - "frontend/e2e/kp-published-softskills.spec.ts"
       - "frontend/e2e/kp-detail-v2-flag-hidden.spec.ts"
+      - "frontend/e2e/folder-flags.ts"
       - "frontend/e2e/city-progress.spec.ts"
       - "frontend/e2e/city-views.spec.ts"
       - "frontend/e2e/city-home.spec.ts"
@@ -83,6 +86,7 @@ on:
       - "frontend/next.config.ts"
       - "frontend/.dockerignore"
       - ".github/workflows/validate-knowledge-points.yml"
+      - ".github/workflows/deploy-frontend.yml"
       - "frontend/components/layout/Header.tsx"
 
 jobs:
@@ -322,7 +326,8 @@ jobs:
             sleep 1
           done
 
-      # 同一份 build（不帶草稿、KP_* 全關，和正式 image 一樣），執行時用正式站的旗標再加 V2（docs/kp-db-restructure.md 第 17.5 節）。
+      # 同一份 build（不帶草稿、build 時 KP_* 全關；正式 image 自 #68 起改用 deploy-frontend.yml 的 KP_BUILD_FLAGS build，學門全開，那一份在本 job 最後兩步），
+      # 執行時用正式站的旗標再加 V2（docs/kp-db-restructure.md 第 17.5 節）。這一輪守住「build 時旗標關」的情況（例如回滾到旗標全關的 build）。
       # V2「學習順序」的「另有 N 個尚未發布」只能算草稿，不能把 build 時被旗標擋掉的已發布點算進去。只是 CI 行程的環境變數，不是正式旗標的值。
       - name: Published-only pages, V2 with production runtime flags
         env:
@@ -390,4 +395,56 @@ jobs:
               if ! curl -sf -o /dev/null http://127.0.0.1:3000/api/kp-launch; then break; fi
               sleep 1
             done
+          done
+
+      # 正式 image 的 build：不帶草稿，build 時旗標照 deploy-frontend.yml 的 KP_BUILD_FLAGS（frontend/scripts/kp-deploy-flags.mjs 讀，不另抄一份）。
+      # 靜態詳細頁的跨學門連結在 build 時決定；下面兩步用 E2E_BUILD_FLAGS 告訴 spec 這份 build 的旗標。
+      - name: Build without drafts, production build flags
+        env:
+          NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyCIDummyKeyForKpE2EOnly0000000
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: mido-learning.firebaseapp.com
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: mido-learning
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: mido-learning.appspot.com
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "000000000000"
+          NEXT_PUBLIC_FIREBASE_APP_ID: "1:000000000000:web:kp-e2e"
+        run: |
+          set -euo pipefail
+          KP_BUILD_FLAGS="$(node scripts/kp-deploy-flags.mjs KP_BUILD_FLAGS)"
+          echo "KP_BUILD_FLAGS=${KP_BUILD_FLAGS}"
+          echo "E2E_BUILD_FLAGS=${KP_BUILD_FLAGS}" >> "$GITHUB_ENV"
+          env $(tr ',' ' ' <<<"$KP_BUILD_FLAGS") pnpm build
+
+      # 同一份正式旗標 build 跑兩輪：執行時只開 KP_ENABLED、KP_HOME_ENABLED（同上面的 published-only），
+      # 再用正式站的執行時旗標加 V2（同上面的 V2 那一輪）。
+      - name: Published-only pages, production build flags
+        env:
+          E2E_BASE_URL: http://127.0.0.1:3000
+        run: |
+          for mode in published v2; do
+            (
+              if [ "$mode" = published ]; then
+                export KP_ENABLED=true KP_HOME_ENABLED=true E2E_PUBLISHED_COUNT=100
+                spec=e2e/kp-published-only.spec.ts
+              else
+                export KP_ENABLED=true KP_HOME_ENABLED=true KP_SOFTSKILLS_ENABLED=true KP_YUWEN_ENABLED=true KP_DETAIL_V2_ENABLED=true
+                spec=e2e/kp-detail-v2-flag-hidden.spec.ts
+              fi
+              pnpm exec next start -p 3000 > "/tmp/next-prod-flags-$mode.log" 2>&1 &
+              echo $! > /tmp/next.pid
+              for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+                curl -sf http://127.0.0.1:3000/api/kp-launch && break
+                sleep 2
+              done
+              echo "== $mode (build: $E2E_BUILD_FLAGS)"
+              status=0
+              pnpm exec playwright test "$spec" --reporter=list || status=$?
+              kill "$(cat /tmp/next.pid)" || true
+              pkill -f "next start -p 3000" || true
+              pkill -f "next-server" || true
+              for i in 1 2 3 4 5 6 7 8 9 10; do
+                if ! curl -sf -o /dev/null http://127.0.0.1:3000/api/kp-launch; then break; fi
+                sleep 1
+              done
+              exit "$status"
+            )
           done

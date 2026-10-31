@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { annulus, boxInside, cityNodeRadius, focusViewBox, placeTag, stageLabelBox, tagObstacles, viewBoxString, wheelViewBox, type CityMapData, type CityTag } from "@/lib/content/city";
@@ -243,7 +243,14 @@ export function CityMapView({
     return () => window.removeEventListener("popstate", onPop);
   }, [defaultView, rememberView]);
 
-  useEffect(() => {
+  // layout effect：視野在瀏覽器第一次繪製前就換好（伺服端不跑，React 19 也不再警告）。
+  // 手機版的小地圖永遠是整個圓：直接換，不做動畫。這裡直接問 matchMedia、不等 narrow ——
+  // hydration 那一輪 narrow 還是伺服端的 false，等它更新就會先畫出放大的視野再縮回整圓。
+  useLayoutEffect(() => {
+    if (readNarrow()) {
+      setViewBox(wheelViewBox(data));
+      return;
+    }
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       setViewBox(targetBox);
@@ -264,7 +271,7 @@ export function CityMapView({
     return () => cancelAnimationFrame(frame);
     // viewBox is the animation source; including it would restart every frame.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetBox]);
+  }, [targetBox, data]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -408,9 +415,11 @@ export function CityMapView({
             value={pathId}
             onChange={(event) => choosePath(event.target.value)}
           >
-            <option value="">不標路線</option>
+            <option value="" data-path-option="">
+              不標路線
+            </option>
             {data.landmarks.map((item) => (
-              <option key={item.id} value={item.id}>
+              <option key={item.id} value={item.id} data-path-option="">
                 {item.title}
                 {item.colearn ? "（有家庭時間）" : ""}
               </option>

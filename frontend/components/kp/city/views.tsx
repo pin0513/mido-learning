@@ -490,18 +490,17 @@ function MobileStages({
                 <span aria-hidden="true">{expanded ? "−" : "+"}</span>
               </button>
             </h3>
-            {expanded ? (
-              <div id={panel}>
-                <ul className="mt-2 space-y-2">
-                  {items.filter((building) => building.title && accept(building)).map((building) => (
-                    <li key={building.id}>
-                      <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
-                    </li>
-                  ))}
-                </ul>
-                <DraftNote count={items.filter((building) => !building.title && accept(building)).length} />
-              </div>
-            ) : null}
+            {/* 收起來的段落也留在 DOM（hidden），讓按鈕的 aria-controls 一直指得到面板。 */}
+            <div id={panel} hidden={!expanded} data-testid="city-mobile-panel">
+              <ul className="mt-2 space-y-2">
+                {items.filter((building) => building.title && accept(building)).map((building) => (
+                  <li key={building.id}>
+                    <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
+                  </li>
+                ))}
+              </ul>
+              <DraftNote count={items.filter((building) => !building.title && accept(building)).length} />
+            </div>
           </section>
         );
       })}
