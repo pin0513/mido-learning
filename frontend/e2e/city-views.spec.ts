@@ -127,6 +127,31 @@ test.describe("學習城市的三種檢視", () => {
     await expect(page.locator('[data-testid="city-district-label"]:not([visibility="hidden"])')).toHaveCount(4);
   });
 
+  test("手機版直接打開 ?d=language：小地圖一出現就是整個圓，不先閃一下放大的視野", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    // 每個 animation frame 記下地圖看得見時的 viewBox（從頁面一開始就記）。
+    await page.addInitScript(() => {
+      const seen: string[] = [];
+      (window as unknown as { __cityBoxes: string[] }).__cityBoxes = seen;
+      const tick = () => {
+        const svg = document.querySelector('[data-testid="city-map"]');
+        const box = svg?.getAttribute("viewBox");
+        if (svg && box && svg.getBoundingClientRect().width > 0 && seen.at(-1) !== box) seen.push(box);
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await page.goto("/kp/map?d=language", { waitUntil: "networkidle" });
+    await expect(page.getByTestId("city-map")).toBeVisible();
+    await page.waitForTimeout(500);
+    const boxes = await page.evaluate(() => (window as unknown as { __cityBoxes: string[] }).__cityBoxes);
+    expect(boxes.length).toBeGreaterThan(0);
+    // 只出現過一個視野：整個圓（正方形）。
+    expect(new Set(boxes).size).toBe(1);
+    const [, , w, h] = boxes[0].split(" ").map(Number);
+    expect(Math.abs(w - h)).toBeLessThan(0.5);
+  });
+
   test("手機版選了學區：小地圖在清單上面，階段一次展開一段", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/kp/map", { waitUntil: "networkidle" });
@@ -164,15 +189,25 @@ test.describe("學習城市的三種檢視", () => {
     await expect(stages.locator("button[aria-expanded]")).toHaveCount(4);
     await expect(stages.locator('button[aria-expanded="true"]')).toHaveCount(1);
     await expect(mobile.locator('[data-stage="es"] button[aria-expanded="true"]')).toHaveCount(1);
-    await expect(mobile.locator('[data-stage="jh"] li')).toHaveCount(0);
+    // 收起來的段落仍在 DOM（hidden）：每個按鈕的 aria-controls 都指得到面板。
+    const controls = await stages.locator("button[aria-expanded]").evaluateAll((buttons) =>
+      buttons.map((button) => {
+        const panel = document.getElementById(button.getAttribute("aria-controls") ?? "");
+        return { expanded: button.getAttribute("aria-expanded"), exists: Boolean(panel), hidden: panel?.hidden ?? null };
+      }),
+    );
+    expect(controls).toEqual(controls.map((item) => ({ expanded: item.expanded, exists: true, hidden: item.expanded !== "true" })));
+    await expect(mobile.locator('[data-stage="jh"] [data-testid="city-mobile-panel"]')).toBeHidden();
     await mobile.locator('[data-stage="jh"] button[aria-expanded]').click();
     await expect(page).toHaveURL(/[?&]s=jh/);
     await expect(mobile.locator('[data-stage="jh"] button[aria-expanded="true"]')).toHaveCount(1);
-    await expect(mobile.locator('[data-stage="es"] li')).toHaveCount(0);
+    await expect(mobile.locator('[data-stage="es"] [data-testid="city-mobile-panel"]')).toBeHidden();
+    await expect(mobile.locator('[data-stage="jh"] [data-testid="city-mobile-panel"]')).toBeVisible();
     expect(await mobile.locator('[data-stage="jh"] li').count()).toBeGreaterThan(0);
     // 再點一次收起來。
     await mobile.locator('[data-stage="jh"] button[aria-expanded]').click();
     await expect(stages.locator('button[aria-expanded="true"]')).toHaveCount(0);
+    await expect(mobile.locator('[data-stage="jh"] [data-testid="city-mobile-panel"]')).toBeHidden();
     expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(1);
   });
 });
