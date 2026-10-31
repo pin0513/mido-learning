@@ -138,6 +138,8 @@ const RINGS: [number, number][] = [
 ];
 const RIM: [number, number] = [526, 534];
 const LABEL_R = 552;
+/** 學門標籤外框離色環外緣至少這麼遠（標籤不貼著色環或隔壁學門的邊）。 */
+export const LABEL_CLEAR = 28;
 /** 正上方的空隙，放「國小、國中、高中、大學」。 */
 const SPINE = 18;
 /** 扇形之間的空隙（度）。 */
@@ -202,8 +204,23 @@ export function textWidth(text: string, size: number): number {
   return width * size;
 }
 
+/** 外框上離圓心最近的一點有多遠。 */
+export function boxNearestRadius(box: [number, number, number, number], cx = CX, cy = CY): number {
+  const [x, y, w, h] = box;
+  return Math.hypot(Math.max(x - cx, 0, cx - (x + w)), Math.max(y - cy, 0, cy - (y + h)));
+}
+
+/** 標籤沿扇形中線往外推，直到外框離色環外緣至少 LABEL_CLEAR。 */
 function placeLabel(mid: number, name: string, sub: string): CityLabel {
-  const [x, y] = polar(CX, CY, LABEL_R, mid);
+  let label = placeLabelAt(mid, name, sub, LABEL_R);
+  for (let radius = LABEL_R + 2; boxNearestRadius(label.box) < RIM[1] + LABEL_CLEAR && radius < LABEL_R + 120; radius += 2) {
+    label = placeLabelAt(mid, name, sub, radius);
+  }
+  return label;
+}
+
+function placeLabelAt(mid: number, name: string, sub: string, radius: number): CityLabel {
+  const [x, y] = polar(CX, CY, radius, mid);
   const cos = Math.cos(rad(mid));
   const sin = Math.sin(rad(mid));
   const anchor: CityLabel["anchor"] = cos > 0.26 ? "start" : cos < -0.26 ? "end" : "middle";
@@ -285,10 +302,23 @@ export function viewBoxString(view: CityMapData["view"]): string {
   return view.map((value) => value.toFixed(1)).join(" ");
 }
 
-export function focusViewBox(data: Pick<CityMapData, "cx" | "cy" | "plaza" | "rings" | "view" | "districts">, districtIndex: number | null, stageIndex: number | null): string {
+export function focusViewBox(data: Pick<CityMapData, "cx" | "cy" | "plaza" | "rings" | "view" | "districts">, districtIndex: number | null, stageIndex: number | null, withLabels = true): string {
+  // withLabels：學門標籤畫得出來時（桌機）才把標籤框進視野；手機版的小地圖不畫標籤，不用留位置。
   if (districtIndex === null && stageIndex === null) return viewBoxString(data.view);
   if (districtIndex === null && stageIndex !== null) {
     const radius = data.rings[stageIndex][1] + 24;
+    // 最外圈（大學）貼著學門標籤：把六個標籤也框進來，不然標籤會被切掉或藏起來。
+    if (withLabels && stageIndex === data.rings.length - 1) {
+      const boxes = data.districts.map((district) => district.label.box);
+      return fitAspect(
+        data.view,
+        Math.min(data.cx - radius, ...boxes.map(([x]) => x - 8)),
+        Math.min(data.cy - radius, ...boxes.map(([, y]) => y - 8)),
+        Math.max(data.cx + radius, ...boxes.map(([x, , w]) => x + w + 8)),
+        Math.max(data.cy + radius, ...boxes.map(([, y, , h]) => y + h + 8)),
+        0,
+      );
+    }
     return fitAspect(data.view, data.cx - radius, data.cy - radius, data.cx + radius, data.cy + radius, 0);
   }
   const district = districtIndex === null ? undefined : data.districts[districtIndex];
@@ -308,6 +338,12 @@ export function focusViewBox(data: Pick<CityMapData, "cx" | "cy" | "plaza" | "ri
       xs.push(x);
       ys.push(y);
     }
+  }
+  // 只選學區時，把它自己的學門標籤也框進來（標籤不會被切掉）。
+  if (withLabels && stageIndex === null) {
+    const [lx, ly, lw, lh] = district.label.box;
+    xs.push(lx - 8, lx + lw + 8);
+    ys.push(ly - 8, ly + lh + 8);
   }
   return fitAspect(data.view, Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys), 28);
 }
@@ -598,4 +634,66 @@ export function footprintsOverlap(buildings: Pick<CityBuilding, "x" | "y">[], mi
     }
   }
   return false;
+}
+
+/** 階段名（國小…大學，字級 14）的外框，給碰撞與「整個在視野裡才顯示」用。 */
+export function stageLabelBox(stage: { name: string; x: number; y: number }): [number, number, number, number] {
+  const width = textWidth(stage.name, 14);
+  return [round(stage.x - width / 2), round(stage.y - 8), round(width), 16];
+}
+
+/** box 整個落在 viewBox（[x, y, w, h]）裡面。 */
+export function boxInside(box: [number, number, number, number], view: [number, number, number, number]): boolean {
+  return box[0] >= view[0] && box[1] >= view[1] && box[0] + box[2] <= view[0] + view[2] && box[1] + box[3] <= view[1] + view[3];
+}
+
+export interface CityTag {
+  /** 名牌外框 [x, y, w, h]、文字基線、從節點拉過來的引線（離節點遠時才有）。 */
+  box: [number, number, number, number];
+  textX: number;
+  textY: number;
+  leader: [number, number, number, number] | null;
+}
+
+function boxHitsCircle(box: [number, number, number, number], circle: { x: number; y: number; r: number }, pad: number): boolean {
+  const [x, y, w, h] = box;
+  const dx = Math.max(x - circle.x, 0, circle.x - (x + w));
+  const dy = Math.max(y - circle.y, 0, circle.y - (y + h));
+  return Math.hypot(dx, dy) < circle.r + pad;
+}
+
+/**
+ * 範例家人的名牌：從節點旁邊開始，依 8 個方向、由近而遠找一個不壓到任何節點、標籤、其他名牌的位置。
+ * 找不到時退回最後一個候選（理論上不會發生，測試會檢查）。
+ */
+export function placeTag(
+  anchor: { x: number; y: number; r: number },
+  text: string,
+  obstacles: { circles: { x: number; y: number; r: number }[]; boxes: [number, number, number, number][] },
+  size = 14,
+): CityTag {
+  const width = textWidth(text, size) + 14;
+  const height = size + 8;
+  // 先試斜上、斜下，再試正上下左右，最後每 15° 一個方向；距離由近而遠，越遠越晚選（引線越長越難看）。
+  const directions = [-45, -135, 45, 135, -90, 90, 0, 180, -22.5, -67.5, -112.5, -157.5, 22.5, 67.5, 112.5, 157.5, -15, -75, -105, -165, 15, 75, 105, 165, -30, -60, -120, -150, 30, 60, 120, 150];
+  let fallback: CityTag | null = null;
+  for (let gap = 4; gap <= 200; gap += 4) {
+    for (const deg of directions) {
+      const cos = Math.cos(rad(deg));
+      const sin = Math.sin(rad(deg));
+      // 名牌中心沿方向往外放，讓外框最靠近節點的一邊離節點 gap。half 是中心到外框邊的距離（沿這個方向）。
+      const half = Math.min(Math.abs(width / 2 / (cos || 1e-9)), Math.abs(height / 2 / (sin || 1e-9)));
+      const reach = anchor.r + gap + half;
+      const cx = anchor.x + cos * reach;
+      const cy = anchor.y + sin * reach;
+      const box: [number, number, number, number] = [round(cx - width / 2), round(cy - height / 2), round(width), round(height)];
+      const leader: CityTag["leader"] = gap > 10 ? [round(anchor.x + cos * anchor.r), round(anchor.y + sin * anchor.r), round(cx - cos * half), round(cy - sin * half)] : null;
+      const tag: CityTag = { box, textX: round(cx), textY: round(cy + size * 0.36), leader };
+      fallback ??= tag;
+      if (obstacles.circles.some((circle) => boxHitsCircle(box, circle, 3))) continue;
+      if (obstacles.boxes.some((other) => boxesOverlap(box, other, 3))) continue;
+      return tag;
+    }
+  }
+  return fallback as CityTag;
 }

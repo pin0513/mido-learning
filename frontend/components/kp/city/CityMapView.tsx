@@ -1,9 +1,9 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { annulus, focusViewBox, viewBoxString, type CityMapData } from "@/lib/content/city";
+import { annulus, boxInside, focusViewBox, placeTag, stageLabelBox, viewBoxString, type CityMapData, type CityTag } from "@/lib/content/city";
 import { CityList, LayerOverview, MobileDistricts, parseCityView, readRememberedView, ViewSwitch, writeRememberedView, type CityView } from "./views";
 import {
   clearStoredProgress,
@@ -75,12 +75,30 @@ function inFocus(building: { layer: string; competencies: string[] }, level: Lev
   return true;
 }
 
+const NARROW = "(max-width: 767px)";
+
+function subscribeNarrow(onChange: () => void): () => void {
+  const query = window.matchMedia(NARROW);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
+function readNarrow(): boolean {
+  return window.matchMedia(NARROW).matches;
+}
+
 function parseViewBox(value: string): [number, number, number, number] {
   const [x, y, w, h] = value.split(" ").map(Number);
   return [x, y, w, h];
 }
 
 /** 被依賴越多越大，上限 10；本質層外圈再加 3。lib/content/city.ts 的排距以 13 為最大半徑。 */
+/** 名牌最多 6 個字，太長的暱稱用「…」收尾（完整名字在 title 與 aria-label）。 */
+function shortName(name: string): string {
+  const chars = [...name];
+  return chars.length > 6 ? `${chars.slice(0, 5).join("")}…` : name;
+}
+
 function nodeRadius(node: { title: string; dependents: number }): number {
   if (!node.title) return 6;
   return 7 + Math.min(node.dependents, 3);
@@ -143,6 +161,33 @@ export function CityMapView({
   const hovered = hover ? byId.get(hover) : undefined;
   const snapshot: ProgressSnapshot = mode === "demo" ? demoProgress.read() : toSnapshot(stored);
   const path = data.landmarks.find((item) => item.id === pathId) ?? null;
+  // 現在的視野。學門標籤與階段名只在整個落在視野裡時顯示，放大到一圈或一格時不會被切成半個字。
+  const currentView = parseViewBox(viewBox);
+  // 範例家人的名牌：放在節點旁邊沒有其他節點、標籤的地方。
+  const childAt = snapshot.child.at;
+  const adultAt = snapshot.adult.at;
+  const childName = snapshot.child.name;
+  const adultName = snapshot.adult.name;
+  const tags = useMemo(() => {
+    // 中央的家庭空間也是障礙物（名牌不蓋住「家庭空間」四個字）。
+    const circles = [{ x: data.cx, y: data.cy, r: data.plaza }, ...data.buildings.map((building) => ({ x: building.x, y: building.y, r: nodeRadius(building) + 3 }))];
+    const boxes: [number, number, number, number][] = [
+      ...data.districts.map((district) => district.label.box),
+      ...data.stageLabels.map((stage) => stageLabelBox(stage)),
+    ];
+    const out: Partial<Record<"child" | "adult", CityTag>> = {};
+    for (const [role, at, name] of [["child", childAt, childName], ["adult", adultAt, adultName]] as const) {
+      const place = at ? byId.get(at) : undefined;
+      if (!place?.title) continue;
+      const r = nodeRadius(place) + 2;
+      // 標記點本身也是障礙物（孩子在右上角、大人在左上角）。
+      circles.push({ x: place.x + (role === "child" ? r : -r), y: place.y - r, r: 6 });
+      const tag = placeTag({ x: place.x, y: place.y, r: r + 4 }, shortName(name), { circles, boxes });
+      boxes.push(tag.box);
+      out[role] = tag;
+    }
+    return out;
+  }, [data.cx, data.cy, data.plaza, data.buildings, data.districts, data.stageLabels, byId, childAt, adultAt, childName, adultName]);
   const pathStops = path?.stops.filter((id) => byId.has(id)) ?? [];
 
   const choosePath = (id: string) => {
@@ -159,10 +204,13 @@ export function CityMapView({
     writeStoredProgress(next);
   };
 
+  // 手機版（< 768px）的小地圖不畫學門標籤，放大時不用替標籤留位置。
+  const narrow = useSyncExternalStore(subscribeNarrow, readNarrow, () => false);
   const targetBox = focusViewBox(
     data,
     districtIndex >= 0 ? districtIndex : null,
     stageIndex >= 0 ? stageIndex : null,
+    !narrow,
   );
 
   const go = useCallback((patch: Partial<Level>, historyMode: "push" | "replace") => {
@@ -319,6 +367,23 @@ export function CityMapView({
     return place ? [place] : [];
   }));
   const accept = (building: { layer: string; competencies: string[] }) => inFocus(building, level);
+
+  // 手機版的學區清單：沒選學區時在地圖位置顯示（地圖在手機版收起來），選了學區就接在小地圖下面。
+  const mobileList = (
+    <MobileDistricts
+      data={data}
+      district={level.district}
+      stage={level.stage}
+      snapshot={snapshot}
+      selectedId={selected?.id ?? null}
+      linkedIds={linkedIds}
+      accept={accept}
+      onDistrict={(id) => go(id ? { district: id, stage: null, kp: null } : { district: null, stage: null, kp: null }, "push")}
+      onStage={(stageId) => go({ district: level.district, stage: stageId, kp: null }, "push")}
+      onOpen={openBuilding}
+      onLot={openLot}
+    />
+  );
 
   return (
     <div ref={mapRoot} data-testid="city-experience" className="city-stack">
@@ -505,25 +570,10 @@ export function CityMapView({
             </button>
           ))}
         </div>
-        {view === "map" ? (
-          <div className="mb-4 md:hidden">
-            <MobileDistricts
-              data={data}
-              district={level.district}
-              snapshot={snapshot}
-              selectedId={selected?.id ?? null}
-              linkedIds={linkedIds}
-              accept={accept}
-              onDistrict={(id) => go(id ? { district: id, stage: null, kp: null } : { district: null, stage: null, kp: null }, "push")}
-              onStage={(stageId) => go({ district: level.district, stage: stageId, kp: null }, "push")}
-              onOpen={openBuilding}
-              onLot={openLot}
-            />
-          </div>
-        ) : null}
+        {view === "map" && !level.district ? <div className="mb-4 md:hidden">{mobileList}</div> : null}
         <div className={view === "map" ? (level.district ? "block" : "hidden md:block") : "hidden"}>
-        <div className="mapbox relative">
-          <p className="px-3 pt-3 text-sm font-semibold md:sr-only">小地圖</p>
+        <div className="mapbox relative flex-col md:flex-row">
+          <p className="self-start px-3 pt-3 text-sm font-semibold md:sr-only">小地圖</p>
           <svg
             ref={svgRef}
             data-testid="city-map"
@@ -598,13 +648,13 @@ export function CityMapView({
               ))}
               <g className="ringlbl">
                 {data.stageLabels.map((stage) => (
-                  <text key={stage.id} x={stage.x} y={stage.y + 5} textAnchor="middle" fontSize={14} fontWeight={700} fill="#c3cbc5">
+                  <text key={stage.id} x={stage.x} y={stage.y + 5} textAnchor="middle" fontSize={14} fontWeight={700} fill="#c3cbc5" visibility={boxInside(stageLabelBox(stage), currentView) ? undefined : "hidden"}>
                     {stage.name}
                   </text>
                 ))}
               </g>
               {data.districts.map((district) => (
-                <g key={district.key} className="lbl" data-testid="city-district-label" data-district={district.key}>
+                <g key={district.key} className="lbl" data-testid="city-district-label" data-district={district.key} visibility={boxInside(district.label.box, currentView) ? undefined : "hidden"}>
                   <text x={district.label.x} y={district.label.nameY} textAnchor={district.label.anchor} fontSize={22} fontWeight={900} fill="#1a1614">{district.name}</text>
                   <text x={district.label.x} y={district.label.subY} textAnchor={district.label.anchor} fontSize={14} fill="#47413b">{district.layerName}・{district.count} 個</text>
                 </g>
@@ -709,10 +759,18 @@ export function CityMapView({
               if (!place?.title) return null;
               const dot = role === "child";
               const r = nodeRadius(place) + 2;
+              const tag = tags[role];
               return (
-                <g key={role} role="img" aria-label={`${person.name}目前在${place.title}（範例資料）`}>
+                <g key={role} role="img" data-testid="city-person" data-role={role} aria-label={`${person.name}目前在${place.title}（範例資料）`}>
                   <title>{`${person.name}目前在${place.title}（範例資料）`}</title>
                   <circle cx={place.x + (dot ? r : -r)} cy={place.y - r} r={dot ? 6 : 5.5} fill={dot ? fill : "#1c2621"} stroke={dot ? "#1c2621" : fill} strokeWidth={dot ? 2.5 : 3} pointerEvents="none" />
+                  {tag ? (
+                    <g className="person-tag" data-testid="city-person-tag" pointerEvents="none" aria-hidden="true">
+                      {tag.leader ? <line x1={tag.leader[0]} y1={tag.leader[1]} x2={tag.leader[2]} y2={tag.leader[3]} stroke="#fffdf8" strokeWidth={2} /> : null}
+                      <rect x={tag.box[0]} y={tag.box[1]} width={tag.box[2]} height={tag.box[3]} rx={4} fill="#fffdf8" stroke={dot ? fill : "#1c2621"} strokeWidth={2} />
+                      <text x={tag.textX} y={tag.textY} textAnchor="middle" fontSize={14} fontWeight={800} fill="#1a1614">{shortName(person.name)}</text>
+                    </g>
+                  ) : null}
                 </g>
               );
             })}
@@ -724,6 +782,8 @@ export function CityMapView({
             </p>
           ) : null}
         </div>
+        {/* 手機版選了學區：先看上面的小地圖，清單接在地圖下面（依階段收合）。 */}
+        {view === "map" && level.district ? <div className="mt-4 md:hidden">{mobileList}</div> : null}
         {data.lots.some((item) => item.featured) ? (
           <div className="city-lots hidden md:flex" data-testid="city-lots">
             <span className="city-lots-h">下一輪預留</span>

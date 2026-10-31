@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { boxesOverlap, buildCityMap, DISTRICT_COLORS, focusViewBox, footprintsOverlap, presentCityMap, viewBoxString } from "./city";
+import { boxesOverlap, boxInside, boxNearestRadius, buildCityMap, DISTRICT_COLORS, focusViewBox, footprintsOverlap, LABEL_CLEAR, placeTag, presentCityMap, stageLabelBox, viewBoxString } from "./city";
 import { launchedCatalog, loadCatalog } from "./catalog";
 import { loadContent } from "./load";
 import { publishedEstimatePath } from "../kp/open-path";
@@ -143,6 +143,69 @@ test("六個扇形不重疊、角度跟點數走，學門標籤在圖外而且�
     for (const [cx, cy] of corners) assert.ok(cx >= vx && cx <= vx + vw && cy >= vy && cy <= vy + vh, map.districts[i].key);
     for (let j = i + 1; j < map.districts.length; j += 1) {
       assert.equal(boxesOverlap(label.box, map.districts[j].label.box, 4), false, `${map.districts[i].key} × ${map.districts[j].key}`);
+    }
+  }
+});
+
+test("學門標籤離色環外緣至少 LABEL_CLEAR，而且整個落在自己扇形的角度裡（數學不貼哲學的邊）", () => {
+  const map = buildCityMap(content());
+  for (const district of map.districts) {
+    const [x, y, w, h] = district.label.box;
+    assert.ok(boxNearestRadius(district.label.box, map.cx, map.cy) >= map.rim[1] + LABEL_CLEAR, `${district.key} too close to rim`);
+    const mid = district.start + district.span / 2;
+    for (const [px, py] of [[x, y], [x + w, y], [x, y + h], [x + w, y + h]]) {
+      const deg = (Math.atan2(py - map.cy, px - map.cx) * 180) / Math.PI;
+      const off = ((deg - mid + 540) % 360) - 180;
+      // 外框四角都在扇形兩側邊界內，至少留 2°。
+      assert.ok(Math.abs(off) <= district.span / 2 - 2, `${district.key} corner at ${deg.toFixed(1)}° outside ${district.start.toFixed(1)}..${(district.start + district.span).toFixed(1)}`);
+    }
+  }
+});
+
+test("放大到單一階段、單一學區時，學門標籤與階段名不會被切一半：要嘛整個在視野裡，要嘛整個藏起來", () => {
+  const map = buildCityMap(content());
+  const box = (value: string) => value.split(" ").map(Number) as [number, number, number, number];
+  // 只選學區：它自己的學門標籤一定整個在視野裡。
+  for (let index = 0; index < map.districts.length; index += 1) {
+    const view = box(focusViewBox(map, index, null));
+    assert.ok(boxInside(map.districts[index].label.box, view), `${map.districts[index].key} label clipped`);
+  }
+  // 只選一圈：顯示規則是 boxInside，這裡確認至少不是全部都看不到，且總覽時全部可見。
+  for (const label of [...map.districts.map((district) => district.label.box), ...map.stageLabels.map((stage) => stageLabelBox(stage))]) {
+    assert.ok(boxInside(label, map.view));
+  }
+  // 最外圈（大學）：六個學門標籤都整個在視野裡。
+  const outer = box(focusViewBox(map, null, map.rings.length - 1));
+  for (const district of map.districts) assert.ok(boxInside(district.label.box, outer), `${district.key} label clipped at the outer ring`);
+  for (let stage = 0; stage < map.stages.length; stage += 1) {
+    const view = box(focusViewBox(map, null, stage));
+    assert.ok(map.stageLabels.some((label) => boxInside(stageLabelBox(label), view)), `stage ${stage} hides every stage name`);
+  }
+});
+
+test("範例家人的名牌不壓到任何節點、學門標籤、階段名，也不壓到另一個名牌", () => {
+  const map = buildCityMap(content());
+  const circles = map.buildings.map((building) => ({ x: building.x, y: building.y, r: (building.title ? 7 + Math.min(building.dependents, 3) : 6) + 3 }));
+  const fixed: [number, number, number, number][] = [...map.districts.map((district) => district.label.box), ...map.stageLabels.map((stage) => stageLabelBox(stage))];
+  const hits = (box: [number, number, number, number], skip: { x: number; y: number }) =>
+    circles.some((circle) => {
+      if (circle.x === skip.x && circle.y === skip.y) return false;
+      const dx = Math.max(box[0] - circle.x, 0, circle.x - (box[0] + box[2]));
+      const dy = Math.max(box[1] - circle.y, 0, circle.y - (box[1] + box[3]));
+      return Math.hypot(dx, dy) < circle.r;
+    });
+  // 每一棟都當一次「孩子在這裡」，再在旁邊一棟放「大人」。
+  for (let index = 0; index < map.buildings.length; index += 1) {
+    const child = map.buildings[index];
+    const adult = map.buildings[(index + 1) % map.buildings.length];
+    const boxes = [...fixed];
+    for (const [place, name] of [[child, "小明"], [adult, "爸爸媽媽"]] as const) {
+      const r = (place.title ? 7 + Math.min(place.dependents, 3) : 6) + 2;
+      const tag = placeTag({ x: place.x, y: place.y, r: r + 4 }, name, { circles, boxes });
+      assert.equal(hits(tag.box, place), false, `${place.id} tag on a node`);
+      assert.ok(!boxes.some((box) => boxesOverlap(tag.box, box, 0)), `${place.id} tag on a label`);
+      assert.ok(boxInside(tag.box, map.view), `${place.id} tag outside view`);
+      boxes.push(tag.box);
     }
   }
 });

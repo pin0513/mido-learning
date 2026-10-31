@@ -124,6 +124,12 @@ jobs:
             echo "/kp/map should have 100 points while soft-skills and yuwen are unset"
             exit 1
           fi
+          # 主線下拉選單：四個學門的 29 條主線 + 「不標路線」。
+          options="$(node frontend/scripts/city-path-count.mjs /tmp/kp-map.html)"
+          if [ "$options" != "30" ]; then
+            echo "/kp/map has ${options} path options, expected 30 while soft-skills and yuwen are unset"
+            exit 1
+          fi
           if grep -F "溝通與解決問題" /tmp/home.html >/dev/null; then
             echo "homepage shows soft-skills while the flag is unset"
             exit 1
@@ -217,6 +223,11 @@ jobs:
             echo "/kp/map returned ${code} or does not have 133 points with soft-skills on"
             exit 1
           fi
+          options="$(node frontend/scripts/city-path-count.mjs /tmp/map-soft.html)"
+          if [ "$options" != "36" ]; then
+            echo "/kp/map has ${options} path options, expected 36 with soft-skills on"
+            exit 1
+          fi
 
       - name: Run image with yuwen flag
         run: |
@@ -279,6 +290,11 @@ jobs:
             echo "/kp/map should have 241 points with soft-skills and yuwen on"
             exit 1
           fi
+          options="$(node frontend/scripts/city-path-count.mjs /tmp/yuwen-body.html)"
+          if [ "$options" != "50" ]; then
+            echo "/kp/map has ${options} path options, expected 50 with soft-skills and yuwen on"
+            exit 1
+          fi
           check "/kp/zh.punct/es"
           check "/kp/en.gept1/jh"
           check "/kp/ja.hira/es"
@@ -330,6 +346,66 @@ jobs:
                 exit 1
               fi
             done < /tmp/kp-drafts.tsv
+          fi
+
+      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、208 個節點、43 條主線 + 「不標路線」。
+      - name: Run image with yuwen flag only
+        run: |
+          set -euo pipefail
+          docker run -d --name kp-image-yuwen-only -p 3005:3000 \
+            -e KP_ENABLED=true \
+            -e KP_HOME_ENABLED=true \
+            -e KP_YUWEN_ENABLED=true \
+            mido-frontend-smoke
+          cleanup() {
+            status=$?
+            if [ "$status" -ne 0 ]; then
+              echo "----- yuwen-only container logs -----"
+              docker logs kp-image-yuwen-only >&2 || true
+            fi
+            docker rm -f kp-image-yuwen-only >/dev/null 2>&1 || true
+            exit "$status"
+          }
+          trap cleanup EXIT
+          ready=0
+          for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do
+            if curl -sf http://127.0.0.1:3005/api/kp-launch | grep -q '"home":true'; then
+              ready=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "yuwen-only image did not become ready"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/map-yuwen-only.html -w '%{http_code}' http://127.0.0.1:3005/kp/map)"
+          if [ "$code" != "200" ]; then
+            echo "GET /kp/map returned ${code} with only yuwen on"
+            exit 1
+          fi
+          if ! grep -F 'data-building-count="208"' /tmp/map-yuwen-only.html >/dev/null; then
+            echo "/kp/map should have 208 points with only yuwen on"
+            exit 1
+          fi
+          options="$(node frontend/scripts/city-path-count.mjs /tmp/map-yuwen-only.html)"
+          if [ "$options" != "44" ]; then
+            echo "/kp/map has ${options} path options, expected 44 with only yuwen on"
+            exit 1
+          fi
+          # 溝通與解決問題沒開：地圖上不能有它的學區，語文的點要在。
+          if grep -F 'data-district="soft-skills"' /tmp/map-yuwen-only.html >/dev/null; then
+            echo "/kp/map shows the soft-skills district while its flag is unset"
+            exit 1
+          fi
+          if ! grep -F 'data-district="language"' /tmp/map-yuwen-only.html >/dev/null; then
+            echo "/kp/map does not show the language district with yuwen on"
+            exit 1
+          fi
+          code="$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:3005/kp/zh.punct/es)"
+          if [ "$code" != "200" ]; then
+            echo "GET /kp/zh.punct/es returned ${code} with only yuwen on"
+            exit 1
           fi
 
       - name: Run image with detail v2 flag

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { CityBuilding, CityMapData } from "@/lib/content/city";
 import type { ProgressSnapshot } from "./progress";
 
@@ -346,6 +347,7 @@ function LotList({ data, layerId, onLot }: { data: CityMapData; layerId: string;
 export function MobileDistricts({
   data,
   district,
+  stage = null,
   onDistrict,
   onStage,
   onOpen,
@@ -357,6 +359,8 @@ export function MobileDistricts({
 }: {
   data: CityMapData;
   district: string | null;
+  /** 目前放大的階段；手機版一次只展開這一段（沒選時展開第一個有點的階段）。 */
+  stage?: string | null;
   onDistrict: (id: string) => void;
   onStage: (stageId: string) => void;
   onOpen: (id: string) => void;
@@ -398,28 +402,106 @@ export function MobileDistricts({
 
   const name = data.districts.find((item) => item.key === district)?.name ?? district;
   return (
+    <MobileStages
+      key={district}
+      data={data}
+      district={district}
+      name={name}
+      stage={stage}
+      onDistrict={onDistrict}
+      onStage={onStage}
+      onOpen={onOpen}
+      snapshot={snapshot}
+      selectedId={selectedId}
+      linkedIds={linkedIds}
+      accept={accept}
+    />
+  );
+}
+
+/**
+ * 手機版一個學區的清單：依階段分段，一次只展開一段（語文一個學區 108 點，全部攤開太長）。
+ * 點階段的標題會展開那一段，並把上面的小地圖放大到那一圈；再點一次收起來。
+ */
+function MobileStages({
+  data,
+  district,
+  name,
+  stage,
+  onDistrict,
+  onStage,
+  onOpen,
+  snapshot,
+  selectedId,
+  linkedIds,
+  accept,
+}: {
+  data: CityMapData;
+  district: string;
+  name: string;
+  stage: string | null;
+  onDistrict: (id: string) => void;
+  onStage: (stageId: string) => void;
+  onOpen: (id: string) => void;
+  snapshot: ProgressSnapshot;
+  selectedId: string | null;
+  linkedIds: string[];
+  accept: (building: CityBuilding) => boolean;
+}) {
+  const itemsOf = (stageId: string) => data.buildings.filter((building) => building.folder === district && building.stage === stageId);
+  const firstStage = data.stages.find((item) => itemsOf(item.id).length > 0)?.id ?? null;
+  const [open, setOpen] = useState<string | null>(stage ?? firstStage);
+  // 從地圖或網址換了階段，就展開那一段（在 render 裡跟著 prop 調整，不用 effect）。
+  const [seenStage, setSeenStage] = useState(stage);
+  if (stage !== seenStage) {
+    setSeenStage(stage);
+    if (stage) setOpen(stage);
+  }
+  return (
     <div data-testid="city-mobile">
       <button type="button" className={`${control} bg-white hover:bg-[#f3f0ea]`} onClick={() => onDistrict("")}>
         回領域
       </button>
       <h2 className="mt-4 text-lg font-bold">{name}</h2>
-      {data.stages.map((stage) => {
-        const items = data.buildings.filter((building) => building.folder === district && building.stage === stage.id);
+      {data.stages.map((item) => {
+        const items = itemsOf(item.id);
+        const expanded = open === item.id;
+        const panel = `mobile-stage-${item.id}`;
         return (
-          <section key={stage.id} className="mt-4" aria-labelledby={`ring-${stage.id}`}>
-            <h3 id={`ring-${stage.id}`}>
-              <button type="button" className={`${control} w-full bg-white hover:bg-[#f3f0ea]`} onClick={() => onStage(stage.id)}>
-                {stage.name}（{items.length}）
+          <section key={item.id} className="mt-3" aria-labelledby={`ring-${item.id}`} data-testid="city-mobile-stage" data-stage={item.id}>
+            <h3 id={`ring-${item.id}`}>
+              <button
+                type="button"
+                className={`${control} flex w-full items-center justify-between bg-white hover:bg-[#f3f0ea]`}
+                aria-expanded={expanded}
+                aria-controls={panel}
+                onClick={() => {
+                  if (expanded) {
+                    setOpen(null);
+                    return;
+                  }
+                  setOpen(item.id);
+                  onStage(item.id);
+                }}
+              >
+                <span>
+                  {item.name}（{items.length}）
+                </span>
+                <span aria-hidden="true">{expanded ? "−" : "+"}</span>
               </button>
             </h3>
-            <ul className="mt-2 space-y-2">
-              {items.filter((building) => building.title && accept(building)).map((building) => (
-                <li key={building.id}>
-                  <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
-                </li>
-              ))}
-            </ul>
-            <DraftNote count={items.filter((building) => !building.title && accept(building)).length} />
+            {expanded ? (
+              <div id={panel}>
+                <ul className="mt-2 space-y-2">
+                  {items.filter((building) => building.title && accept(building)).map((building) => (
+                    <li key={building.id}>
+                      <BuildingButton building={building} snapshot={snapshot} selected={selectedId === building.id} linked={linkedIds.includes(building.id)} onOpen={onOpen} />
+                    </li>
+                  ))}
+                </ul>
+                <DraftNote count={items.filter((building) => !building.title && accept(building)).length} />
+              </div>
+            ) : null}
           </section>
         );
       })}
