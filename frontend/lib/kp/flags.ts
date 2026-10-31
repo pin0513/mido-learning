@@ -4,7 +4,7 @@
  *
  * 讀取時機（docs/kp-db-restructure.md 第 17 節）：
  *   - 請求時：middleware、首頁（/city-home，讀 searchParams）、/api/kp-launch、/kp/index.json、sitemap，
- *     以及 /kp、/kp/layer/*、/kp/stage/*、/kp/competency/* 這幾個清單頁（先 await headers()，是請求時才算的動態頁）。
+ *     以及 /kp、/kp/map、/kp/layer/*、/kp/stage/*、/kp/competency/* 這幾個清單頁（先 await headers()，是請求時才算的動態頁）。
  *     「不用重新 build，重啟行程（Cloud Run 開新 revision）就生效」只對這些成立。
  *   - build 時：靜態詳細頁 /kp/概念/學段、/kp/概念、/kp-v2/概念/學段（generateStaticParams＋dynamicParams = false）。
  *     跨學門連結（isFolderLaunched）寫死在頁面裡，只重啟行程不會變，要重新 build。

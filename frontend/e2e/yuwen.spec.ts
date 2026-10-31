@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { expectMapSectors } from "./city-map-sectors";
 
 /**
  * KP_YUWEN_ENABLED=true、KP_SOFTSKILLS_ENABLED=true、KP_HOME_ENABLED=true 時才跑（E2E_YUWEN=1）。
@@ -22,6 +23,15 @@ const VIEWS = [
 test.describe("語文", () => {
   test.beforeEach(() => {
     test.skip(!process.env.E2E_YUWEN, "KP_YUWEN_ENABLED 沒開");
+  });
+
+  test("知識地圖六個學區：241 個節點、50 個路線選項", async ({ page }) => {
+    test.setTimeout(120_000);
+    await expectMapSectors(page, {
+      buildings: 241,
+      options: 50,
+      districts: ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai", "language"],
+    });
   });
 
   test("108 個知識點與 sitemap", async ({ request }) => {
