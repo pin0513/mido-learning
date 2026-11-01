@@ -35,10 +35,12 @@ export function AxisBrowser({
     const nextFolder = params.get("discipline");
     const nextLayer = params.get("layer");
     const nextCompetency = params.get("competency");
+    /* eslint-disable react-hooks/set-state-in-effect -- filters come from window.location, read after mount so the statically rendered HTML and first client render match */
     if (nextStage) setStage(nextStage);
     if (nextFolder) setFolder(nextFolder);
     if (nextLayer) setLayer(nextLayer);
     if (nextCompetency) setCompetency(nextCompetency);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   const filtered = useMemo(

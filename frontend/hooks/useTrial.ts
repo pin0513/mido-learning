@@ -9,11 +9,6 @@ export function useTrial() {
   const [remainingCount, setRemainingCount] = useState<number>(5);
   const [hasRemaining, setHasRemaining] = useState<boolean>(true);
 
-  useEffect(() => {
-    // 初始載入試玩次數
-    updateTrialStatus();
-  }, []);
-
   const updateTrialStatus = () => {
     const count = getTrialRemainingCount();
     const remaining = hasTrialRemaining();
@@ -21,6 +16,12 @@ export function useTrial() {
     setRemainingCount(count);
     setHasRemaining(remaining);
   };
+
+  useEffect(() => {
+    // 初始載入試玩次數
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- trial count is in browser storage; read after mount to avoid hydration mismatch
+    updateTrialStatus();
+  }, []);
 
   const consume = () => {
     const newCount = consumeTrial();

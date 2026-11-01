@@ -28,7 +28,7 @@ export function clearAllCache() {
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   let logInterval: NodeJS.Timeout;
 
-  (window as any).__debugQueue = {
+  (window as unknown as Record<string, unknown>).__debugQueue = {
     start: () => {
       logInterval = setInterval(() => {
         const queueStats = getQueueStats();
