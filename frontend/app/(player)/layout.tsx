@@ -29,6 +29,7 @@ export default function PlayerLayout({ children }: { children: React.ReactNode }
     if (!payload) {
       router.replace('/family-login');
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- token is in browser storage; reading it after mount keeps server and first client render identical (no hydration mismatch)
       setPlayerInfo(payload);
     }
     setChecked(true);

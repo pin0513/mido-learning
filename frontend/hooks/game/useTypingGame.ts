@@ -71,6 +71,12 @@ export function useTypingGame({
     return currentInput[index] === currentQuestion.text[index];
   }, [currentQuestion, currentInput]);
 
+  const finishGame = useCallback((finalStats: GameStats) => {
+    setIsGameOver(true);
+    const stars = calculateStars(finalStats.wpm, finalStats.accuracy);
+    onComplete?.(finalStats, stars);
+  }, [calculateStars, onComplete]);
+
   const handleInput = useCallback((value: string) => {
     if (!currentQuestion || isGameOver) return;
 
@@ -119,13 +125,7 @@ export function useTypingGame({
         finishGame({ correctChars, totalChars, wpm, accuracy, combo: newCombo, maxCombo });
       }
     }
-  }, [currentQuestion, isGameOver, questionIndex, questions.length, stats.combo, stats.maxCombo, startTime, calculateWPM]);
-
-  const finishGame = useCallback((finalStats: GameStats) => {
-    setIsGameOver(true);
-    const stars = calculateStars(finalStats.wpm, finalStats.accuracy);
-    onComplete?.(finalStats, stars);
-  }, [calculateStars, onComplete]);
+  }, [currentQuestion, isGameOver, questionIndex, questions.length, stats.combo, stats.maxCombo, startTime, calculateWPM, finishGame]);
 
   const startGame = useCallback(() => {
     setQuestionIndex(0);
@@ -149,6 +149,7 @@ export function useTypingGame({
   // Handle time up
   useEffect(() => {
     if (isGameOver && startTime) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- existing time-up flow; kept as-is (no behavior change)
       finishGame(stats);
     }
   }, [isGameOver, startTime, stats, finishGame]);

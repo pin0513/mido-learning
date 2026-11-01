@@ -1,5 +1,6 @@
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { competencyName } from "@/lib/content";
+import { curriculumCodeLabel } from "@/lib/content/curriculum-ref";
 import { RichText, type PointRefs } from "./text";
 
 function CodeRows({ codes, catalog }: { codes: string[]; catalog: ContentCatalog }) {
@@ -9,8 +10,8 @@ function CodeRows({ codes, catalog }: { codes: string[]; catalog: ContentCatalog
         const entry = catalog.taxonomy.curriculumCodes.get(code);
         return (
           <div key={code}>
-            <span className="v2-code">{code}</span>
-            <span>{entry ? <RichText text={entry.text} /> : code}</span>
+            <span className="v2-code">{curriculumCodeLabel(code)}</span>
+            <span>{entry ? <RichText text={entry.text} /> : curriculumCodeLabel(code)}</span>
           </div>
         );
       })}

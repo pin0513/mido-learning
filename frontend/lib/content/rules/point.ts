@@ -75,6 +75,11 @@ function citeCode(
   errors: string[],
 ): void {
   const entry = taxonomy.curriculumCodes.get(code);
+  const sameCode = taxonomy.ambiguousCurriculumCodes.get(code);
+  if (!entry && sameCode) {
+    errors.push(`${rel}: ${where} 的代碼「${code}」在 ${sameCode.join("、")} 同號，請寫成「科目:代碼」（例如「${sameCode[0]}:${code}」）`);
+    return;
+  }
   if (!entry) {
     errors.push(`${rel}: ${where} 的代碼「${code}」不在 curriculum-108-codes.yaml，不可自編`);
     return;

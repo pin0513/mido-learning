@@ -402,6 +402,51 @@ function runSelfTest(): string[] {
       );
     },
   );
+  const sameCodeFixture = `
+同號測試甲:
+  performances:
+    1c-III-8:
+      stage: 3
+      text: 測試用學習表現甲。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 1
+同號測試乙:
+  performances:
+    1c-III-8:
+      stage: 3
+      text: 測試用學習表現乙。
+      source:
+        url: https://example.com/curriculum.pdf
+        page: 2
+`;
+  const addSameCodes = (dir: string) => {
+    appendFileSync(join(dir, "taxonomy", "curriculum-108-codes.yaml"), sameCodeFixture);
+  };
+  check(
+    "跨科同號：代碼表可收錄，裸代碼引用要報錯",
+    VALID_ES.replace("issues: []", "issues: []\n  performances: [1c-III-8]"),
+    VALID_JH,
+    VALID_PATH,
+    (errors) => errors.length === 1 && errors[0].includes("同號測試甲、同號測試乙 同號") && !errors.some((error) => error.includes("代碼重複")),
+    addSameCodes,
+  );
+  check(
+    "跨科同號：寫成「科目:代碼」可過",
+    VALID_ES.replace("issues: []", 'issues: []\n  performances: ["同號測試乙:1c-III-8"]'),
+    VALID_JH,
+    VALID_PATH,
+    (errors) => errors.length === 0,
+    addSameCodes,
+  );
+  check(
+    "跨科同號：「科目:代碼」仍檢查學段",
+    VALID_ES,
+    VALID_JH.replace("issues: []", 'issues: []\n  performances: ["同號測試甲:1c-III-8"]'),
+    VALID_PATH,
+    includes("學習階段 3 不在這個學段"),
+    addSameCodes,
+  );
   check(
     "published 缺 what 而且不在清單",
     withBlock(published(VALID_ES), `${TWO_SOURCES}${CIRCLE("why", "kuoyu")}${CIRCLE("how", "note")}`),
