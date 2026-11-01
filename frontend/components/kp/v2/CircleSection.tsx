@@ -1,4 +1,5 @@
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
+import { curriculumCodeLabel } from "@/lib/content/curriculum-ref";
 import type { KnowledgeFigure, KnowledgeSource } from "@/lib/content/types";
 import type { Block, Circle } from "@/lib/kp/circle";
 import { Compare } from "./figures/Compare";
@@ -145,7 +146,7 @@ function Blocks({
                   <li key={item.title}>
                     <b>{item.title}</b>
                     <span><RichText text={item.text} refs={refs} /></span>
-                    {item.code ? <span className="v2-code">課綱 {item.code}</span> : null}
+                    {item.code ? <span className="v2-code">課綱 {curriculumCodeLabel(item.code)}</span> : null}
                   </li>
                 ))}
               </ul>

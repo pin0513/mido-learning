@@ -102,18 +102,22 @@ function loadIdList(contentDir: string, fileName: string, errors: string[]): Set
   return ids;
 }
 
-function loadCurriculumCodes(contentDir: string, errors: string[]): Map<string, CurriculumCode> {
+function loadCurriculumCodes(
+  contentDir: string,
+  errors: string[],
+): { map: Map<string, CurriculumCode>; ambiguous: Map<string, string[]> } {
   const map = new Map<string, CurriculumCode>();
+  const subjectsByCode = new Map<string, string[]>();
   const rel = "taxonomy/curriculum-108-codes.yaml";
   const file = join(contentDir, rel);
   if (!existsSync(file)) {
     errors.push(`${rel}: 必須存在。學習表現與學習內容只能逐字複製官方原文`);
-    return map;
+    return { map, ambiguous: new Map() };
   }
   const parsed = readYamlFile(file);
   if (parsed.error || !isRecord(parsed.value)) {
     errors.push(`${rel}: 無法解析 YAML${parsed.error ? `（${parsed.error}）` : ""}`);
-    return map;
+    return { map, ambiguous: new Map() };
   }
   for (const [subject, body] of Object.entries(parsed.value)) {
     if (!isRecord(body)) {
@@ -149,16 +153,29 @@ function loadCurriculumCodes(contentDir: string, errors: string[]): Map<string, 
           errors.push(`${rel}: ${code} 必須附上官方 PDF 網址與頁碼`);
           continue;
         }
-        if (map.has(code)) {
-          errors.push(`${rel}: 代碼重複（${code}）`);
+        if (code.includes(":")) {
+          errors.push(`${rel}: ${subject} 的代碼「${code}」不可含「:」`);
           continue;
         }
-        map.set(code, { code, stage: raw.stage, text: raw.text, sourceUrl: source.url, sourcePage: source.page });
+        const key = `${subject}:${code}`;
+        if (map.has(key)) {
+          errors.push(`${rel}: 代碼重複（${subject} ${code}）`);
+          continue;
+        }
+        map.set(key, { code, subject, stage: raw.stage, text: raw.text, sourceUrl: source.url, sourcePage: source.page });
+        subjectsByCode.set(code, [...(subjectsByCode.get(code) ?? []), subject]);
       }
     }
   }
   if (map.size === 0) errors.push(`${rel}: 沒有任何代碼`);
-  return map;
+  // 不同科目可以同號（例如英語文與國語文都有 6-V-1）：同號的代碼只能用「科目:代碼」引用。
+  const ambiguous = new Map<string, string[]>();
+  for (const [code, subjects] of subjectsByCode) {
+    const only = subjects.length === 1 ? map.get(`${subjects[0]}:${code}`) : undefined;
+    if (only) map.set(code, only);
+    else ambiguous.set(code, subjects);
+  }
+  return { map, ambiguous };
 }
 
 function readYamlFile(file: string): { value?: unknown; error?: string } {
@@ -373,7 +390,7 @@ function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
     if (!formatIds.has("slides")) errors.push("taxonomy/formats.yaml: 缺少 slides");
   }
 
-  const curriculumCodes = loadCurriculumCodes(contentDir, errors);
+  const { map: curriculumCodes, ambiguous: ambiguousCurriculumCodes } = loadCurriculumCodes(contentDir, errors);
 
   if (errors.length > 0) return null;
   return {
@@ -382,6 +399,7 @@ function loadTaxonomy(contentDir: string, errors: string[]): Taxonomy | null {
     layers,
     layerList,
     curriculumCodes,
+    ambiguousCurriculumCodes,
     domains: new Set(domainNames),
     coreCodes: new Set(coreCodes),
     coreCompetencies,

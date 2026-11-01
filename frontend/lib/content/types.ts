@@ -29,6 +29,8 @@ export interface LayerInfo {
 
 export interface CurriculumCode {
   code: string;
+  /** curriculum-108-codes.yaml 的科目鍵，例如「語文/英語文」。 */
+  subject: string;
   stage: number;
   text: string;
   sourceUrl: string;
@@ -153,7 +155,13 @@ export interface Taxonomy {
   stageList: StageInfo[];
   layers: Set<string>;
   layerList: LayerInfo[];
+  /**
+   * 以「科目:代碼」（例如「語文/英語文:6-V-1」）為鍵收錄每一筆；
+   * 只在一個科目出現的代碼另外以裸代碼為鍵收錄。
+   */
   curriculumCodes: Map<string, CurriculumCode>;
+  /** 在兩個以上科目同號的裸代碼 → 科目鍵清單；引用時要寫成「科目:代碼」。 */
+  ambiguousCurriculumCodes: Map<string, string[]>;
   domains: Set<string>;
   coreCodes: Set<string>;
   coreCompetencies: CoreCompetencyInfo[];
