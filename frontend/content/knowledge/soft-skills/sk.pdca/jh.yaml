@@ -3,6 +3,7 @@
 # - 課綱：綜合活動 2c-IV-1（計畫與執行）、自然科學 pe-IV-1（計劃測試、預測結果）。
 # - 依據：美國 CMS 的 PDSA 範本與 AHRQ 的 PDSA 說明（先想好怎麼量、小規模試、和預測比較、Adopt/Adapt/Abandon）。
 # - domains 的科技改成自然科學；標題維持 PDCA，說明 CMS、AHRQ 寫成 PDSA（見 verify_notes）。
+# - 起源：補休哈特 1939 年原書、戴明學會的 PDSA 頁與 Moen 的 PDSA 史，說明 PDSA 與 PDCA 的差別（見 verify_notes）。
 id: sk.pdca@jh
 concept: sk.pdca
 title: PDCA：計畫、執行、檢查、改進
@@ -41,7 +42,10 @@ verify_notes:
 - 綜合活動 2c-IV-1、自然科學 pe-IV-1 都沿用代碼表的文字與頁碼。
 - 健康與體育領綱也有同號的學習表現：1b-IV-2、2a-IV-1、2a-IV-3、2c-IV-1（健體 p.26），文字和綜合活動不同；健體不在代碼表，代碼表以代碼為鍵，將來要收健體要先改 schema（taxonomy 的綜合活動區塊加了註解）。健體的學習內容 Da-IV-1、Db-IV-1（健體 p.28）沒有科目字首，本點的家 Da-IV-1、輔 Db-IV-1 帶字首，鍵不衝突。
 - 原 curriculum_108.domains 是綜合活動、科技；本點引的是自然科學 pe-IV-1（計劃適當次數的測試、預測活動的可能結果），科技領綱沒有對應計畫、測試、檢討改進的條目被引用，所以科技改成自然科學。
-- 標題維持 PDCA（原稿）。CMS、AHRQ 的工具都寫成 PDSA（Study），第三步看結果、和預測比較；本頁把兩種寫法當成同一個循環教，並在 How 說明（本站整理）。Act 依 CMS 寫成 Adopt、Adapt、Abandon（保留、修改或放棄）。
+- 標題維持 PDCA（原稿，也是常見的名稱）。CMS、AHRQ 的工具都寫成 PDSA（Study），第三步看結果、和預測比較；戴明主張寫成 PDSA，本頁在 How 說明兩者的差別，做法照 PDSA 和預測比較（本站整理）。Act 依 CMS 寫成 Adopt、Adapt、Abandon（保留、修改或放棄）。
+- 起源依休哈特 1939 年原書 Statistical Method from the Viewpoint of Quality Control：引文取自 Internet Archive 上美國農業部國家農業圖書館的掃描本（CAT10502416，館方標示不在著作權內），頁碼是書上印的頁碼（p.44–45）。
+- PDSA 與 PDCA 的差別依戴明學會（The W. Edwards Deming Institute）的 PDSA 頁與 Ron Moen 的 Foundation and History of the PDSA Cycle（戴明學會網站的 PDF）。兩者的文字 2026-11-01 線上讀取核對；deming.org 擋自動下載，PDF 頁碼對照 Internet Archive 2025-12-20 存檔的同一份 PDF（PDF 頁就是頁腳印的頁碼）。
+- 戴明 1990 年信中的話「be sure to call it PDSA, not the corruption PDCA.」是 Moen 文中轉述（Moen 是收信人），Why 內文寫明是 Moen 轉述。戴明自己的書（Out of the Crisis、The New Economics）線上無法讀全文，不引用。
 - 原 review 的兩週紀錄表、P 欄、C 欄、A 欄保留；goal、review、What 的兩週都標成天數是示意。
 - 原 scenario「親子共學：親子各跑一輪自己的 PDCA（孩子：讀書方法；大人：運動或睡眠），兩週後互相報告數字。」保留做法，補上本站建議。
 - 原 ai.delegable「整理紀錄、畫成圖表」補上由老師或家長操作（本站建議），並在 What 加上教育部注意事項（學生版）的使用規則。
@@ -61,7 +65,7 @@ links:
   - pm.agile@sh
   deeper:
   - sk.design@sh
-link_notes: 框架：PDCA 循環（CMS、AHRQ 的工具寫成 PDSA）。綜合活動 2c-IV-1；自然科學 pe-IV-1。跨學門先學：哲學 ph.hypothesis（假設與實驗）。
+link_notes: 框架：PDCA 循環（源自休哈特 1939 年的循環；戴明主張寫成 PDSA，CMS、AHRQ 的工具也寫成 PDSA）。綜合活動 2c-IV-1；自然科學 pe-IV-1。跨學門先學：哲學 ph.hypothesis（假設與實驗）。
 competency:
   specialist:
   - 問題解決
@@ -89,7 +93,7 @@ audience:
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-30'
+updated: '2026-11-01'
 est_time:
   school: 國中七至九年級綜合活動課
   source: zonghe
@@ -98,6 +102,7 @@ why:
   body:
   - 綜合活動課綱要國中生「善用各項資源，妥善計畫與執行個人生活中重要事務。」核心素養也提到要「檢核、評估學習及生活計畫」。自然科學課綱則要學生「計劃適當次數的測試、預測活動的可能結果。」
   - 美國聯邦醫療保險與補助服務中心（CMS）的改善範本有一個先問的問題：「How will we know that change is an improvement (measures)?」，也就是先想好用什麼數字判斷有沒有變好（翻譯是本站整理）。美國醫療研究與品質局（AHRQ）也說，這個方法是「a way to test a change that is implemented.」，用來檢驗一個改變（翻譯是本站整理）。
+  - 戴明學會說，這個循環「was first introduced to Dr. Deming by his mentor, Walter Shewhart」，也就是最早是戴明的老師休哈特（Walter A. Shewhart）介紹給戴明的（翻譯是本站整理）。休哈特在 1939 年的書裡說，規格、生產、檢驗這三步「must go in a circle instead of in a straight line」，也就是要繞成一個圈，不是走一條直線（翻譯是本站整理）；他還把這三步比成先有假設、做實驗、再檢驗假設（本站整理）。研究這段歷史的 Moen 引用今井正明（Masaaki Imai）的說法：日本的主管把戴明 1950 年講課用的循環改寫成 PDCA（本站整理）。Moen 也轉述戴明 1990 年寫給他的信：「be sure to call it PDSA, not the corruption PDCA.」，意思是一定要叫 PDSA，PDCA 是被改歪了的叫法（翻譯是本站整理）。
   qa:
     question: 你怎麼知道新的讀書方法真的比較有效？
     answer: 先決定要量什麼，例如每天小考的對題數；試之前先記下原本的數字，試完再比較（例子是本站建議）。CMS 的範本在計畫時就要問「What data need to be collected?」，也就是要收集哪些資料（翻譯是本站整理）。
@@ -126,16 +131,19 @@ why:
   - zonggang
   - cms-pdsa
   - ahrq-pdsa
+  - shewhart-1939
+  - deming-pdsa
+  - moen-pdsa
 how:
   heading: 計畫、執行、檢查、改進
   body:
   - 計畫（P）：寫下要試什麼、要量什麼、預測會怎樣（本站整理）。CMS 的範本問「What do you predict will happen and why?」，也建議「Plan a small test of change.」，先試一個小小的改變（翻譯是本站整理）。例如兩週內每天睡前複習英文單字，記下每天小考的對題數（例子是本站整理）。
-  - 執行（D）：照計畫做，CMS 寫「Carry out the test on a small scale.」，每天記在紀錄表上（翻譯是本站整理）。檢查（C）：把結果和原本的數字、和預測比一比，CMS 要寫下「Describe the measured results and how they compared to the predictions.」（翻譯是本站整理）。前後的數字變了，也可能是別的原因造成的，例如那段時間剛好比較不忙；所以也記下那段時間還有什麼不一樣（例子是本站整理）。CMS、AHRQ 把這一步寫成 Study（研究），所以叫 PDSA；本頁把 PDCA 和 PDSA 當成同一個循環來教（本站整理）。
+  - 執行（D）：照計畫做，CMS 寫「Carry out the test on a small scale.」，每天記在紀錄表上（翻譯是本站整理）。檢查（C）：把結果和原本的數字、和預測比一比，CMS 要寫下「Describe the measured results and how they compared to the predictions.」（翻譯是本站整理）。前後的數字變了，也可能是別的原因造成的，例如那段時間剛好比較不忙；所以也記下那段時間還有什麼不一樣（例子是本站整理）。CMS、AHRQ 把這一步寫成 Study（研究），所以叫 PDSA。戴明學會說，戴明看重的是「predicting the results of an improvement effort, studying the actual results, and comparing them to possibly revise the theory」，先預測、再研究實際結果、比較之後修正想法；而「Dr. Deming found that the focus on Check is more about the implementation of a change, with success or failure.」，Check 比較偏向看改變有沒有做成（翻譯是本站整理）。本頁用 PDCA 這個常見的名稱，第三步照 PDSA 的做法和預測比較（本站整理）。
   - 改進（A）：依結果決定保留、修改或放棄，CMS 寫成 Adopt、「Adapt – modify the changes and repeat PDSA cycle.」和「Abandon – change your approach and repeat PDSA cycle.」（翻譯是本站整理）。結果不如預期也是有用的結果，寫下下一輪要改什麼再試一次；AHRQ 說「Each time you make an adjustment and test it again, you will do another cycle.」（翻譯是本站整理）。
   qa:
     question: PDCA 和 PDSA 有什麼不同？
-    answer: 第三步的名字不同：PDCA 寫檢查（Check），PDSA 寫研究（Study），都是看結果、和預測比較（本站整理）。AHRQ 的說明是「After implementation you will study the results.」，做完之後研究結果（翻譯是本站整理）。
-    source: ahrq-pdsa
+    answer: 第三步的名字不同：PDCA 寫檢查（Check），PDSA 寫研究（Study）（本站整理）。戴明學會說「Dr. Deming emphasized the PDSA Cycle, not the PDCA Cycle, with a third step emphasis on Study (S), not Check (C).」，也就是戴明看重 PDSA，第三步的重點是研究，不是檢查（翻譯是本站整理）。
+    source: deming-pdsa
   items_title: 四步做
   items:
   - title: 計畫 P
@@ -156,6 +164,7 @@ how:
   sources:
   - cms-pdsa
   - ahrq-pdsa
+  - deming-pdsa
 what:
   heading: 用數字決定下一步
   body:
@@ -241,6 +250,27 @@ sources:
   accessed: '2026-10-30'
   kind: government
   supports: 「The Plan-Do-Study-Act (PDSA) method is a way to test a change that is implemented.」；「Each time you make an adjustment and test it again, you will do another cycle.」；「After implementation you will study the results.」
+- id: shewhart-1939
+  title: Statistical Method from the Viewpoint of Quality Control（Walter A. Shewhart 著，with the editorial assistance of W. Edwards Deming，1939）
+  publisher: The Graduate School, The Department of Agriculture（Washington）；Internet Archive 上美國農業部國家農業圖書館的掃描本
+  url: https://archive.org/details/CAT10502416
+  accessed: '2026-11-01'
+  kind: reference
+  supports: 第 1 章 Statistical Control：「these three steps must go in a circle instead of in a straight line」（p.44）；「specification, production, and inspection correspond respectively to making a hypothesis, carrying out an experiment, and testing the hypothesis」（p.44–45）
+- id: deming-pdsa
+  title: PDSA Cycle
+  publisher: The W. Edwards Deming Institute（戴明學會）
+  url: https://deming.org/explore/pdsa/
+  accessed: '2026-11-01'
+  kind: reference
+  supports: 「was first introduced to Dr. Deming by his mentor, Walter Shewhart of the famous Bell Laboratories in New York.」；PDSA and PDCA 一節：「Dr. Deming emphasized the PDSA Cycle, not the PDCA Cycle, with a third step emphasis on Study (S), not Check (C).」；「Dr. Deming found that the focus on Check is more about the implementation of a change, with success or failure.」；「His focus was on predicting the results of an improvement effort, studying the actual results, and comparing them to possibly revise the theory.」
+- id: moen-pdsa
+  title: Foundation and History of the PDSA Cycle（Ronald Moen，Associates in Process Improvement）
+  publisher: The W. Edwards Deming Institute 網站刊載
+  url: https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf
+  accessed: '2026-11-01'
+  kind: reference
+  supports: 摘要：「It includes the Shewhart Cycle of 1939」（p.1）；3. The PDCA Cycle Evolves，Moen 引 Imai 的說法：「the Japanese executives recast the Deming wheel from the 1950 JUSE seminar into the Plan-Do-Check-Act (PDCA) cycle」（p.4）；「No one person claimed authorship」（p.4）；4. The PDSA Cycle Evolves，Moen 轉述戴明 1990 年 11 月 17 日的來信：「be sure to call it PDSA, not the corruption PDCA.」（p.7）；摘要條列：「The PDCA and PDSA are only related through the scientific method」（p.7）
 - id: genai-student
   title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
   publisher: 教育部（中小學數位學習精進方案網站）

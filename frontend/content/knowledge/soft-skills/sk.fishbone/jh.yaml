@@ -2,7 +2,8 @@
 # - 補 grades（七至九年級）、est_time、Why/How/What、兩張圖、來源；status 改 published。
 # - 課綱：綜合活動 1b-IV-2、輔 Db-IV-1（問題解決策略）、自然科學 pa-IV-2（獲知因果關係）。
 # - 依據：美國 CMS 的魚骨圖工具（因果圖；問題寫在魚頭、原因分類、全員參與、投票選根本原因）。
-# - 1b-IV-2、輔 Db-IV-1、pa-IV-2 是新加進代碼表的代碼（見 taxonomy patch）；domains 加上自然科學；不寫石川圖（見 verify_notes）。
+# - 1b-IV-2、輔 Db-IV-1、pa-IV-2 是新加進代碼表的代碼（見 taxonomy patch）；domains 加上自然科學。
+# - 起源：補 JUSE 石川馨年表（1953 年想出因果圖）與 ASQ 的魚骨圖說明（又叫石川圖），見 verify_notes。
 id: sk.fishbone@jh
 concept: sk.fishbone
 title: 魚骨圖：把原因分類找
@@ -41,7 +42,9 @@ verify_notes:
 - 綜合活動 1b-IV-2（p.17）、輔 Db-IV-1（p.93）、自然科學 pa-IV-2 原本不在代碼表，本批依原文加入（taxonomy patch）。pa-IV-2 的文字跨 p.21–22（在發現新知中間換頁），引文標 p.21–22，代碼表記第一頁 p.21。
 - 健康與體育領綱也有同號的學習表現：1b-IV-2、2a-IV-1、2a-IV-3、2c-IV-1（健體 p.26），文字和綜合活動不同；健體不在代碼表，代碼表以代碼為鍵，將來要收健體要先改 schema（taxonomy 的綜合活動區塊加了註解）。健體的學習內容 Da-IV-1、Db-IV-1（健體 p.28）沒有科目字首，本點的家 Da-IV-1、輔 Db-IV-1 帶字首，鍵不衝突。
 - 原 curriculum_108.domains 只有綜合活動，本點加上自然科學 pa-IV-2（從資訊或數據獲知因果關係），所以 domains 補自然科學；核心素養維持 A2。
-- 原 idea 的「魚骨圖（石川圖）」改成魚骨圖（也叫因果圖）；「逼自己想到」改成幫自己想到：CMS 的工具寫 A cause and effect diagram；石川圖的出處（ASQ 網頁）讀取時回 403，沒有可逐字引用的來源，所以不寫。
+- 原 idea 的「魚骨圖（石川圖）」改成魚骨圖（也叫因果圖、石川圖）；「逼自己想到」改成幫自己想到：CMS 的工具寫 A cause and effect diagram；石川圖的名稱與發明人依 ASQ 的魚骨圖頁（2026-11-01 讀取，頁上標 Reviewed October 2024）。
+- 起源依日本科學技術聯盟（JUSE）網站的石川馨年表（JUSE 的石川馨百年紀念計畫網站 juse.jp/ishikawa 也刊載同一份 PDF，兩份檔案完全相同）：1953 年那一列寫他想出因果圖、用在川崎製鐵葺合工廠（PDF 第 8 頁，頁腳印 502）。有些二手資料寫成 1943 年，例如澳洲 HCi Professional Services 的〈Cause and effect diagrams〉頁面寫「He first used it in 1943」（網際網路檔案館 2014 年 1 月 1 日存檔 https://web.archive.org/web/20140101070227/http://www.hci.com.au/hcisite5/library/materials/Cause%20and%20effect%20diagrams.htm ）；本頁照 JUSE 年表寫 1953 年。工廠的中文名稱是本站整理。
+- 石川馨自己的書（Guide to Quality Control，亞洲生產力組織 1976）在 Internet Archive 只能借閱，無法逐字核對，所以不引用；ASQ 網頁的引文只取不含彎引號、撇號的片段。
 - 原稿的四類（方法、時間、環境、身心）保留，標成本站建議；CMS 的例子用設備、環境、規則程序和人員四類，本頁說明類別可以依問題調整。
 - 原 review 的「至少 4 類、每類 2 個原因」「圈出 2 個」標成示意。
 - 原 scenario「親子共學：全家一起畫『為什麼早上總是很趕』的魚骨圖，每個人都要在別人的分類裡補一個原因。」保留做法，補上本站建議。內層引號拿掉。
@@ -61,7 +64,7 @@ links:
   - ph.feedback@jh
   deeper:
   - sk.rootcause@sh
-link_notes: 框架：魚骨圖（因果圖，CMS 品質改善工具）。綜合活動 1b-IV-2、輔 Db-IV-1；自然科學 pa-IV-2。跨學門先學：哲學「部分與整體」。
+link_notes: 框架：魚骨圖（因果圖、石川圖；石川馨提出，CMS 品質改善工具）。綜合活動 1b-IV-2、輔 Db-IV-1；自然科學 pa-IV-2。跨學門先學：哲學「部分與整體」。
 competency:
   specialist:
   - 問題解決
@@ -73,7 +76,7 @@ ai:
   - 補充可能遺漏的原因類別（由老師或家長操作，本站建議）
   human_experience:
   - 判斷哪個原因最可能、值得先查
-idea: 魚骨圖（也叫因果圖）把問題寫在魚頭，原因分類寫在魚骨上，例如方法、時間、環境、身心。分類可以幫自己想到平常忽略的原因；畫完再圈出最可能的兩三個去查證。
+idea: 魚骨圖（也叫因果圖、石川圖）把問題寫在魚頭，原因分類寫在魚骨上，例如方法、時間、環境、身心。分類可以幫自己想到平常忽略的原因；畫完再圈出最可能的兩三個去查證。
 guiding_questions:
 - 數學退步，可能的原因只有「不夠用功」嗎？
 - 魚頭要寫什麼？
@@ -89,7 +92,7 @@ audience:
 - family
 authors:
 - I-PING Huang
-updated: '2026-10-30'
+updated: '2026-11-01'
 est_time:
   school: 國中七至九年級綜合活動課
   source: zonghe
@@ -98,6 +101,7 @@ why:
   body:
   - 綜合活動課綱要國中生「運用問題解決策略，處理生活議題，進而克服生活逆境。」輔導的學習內容有「生活議題的問題解決、危機因應與克服困境的方法。」自然科學課綱也要學生「從（所得的）資訊或數據，形成解釋、發現新知、獲知因果關係、解決問題或是發現新的問題。」
   - 美國聯邦醫療保險與補助服務中心（CMS）的品質改善工具說，「A fishbone diagram is a visual way to look at cause and effect.」，也就是用圖來看原因和結果（翻譯是本站整理）。它也說，分類可以幫大家找出「possible causes for a problem that might not otherwise be considered」，也就是平常可能想不到的原因（翻譯是本站整理）。CMS 的例子也提醒「As this example illustrates, there can be more than one root cause.」，根本原因可能不只一個（翻譯是本站整理）。
+  - 魚骨圖也叫石川圖。美國品質學會（ASQ）說它「Also known as a cause and effect diagram or an Ishikawa diagram (after its creator, Kaoru Ishikawa)」，名字來自發明人石川馨（翻譯是本站整理）。日本科學技術聯盟（JUSE）的石川馨年表記載，1953 年「He devised the cause and effect diagram, which was applied to the production process at the Fukiai Plant of Kawasaki Steel.」，也就是他想出因果圖，用在川崎製鐵葺合工廠的生產流程（翻譯是本站整理）。
   qa:
     question: 數學退步，可能的原因只有「不夠用功」嗎？
     answer: 不一定。可能還有方法（只看不寫）、時間（考前才讀）、環境（讀書時手機在旁邊）、身心（睡不夠）等原因（例子是本站整理）。CMS 的工具建議先「Brainstorm all the possible causes of the problem.」，也就是把可能的原因都列出來，再來判斷（翻譯是本站整理）。
@@ -128,11 +132,13 @@ why:
   - sci108
   - zonggang
   - cms-fishbone
+  - asq-fishbone
+  - juse-ishikawa
 how:
   heading: 魚頭、魚骨，再圈出來
   body:
   - 先寫魚頭：把問題寫清楚，例如這次段考數學比上次低（例子是本站整理）。CMS 建議「Be as clear and specific as you can about the problem.」，也提醒「Beware of defining the problem in terms of a solution」，魚頭寫問題，不要寫成辦法，例如不要寫要多補習（翻譯和例子是本站整理）。
-  - 再畫魚骨：本頁建議分成方法、時間、環境、身心四類，每類想兩個以上的原因（本站建議）；CMS 的例子用的是設備、環境、規則程序和人員四類，類別可以依問題調整（本站整理）。全家每個人都可以補，CMS 也建議「Encourage each person to participate in the brainstorming activity」（翻譯是本站整理）。原因寫成事情，不寫成怪誰，例如寫睡不到七小時，不寫他很懶（例子是本站建議）。
+  - 再畫魚骨：本頁建議分成方法、時間、環境、身心四類，每類想兩個以上的原因（本站建議）；CMS 的例子用的是設備、環境、規則程序和人員四類，類別可以依問題調整（本站整理）；ASQ 也說石川馨「also encouraged creativity in naming these categories to communicate more clearly to those who would be using the diagram」，類別名稱可以改成使用的人看得懂的說法（翻譯是本站整理）。全家每個人都可以補，CMS 也建議「Encourage each person to participate in the brainstorming activity」（翻譯是本站整理）。原因寫成事情，不寫成怪誰，例如寫睡不到七小時，不寫他很懶（例子是本站建議）。
   - 最後圈出來：CMS 的做法是「having each team member identify the top three root causes」，本頁建議每個人先圈 2 個最可能的原因（本站建議）。再替圈到的原因寫下要怎麼確認，例如連續一週記下睡眠時間；查過才知道是不是真的原因（例子是本站整理）。
   qa:
     question: 畫完之後，怎麼找出最該先查的原因？
@@ -157,6 +163,7 @@ how:
   activity_figure: fishbone-flow
   sources:
   - cms-fishbone
+  - asq-fishbone
 what:
   heading: 分類找原因，再查證
   body:
@@ -235,6 +242,20 @@ sources:
   accessed: '2026-10-30'
   kind: government
   supports: 「A fishbone diagram is a visual way to look at cause and effect.」（p.1）；「possible causes for a problem that might not otherwise be considered」（p.1）；「A cause and effect diagram」（p.1）；「Brainstorm all the possible causes of the problem.」（p.1）；「Be as clear and specific as you can about the problem.」（p.1）；「Beware of defining the problem in terms of a solution」（p.1）；「Encourage each person to participate in the brainstorming activity」（p.2）；「having each team member identify the top three root causes」（p.2）；「place three tally marks or colored sticky dots」（p.2）；「As this example illustrates, there can be more than one root cause.」（p.3）
+- id: asq-fishbone
+  title: What is a Fishbone Diagram? Ishikawa Cause & Effect Diagram
+  publisher: 美國品質學會（ASQ），Quality Resources，Reviewed October 2024
+  url: https://asq.org/quality-resources/fishbone
+  accessed: '2026-11-01'
+  kind: reference
+  supports: WHAT IS A FISHBONE DIAGRAM? 一節：「Also known as a cause and effect diagram or an Ishikawa diagram (after its creator, Kaoru Ishikawa)」；FISHBONE DIAGRAM PROCEDURE 第 3 步：「he also encouraged creativity in naming these categories to communicate more clearly to those who would be using the diagram」
+- id: juse-ishikawa
+  title: A Parallel Chronology of Prof. Kaoru Ishikawa’s Life and TQC in Japan
+  publisher: 日本科學技術聯盟（JUSE）
+  url: https://www.juse.or.jp/english/archives/pdf/ParallelChronology_Ver2_150717.pdf
+  accessed: '2026-11-01'
+  kind: reference
+  supports: 1953 年（Age 38）石川馨生平欄：「He devised the cause and effect diagram, which was applied to the production process at the Fukiai Plant of Kawasaki Steel.」（PDF p.8，頁腳印 502）
 - id: genai-student
   title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
   publisher: 教育部（中小學數位學習精進方案網站）
