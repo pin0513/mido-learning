@@ -43,7 +43,7 @@ verify_notes:
 - 健康與體育領綱也有同號的學習表現：1b-IV-2、2a-IV-1、2a-IV-3、2c-IV-1（健體 p.26），文字和綜合活動不同；健體不在代碼表，代碼表以代碼為鍵，將來要收健體要先改 schema（taxonomy 的綜合活動區塊加了註解）。健體的學習內容 Da-IV-1、Db-IV-1（健體 p.28）沒有科目字首，本點的家 Da-IV-1、輔 Db-IV-1 帶字首，鍵不衝突。
 - 原 curriculum_108.domains 只有綜合活動，本點加上自然科學 pa-IV-2（從資訊或數據獲知因果關係），所以 domains 補自然科學；核心素養維持 A2。
 - 原 idea 的「魚骨圖（石川圖）」改成魚骨圖（也叫因果圖、石川圖）；「逼自己想到」改成幫自己想到：CMS 的工具寫 A cause and effect diagram；石川圖的名稱與發明人依 ASQ 的魚骨圖頁（2026-11-01 讀取，頁上標 Reviewed October 2024）。
-- 起源依日本科學技術聯盟（JUSE）網站的石川馨年表（JUSE 的石川馨百年紀念計畫網站 juse.jp/ishikawa 也刊載同一份 PDF，兩份檔案完全相同）：1953 年那一列寫他想出因果圖、用在川崎製鐵葺合工廠（PDF 第 8 頁，頁腳印 502）。有些二手資料寫成 1943 年，本頁照 JUSE 年表寫 1953 年。工廠的中文名稱是本站整理。
+- 起源依日本科學技術聯盟（JUSE）網站的石川馨年表（JUSE 的石川馨百年紀念計畫網站 juse.jp/ishikawa 也刊載同一份 PDF，兩份檔案完全相同）：1953 年那一列寫他想出因果圖、用在川崎製鐵葺合工廠（PDF 第 8 頁，頁腳印 502）。有些二手資料寫成 1943 年，例如澳洲 HCi Professional Services 的〈Cause and effect diagrams〉頁面寫「He first used it in 1943」（網際網路檔案館 2014 年 1 月 1 日存檔 https://web.archive.org/web/20140101070227/http://www.hci.com.au/hcisite5/library/materials/Cause%20and%20effect%20diagrams.htm ）；本頁照 JUSE 年表寫 1953 年。工廠的中文名稱是本站整理。
 - 石川馨自己的書（Guide to Quality Control，亞洲生產力組織 1976）在 Internet Archive 只能借閱，無法逐字核對，所以不引用；ASQ 網頁的引文只取不含彎引號、撇號的片段。
 - 原稿的四類（方法、時間、環境、身心）保留，標成本站建議；CMS 的例子用設備、環境、規則程序和人員四類，本頁說明類別可以依問題調整。
 - 原 review 的「至少 4 類、每類 2 個原因」「圈出 2 個」標成示意。

@@ -102,7 +102,7 @@ why:
   body:
   - 綜合活動課綱要國中生「善用各項資源，妥善計畫與執行個人生活中重要事務。」核心素養也提到要「檢核、評估學習及生活計畫」。自然科學課綱則要學生「計劃適當次數的測試、預測活動的可能結果。」
   - 美國聯邦醫療保險與補助服務中心（CMS）的改善範本有一個先問的問題：「How will we know that change is an improvement (measures)?」，也就是先想好用什麼數字判斷有沒有變好（翻譯是本站整理）。美國醫療研究與品質局（AHRQ）也說，這個方法是「a way to test a change that is implemented.」，用來檢驗一個改變（翻譯是本站整理）。
-  - 戴明學會說，這個循環「was first introduced to Dr. Deming by his mentor, Walter Shewhart of the famous Bell Laboratories in New York.」，也就是戴明的老師休哈特（Walter A. Shewhart）先提出的（翻譯是本站整理）。休哈特在 1939 年的書裡說，規格、生產、檢驗這三步「must go in a circle instead of in a straight line」，而且就像科學方法：「specification, production, and inspection correspond respectively to making a hypothesis, carrying out an experiment, and testing the hypothesis」，也就是先有假設、做實驗、再檢驗假設（翻譯是本站整理）。研究這段歷史的 Moen 引用今井正明（Masaaki Imai）的說法，日本的主管把戴明 1950 年講課用的循環改成 PDCA：「the Japanese executives recast the Deming wheel from the 1950 JUSE seminar into the Plan-Do-Check-Act (PDCA) cycle」（翻譯是本站整理）。Moen 也轉述戴明 1990 年寫給他的信：「be sure to call it PDSA, not the corruption PDCA.」，提醒要叫 PDSA、不要叫 PDCA（翻譯是本站整理）。
+  - 戴明學會說，這個循環「was first introduced to Dr. Deming by his mentor, Walter Shewhart」，也就是最早是戴明的老師休哈特（Walter A. Shewhart）介紹給戴明的（翻譯是本站整理）。休哈特在 1939 年的書裡說，規格、生產、檢驗這三步「must go in a circle instead of in a straight line」，也就是要繞成一個圈，不是走一條直線（翻譯是本站整理）；他還把這三步比成先有假設、做實驗、再檢驗假設（本站整理）。研究這段歷史的 Moen 引用今井正明（Masaaki Imai）的說法：日本的主管把戴明 1950 年講課用的循環改寫成 PDCA（本站整理）。Moen 也轉述戴明 1990 年寫給他的信：「be sure to call it PDSA, not the corruption PDCA.」，意思是一定要叫 PDSA，PDCA 是被改歪了的叫法（翻譯是本站整理）。
   qa:
     question: 你怎麼知道新的讀書方法真的比較有效？
     answer: 先決定要量什麼，例如每天小考的對題數；試之前先記下原本的數字，試完再比較（例子是本站建議）。CMS 的範本在計畫時就要問「What data need to be collected?」，也就是要收集哪些資料（翻譯是本站整理）。
@@ -142,7 +142,7 @@ how:
   - 改進（A）：依結果決定保留、修改或放棄，CMS 寫成 Adopt、「Adapt – modify the changes and repeat PDSA cycle.」和「Abandon – change your approach and repeat PDSA cycle.」（翻譯是本站整理）。結果不如預期也是有用的結果，寫下下一輪要改什麼再試一次；AHRQ 說「Each time you make an adjustment and test it again, you will do another cycle.」（翻譯是本站整理）。
   qa:
     question: PDCA 和 PDSA 有什麼不同？
-    answer: 第三步的名字不同：PDCA 寫檢查（Check），PDSA 寫研究（Study）。戴明學會說「Dr. Deming emphasized the PDSA Cycle, not the PDCA Cycle, with a third step emphasis on Study (S), not Check (C).」，戴明主張用 PDSA，重點是拿結果和預測比較、從中學習（翻譯是本站整理）。
+    answer: 第三步的名字不同：PDCA 寫檢查（Check），PDSA 寫研究（Study）（本站整理）。戴明學會說「Dr. Deming emphasized the PDSA Cycle, not the PDCA Cycle, with a third step emphasis on Study (S), not Check (C).」，也就是戴明看重 PDSA，第三步的重點是研究，不是檢查（翻譯是本站整理）。
     source: deming-pdsa
   items_title: 四步做
   items:
@@ -256,7 +256,7 @@ sources:
   url: https://archive.org/details/CAT10502416
   accessed: '2026-11-01'
   kind: reference
-  supports: Chapter I Statistical Control：「these three steps must go in a circle instead of in a straight line」（p.44）；「specification, production, and inspection correspond respectively to making a hypothesis, carrying out an experiment, and testing the hypothesis」（p.44–45）
+  supports: 第 1 章 Statistical Control：「these three steps must go in a circle instead of in a straight line」（p.44）；「specification, production, and inspection correspond respectively to making a hypothesis, carrying out an experiment, and testing the hypothesis」（p.44–45）
 - id: deming-pdsa
   title: PDSA Cycle
   publisher: The W. Edwards Deming Institute（戴明學會）
@@ -270,7 +270,7 @@ sources:
   url: https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf
   accessed: '2026-11-01'
   kind: reference
-  supports: 3. The PDCA Cycle Evolves，Moen 引 Imai 的說法：「the Japanese executives recast the Deming wheel from the 1950 JUSE seminar into the Plan-Do-Check-Act (PDCA) cycle」（p.4）；「No one person claimed authorship」（p.4）；4. The PDSA Cycle Evolves，Moen 轉述戴明 1990 年 11 月 17 日的來信：「be sure to call it PDSA, not the corruption PDCA.」（p.7）；摘要條列：「The PDCA and PDSA are only related through the scientific method」（p.7）
+  supports: 摘要：「It includes the Shewhart Cycle of 1939」（p.1）；3. The PDCA Cycle Evolves，Moen 引 Imai 的說法：「the Japanese executives recast the Deming wheel from the 1950 JUSE seminar into the Plan-Do-Check-Act (PDCA) cycle」（p.4）；「No one person claimed authorship」（p.4）；4. The PDSA Cycle Evolves，Moen 轉述戴明 1990 年 11 月 17 日的來信：「be sure to call it PDSA, not the corruption PDCA.」（p.7）；摘要條列：「The PDCA and PDSA are only related through the scientific method」（p.7）
 - id: genai-student
   title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
   publisher: 教育部（中小學數位學習精進方案網站）
