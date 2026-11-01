@@ -13,7 +13,7 @@ interface CacheEntry<T> {
 }
 
 class SimpleCache {
-  private cache = new Map<string, CacheEntry<any>>();
+  private cache = new Map<string, CacheEntry<unknown>>();
   private ttl: number;
 
   constructor(ttlMs = 30000) {
@@ -36,7 +36,7 @@ class SimpleCache {
       return null;
     }
 
-    return entry.data;
+    return entry.data as T;
   }
 
   /**
@@ -104,7 +104,7 @@ if (typeof window !== 'undefined') {
 
 // 在開發環境下，將 cache 掛載到 window 方便除錯
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-  (window as any).__apiCache = {
+  (window as unknown as Record<string, unknown>).__apiCache = {
     stats: () => apiCache.getStats(),
     clear: () => apiCache.clear(),
     get: (key: string) => apiCache.get(key),

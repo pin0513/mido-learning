@@ -31,6 +31,7 @@ export function Header() {
 
   useEffect(() => {
     if (user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- flags loading while the external Firebase token refresh runs for the new user
       setRoleLoading(true);
       // Force refresh token to get latest custom claims
       user.getIdTokenResult(true).then((token) => {
@@ -62,11 +63,6 @@ export function Header() {
     return () => {
       cancelled = true;
     };
-  }, []);
-
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setMobileMenuOpen(false);
   }, []);
 
   return (

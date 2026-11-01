@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable react-hooks/refs -- legacy canvas board: mirrors state into refs during render ("stale-closure refs") and reads them in render; refactoring is out of scope for a no-behavior-change lint fix */
+
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import type {
@@ -421,6 +423,12 @@ export default function BoardClient() {
     });
   }, [drawPlayerMarker, drawShuttleMarker]);
 
+  const getActiveEntityRef = useCallback((): PlayerEntity | BallEntity | AnnotEntity => {
+    if (activeTypeRef.current === 'player') return playersRef.current[activeIdxRef.current];
+    if (activeTypeRef.current === 'ball') return ballsRef.current[activeIdxRef.current];
+    return annotsRef.current[activeIdxRef.current];
+  }, []);
+
   // ════════════════════════════════════════
   // Redraw all
   // ════════════════════════════════════════
@@ -444,12 +452,6 @@ export default function BoardClient() {
   // ════════════════════════════════════════
   // Entity helpers
   // ════════════════════════════════════════
-  const getActiveEntityRef = useCallback((): PlayerEntity | BallEntity | AnnotEntity => {
-    if (activeTypeRef.current === 'player') return playersRef.current[activeIdxRef.current];
-    if (activeTypeRef.current === 'ball') return ballsRef.current[activeIdxRef.current];
-    return annotsRef.current[activeIdxRef.current];
-  }, []);
-
   const entityAt = useCallback((hit: HitResult): PlayerEntity | BallEntity => {
     return hit.who === 'player' ? playersRef.current[hit.id] : ballsRef.current[hit.id];
   }, []);

@@ -88,6 +88,10 @@ export default function FamilyScoreboardPage() {
 
   const familyId = selectedFamilyId;
 
+  // Display code for players
+  const [displayCode, setDisplayCode] = useState<string | null>(null);
+  const [codeCopied, setCodeCopied] = useState(false);
+
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -99,6 +103,7 @@ export default function FamilyScoreboardPage() {
 
   useEffect(() => {
     if (!uid) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- marks the external family fetch as loading whenever uid changes
     setFamilyLoading(true);
     getMyFamilies()
       .then((result) => {
@@ -167,10 +172,6 @@ export default function FamilyScoreboardPage() {
 
   // Score bounce animation
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
-
-  // Display code for players
-  const [displayCode, setDisplayCode] = useState<string | null>(null);
-  const [codeCopied, setCodeCopied] = useState(false);
 
   // Redeem
   const [selectedRewardId, setSelectedRewardId] = useState('');

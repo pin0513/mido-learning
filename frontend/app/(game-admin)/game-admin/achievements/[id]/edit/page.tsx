@@ -51,6 +51,32 @@ interface AchievementForm {
   isActive: boolean;
 }
 
+interface AchievementCondition {
+  type: ConditionType;
+  courseId?: string;
+  minStars?: number;
+  minWpm?: number;
+  minAccuracy?: number;
+  consecutivePerfect?: number;
+  totalGames?: number;
+  totalStars?: number;
+}
+
+interface AchievementDto {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  type: string;
+  condition: AchievementCondition;
+  reward: {
+    experience: number;
+    coins: number;
+  };
+  displayOrder: number;
+  isActive: boolean;
+}
+
 interface ApiResponse<T> {
   success: boolean;
   data: T;
@@ -93,7 +119,7 @@ export default function EditAchievementPage() {
       );
 
       if (response.ok) {
-        const result: ApiResponse<any[]> = await response.json();
+        const result: ApiResponse<AchievementDto[]> = await response.json();
         const achievement = result.data.find((a) => a.id === achievementId);
 
         if (achievement) {
@@ -136,7 +162,7 @@ export default function EditAchievementPage() {
     setSaving(true);
 
     try {
-      const condition: any = {
+      const condition: AchievementCondition = {
         type: form.conditionType,
       };
 

@@ -110,12 +110,12 @@ export function Compare({ figure, stacked = false }: { figure: CompareFigure; st
   );
   const width = items.length * cardW + (items.length - 1) * gap;
   const height = 1 + Math.max(...items.map((item) => blockHeight(item, cardW)));
+  const mobileRows: { item: (typeof items)[number]; y: number }[] = [];
   let mobileY = 1;
-  const mobileRows = items.map((item) => {
-    const row = { item, y: mobileY };
+  for (const item of items) {
+    mobileRows.push({ item, y: mobileY });
     mobileY += blockHeight(item, 304) + 28;
-    return row;
-  });
+  }
   const vertical = (
     <svg className={stacked ? "v2-cmp-stack" : "v2-only-m"} viewBox={`0 0 320 ${mobileY - 20}`} role="img" aria-label={figure.alt}>
       {mobileRows.map(({ item, y }, index) => (

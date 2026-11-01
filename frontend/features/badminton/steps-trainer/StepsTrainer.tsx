@@ -541,7 +541,7 @@ function StepsTrainer() {
   // ═══════════════════════════════════════════════════
   // Pulse animation loop
   // ═══════════════════════════════════════════════════
-  const pulseLoop = useCallback(() => {
+  const pulseLoop = useCallback(function loop() {
     if (!stateRef.current.running) return;
     pulseRef.current += pulseDirRef.current * 0.05;
     if (pulseRef.current >= 1) {
@@ -553,7 +553,7 @@ function StepsTrainer() {
       pulseDirRef.current = 1;
     }
     drawScene();
-    rafRef.current = requestAnimationFrame(pulseLoop);
+    rafRef.current = requestAnimationFrame(loop);
   }, [drawScene]);
 
   // ═══════════════════════════════════════════════════
@@ -568,6 +568,28 @@ function StepsTrainer() {
     }
     return pool;
   }, []);
+
+  const stopTraining = useCallback(() => {
+    setRunning(false);
+    stateRef.current.running = false;
+    setCurrentLight(-1);
+    stateRef.current.currentLight = -1;
+    setOppLight(-1);
+    stateRef.current.oppLight = -1;
+    setShowManualHint(false);
+    setTacticHint(null);
+    setShotHint(null);
+
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = 0;
+    }
+    drawScene();
+  }, [drawScene]);
 
   const checkRoundComplete = useCallback((activeCount: number) => {
     roundCounterRef.current += 1;
@@ -621,7 +643,7 @@ function StepsTrainer() {
   const pickNextSequential = useCallback(() => {
     const pool = getActivePool();
     if (pool.length === 0) return;
-    let idx = seqIndexRef.current % pool.length;
+    const idx = seqIndexRef.current % pool.length;
     const next = pool[idx];
     seqIndexRef.current = idx + 1;
 
@@ -667,6 +689,28 @@ function StepsTrainer() {
 
     checkRoundComplete(pool.length);
   }, [getActivePool, checkRoundComplete, decideHand, pickShotAndOpp]);
+
+  // Helper for tactic: pick front or back, alternating
+  function pickTacticFrontBack(pool: number[]): number {
+    const current = tacticFrontBackRef.current;
+    const next = current === 'front' ? 'back' : 'front';
+    tacticFrontBackRef.current = next;
+
+    let targetPool: number[];
+    if (next === 'front') {
+      // FL(0), FR(1)
+      targetPool = pool.filter(i => i === 0 || i === 1);
+    } else {
+      // BL(4), BR(5)
+      targetPool = pool.filter(i => i === 4 || i === 5);
+    }
+
+    if (targetPool.length > 0) {
+      return targetPool[Math.floor(Math.random() * targetPool.length)];
+    }
+    // Fallback to any active position
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
 
   const pickNextTactic = useCallback(() => {
     const pool = getActivePool();
@@ -747,28 +791,6 @@ function StepsTrainer() {
     checkRoundComplete(pool.length);
   }, [getActivePool, checkRoundComplete, decideHand, pickShotAndOpp]);
 
-  // Helper for tactic: pick front or back, alternating
-  function pickTacticFrontBack(pool: number[]): number {
-    const current = tacticFrontBackRef.current;
-    const next = current === 'front' ? 'back' : 'front';
-    tacticFrontBackRef.current = next;
-
-    let targetPool: number[];
-    if (next === 'front') {
-      // FL(0), FR(1)
-      targetPool = pool.filter(i => i === 0 || i === 1);
-    } else {
-      // BL(4), BR(5)
-      targetPool = pool.filter(i => i === 4 || i === 5);
-    }
-
-    if (targetPool.length > 0) {
-      return targetPool[Math.floor(Math.random() * targetPool.length)];
-    }
-    // Fallback to any active position
-    return pool[Math.floor(Math.random() * pool.length)];
-  }
-
   const pickNext = useCallback(() => {
     const m = stateRef.current.mode;
     if (m === 'seq') pickNextSequential();
@@ -814,28 +836,6 @@ function StepsTrainer() {
       setShowManualHint(true);
     }
   }, [getActivePool, pickNext, pulseLoop]);
-
-  const stopTraining = useCallback(() => {
-    setRunning(false);
-    stateRef.current.running = false;
-    setCurrentLight(-1);
-    stateRef.current.currentLight = -1;
-    setOppLight(-1);
-    stateRef.current.oppLight = -1;
-    setShowManualHint(false);
-    setTacticHint(null);
-    setShotHint(null);
-
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = 0;
-    }
-    drawScene();
-  }, [drawScene]);
 
   const toggleTraining = useCallback(() => {
     if (stateRef.current.running) stopTraining();
@@ -1249,6 +1249,7 @@ function StepsTrainer() {
       <div style={styles.hudPanel}>
         {/* Top bar (always visible) */}
         <div style={styles.topbar}>
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- keeps the existing full-page navigation that resets the trainer; switching to <Link> would change behavior */}
           <a href="/" style={styles.backLink}>
             &larr; 首頁
           </a>

@@ -32,6 +32,17 @@ type ConditionType =
   | 'TotalGamesPlayed'
   | 'TotalStarsCollected';
 
+interface AchievementCondition {
+  type: ConditionType;
+  courseId?: string;
+  minStars?: number;
+  minWpm?: number;
+  minAccuracy?: number;
+  consecutivePerfect?: number;
+  totalGames?: number;
+  totalStars?: number;
+}
+
 interface AchievementForm {
   title: string;
   description: string;
@@ -70,7 +81,7 @@ export default function NewAchievementPage() {
 
     try {
       // 建立條件物件
-      const condition: any = {
+      const condition: AchievementCondition = {
         type: form.conditionType,
       };
 

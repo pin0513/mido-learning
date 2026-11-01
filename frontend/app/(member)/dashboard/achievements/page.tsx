@@ -16,7 +16,7 @@ interface AchievementDto {
   type: string;
   condition: {
     type: string;
-    [key: string]: any;
+    [key: string]: string | number | undefined;
   };
   reward: {
     experience: number;
@@ -210,7 +210,7 @@ export default function AchievementsPage() {
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
-        <Select value={filter} onValueChange={(value: any) => setFilter(value)}>
+        <Select value={filter} onValueChange={(value) => setFilter(value as 'all' | 'unlocked' | 'locked')}>
           <SelectTrigger className="w-full sm:w-48">
             <SelectValue />
           </SelectTrigger>
@@ -221,7 +221,7 @@ export default function AchievementsPage() {
           </SelectContent>
         </Select>
 
-        <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+        <Select value={sortBy} onValueChange={(value) => setSortBy(value as 'order' | 'unlockedAt')}>
           <SelectTrigger className="w-full sm:w-48">
             <SelectValue />
           </SelectTrigger>
