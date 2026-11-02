@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ContentCatalog, KnowledgePoint } from "@/lib/content";
 import { competencyName, disciplineTitle, layerName, stageName } from "@/lib/content";
 import { isFolderLaunched } from "@/lib/content";
+import { guidingAnswers } from "@/lib/kp/guiding-answers";
 import { competencyPath, disciplinePath, knowledgePointPath, learningPathPath, stagePath } from "@/lib/kp/routes";
 import { GlueTail } from "./v2/text";
 import { ColearnCard } from "./ColearnCard";
@@ -78,6 +79,7 @@ export function KnowledgePointView({
     .filter((item) => isFolderLaunched(item.folder) || item.folder === point.folder);
   const colearnPaths = all.paths.filter((path) => path.colearn && path.knowledgePointIds.includes(point.id));
   const showCurriculum = point.stage !== "uni" && point.curriculum108;
+  const answers = guidingAnswers(point);
 
   return (
     <article className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6">
@@ -155,9 +157,17 @@ export function KnowledgePointView({
           引導問題
         </h2>
         <ol className="mt-2 list-decimal space-y-2 pl-5 leading-7">
-          {point.guidingQuestions.map((question) => (
-            <li key={question}><GlueTail text={question} /></li>
-          ))}
+          {point.guidingQuestions.map((question) => {
+            const answer = answers.get(question);
+            return (
+              <li key={question}>
+                <GlueTail text={question} />
+                {answer ? (
+                  <p className="mt-1 max-w-3xl" data-testid="kp-qa-answer"><b>回答　</b><GlueTail text={answer} /></p>
+                ) : null}
+              </li>
+            );
+          })}
         </ol>
       </section>
 
