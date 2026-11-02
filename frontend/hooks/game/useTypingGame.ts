@@ -1,10 +1,17 @@
 import { useState, useCallback, useRef } from 'react';
+import { calculateAccuracy, calculateWpm } from './typing-stats';
 
 export interface Question {
   text: string;
   difficulty?: 'easy' | 'medium' | 'hard';
 }
 
+/**
+ * Stats for the whole game so far. correctChars / totalChars count every question: completed
+ * questions (all correct, since a question only completes when the input matches) plus the
+ * current input. wpm uses correctChars and the elapsed game time (5 chars = 1 word); it is
+ * computed when the game ends (0 while playing; show a live value from the timer instead).
+ */
 export interface GameStats {
   correctChars: number;
   totalChars: number;
@@ -19,6 +26,12 @@ export interface UseTypingGameProps {
   timeLimit: number;
   targetWPM: number;
   onComplete?: (stats: GameStats, stars: number) => void;
+  /**
+   * Game time elapsed in seconds, used for the finish WPM (and so the stars). Pass the
+   * timer's getElapsedSeconds so pauses are excluded and it matches the countdown, the live
+   * WPM and timeSpent. Without it, wall-clock time since startGame is used.
+   */
+  getElapsedSeconds?: () => number;
 }
 
 export interface UseTypingGameReturn {
@@ -31,7 +44,11 @@ export interface UseTypingGameReturn {
   handleInput: (value: string) => void;
   startGame: () => void;
   resetGame: () => void;
-  /** End the game now (e.g. time is up) with the current stats; no-op if it already ended. */
+  /**
+   * End the game now (e.g. time is up) with the current stats; no-op if it already ended.
+   * WPM is computed over the elapsed game time (getElapsedSeconds), so it reflects the whole
+   * game and not the moment of the last keystroke.
+   */
   endGame: (stars?: number) => void;
 }
 
@@ -40,6 +57,7 @@ export function useTypingGame({
   timeLimit,
   targetWPM,
   onComplete,
+  getElapsedSeconds,
 }: UseTypingGameProps): UseTypingGameReturn {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [currentInput, setCurrentInput] = useState('');
@@ -56,10 +74,10 @@ export function useTypingGame({
 
   const currentQuestion = questions[questionIndex] || null;
 
-  const calculateWPM = useCallback((correctChars: number, seconds: number): number => {
-    if (seconds === 0) return 0;
-    return Math.round((correctChars / 5) / (seconds / 60));
-  }, []);
+  const elapsedSeconds = useCallback(
+    () => (getElapsedSeconds ? getElapsedSeconds() : startTime ? (Date.now() - startTime) / 1000 : 0),
+    [getElapsedSeconds, startTime],
+  );
 
   const calculateStars = useCallback((wpm: number, accuracy: number): number => {
     if (wpm >= targetWPM && accuracy >= 95) return 3;
@@ -76,6 +94,8 @@ export function useTypingGame({
   // onComplete must fire exactly once per game. The guard is a ref (not state) so a
   // second call in the same tick, e.g. a timer that fires twice, is also ignored.
   const finishedRef = useRef(false);
+  // Characters of the questions already completed in this game (they are all correct).
+  const completedCharsRef = useRef(0);
 
   const finishGame = useCallback((finalStats: GameStats, stars?: number) => {
     if (finishedRef.current) return;
@@ -94,10 +114,11 @@ export function useTypingGame({
 
     setCurrentInput(value);
 
-    // Calculate stats
-    const totalChars = value.length;
-    const correctChars = value.split('').filter((char, i) => char === currentQuestion.text[i]).length;
-    const accuracy = totalChars > 0 ? (correctChars / totalChars) * 100 : 0;
+    // Calculate stats for the whole game: completed questions plus the current input
+    const currentCorrect = value.split('').filter((char, i) => char === currentQuestion.text[i]).length;
+    const totalChars = completedCharsRef.current + value.length;
+    const correctChars = completedCharsRef.current + currentCorrect;
+    const accuracy = calculateAccuracy(correctChars, totalChars);
 
     // Calculate combo
     const lastChar = value[value.length - 1];
@@ -107,15 +128,10 @@ export function useTypingGame({
     const newCombo = isCorrect ? stats.combo + 1 : 0;
     const maxCombo = Math.max(stats.maxCombo, newCombo);
 
-    // Calculate WPM
-    const elapsedSeconds = startTime ? (Date.now() - startTime) / 1000 : 0;
-    const wpm = calculateWPM(correctChars, elapsedSeconds);
-
     setStats((prev) => ({
       ...prev,
       correctChars,
       totalChars,
-      wpm,
       accuracy,
       combo: newCombo,
       maxCombo,
@@ -125,14 +141,17 @@ export function useTypingGame({
     if (value === currentQuestion.text) {
       // Move to next question or finish game
       if (questionIndex < questions.length - 1) {
+        completedCharsRef.current += currentQuestion.text.length;
         setQuestionIndex(questionIndex + 1);
         setCurrentInput('');
       } else {
-        // Game completed
-        finishGame({ correctChars, totalChars, wpm, accuracy, combo: newCombo, maxCombo });
+        // Game completed: WPM over the elapsed game time (same source as the live WPM)
+        const finalStats = { correctChars, totalChars, wpm: calculateWpm(correctChars, elapsedSeconds()), accuracy, combo: newCombo, maxCombo };
+        setStats(finalStats);
+        finishGame(finalStats);
       }
     }
-  }, [currentQuestion, isGameOver, questionIndex, questions.length, stats.combo, stats.maxCombo, startTime, calculateWPM, finishGame]);
+  }, [currentQuestion, isGameOver, questionIndex, questions.length, stats.combo, stats.maxCombo, elapsedSeconds, finishGame]);
 
   const startGame = useCallback(() => {
     setQuestionIndex(0);
@@ -148,6 +167,7 @@ export function useTypingGame({
     setIsGameOver(false);
     setStartTime(Date.now());
     finishedRef.current = false;
+    completedCharsRef.current = 0;
   }, []);
 
   const resetGame = useCallback(() => {
@@ -155,8 +175,11 @@ export function useTypingGame({
   }, [startGame]);
 
   const endGame = useCallback((stars?: number) => {
-    finishGame(stats, stars);
-  }, [finishGame, stats]);
+    if (finishedRef.current) return;
+    const finalStats = { ...stats, wpm: calculateWpm(stats.correctChars, elapsedSeconds()) };
+    setStats(finalStats);
+    finishGame(finalStats, stars);
+  }, [finishGame, stats, elapsedSeconds]);
 
   return {
     currentQuestion,
