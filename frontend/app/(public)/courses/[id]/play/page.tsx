@@ -8,6 +8,7 @@ import { db } from '@/lib/firebase';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useTrial } from '@/hooks/useTrial';
 import { useGameTimer } from '@/hooks/game/useGameTimer';
+import { calculateWpm } from '@/hooks/game/typing-stats';
 import { useTypingGame, Question, GameStats } from '@/hooks/game/useTypingGame';
 import { GameHeader } from '@/components/game/GameHeader';
 import { QuestionDisplay } from '@/components/game/QuestionDisplay';
@@ -105,6 +106,8 @@ export default function TypingGamePage({
     setFinalStats({ stats, stars, timeSpent });
 
     // Only call API if user is logged in (trial mode doesn't accumulate achievements).
+    // stats.totalChars counts the whole game (completed questions + current input), so it is
+    // 0 only when nothing was typed in the whole game.
     // Nothing typed (time ran out on an empty game) is not a completed game: the backend
     // would count it towards totalPlays / completedLevels and achievements, so skip the call
     // and only show the local result (no rewards line, since rewards stay null).
@@ -139,8 +142,11 @@ export default function TypingGamePage({
       // Time is up: always end the game (endGame calls onComplete at most once per game).
       // 1 star is the participation result once something was typed. 0 stars means the
       // player gave up (abandoned: nothing typed); it is shown locally only and never sent to
-      // completeGame (see handleGameComplete).
-      game.endGame(game.stats.totalChars > 0 ? 1 : 0);
+      // completeGame (see handleGameComplete). "Typed" means anywhere in the game: a finished
+      // question counts even if the box was cleared at time-up.
+      // WPM is computed over the full time limit (the game ran for all of it).
+      const typedAnything = game.questionIndex > 0 || game.stats.totalChars > 0;
+      game.endGame(typedAnything ? 1 : 0, course?.gameConfig.timeLimit || 60);
     },
   });
 
@@ -304,6 +310,12 @@ export default function TypingGamePage({
     );
   }
 
+  // Live WPM over the game time elapsed so far (timer seconds, so pauses don't count). It is
+  // recomputed every second, not only on keystrokes, so it doesn't freeze at an early burst.
+  const liveWpm = game.isGameOver
+    ? game.stats.wpm
+    : calculateWpm(game.stats.correctChars, course.gameConfig.timeLimit - timer.timeLeft);
+
   // Game screen
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4">
@@ -344,7 +356,7 @@ export default function TypingGamePage({
 
             {/* Stats Panel */}
             <StatsPanel
-              wpm={game.stats.wpm}
+              wpm={liveWpm}
               accuracy={game.stats.accuracy}
               combo={game.stats.combo}
               targetWPM={course.gameConfig.targetWPM}
