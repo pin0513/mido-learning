@@ -120,9 +120,9 @@ export default function TypingGamePage({
   const timer = useGameTimer({
     initialTime: course?.gameConfig.timeLimit || 60,
     onTimeUp: () => {
-      // Force complete game when time is up
+      // Force complete game when time is up; endGame calls onComplete at most once per game
       if (game.stats.totalChars > 0) {
-        handleGameComplete(game.stats, 1); // Minimum 1 star for participation
+        game.endGame(1); // Minimum 1 star for participation
       }
     },
   });
