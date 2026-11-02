@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { Button } from '@/components/ui/Button';
@@ -26,7 +27,16 @@ export function Header() {
   const { user, signOut, loading } = useAuth();
   const [userRole, setUserRole] = useState<UserRole>('guest');
   const [roleLoading, setRoleLoading] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  // The mobile menu remembers the pathname it was opened on. Any route change
+  // (link, back/forward, router.push) closes it; the reset happens during render
+  // (React's "adjust state when a prop changes" pattern), not in an effect.
+  const [menuOpenedAt, setMenuOpenedAt] = useState<string | null>(null);
+  if (menuOpenedAt !== null && menuOpenedAt !== pathname) {
+    setMenuOpenedAt(null);
+  }
+  const mobileMenuOpen = menuOpenedAt !== null && menuOpenedAt === pathname;
+  const setMobileMenuOpen = (open: boolean) => setMenuOpenedAt(open ? pathname : null);
   const [showKnowledgeMap, setShowKnowledgeMap] = useState(false);
 
   useEffect(() => {
