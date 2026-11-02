@@ -100,7 +100,7 @@ export default function TypingGamePage({
 
     const generation = gameGenerationRef.current;
     timer.stop();
-    const timeSpent = course.gameConfig.timeLimit - timer.timeLeft;
+    const timeSpent = (course.gameConfig.timeLimit || 60) - timer.timeLeft;
 
     // Save final stats for result modal
     setFinalStats({ stats, stars, timeSpent });
@@ -144,9 +144,9 @@ export default function TypingGamePage({
       // player gave up (abandoned: nothing typed); it is shown locally only and never sent to
       // completeGame (see handleGameComplete). "Typed" means anywhere in the game: a finished
       // question counts even if the box was cleared at time-up.
-      // WPM is computed over the full time limit (the game ran for all of it).
+      // WPM uses the timer's elapsed time, which is the full time limit here.
       const typedAnything = game.questionIndex > 0 || game.stats.totalChars > 0;
-      game.endGame(typedAnything ? 1 : 0, course?.gameConfig.timeLimit || 60);
+      game.endGame(typedAnything ? 1 : 0);
     },
   });
 
@@ -155,6 +155,8 @@ export default function TypingGamePage({
     timeLimit: course?.gameConfig.timeLimit || 60,
     targetWPM: course?.gameConfig.targetWPM || 30,
     onComplete: handleGameComplete,
+    // One time source (the timer, pauses excluded) for live WPM, finish WPM / stars and timeSpent.
+    getElapsedSeconds: timer.getElapsedSeconds,
   });
 
   const handleStartGame = async () => {
@@ -310,11 +312,12 @@ export default function TypingGamePage({
     );
   }
 
-  // Live WPM over the game time elapsed so far (timer seconds, so pauses don't count). It is
-  // recomputed every second, not only on keystrokes, so it doesn't freeze at an early burst.
+  // Live WPM over the game time elapsed so far, from the same timer source as the finish WPM
+  // (pauses don't count). The page re-renders every second, so it doesn't freeze at an early
+  // burst.
   const liveWpm = game.isGameOver
     ? game.stats.wpm
-    : calculateWpm(game.stats.correctChars, course.gameConfig.timeLimit - timer.timeLeft);
+    : calculateWpm(game.stats.correctChars, timer.getElapsedSeconds());
 
   // Game screen
   return (

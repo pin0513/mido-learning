@@ -20,3 +20,16 @@ export function calculateAccuracy(correctChars: number, totalChars: number): num
   if (!(totalChars > 0)) return 0;
   return (correctChars / totalChars) * 100;
 }
+
+/**
+ * Game time elapsed in seconds, from the countdown: the whole seconds already ticked off
+ * (initialTime - timeLeft) plus the part of the current second that has run (partialMs,
+ * clamped to under one second). Paused time is never counted because the timer passes the
+ * partial second frozen at the pause. Capped at initialTime.
+ */
+export function elapsedGameSeconds(initialTime: number, timeLeft: number, partialMs: number): number {
+  if (!Number.isFinite(initialTime) || initialTime <= 0) return 0;
+  const whole = Math.min(Math.max(initialTime - timeLeft, 0), initialTime);
+  const partial = Number.isFinite(partialMs) ? Math.min(Math.max(partialMs, 0), 999) / 1000 : 0;
+  return Math.min(whole + partial, initialTime);
+}
