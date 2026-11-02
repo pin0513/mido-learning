@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, use } from 'react';
+import { useEffect, useRef, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { doc, getDoc } from 'firebase/firestore';
@@ -52,6 +52,15 @@ export default function TypingGamePage({
     timeSpent: number;
   } | null>(null);
   const [isTrialMode, setIsTrialMode] = useState(false);
+  // Bumped on every start / play again; a completeGame response from an earlier game is ignored.
+  const gameGenerationRef = useRef(0);
+  useEffect(() => {
+    const generation = gameGenerationRef;
+    // On unmount, drop any completeGame response still in flight.
+    return () => {
+      generation.current += 1;
+    };
+  }, []);
 
   // Load course data
   useEffect(() => {
@@ -88,13 +97,18 @@ export default function TypingGamePage({
   const handleGameComplete = async (stats: GameStats, stars: number) => {
     if (!course) return;
 
+    const generation = gameGenerationRef.current;
+    timer.stop();
     const timeSpent = course.gameConfig.timeLimit - timer.timeLeft;
 
     // Save final stats for result modal
     setFinalStats({ stats, stars, timeSpent });
 
-    // Only call API if user is logged in (trial mode doesn't accumulate achievements)
-    if (user && sessionId) {
+    // Only call API if user is logged in (trial mode doesn't accumulate achievements).
+    // Nothing typed (time ran out on an empty game) is not a completed game: the backend
+    // would count it towards totalPlays / completedLevels and achievements, so skip the call
+    // and only show the local result (no rewards line, since rewards stay null).
+    if (user && sessionId && stats.totalChars > 0) {
       try {
         const result = await completeGame({
           sessionId,
@@ -108,22 +122,25 @@ export default function TypingGamePage({
           totalChars: stats.totalChars,
         });
 
+        if (generation !== gameGenerationRef.current) return; // a newer game has started
         setRewards(result);
       } catch (error) {
         console.error('Failed to complete game:', error);
       }
     }
 
+    if (generation !== gameGenerationRef.current) return;
     setShowResult(true);
   };
 
   const timer = useGameTimer({
     initialTime: course?.gameConfig.timeLimit || 60,
     onTimeUp: () => {
-      // Force complete game when time is up; endGame calls onComplete at most once per game
-      if (game.stats.totalChars > 0) {
-        game.endGame(1); // Minimum 1 star for participation
-      }
+      // Time is up: always end the game (endGame calls onComplete at most once per game).
+      // 1 star is the participation result once something was typed. 0 stars means the
+      // player gave up (abandoned: nothing typed); it is shown locally only and never sent to
+      // completeGame (see handleGameComplete).
+      game.endGame(game.stats.totalChars > 0 ? 1 : 0);
     },
   });
 
@@ -136,6 +153,7 @@ export default function TypingGamePage({
 
   const handleStartGame = async () => {
     if (!course) return;
+    gameGenerationRef.current += 1;
 
     // Check trial mode
     if (!user) {
@@ -175,6 +193,7 @@ export default function TypingGamePage({
   };
 
   const handleExit = () => {
+    gameGenerationRef.current += 1; // drop any completeGame response still in flight
     router.push(user ? '/dashboard' : '/games');
   };
 
