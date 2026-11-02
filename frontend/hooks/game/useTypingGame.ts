@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
 export interface Question {
   text: string;
@@ -31,6 +31,8 @@ export interface UseTypingGameReturn {
   handleInput: (value: string) => void;
   startGame: () => void;
   resetGame: () => void;
+  /** End the game now (e.g. time is up) with the current stats; no-op if it already ended. */
+  endGame: (stars?: number) => void;
 }
 
 export function useTypingGame({
@@ -71,10 +73,15 @@ export function useTypingGame({
     return currentInput[index] === currentQuestion.text[index];
   }, [currentQuestion, currentInput]);
 
-  const finishGame = useCallback((finalStats: GameStats) => {
+  // onComplete must fire exactly once per game. The guard is a ref (not state) so a
+  // second call in the same tick, e.g. a timer that fires twice, is also ignored.
+  const finishedRef = useRef(false);
+
+  const finishGame = useCallback((finalStats: GameStats, stars?: number) => {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
     setIsGameOver(true);
-    const stars = calculateStars(finalStats.wpm, finalStats.accuracy);
-    onComplete?.(finalStats, stars);
+    onComplete?.(finalStats, stars ?? calculateStars(finalStats.wpm, finalStats.accuracy));
   }, [calculateStars, onComplete]);
 
   const handleInput = useCallback((value: string) => {
@@ -140,19 +147,16 @@ export function useTypingGame({
     });
     setIsGameOver(false);
     setStartTime(Date.now());
+    finishedRef.current = false;
   }, []);
 
   const resetGame = useCallback(() => {
     startGame();
   }, [startGame]);
 
-  // Handle time up
-  useEffect(() => {
-    if (isGameOver && startTime) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- existing time-up flow; kept as-is (no behavior change)
-      finishGame(stats);
-    }
-  }, [isGameOver, startTime, stats, finishGame]);
+  const endGame = useCallback((stars?: number) => {
+    finishGame(stats, stars);
+  }, [finishGame, stats]);
 
   return {
     currentQuestion,
@@ -164,5 +168,6 @@ export function useTypingGame({
     handleInput,
     startGame,
     resetGame,
+    endGame,
   };
 }
