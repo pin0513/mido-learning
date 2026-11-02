@@ -34,6 +34,9 @@ export function useGameTimer({
     setIsPaused(false);
   }, []);
 
+  // start must set timeLeft and isRunning in the same batch: the time-up effect below runs
+  // on isRunning && timeLeft === 0, so starting after a game that ended at 0 without
+  // resetting timeLeft in the same update would end the new game immediately.
   const start = useCallback(() => {
     setIsRunning(true);
     setIsPaused(false);
