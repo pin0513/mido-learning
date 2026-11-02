@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, use } from 'react';
+import { useEffect, useRef, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { doc, getDoc } from 'firebase/firestore';
@@ -52,6 +52,8 @@ export default function TypingGamePage({
     timeSpent: number;
   } | null>(null);
   const [isTrialMode, setIsTrialMode] = useState(false);
+  // Bumped on every start / play again; a completeGame response from an earlier game is ignored.
+  const gameGenerationRef = useRef(0);
 
   // Load course data
   useEffect(() => {
@@ -88,6 +90,8 @@ export default function TypingGamePage({
   const handleGameComplete = async (stats: GameStats, stars: number) => {
     if (!course) return;
 
+    const generation = gameGenerationRef.current;
+    timer.stop();
     const timeSpent = course.gameConfig.timeLimit - timer.timeLeft;
 
     // Save final stats for result modal
@@ -108,22 +112,23 @@ export default function TypingGamePage({
           totalChars: stats.totalChars,
         });
 
+        if (generation !== gameGenerationRef.current) return; // a newer game has started
         setRewards(result);
       } catch (error) {
         console.error('Failed to complete game:', error);
       }
     }
 
+    if (generation !== gameGenerationRef.current) return;
     setShowResult(true);
   };
 
   const timer = useGameTimer({
     initialTime: course?.gameConfig.timeLimit || 60,
     onTimeUp: () => {
-      // Force complete game when time is up; endGame calls onComplete at most once per game
-      if (game.stats.totalChars > 0) {
-        game.endGame(1); // Minimum 1 star for participation
-      }
+      // Time is up: always end the game (endGame calls onComplete at most once per game).
+      // 1 star for participation once something was typed; 0 stars if nothing was typed.
+      game.endGame(game.stats.totalChars > 0 ? 1 : 0);
     },
   });
 
@@ -136,6 +141,7 @@ export default function TypingGamePage({
 
   const handleStartGame = async () => {
     if (!course) return;
+    gameGenerationRef.current += 1;
 
     // Check trial mode
     if (!user) {

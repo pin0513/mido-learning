@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useEffectEvent, useRef, useCallback } from 'react';
 
 export interface UseGameTimerProps {
   initialTime: number; // seconds
@@ -57,26 +57,37 @@ export function useGameTimer({
     setTimeLeft(initialTime);
   }, [initialTime, stop]);
 
+  // Tick once a second. The updater only computes the next value (it must stay pure:
+  // React may call it twice, e.g. in StrictMode); time-up is handled in the effect below.
+  // The interval depends only on running/paused, so re-renders (every keystroke) do not
+  // restart it.
   useEffect(() => {
     if (isRunning && !isPaused) {
       intervalRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            stop();
-            onTimeUp?.();
-            return 0;
-          }
-          return prev - 1;
-        });
+        setTimeLeft((prev) => Math.max(prev - 1, 0));
       }, 1000);
     }
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
-  }, [isRunning, isPaused, onTimeUp, stop]);
+  }, [isRunning, isPaused]);
+
+  // Time-up runs after the render that shows 0, so onTimeUp sees timeLeft === 0, and it
+  // runs once: stop() clears isRunning before the next check.
+  const handleTimeUp = useEffectEvent(() => {
+    stop();
+    onTimeUp?.();
+  });
+
+  useEffect(() => {
+    if (isRunning && timeLeft === 0) {
+      handleTimeUp();
+    }
+  }, [isRunning, timeLeft]);
 
   return {
     timeLeft,
