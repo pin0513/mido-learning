@@ -175,7 +175,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
           >
@@ -269,7 +269,17 @@ export function Header() {
                     </span>
                   )}
                 </div>
-                <Button variant="outline" size="sm" onClick={signOut} className="w-full">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    // Close the menu like every other menu item (#84); signing out
+                    // doesn't change the route, so the pathname reset wouldn't close it.
+                    setMobileMenuOpen(false);
+                    signOut();
+                  }}
+                  className="w-full"
+                >
                   登出
                 </Button>
               </div>

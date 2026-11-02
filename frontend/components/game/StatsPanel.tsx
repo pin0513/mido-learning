@@ -11,13 +11,15 @@ export function StatsPanel({ wpm, accuracy, combo, targetWPM }: StatsPanelProps)
   const isWpmOnTarget = targetWPM ? wpm >= targetWPM : false;
   const isAccuracyGood = accuracy >= 90;
 
+  // On phones each column is under 100px wide, so the values use text-2xl there
+  // (text-3xl from sm up); "100.0%" at text-3xl is about 102px and spilled out of its column.
   return (
-    <div className="grid grid-cols-3 gap-4 rounded-lg bg-white p-4 shadow">
+    <div className="grid grid-cols-3 gap-2 rounded-lg bg-white p-4 shadow sm:gap-4">
       {/* WPM */}
       <div className="text-center">
         <div className="text-sm font-medium text-gray-600">WPM</div>
         <div
-          className={`mt-1 text-3xl font-bold ${
+          className={`mt-1 text-2xl font-bold tabular-nums sm:text-3xl ${
             isWpmOnTarget ? 'text-green-600' : 'text-blue-600'
           }`}
         >
@@ -34,7 +36,7 @@ export function StatsPanel({ wpm, accuracy, combo, targetWPM }: StatsPanelProps)
       <div className="text-center">
         <div className="text-sm font-medium text-gray-600">Accuracy</div>
         <div
-          className={`mt-1 text-3xl font-bold ${
+          className={`mt-1 text-2xl font-bold tabular-nums sm:text-3xl ${
             isAccuracyGood ? 'text-green-600' : 'text-orange-600'
           }`}
         >
@@ -56,7 +58,7 @@ export function StatsPanel({ wpm, accuracy, combo, targetWPM }: StatsPanelProps)
       <div className="text-center">
         <div className="text-sm font-medium text-gray-600">Combo</div>
         <div
-          className={`mt-1 text-3xl font-bold ${
+          className={`mt-1 text-2xl font-bold tabular-nums sm:text-3xl ${
             combo >= 10 ? 'animate-pulse text-purple-600' : 'text-gray-700'
           }`}
         >
