@@ -23,6 +23,18 @@ const ROLE_COLORS: Record<UserRole, string> = {
   guest: 'bg-gray-100 text-gray-600',
 };
 
+// 思考訓練所：外部決策練習網站（think.paulfun.net，站名「思考事件訓練所」），另開分頁。不是 Next 的路由，所以用 <a>，不用 <Link>。
+const THINK_URL = 'https://think.paulfun.net';
+
+// 和 MaterialHeader「另開分頁」同一個圖示，提示這是外部連結。
+function ExternalLinkIcon() {
+  return (
+    <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>
+  );
+}
+
 export function Header() {
   const { user, signOut, loading } = useAuth();
   const [userRole, setUserRole] = useState<UserRole>('guest');
@@ -78,7 +90,7 @@ export function Header() {
   return (
     <header className="border-b border-gray-200 bg-white relative z-50">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold text-blue-600">
+        <Link href="/" className="flex shrink-0 items-center gap-2 text-xl font-bold text-blue-600">
           <Image
             src="/images/logo.png"
             alt="Mido Learning"
@@ -89,8 +101,12 @@ export function Header() {
           <span className="hidden sm:inline">Mido Learning</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden space-x-8 md:flex items-center">
+        {/* Desktop Navigation: from lg (1024px). An admin has 7 items plus the user block, which
+            doesn't fit on one line below that, so 768–1023 uses the menu button too. The signed-in
+            role badge shows from lg (an admin's from xl: the 管理 button shows the role there); the
+            email (truncated) shows from xl, and below that 登出 carries it. Below lg both are in the
+            mobile menu. */}
+        <nav className="hidden space-x-6 whitespace-nowrap lg:flex items-center">
           <Link href="/" className="text-gray-600 hover:text-gray-900">
             首頁
           </Link>
@@ -112,6 +128,16 @@ export function Header() {
               </Link>
             </>
           )}
+          <a
+            href={THINK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-1 text-gray-600 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+          >
+            思考訓練所
+            <ExternalLinkIcon />
+            <span className="sr-only">（另開新分頁）</span>
+          </a>
           <Link
             href="/experiments"
             className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-200 transition-colors"
@@ -137,9 +163,10 @@ export function Header() {
           {loading ? (
             <div className="h-10 w-20 animate-pulse rounded bg-gray-200" />
           ) : user ? (
-            <div className="hidden items-center space-x-4 md:flex">
-              <div className="flex items-center gap-2">
-                <span className="hidden text-sm text-gray-600 lg:inline">{user.email}</span>
+            <div className="hidden items-center space-x-4 whitespace-nowrap lg:flex">
+              {/* An admin's nav already has the 管理 button, and below xl there's no room for the badge. */}
+              <div className={`${userRole === 'admin' ? 'hidden xl:flex' : 'flex'} items-center gap-2`}>
+                <span className="hidden max-w-[10rem] truncate text-sm text-gray-600 xl:inline" title={user.email ?? undefined}>{user.email}</span>
                 {roleLoading ? (
                   <span className="h-5 w-16 animate-pulse rounded-full bg-gray-200" />
                 ) : (
@@ -150,12 +177,14 @@ export function Header() {
                   </span>
                 )}
               </div>
-              <Button variant="outline" size="sm" onClick={signOut}>
+              {/* Below xl the email isn't shown, so 登出 carries it (tooltip + screen readers). */}
+              <Button variant="outline" size="sm" onClick={signOut} title={user.email ? `登出 ${user.email}` : undefined}>
                 登出
+                {user.email ? <span className="sr-only xl:hidden">（{user.email}）</span> : null}
               </Button>
             </div>
           ) : (
-            <div className="hidden items-center space-x-4 md:flex">
+            <div className="hidden items-center space-x-4 whitespace-nowrap lg:flex">
               <span
                 className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${ROLE_COLORS.guest}`}
               >
@@ -175,7 +204,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 lg:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
           >
@@ -195,7 +224,7 @@ export function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="border-t border-gray-200 bg-white md:hidden">
+        <div className="border-t border-gray-200 bg-white lg:hidden">
           <div className="space-y-1 px-4 py-3">
             <Link
               href="/"
@@ -231,6 +260,18 @@ export function Header() {
                 </Link>
               </>
             )}
+            <a
+              href={THINK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-11 items-center gap-1 rounded-md px-3 py-3 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+              // Opening a new tab doesn't change this tab's route, so close the menu here (#84, #89).
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              思考訓練所
+              <ExternalLinkIcon />
+              <span className="sr-only">（另開新分頁）</span>
+            </a>
             <Link
               href="/experiments"
               className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-2 text-base font-semibold text-amber-700 hover:bg-amber-200 transition-colors"
