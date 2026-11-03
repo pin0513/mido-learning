@@ -103,7 +103,9 @@ export function Header() {
 
         {/* Desktop Navigation: from lg (1024px). An admin has 7 items plus the user block, which
             doesn't fit on one line below that, so 768–1023 uses the menu button too. The signed-in
-            email (truncated) and role badge show from xl; both are always in the mobile menu. */}
+            role badge shows from lg (an admin's from xl: the 管理 button shows the role there); the
+            email (truncated) shows from xl, and below that 登出 carries it. Below lg both are in the
+            mobile menu. */}
         <nav className="hidden space-x-6 whitespace-nowrap lg:flex items-center">
           <Link href="/" className="text-gray-600 hover:text-gray-900">
             首頁
@@ -162,8 +164,9 @@ export function Header() {
             <div className="h-10 w-20 animate-pulse rounded bg-gray-200" />
           ) : user ? (
             <div className="hidden items-center space-x-4 whitespace-nowrap lg:flex">
-              <div className="hidden items-center gap-2 xl:flex">
-                <span className="max-w-[10rem] truncate text-sm text-gray-600" title={user.email ?? undefined}>{user.email}</span>
+              {/* An admin's nav already has the 管理 button, and below xl there's no room for the badge. */}
+              <div className={`${userRole === 'admin' ? 'hidden xl:flex' : 'flex'} items-center gap-2`}>
+                <span className="hidden max-w-[10rem] truncate text-sm text-gray-600 xl:inline" title={user.email ?? undefined}>{user.email}</span>
                 {roleLoading ? (
                   <span className="h-5 w-16 animate-pulse rounded-full bg-gray-200" />
                 ) : (
@@ -174,8 +177,10 @@ export function Header() {
                   </span>
                 )}
               </div>
-              <Button variant="outline" size="sm" onClick={signOut}>
+              {/* Below xl the email isn't shown, so 登出 carries it (tooltip + screen readers). */}
+              <Button variant="outline" size="sm" onClick={signOut} title={user.email ? `登出 ${user.email}` : undefined}>
                 登出
+                {user.email ? <span className="sr-only xl:hidden">（{user.email}）</span> : null}
               </Button>
             </div>
           ) : (
