@@ -3,9 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
 import { useAuth } from '@/components/auth/AuthProvider';
-import { Button } from '@/components/ui/Button';
+import { SiteMark } from '@/components/layout/SiteMark';
 
 type UserRole = 'admin' | 'teacher' | 'member' | 'guest';
 
@@ -16,12 +15,23 @@ const ROLE_LABELS: Record<UserRole, string> = {
   guest: '訪客',
 };
 
+// 深色頂列上的身分標籤：用知識地圖的學門淺色當底、墨色字（對比 9:1 以上）；訪客用比底色亮一階的灰綠。
 const ROLE_COLORS: Record<UserRole, string> = {
-  admin: 'bg-purple-100 text-purple-800',
-  teacher: 'bg-green-100 text-green-800',
-  member: 'bg-blue-100 text-blue-800',
-  guest: 'bg-gray-100 text-gray-600',
+  admin: 'bg-d-pm text-ink',
+  teacher: 'bg-d-it text-ink',
+  member: 'bg-d-philosophy text-ink',
+  guest: 'bg-board-3 text-chalk',
 };
+
+// 頂列和知識地圖（KpFrame）同一套：board 底、6px accent 頂邊、粉筆色字、膠囊按鈕，點擊區至少 44px。
+const FOCUS = 'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-accent';
+const NAV_LINK = `inline-flex min-h-11 items-center text-sm font-medium text-chalk transition-colors hover:text-accent ${FOCUS}`;
+const PILL = `inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-[18px] text-sm font-bold transition-colors ${FOCUS}`;
+const PILL_QUIET = `${PILL} bg-board-3 text-chalk hover:bg-board-4`;
+const PILL_ACCENT = `${PILL} bg-accent text-ink hover:bg-[#ff7445]`;
+const PILL_OUTLINE = `${PILL} border border-board-4 text-chalk hover:bg-board-3`;
+const ROLE_BADGE = 'inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-bold';
+const MENU_LINK = `flex min-h-11 items-center rounded-lg px-3 text-base font-medium text-chalk transition-colors hover:bg-board-3 ${FOCUS}`;
 
 // 思考訓練所：外部決策練習網站（think.paulfun.net，站名「思考事件訓練所」），另開分頁。不是 Next 的路由，所以用 <a>，不用 <Link>。
 const THINK_URL = 'https://think.paulfun.net';
@@ -88,17 +98,11 @@ export function Header() {
   }, []);
 
   return (
-    <header className="border-b border-gray-200 bg-white relative z-50">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-2 text-xl font-bold text-blue-600">
-          <Image
-            src="/images/logo.png"
-            alt="Mido Learning"
-            width={32}
-            height={32}
-            className="rounded"
-          />
-          <span className="hidden sm:inline">Mido Learning</span>
+    <header className="relative z-50 border-t-[6px] border-accent bg-board font-kp text-chalk">
+      <div className="flex min-h-[68px] items-center gap-8 px-[clamp(16px,2.6vw,40px)]">
+        <Link href="/" className={`flex min-h-11 shrink-0 items-center gap-2.5 whitespace-nowrap text-[clamp(1.25rem,1.1rem+0.7vw,1.625rem)] font-black tracking-[-0.01em] text-chalk ${FOCUS}`}>
+          <SiteMark className="h-[30px] w-[30px] shrink-0" />
+          Mido Learning
         </Link>
 
         {/* Desktop Navigation: from lg (1024px). An admin has 7 items plus the user block, which
@@ -106,24 +110,21 @@ export function Header() {
             role badge shows from lg (an admin's from xl: the 管理 button shows the role there); the
             email (truncated) shows from xl, and below that 登出 carries it. Below lg both are in the
             mobile menu. */}
-        <nav className="hidden space-x-6 whitespace-nowrap lg:flex items-center">
-          <Link href="/" className="text-gray-600 hover:text-gray-900">
+        <nav className="ml-auto hidden items-center gap-6 whitespace-nowrap lg:flex">
+          <Link href="/" className={NAV_LINK}>
             首頁
           </Link>
           {showKnowledgeMap ? (
-            <Link
-              href="/kp"
-              className="inline-flex min-h-11 items-center text-gray-600 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-            >
+            <Link href="/kp" className={NAV_LINK}>
               知識地圖
             </Link>
           ) : null}
           {user && (
             <>
-              <Link href="/components" className="text-gray-600 hover:text-gray-900">
+              <Link href="/components" className={NAV_LINK}>
                 教材清單
               </Link>
-              <Link href="/skill-village" className="text-gray-600 hover:text-gray-900">
+              <Link href="/skill-village" className={NAV_LINK}>
                 技能村
               </Link>
             </>
@@ -132,24 +133,18 @@ export function Header() {
             href={THINK_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-1 text-gray-600 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+            className={`${NAV_LINK} gap-1`}
           >
             思考訓練所
             <ExternalLinkIcon />
             <span className="sr-only">（另開新分頁）</span>
           </a>
-          <Link
-            href="/experiments"
-            className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-200 transition-colors"
-          >
+          <Link href="/experiments" className={PILL_OUTLINE}>
             🧪 試驗功能
           </Link>
           {userRole === 'admin' && (
-            <Link
-              href="/admin/components"
-              className="inline-flex items-center gap-1 rounded-md bg-purple-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-700 transition-colors"
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <Link href="/admin/components" className={PILL_QUIET}>
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
@@ -158,45 +153,39 @@ export function Header() {
           )}
         </nav>
 
-        <div className="flex items-center space-x-4">
+        <div className="ml-auto flex items-center gap-4 lg:ml-0">
           {/* Desktop User Info */}
           {loading ? (
-            <div className="h-10 w-20 animate-pulse rounded bg-gray-200" />
+            <div className="h-11 w-20 animate-pulse rounded-full bg-board-3" />
           ) : user ? (
-            <div className="hidden items-center space-x-4 whitespace-nowrap lg:flex">
+            <div className="hidden items-center gap-3 whitespace-nowrap lg:flex">
               {/* An admin's nav already has the 管理 button, and below xl there's no room for the badge. */}
               <div className={`${userRole === 'admin' ? 'hidden xl:flex' : 'flex'} items-center gap-2`}>
-                <span className="hidden max-w-[10rem] truncate text-sm text-gray-600 xl:inline" title={user.email ?? undefined}>{user.email}</span>
+                <span className="hidden max-w-[10rem] truncate text-sm text-chalk-2 xl:inline" title={user.email ?? undefined}>{user.email}</span>
                 {roleLoading ? (
-                  <span className="h-5 w-16 animate-pulse rounded-full bg-gray-200" />
+                  <span className="h-5 w-16 animate-pulse rounded-full bg-board-3" />
                 ) : (
-                  <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${ROLE_COLORS[userRole]}`}
-                  >
+                  <span className={`${ROLE_BADGE} ${ROLE_COLORS[userRole]}`}>
                     {ROLE_LABELS[userRole]}
                   </span>
                 )}
               </div>
               {/* Below xl the email isn't shown, so 登出 carries it (tooltip + screen readers). */}
-              <Button variant="outline" size="sm" onClick={signOut} title={user.email ? `登出 ${user.email}` : undefined}>
+              <button type="button" className={PILL_QUIET} onClick={signOut} title={user.email ? `登出 ${user.email}` : undefined}>
                 登出
                 {user.email ? <span className="sr-only xl:hidden">（{user.email}）</span> : null}
-              </Button>
+              </button>
             </div>
           ) : (
-            <div className="hidden items-center space-x-4 whitespace-nowrap lg:flex">
-              <span
-                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${ROLE_COLORS.guest}`}
-              >
+            <div className="hidden items-center gap-3 whitespace-nowrap lg:flex">
+              <span className={`${ROLE_BADGE} ${ROLE_COLORS.guest}`}>
                 {ROLE_LABELS.guest}
               </span>
-              <Link href="/login">
-                <Button variant="outline" size="sm">
-                  登入
-                </Button>
+              <Link href="/login" className={PILL_QUIET}>
+                登入
               </Link>
-              <Link href="/register">
-                <Button size="sm">註冊</Button>
+              <Link href="/register" className={PILL_ACCENT}>
+                註冊
               </Link>
             </div>
           )}
@@ -204,17 +193,17 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 lg:hidden"
+            className={`inline-flex h-11 w-11 items-center justify-center rounded-full bg-board-3 text-chalk transition-colors hover:bg-board-4 lg:hidden ${FOCUS}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
           >
             <span className="sr-only">開啟選單</span>
             {mobileMenuOpen ? (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
@@ -224,11 +213,11 @@ export function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="border-t border-gray-200 bg-white lg:hidden">
-          <div className="space-y-1 px-4 py-3">
+        <div className="border-t border-board-4 bg-board-2 lg:hidden">
+          <div className="flex flex-col gap-1 px-[clamp(16px,2.6vw,40px)] py-3">
             <Link
               href="/"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+              className={MENU_LINK}
               onClick={() => setMobileMenuOpen(false)}
             >
               首頁
@@ -236,7 +225,7 @@ export function Header() {
             {showKnowledgeMap ? (
               <Link
                 href="/kp"
-                className="block min-h-11 rounded-md px-3 py-3 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                className={MENU_LINK}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 知識地圖
@@ -246,14 +235,14 @@ export function Header() {
               <>
                 <Link
                   href="/components"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  className={MENU_LINK}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   教材清單
                 </Link>
                 <Link
                   href="/skill-village"
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  className={MENU_LINK}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   技能村
@@ -264,7 +253,7 @@ export function Header() {
               href={THINK_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex min-h-11 items-center gap-1 rounded-md px-3 py-3 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+              className={`${MENU_LINK} gap-1`}
               // Opening a new tab doesn't change this tab's route, so close the menu here (#84, #89).
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -274,7 +263,7 @@ export function Header() {
             </a>
             <Link
               href="/experiments"
-              className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-3 py-2 text-base font-semibold text-amber-700 hover:bg-amber-200 transition-colors"
+              className={`${PILL_OUTLINE} self-start text-base`}
               onClick={() => setMobileMenuOpen(false)}
             >
               🧪 試驗功能
@@ -282,10 +271,10 @@ export function Header() {
             {userRole === 'admin' && (
               <Link
                 href="/admin/components"
-                className="inline-flex items-center gap-2 rounded-md bg-purple-600 px-3 py-2 text-base font-medium text-white hover:bg-purple-700 transition-colors"
+                className={`${PILL_QUIET} self-start text-base`}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -295,44 +284,39 @@ export function Header() {
           </div>
 
           {/* Mobile User Info */}
-          <div className="border-t border-gray-200 px-4 py-3">
+          <div className="border-t border-board-4 px-[clamp(16px,2.6vw,40px)] py-3">
             {loading ? (
-              <div className="h-10 w-full animate-pulse rounded bg-gray-200" />
+              <div className="h-11 w-full animate-pulse rounded-full bg-board-3" />
             ) : user ? (
               <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">{user.email}</span>
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="min-w-0 truncate text-sm text-chalk-2">{user.email}</span>
                   {!roleLoading && (
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${ROLE_COLORS[userRole]}`}
-                    >
+                    <span className={`${ROLE_BADGE} ${ROLE_COLORS[userRole]}`}>
                       {ROLE_LABELS[userRole]}
                     </span>
                   )}
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={() => {
                     // Close the menu like every other menu item (#84); signing out
                     // doesn't change the route, so the pathname reset wouldn't close it.
                     setMobileMenuOpen(false);
                     signOut();
                   }}
-                  className="w-full"
+                  className={`${PILL_QUIET} w-full`}
                 >
                   登出
-                </Button>
+                </button>
               </div>
             ) : (
               <div className="flex flex-col gap-2">
-                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="outline" size="sm" className="w-full">
-                    登入
-                  </Button>
+                <Link href="/login" className={`${PILL_QUIET} w-full`} onClick={() => setMobileMenuOpen(false)}>
+                  登入
                 </Link>
-                <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <Button size="sm" className="w-full">註冊</Button>
+                <Link href="/register" className={`${PILL_ACCENT} w-full`} onClick={() => setMobileMenuOpen(false)}>
+                  註冊
                 </Link>
               </div>
             )}
