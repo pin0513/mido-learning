@@ -15,7 +15,8 @@ export const metadata: Metadata = {
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    // font-kp：拉丁字 Geist、中文走系統字型，和知識地圖同一組字型（globals.css @theme，不載入 kp-theme.css）。
+    <div className="flex min-h-screen flex-col font-kp">
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
