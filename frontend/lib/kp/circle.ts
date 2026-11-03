@@ -135,9 +135,14 @@ function convertedWhy(part: CirclePart, point: KnowledgePoint): Block[] {
   return blocks;
 }
 
+function qaBlock(part: CirclePart): Block[] {
+  return part.qa ? [{ kind: "qa", question: part.qa.question, answer: part.qa.answer }] : [];
+}
+
 function convertedHow(part: CirclePart, point: KnowledgePoint): Block[] {
   const blocks: Block[] = [];
   if (part.body.length > 0) blocks.push({ kind: "paragraphs", texts: part.body });
+  blocks.push(...qaBlock(part));
   for (const id of part.figures) {
     if (id !== part.activityFigure) blocks.push({ kind: "figure", id });
   }
@@ -176,7 +181,7 @@ function convertedHow(part: CirclePart, point: KnowledgePoint): Block[] {
 }
 
 /**
- * 學什麼：先內文，再圖、能力列、檢核，最後是說明。
+ * 學什麼：先內文和問答，再圖、能力列、檢核，最後是說明。
  * 只有 notes、沒有內文和圖的頁面，notes 就是這一圈的內文，照一般段落呈現。
  */
 function convertedWhat(part: CirclePart, point: KnowledgePoint): Block[] {
@@ -184,9 +189,11 @@ function convertedWhat(part: CirclePart, point: KnowledgePoint): Block[] {
   const onlyNotes = part.body.length === 0 && part.figures.length === 0 && part.items.length === 0 && part.checklist.length === 0;
   if (onlyNotes) {
     if (part.notes.length > 0) blocks.push({ kind: "paragraphs", texts: part.notes });
+    blocks.push(...qaBlock(part));
     return blocks;
   }
   if (part.body.length > 0) blocks.push({ kind: "paragraphs", texts: part.body });
+  blocks.push(...qaBlock(part));
   const lastId = part.figures[part.figures.length - 1];
   const last = point.figures?.find((figure) => figure.id === lastId);
   const notesOnLast = last?.type === "tone_chart" && part.notes.length > 0;

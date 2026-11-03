@@ -235,3 +235,24 @@ test("學什麼只有 notes 時當內文；有內文時 notes 收成說明，內
   const hello = buildCircles(point("ja.hello@es"), shared).circles[2];
   assert.deepEqual(hello.blocks.map((block) => block.kind), ["paragraphs", "figure", "uses", "checklist", "notes"]);
 });
+
+// 2026-11-03：how／what 的 qa 以前被丟掉（只有 why 會出 qa）。it.nn@uni 的 what 帶 qa；how 帶 qa 的點挑第一個真實的點。
+test("how／what 的 qa 也會出成 qa 區塊，緊接在內文之後", () => {
+  const nn = shared.indexes.byId.get("it.nn@uni");
+  assert.ok(nn?.what?.qa, "it.nn@uni 的 what 應該有 qa");
+  const what = buildCircles(nn, shared).circles[2];
+  const qa = what.blocks.find((block) => block.kind === "qa");
+  assert.deepEqual(qa, { kind: "qa", question: nn.what.qa.question, answer: nn.what.qa.answer });
+  assert.equal(what.blocks[what.blocks.findIndex((block) => block.kind === "qa") - 1]?.kind, "paragraphs");
+
+  const withHow = shared.points.find((point) => point.how?.qa);
+  assert.ok(withHow?.how?.qa, "至少一個點的 how 有 qa");
+  const how = buildCircles(withHow, shared).circles[1];
+  assert.deepEqual(how.blocks.find((block) => block.kind === "qa"), { kind: "qa", question: withHow.how.qa.question, answer: withHow.how.qa.answer });
+
+  const onlyNotes: KnowledgePoint = {
+    ...nn,
+    what: { heading: "學什麼", body: [], sources: [], items: [], checklist: [], figures: [], notes: ["只有說明"], qa: nn.what.qa },
+  };
+  assert.deepEqual(buildCircles(onlyNotes, shared).circles[2].blocks.map((block) => block.kind), ["paragraphs", "qa"]);
+});
