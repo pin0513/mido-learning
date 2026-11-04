@@ -93,14 +93,14 @@ export function Axes({
   const zeroX = xTicks[0] <= 0 && xTicks[xTicks.length - 1] >= 0 ? x(0) : x0;
   const zeroY = yTicks[0] <= 0 && yTicks[yTicks.length - 1] >= 0 ? y(0) : y0;
   return (
-    <g className="text-[15px]">
+    <g className="text-[18px]">
       {xTicks.map((t) => <line key={`gx${t}`} x1={x(t)} x2={x(t)} y1={y0} y2={y1} className="stroke-[#e4dfd7]" />)}
       {yTicks.map((t) => <line key={`gy${t}`} y1={y(t)} y2={y(t)} x1={x0} x2={x1} className="stroke-[#e4dfd7]" />)}
       <line x1={x0} x2={x1} y1={zeroY} y2={zeroY} className="stroke-ink" strokeWidth={1.5} />
       <line x1={zeroX} x2={zeroX} y1={y0} y2={y1} className="stroke-ink" strokeWidth={1.5} />
-      {xTicks.map((t) => <text key={`tx${t}`} x={x(t)} y={y0 + 20} textAnchor="middle" className="fill-[#3d3830]">{fmtX(t)}</text>)}
+      {xTicks.map((t) => <text key={`tx${t}`} x={x(t)} y={y0 + 32} textAnchor="middle" className="fill-[#3d3830]">{fmtX(t)}</text>)}
       {yTicks.map((t) => <text key={`ty${t}`} x={x0 - 8} y={y(t) + 5} textAnchor="end" className="fill-[#3d3830]">{fmtY(t)}</text>)}
-      {xLabel ? <text x={x1} y={y0 + 40} textAnchor="end" className="fill-ink font-bold">{xLabel}</text> : null}
+      {xLabel ? <text x={x1} y={y0 + 58} textAnchor="end" className="fill-ink font-bold">{xLabel}</text> : null}
       {yLabel ? <text x={x0} y={y1 - 12} textAnchor="start" className="fill-ink font-bold">{yLabel}</text> : null}
     </g>
   );

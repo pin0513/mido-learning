@@ -7,7 +7,7 @@ import { Axes, Choices, FigureFrame, Slider, clamp, range, scale, snap, useSvgPo
 
 const W = 480;
 const H = 340;
-const M = { l: 56, r: 24, t: 40, b: 56 };
+const M = { l: 56, r: 24, t: 40, b: 64 };
 const INK = "stroke-ink";
 const DEEP = "stroke-accent-deep";
 const QUAD = ["", "第一象限", "第二象限", "第三象限", "第四象限"] as const;
@@ -113,9 +113,9 @@ function Quadrant({ spec }: { spec: Of<"quadrant"> }) {
       {regions.map(([k, rx, ry]) => (
         <rect key={k} x={x(rx)} y={y(ry)} width={x(n) - x(0)} height={y(0) - y(n)} className={k === q ? "fill-[#ffe9df]" : "fill-transparent"} />
       ))}
-      <Axes x={x} y={y} xTicks={range(-n, n, 1)} yTicks={range(-n, n, 1)} fmtX={(v) => (v % 5 === 0 && v !== 0 ? sign(v) : "")} fmtY={(v) => (v % 5 === 0 && v !== 0 ? sign(v) : "")} />
-      <text x={x(n) + 8} y={y(0) + 5} className="fill-ink text-[15px] font-bold">x</text>
-      <text x={x(0) - 5} y={y(n) - 8} textAnchor="end" className="fill-ink text-[15px] font-bold">y</text>
+      <Axes x={x} y={y} xTicks={range(-n, n, 1)} yTicks={range(-n, n, 1)} fmtX={(v) => (v % 5 === 0 && v !== 0 ? sign(v) : "")} fmtY={(v) => (v === n ? sign(v) : "")} />
+      <text x={x(n) + 8} y={y(0) + 5} className="fill-ink text-[18px] font-bold">x</text>
+      <text x={x(0) - 5} y={y(n) - 8} textAnchor="end" className="fill-ink text-[18px] font-bold">y</text>
       <line x1={x(px)} x2={x(px)} y1={y(0)} y2={y(py)} className={DEEP} strokeDasharray="4 4" strokeWidth={2} />
       <line x1={x(0)} x2={x(px)} y1={y(py)} y2={y(py)} className={DEEP} strokeDasharray="4 4" strokeWidth={2} />
       <circle cx={x(px)} cy={y(py)} r={14} className="fill-accent-deep/20" />
@@ -262,7 +262,7 @@ function Ferris({ spec }: { spec: Of<"ferris"> }) {
       <line x1={cx} y1={y(spec.center)} x2={cx} y2={y(0)} className="stroke-[#8a8178]" strokeWidth={2} />
       <line x1={cx} y1={y(spec.center)} x2={carX} y2={y(hgt)} className={INK} strokeWidth={2} />
       <line x1={carX} x2={g(deg)} y1={y(hgt)} y2={y(hgt)} className="stroke-[#8a8178]" strokeDasharray="3 4" />
-      <Axes x={g} y={y} xTicks={range(0, 360, 90)} yTicks={[0, 2, 12, 22]} fmtX={(v) => `${v}°`} xLabel="θ" yLabel="高度（公尺）" />
+      <Axes x={g} y={y} xTicks={range(0, 360, 90)} yTicks={[0, 2, 12, 22]} fmtX={(v) => (v % 180 === 0 ? `${v}°` : "")} fmtY={(v) => (v === 0 ? "" : String(v))} xLabel="θ" yLabel="高度（公尺）" />
       <path d={curve((t) => ferrisHeight(spec.center, spec.radius, t), 0, 360, g, y)} fill="none" className={DEEP} strokeWidth={3} />
       <circle cx={carX} cy={y(hgt)} r={8} className="fill-accent-deep" />
       <circle cx={g(deg)} cy={y(hgt)} r={6} className="fill-ink" />
@@ -277,11 +277,11 @@ function Fraction({ spec }: { spec: Of<"fraction"> }) {
   const x = scale(0, 1, 24, W - 24);
   const bar = (top: number, parts: number, filled: number, label: string) => (
     <g>
-      <text x={24} y={top - 10} className="fill-ink text-[15px] font-bold">{label}</text>
+      <text x={24} y={top - 10} className="fill-ink text-[18px] font-bold">{label}</text>
       {range(0, parts - 1, 1).map((i) => (
         <g key={i}>
           <rect x={x(i / parts)} y={top} width={x(1 / parts) - x(0)} height={56} className={i < filled ? "fill-[#ffd2bd] stroke-ink" : "fill-white stroke-ink"} strokeWidth={2} />
-          <text x={x((i + 0.5) / parts)} y={top + 34} textAnchor="middle" className="fill-ink text-[15px] tabular-nums">1/{parts}</text>
+          <text x={x((i + 0.5) / parts)} y={top + 34} textAnchor="middle" className="fill-ink text-[18px] tabular-nums">1/{parts}</text>
         </g>
       ))}
     </g>
@@ -324,7 +324,7 @@ function BarModel({ spec }: { spec: Of<"barmodel"> }) {
   const seg = (top: number, from: number, len: number, label: string, faded: boolean, key: string) => (
     <g key={key} opacity={faded ? 0.35 : 1}>
       <rect x={x(from)} y={top} width={x(len) - x(0)} height={52} className={faded ? "fill-[#e4dfd7] stroke-ink" : "fill-[#ffd2bd] stroke-ink"} strokeWidth={2} strokeDasharray={faded ? "6 4" : undefined} />
-      <text x={x(from + len / 2)} y={top + 32} textAnchor="middle" className="fill-ink text-[16px] font-bold">{label}</text>
+      <text x={x(from + len / 2)} y={top + 32} textAnchor="middle" className="fill-ink text-[19px] font-bold">{label}</text>
     </g>
   );
   const fade = s >= 1;
@@ -343,12 +343,12 @@ function BarModel({ spec }: { spec: Of<"barmodel"> }) {
         </p>
       }
     >
-      <text x={24} y={34} className="fill-ink text-[15px] font-bold">收入{s === 3 ? `　${total} 元` : ""}</text>
+      <text x={24} y={34} className="fill-ink text-[18px] font-bold">收入{s === 3 ? `　${total} 元` : ""}</text>
       {seg(46, 0, common, `${spec.cost}x`, fade, "ic")}
       {s === 2
         ? range(0, spec.price - spec.cost - 1, 1).map((i) => seg(46, common + i * xv, xv, i === 0 ? "x" : "", false, `p${i}`))
         : seg(46, common, rest, s === 3 ? `${spec.price - spec.cost} × ${xv}` : `${spec.price - spec.cost}x`, false, "ir")}
-      <text x={24} y={146} className="fill-ink text-[15px] font-bold">支出{s === 3 ? `　${spec.fee + common} 元` : ""}</text>
+      <text x={24} y={146} className="fill-ink text-[18px] font-bold">支出{s === 3 ? `　${spec.fee + common} 元` : ""}</text>
       {seg(158, 0, spec.fee, `${spec.fee}`, false, "ef")}
       {seg(158, spec.fee, common, `${spec.cost}x`, fade, "ec")}
     </FigureFrame>
@@ -361,13 +361,13 @@ function Pythag({ spec }: { spec: Of<"pythag"> }) {
   const [way, setWay] = useState<"第一種" | "第二種">("第一種");
   const side = 260;
   const s = side / (a + b);
-  const o = { x: (W - side) / 2 - 60, y: 30 };
+  const o = { x: (W - side) / 2, y: 30 };
   const P = (u: number, v: number) => `${(o.x + u * s).toFixed(1)},${(o.y + side - v * s).toFixed(1)}`;
   const L = a + b;
   const tris1 = [[[0, 0], [a, 0], [0, b]], [[a, 0], [L, 0], [L, a]], [[L, a], [L, L], [b, L]], [[b, L], [0, L], [0, b]]];
   const tris2 = [[[a, 0], [L, 0], [L, a]], [[a, 0], [a, a], [L, a]], [[0, a], [a, a], [0, L]], [[a, a], [a, L], [0, L]]];
   const c2 = a * a + b * b;
-  const label = (u: number, v: number, text: string, big: boolean) => (big ? <text x={o.x + u * s} y={o.y + side - v * s + 6} textAnchor="middle" className="fill-ink text-[16px] font-bold">{text}</text> : null);
+  const label = (u: number, v: number, text: string, big: boolean) => (big ? <text x={o.x + u * s} y={o.y + side - v * s + 6} textAnchor="middle" className="fill-ink text-[19px] font-bold">{text}</text> : null);
   return (
     <FigureFrame
       {...spec}
@@ -391,9 +391,8 @@ function Pythag({ spec }: { spec: Of<"pythag"> }) {
       <rect x={o.x} y={o.y} width={side} height={side} className="fill-[#ffe9df] stroke-ink" strokeWidth={2} />
       {(way === "第一種" ? tris1 : tris2).map((t, i) => <polygon key={i} points={t.map(([u, v]) => P(u, v)).join(" ")} className="fill-white stroke-ink" strokeWidth={2} />)}
       {way === "第一種" ? label(L / 2, L / 2, "c²", s * Math.sqrt(c2) > 44) : (<>{label(a / 2, a / 2, "a²", a * s > 36)}{label(a + b / 2, a + b / 2, "b²", b * s > 36)}</>)}
-      <text x={o.x + (a * s) / 2} y={o.y + side + 24} textAnchor="middle" className="fill-ink text-[15px] font-bold">a</text>
-      <text x={o.x + a * s + (b * s) / 2} y={o.y + side + 24} textAnchor="middle" className="fill-ink text-[15px] font-bold">b</text>
-      <line x1={o.x + a * s} x2={o.x + a * s} y1={o.y + side + 6} y2={o.y + side + 12} className={INK} strokeWidth={2} />
+      <text x={o.x + (a * s) / 2} y={o.y + side + 24} textAnchor="middle" className="fill-ink text-[18px] font-bold">a</text>
+      <text x={o.x + a * s + (b * s) / 2} y={o.y + side + 24} textAnchor="middle" className="fill-ink text-[18px] font-bold">b</text>
     </FigureFrame>
   );
 }
