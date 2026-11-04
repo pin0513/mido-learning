@@ -51,7 +51,8 @@ export function FigureFrame({
           role="img"
           aria-labelledby={`${id}-t`}
           aria-describedby={`${id}-d`}
-          className="h-auto w-full max-w-[560px] touch-none select-none"
+          className={`h-auto w-full select-none ${onPointer ? "touch-none" : ""}`}
+          style={{ maxWidth: 430 }}
           onPointerDown={onPointer ? (event) => { event.currentTarget.setPointerCapture(event.pointerId); onPointer(event); } : undefined}
           onPointerMove={onPointer ? (event) => { if (event.buttons) onPointer(event); } : undefined}
         >

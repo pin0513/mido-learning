@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import type { FigureSpec } from "@/lib/kp/figures/specs";
-import { ferrisHeight, fmt, intersect, lineY, quadrant, riemann, secantSlope, sign } from "@/lib/kp/figures/math";
+import { compareHalf, ferrisHeight, ferrisMinutes, fmt, intersect, lineY, quadrant, riemann, secantSlope, sign } from "@/lib/kp/figures/math";
 import { Axes, Choices, FigureFrame, Slider, clamp, range, scale, snap, useSvgPoint } from "./parts";
 
 const W = 480;
@@ -35,7 +35,7 @@ function Lines({ spec }: { spec: Of<"lines"> }) {
   const cross = intersect(A, B);
   const ya = lineY(A, xv);
   const yb = lineY(B, xv);
-  const cheaper = ya === yb ? "兩個方案一樣貴" : `${ya < yb ? A.name : B.name}較便宜，差 ${fmt(Math.abs(ya - yb))} ${spec.yUnit}`;
+  const cheaper = ya === yb ? "兩個方案一樣貴" : `${ya < yb ? A.name : B.name} 較便宜，差 ${fmt(Math.abs(ya - yb))} ${spec.yUnit}`;
   return (
     <FigureFrame
       {...spec}
@@ -105,7 +105,7 @@ function Quadrant({ spec }: { spec: Of<"quadrant"> }) {
       readout={
         <>
           <p className="text-2xl font-black tabular-nums">({sign(px)}, {sign(py)})</p>
-          <p className="font-bold">{q === 0 ? "在坐標軸上，不屬於任何象限" : QUAD[q]}</p>
+          <p className="font-bold">{q === 0 ? (px === 0 && py === 0 ? "原點，在坐標軸上，不屬於任何象限" : "在坐標軸上，不屬於任何象限") : QUAD[q]}</p>
           <p className="text-sm">x {px > 0 ? "是正" : px < 0 ? "是負" : "是 0"}，y {py > 0 ? "是正" : py < 0 ? "是負" : "是 0"}。</p>
         </>
       }
@@ -161,7 +161,7 @@ function Parabola({ spec }: { spec: Of<"parabola"> }) {
 function Secant({ spec }: { spec: Of<"secant"> }) {
   const [h, setH] = useState(spec.hs[0]);
   const t0 = spec.t0;
-  const x = scale(0, 2.2, M.l, W - M.r);
+  const x = scale(0, 2, M.l, W - M.r);
   const y = scale(0, 5, H - M.b, M.t);
   const m = secantSlope(t0, h);
   const lineAt = (slope: number, t: number) => t0 * t0 + slope * (t - t0);
@@ -187,9 +187,9 @@ function Secant({ spec }: { spec: Of<"secant"> }) {
       <defs><clipPath id={`clip-${spec.id}`}><rect x={M.l} y={M.t} width={W - M.l - M.r} height={H - M.t - M.b} /></clipPath></defs>
       <Axes x={x} y={y} xTicks={range(0, 2, 0.5)} yTicks={range(0, 5, 1)} xLabel="t（秒）" yLabel="s（公尺）" />
       <g clipPath={`url(#clip-${spec.id})`}>
-        <path d={curve((t) => t * t, 0, 2.2, x, y)} fill="none" className="stroke-[#8a8178]" strokeWidth={3} />
-        <line x1={x(0)} y1={y(lineAt(2, 0))} x2={x(2.2)} y2={y(lineAt(2, 2.2))} className={DEEP} strokeWidth={2.5} strokeDasharray="8 6" />
-        <line x1={x(0)} y1={y(lineAt(m, 0))} x2={x(2.2)} y2={y(lineAt(m, 2.2))} className={INK} strokeWidth={3} />
+        <path d={curve((t) => t * t, 0, 2, x, y)} fill="none" className="stroke-[#8a8178]" strokeWidth={3} />
+        <line x1={x(0)} y1={y(lineAt(2, 0))} x2={x(2)} y2={y(lineAt(2, 2))} className={DEEP} strokeWidth={2.5} strokeDasharray="8 6" />
+        <line x1={x(0)} y1={y(lineAt(m, 0))} x2={x(2)} y2={y(lineAt(m, 2))} className={INK} strokeWidth={3} />
       </g>
       <circle cx={x(t0)} cy={y(t0 * t0)} r={6} className="fill-ink" />
       <circle cx={x(t1)} cy={y(t1 * t1)} r={6} className="fill-white stroke-ink" strokeWidth={2.5} />
@@ -218,7 +218,7 @@ function Riemann({ spec }: { spec: Of<"riemann"> }) {
       }
       readout={
         <>
-          <p>每段 {fmt(dt)} 秒。用開頭的速度估 <b className="tabular-nums">{fmt(sums.left)}</b> 公尺，用結尾的速度估 <b className="tabular-nums">{fmt(sums.right)}</b> 公尺。</p>
+          <p>每段 {fmt(dt, 4)} 秒。用開頭的速度估 <b className="tabular-nums">{fmt(sums.left)}</b> 公尺，用結尾的速度估 <b className="tabular-nums">{fmt(sums.right)}</b> 公尺。</p>
           <p className="font-bold">準確距離 ＝ 三角形面積 ＝ ½ × {spec.T} × {vmax} ＝ {fmt((spec.T * vmax) / 2)} 公尺</p>
         </>
       }
@@ -239,11 +239,12 @@ function Ferris({ spec }: { spec: Of<"ferris"> }) {
   const y = scale(0, top, H - M.b, M.t);
   const px = y(0) - y(1);
   const cx = 24 + spec.radius * px;
-  const g = scale(0, 360, cx + spec.radius * px + 64, W - M.r);
+  const g = scale(0, spec.periodMin, cx + spec.radius * px + 64, W - M.r);
   const hgt = ferrisHeight(spec.center, spec.radius, deg);
   const rad = (deg * Math.PI) / 180;
   const carX = cx + spec.radius * px * Math.cos(rad);
-  const seconds = (deg / 360) * spec.periodMin * 60;
+  const minutes = ferrisMinutes(deg, spec.periodMin);
+  const seconds = minutes * 60;
   return (
     <FigureFrame
       {...spec}
@@ -261,11 +262,11 @@ function Ferris({ spec }: { spec: Of<"ferris"> }) {
       <circle cx={cx} cy={y(spec.center)} r={spec.radius * px} fill="none" className="stroke-[#8a8178]" strokeWidth={2} />
       <line x1={cx} y1={y(spec.center)} x2={cx} y2={y(0)} className="stroke-[#8a8178]" strokeWidth={2} />
       <line x1={cx} y1={y(spec.center)} x2={carX} y2={y(hgt)} className={INK} strokeWidth={2} />
-      <line x1={carX} x2={g(deg)} y1={y(hgt)} y2={y(hgt)} className="stroke-[#8a8178]" strokeDasharray="3 4" />
-      <Axes x={g} y={y} xTicks={range(0, 360, 90)} yTicks={[0, 2, 12, 22]} fmtX={(v) => (v % 180 === 0 ? `${v}°` : "")} fmtY={(v) => (v === 0 ? "" : String(v))} xLabel="θ" yLabel="高度（公尺）" />
-      <path d={curve((t) => ferrisHeight(spec.center, spec.radius, t), 0, 360, g, y)} fill="none" className={DEEP} strokeWidth={3} />
+      <line x1={carX} x2={g(minutes)} y1={y(hgt)} y2={y(hgt)} className="stroke-[#8a8178]" strokeDasharray="3 4" />
+      <Axes x={g} y={y} xTicks={spec.minuteTicks} yTicks={[0, 2, 12, 22]} fmtY={(v) => (v === 0 ? "" : String(v))} xLabel={spec.xLabel} yLabel="高度（公尺）" />
+      <path d={curve((t) => ferrisHeight(spec.center, spec.radius, (t / spec.periodMin) * 360), 0, spec.periodMin, g, y)} fill="none" className={DEEP} strokeWidth={3} />
       <circle cx={carX} cy={y(hgt)} r={8} className="fill-accent-deep" />
-      <circle cx={g(deg)} cy={y(hgt)} r={6} className="fill-ink" />
+      <circle cx={g(minutes)} cy={y(hgt)} r={6} className="fill-ink" />
     </FigureFrame>
   );
 }
@@ -286,7 +287,7 @@ function Fraction({ spec }: { spec: Of<"fraction"> }) {
       ))}
     </g>
   );
-  const cmp = kk / d === 0.5 ? "＝" : kk / d > 0.5 ? "＞" : "＜";
+  const cmp = compareHalf(kk, d);
   return (
     <FigureFrame
       {...spec}
@@ -349,8 +350,8 @@ function BarModel({ spec }: { spec: Of<"barmodel"> }) {
         ? range(0, spec.price - spec.cost - 1, 1).map((i) => seg(46, common + i * xv, xv, i === 0 ? "x" : "", false, `p${i}`))
         : seg(46, common, rest, s === 3 ? `${spec.price - spec.cost} × ${xv}` : `${spec.price - spec.cost}x`, false, "ir")}
       <text x={24} y={146} className="fill-ink text-[18px] font-bold">支出{s === 3 ? `　${spec.fee + common} 元` : ""}</text>
-      {seg(158, 0, spec.fee, `${spec.fee}`, false, "ef")}
-      {seg(158, spec.fee, common, `${spec.cost}x`, fade, "ec")}
+      {seg(158, 0, common, `${spec.cost}x`, fade, "ec")}
+      {seg(158, common, spec.fee, `${spec.fee}`, false, "ef")}
     </FigureFrame>
   );
 }

@@ -38,6 +38,12 @@ export function riemann(k: number, T: number, n: number): { left: number; right:
 export const ferrisHeight = (center: number, radius: number, deg: number) => center + radius * Math.sin((deg * Math.PI) / 180);
 
 /** 顯示用：去掉浮點誤差，最多 3 位小數。 */
+/** 摩天輪轉了 deg 度時經過幾分鐘；一圈 periodMin 分鐘。 */
+export const ferrisMinutes = (deg: number, periodMin: number) => (deg / 360) * periodMin;
+
+/** k/d 和 1/2 比大小，回傳要顯示的符號。 */
+export const compareHalf = (k: number, d: number): "＜" | "＝" | "＞" => (2 * k === d ? "＝" : 2 * k > d ? "＞" : "＜");
+
 export function fmt(value: number, digits = 3): string {
   const rounded = Math.round(value * 10 ** digits) / 10 ** digits;
   return Object.is(rounded, -0) ? "0" : String(rounded);

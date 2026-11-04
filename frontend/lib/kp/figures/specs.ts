@@ -19,7 +19,7 @@ export type FigureSpec =
   | (Base & { widget: "parabola"; coefficients: number[]; xs: number[] })
   | (Base & { widget: "secant"; t0: number; hs: number[] })
   | (Base & { widget: "riemann"; k: number; T: number; ns: number[] })
-  | (Base & { widget: "ferris"; center: number; radius: number; periodMin: number; stepDeg: number })
+  | (Base & { widget: "ferris"; center: number; radius: number; periodMin: number; stepDeg: number; xLabel: string; minuteTicks: number[] })
   | (Base & { widget: "fraction"; denominators: number[] })
   | (Base & { widget: "barmodel"; fee: number; cost: number; price: number })
   | (Base & { widget: "pythag"; start: [number, number]; max: number });
@@ -80,9 +80,9 @@ export const FIGURE_SPECS: Record<string, FigureSpec[]> = {
       id: "trig-ferris",
       widget: "ferris",
       title: "車廂轉到哪，高度畫到哪",
-      desc: "摩天輪中心離地 12 公尺、半徑 10 公尺，從正右方逆時針轉。離地高度 ＝ 12 ＋ 10 × sin θ：30° 是 17 公尺，90° 是 22 公尺，210° 是 7 公尺，270° 是 2 公尺。高度在 2 到 22 公尺之間上下，畫出來是正弦波。",
+      desc: "摩天輪中心離地 12 公尺、半徑 10 公尺，從正右方逆時針轉。離地高度 ＝ 12 ＋ 10 × sin θ：30° 是 17 公尺，90° 是 22 公尺，210° 是 7 公尺，270° 是 2 公尺。橫軸是時間：一圈 8 分鐘，每 2 分鐘轉 90°；高度在 2 到 22 公尺之間上下，畫出來是正弦波，週期 8 分鐘。",
       caption: "摩天輪的數字是示意。",
-      center: 12, radius: 10, periodMin: 8, stepDeg: 30,
+      center: 12, radius: 10, periodMin: 8, stepDeg: 30, xLabel: "時間（分鐘）", minuteTicks: [0, 2, 4, 6, 8],
     },
   ],
   "ma.fraction@es": [

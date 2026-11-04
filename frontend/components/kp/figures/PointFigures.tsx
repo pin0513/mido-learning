@@ -1,5 +1,8 @@
 import { figureSpecsFor } from "@/lib/kp/figures/specs";
-import { InteractiveFigure } from "./widgets";
+import dynamic from "next/dynamic";
+
+// 動態載入：圖形的 JS 只在有圖的頁面下載；預渲染的 HTML 照常輸出（ssr 預設開）。
+const InteractiveFigure = dynamic(() => import("./widgets").then((mod) => mod.InteractiveFigure));
 
 /** 知識點頁的「動手看圖」：只有 specs.ts 有這個點才出現，其他頁 DOM 不變。 */
 export function PointFigures({ pointId }: { pointId: string }) {

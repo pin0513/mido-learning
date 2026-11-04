@@ -3,7 +3,7 @@ import test from "node:test";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ferrisHeight, intersect, quadrant, riemann, secantSlope } from "./math";
+import { compareHalf, ferrisHeight, ferrisMinutes, intersect, quadrant, riemann, secantSlope } from "./math";
 import { FIGURE_SPECS } from "./specs";
 
 // lib/content 是 server-only，測試直接讀原始 YAML。
@@ -88,9 +88,35 @@ test("ma.trig：30°、90°、210°、270° 的高度", () => {
   for (const piece of ["高 17 公尺", "高 22 公尺", "高 7 公尺", "高 2 公尺", "每 40 秒轉 30 度"]) assert.ok(t.includes(piece), piece);
 });
 
+test("ma.trig：橫軸是時間（分鐘），週期 8 分鐘", () => {
+  const s = spec("ma.trig@sh", "ferris");
+  const t = text("ma.trig@sh");
+  assert.ok(t.includes("畫圖的橫軸用時間"));
+  assert.ok(t.includes("週期 8 分鐘"));
+  assert.match(s.xLabel, /時間/);
+  assert.match(s.xLabel, /分鐘/);
+  assert.equal(s.periodMin, 8);
+  assert.deepEqual(s.minuteTicks, [0, 2, 4, 6, 8]);
+  assert.equal(s.minuteTicks.at(-1), s.periodMin, "橫軸要畫滿一個週期");
+  assert.deepEqual([0, 90, 180, 270, 360].map((d) => ferrisMinutes(d, s.periodMin)), s.minuteTicks);
+  const h = (min: number) => Math.round(ferrisHeight(s.center, s.radius, (min / s.periodMin) * 360) * 1e9) / 1e9;
+  assert.deepEqual([0, 2, 4, 6].map(h), [12, 22, 12, 2]);
+  assert.ok(t.includes("t ＝ 0、2、4、6 時高度 12、22、12、2"));
+  assert.equal(h(0), h(s.periodMin), "8 分鐘後回到原高度");
+});
+
 test("ma.fraction、ma.algebra、ma.pythag：數字和原文一致", () => {
-  assert.deepEqual(spec("ma.fraction@es", "fraction").denominators, [2, 4, 8]);
-  assert.ok(text("ma.fraction@es").includes("2/4 ＝ 1/2"));
+  const f = spec("ma.fraction@es", "fraction");
+  for (const d of f.denominators) assert.equal(compareHalf(d / 2, d), "＝", `${d / 2}/${d} 應等於 1/2`);
+  assert.equal(compareHalf(3, 4), "＞");
+  assert.equal(compareHalf(1, 4), "＜");
+  assert.equal(compareHalf(3, 8), "＜");
+  assert.equal(compareHalf(5, 8), "＞");
+  const ft = text("ma.fraction@es");
+  assert.ok(ft.includes("2/4 ＝ 1/2"));
+  assert.ok(ft.includes("3/4 > 2/4"));
+  assert.ok(ft.includes("1/8 < 1/4 < 1/2"));
+  assert.deepEqual(f.denominators, [2, 4, 8]);
   const b = spec("ma.algebra@jh", "barmodel");
   const x = b.fee / (b.price - b.cost);
   assert.equal(x, 30);
