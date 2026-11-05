@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useId, type ReactNode, type RefObject } from "react";
+import { useCallback, type ReactNode, type RefObject } from "react";
 
 /** 線性比例尺：資料值 → SVG 座標。 */
 export function scale(d0: number, d1: number, r0: number, r1: number) {
@@ -18,6 +18,7 @@ export const range = (from: number, to: number, step: number) => {
 
 /** 圖的外框：SVG 有 role=img、標題和文字說明；控制項與讀數在 SVG 外面，字不會壓到線。 */
 export function FigureFrame({
+  id: specId,
   title,
   desc,
   caption,
@@ -29,6 +30,8 @@ export function FigureFrame({
   readout,
   children,
 }: {
+  /** 規格 id；拿來組 aria 的 id。不用 useId：圖在 next/dynamic 裡，伺服器和瀏覽器的 useId 會對不上。 */
+  id: string;
   title: string;
   desc: string;
   caption: string;
@@ -40,7 +43,7 @@ export function FigureFrame({
   readout?: ReactNode;
   children: ReactNode;
 }) {
-  const id = useId();
+  const id = `kpfig-${specId}`;
   return (
     <figure className="kpfig mt-4 border border-[#c0bab2] bg-white p-4 text-ink sm:p-6" aria-labelledby={`${id}-t`}>
       <h3 id={`${id}-t`} className="text-lg font-bold">{title}</h3>
@@ -125,15 +128,14 @@ export function Slider({
   onChange: (value: number) => void;
   display?: string;
 }) {
-  const id = useId();
+  // 用 <label> 包住 input，不需要 id（useId 在 next/dynamic 裡伺服器和瀏覽器會對不上）。
   return (
-    <div className="flex flex-col gap-1">
-      <label htmlFor={id} className="flex items-baseline justify-between gap-3 text-sm font-bold">
+    <label className="flex flex-col gap-1">
+      <span className="flex items-baseline justify-between gap-3 text-sm font-bold">
         <span>{label}</span>
-        <output htmlFor={id} className="text-base tabular-nums">{display ?? value}</output>
-      </label>
+        <output className="text-base tabular-nums">{display ?? value}</output>
+      </span>
       <input
-        id={id}
         type="range"
         min={min}
         max={max}
@@ -142,7 +144,7 @@ export function Slider({
         onChange={(event) => onChange(Number(event.target.value))}
         className="h-11 w-full cursor-pointer accent-[#a83a0f]"
       />
-    </div>
+    </label>
   );
 }
 

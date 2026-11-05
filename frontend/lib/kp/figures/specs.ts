@@ -22,7 +22,14 @@ export type FigureSpec =
   | (Base & { widget: "ferris"; center: number; radius: number; periodMin: number; stepDeg: number; xLabel: string; minuteTicks: number[] })
   | (Base & { widget: "fraction"; denominators: number[] })
   | (Base & { widget: "barmodel"; fee: number; cost: number; price: number })
-  | (Base & { widget: "pythag"; start: [number, number]; max: number });
+  | (Base & { widget: "pythag"; start: [number, number]; max: number })
+  | (Base & { widget: "vector"; u: [number, number]; v: [number, number]; ks: number[]; range: [number, number] })
+  | (Base & { widget: "doubling"; base: number; maxN: number; start: number; limitCm: number })
+  | (Base & { widget: "halving"; maxN: number; start: number })
+  | (Base & { widget: "hole"; xs: number[] })
+  | (Base & { widget: "can"; volume: number; rMin: number; rMax: number; sMax: number; start: number })
+  | (Base & { widget: "bsearch"; lo: number; hi: number; start: number })
+  | (Base & { widget: "pixels"; start: string[] });
 
 export const FIGURE_SPECS: Record<string, FigureSpec[]> = {
   "ma.coord@jh": [
@@ -113,6 +120,76 @@ export const FIGURE_SPECS: Record<string, FigureSpec[]> = {
       desc: "邊長 a ＋ b 的大正方形裡放 4 個兩股 a、b 的直角三角形。第一種擺法空出邊長 c 的正方形，第二種空出邊長 a 和 b 的兩個正方形；空出的面積一樣，所以 c² ＝ a² ＋ b²。例如 a ＝ 3、b ＝ 4 時，9 ＋ 16 ＝ 25 ＝ 5²。",
       caption: "拼圖證明是本站整理。",
       start: [3, 4], max: 8,
+    },
+  ],
+  "ma.vector@sh": [
+    {
+      id: "vector-add",
+      widget: "vector",
+      title: "向量頭接尾，相加看位移",
+      desc: "u 是往東 3 格 (3, 0)，v 是往北 4 格 (0, 4)。把 v 的尾巴接在 u 的頭，從起點指到終點的就是 u ＋ v ＝ (3, 4)，長度 √(9 ＋ 16) ＝ 5。乘 2 倍得到 (6, 8)，方向不變、長度變成 10。",
+      caption: "地磚格數是示意。",
+      u: [3, 0], v: [0, 4], ks: [1, 2], range: [-2, 10],
+    },
+  ],
+  "ma.function@sh": [
+    {
+      id: "function-fold",
+      widget: "doubling",
+      title: "對摺一次，厚度乘 2",
+      desc: "紙厚 0.01 公分，摺 n 次厚度是 0.01 × 2ⁿ 公分。摺 10 次是 10.24 公分；摺 23 次約 838 公尺，摺 24 次約 1,678 公尺，第一次超過 1 公里。一般刻度前面幾乎貼著橫軸、最後突然衝高；對數刻度上每摺一次升高一樣多，變成一直線。",
+      caption: "紙厚是課程手冊的示意數字。",
+      base: 0.01, maxN: 24, start: 10, limitCm: 100000,
+    },
+  ],
+  "ma.sequence@sh": [
+    {
+      id: "sequence-halves",
+      widget: "halving",
+      title: "一直剪一半，加起來不會超過一張紙",
+      desc: "第一刀留下 1/2，第二刀 1/4，第三刀 1/8，排成一列。剪 5 次的總和是 31/32，還差 1/32；剪 n 次的總和是 1 − 1/2ⁿ，空白一直變小，但永遠不會超過一整張紙。",
+      caption: "本站整理。",
+      maxN: 10, start: 5,
+    },
+  ],
+  "ma.limit@uni": [
+    {
+      id: "limit-hole",
+      widget: "hole",
+      title: "x 靠近 1，f(x) 靠近 2",
+      desc: "f(x) ＝ (x² − 1) ÷ (x − 1)，x ≠ 1 時等於 x ＋ 1，圖是一條直線，但在 x ＝ 1 有一個洞。x ＝ 0.9、0.99、0.999 時 f(x) 是 1.9、1.99、1.999；x ＝ 1.1、1.01、1.001 時是 2.1、2.01、2.001。和 2 的差剛好等於 x 和 1 的差。",
+      caption: "數字是示意，本站整理。",
+      xs: [0.9, 0.99, 0.999, 1.001, 1.01, 1.1],
+    },
+  ],
+  "ma.derivative@uni": [
+    {
+      id: "derivative-can",
+      widget: "can",
+      title: "半徑多少，罐子最省料",
+      desc: "裝 350 立方公分的圓柱罐，表面積 S(r) ＝ 2πr² ＋ 700 ÷ r。r ＝ 3 時 S ≈ 289.9，r ＝ 5 時 S ≈ 297.1；導數為 0 的 r ≈ 3.82 公分時最小，S ≈ 274.9、h ≈ 7.64 公分。虛線是那一點的切線，斜率就是導數。",
+      caption: "數字是示意，本站整理。",
+      volume: 350, rMin: 1, rMax: 8, sMax: 800, start: 3,
+    },
+  ],
+  "it.algo@jh": [
+    {
+      id: "algo-bsearch",
+      widget: "bsearch",
+      title: "每次猜中間，範圍少一半",
+      desc: "家長心裡想一個 1 到 100 的數，孩子每次猜範圍的中間，家長只說太大或太小。每猜一次，剩下的數最多只有一半；1 到 100 的任何一個數，最多 7 次就猜中。",
+      caption: "7 次是本站整理。",
+      lo: 1, hi: 100, start: 37,
+    },
+  ],
+  "it.data@es": [
+    {
+      id: "data-pixels",
+      widget: "pixels",
+      title: "一行數字，畫出一行像素",
+      desc: "8 × 8 的方格，1 代表白、0 代表黑。每一行寫成 8 個 0 或 1，只看數字就能把圖畫回來；改一個數字，圖上就有一格變色，點圖上的格子也會改數字。",
+      caption: "規則依 CS Unplugged，圖案是示意。",
+      start: ["11111111", "11000011", "10111101", "01011010", "01111110", "01011010", "10100101", "11000011"],
     },
   ],
 };

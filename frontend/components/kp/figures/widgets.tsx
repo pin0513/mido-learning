@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import type { FigureSpec } from "@/lib/kp/figures/specs";
 import { compareHalf, ferrisHeight, ferrisMinutes, fmt, intersect, lineY, quadrant, riemann, secantSlope, sign } from "@/lib/kp/figures/math";
+import { InteractiveFigure2 } from "./widgets2";
 import { Axes, Choices, FigureFrame, Slider, clamp, range, scale, snap, useSvgPoint } from "./parts";
 
 const W = 480;
@@ -347,8 +348,9 @@ function BarModel({ spec }: { spec: Of<"barmodel"> }) {
       <text x={24} y={34} className="fill-ink text-[18px] font-bold">收入{s === 3 ? `　${total} 元` : ""}</text>
       {seg(46, 0, common, `${spec.cost}x`, fade, "ic")}
       {s === 2
-        ? range(0, spec.price - spec.cost - 1, 1).map((i) => seg(46, common + i * xv, xv, i === 0 ? "x" : "", false, `p${i}`))
+        ? range(0, spec.price - spec.cost - 1, 1).map((i) => seg(46, common + i * xv, xv, "", false, `p${i}`))
         : seg(46, common, rest, s === 3 ? `${spec.price - spec.cost} × ${xv}` : `${spec.price - spec.cost}x`, false, "ir")}
+      {s === 2 ? <text x={x(common)} y={122} className="fill-ink text-[18px] font-bold">每一格是 x</text> : null}
       <text x={24} y={146} className="fill-ink text-[18px] font-bold">支出{s === 3 ? `　${spec.fee + common} 元` : ""}</text>
       {seg(158, 0, common, `${spec.cost}x`, fade, "ec")}
       {seg(158, common, spec.fee, `${spec.fee}`, false, "ef")}
@@ -409,5 +411,6 @@ export function InteractiveFigure({ spec }: { spec: FigureSpec }) {
     case "fraction": return <Fraction spec={spec} />;
     case "barmodel": return <BarModel spec={spec} />;
     case "pythag": return <Pythag spec={spec} />;
+    default: return <InteractiveFigure2 spec={spec} />;
   }
 }
