@@ -187,7 +187,10 @@ function Blocks({
               {figure && figure.type !== "unknown" ? (
                 <figure className="v2-fig">
                   <FigureGraphic figure={figure} />
-                  {block.caption ? <figcaption><RichText text={block.caption} refs={refs} /></figcaption> : null}
+                  {(() => {
+                    const line = block.caption ?? cite(figure, point.sources, false);
+                    return line ? <figcaption><RichText text={line} refs={refs} /></figcaption> : null;
+                  })()}
                 </figure>
               ) : block.caption ? <p><RichText text={block.caption} refs={refs} /></p> : null}
             </div>

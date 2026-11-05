@@ -2,6 +2,10 @@ import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { CircleSection } from "../../components/kp/v2/CircleSection";
+import { pointRefs } from "../../components/kp/v2/refs";
 import { catalogFromModel } from "../content/catalog";
 import { loadContent } from "../content/load";
 import { v1Circles } from "./v1-circles";
@@ -10,6 +14,10 @@ const here = dirname(fileURLToPath(import.meta.url));
 const { model } = loadContent(join(here, "..", "..", "content"));
 assert.ok(model);
 const all = catalogFromModel(model);
+
+function plain(html: string): string {
+  return html.replace(/<[^>]+>/g, "");
+}
 
 test("V1 三圈只畫內容裡寫了的圈，段標用內容的 heading", () => {
   const point = all.points.find((item) => item.why && item.how && item.what);
@@ -21,30 +29,38 @@ test("V1 三圈只畫內容裡寫了的圈，段標用內容的 heading", () => 
   assert.ok(!kinds.includes("review") && !kinds.includes("ai"), "V1 別處已有檢核與 AI 分工");
 });
 
-test("活動圖保留 title 與 caption，不重複情境內文", () => {
-  const point = all.points.find((item) => item.id === "sk.pdca@jh");
-  assert.ok(point);
-  const scenario = v1Circles(point, all)
-    .flatMap((c) => c.blocks)
-    .find((b) => b.kind === "scenario");
-  assert.ok(scenario && scenario.kind === "scenario");
-  assert.ok(scenario.figureId);
-  assert.equal(scenario.title, undefined);
-  assert.equal(scenario.text, undefined, "情境內文 V1 已有，不重複");
-  assert.ok(scenario.caption);
-  assert.match(scenario.caption, /^親子共學：親子各跑一輪自己的 PDCA（孩子：讀書方法；大人：運動或睡眠）/);
-  assert.doesNotMatch(scenario.caption, /^讀書方法/);
-});
+test("活動圖不重複情境句，figcaption 只留圖的出處", () => {
+  for (const id of ["sk.pdca@jh", "ma.probmodel@uni"] as const) {
+    const point = all.points.find((item) => item.id === id);
+    assert.ok(point?.scenario, id);
+    const scenario = v1Circles(point, all)
+      .flatMap((c) => c.blocks)
+      .find((b) => b.kind === "scenario");
+    assert.ok(scenario && scenario.kind === "scenario", id);
+    assert.ok(scenario.figureId, id);
+    assert.equal(scenario.title, undefined, id);
+    assert.equal(scenario.text, undefined, id);
+    assert.equal(scenario.caption, undefined, id);
 
-test("ma.probmodel 活動圖 caption 不從括號中間斷開", () => {
-  const point = all.points.find((item) => item.id === "ma.probmodel@uni");
-  assert.ok(point);
-  const scenario = v1Circles(point, all)
-    .flatMap((c) => c.blocks)
-    .find((b) => b.kind === "scenario");
-  assert.ok(scenario && scenario.kind === "scenario" && scenario.caption);
-  assert.match(scenario.caption, /丟骰子：1–2 點/);
-  assert.doesNotMatch(scenario.caption, /^1–2 點/);
+    const how = v1Circles(point, all).find((c) => c.kind === "how");
+    assert.ok(how, id);
+    const html = renderToStaticMarkup(
+      createElement(CircleSection, {
+        circle: how,
+        point,
+        all,
+        visible: all,
+        refs: pointRefs(all, all, point.folder),
+      }),
+    );
+    const text = plain(html);
+    assert.ok(!text.includes(point.scenario), `${id} 不重複情境`);
+    const figure = point.figures?.find((f) => f.id === scenario.figureId);
+    assert.ok(figure && "caption" in figure && figure.caption, id);
+    assert.ok(text.includes(String(figure.caption)), `${id} 保留出處`);
+    assert.match(html, /<figure[\s>]/i, `${id} 有圖`);
+    assert.match(html, /<figcaption[\s>]/i, `${id} 有 figcaption`);
+  }
 });
 
 test("學什麼 checklist 不重複「家長檢核」標題", () => {
