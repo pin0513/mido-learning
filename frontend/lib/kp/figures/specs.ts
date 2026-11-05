@@ -29,9 +29,126 @@ export type FigureSpec =
   | (Base & { widget: "hole"; xs: number[] })
   | (Base & { widget: "can"; volume: number; rMin: number; rMax: number; sMax: number; start: number })
   | (Base & { widget: "bsearch"; lo: number; hi: number; start: number })
-  | (Base & { widget: "pixels"; start: string[] });
+  | (Base & { widget: "pixels"; start: string[] })
+  | (Base & { widget: "matrix"; shape: [number, number][]; range: number })
+  | (Base & { widget: "shadow"; personH: number; personShadow: number; poleShadowMin: number; poleShadowMax: number; start: number })
+  | (Base & { widget: "cointree" })
+  | (Base & { widget: "dice"; seed: number; maxN: number; step: number; start: number })
+  | (Base & { widget: "binomial"; n: number; start: number })
+  | (Base & { widget: "sumdist"; a: [number, number][]; b: [number, number][]; deadlines: number[]; start: number })
+  | (Base & { widget: "cooling"; room: number; diff: number; data: [number, number][]; halfMin: number; halfMax: number; start: number; target: number })
+  | (Base & { widget: "bars"; items: [string, number][]; max: number; unit: string })
+  | (Base & { widget: "oddsquare"; maxN: number; start: number })
+  | (Base & { widget: "matches"; maxN: number; start: number })
+  | (Base & { widget: "dihedral" });
 
 export const FIGURE_SPECS: Record<string, FigureSpec[]> = {
+  "ma.linalg@uni": [
+    {
+      id: "linalg-matrix",
+      widget: "matrix",
+      title: "同一個 L 形，乘上不同的矩陣",
+      desc: "方格紙上的 L 形由 (1, 0)、(0, 0)、(0, 2) 連成。逆時針轉 90 度的矩陣第一列 (0, −1)、第二列 (1, 0)：(1, 0) 變成 (0, 1)，(0, 2) 變成 (−2, 0)。放大 2 倍的矩陣第一列 (2, 0)、第二列 (0, 2)；先轉再放大，等於乘上兩個矩陣的乘積。",
+      caption: "數字是示意，本站整理。",
+      shape: [[1, 0], [0, 0], [0, 2]], range: 4,
+    },
+  ],
+  "ma.similar@jh": [
+    {
+      id: "similar-shadow",
+      widget: "shadow",
+      title: "量影子，算旗桿高",
+      desc: "同一時間，身高 160 公分的人影長 120 公分。太陽光可看成平行，人和旗桿都垂直地面，兩個三角形相似，高和影長的比相同：旗桿影長 6 公尺時，旗桿高 6 × 160 ÷ 120 ＝ 8 公尺。拉動旗桿影長，高度跟著按同一個比例變。",
+      caption: "數字是示意，本站整理。",
+      personH: 1.6, personShadow: 1.2, poleShadowMin: 1, poleShadowMax: 9, start: 6,
+    },
+  ],
+  "ma.prob@jh": [
+    {
+      id: "prob-tree",
+      widget: "cointree",
+      title: "兩枚銅板的樹狀圖",
+      desc: "第一枚銅板正或反，第二枚也是正或反，樹狀圖畫出兩層共 4 種結果，每種機會相同。兩枚都正面只有 1 種，機率是 1/2 × 1/2 ＝ 1/4。",
+      caption: "本站整理。",
+    },
+    {
+      id: "prob-dice",
+      widget: "dice",
+      title: "擲越多次，相對次數越接近 1/6",
+      desc: "相對次數 ＝ 次數 ÷ 總次數。拉動擲的次數，看 6 點出現幾次、相對次數是多少；擲得越多，相對次數通常越接近 1/6 ≈ 0.167。前面擲出什麼，不會改變下一次的機率。",
+      caption: "擲骰結果是電腦用固定亂數種子模擬的示意，不是真實紀錄。",
+      seed: 20261105, maxN: 60, step: 6, start: 60,
+    },
+  ],
+  "ma.stats@sh": [
+    {
+      id: "stats-binomial",
+      widget: "binomial",
+      title: "公正銅板丟 10 次，正面幾次",
+      desc: "假設銅板公正，丟 10 次的結果共 2¹⁰ ＝ 1,024 種，剛好 k 次正面有 C(10, k) 種。9 次以上正面有 10 ＋ 1 ＝ 11 種，機率 11/1,024，約 1%：很少見，讓公正的說法值得懷疑，但不是證明它錯。",
+      caption: "數字是示意。",
+      n: 10, start: 9,
+    },
+  ],
+  "ma.probmodel@uni": [
+    {
+      id: "probmodel-sum",
+      widget: "sumdist",
+      title: "總天數 T ＝ A ＋ B 的分布",
+      desc: "A 是 2 或 3 天，各 1/2；B 是 1、2 或 3 天，各 1/3；兩者獨立。T 的分布是 3 天 1/6、4 天 1/3、5 天 1/3、6 天 1/6，平均 E(T) ＝ 4.5 天。期限 5 天時準時的機率是 5/6 ≈ 83%；期限放寬到 6 天，準時的機率就是 1。",
+      caption: "數字是示意，本站整理。",
+      a: [[2, 1 / 2], [3, 1 / 2]], b: [[1, 1 / 3], [2, 1 / 3], [3, 1 / 3]], deadlines: [4, 5, 6], start: 5,
+    },
+  ],
+  "ma.diffeq@uni": [
+    {
+      id: "diffeq-cooling",
+      widget: "cooling",
+      title: "熱水冷卻：溫差每隔同樣時間乘同一個倍數",
+      desc: "室溫 25°C，牛頓冷卻定律 dT/dt ＝ −k(T − 25) 的解是 T ＝ 25 ＋ 60 × e^(−kt)。示意數據 85、77.2、70.5、64.6、59.5、55°C 是每 2 分鐘記一次，溫差 10 分鐘剛好減半，所以 k ＝ ln 2 ÷ 10 ≈ 0.069；降到 40°C 時溫差 15，是 60 的四分之一，要 20 分鐘。拉動「溫差減半要幾分鐘」，看曲線和數據合不合。",
+      caption: "數據是示意。",
+      room: 25, diff: 60, data: [[0, 85], [2, 77.2], [4, 70.5], [6, 64.6], [8, 59.5], [10, 55]], halfMin: 4, halfMax: 20, start: 10, target: 40,
+    },
+  ],
+  "ma.data@es": [
+    {
+      id: "data-fruit",
+      widget: "bars",
+      title: "最喜歡的水果長條圖",
+      desc: "一格代表 1 票，長條越高票越多：蘋果 9 票、葡萄 7 票、香蕉 5 票、芭樂 0 票。芭樂 0 票也要在橫軸寫出來，只是長條高度是 0。按加減改票數，長條跟著變。",
+      caption: "票數是示意。",
+      items: [["蘋果", 9], ["葡萄", 7], ["香蕉", 5], ["芭樂", 0]], max: 12, unit: "票",
+    },
+  ],
+  "ma.proof@sh": [
+    {
+      id: "proof-odd",
+      widget: "oddsquare",
+      title: "前 n 個奇數的和是 n²",
+      desc: "1 ＝ 1²，1 ＋ 3 ＝ 2²，1 ＋ 3 ＋ 5 ＝ 3²。k × k 的正方形外面補一圈 L 形的 2k ＋ 1 塊，就變成 (k ＋ 1) × (k ＋ 1)。這是歸納法第二步的圖；只看幾個例子還不夠，要兩步都寫出來才是證明。",
+      caption: "本站整理。",
+      maxN: 8, start: 4,
+    },
+  ],
+  "ma.pattern@es": [
+    {
+      id: "pattern-matches",
+      widget: "matches",
+      title: "火柴棒排三角形",
+      desc: "火柴棒連著排三角形：1 個三角形 3 支、2 個 5 支、3 個 7 支、4 個 9 支，第 5 個要 11 支。第一個用 3 支，之後每多一個三角形，只要再加 2 支，因為有一邊和前一個共用。",
+      caption: "支數依課程手冊的火柴棒例子。",
+      maxN: 6, start: 4,
+    },
+  ],
+  "ma.beauty@uni": [
+    {
+      id: "beauty-square",
+      widget: "dihedral",
+      title: "正方形的 8 種對稱",
+      desc: "正方形可以轉 0、90、180、270 度，共 4 種；也可以沿兩條對角線、兩條對邊中點的連線翻，共 4 種，合起來 8 種。按「轉 90 度」和「左右翻」接連做，結果一定還是這 8 種之一；先轉 90 度再轉 90 度等於轉 180 度，沿同一條線翻兩次等於不動。",
+      caption: "依 Judson 的書，本站整理。",
+    },
+  ],
   "ma.coord@jh": [
     {
       id: "coord-plans",
