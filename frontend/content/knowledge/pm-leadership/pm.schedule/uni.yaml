@@ -55,8 +55,8 @@ guiding_questions:
 scenario: 以虛構的小型建物施工為例（十項工作、土木和機電各一組工班，數字是示意）做資源平準化，比較兩個方案的完工日和要徑，再寫出模型沒考慮到的現場限制（本站建議）。
 formats:
   slides: []
-  exercise: 目標：用這份示意資料（每項工作要 1 組工班，土木和機電各只有 1 組）：A 放樣 2 天，無先行，土木；B 開挖 3 天，接 A，土木；C 基礎 4 天，接 B，土木；D 預埋管 2 天，接 B，機電；E 結構 5 天，接 C，土木；F 屋頂 3 天，接 E，土木；G 外牆 4 天，接 E，土木；H 配線 4 天，接 D、E，機電；I 測試 2 天，接 H，機電；J 驗收 1 天，接 F、G、I，土木。先算出要徑和每項的浮時，再寫出兩種工班每天要幾組、標出超量的天數，做出兩個平準化方案，比較完工日和要徑；最後把 G 外牆改成 5 天，自己再做一次。　檢核：原資料的答案在本頁的文章裡。G 改成 5 天時，要徑仍是 A→B→C→E→H→I→J、完工第 21 天，G 浮時剩 1 天，土木第 15 到 17 天仍要 2 組；只用一組土木班，不論 G 先或 F 先，完工都變成第 23 天，要徑變成 A→B→C→E→G→F→J（或 F 在 G 前）；第 15 到 17 天加派一組土木班，完工仍是第 21 天。
-  article: 完整示範（數字是示意）：資料是 A 放樣 2 天，無先行，土木；B 開挖 3 天，接 A，土木；C 基礎 4 天，接 B，土木；D 預埋管 2 天，接 B，機電；E 結構 5 天，接 C，土木；F 屋頂 3 天，接 E，土木；G 外牆 4 天，接 E，土木；H 配線 4 天，接 D、E，機電；I 測試 2 天，接 H，機電；J 驗收 1 天，接 F、G、I，土木；土木、機電各 1 組。第一步，往前推算最早開工日：A 第 1–2 天、B 第 3–5 天、C 第 6–9 天、D 第 6–7 天、E 第 10–14 天，F、G、H 都從第 15 天開始，F 第 15–17 天、G 第 15–18 天、H 第 15–18 天，I 第 19–20 天，J 要等 F、G、I 都完成，第 21 天做完。要徑是 A→B→C→E→H→I→J，共 21 天；浮時 D 7 天、F 3 天、G 2 天，其餘是 0。第二步，數每天要幾組：土木第 1–14 天 1 組，第 15–17 天 F 和 G 同時做，要 2 組，超量 3 天；機電第 6–7 天和第 15–20 天各 1 組，沒有超量。只挪浮時解不掉：G 先做到第 18 天，F 第 19–21 天，比 F 最晚的完工日（第 20 天）晚 1 天。方案一，只用一組土木班、G 先 F 後：J 在第 22 天做完，晚 1 天，要徑變成 A→B→C→E→G→F→J，H、I 反而多出 1 天浮時；F 先 G 後也是第 22 天。方案二，第 15–17 天加派一組土木班（多 3 組·天的工錢）：完工仍是第 21 天，要徑不變。要選哪一個，看晚 1 天的代價和多出的工錢哪個大，再問現場做不做得到（本站建議）。
+  exercise: 目標：用「怎麼學」的同一份示意資料，把 G 外牆改成 5 天，照四步重做一次：寫出要徑和 G 的浮時、土木班超量的天數、只用一組土木班時的完工日和要徑、加派一組時的完工日。　檢核：四個答案都寫出來後，再到「學什麼」說明裡的「練習對答案」核對。
+  article: 這一頁用一個虛構的小工程示範資源平準化。先在「怎麼學」看資料，照四個步驟算出要徑、每天要幾組工班、超量的天數和兩個方案；再做下面的練習，把一項工作的天數改掉自己重算。
 authors:
 - I-PING Huang
 updated: '2026-11-05'
@@ -94,32 +94,34 @@ why:
 how:
   heading: 找出超量，錯開，再驗證
   body:
-  - 先算要徑，再畫資源需求。示意資料（每項要 1 組工班，土木、機電各只有 1 組）：A 放樣 2 天，無先行，土木；B 開挖 3 天，接 A，土木；C 基礎 4 天，接 B，土木；D 預埋管 2 天，接 B，機電；E 結構 5 天，接 C，土木；F 屋頂 3 天，接 E，土木；G 外牆 4 天，接 E，土木；H 配線 4 天，接 D、E，機電；I 測試 2 天，接 H，機電；J 驗收 1 天，接 F、G、I，土木。往前推算：F、G、H 都在第 15 天開始，J 要等 F、G、I 都完成，第 21 天做完；要徑是 A→B→C→E→H→I→J，浮時 D 7 天、F 3 天、G 2 天。把每天要幾組工班數出來（資源直方圖）：土木第 15–17 天要 2 組，超量 3 天；機電最多 1 組，沒有超量（例子和數字是本站示意）。NASA 的手冊說資源平準化是「the process of moving schedule tasks without violating network logic or constraints in order to achieve a more consistent level of resources throughout the schedule duration.」也就是不打破先後關係，把工作挪開，讓每段時間用的人比較平均（說明是本站整理）。
-  - 再做兩個方案比較。先試只挪浮時：G 先做到第 18 天，F 第 19–21 天，比 F 最晚的完工日第 20 天還晚 1 天，浮時不夠。方案一，只用一組土木班、G 先 F 後：完工第 22 天，晚 1 天；要徑換成 A→B→C→E→G→F→J，原本的 H、I 反而多出 1 天浮時。方案二，第 15–17 天加派一組土木班：完工仍是第 21 天，要徑不變，但多付 3 組·天的工錢（數字是示意）。這就是 Watt 說的「leveling could result in a later project finish date if the tasks affected are in the critical path.」兩個方案各寫完工日、要徑和多花的錢，再決定用哪一個（本站建議）。
-  - 最後請現場檢查，並讀懂模擬：手冊提醒「automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」結果要由團隊仔細檢查，「not just taken at face value」；所以要問現場的人：這組師傅會不會這項工、誰會請假、材料什麼時候到（說明是本站整理）。排程風險分析是要「evaluate the likelihood that the P/p plan is achievable within the planned finish date constraints」，結果是準時完成的機會有多大，不是保證；手冊也說，蒙地卡羅模擬工具「is simply a mathematical machine that operates on the inputs to produce outputs.」輸入的估計不可靠，結果也不可靠（說明是本站整理）。
+  - 示意資料（例子是虛構的，工作、天數和工班數都是本站示意）：每項工作要 1 組工班，土木、機電各只有 1 組。土木班做 A 放樣 2 天（起點）、B 開挖 3 天（接 A）、C 基礎 4 天（接 B）、E 結構 5 天（接 C）、F 屋頂 3 天（接 E）、G 外牆 4 天（接 E）、J 驗收 1 天（接 F、G、I）；機電班做 D 預埋管 2 天（接 B）、H 配線 4 天（接 D、E）、I 測試 2 天（接 H）。下面四步照這份資料算一次。
+  - 平準化是什麼：NASA 的手冊說資源平準化是「the process of moving schedule tasks without violating network logic or constraints in order to achieve a more consistent level of resources throughout the schedule duration.」也就是不打破先後關係，把工作挪開，讓每段時間用的人比較平均。Watt 也提醒「leveling could result in a later project finish date if the tasks affected are in the critical path.」（說明是本站整理）
   qa:
     question: 模型算出的「最佳」排程，現場的人做得到嗎？
     answer: 不一定。手冊提醒「automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」所以要拿排程去問現場的人：誰會做、誰有空、材料什麼時候到，再調整（說明是本站整理）。
     source: nasa-smh
-  items_title: 四步做
+  items_title: 四步做（示範）
   items:
-  - title: 畫出資源需求
-    text: 先算要徑和浮時，再數每天每種工班要幾組。
-    example: （示意）土木第 15–17 天要 2 組。
-  - title: 標出超量時段
-    text: 超過可用組數就標出來。
-    example: （示意）土木只有 1 組，超量 3 天。
-  - title: 做兩個方案
-    text: 比較完工日、要徑和多花的錢。
-    example: （示意）G 先 F 後第 22 天完工；加派一組仍是第 21 天。
-  - title: 請現場檢查
-    text: 模型沒算到的寫下來。
+  - title: 算要徑和浮時
+    text: 往前推每項最早的開工、完工日，往後推最晚的日子，兩者的差就是浮時。
+    example: （示意）A 第 1–2 天、B 3–5、C 6–9、D 6–7、E 10–14、F 15–17、G 15–18、H 15–18、I 19–20、J 第 21 天完工。要徑依序經過 A、B、C、E、H、I、J；浮時 D 7 天、F 3 天、G 2 天，其餘 0。
+  - title: 數每天要幾組工班
+    text: 把每天在做的工作按工班加起來，就是資源直方圖。
+    example: （示意）土木：第 1–14 天 1 組，第 15–17 天 2 組，第 18 天 1 組，第 19–20 天 0 組，第 21 天 1 組。機電：第 6–7 天、第 15–20 天各 1 組，其餘 0 組。
+  - title: 標出超量、先試浮時
+    text: 超過可用組數的天就標出來，先看只挪有浮時的工作夠不夠。
+    example: （示意）土木只有 1 組，第 15–17 天超量 3 天。G 做到第 18 天後 F 才開始，F 第 19–21 天，比 F 最晚的第 20 天晚 1 天，浮時不夠。
+  - title: 做兩個方案比較
+    text: 每個方案寫完工日、要徑和多花的錢，再決定用哪一個（本站建議）。
+    example: （示意）方案一，一組土木班 G 先 F 後：第 22 天完工，要徑換成依序經過 A、B、C、E、G、F、J，H、I 多出 1 天浮時；F 先 G 後也是第 22 天。方案二，第 15–17 天加派一組土木班：第 21 天完工，要徑不變，多付 3 組·天的工錢。
   checklist_title: 每次做完勾一下
   checklist:
   - 超量已標出
   - 兩個方案都算
   - 要徑有重找
   - 問過現場
+  notes:
+  - 算完之後請現場檢查：手冊說平準化的結果要由團隊仔細檢查，「not just taken at face value」（見上面的問答）。排程風險分析是要「evaluate the likelihood that the P/p plan is achievable within the planned finish date constraints」；手冊也說，蒙地卡羅模擬工具「is simply a mathematical machine that operates on the inputs to produce outputs.」輸入的估計不可靠，結果也不可靠（說明是本站整理）。
   activity_figure: schedule-flow
   sources:
   - nasa-smh
@@ -148,7 +150,7 @@ what:
   notes:
   - 合併偏誤的數字怎麼算（示意）：一條路準時的機會是 80%；兩條路會合，都準時是 0.8×0.8＝64%；三條路會合是 0.8×0.8×0.8，約 51%。真實的路有浮時、彼此也可能相關（例如同一場雨拖到所有戶外工作），所以這只說明方向，不是真實機率（本站整理）。
   - 模型沒考慮到的：工班會不會這項工、誰會請假、材料何時到、一組人能不能拆成半組、天氣；這些要問現場（本站整理）。
-  - 本頁的施工排程例子是虛構的，工作、天數和工班數都是示意。
+  - 練習對答案（G 外牆改成 5 天，示意）：要徑仍是 A→B→C→E→H→I→J、第 21 天完工，G 的浮時剩 1 天，土木第 15–17 天仍要 2 組；只用一組土木班，不論 G 先或 F 先都是第 23 天完工，要徑變成 A→B→C→E→G→F→J（或 F 在 G 前）；第 15–17 天加派一組土木班，仍是第 21 天完工。
   - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
   sources:
   - nasa-smh
