@@ -10,7 +10,8 @@ discipline:
 stage:
   level: uni
 to_verify: false
-verify_notes: []
+verify_notes:
+- 2026-11-05 加深：BAC 200 萬元、八個月的 PV 曲線、PV、EV、AC 和練習的數字都是本站示意，不是任何來源的數字；CV、SV、CPI、SPI、EAC、TCPI、賺得時程由腳本重算。EAC 的兩個公式和最好、最壞情況的說法取自 NASA 參考卡，2026-11-05 重新讀取核對。
 prerequisites: [pm.estimate@sh, pm.schedule@uni]
 links:
   why: []
@@ -33,8 +34,10 @@ goal: 會從 PV、EV、AC 算出 CPI、SPI，說得出它們代表什麼，也�
 review: 給一組期中資料，算出 CPI、SPI、CV、SV；用一句話解釋每個數字，並指出還需要看哪份資料才能判斷工期。
 formats:
   slides: []
+  article: 這一頁用一個虛構的專案示範實獲值管理。先在「怎麼學」照四步算出 PV、EV、AC 和兩個比值，再看預測總成本和用時間看進度的三段；「學什麼」說明 SPI 的盲點。最後做下面的練習。
+  exercise: 目標：一個總預算 BAC 400 萬元的專案（示意），第 6 個月底 PV 240、EV 210、AC 250 萬元。照「怎麼學」的四步和後面的預測，算出 CV、SV、CPI、SPI、兩種 EAC 和 TCPI，各用一句話說它代表什麼，再說還要看哪份資料才知道工期有沒有延誤。　檢核：寫完後到「學什麼」的「練習對答案」核對。
 authors: [I-PING Huang]
-updated: "2026-10-28"
+updated: "2026-11-05"
 
 # ---------- 新增 ----------
 why:
@@ -44,7 +47,7 @@ why:
   - 有了 EV，就能拆開兩個問題：錢花得值不值得（CPI = EV/AC），工作有沒有照計畫做出來（SPI = EV/PV）。
   qa:
     question: CPI 很好但 SPI 很差，可能發生了什麼事？
-    answer: 已經做的工作花得比預算省，但完成的工作量比計畫少。這不一定代表工期延誤，因為 SPI 不看要徑；要對照時程網路的要徑，才知道有沒有真的落後。
+    answer: 已經做的工作花得比預算省，但完成的工作量比計畫少。示意：PV 100、EV 80、AC 70 萬元，CPI 約 1.14、SPI 0.80。可能是人手沒到齊，錢自然花得少。這不一定代表工期延誤，因為 SPI 不看要徑；要對照時程網路的要徑，才知道有沒有真的落後。
     source: dau-spi
   figures: [why-compare]
   sources: [nasa-evm-card, dau-spi, sinek]
@@ -53,21 +56,40 @@ how:
   heading: 三個數字，算兩個比值
   body:
   - EV 要算得出來，工作得先拆好、每一項都有預算。NASA 的 WBS 手冊說，WBS 的目的就是把工作分成可管理的小塊，以利控管成本與時程。
+  - 下面照四步示範一次（數字是示意）：總預算 BAC 200 萬元、預計 8 個月，現在是第 4 個月底；算完比值後，再接著預測總成本、用時間看進度。
+  items_title: 四步算（示範）
   items:
-  - {title: 定出 PV, text: 到今天，依計畫應完成的工作值多少預算。}
-  - {title: 量出 EV, text: 到今天，實際完成的工作值多少預算。}
-  - {title: 記下 AC, text: 為完成這些工作，實際花了多少。}
-  - {title: 算比值、看差額, text: CPI = EV/AC，SPI = EV/PV；CV = EV − AC，SV = EV − PV。, example: （示意）PV 100、EV 80、AC 70 → CPI ≈ 1.14，SPI = 0.80}
+  - title: 定出 PV
+    text: 到今天，依計畫應完成的工作值多少預算。
+    example: （示意）照計畫，第 4 個月底該完成價值 100 萬元的工作：PV＝100。
+  - title: 量出 EV
+    text: 到今天，實際完成的工作值多少預算。
+    example: （示意）實際做完的工作，原本預算是 80 萬元：EV＝80。
+  - title: 記下 AC
+    text: 為完成這些工作，實際花了多少。
+    example: （示意）實際花了 70 萬元：AC＝70。
+  - title: 算比值、看差額
+    text: CPI = EV/AC，SPI = EV/PV；CV = EV − AC，SV = EV − PV。
+    example: （示意）CV＝80−70＝＋10，SV＝80−100＝−20，單位都是萬元；CPI＝80÷70，約 1.14，每花 1 元做出約 1.14 元的工作；SPI＝80÷100＝0.80，每計畫做 1 元的工作，只做了 0.80 元。
+  notes:
+  - 接著預測總成本（示意）：NASA 參考卡的 EAC＝AC＋(BAC−EV)÷CPI，卡上說它「typically a best case」，這裡是 70＋120÷1.14…＝175 萬元；把 CPI×SPI 放進分母的版本 EAC＝AC＋(BAC−EV)÷(CPI×SPI)，卡上說它「typically a worst case」，這裡是 70＋120÷(1.14…×0.80)，約 201 萬元。
+  - 要照原預算做完（示意）：TCPI＝(BAC−EV)÷(BAC−AC)＝(200−80)÷(200−70)，約 0.92：剩下的工作每花 1 元要做出約 0.92 元，比目前的 1.14 低，代表目前的效率夠用（說明是本站整理）。
+  - 用時間看進度（示意）：PV 照計畫逐月累積是 10、30、60、100、140、170、190、200 萬元。EV 80 落在第 3 個月底（60）和第 4 個月底（100）的正中間，所以賺得時程 ES＝3.5 個月；實際已過 AT＝4 個月，SPI(t)＝3.5÷4，約 0.88，等於落後半個月（說明是本站整理）。
   activity_figure: how-flow
   sources: [nasa-wbs, nasa-evm-card]
 
 what:
   heading: SPI 的兩個盲點
+  qa:
+    question: 專案已經延誤，為什麼最後 SPI 還是 1？
+    answer: 因為計畫的工作全部做完時，EV 等於 PV，SPI 依定義就是 1。示意：原訂 8 個月、預算 200 萬元的專案拖到第 10 個月才做完，那時 EV＝PV＝200，SPI＝1；用賺得時程看，ES＝8 個月、AT＝10 個月，SPI(t)＝0.8，才看得出晚了。
+    source: dau-spi
   notes:
-  - SPI 不看要徑：DAU 說明，SPI 不好不一定代表工期延誤，要評估時程網路的要徑才能判斷。
-  - 尾聲會趨近 1：所有計畫工作做完時 EV 等於 PV，SPI 依定義就是 1；研究指出，這段不可靠的時間通常落在專案的最後三分之一。
+  - SPI 的兩個盲點：DAU 說明，SPI 不好不一定代表工期延誤，要評估時程網路的要徑才能判斷；而所有計畫工作做完時 EV 等於 PV，SPI 依定義就是 1，研究指出這段不可靠的時間通常落在專案的最後三分之一。
+  - 常見的誤會：花了幾成錢不等於做了幾成。示意例子花了 70÷200＝35% 的預算，做了 80÷200＝40% 的工作；CPI 大於 1 也不代表最後一定不超支，EAC 只是假設未來的效率和過去一樣時的預測（本站整理）。
   - SV 是金額，不是天數。為了用時間看進度，Lipke 提出「賺得時程」（Earned Schedule）：ES 是目前做到的 EV，照計畫原本應該在第幾天達成；AT 是實際已經過了幾天。SPI(t) = ES / AT。
-  sources: [dau-spi, vv-2006]
+  - 練習對答案（示意，單位萬元）：CV＝210−250＝−40、SV＝210−240＝−30（都是金額，不是天數）；CPI＝210÷250＝0.84、SPI＝210÷240，約 0.88，兩個都不利；只用 CPI 推的 EAC＝250＋(400−210)÷0.84，約 476；用 CPI×SPI 推的 EAC 約 509；TCPI＝(400−210)÷(400−250)，約 1.27，比目前的 0.84 高很多。工期有沒有延誤，要看時程網路的要徑。
+  sources: [dau-spi, vv-2006, nasa-evm-card]
 
 figures:
 - id: why-compare
@@ -96,34 +118,34 @@ sources:
   title: Performance Management Reference Card（Revised May 20, 2021）
   publisher: NASA
   url: https://www.nasa.gov/wp-content/uploads/2018/06/nasa_evm_reference_card.pdf
-  accessed: "2026-10-28"
+  accessed: "2026-11-05"
   kind: government
-  supports: PV=BCWS、EV=BCWP、AC=ACWP；CPI = BCWP/ACWP、SPI = BCWP/BCWS，大於 1.0 為有利；CPI 為每 1 元實際成本賺得多少計畫工作；CV = BCWP − ACWP、SV = BCWP − BCWS
+  supports: PV=BCWS、EV=BCWP、AC=ACWP；CPI = BCWP/ACWP、SPI = BCWP/BCWS，大於 1.0 為有利；CPI 為每 1 元實際成本賺得多少計畫工作；CV = BCWP − ACWP、SV = BCWP − BCWS；EAC 以 CPI 推估「typically a best case」、以 CPI×SPI 推估「typically a worst case」；TCPI = (BAC − BCWP) / (Target − ACWP)
 - id: dau-spi
   title: "Acquipedia: Schedule Performance Index (SPI)"
   publisher: Warfighting Acquisition University（WarU，原 Defense Acquisition University）
   url: https://www.waru.edu/acquipedia-article/schedule-performance-index-spi
-  accessed: "2026-10-28"
+  accessed: "2026-11-05"
   kind: government
   supports: SPI 大於 1.0 為有利；計畫工作全部完成時 BCWP 等於 BCWS，SPI 依定義為 1.0；SPI 與要徑時程無關，不利的 SPI 不一定代表延誤，延誤只能由網路時程的要徑判斷
 - id: vv-2006
   title: "A comparison of different project duration forecasting methods using earned value metrics（International Journal of Project Management 24(4): 289–302，DOI 10.1016/j.ijproman.2005.10.004；Vlerick 工作論文版 2005/16）"
   publisher: Stephan Vandevoorde、Mario Vanhoucke，Elsevier（2006）
   url: https://public.vlerick.com/Publications/32498bd5-69a9-e011-8a89-005056a635ed.pdf
-  accessed: "2026-10-28"
+  accessed: "2026-11-05"
   kind: peer_reviewed
   supports: SV 以金額而非時間表示；專案尾聲 SV 收斂到 0、SPI 收斂到 1，即使專案延誤；不可靠的期間通常在最後三分之一；Lipke（2003）的賺得時程：把目前的 EV 對回計畫 PV 曲線，換算到時間軸上得到 ES；AT 指實際經過的時間（Actual Time）；SV(t) = ES − AT、SPI(t) = ES / AT
 - id: nasa-wbs
   title: NASA Work Breakdown Structure (WBS) Handbook, NASA/SP-2016-3404/REV1
   publisher: NASA（2018 年 1 月）
   url: https://ntrs.nasa.gov/api/citations/20180000844/downloads/20180000844.pdf
-  accessed: "2026-10-28"
+  accessed: "2026-11-05"
   kind: government
   supports: WBS 把專案工作分成可管理的小塊，以利規劃與控管成本、時程與技術內容
 - id: sinek
   title: How great leaders inspire action
   publisher: Simon Sinek，TED（2009）
   url: https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
-  accessed: "2026-10-28"
+  accessed: "2026-11-05"
   kind: aux
   supports: 頁面結構採用的黃金圈（Why → How → What），不支持教學內容
