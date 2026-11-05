@@ -25,8 +25,8 @@ curriculum_108:
   contents: []
 to_verify: false
 verify_notes:
-- 鋪梗、轉折的說法依史丹佛哲學百科對 set-up 與 punch 的整理，對到國語課綱「結構及寫作手法」時標成本站整理，不把課綱改寫成笑話寫作課。
-- 自嘲的例子只用百科裡找眼鏡的那一種：笑自己當下的失誤。不收集貶低別人的句子。
+- 鋪梗、轉折的說法依史丹佛哲學百科對 set-up 與 punch 的整理。對到國語課綱 2-V-2、5-V-1 的全文時標成本站整理，不把課綱改寫成笑話寫作課。
+- 眼鏡那句只說明優越論解釋不了笑自己。百科沒有把它叫做自嘲技巧。笑自己當下的失誤、不拿權力較小的人當笑點，是本站整理。不收集貶低別人的句子。
 - 英文引文取自 2026-11-05 讀取的網頁；中文說明標「本站整理」或「翻譯是本站整理」。
 prerequisites:
 - sk.present@sh
@@ -66,7 +66,7 @@ updated: '2026-11-05'
 why:
   heading: 轉折不等於可以笑人
   body:
-  - "史丹佛哲學百科描述笑匠的做法：「The set-up is the first part of the joke: it creates the expectation. The punch (line) is the last part that violates that expectation.」前面建立預期，後面打破預期（翻譯是本站整理）。國語課綱要高中生辨析文本的結構及寫作手法，也要在討論裡「達成友善且平等的溝通。」"
+  - "史丹佛哲學百科描述笑匠的做法：「The set-up is the first part of the joke: it creates the expectation. The punch (line) is the last part that violates that expectation.」前面建立預期，後面打破預期（翻譯是本站整理）。國語課綱的學習表現是「辨析文本的寫作主旨、風格、結構及寫作手法。」以及討論時「能適切陳述自身立場，歸納他人論點並給予回應，達成友善且平等的溝通。」把這兩條對到鋪梗與轉折，是本站整理。"
   - 同一本百科也說，心理模式被打破時，「we may well feel fear, disgust, or anger and not amusement.」人不一定覺得好笑，也可能害怕、厭惡或生氣（翻譯是本站整理）。所以轉折之後要看場合，而不是把話說完。
   qa:
     question: 自嘲說到一半，怎樣算踩到別人？
@@ -75,10 +75,10 @@ why:
   items_title: 課綱、預期與轉折
   items:
   - title: 友善且平等
-    text: 討論時適切陳述立場，並達成友善且平等的溝通。
+    text: 討論過程中，能適切陳述自身立場，歸納他人論點並給予回應，達成友善且平等的溝通。
     code: 2-V-2
   - title: 看出結構
-    text: 辨析文本的結構及寫作手法。
+    text: 辨析文本的寫作主旨、風格、結構及寫作手法。
     code: 5-V-1
   - title: 預期
     text: 前半先讓人以為會往哪個方向走。
@@ -91,7 +91,7 @@ how:
   heading: 鋪預期、轉折、停在自己
   body:
   - 先說一句讓人有預期的話，再用轉折打破它，最後檢查笑點是不是自己的行為。聽到停，或看到有人不笑，就把轉折停住（本站建議）。
-  - 百科舉的一種自嘲是：找眼鏡找了很久，結果在自己頭上。「If I search high and low for my eyeglasses only to find them on my head, the Superiority Theory seems unable to explain my laughter at myself.」這種笑停在自己當下的失誤（翻譯是本站整理）。優越論說的則是笑別人，或笑過去的自己。
+  - 史丹佛哲學百科寫：「If I search high and low for my eyeglasses only to find them on my head, the Superiority Theory seems unable to explain my laughter at myself.」如果我到處找眼鏡，結果發現它在自己頭上，優越論似乎無法解釋我對自己的笑（翻譯是本站整理）。把「只笑自己當下的失誤、不把權力較小的人放進笑點」當成自嘲的界線，是本站整理；百科沒有把找眼鏡叫做自嘲技巧。
   items_title: 四步做
   items:
   - title: 鋪預期
