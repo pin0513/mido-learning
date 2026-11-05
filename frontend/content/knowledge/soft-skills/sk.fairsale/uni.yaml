@@ -1,0 +1,137 @@
+id: sk.fairsale@uni
+concept: sk.fairsale
+title: 說服的界線：不誤導、不施壓
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes:
+- 大學不對應 108 課綱，以學門路徑對應。
+- 本點引用公平交易法第 21 條與消費者保護法第 19 條的條文，只說明法律畫出的界線；個案是否違法要看主管機關或法院的認定，本點不做法律意見。
+prerequisites:
+- sk.persuade@uni
+links:
+  why: []
+  how: []
+  related:
+  - sk.pitch@jh
+  - sk.deal@uni
+  deeper: []
+link_notes: 法規：公平交易法第 21 條（不得虛偽不實或引人錯誤的表示）、消費者保護法第 19 條（通訊交易與訪問交易七日內可解除契約）。說服方法在 sk.persuade@uni，談判流程在 sk.deal@uni。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 媒體素養
+  - 查證
+ai:
+  delegable:
+  - 請 AI 檢查文案裡沒有根據的數字與比較用語，再由人逐條確認
+  human_experience:
+  - 在業績壓力下，仍然說出產品的限制
+idea: 說服是幫對方做出自己的決定；誤導和施壓是替對方做決定。公平交易法要求，跟交易決定有關的事（例如價格、品質）不能說得不實或讓人誤會；消費者保護法則讓網購、到府推銷這類交易的消費者，收到商品後七天內可以解除契約（通訊交易有合理例外）。這兩條法律畫出界線：資訊要真，決定要留給對方。
+guiding_questions:
+- 「今天不買就沒了」，這句話什麼時候算施壓？
+scenario: 親子共學：一起看一則手機上的廣告或直播銷售，大人和孩子各圈出一句「讓人想馬上買」的話，討論它是事實、誇大，還是在催人。
+goal: 推銷或提案時，所有影響決定的說法都有根據，並且留給對方考慮和拒絕的空間。
+review: 拿自己寫過的一份銷售文案、提案或募資頁，逐句標出影響決定的說法（價格、數量、品質、期限）；每句附上根據，沒有根據的改寫或刪除；再加一句讓對方可以慢慢決定的話，請一位同學或同事檢查。
+formats:
+  slides: []
+  exercise: 目標：推銷或提案時，所有影響決定的說法都有根據，並且留給對方考慮和拒絕的空間。　檢核：拿自己寫過的一份銷售文案、提案或募資頁，逐句標出影響決定的說法（價格、數量、品質、期限）；每句附上根據，沒有根據的改寫或刪除；再加一句讓對方可以慢慢決定的話，請一位同學或同事檢查。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-11-05'
+why:
+  heading: 法律已經畫出兩條線
+  body:
+  - 公平交易法第 21 條規定：「事業不得在商品或廣告上，或以其他使公眾得知之方法，對於與商品相關而足以影響交易決定之事項，為虛偽不實或引人錯誤之表示或表徵。」同條也列出價格、數量、品質等事項。
+  - 消費者保護法第 19 條規定，通訊交易或訪問交易的消費者「得於收受商品或接受服務後七日內，以退回商品或書面通知方式解除契約，無須說明理由及負擔任何費用或對價。」本站的解讀：法律預想到，在螢幕前或家門口，人容易來不及想清楚。
+  qa:
+    question: 「今天不買就沒了」，這句話什麼時候算施壓？
+    answer: 如果是真的（限量、檔期有明確根據），它是在提供資訊；如果不是真的，就可能是公平交易法第 21 條說的虛偽不實或引人錯誤的表示。就算是真的，也要讓對方能說「我再想想」；網購和到府推銷，消費者原則上有七天可以解除契約。
+    source: ftc21
+  items_title: 兩條界線
+  items:
+  - title: 不誤導
+    text: 價格、數量、品質這類影響決定的事，說的都要有根據。
+  - title: 不施壓
+    text: 留給對方考慮和拒絕的時間。
+  sources:
+  - ftc21
+  - cpa19
+how:
+  heading: 說之前，先自己檢查
+  body:
+  - 寫完文案或提案，逐句問三件事：這句會不會影響對方的決定？有沒有根據？對方能不能慢慢決定？三題都過，再說出口。（本站建議）
+  items:
+  - title: 圈出關鍵句
+    example: 「全台最低價」「只剩三組」
+    text: 找出影響交易決定的說法。
+  - title: 附上根據
+    example: 比價截圖、庫存紀錄
+    text: 每句都要說得出根據；說不出來就改寫或刪掉。
+  - title: 留出空間
+    example: 「可以帶回去想，七天內都能問我」
+    text: 給對方考慮和拒絕的時間。
+  activity_figure: how-flow
+  sources:
+  - ftc21
+  - cpa19
+what:
+  heading: 說服不等於誤導
+  figures:
+  - what-compare
+  notes:
+  - 公平交易法第 21 條管的是「虛偽不實或引人錯誤」的表示，條文把「虛偽不實」和「引人錯誤」並列；本站的解讀：不只明顯的假話，讓人誤會影響決定的事也要避免。
+  - 消費者保護法第 19 條的七日解除契約適用於通訊交易和訪問交易；通訊交易有合理例外情事的，不在此限。
+  sources:
+  - ftc21
+  - cpa19
+figures:
+- id: how-flow
+  type: flow
+  alt: 親子看廣告：大人和孩子各圈出一句讓人想馬上買的話，一起判斷是事實、誇大還是催人，再改寫成誠實的說法
+  steps:
+  - actor: 大人
+    text: 選一則廣告
+  - actor: 兩人
+    text: 各圈一句催買的話
+  - actor: 孩子
+    text: 判斷事實或誇大
+  - actor: 大人
+    text: 改寫成誠實說法
+- id: what-compare
+  type: compare
+  alt: 說服和誤導不同：說服提供有根據的資訊讓對方自己決定，誤導用不實或讓人誤會的說法影響決定
+  source: ftc21
+  relation: not_equal
+  items:
+  - term: 說服
+    note: 有根據的資訊，讓對方自己決定
+  - term: 誤導
+    note: 不實或讓人誤會的說法，替對方決定
+sources:
+- id: ftc21
+  title: 公平交易法 第 21 條
+  publisher: 全國法規資料庫，法務部
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0150002&flno=21
+  accessed: '2026-11-05'
+  kind: government
+  supports: 第一項「事業不得在商品或廣告上，或以其他使公眾得知之方法，對於與商品相關而足以影響交易決定之事項，為虛偽不實或引人錯誤之表示或表徵。」第二項列出價格、數量、品質等事項
+- id: cpa19
+  title: 消費者保護法 第 19 條
+  publisher: 全國法規資料庫，法務部
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=J0170001&flno=19
+  accessed: '2026-11-05'
+  kind: government
+  supports: 第一項「通訊交易或訪問交易之消費者，得於收受商品或接受服務後七日內，以退回商品或書面通知方式解除契約，無須說明理由及負擔任何費用或對價。但通訊交易有合理例外情事者，不在此限。」

@@ -50,3 +50,11 @@ paths:
       - sk.design@sh
       - sk.a3@uni
     colearn: 親子各跑一輪兩週的小改進（孩子：讀書方法；大人：睡眠或運動），用同一張紀錄表報告數字。
+  - id: sk.deal
+    title: 從需要到成交
+    knowledge_points:
+      - sk.trade@es
+      - sk.pitch@jh
+      - sk.batna@sh
+      - sk.deal@uni
+    colearn: 孩子在家庭小市集練「我想要、你想要」，大人把一場工作談判改成家庭版讓孩子扮對方；開談前互看對方寫的替代方案和底線。

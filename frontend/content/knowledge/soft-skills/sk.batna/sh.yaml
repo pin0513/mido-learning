@@ -1,0 +1,161 @@
+id: sk.batna@sh
+concept: sk.batna
+title: 談判前的準備：底線和替代方案
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 社會
+  core_competencies:
+  - A2
+  - C2
+  issues:
+  - 品德教育
+  performances: []
+  contents:
+  - 公 Bo-V-1
+to_verify: false
+verify_notes: []
+prerequisites:
+- pm.conflict@sh
+- sk.qa@sh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.deal@uni
+link_notes: 框架：BATNA（談判協議的最佳替代方案）與底線（reservation point）。分開立場與需求的做法在先備 pm.conflict，這裡不重講。公民：願付價格（公 Bo-V-1）。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 提問
+ai:
+  delegable:
+  - 依學校的使用規則，請 AI 幫忙列出可比較的其他選項和價格（本站建議）
+  human_experience:
+  - 誠實判斷自己最多能接受到哪裡
+idea: 談判前先寫下兩件事：談不成的話，我最好的其他選擇是什麼（BATNA）；根據這個選擇，我最多能接受到哪裡（底線）。有了這兩件事，比較不會因為現場氣氛答應一個比不談還差的條件。
+guiding_questions:
+- 想跟爸媽談延長手機時間，談不成的話你還能做什麼？
+scenario: 親子共學：孩子和大人各準備一場真的要談的事（零用錢、打工時薪、家事分工），開談前互看對方的準備表：其他選擇、底線、想問對方的問題。
+goal: 談判前寫出至少兩個其他選擇、挑出最好的一個，並依它定出底線。
+review: 為一場真實的談判（打工時薪、二手買賣、社團經費）填準備表：至少兩個其他選擇並標出最好的、一個底線和理由、兩個想問對方的問題；談完寫下結果有沒有高於底線。
+formats:
+  slides: []
+  exercise: 目標：談判前寫出至少兩個其他選擇、挑出最好的一個，並依它定出底線。　檢核：為一場真實的談判（打工時薪、二手買賣、社團經費）填準備表：至少兩個其他選擇並標出最好的、一個底線和理由、兩個想問對方的問題；談完寫下結果有沒有高於底線。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-11-05'
+why:
+  heading: 知道談不成怎麼辦，才知道要不要答應
+  body:
+  - 社會課綱在高中公民問：「消費者對某單位產品的願付價格是如何決定的？」願付價格不是憑感覺：你知道別處可以用多少錢買到，就知道這裡最多付多少。
+  - 哈佛法學院談判研究計畫（PON）說明，BATNA 是「Best Alternative to a Negotiated Agreement」，白話就是「what you will do if you do not reach a deal」；底線則是「the least favorable deal you’d accept, based on that alternative.」
+  qa:
+    question: 想跟爸媽談延長手機時間，談不成的話你還能做什麼？
+    answer: 先列出來：例如週末改去打球、用電腦做作業時順便查資料。挑出最好的一個，再想：如果爸媽只答應多十分鐘，比這個選擇好還是差？比較差就不必急著答應，可以再提別的方案。
+    source: pon-batna
+  items_title: 練好以後，可以
+  items:
+  - title: 願付價格
+    text: 說明自己的願付價格是怎麼決定的。
+    code: 公 Bo-V-1
+  - title: 列出替代方案
+    text: 談判前寫出談不成時的其他選擇。
+  - title: 定出底線
+    text: 根據最好的替代方案，說出最多接受到哪裡。
+  sources:
+  - shehui
+  - pon-batna
+  - pon-reservation
+how:
+  heading: 列選擇、挑最好、定底線
+  body:
+  - 先把談不成時能做的事都寫下來；挑出最好的一個；再用它算出底線。最後準備兩個問題，開談時先問對方在意什麼。底線自己知道就好，不必一開口就說。（本站建議）
+  items:
+  - title: 列選擇
+    example: 便利商店時薪、家教、不打工專心讀書
+    text: 談不成時，你還能做什麼。
+  - title: 挑最好
+    example: 便利商店，時薪已知
+    text: 選出最好的那一個，就是你的 BATNA。
+  - title: 定底線
+    example: 低於便利商店的時薪就不接
+    text: 根據 BATNA，寫下最多接受到哪裡。
+  - title: 備問題
+    example: 這份工作最需要什麼時段？
+    text: 準備兩個問對方需要的問題。
+  activity_figure: how-flow
+  sources:
+  - pon-batna
+  - pon-reservation
+what:
+  heading: 替代方案不等於底線
+  figures:
+  - what-compare
+  notes:
+  - BATNA 是「談不成時最好的其他選擇」，是一件你真的可以去做的事；底線是根據它算出來的數字或條件。替代方案變好，底線也會跟著變。
+  sources:
+  - pon-batna
+  - pon-reservation
+figures:
+- id: how-flow
+  type: flow
+  alt: 開談前互看準備表：孩子列出其他選擇並挑最好的，定出底線，大人看準備表提問，孩子修改
+  steps:
+  - actor: 孩子
+    text: 列出其他選擇
+  - actor: 孩子
+    text: 挑最好的一個
+  - actor: 孩子
+    text: 依它定出底線
+  - actor: 大人
+    text: 看準備表提問
+  - actor: 孩子
+    text: 修改準備表
+- id: what-compare
+  type: compare
+  alt: 替代方案和底線不同：替代方案是談不成時真的能做的事，底線是根據它算出的最低條件
+  source: pon-reservation
+  relation: not_equal
+  items:
+  - term: BATNA
+    note: 談不成時，你真的會去做的事
+  - term: 底線
+    note: 根據替代方案，最多接受到哪裡
+sources:
+- id: shehui
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-05'
+  kind: curriculum
+  supports: 公民學習內容 公 Bo-Ⅴ-1「消費者對某單位產品的願付價格是如何決定的？」（p.32，第五學習階段）
+- id: pon-batna
+  title: Translate Your BATNA to the Current Deal
+  publisher: Program on Negotiation at Harvard Law School
+  url: https://www.pon.harvard.edu/daily/batna/translate-your-batna-to-the-current-deal/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 「BATNA stands for Best Alternative to a Negotiated Agreement. In plain terms, it is what you will do if you do not reach a deal.」
+- id: pon-reservation
+  title: 'Negotiation Research in the News: Adapting the BATNA Strategy Across Cultures'
+  publisher: Program on Negotiation at Harvard Law School
+  url: https://www.pon.harvard.edu/daily/batna/negotiation-research-in-the-news-adapting-the-batna-strategy-across-cultures-nb/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 「Your reservation point is the least favorable deal you’d accept, based on that alternative.」
