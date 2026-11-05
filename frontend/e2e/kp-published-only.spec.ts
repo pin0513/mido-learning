@@ -38,7 +38,7 @@ function hiddenOnStaticPage(text: string): boolean {
 // 旗標打開、只靠草稿過濾的那一輪在 kp-published-softskills.spec.ts（CI「Published-only pages, soft-skills on」）。
 // B25 發布 sk.problem@es 後，改用仍是草稿的 sk.interview@sh（先備 ph.question@es）。
 // B26 發布 sk.issuetree@jh 後，改用仍是草稿的 sk.feedback@sh（先備 pm.retro@es；zh.editing@uni 的 links 也連到它）。
-// B28 發布這大學 4 點後，全站 246 點都已發布、沒有草稿。這支檔案在溝通與解決問題旗標關閉的行程跑，下面的 DRAFT_TITLES、PM_PAGES 負向檢查、sk.a3@uni 404 都留著，改當「已發布、只靠旗標不露出」的真實樣本；草稿不露出改由單元測試的合成內容守住。
+// B28 發布這大學 4 點後，全站沒有草稿（sk.humor 主線再加 4 點後為 250 點，全部已發布）。這支檔案在溝通與解決問題旗標關閉的行程跑，下面的 DRAFT_TITLES、PM_PAGES 負向檢查、sk.a3@uni 404 都留著，改當「已發布、只靠旗標不露出」的真實樣本；草稿不露出改由單元測試的合成內容守住。
 // B27 發布軟實力高中 6 點後，草稿樣本只剩大學 4 點（sk.a3、sk.mediate、sk.hypo、sk.coach）；PM_PAGES 裡 sk.decide、sk.rootcause、sk.feedback、sk.interview、sk.design 的標題與網址留著，理由同下（各列註明）。
 // 下面 PM_PAGES 裡 B26 發布的 sk.empmap、sk.nvc、sk.fishbone、sk.issuetree、sk.pdca 的標題與網址也留著，理由同下（各列註明）。
 // 下面 PM_PAGES 裡 sk.problem、sk.otherside、sk.why5 的標題與網址留著：它們已發布，這個行程只因旗標關閉不露出（已發布的軟實力點在別學門頁上，旗標開時有連結，見 kp-published-softskills.spec.ts 第一則）。

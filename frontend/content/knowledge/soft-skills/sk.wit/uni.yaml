@@ -1,0 +1,164 @@
+id: sk.wit@uni
+concept: sk.wit
+title: 場合、身分與修辭幽默
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes:
+- 大學不對應 108 課綱，以學門路徑對應。
+- 美國平等就業機會委員會（EEOC）網頁說明的是美國聯邦就業歧視法下的騷擾界線，不是台灣法律意見。2026-11-05 該頁頂端寫資訊正在依法律與行政命令複核、之後會修訂；引文以當日頁面文字為準。
+- 英文引文取自 2026-11-05 讀取的網頁；中文說明標「本站整理」或「翻譯是本站整理」。
+- 本點不收集攻擊型的句子。鋪梗與自嘲的界線在 sk.setup@sh。
+prerequisites:
+- sk.persuade@uni
+- sk.setup@sh
+links:
+  why: []
+  how: []
+  related:
+  - sk.fairsale@uni
+  deeper: []
+link_notes: 框架：不一致論、優越論、釋放論，依史丹佛哲學百科的整理；不一致論是該百科所說目前的主流，釋放論該百科說已少被當作總解釋。說服三要素在 sk.persuade@uni；不誤導的界線在 sk.fairsale@uni；鋪梗與自嘲在 sk.setup@sh。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 媒體素養
+ai:
+  delegable:
+  - 請 AI 標出這句有沒有點名權力較小的人，或有沒有重複某個群體的刻板印象
+  human_experience:
+  - 在會議或台上決定這句說不說，並為說出口的話負責
+idea: 報告或會議裡的一句玩笑，是放在重點之後的短轉折，不是拿身分差來顯得自己比較高。主管說的玩笑，和下屬之間的玩笑，份量不一樣。重複刻板印象的玩笑，就算說的人沒有敵意，句子仍在流傳。
+guiding_questions:
+- 主管在會議上開玩笑，底下的人笑了，就代表可以繼續嗎？
+scenario: 親子共學：大人把會議或報告裡想用的一句話先講給家人聽。孩子問三件事：這是什麼場合、誰的權力比較小、笑的是事情還是人。笑的是權力較小的人，就改掉。
+goal: 在報告或會議裡用一句玩笑前，寫下場合、身分差，以及笑的是事情還是人。
+review: 對一次真實的報告或會議（課堂、社團或實習）事前寫下場合、身分差、笑的是事情還是人；若笑的是權力較小的人就改掉。事後請一位聽眾說有沒有哪句讓他不舒服。
+formats:
+  slides: []
+  exercise: 目標：在報告或會議裡用一句玩笑前，寫下場合、身分差，以及笑的是事情還是人。　檢核：對一次真實的報告或會議（課堂、社團或實習）事前寫下場合、身分差、笑的是事情還是人；若笑的是權力較小的人就改掉。事後請一位聽眾說有沒有哪句讓他不舒服。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-11-05'
+why:
+  heading: 身分不同，玩笑的份量不同
+  body:
+  - 史丹佛哲學百科整理三種老說法。優越論：「our laughter expresses feelings of superiority over other people or over a former state of ourselves.」釋放論把笑說成神經能量的釋放；同一頁寫「today almost no scholar in philosophy or psychology explains laughter or humor as a process of releasing pent-up nervous energy.」不一致論把笑說成預期被打破，並寫「It is now the dominant theory of humor in philosophy and psychology.」（翻譯是本站整理）。
+  - 美國平等就業機會委員會寫道：「Offensive conduct may include, but is not limited to, offensive jokes」，冒犯性的玩笑可以是騷擾行為的一種（翻譯是本站整理）。同頁也寫：「Petty slights, annoyances, and isolated incidents (unless extremely serious) will not rise to the level of illegality.」小事和單次事件不一定違法，除非極為嚴重（翻譯是本站整理）。本頁談的是說不說的判斷，不是認定某句話違法。
+  qa:
+    question: 主管在會議上開玩笑，底下的人笑了，就代表可以繼續嗎？
+    answer: 不一定。同頁寫「The harasser can be the victim's supervisor」，騷擾者可以是被害人的主管（翻譯是本站整理）。權力較小的人跟著笑，可能是因為身分，不是因為這句沒有問題。先停，問一位聽眾有沒有哪句不舒服（本站整理）。
+    source: eeoc-harass
+  items_title: 三種說法，外加違法界線
+  items:
+  - title: 優越論
+    text: 笑是不是在表達自己比某人高。
+  - title: 釋放論
+    text: 百科說現在很少人再用它解釋所有的笑。
+  - title: 不一致論
+    text: 百科說這是目前哲學和心理學的主流。
+  - title: 違法是另一件事
+    text: 單次、輕微的冒犯不一定達到美國法上的違法程度。
+  sources:
+  - sep-humor
+  - eeoc-harass
+how:
+  heading: 先寫身分，再決定說不說
+  body:
+  - 先寫場合和誰的權力比較小，再決定這句是接在重點後面的短轉折，還是拿某人的身分當笑點。後者就改掉（本站建議）。重點怎麼講，用說服那一點；這句只放在重點之後。
+  - 史丹佛哲學百科寫：「While playing with negative stereotypes in jokes does not require endorsement of those stereotypes, however, it still keeps them in circulation, and that can be harmful in a racist or sexist culture where stereotypes support prejudice and injustice.」在玩笑裡玩味負面刻板印象，並不必然要求對那些刻板印象的認同；然而這仍會讓那些印象繼續流傳。在種族歧視或性別歧視的文化裡，刻板印象支撐偏見與不公，這可能有害（翻譯是本站整理）。CASEL 的社會覺察包括理解不同背景、文化和情境的人，例子有「Identifying diverse social norms, including unjust ones」，辨認不同的社會規範，包括不公正的規範（翻譯是本站整理）。
+  items_title: 上台前四格
+  items:
+  - title: 場合
+    example: 課堂報告、會議、實習
+    text: 先寫這句出現在哪裡。
+  - title: 身分差
+    example: 誰能決定分數或班表
+    text: 權力較小的人先標出來。
+  - title: 接在重點後
+    example: 結論說完，才有一句轉折
+    text: 玩笑不取代要講的重點。
+  - title: 改掉
+    example: 笑點是某一個人的身分
+    text: 換成笑事情，或整句不用。
+  checklist_title: 說出口前
+  checklist:
+  - 寫下場合
+  - 寫下身分差
+  - 不笑權力較小者
+  - 聽眾不適就改
+  activity_figure: wit-flow
+  sources:
+  - sep-humor
+  - casel-framework
+  - eeoc-harass
+what:
+  heading: 短轉折，不拿身分當笑點
+  figures:
+  - wit-compare
+  notes:
+  - 不一致論說明預期如何被打破。心理模式被打破時，人「may well feel fear, disgust, or anger and not amusement」，也可能害怕、厭惡或生氣，而不覺得好笑（翻譯是本站整理）。聽眾笑了，不是這句可以繼續的證據。
+  - 這段是美國聯邦法（EEOC）的說明，不是台灣的職場法規。同頁寫：「The employer is automatically liable for harassment by a supervisor that results in a negative employment action such as termination, failure to promote or hire, and loss of wages.」方向是主管騷擾他人；若該騷擾造成負面就業行動（例如終止僱用、不予晉升或不予錄用、工資損失），雇主自動負責（翻譯是本站整理）。調查時看整份紀錄，包括行為的性質和情境。本頁用來說明身分差，不是對個案下法律結論。
+  sources:
+  - sep-humor
+  - eeoc-harass
+figures:
+- id: wit-flow
+  type: flow
+  alt: 家庭預習：大人寫下場合和身分差，孩子問有沒有踩到權力較小的人，大人改口
+  steps:
+  - actor: 大人
+    text: 寫下場合身分
+  - actor: 大人
+    text: 梗接在重點後
+  - actor: 孩子
+    text: 問有沒有踩人
+  - actor: 大人
+    text: 不適就改口
+  source: eeoc-harass
+  caption: 流程是本站建議。主管與下屬的差別見 EEOC 對騷擾者身分的說明。
+- id: wit-compare
+  type: compare
+  alt: 比較接在重點後的短轉折，和拿身分當笑點：前者笑事情，後者先改掉
+  source: sep-humor
+  relation: versus
+  items:
+  - term: 接在重點後
+    note: 結論先說完，轉折不取代重點
+  - term: 拿身分當笑點
+    note: 靠權力較小的人或刻板印象，就改掉
+  caption: 左欄把不一致論的轉折接到報告之後，是本站整理。右欄依優越論與百科對刻板印象仍會流傳的說明。
+sources:
+- id: sep-humor
+  title: Philosophy of Humor
+  publisher: Stanford Encyclopedia of Philosophy
+  url: https://plato.stanford.edu/entries/humor/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 優越論「our laughter expresses feelings of superiority over other people or over a former state of ourselves.」；釋放論「today almost no scholar in philosophy or psychology explains laughter or humor as a process of releasing pent-up nervous energy.」；不一致論「It is now the dominant theory of humor in philosophy and psychology.」；「when our mental patterns and expectations are violated, we may well feel fear, disgust, or anger and not amusement.」；刻板印象「While playing with negative stereotypes in jokes does not require endorsement of those stereotypes, however, it still keeps them in circulation, and that can be harmful in a racist or sexist culture where stereotypes support prejudice and injustice.」
+- id: eeoc-harass
+  title: Harassment
+  publisher: U.S. Equal Employment Opportunity Commission
+  url: https://www.eeoc.gov/harassment
+  accessed: '2026-11-05'
+  kind: government
+  supports: "「Offensive conduct may include, but is not limited to, offensive jokes, slurs, epithets or name calling, physical assaults or threats, intimidation, ridicule or mockery, insults or put-downs, offensive objects or pictures, and interference with work performance.」；「Petty slights, annoyances, and isolated incidents (unless extremely serious) will not rise to the level of illegality.」；「The harasser can be the victim's supervisor, a supervisor in another area, an agent of the employer, a co-worker, or a non-employee.」；「The employer is automatically liable for harassment by a supervisor that results in a negative employment action such as termination, failure to promote or hire, and loss of wages.」；「When investigating allegations of harassment, the EEOC looks at the entire record: including the nature of the conduct, and the context in which the alleged incidents occurred.」"
+- id: casel-framework
+  title: What Is SEL?（CASEL 5 核心能力說明）
+  publisher: CASEL（Collaborative for Academic, Social, and Emotional Learning）
+  url: https://casel.org/fundamentals-of-sel/what-is-the-casel-framework/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 社會覺察「including those from diverse backgrounds, cultures, and contexts.」；例子「Identifying diverse social norms, including unjust ones」

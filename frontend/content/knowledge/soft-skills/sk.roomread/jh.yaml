@@ -1,0 +1,191 @@
+id: sk.roomread@jh
+concept: sk.roomread
+title: 觀察場合：什麼時候能開什麼玩笑
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+curriculum_108:
+  domains:
+  - 語文
+  - 科技
+  core_competencies:
+  - B1
+  - B2
+  - C2
+  issues:
+  - 資訊教育
+  - 品德教育
+  performances:
+  - 1-IV-2
+  - 2-IV-5
+  contents:
+  - 資 H-IV-5
+to_verify: false
+verify_notes:
+- 資 H-IV-5 的文字與頁碼依代碼表所記科技領綱頁碼。本點不把單次轉傳說成準則定義的霸凌；準則第 4 條第 4 款還要求持續、故意，以及敵意環境、損害或影響學習。
+- 英文引文取自 2026-11-05 讀取的網頁；中文說明標「本站整理」或「翻譯是本站整理」。
+- 本點不收集嘲弄某人的圖文當教材。媒體查證的完整練法在 it.media@jh。
+prerequisites:
+- sk.audience@jh
+- sk.kindlaugh@es
+links:
+  why: []
+  how: []
+  related:
+  - it.media@jh
+  deeper:
+  - sk.setup@sh
+link_notes: 框架：CASEL 社會覺察裡的認出場合。說給誰聽在 sk.audience@jh；好笑還是傷人在 sk.kindlaugh@es。轉傳前的倫理對到科技領綱的資訊倫理與法律；查來源的練法在 it.media@jh。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 媒體素養
+ai:
+  delegable:
+  - 由大人陪著，請 AI 把同一句提醒改成課堂、家庭、班級群組三種說法當參考，不生成嘲弄某人的句子
+  human_experience:
+  - 看這是什麼場合、誰會看到，決定說不說、轉不轉
+idea: 同一句話，換了場合和聽眾，就不一樣。開口或轉傳之前，先寫下這是什麼場合、誰會看到、誰可能被點到。笑的是事情，還是某一個人，先分開。
+guiding_questions:
+- 這則想轉到班級群組，誰可能不舒服？
+scenario: 親子共學：孩子挑一則想分享的內容，先寫三格（場合、誰會看到、誰可能不舒服）。有一格寫出可能不舒服，就先不轉。不把那則內容貼進練習單。
+goal: 開口或轉傳前寫下場合、誰會看到、誰可能不舒服。
+review: 孩子挑一則想分享的內容，寫出三格；其中一格若寫「可能不舒服」，就選擇不轉。大人確認三格都寫了，而且練習單上沒有嘲弄某人的句子。
+formats:
+  slides: []
+  exercise: 目標：開口或轉傳前寫下場合、誰會看到、誰可能不舒服。　檢核：孩子挑一則想分享的內容，寫出三格；其中一格若寫「可能不舒服」，就選擇不轉。大人確認三格都寫了，而且練習單上沒有嘲弄某人的句子。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-11-05'
+why:
+  heading: 場合換了，話就要換
+  body:
+  - 國語課綱要國中生「依據不同情境，分辨聲情意涵及表達技巧，適切回應。」也要「視不同情境，進行報告、評論、演說及論辯。」同一件事，課堂、家裡、班級群組，能說的不一樣（本站整理）。
+  - CASEL 的社會覺察例子包括「Recognizing situational demands and opportunities」，也就是認出這個場合要求什麼、有什麼機會（翻譯是本站整理）。先看臉的練法在國小那一點，這裡加上場合和轉傳。
+  qa:
+    question: 這則想轉到班級群組，誰可能不舒服？
+    answer: 先寫下誰會看到、誰被點到。科技領綱要了解資訊科技相關的法律、倫理和社會議題，以保護自己與尊重他人。不確定誰會不舒服，就先不轉（本站整理）。
+    source: tech108
+  items_title: 課綱要看的場合
+  items:
+  - title: 聽出場合
+    text: 依據不同情境，分辨聲情意涵及表達技巧，適切回應。
+    code: 1-IV-2
+  - title: 換了場合就換說法
+    text: 視不同情境，進行報告、評論、演說及論辯。
+    code: 2-IV-5
+  - title: 資訊倫理
+    text: 資訊倫理與法律。
+    code: 資 H-IV-5
+  - title: 尊重他人
+    text: 能了解資訊科技相關之法律、倫理及社會議題，以保護自己與尊重他人。
+    code: 運 a-IV-2
+  sources:
+  - kuoyu
+  - tech108
+  - casel-framework
+how:
+  heading: 三格寫完，再決定轉不轉
+  body:
+  - 先寫場合，再寫誰會看到，再寫誰可能被點到。三格裡有一格是「可能不舒服」，就先不說、不轉（本站建議）。
+  - 《校園霸凌防制準則》第 4 條的方式包含電子通訊、網際網路，行為包含故意戲弄。轉傳會把這句再送出去。法律上的霸凌還要看是不是持續，以及有沒有造成敵意環境、損害或影響學習。達不到那條定義，仍然可以選擇不轉（本站整理）。
+  items_title: 轉傳前三格
+  items:
+  - title: 場合
+    example: 課堂、家裡、班級群組
+    text: 這句是在哪裡說。
+  - title: 誰會看到
+    example: 全班，還是只有家人
+    text: 範圍越大，越要先停一下。
+  - title: 誰被點到
+    example: 這則是在笑某一個人嗎
+    text: 笑事情和笑人分開。
+  - title: 先不轉
+    example: 有一格不舒服，就先留著
+    text: 不確定就不要送出去。
+  checklist_title: 送出前檢查
+  checklist:
+  - 寫下場合
+  - 寫下誰會看到
+  - 有人不舒服就不轉
+  activity_figure: room-flow
+  sources:
+  - bully-rule
+  - tech108
+what:
+  heading: 笑事情，不等於笑人
+  figures:
+  - room-compare
+  notes:
+  - 本點不把嘲弄某人的圖文收成教材。查這則內容的來源真不真，練法在 it.media@jh。
+  - 準則第 4 條的霸凌是持續的故意行為。本頁的三格比法律定義更早用：還沒送出去，就先問誰可能不舒服（本站整理）。
+  sources:
+  - bully-rule
+  - casel-framework
+figures:
+- id: room-flow
+  type: flow
+  alt: 家庭練習：孩子寫下場合、誰會看到、誰可能不舒服，有一格不舒服就先不轉
+  steps:
+  - actor: 孩子
+    text: 寫下什麼場合
+  - actor: 孩子
+    text: 誰會看到
+  - actor: 孩子
+    text: 誰可能不舒服
+  - actor: 家人
+    text: 不確定就不轉
+  source: casel-framework
+  caption: 流程是本站建議。CASEL 的原文是認出場合的要求與機會。
+- id: room-compare
+  type: compare
+  alt: 比較笑這件事和笑某一個人：前者先看場合，後者先不轉
+  source: bully-rule
+  relation: versus
+  items:
+  - term: 笑這件事
+    note: 沒有點名某一個人，仍要看場合
+  - term: 笑某一個人
+    note: 先不轉，回到看臉那一點
+  caption: 分法是本站整理。準則把故意戲弄列在霸凌的行為裡，並要求持續等要件。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-11-05'
+  kind: curriculum
+  supports: 學習表現：1-IV-2「依據不同情境，分辨聲情意涵及表達技巧，適切回應。」（p.7）；2-IV-5「視不同情境，進行報告、評論、演說及論辯。」（p.8）
+- id: tech108
+  title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
+  publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-05'
+  kind: curriculum
+  supports: 學習重點：運 a-IV-2「能了解資訊科技相關之法律、倫理及社會議題，以保護自己與尊重他人。」（p.7）；資 H-IV-5「資訊倫理與法律。」（p.11）
+- id: casel-framework
+  title: What Is SEL?（CASEL 5 核心能力說明）
+  publisher: CASEL（Collaborative for Academic, Social, and Emotional Learning）
+  url: https://casel.org/fundamentals-of-sel/what-is-the-casel-framework/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 社會覺察的例子「Recognizing situational demands and opportunities」
+- id: bully-rule
+  title: 校園霸凌防制準則
+  publisher: 全國法規資料庫（教育部訂定，民國 113 年 4 月 17 日修正）
+  url: https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=H0020081
+  accessed: '2026-11-05'
+  kind: government
+  supports: 第 4 條第 4 款「霸凌：指個人或集體持續以言語、文字、圖畫、符號、肢體動作、電子通訊、網際網路或其他方式，直接或間接對他人故意為貶抑、排擠、欺負、騷擾或戲弄等行為，使他人處於具有敵意或不友善環境，產生精神上、生理上或財產上之損害，或影響正常學習活動之進行。」

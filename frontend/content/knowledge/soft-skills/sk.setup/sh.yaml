@@ -1,0 +1,167 @@
+id: sk.setup@sh
+concept: sk.setup
+title: 鋪梗、轉折與自嘲的界線
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C2
+  issues:
+  - 品德教育
+  performances:
+  - 2-V-2
+  - 5-V-1
+  contents: []
+to_verify: false
+verify_notes:
+- 鋪梗、轉折的說法依史丹佛哲學百科對 set-up 與 punch 的整理。對到國語課綱 2-V-2、5-V-1 的全文時標成本站整理，不把課綱改寫成笑話寫作課。
+- 眼鏡那句只說明優越論解釋不了笑自己。百科沒有把它叫做自嘲技巧。笑自己當下的失誤、不拿權力較小的人當笑點，是本站整理。不收集貶低別人的句子。
+- 英文引文取自 2026-11-05 讀取的網頁；中文說明標「本站整理」或「翻譯是本站整理」。
+prerequisites:
+- sk.present@sh
+- sk.roomread@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.wit@uni
+link_notes: 框架：不一致論的鋪陳與轉折（set-up 與 punch），史丹佛哲學百科的整理。上台把事情講清楚在 sk.present@sh；看場合在 sk.roomread@jh。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 請 AI 標出一段話的預期和轉折在哪一句，不提供貶低別人的句子
+  human_experience:
+  - 聽現場有沒有人說停，決定要不要把轉折說完
+idea: 一句讓人會心一笑的話，常常先建立預期，再用轉折打破預期。預期被打破不一定好笑，也可能讓人害怕或生氣。自嘲只笑自己當下的失誤；這句若需要權力較小的人當笑點，就不是自嘲。
+guiding_questions:
+- 自嘲說到一半，怎樣算踩到別人？
+scenario: 親子共學：孩子用自己的一件小失誤說一段話，先指出哪句在建立預期、哪句是轉折，不拿在場的人當笑點。大人說停的時候，孩子就停。
+goal: 用預期和轉折說一件自己的事，自嘲不把在場的人當笑點，聽到停就停。
+review: 孩子說一段約一分鐘（示意）的話，指出哪句是預期、哪句是轉折；自嘲只針對自己的行為；大人說停時就停。三項都做到，大人打勾。
+formats:
+  slides: []
+  exercise: 目標：用預期和轉折說一件自己的事，自嘲不把在場的人當笑點，聽到停就停。　檢核：孩子說一段約一分鐘（示意）的話，指出哪句是預期、哪句是轉折；自嘲只針對自己的行為；大人說停時就停。三項都做到，大人打勾。
+audience:
+- kid
+- adult
+authors:
+- I-PING Huang
+updated: '2026-11-05'
+why:
+  heading: 轉折不等於可以笑人
+  body:
+  - "史丹佛哲學百科描述笑匠的做法：「The set-up is the first part of the joke: it creates the expectation. The punch (line) is the last part that violates that expectation.」前面建立預期，後面打破預期（翻譯是本站整理）。國語課綱的學習表現是「辨析文本的寫作主旨、風格、結構及寫作手法。」以及討論時「能適切陳述自身立場，歸納他人論點並給予回應，達成友善且平等的溝通。」把這兩條對到鋪梗與轉折，是本站整理。"
+  - 同一本百科也說，心理模式被打破時，「we may well feel fear, disgust, or anger and not amusement.」人不一定覺得好笑，也可能害怕、厭惡或生氣（翻譯是本站整理）。所以轉折之後要看場合，而不是把話說完。
+  qa:
+    question: 自嘲說到一半，怎樣算踩到別人？
+    answer: 笑自己當下的失誤，可以停在自己身上。若這句要成立，得把在場、權力比較小、或沒在笑的人放進來當笑點，就不是自嘲，停下來（本站整理）。
+    source: sep-humor
+  items_title: 課綱、預期與轉折
+  items:
+  - title: 友善且平等
+    text: 討論過程中，能適切陳述自身立場，歸納他人論點並給予回應，達成友善且平等的溝通。
+    code: 2-V-2
+  - title: 看出結構
+    text: 辨析文本的寫作主旨、風格、結構及寫作手法。
+    code: 5-V-1
+  - title: 預期
+    text: 前半先讓人以為會往哪個方向走。
+  - title: 轉折
+    text: 後半打破那個預期，然後看反應。
+  sources:
+  - sep-humor
+  - kuoyu
+how:
+  heading: 鋪預期、轉折、停在自己
+  body:
+  - 先說一句讓人有預期的話，再用轉折打破它，最後檢查笑點是不是自己的行為。聽到停，或看到有人不笑，就把轉折停住（本站建議）。
+  - 史丹佛哲學百科寫：「If I search high and low for my eyeglasses only to find them on my head, the Superiority Theory seems unable to explain my laughter at myself.」如果我到處找眼鏡，結果發現它在自己頭上，優越論似乎無法解釋我對自己的笑（翻譯是本站整理）。把「只笑自己當下的失誤、不把權力較小的人放進笑點」當成自嘲的界線，是本站整理；百科沒有把找眼鏡叫做自嘲技巧。
+  items_title: 四步做
+  items:
+  - title: 鋪預期
+    example: 我找了十分鐘
+    text: 先讓聽的人以為結果是什麼。
+  - title: 給轉折
+    example: 眼鏡在頭上
+    text: 打破剛才的預期。
+  - title: 停在自己
+    example: 笑的是我自己的失誤
+    text: 不把在場的人放進笑點。
+  - title: 說停就停
+    example: 有人說停，這句結束
+    text: 不把轉折說完。
+  checklist_title: 說完檢查
+  checklist:
+  - 指出預期
+  - 指出轉折
+  - 自嘲不踩人
+  - 說停就停
+  activity_figure: setup-flow
+  sources:
+  - sep-humor
+what:
+  heading: 自嘲停在自己身上
+  figures:
+  - setup-compare
+  notes:
+  - 不一致論是史丹佛哲學百科所說、目前哲學和心理學裡較常被採用的幽默說明：「It is now the dominant theory of humor in philosophy and psychology.」它說明預期為什麼會被打破。聽的人覺得好笑與否，要看當下的反應（翻譯是本站整理）。
+  - 本點不練習貶低別人的轉折。場合看不懂時，回到 sk.roomread@jh。
+  sources:
+  - sep-humor
+figures:
+- id: setup-flow
+  type: flow
+  alt: 家庭練習：孩子先說預期、再給轉折、只笑自己的事，大人說停就停
+  steps:
+  - actor: 孩子
+    text: 先說一個預期
+  - actor: 孩子
+    text: 轉折打破預期
+  - actor: 孩子
+    text: 只笑自己的事
+  - actor: 大人
+    text: 說停就停
+  source: sep-humor
+  caption: 流程是本站建議。預期與轉折的分法見史丹佛哲學百科。
+- id: setup-compare
+  type: compare
+  alt: 比較笑自己的失誤和笑權力較小的人：前者停在自己，後者先不要說
+  source: sep-humor
+  relation: versus
+  items:
+  - term: 笑自己失誤
+    note: 像眼鏡在自己頭上，笑點停在自己
+  - term: 笑權力較小
+    note: 要靠別人當笑點，就先不要說
+  caption: 眼鏡的例子來自史丹佛哲學百科；右欄是本站整理的界線。
+sources:
+- id: sep-humor
+  title: Philosophy of Humor
+  publisher: Stanford Encyclopedia of Philosophy
+  url: https://plato.stanford.edu/entries/humor/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: "「The set-up is the first part of the joke: it creates the expectation. The punch (line) is the last part that violates that expectation.」；「when our mental patterns and expectations are violated, we may well feel fear, disgust, or anger and not amusement.」；「If I search high and low for my eyeglasses only to find them on my head, the Superiority Theory seems unable to explain my laughter at myself.」；「It is now the dominant theory of humor in philosophy and psychology.」；優越論「our laughter expresses feelings of superiority over other people or over a former state of ourselves.」"
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-11-05'
+  kind: curriculum
+  supports: 學習表現：2-V-2「討論過程中，能適切陳述自身立場，歸納他人論點並給予回應，達成友善且平等的溝通。」（p.8）；5-V-1「辨析文本的寫作主旨、風格、結構及寫作手法。」（p.11）

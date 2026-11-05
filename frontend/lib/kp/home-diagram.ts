@@ -292,10 +292,10 @@ function topoWithin(group: KnowledgePoint[], fileOrder: Map<string, number>): Kn
 
 /** 大綱表格順序。同一個學段裡沒有先學關係時，用這個當次序，不跟檔名字母走。 */
 const SOFT_ORDER = [
-  "sk.voice@es", "sk.point@es", "sk.showtell@es",
-  "sk.audience@jh", "sk.speech@jh", "sk.discuss@jh",
-  "sk.consensus@sh", "sk.present@sh", "sk.qa@sh",
-  "sk.persuade@uni", "sk.facilitate@uni",
+  "sk.voice@es", "sk.point@es", "sk.showtell@es", "sk.trade@es", "sk.kindlaugh@es",
+  "sk.audience@jh", "sk.speech@jh", "sk.discuss@jh", "sk.pitch@jh", "sk.roomread@jh",
+  "sk.consensus@sh", "sk.present@sh", "sk.qa@sh", "sk.batna@sh", "sk.setup@sh",
+  "sk.persuade@uni", "sk.facilitate@uni", "sk.deal@uni", "sk.fairsale@uni", "sk.wit@uni",
   "sk.feelings@es", "sk.listen@es", "sk.otherside@es",
   "sk.empmap@jh", "sk.imsg@jh", "sk.nvc@jh",
   "sk.hardtalk@sh", "sk.interview@sh", "sk.feedback@sh",

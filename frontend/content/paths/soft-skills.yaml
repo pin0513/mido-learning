@@ -58,3 +58,11 @@ paths:
       - sk.batna@sh
       - sk.deal@uni
     colearn: 孩子在家庭小市集練「我想要、你想要」，大人把一場工作談判改成家庭版讓孩子扮對方；開談前互看對方寫的替代方案和底線。
+  - id: sk.humor
+    title: 幽默感怎麼練
+    knowledge_points:
+      - sk.kindlaugh@es
+      - sk.roomread@jh
+      - sk.setup@sh
+      - sk.wit@uni
+    colearn: 孩子練「好笑還是傷人」檢核；大人練場合／自嘲界線；家庭共寫一份「家裡開玩笑的停損線」。
