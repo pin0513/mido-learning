@@ -516,3 +516,8 @@
   .kp-root .kp-detail .v2-ex { font-size: 22px; }
   .kp-root .kp-detail .v2-panel > section { padding: 16px; }
 }
+
+/* V1 頁嵌入三圈：不另設版心與留白，段標和 V1 其他 h2 一樣大。 */
+.kp-root .kp-detail.kp-detail-embed { max-width: 48rem; margin: 32px 0 0; padding: 0; }
+.kp-root .kp-detail.kp-detail-embed .v2-sec { margin-bottom: 40px; }
+.kp-root .kp-detail.kp-detail-embed .v2-sec-h h2 { font-size: 20px; }

@@ -11,6 +11,7 @@ import { StageGlyph } from "./StageGlyph";
 import { KpSlides } from "./KpSlides";
 import { LicenseNotice } from "./LicenseNotice";
 import { PointFigures } from "./figures/PointFigures";
+import { V1Circles } from "./V1Circles";
 
 const textLink =
   "font-semibold underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1614]";
@@ -152,6 +153,8 @@ export function KnowledgePointView({
         </h2>
         <p className="mt-2 max-w-3xl leading-7"><GlueTail text={point.scenario} /></p>
       </section>
+
+      <V1Circles point={point} all={all} visible={visible} />
 
       <PointFigures pointId={point.id} />
 
