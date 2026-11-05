@@ -5,6 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { binaryGuesses, canBestR, canDS, canH, canS, foldThickness, foldsToExceed, halvingSum, holeF, rowCode, vecAdd, vecLen, vecScale, compareHalf, ferrisHeight, ferrisMinutes, intersect, quadrant, riemann, secantSlope } from "./math";
 import { FIGURE_SPECS } from "./specs";
+import { ROT90, SCALE2, SYM_ID, atLeastCount, choose, cooling, coolingTimeTo, diceRolls, matApply, matMul, matchSticks, mean, probAtMost, similarHeight, sumDist, symApply, symFlip, symName, symRotate, overwriteRow, type Sym } from "./math";
 
 // lib/content 是 server-only，測試直接讀原始 YAML。
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../content/knowledge");
@@ -216,4 +217,112 @@ test("it.data：8 × 8，1 是白、0 是黑", () => {
   const t = text("it.data@es");
   assert.ok(t.includes("8 × 8 的方格紙"));
   assert.ok(t.includes("1 代表白、0 代"));
+});
+
+const has = (id: string, ...parts: string[]) => {
+  const t = text(id);
+  for (const part of parts) assert.ok(t.includes(part), `${id} 原文沒有「${part}」`);
+};
+
+test("ma.linalg：(1, 0) → (0, 1)、(0, 2) → (−2, 0)，先轉再放大", () => {
+  assert.deepEqual(matApply(ROT90, [1, 0]), [0, 1]);
+  assert.deepEqual(matApply(ROT90, [0, 2]), [-2, 0]);
+  assert.deepEqual(matApply(matMul(SCALE2, ROT90), [0, 2]), [-4, 0]);
+  assert.deepEqual(spec("ma.linalg@uni", "matrix").shape, [[1, 0], [0, 0], [0, 2]]);
+  has("ma.linalg@uni", "(1, 0) 變成 (0, 1)，(0, 2) 變成 (−2, 0)", "點 (0, 0)、(1, 0)、(0, 2)");
+});
+
+test("ma.similar：160 公分影長 120 公分，旗桿影長 6 公尺 → 8 公尺", () => {
+  const s = spec("ma.similar@jh", "shadow");
+  assert.ok(Math.abs(similarHeight(s.personH, s.personShadow, s.start) - 8) < 1e-9);
+  has("ma.similar@jh", "身高 160 公分的人影長 120 公分，旗桿影長 6 公尺", "影長 6 公尺，高 8 公尺");
+});
+
+test("ma.prob：骰子模擬固定種子、標成示意", () => {
+  const s = spec("ma.prob@jh", "dice");
+  assert.deepEqual(diceRolls(s.seed, 60), diceRolls(s.seed, 60));
+  const rolls = diceRolls(s.seed, 6000);
+  assert.ok(rolls.every((r) => r >= 1 && r <= 6));
+  for (let f = 1; f <= 6; f++) assert.ok(Math.abs(rolls.filter((r) => r === f).length / 6000 - 1 / 6) < 0.02, `點數 ${f}`);
+  assert.match(s.caption, /模擬/);
+  assert.match(s.caption, /示意/);
+  has("ma.prob@jh", "每人擲 60 次", "12 ÷ 60 ＝ 0.2");
+});
+
+test("ma.stats：C(10, 9) ＝ 10，9 次以上 11/1,024", () => {
+  assert.equal(choose(10, 9), 10);
+  assert.equal(choose(10, 5), 252);
+  assert.equal(atLeastCount(10, 9), 11);
+  assert.equal(atLeastCount(10, 0), 1024);
+  has("ma.stats@sh", "11/1,024", "2¹⁰ ＝ 1,024");
+});
+
+test("ma.probmodel：T 的分布、5 天準時 5/6、平均 4.5", () => {
+  const s = spec("ma.probmodel@uni", "sumdist");
+  const d = sumDist(s.a, s.b);
+  assert.deepEqual(d.map(([t]) => t), [3, 4, 5, 6]);
+  assert.deepEqual(d.map(([, p]) => Math.round(p * 6)), [1, 2, 2, 1]);
+  assert.ok(Math.abs(probAtMost(d, 5) - 5 / 6) < 1e-12);
+  assert.ok(Math.abs(probAtMost(d, 6) - 1) < 1e-12);
+  assert.ok(Math.abs(mean(d) - 4.5) < 1e-12);
+  has("ma.probmodel@uni", "5/6 ≈ 83%", "E(T) ＝ 4.5 天");
+});
+
+test("ma.diffeq：示意數據和模型一致，降到 40°C 要 20 分鐘", () => {
+  const s = spec("ma.diffeq@uni", "cooling");
+  for (const [t, v] of s.data) assert.ok(Math.abs(cooling(s.room, s.diff, s.start, t) - v) < 0.06, `t ＝ ${t}`);
+  assert.ok(Math.abs(coolingTimeTo(s.room, s.diff, s.start, s.target) - 20) < 1e-9);
+  assert.ok(Math.abs(Math.LN2 / s.start - 0.069) < 0.0005);
+  has("ma.diffeq@uni", "85、77.2、70.5、64.6、59.5、55°C", "要 20 分鐘");
+});
+
+test("ma.data：蘋果 9、葡萄 7、香蕉 5、芭樂 0", () => {
+  const s = spec("ma.data@es", "bars");
+  assert.deepEqual(s.items, [["蘋果", 9], ["葡萄", 7], ["香蕉", 5], ["芭樂", 0]]);
+  has("ma.data@es", "蘋果 9 票、葡萄 7 票、香蕉 5 票、芭樂 0 票");
+});
+
+test("ma.proof：前 n 個奇數的和是 n²", () => {
+  for (let n = 1; n <= spec("ma.proof@sh", "oddsquare").maxN; n++) {
+    assert.equal(Array.from({ length: n }, (_, i) => 2 * i + 1).reduce((a, b) => a + b, 0), n * n);
+  }
+  has("ma.proof@sh", "1 ＋ 3 ＋ 5 ＋ 7 ＝ 16 ＝ 4²");
+});
+
+test("ma.pattern：火柴棒 3、5、7、9、11 支，畫出的每支都不重複", () => {
+  assert.deepEqual([1, 2, 3, 4, 5].map((n) => matchSticks(n).length), [3, 5, 7, 9, 11]);
+  for (let n = 1; n <= 6; n++) {
+    const keys = matchSticks(n).map(([p, q]) => [p, q].map((v) => v.join(",")).sort().join("|"));
+    assert.equal(new Set(keys).size, 2 * n + 1);
+  }
+  has("ma.pattern@es", "1 個三角形 3 支、2 個 5 支、3 個 7 支、4 個 9 支，猜第 5 個要 11 支");
+});
+
+test("ma.beauty：轉和翻接連做，正好 8 種", () => {
+  const key = (s: Sym) => [[-1, 1], [1, 1], [1, -1], [-1, -1]].map((p) => symApply(s, p as [number, number]).join(",")).join(" ");
+  const seen = new Map<string, string>([[key(SYM_ID), symName(SYM_ID)]]);
+  const queue: Sym[] = [SYM_ID];
+  while (queue.length) {
+    const s = queue.shift()!;
+    for (const next of [symRotate(s), symFlip(s)]) if (!seen.has(key(next))) { seen.set(key(next), symName(next)); queue.push(next); }
+  }
+  assert.equal(seen.size, 8);
+  assert.equal(new Set(seen.values()).size, 8);
+  assert.equal(symName(symRotate(symRotate(SYM_ID))), "轉 180 度");
+  assert.equal(key(symFlip(symFlip(SYM_ID))), key(SYM_ID));
+  // 翻的軸上的角不動：沿 \ 對角線翻，(1, −1) 和 (−1, 1) 留在原地。
+  const diag = symFlip(symRotate(symRotate(symRotate(SYM_ID))));
+  assert.equal(symName(diag), "沿\\ 對角線翻");
+  assert.deepEqual(symApply(diag, [1, -1]), [1, -1]);
+  has("ma.beauty@uni", "合起來 8 種");
+});
+
+test("it.data：每行輸入是覆寫模式，格子數不變、不會往前移", () => {
+  const old = "11000011";
+  assert.deepEqual(overwriteRow(old, "0" + old, 1), { row: "01000011", caret: 1 }); // 在開頭打 0
+  assert.deepEqual(overwriteRow(old, "1100011", 3), { row: old, caret: 3 }); // 退格不移動後面的格子
+  assert.deepEqual(overwriteRow(old, "", 0), { row: old, caret: 0 }); // 清空不變
+  assert.deepEqual(overwriteRow(old, "0", 1), { row: "01000011", caret: 1 }); // 全選後打 0
+  assert.deepEqual(overwriteRow(old, "0101" + old, 4), { row: "01010011", caret: 4 }); // 貼上覆寫
+  assert.deepEqual(overwriteRow(old, "11a000011", 3), { row: old, caret: 2 }); // 非 0／1 不算
 });

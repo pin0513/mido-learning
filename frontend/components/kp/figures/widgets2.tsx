@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import type { FigureSpec } from "@/lib/kp/figures/specs";
-import { binaryGuesses, canBestR, canDS, canH, canS, fmt, foldThickness, halvingSum, holeF, sign, vecAdd, vecLen, vecScale, type Vec } from "@/lib/kp/figures/math";
+import { binaryGuesses, overwriteRow, canBestR, canDS, canH, canS, fmt, foldThickness, halvingSum, holeF, sign, vecAdd, vecLen, vecScale, type Vec } from "@/lib/kp/figures/math";
+import { InteractiveFigure3 } from "./widgets3";
 import { Axes, Choices, FigureFrame, Slider, clamp, range, scale, useSvgPoint } from "./parts";
 
 const W = 480;
@@ -303,18 +304,22 @@ function Pixels({ spec }: { spec: Of<"pixels"> }) {
                 <input
                   value={row}
                   inputMode="numeric"
-                  maxLength={n}
+                  autoComplete="off"
+                  spellCheck={false}
                   aria-label={`第 ${i + 1} 行的數字`}
+                  aria-describedby={`${spec.id}-howto`}
                   onChange={(event) => {
-                    const v = event.target.value.replace(/[^01]/g, "").slice(0, n);
-                    // 還沒打到的格子保留原本的值，不偷偷補 1（會把整行變白）。
-                    setRows(rows.map((old, j) => (j === i ? v + old.slice(v.length) : old)));
+                    const el = event.target;
+                    const { row: next, caret } = overwriteRow(row, el.value, el.selectionStart ?? el.value.length);
+                    setRows(rows.map((old, j) => (j === i ? next : old)));
+                    requestAnimationFrame(() => el.setSelectionRange(caret, caret));
                   }}
                   className="h-11 w-full min-w-0 border border-[#c0bab2] px-2 font-mono tabular-nums tracking-widest"
                 />
               </label>
             ))}
           </div>
+          <p id={`${spec.id}-howto`} className="mt-2 text-sm text-[#3d3830]">打 0 或 1 會改游標後面那一格；刪除只移動游標，格子數不變。</p>
         </fieldset>
       }
       readout={<p>{n} × {n} 格要寫 {n * n} 個 0 或 1；這張圖有 {rows.join("").split("").filter((d) => d === "0").length} 個黑格。</p>}
@@ -337,6 +342,6 @@ export function InteractiveFigure2({ spec }: { spec: FigureSpec }) {
     case "can": return <Can spec={spec} />;
     case "bsearch": return <BinarySearch spec={spec} />;
     case "pixels": return <Pixels spec={spec} />;
-    default: return null;
+    default: return <InteractiveFigure3 spec={spec} />;
   }
 }

@@ -94,6 +94,7 @@ export function Axes({
   yLabel,
   fmtX = String,
   fmtY = String,
+  zeroAxes = true,
 }: {
   x: Scale;
   y: Scale;
@@ -103,10 +104,12 @@ export function Axes({
   yLabel?: string;
   fmtX?: (v: number) => string;
   fmtY?: (v: number) => string;
+  /** 長條圖設 false：縱軸固定在最左邊，不畫在 x ＝ 0 的長條上。 */
+  zeroAxes?: boolean;
 }) {
   const [x0, x1] = [x(xTicks[0]), x(xTicks[xTicks.length - 1])];
   const [y0, y1] = [y(yTicks[0]), y(yTicks[yTicks.length - 1])];
-  const zeroX = xTicks[0] <= 0 && xTicks[xTicks.length - 1] >= 0 ? x(0) : x0;
+  const zeroX = zeroAxes && xTicks[0] <= 0 && xTicks[xTicks.length - 1] >= 0 ? x(0) : x0;
   const zeroY = yTicks[0] <= 0 && yTicks[yTicks.length - 1] >= 0 ? y(0) : y0;
   return (
     <g className="text-[18px]">
@@ -213,3 +216,12 @@ export function useSvgPoint(svgRef: RefObject<SVGSVGElement | null>) {
 
 export const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 export const snap = (v: number, step: number) => Math.round(v / step) * step;
+
+/** 圖框裁切：線、箭頭、切線都只畫在圖框裡。用法：先放 <PlotClip id=…/>，再在線上加 clipPath={`url(#id)`}。 */
+export function PlotClip({ id, x0, y0, x1, y1 }: { id: string; x0: number; y0: number; x1: number; y1: number }) {
+  return (
+    <clipPath id={id}>
+      <rect x={Math.min(x0, x1)} y={Math.min(y0, y1)} width={Math.abs(x1 - x0)} height={Math.abs(y1 - y0)} />
+    </clipPath>
+  );
+}

@@ -94,3 +94,87 @@ export function binaryGuesses(target: number, lo: number, hi: number): number[] 
 
 /** 像素一行：true 是白（1），false 是黑（0）。 */
 export const rowCode = (row: boolean[]) => row.map((white) => (white ? "1" : "0")).join("");
+
+/**
+ * 覆寫模式：每行永遠是 n 格。打進的 0／1 從變動的位置開始蓋過原本的格子；
+ * 刪除（退格、清空）不刪格子、不讓後面的格子往前移，只把游標移到變動的位置。
+ */
+export function overwriteRow(old: string, raw: string, caret: number): { row: string; caret: number } {
+  let start = 0;
+  while (start < old.length && start < raw.length && raw[start] === old[start]) start++;
+  start = Math.min(start, caret);
+  const typed = raw.slice(start, Math.max(start, caret)).replace(/[^01]/g, "").slice(0, old.length - start);
+  return { row: old.slice(0, start) + typed + old.slice(start + typed.length), caret: start + typed.length };
+}
+
+/* ---------- Batch 3 ---------- */
+
+/** 2 × 2 矩陣 [a, b, c, d]（第一列 a b、第二列 c d）乘上點 (x, y)。 */
+export type Mat = [number, number, number, number];
+export const matApply = (m: Mat, p: Vec): Vec => [m[0] * p[0] + m[1] * p[1], m[2] * p[0] + m[3] * p[1]];
+export const matMul = (m: Mat, n: Mat): Mat => [m[0] * n[0] + m[1] * n[2], m[0] * n[1] + m[1] * n[3], m[2] * n[0] + m[3] * n[2], m[2] * n[1] + m[3] * n[3]];
+export const ROT90: Mat = [0, -1, 1, 0];
+export const SCALE2: Mat = [2, 0, 0, 2];
+
+/** 相似三角形：人高 ÷ 人影 ＝ 旗桿高 ÷ 旗桿影。 */
+export const similarHeight = (personH: number, personShadow: number, poleShadow: number) => (poleShadow * personH) / personShadow;
+
+/** 固定種子的骰子模擬（線性同餘），同一個種子每次結果都一樣。 */
+export function diceRolls(seed: number, n: number): number[] {
+  let s = seed >>> 0;
+  const out: number[] = [];
+  for (let i = 0; i < n; i++) {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+    out.push(1 + Math.floor((s / 2 ** 32) * 6));
+  }
+  return out;
+}
+
+/** 組合數 C(n, k)。 */
+export function choose(n: number, k: number): number {
+  if (k < 0 || k > n) return 0;
+  let c = 1;
+  for (let i = 1; i <= k; i++) c = (c * (n - k + i)) / i;
+  return Math.round(c);
+}
+/** 公正銅板丟 n 次，至少 k 次正面的種數（分母是 2ⁿ）。 */
+export const atLeastCount = (n: number, k: number) => range0(n + 1).filter((j) => j >= k).reduce((s, j) => s + choose(n, j), 0);
+const range0 = (n: number) => Array.from({ length: n }, (_, i) => i);
+
+/** 兩個獨立的離散分布相加：回傳 T 的每個值和機率。 */
+export function sumDist(a: [number, number][], b: [number, number][]): [number, number][] {
+  const m = new Map<number, number>();
+  for (const [x, p] of a) for (const [y, q] of b) m.set(x + y, (m.get(x + y) ?? 0) + p * q);
+  return [...m.entries()].sort((u, v) => u[0] - v[0]);
+}
+export const probAtMost = (d: [number, number][], limit: number) => d.filter(([t]) => t <= limit).reduce((s, [, p]) => s + p, 0);
+export const mean = (d: [number, number][]) => d.reduce((s, [t, p]) => s + t * p, 0);
+
+/** 牛頓冷卻：T(t) ＝ room ＋ diff × 2^(−t / half)，half 是溫差減半的分鐘數（k ＝ ln 2 ÷ half）。 */
+export const cooling = (room: number, diff: number, half: number, t: number) => room + diff * 2 ** (-t / half);
+export const coolingTimeTo = (room: number, diff: number, half: number, target: number) => half * Math.log2(diff / (target - room));
+
+/** 火柴棒連排 n 個三角形：回傳每一支的兩端（底邊點 (j, 0)，頂點 (j ＋ 0.5, 1)）。 */
+export function matchSticks(n: number): [Vec, Vec][] {
+  const b = (j: number): Vec => [j, 0];
+  const t = (j: number): Vec => [j + 0.5, 1];
+  const out: [Vec, Vec][] = [];
+  for (let k = 0; k <= n; k++) out.push(k % 2 === 0 ? [b(k / 2), t(k / 2)] : [t((k - 1) / 2), b((k + 1) / 2)]);
+  for (let j = 0; j < Math.ceil(n / 2); j++) out.push([b(j), b(j + 1)]);
+  for (let j = 0; j < Math.floor(n / 2); j++) out.push([t(j), t(j + 1)]);
+  return out;
+}
+
+/** 正方形的對稱：先沿鉛直中線翻 flip 次，再逆時針轉 r × 90 度。 */
+export interface Sym { r: 0 | 1 | 2 | 3; flip: boolean }
+export const SYM_ID: Sym = { r: 0, flip: false };
+export const symRotate = (s: Sym): Sym => ({ r: ((s.r + 1) % 4) as Sym["r"], flip: s.flip });
+/** 再沿鉛直中線翻一次：F ∘ R^r ∘ F^f ＝ R^(−r) ∘ F^(f＋1)。 */
+export const symFlip = (s: Sym): Sym => ({ r: ((4 - s.r) % 4) as Sym["r"], flip: !s.flip });
+export const symApply = (s: Sym, p: Vec): Vec => {
+  let q: Vec = s.flip ? [-p[0], p[1]] : p;
+  for (let i = 0; i < s.r; i++) q = matApply(ROT90, q);
+  return q;
+};
+const AXES = ["鉛直中線", "\\ 對角線", "水平中線", "/ 對角線"];
+export const symName = (s: Sym) => (s.flip ? `沿${AXES[s.r]}翻` : `轉 ${s.r * 90} 度`);
