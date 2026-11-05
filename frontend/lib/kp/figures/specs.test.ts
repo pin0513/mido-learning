@@ -3,14 +3,15 @@ import test from "node:test";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { compareHalf, ferrisHeight, ferrisMinutes, intersect, quadrant, riemann, secantSlope } from "./math";
+import { binaryGuesses, canBestR, canDS, canH, canS, foldThickness, foldsToExceed, halvingSum, holeF, rowCode, vecAdd, vecLen, vecScale, compareHalf, ferrisHeight, ferrisMinutes, intersect, quadrant, riemann, secantSlope } from "./math";
 import { FIGURE_SPECS } from "./specs";
 
 // lib/content 是 server-only，測試直接讀原始 YAML。
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../content/knowledge/math");
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../content/knowledge");
+const FOLDERS = ["math", "it-ai", "pm-leadership", "philosophy", "soft-skills", "language"];
 const text = (id: string) => {
   const [concept, stage] = id.split("@");
-  const file = join(ROOT, concept, `${stage}.yaml`);
+  const file = FOLDERS.map((folder) => join(ROOT, folder, concept, `${stage}.yaml`)).find(existsSync) ?? "";
   assert.ok(existsSync(file), `${id} 不在目錄`);
   return readFileSync(file, "utf8");
 };
@@ -126,4 +127,93 @@ test("ma.fraction、ma.algebra、ma.pythag：數字和原文一致", () => {
   const p = spec("ma.pythag@jh", "pythag");
   assert.equal(p.start[0] ** 2 + p.start[1] ** 2, 25);
   assert.ok(text("ma.pythag@jh").includes("9 ＋ 16 ＝ 25 ＝ 5²"));
+});
+
+const near = (a: number, b: number, eps = 1e-9) => assert.ok(Math.abs(a - b) < eps, `${a} ≠ ${b}`);
+
+test("ma.vector：(3, 0) ＋ (0, 4) ＝ (3, 4)、長度 5，兩倍 (6, 8)、長度 10", () => {
+  const s = spec("ma.vector@sh", "vector");
+  const sum = vecAdd(s.u, s.v);
+  assert.deepEqual(sum, [3, 4]);
+  assert.equal(vecLen(sum), 5);
+  assert.deepEqual(vecScale(2, sum), [6, 8]);
+  assert.equal(vecLen(vecScale(2, sum)), 10);
+  assert.equal(vecLen([2, 3, 6]), 7);
+  assert.ok(vecScale(Math.max(...s.ks), sum).every((c) => c <= s.range[1]), "兩倍的和向量要畫得下");
+  assert.ok(text("ma.vector@sh").includes("(3, 0) ＋ (0, 4) ＝ (3, 4)、長度 5、2 × (3, 4) ＝ (6, 8)、長度 10"));
+});
+
+test("ma.function：摺 10 次 10.24 公分，超過 1 公里要 24 次", () => {
+  const s = spec("ma.function@sh", "doubling");
+  near(foldThickness(s.base, 10), 10.24);
+  assert.equal(foldsToExceed(s.base, s.limitCm), 24);
+  assert.equal(2 ** 23, 8388608);
+  assert.equal(2 ** 24, 16777216);
+  near(foldThickness(s.base, 23) / 100, 838.8608, 1e-6);
+  near(foldThickness(s.base, 24) / 100, 1677.7216, 1e-6);
+  assert.equal(s.maxN, 24);
+  assert.ok(foldThickness(s.base, s.maxN) < 200000, "一般刻度上限 200,000 公分要畫得下");
+  const t = text("ma.function@sh");
+  assert.ok(t.includes("0.01 × 1,024 ＝ 10.24 公分、超過 1 公里要 24 次"));
+  assert.ok(t.includes("2²³ ＝ 8,388,608、2²⁴ ＝ 16,777,216"));
+});
+
+test("ma.sequence：剪 5 次 31/32，1/2¹⁰ ＝ 1/1,024", () => {
+  assert.deepEqual(halvingSum(5), { num: 31, den: 32 });
+  assert.equal(halvingSum(10).den, 1024);
+  let sum = 0;
+  for (let i = 1; i <= 5; i += 1) sum += 1 / 2 ** i;
+  near(sum, 31 / 32);
+  const t = text("ma.sequence@sh");
+  assert.ok(t.includes("1/2 ＋ 1/4 ＋ 1/8 ＋ 1/16 ＋ 1/32 ＝ 31/32、1/2¹⁰ ＝ 1/1,024"));
+  assert.equal(spec("ma.sequence@sh", "halving").start, 5);
+});
+
+test("ma.limit：表上的 6 個值，x ＝ 1 沒有定義", () => {
+  const s = spec("ma.limit@uni", "hole");
+  const values = s.xs.map((x) => Math.round(holeF(x) * 1e9) / 1e9);
+  assert.deepEqual(values, [1.9, 1.99, 1.999, 2.001, 2.01, 2.1]);
+  for (const x of s.xs) near(Math.abs(holeF(x) - 2), Math.abs(x - 1), 1e-9);
+  assert.ok(Number.isNaN(holeF(1)));
+  assert.ok(text("ma.limit@uni").includes("x ＝ 0.9、0.99、0.999 時 f(x) 是 1.9、1.99、1.999；x ＝ 1.1、1.01、1.001 時是 2.1、2.01、2.001"));
+});
+
+test("ma.derivative：r ≈ 3.82、h ≈ 7.64、S ≈ 274.9，r ＝ 3 和 5 比較大", () => {
+  const s = spec("ma.derivative@uni", "can");
+  const r = canBestR(s.volume);
+  assert.equal(r.toFixed(2), "3.82");
+  assert.equal(canH(s.volume, r).toFixed(2), "7.64");
+  near(canH(s.volume, r), 2 * r, 1e-9);
+  assert.equal(canS(s.volume, r).toFixed(1), "274.9");
+  near(canDS(s.volume, r), 0, 1e-9);
+  assert.equal(canS(s.volume, 3).toFixed(1), "289.9");
+  assert.equal(canS(s.volume, 5).toFixed(1), "297.1");
+  assert.ok(canDS(s.volume, 3) < 0 && canDS(s.volume, 5) > 0);
+  assert.ok(canS(s.volume, s.rMin) < s.sMax && canS(s.volume, s.rMax) < s.sMax, "曲線要畫得下");
+  const t = text("ma.derivative@uni");
+  assert.ok(t.includes("r ＝ 3 時 S ≈ 289.9，r ≈ 3.82 時 S ≈ 274.9，r ＝ 5 時 S ≈ 297.1"));
+  assert.ok(t.includes("S(r) ＝ 2πr² ＋ 700 ÷ r"));
+});
+
+test("it.algo：1 到 100 每次猜中間，最多 7 次", () => {
+  const s = spec("it.algo@jh", "bsearch");
+  let worst = 0;
+  for (let n = s.lo; n <= s.hi; n += 1) {
+    const g = binaryGuesses(n, s.lo, s.hi);
+    assert.equal(g.at(-1), n, `${n} 要猜中`);
+    worst = Math.max(worst, g.length);
+  }
+  assert.equal(worst, 7);
+  assert.deepEqual(binaryGuesses(50, 1, 100), [50]);
+  assert.ok(text("it.algo@jh").includes("在 7 次內猜中 1 到 100 的數字"));
+});
+
+test("it.data：8 × 8，1 是白、0 是黑", () => {
+  const s = spec("it.data@es", "pixels");
+  assert.equal(s.start.length, 8);
+  for (const row of s.start) assert.match(row, /^[01]{8}$/);
+  assert.equal(rowCode([true, false, true]), "101");
+  const t = text("it.data@es");
+  assert.ok(t.includes("8 × 8 的方格紙"));
+  assert.ok(t.includes("1 代表白、0 代"));
 });
