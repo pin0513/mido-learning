@@ -335,10 +335,10 @@ test("溝通與解決問題預設不進學門切換，打開後口語表達全�
   const talk = open.diagrams.find((item) => item.branchId === "talk");
   assert.ok(talk);
   assert.deepEqual(talk.nodes.map((node) => node.id), [
-    "sk.voice@es", "sk.point@es", "sk.showtell@es", "sk.trade@es",
-    "sk.audience@jh", "sk.speech@jh", "sk.discuss@jh", "sk.pitch@jh",
-    "sk.consensus@sh", "sk.present@sh", "sk.qa@sh", "sk.batna@sh",
-    "sk.persuade@uni", "sk.facilitate@uni", "sk.deal@uni", "sk.fairsale@uni",
+    "sk.voice@es", "sk.point@es", "sk.showtell@es", "sk.trade@es", "sk.kindlaugh@es",
+    "sk.audience@jh", "sk.speech@jh", "sk.discuss@jh", "sk.pitch@jh", "sk.roomread@jh",
+    "sk.consensus@sh", "sk.present@sh", "sk.qa@sh", "sk.batna@sh", "sk.setup@sh",
+    "sk.persuade@uni", "sk.facilitate@uni", "sk.deal@uni", "sk.fairsale@uni", "sk.wit@uni",
   ]);
   assert.equal(talk.nodes.every((node) => node.pageHref?.startsWith("/kp/sk.")), true);
   const point = talk.nodes.find((node) => node.id === "sk.point@es");

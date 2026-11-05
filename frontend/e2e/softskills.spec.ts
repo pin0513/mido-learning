@@ -45,12 +45,12 @@ test.describe("溝通與解決問題", () => {
     test.skip(!process.env.E2E_SOFTSKILLS, "KP_SOFTSKILLS_ENABLED 沒開");
   });
 
-  test("知識地圖五個學區（語文旗標沒開）：138 個節點、37 個路線選項", async ({ page }) => {
+  test("知識地圖五個學區（語文旗標沒開）：142 個節點、38 個路線選項", async ({ page }) => {
     test.skip(process.env.KP_YUWEN_ENABLED === "true", "語文也開了，六個學區由 yuwen.spec.ts 檢查");
     test.setTimeout(120_000);
     await expectMapSectors(page, {
-      buildings: 138,
-      options: 37,
+      buildings: 142,
+      options: 38,
       districts: ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai"],
     });
   });
@@ -152,7 +152,7 @@ test.describe("溝通與解決問題的草稿", () => {
 
   // B16 已發布資訊與 AI 大學 6 點；仍是草稿、to_verify、沒有課綱對應的大學點只剩溝通與解決問題，原本 kp.spec.ts 對 it.nn@uni 的檢查移到這裡。
   // B28 發布 sk.hypo@uni（to_verify: false）後，舊版頁的「草稿」與「課綱對應待核對」標記已沒有真實的大學草稿；改查它發布後沒有草稿標記、沒有課綱區塊、沒有待核對。
-  // 「草稿」標記在這個行程已沒有真實樣本（全站 246 點都已發布）；草稿與待核對的組合由 review-state.test.ts 的合成內容守住。
+  // 「草稿」標記在這個行程已沒有真實樣本（全站 250 點都已發布）；草稿與待核對的組合由 review-state.test.ts 的合成內容守住。
   test("sk.hypo@uni 已發布：沒有草稿標記、沒有課綱區塊、沒有待核對", async ({ page }) => {
     const response = await page.goto("/kp/sk.hypo/uni");
     expect(response?.status()).toBe(200);

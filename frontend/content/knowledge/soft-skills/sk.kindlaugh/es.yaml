@@ -1,0 +1,183 @@
+id: sk.kindlaugh@es
+concept: sk.kindlaugh
+title: 好笑跟傷人：先看對方的臉
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - B1
+  - C2
+  issues:
+  - 品德教育
+  performances:
+  - 2-III-7
+  contents: []
+to_verify: false
+verify_notes:
+- 換位子說出對方看到什麼、想到什麼、感覺怎樣，完整練法在 sk.otherside@es。本點只練開玩笑前先看臉，不重寫那一課。
+- 校園霸凌防制準則第 4 條第 4 款的霸凌要同時有持續、故意，並使人處在敵意或不友善環境，或造成損害、影響學習。本點不把單次玩笑直接稱作霸凌。
+- 英文引文取自 2026-11-05 讀取的網頁；中文說明標「本站整理」或「翻譯是本站整理」。
+- 本點不收集傷人的句子當例子。
+prerequisites:
+- sk.otherside@es
+- sk.feelings@es
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - sk.roomread@jh
+link_notes: 框架：優越論（superiority theory），史丹佛哲學百科的整理。先看對方的臉是社會覺察；換位子的完整練法在 sk.otherside@es。國語文口語表達：與他人溝通時能尊重不同意見。
+competency:
+  specialist:
+  - 口語表達
+  - 同理溝通
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 由大人陪著，請 AI 列出可以笑的事情，不列拿人當笑點的句子
+  human_experience:
+  - 看著對方的臉，決定這句還要不要說
+idea: 你覺得好笑，不代表被笑到的人也覺得好笑。開口前先看對方的臉；沒有一起笑，就停。拿別人的難堪來顯得自己比較高，就先不要說。
+guiding_questions:
+- 你覺得好玩，對方的臉也在笑嗎？
+scenario: 親子共學：看一段大家都在笑的短片時暫停。孩子先看大人的臉，問「你覺得好笑嗎？」大人有一次不笑，孩子要能停，並換一個不拿人當笑點的話題。
+goal: 開玩笑前先看對方的臉、問一句，對方沒笑就停。
+review: 家庭練習三次，每次孩子都先看臉並問「你覺得好笑嗎？」；其中一次大人不笑，孩子能停下來並換話題，大人逐次打勾。
+formats:
+  slides: []
+  exercise: 目標：開玩笑前先看對方的臉、問一句，對方沒笑就停。　檢核：家庭練習三次，每次孩子都先看臉並問「你覺得好笑嗎？」；其中一次大人不笑，孩子能停下來並換話題，大人逐次打勾。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-11-05'
+why:
+  heading: 對方沒笑，就先停
+  body:
+  - 國語課綱要孩子「與他人溝通時能尊重不同意見。」開玩笑也是溝通。你站在旁邊覺得好玩，不代表站在中間的人覺得好玩（本站整理）。
+  - CASEL（美國推動社會情緒學習的組織）把社會覺察說明為「The abilities to understand the perspectives of and empathize with others, including those from diverse backgrounds, cultures, and contexts.」，例子包括「Showing concern for the feelings of others」，也就是理解別人的觀點、在意別人的感受（翻譯是本站整理）。換位子的完整練法在先備的點，這裡只多練一件事：先看臉。
+  qa:
+    question: 你覺得好玩，對方的臉也在笑嗎？
+    answer: 不一定。史丹佛哲學百科整理一種老說法，叫做優越論：「our laughter expresses feelings of superiority over other people or over a former state of ourselves.」，笑是在表達自己比別人高，或比過去的自己高（翻譯是本站整理）。對方沒笑，就先停。
+    source: sep-humor
+  items_title: 開口前，並對到課綱
+  items:
+  - title: 看臉
+    text: 對方有沒有跟著笑。
+  - title: 問一句
+    text: 你覺得好笑嗎？
+  - title: 停下來
+    text: 沒笑、皺眉、低頭，就換話題。
+  - title: 尊重不同意見
+    text: 與他人溝通時能尊重不同意見。
+    code: 2-III-7
+  sources:
+  - kuoyu
+  - casel-framework
+  - sep-humor
+how:
+  heading: 看臉、問一句、停
+  body:
+  - 先看臉，再問一句，再決定說不說下去。沒笑就停，換一個不拿某一個人當笑點的話題（本站建議）。
+  - 教育部《校園霸凌防制準則》第 4 條把霸凌定義成：個人或集體持續以言語、文字、電子通訊、網際網路或其他方式，故意對他人貶抑、排擠、欺負、騷擾或戲弄，使人處在敵意或不友善的環境，或造成損害、影響學習。單次玩笑不一定就是這條說的霸凌；臉已經不對，仍然先停（本站整理）。
+  items_title: 四步做
+  items:
+  - title: 看臉
+    example: 他有沒有跟著笑？
+    text: 開口前先看對方。
+  - title: 問一句
+    example: 你覺得好笑嗎？
+    text: 問被說到的那個人。
+  - title: 停
+    example: 他沒笑，這句到此。
+    text: 沒笑、皺眉、低頭就停。
+  - title: 換話題
+    example: 改笑一件事，不笑人。
+    text: 不拿某一個人當笑點。
+  checklist_title: 說之前檢查
+  checklist:
+  - 先看對方的臉
+  - 問他好不好笑
+  - 不笑就停
+  activity_figure: laugh-flow
+  sources:
+  - bully-rule
+  - casel-framework
+what:
+  heading: 一起笑，才算好玩
+  figures:
+  - laugh-compare
+  notes:
+  - 本點不收集會傷人的句子。準則裡的霸凌還要看有沒有持續、故意，以及有沒有造成敵意環境、損害或影響學習。本頁的停比那條定義更早：臉不對就停（本站整理）。
+  - 史丹佛哲學百科引 Roger Scruton：「If people dislike being laughed at,」人不喜歡被笑（翻譯是本站整理）。先看臉，就是在確認這句有沒有把對方貶低。
+  sources:
+  - sep-humor
+  - bully-rule
+figures:
+- id: laugh-flow
+  type: flow
+  alt: 家庭練習：孩子看大人的臉、問好笑嗎，大人不笑時孩子停下並換話題
+  steps:
+  - actor: 孩子
+    text: 看對方的臉
+  - actor: 孩子
+    text: 問他好笑嗎
+  - actor: 大人
+    text: 這次不笑
+  - actor: 孩子
+    text: 停下並換話題
+  source: casel-framework
+  caption: 流程是本站建議。
+- id: laugh-compare
+  type: compare
+  alt: 比較一起笑和只有自己笑：一起笑可以繼續看臉；只有自己笑就停
+  source: sep-humor
+  relation: versus
+  items:
+  - term: 一起笑
+    note: 對方的臉也在笑，可以再看一次
+  - term: 只有自己笑
+    note: 先停，換一個不拿人當笑點的話題
+  caption: 分法是本站整理。優越論的原文見史丹佛哲學百科。
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-11-05'
+  kind: curriculum
+  supports: 學習表現：2-III-7「與他人溝通時能尊重不同意見。」（p.7）
+- id: casel-framework
+  title: What Is SEL?（CASEL 5 核心能力說明）
+  publisher: CASEL（Collaborative for Academic, Social, and Emotional Learning）
+  url: https://casel.org/fundamentals-of-sel/what-is-the-casel-framework/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 社會覺察（Social awareness）「The abilities to understand the perspectives of and empathize with others, including those from diverse backgrounds, cultures, and contexts.」；例子「Showing concern for the feelings of others」
+- id: sep-humor
+  title: Philosophy of Humor
+  publisher: Stanford Encyclopedia of Philosophy
+  url: https://plato.stanford.edu/entries/humor/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 優越論「Simply put, our laughter expresses feelings of superiority over other people or over a former state of ourselves.」；Scruton「If people dislike being laughed at,」
+- id: bully-rule
+  title: 校園霸凌防制準則
+  publisher: 全國法規資料庫（教育部訂定，民國 113 年 4 月 17 日修正）
+  url: https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=H0020081
+  accessed: '2026-11-05'
+  kind: government
+  supports: 第 4 條第 4 款「霸凌：指個人或集體持續以言語、文字、圖畫、符號、肢體動作、電子通訊、網際網路或其他方式，直接或間接對他人故意為貶抑、排擠、欺負、騷擾或戲弄等行為，使他人處於具有敵意或不友善環境，產生精神上、生理上或財產上之損害，或影響正常學習活動之進行。」

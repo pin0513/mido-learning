@@ -227,15 +227,15 @@ jobs:
             echo "GET /kp/zh.punct/es returned ${code}, expected 404 while yuwen is unset"
             exit 1
           fi
-          # 只開溝通與解決問題：地圖五個學區、138 個節點。
+          # 只開溝通與解決問題：地圖五個學區、142 個節點。
           code="$(curl -sS -o /tmp/map-soft.html -w '%{http_code}' http://127.0.0.1:3001/kp/map)"
-          if [ "$code" != "200" ] || ! grep -F 'data-building-count="138"' /tmp/map-soft.html >/dev/null; then
-            echo "/kp/map returned ${code} or does not have 138 points with soft-skills on"
+          if [ "$code" != "200" ] || ! grep -F 'data-building-count="142"' /tmp/map-soft.html >/dev/null; then
+            echo "/kp/map returned ${code} or does not have 142 points with soft-skills on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-soft.html)"
-          if [ "$options" != "37" ]; then
-            echo "/kp/map has ${options} path options, expected 37 with soft-skills on"
+          if [ "$options" != "38" ]; then
+            echo "/kp/map has ${options} path options, expected 38 with soft-skills on"
             exit 1
           fi
 
@@ -295,14 +295,14 @@ jobs:
           fi
           check "/kp"
           check "/kp/map"
-          # 六個學門全開：地圖六個學區、246 個節點。
-          if ! grep -F 'data-building-count="246"' /tmp/yuwen-body.html >/dev/null; then
-            echo "/kp/map should have 246 points with soft-skills and yuwen on"
+          # 六個學門全開：地圖六個學區、250 個節點。
+          if ! grep -F 'data-building-count="250"' /tmp/yuwen-body.html >/dev/null; then
+            echo "/kp/map should have 250 points with soft-skills and yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/yuwen-body.html)"
-          if [ "$options" != "51" ]; then
-            echo "/kp/map has ${options} path options, expected 51 with soft-skills and yuwen on"
+          if [ "$options" != "52" ]; then
+            echo "/kp/map has ${options} path options, expected 52 with soft-skills and yuwen on"
             exit 1
           fi
           check "/kp/zh.punct/es"
@@ -586,15 +586,15 @@ jobs:
             fetch "/" /tmp/prod-home.html
             fetch "/kp/map" /tmp/prod-map.html
             points=100
-            [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 38))
+            [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 42))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 108))
             if ! grep -F "data-building-count=\"${points}\"" /tmp/prod-map.html >/dev/null; then
               echo "/kp/map should have ${points} points with the production runtime flags"
               exit 1
             fi
-            # 主線選項數（#77 的 city-path-count）：四個學區 30，溝通與解決問題 +7，語文 +14。
+            # 主線選項數（#77 的 city-path-count）：四個學區 30，溝通與解決問題 +8，語文 +14。
             options=30
-            [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 7))
+            [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 8))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 14))
             actual="$(node frontend/scripts/city-path-count.mjs /tmp/prod-map.html)"
             if [ "$actual" != "$options" ]; then
