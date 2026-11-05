@@ -17,13 +17,14 @@ verify_notes:
 - 大學不屬於 108 課綱：本點不填 curriculum_108、不列 est_time、item 不放代碼。高中的相關學習重點只在來源的 supports 逐字引用，當作先學過的內容：運 c-V-2、運 t-V-3 在高中科技領綱（tech108 來源）（頁碼是頁腳印的頁碼，比 PDF 頁少 4）。
 - 生成式 AI 的使用規則依教育部注意事項（學生版）中大學生也適用的原則（本站建議）；學生版是寫給中小學生的，what.notes 寫明這點。
 - NASA Schedule Management Handbook 的頁碼是頁腳印的頁碼（PDF 頁 − 1）。
-- 英文網頁的引文取自 2026-10-30 讀取的網頁；只取不含彎引號的句子或片段，省略處用刪節號；中文說明和翻譯是本站整理。
+- 英文網頁的引文取自 2026-11-05 重新讀取的網頁；只取不含彎引號的句子或片段，省略處用刪節號；中文說明和翻譯是本站整理。
 - 英文 PDF 的引文避開彎引號；PDF 換行處的斷字（例如 per- ceived）照原詞接回，其餘空白照原文。
 - Watt《Project Management》第 11 章由多個開放來源改編；本點引用的兩句在 Techniques for Managing Resources 一節，章末說明這節改寫自 Wikipedia 的 Resource Leveling 條目（CC BY-SA）；本點只短句引用並附出處。
 - 原 scenario「以小型建物施工為例做資源平準化，比較不同排程方案。」保留做法，補上本站建議與做法細節。
 - 原 ai.delegable「執行最佳化與模擬（例如蒙地卡羅模擬）」補上使用條件（本站建議）。
 - guiding_questions 補到三題，三題的答案都寫在 How 內文（qa 只是摘要）。
 - 合併偏誤那句在 NASA 手冊裡是引號內的引文（手冊註 103 註明出處）；本點只引不含彎引號的那一句。
+- 2026-11-05 加深：十項工作的施工資料、工班數、80% 準時機會都是本站示意，不是任何來源的數字；要徑、浮時、每天工班數和兩個方案的完工日由腳本重算核對。英文引文在 2026-11-05 重新讀取來源核對。
 prerequisites:
 - pm.cpm@sh
 - pm.estimate@sh
@@ -51,15 +52,16 @@ guiding_questions:
 - 模型算出的「最佳」排程，現場的人做得到嗎？
 - 資源不夠時，排程會怎麼變？
 - 模擬的結果要怎麼讀、怎麼用？
-scenario: 以虛構的小型建物施工為例做資源平準化，比較不同排程方案的完工日和要徑，再寫出模型沒考慮到的現場限制（本站建議）。
+scenario: 以虛構的小型建物施工為例（十項工作、土木和機電各一組工班，數字是示意）做資源平準化，比較兩個方案的完工日和要徑，再寫出模型沒考慮到的現場限制（本站建議）。
 formats:
   slides: []
-  exercise: 目標：用一個虛構的小型施工排程（十項工作、兩種工班，數字是示意），找出資源超量的時段，做出兩個平準化方案，比較完工日和要徑的變化，並寫出模型沒考慮到的現場限制。　檢核：不看本頁，說出資源平準化在做什麼、為什麼它可能讓完工日延後、自動平準化沒有考慮到什麼、排程風險分析的結果要怎麼讀，並說明為什麼平行的工作越多，只用單一估計算出的完工日越不可靠。
+  exercise: 目標：用這份示意資料（每項工作要 1 組工班，土木和機電各只有 1 組）：A 放樣 2 天，無先行，土木；B 開挖 3 天，接 A，土木；C 基礎 4 天，接 B，土木；D 預埋管 2 天，接 B，機電；E 結構 5 天，接 C，土木；F 屋頂 3 天，接 E，土木；G 外牆 4 天，接 E，土木；H 配線 4 天，接 D、E，機電；I 測試 2 天，接 H，機電；J 驗收 1 天，接 F、G、I，土木。先算出要徑和每項的浮時，再寫出兩種工班每天要幾組、標出超量的天數，做出兩個平準化方案，比較完工日和要徑；最後把 G 外牆改成 5 天，自己再做一次。　檢核：原資料的答案在本頁的文章裡。G 改成 5 天時，要徑仍是 A→B→C→E→H→I→J、完工第 21 天，G 浮時剩 1 天，土木第 15 到 17 天仍要 2 組；只用一組土木班，不論 G 先或 F 先，完工都變成第 23 天，要徑變成 A→B→C→E→G→F→J（或 F 在 G 前）；第 15 到 17 天加派一組土木班，完工仍是第 21 天。
+  article: 完整示範（數字是示意）：資料是 A 放樣 2 天，無先行，土木；B 開挖 3 天，接 A，土木；C 基礎 4 天，接 B，土木；D 預埋管 2 天，接 B，機電；E 結構 5 天，接 C，土木；F 屋頂 3 天，接 E，土木；G 外牆 4 天，接 E，土木；H 配線 4 天，接 D、E，機電；I 測試 2 天，接 H，機電；J 驗收 1 天，接 F、G、I，土木；土木、機電各 1 組。第一步，往前推算最早開工日：A 第 1–2 天、B 第 3–5 天、C 第 6–9 天、D 第 6–7 天、E 第 10–14 天，F、G、H 都從第 15 天開始，F 第 15–17 天、G 第 15–18 天、H 第 15–18 天，I 第 19–20 天，J 要等 F、G、I 都完成，第 21 天做完。要徑是 A→B→C→E→H→I→J，共 21 天；浮時 D 7 天、F 3 天、G 2 天，其餘是 0。第二步，數每天要幾組：土木第 1–14 天 1 組，第 15–17 天 F 和 G 同時做，要 2 組，超量 3 天；機電第 6–7 天和第 15–20 天各 1 組，沒有超量。只挪浮時解不掉：G 先做到第 18 天，F 第 19–21 天，比 F 最晚的完工日（第 20 天）晚 1 天。方案一，只用一組土木班、G 先 F 後：J 在第 22 天做完，晚 1 天，要徑變成 A→B→C→E→G→F→J，H、I 反而多出 1 天浮時；F 先 G 後也是第 22 天。方案二，第 15–17 天加派一組土木班（多 3 組·天的工錢）：完工仍是第 21 天，要徑不變。要選哪一個，看晚 1 天的代價和多出的工錢哪個大，再問現場做不做得到（本站建議）。
 authors:
 - I-PING Huang
-updated: '2026-10-30'
-goal: 用一個虛構的小型施工排程（十項工作、兩種工班，數字是示意），找出資源超量的時段，做出兩個平準化方案，比較完工日和要徑的變化，並寫出模型沒考慮到的現場限制。
-review: 不看本頁，說出資源平準化在做什麼、為什麼它可能讓完工日延後、自動平準化沒有考慮到什麼、排程風險分析的結果要怎麼讀，並說明為什麼平行的工作越多，只用單一估計算出的完工日越不可靠。
+updated: '2026-11-05'
+goal: 用一份十項工作、兩種工班的示意資料，算出要徑和浮時，標出資源超量的時段，做出兩個平準化方案，比較完工日和要徑的變化，並寫出模型沒考慮到的現場限制。
+review: 不看本頁，用練習的示意資料算出要徑、浮時和超量的天數，說出兩個平準化方案的完工日和要徑；再說明自動平準化沒有考慮到什麼、排程風險分析的結果要怎麼讀，以及為什麼平行的路在同一點會合時，只用單一估計算出的完工日偏樂觀。
 why:
   heading: 資源有限，排程要重算
   body:
@@ -67,7 +69,7 @@ why:
   - NASA 的排程手冊說，排程定案前沒有排入資源、做平準化分析，等於承擔「a significant risk in achieving P/p completion within budget and on schedule.」（P/p 指計畫和專案，說明是本站整理）。高中資訊科技要學生「能應用運算思維評估解題方法的優劣。」到了大學，要比較的是不同的排程方案，也要知道模型算不到什麼（本站整理）。
   qa:
     question: 資源不夠時，排程會怎麼變？
-    answer: 原本同時做的工作要錯開，完工日可能往後。Watt 說「leveling could result in a later project finish date if the tasks affected are in the critical path.」（說明是本站整理）
+    answer: 原本同時做的工作要錯開，完工日可能往後。Watt 說「leveling could result in a later project finish date if the tasks affected are in the critical path.」在本頁的示意資料裡，F 和 G 在第 15–17 天都要土木班，只有一組時改成 G 先 F 後，完工從第 21 天變成第 22 天，要徑也換成經過 G、F 的那條（說明是本站整理）。
     source: watt-ch11
   items_title: 這一點用到的
   items:
@@ -92,9 +94,9 @@ why:
 how:
   heading: 找出超量，錯開，再驗證
   body:
-  - 先畫出資源需求：把虛構的小型施工排程，例如十項工作、兩種工班，畫成甘特圖，在每一週下面寫出各工班要幾組人，標出超過可用人數的時段（例子是本站整理）。NASA 的手冊說資源平準化是「the process of moving schedule tasks without violating network logic or constraints in order to achieve a more consistent level of resources throughout the schedule duration.」也就是不打破先後關係，把工作挪開，讓每段時間用的人比較平均（說明是本站整理）。
-  - 再做兩個方案比較：方案一只挪有浮時的工作，完工日不變；方案二連要徑上的工作也挪，或者加派工班（本站建議）。這就是資源不夠時排程的變化：Watt 說「leveling could result in a later project finish date if the tasks affected are in the critical path.」挪到要徑上的工作，完工日就往後，要徑也可能換成另一條（說明是本站整理）。兩個方案各寫完工日、新的要徑和多花的錢，再決定用哪一個（本站建議）。
-  - 最後請現場檢查，並讀懂模擬：模型算出的最佳排程，現場不一定做得到。手冊提醒「automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」結果要由團隊仔細檢查，「not just taken at face value」；所以要問現場的人：這組師傅會不會這項工、誰會請假、材料什麼時候到（說明是本站整理）。排程風險分析是要「evaluate the likelihood that the P/p plan is achievable within the planned finish date constraints」，結果是準時完成的機會有多大，不是保證；可以用它決定要留多少緩衝、先處理哪個風險（說明是本站整理）。手冊也說，蒙地卡羅模擬工具「is simply a mathematical machine that operates on the inputs to produce outputs.」輸入的估計不可靠，結果也不可靠。平行的工作越多越容易晚，因為幾條路在同一點會合時，任何一條晚了都會拖到後面：手冊說「the inclusion of parallel tasks in the schedule will cause the deterministic schedule to be at a low confidence level.」deterministic schedule 是每項工作只用一個估計值算出的排程，它沒算進這種會合造成的延誤，所以平行的路越多，它給的完工日越不可靠（說明是本站整理）。
+  - 先算要徑，再畫資源需求。示意資料（每項要 1 組工班，土木、機電各只有 1 組）：A 放樣 2 天，無先行，土木；B 開挖 3 天，接 A，土木；C 基礎 4 天，接 B，土木；D 預埋管 2 天，接 B，機電；E 結構 5 天，接 C，土木；F 屋頂 3 天，接 E，土木；G 外牆 4 天，接 E，土木；H 配線 4 天，接 D、E，機電；I 測試 2 天，接 H，機電；J 驗收 1 天，接 F、G、I，土木。往前推算：F、G、H 都在第 15 天開始，J 要等 F、G、I 都完成，第 21 天做完；要徑是 A→B→C→E→H→I→J，浮時 D 7 天、F 3 天、G 2 天。把每天要幾組工班數出來（資源直方圖）：土木第 15–17 天要 2 組，超量 3 天；機電最多 1 組，沒有超量（例子和數字是本站示意）。NASA 的手冊說資源平準化是「the process of moving schedule tasks without violating network logic or constraints in order to achieve a more consistent level of resources throughout the schedule duration.」也就是不打破先後關係，把工作挪開，讓每段時間用的人比較平均（說明是本站整理）。
+  - 再做兩個方案比較。先試只挪浮時：G 先做到第 18 天，F 第 19–21 天，比 F 最晚的完工日第 20 天還晚 1 天，浮時不夠。方案一，只用一組土木班、G 先 F 後：完工第 22 天，晚 1 天；要徑換成 A→B→C→E→G→F→J，原本的 H、I 反而多出 1 天浮時。方案二，第 15–17 天加派一組土木班：完工仍是第 21 天，要徑不變，但多付 3 組·天的工錢（數字是示意）。這就是 Watt 說的「leveling could result in a later project finish date if the tasks affected are in the critical path.」兩個方案各寫完工日、要徑和多花的錢，再決定用哪一個（本站建議）。
+  - 最後請現場檢查，並讀懂模擬：手冊提醒「automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」結果要由團隊仔細檢查，「not just taken at face value」；所以要問現場的人：這組師傅會不會這項工、誰會請假、材料什麼時候到（說明是本站整理）。排程風險分析是要「evaluate the likelihood that the P/p plan is achievable within the planned finish date constraints」，結果是準時完成的機會有多大，不是保證；手冊也說，蒙地卡羅模擬工具「is simply a mathematical machine that operates on the inputs to produce outputs.」輸入的估計不可靠，結果也不可靠（說明是本站整理）。
   qa:
     question: 模型算出的「最佳」排程，現場的人做得到嗎？
     answer: 不一定。手冊提醒「automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」所以要拿排程去問現場的人：誰會做、誰有空、材料什麼時候到，再調整（說明是本站整理）。
@@ -102,11 +104,14 @@ how:
   items_title: 四步做
   items:
   - title: 畫出資源需求
-    text: 每週每種工班要幾組人。
+    text: 先算要徑和浮時，再數每天每種工班要幾組。
+    example: （示意）土木第 15–17 天要 2 組。
   - title: 標出超量時段
-    text: 超過可用人數就標出來。
+    text: 超過可用組數就標出來。
+    example: （示意）土木只有 1 組，超量 3 天。
   - title: 做兩個方案
-    text: 比較完工日和要徑。
+    text: 比較完工日、要徑和多花的錢。
+    example: （示意）G 先 F 後第 22 天完工；加派一組仍是第 21 天。
   - title: 請現場檢查
     text: 模型沒算到的寫下來。
   checklist_title: 每次做完勾一下
@@ -130,16 +135,23 @@ what:
   - title: 比較方案
     text: 完工日、要徑、成本。
   - title: 說出模型的限度
-    text: 技能、請假、材料。
+    text: 技能、請假、材料、會合點的延誤。
   checklist_title: 自我檢核
   checklist:
   - 平準化完成
   - 方案比較過
   - 限制寫下來
+  qa:
+    question: 模擬的結果要怎麼讀、怎麼用？
+    answer: 結果是準時完成的機會有多大，不是保證。只用單一估計的排程會偏樂觀：本頁的 J 要等三條路會合，假設三條路都沒有浮時、各自有 80% 的機會準時、彼此不相關（數字是示意），三條都準時的機會只有 0.8×0.8×0.8，約 51%。手冊說「the inclusion of parallel tasks in the schedule will cause the deterministic schedule to be at a low confidence level.」所以可以用模擬決定要留多少緩衝、先處理哪個風險（說明是本站整理）。
+    source: nasa-smh
   notes:
-  - 本頁的施工排程例子是虛構的，工作數和人數是示意。
+  - 合併偏誤的數字怎麼算（示意）：一條路準時的機會是 80%；兩條路會合，都準時是 0.8×0.8＝64%；三條路會合是 0.8×0.8×0.8，約 51%。真實的路有浮時、彼此也可能相關（例如同一場雨拖到所有戶外工作），所以這只說明方向，不是真實機率（本站整理）。
+  - 模型沒考慮到的：工班會不會這項工、誰會請假、材料何時到、一組人能不能拆成半組、天氣；這些要問現場（本站整理）。
+  - 本頁的施工排程例子是虛構的，工作、天數和工班數都是示意。
   - 教育部的生成式 AI 注意事項（學生版）是寫給中小學生的，其中幾條原則大學生也適用（本站建議）：不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信，數字、事實和引用的資料要自己查證；作業若用了 AI，要註明工具和用途，不能把 AI 寫的內容當成自己的作品交出去，也不能用 AI 抄襲、代寫或作弊；以學校和課程的規定為準。
   sources:
+  - nasa-smh
   - genai-student
 figures:
 - id: schedule-flow
@@ -165,23 +177,23 @@ figures:
   relation: versus
   items:
   - term: 平準化前
-    note: 同一週要兩組工班，但只有一組
+    note: （示意）第 15–17 天要兩組土木班，但只有一組
   - term: 平準化後
-    note: 工作錯開、人夠用，完工日可能延後
+    note: （示意）G 先 F 後，人夠用，完工從第 21 天變第 22 天
   caption: 例子是本站整理。
 sources:
 - id: tech108
   title: 十二年國民基本教育課程綱要 國民中學暨普通型高級中等學校—科技領域
   publisher: 國家教育研究院（教育部 107 年 9 月 20 日發布）
   url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
-  accessed: '2026-10-30'
+  accessed: '2026-11-05'
   kind: curriculum
   supports: 大學不屬於 108 課綱；以下是高中資訊科技先學過的相關學習重點，只當先備：運 c-V-2「能認識專案管理的概念。」（p.7）；運 t-V-3「能應用運算思維評估解題方法的優劣。」（p.7）
 - id: nasa-smh
   title: NASA Schedule Management Handbook（NASA/SP-2010-3403, Revision 1）
   publisher: NASA（Office of the Chief Financial Officer；生效日 2020 年 1 月 30 日）
   url: https://www.nasa.gov/wp-content/uploads/2020/11/nasa_schedule_management_hand_book.pdf
-  accessed: '2026-10-30'
+  accessed: '2026-11-05'
   kind: government
   supports: 「Resource leveling is the process of moving schedule tasks without violating network logic or constraints in order to achieve a more consistent level of resources throughout the schedule duration.」（p.129）；「Caution. It is important to note that automated resource leveling does not factor in the varying skillsets and availability of specific resources (people).」（p.129）；「It is very important that the resulting schedule data be reviewed by the P/p management team carefully, and not just taken at face value.」（p.131）；「To baseline a P/p schedule without first resource loading and conducting leveling analysis is to assume a significant risk in achieving P/p completion within budget and on schedule.」（p.131）；排程風險分析「to evaluate the likelihood that the P/p plan is achievable within the planned finish date constraints」（p.186）；「The Monte Carlo simulation tool used for the analysis is simply a mathematical machine that operates on the inputs to produce outputs.」（p.192）；合併偏誤「Under most circumstances,
     the inclusion of parallel tasks in the schedule will cause the deterministic schedule to be at a low confidence level.」（p.203）
@@ -189,13 +201,13 @@ sources:
   title: 'Project Management（第 2 版）Chapter 11: Resource Planning'
   publisher: Adrienne Watt 著；本章作者 Adrienne Watt、TAP-a-PM、Project Management Open Resources、Merrie Barron、Andrew Barron、David Wiley 等（BCcampus 開放教科書，第 2 版，CC BY-SA 4.0）
   url: https://opentextbc.ca/projectmanagement/chapter/chapter-11-resource-planning-project-management/
-  accessed: '2026-10-30'
+  accessed: '2026-11-05'
   kind: textbook
-  supports: 「Resource leveling is used to examine unbalanced use of resources (usually people or equipment) over time and for resolving over-allocations or conflicts.」；「In either definition, leveling could result in a later project finish date if the tasks affected are in the critical path.」
+  supports: 「Resource leveling is used to examine unbalanced use of resources (usually people or equipment) over time and for resolving over-allocations or conflicts.」；「In either definition, leveling could result in a later project finish date if the tasks affected are in the critical path.」；「When more resources such as machines or people are needed than are available, or perhaps a specific person is needed in both tasks, the tasks will have to be rescheduled sequentially」
 - id: genai-student
   title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
   publisher: 教育部（中小學數位學習精進方案網站）
   url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
-  accessed: '2026-10-30'
+  accessed: '2026-11-05'
   kind: government
   supports: 六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」
