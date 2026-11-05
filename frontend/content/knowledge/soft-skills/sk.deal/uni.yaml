@@ -1,0 +1,157 @@
+id: sk.deal@uni
+concept: sk.deal
+title: 商業談判：從探詢到寫下協議
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes:
+- 大學不對應 108 課綱，以學門路徑對應。
+prerequisites:
+- sk.persuade@uni
+- sk.batna@sh
+- pm.business@uni
+links:
+  why: []
+  how: []
+  related:
+  - sk.fairsale@uni
+  deeper: []
+link_notes: 框架：Fisher、Ury、Patton《Getting to Yes》的原則式談判（聚焦利益而非立場），經哈佛法學院談判研究計畫（PON）整理。準備 BATNA 在 sk.batna@sh；商業論證在 pm.business@uni；說服的界線在 sk.fairsale@uni。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+  - 領導
+ai:
+  delegable:
+  - 整理談判紀錄，草擬協議條文初稿
+  human_experience:
+  - 在現場判斷對方真正在意什麼，並為簽下的協議負責
+idea: 商業談判常卡在立場：「價格就是這樣」「低於這個不做」。往下問「為什麼」，常會找到不同的需要，例如一方要快、一方要穩定。把需要攤開，就能多放幾個條件一起談（交期、數量、付款方式），最後把談好的事寫成雙方都看得懂的協議。
+guiding_questions:
+- 對方說「價格沒得談」，你下一句要說什麼？
+scenario: 親子共學：大人把一場工作上的談判（採購、合作、報價）改成家庭版，讓孩子扮演對方，只准問「為什麼」；結束後一起寫一份一頁的協議。
+goal: 在一場真實的商業談判中，問出對方立場背後的需要，提出至少兩個條件組合，並寫下雙方確認的協議。
+review: 完成一場真實的商業談判（接案報價、採購、社團贊助）：事前有 BATNA 和底線；紀錄裡至少三個「為什麼」的提問與回答、兩個條件組合；協議寫明誰、做什麼、何時、多少錢，並經對方書面確認。
+formats:
+  slides: []
+  exercise: 目標：在一場真實的商業談判中，問出對方立場背後的需要，提出至少兩個條件組合，並寫下雙方確認的協議。　檢核：完成一場真實的商業談判（接案報價、採購、社團贊助）：事前有 BATNA 和底線；紀錄裡至少三個「為什麼」的提問與回答、兩個條件組合；協議寫明誰、做什麼、何時、多少錢，並經對方書面確認。
+audience:
+- adult
+authors:
+- I-PING Huang
+updated: '2026-11-05'
+why:
+  heading: 只談價格，常常兩邊都吃虧
+  body:
+  - 《Getting to Yes》描述立場式談判：「each side takes a position, argues for it, and makes concessions to reach a compromise」。PON 整理這本書的說法：這樣談容易得到不明智的協議、拖長時間，也傷害關係。
+  - PON 也說，立場只是表面，底下是需要、動機和顧慮；把需要找出來，常能想出讓雙方都滿意的方案。
+  qa:
+    question: 對方說「價格沒得談」，你下一句要說什麼？
+    answer: 先問為什麼：「這個價格對你們最重要的考量是什麼？」如果是年底要達標，也許可以談付款時間或採購數量；如果真的只能這樣，就回頭比你的 BATNA，決定接或不接。
+    source: pon-interests
+  items_title: 原則式談判的四件事
+  items:
+  - title: 問需要
+    text: 從立場往下問「為什麼」。
+  - title: 加條件
+    text: 價格之外，再放交期、數量、付款一起談。
+  - title: 用標準
+    text: 用市價、行情這類雙方都認的標準。
+  - title: 寫下來
+    text: 把談好的事寫成雙方確認的協議。
+  sources:
+  - pon-positional
+  - pon-interests
+  - pon-integrative
+how:
+  heading: 探詢、組合、比較、寫下
+  body:
+  - 開談先問，不急著出價；把聽到的需要寫下來，組成兩三個條件組合；每個組合都和自己的 BATNA 比；最後把結論寫成協議，請對方確認。（本站建議的順序）
+  items:
+  - title: 探詢
+    example: 這次採購，最怕的是什麼？
+    text: 問立場背後的需要。
+  - title: 組合
+    example: 價格不動，交期提前一週
+    text: 把價格之外的條件一起放進來。
+  - title: 比較
+    example: 這個組合比另一家報價好
+    text: 每個組合都和 BATNA 比。
+  - title: 寫下
+    example: 誰、做什麼、何時、多少錢
+    text: 寫成協議，請對方書面確認。
+  activity_figure: how-flow
+  sources:
+  - pon-integrative
+  - pon-batna
+what:
+  heading: 立場不等於需要
+  figures:
+  - what-compare
+  notes:
+  - 立場是嘴上的要求（「一台車一萬二」）；需要是背後的原因（「搬家急著用錢」）。PON 用的例子是兩姊妹分一顆柳橙：一個要皮做蛋糕，一個要果汁，切一半兩人都只拿到一半。
+  sources:
+  - pon-positional
+  - pon-integrative
+figures:
+- id: how-flow
+  type: flow
+  alt: 家庭版談判：大人提出工作上的條件，孩子扮演對方只問為什麼，大人說出需要並改組條件，兩人寫下一頁協議
+  steps:
+  - actor: 大人
+    text: 提出工作條件
+  - actor: 孩子
+    text: 扮對方問為什麼
+  - actor: 大人
+    text: 說出需要並改組
+  - actor: 兩人
+    text: 寫下一頁協議
+- id: what-compare
+  type: compare
+  alt: 立場和需要不同：立場是嘴上的要求，需要是背後的原因
+  source: pon-integrative
+  relation: not_equal
+  items:
+  - term: 立場
+    note: 嘴上的要求，例如一台車一萬二
+  - term: 需要
+    note: 背後的原因，例如搬家急著用錢
+sources:
+- id: pon-positional
+  title: Positional Bargaining Pitfalls
+  publisher: Program on Negotiation at Harvard Law School
+  url: https://www.pon.harvard.edu/daily/negotiation-skills-daily/positional-bargaining-pitfalls/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 引《Getting to Yes》：立場式談判是「each side takes a position, argues for it, and makes concessions to reach a compromise」；整理三個缺點：produces unwise agreements、is ineffective、harms the relationship；兩姊妹分柳橙的例子
+- id: pon-interests
+  title: 'Principled Negotiation: Focus on Interests to Create Value'
+  publisher: Program on Negotiation at Harvard Law School
+  url: https://www.pon.harvard.edu/daily/negotiation-skills-daily/principled-negotiation-focus-interests-create-value/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 「Positions are surface-level statements. Beneath them lie interests—the underlying needs, motivations, and concerns driving those demands.」；聚焦需要而非立場，常能找到讓雙方都滿意的方案（often discover creative solutions that satisfy both sides）
+- id: pon-integrative
+  title: 'Expanding the Pie: Integrative versus Distributive Bargaining Negotiation Strategies'
+  publisher: Program on Negotiation at Harvard Law School
+  url: https://www.pon.harvard.edu/daily/negotiation-skills-daily/negotiation-skills-expanding-the-pie-integrative-bargaining-versus-distributive-bargaining/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 改寫自《Getting to Yes》的整合式談判要素：「Focus on interests, not positions. Positions are demands (“$12,000 for the car”). Interests explain why (“I need funds quickly for a move”).」；「Invent options for mutual gain」；「Use objective criteria」
+- id: pon-batna
+  title: Translate Your BATNA to the Current Deal
+  publisher: Program on Negotiation at Harvard Law School
+  url: https://www.pon.harvard.edu/daily/batna/translate-your-batna-to-the-current-deal/
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 「BATNA stands for Best Alternative to a Negotiated Agreement. In plain terms, it is what you will do if you do not reach a deal.」

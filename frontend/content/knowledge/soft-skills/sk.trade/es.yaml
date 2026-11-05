@@ -1,0 +1,145 @@
+id: sk.trade@es
+concept: sk.trade
+title: 交換之前：我想要、你想要
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 溝通與解決問題
+  - 口語表達
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+curriculum_108:
+  domains:
+  - 社會
+  core_competencies:
+  - C2
+  issues:
+  - 家庭教育
+  performances: []
+  contents: []
+to_verify: false
+verify_notes:
+- 社會領綱的 Ad-II-1、Ad-II-2 和國語文的 Ad-II-1、Ad-II-2 同號；收進代碼表會讓國語文既有知識點的代碼變成「同號要加科目」，所以本點不登錄代碼，只在來源 shehui 的 supports 逐字引用（p.15）。
+prerequisites:
+- sk.point@es
+- sk.listen@es
+links:
+  why: []
+  how: []
+  related:
+  - sk.otherside@es
+  deeper:
+  - sk.pitch@jh
+link_notes: 框架：自願交換（voluntary exchange），雙方都覺得換了比較好才換。社會：分工合作與消費（Ad-II-1、Ad-II-2）。
+competency:
+  specialist:
+  - 口語表達
+  generalist:
+  - 溝通
+ai:
+  delegable:
+  - 由大人陪著，請 AI 列出家裡可以拿來交換的東西
+  human_experience:
+  - 看著對方的表情，問他真正想要什麼
+idea: 交換之前，先說清楚「我想要什麼」，再問「你想要什麼」。兩個人都覺得換了比較好，才換；有一方不想換，就可以說「不要」。
+guiding_questions:
+- 你想用貼紙換同學的卡片，可是他不想換，怎麼辦？
+scenario: 親子共學：家庭小市集。孩子和大人各拿三樣不用的小東西，輪流說「我想要……」「你想要什麼？」，雙方都點頭才交換。
+goal: 交換前說出自己想要什麼、問出對方想要什麼，雙方都同意才交換。
+review: 家庭小市集玩三輪，每輪孩子都先說「我想要……」並問一次「你想要什麼？」；有一輪大人說「不要」，孩子能接受並換別的提議，大人逐輪打勾。
+formats:
+  slides: []
+  exercise: 目標：交換前說出自己想要什麼、問出對方想要什麼，雙方都同意才交換。　檢核：家庭小市集玩三輪，每輪孩子都先說「我想要……」並問一次「你想要什麼？」；有一輪大人說「不要」，孩子能接受並換別的提議，大人逐輪打勾。
+audience:
+- kid
+- family
+authors:
+- I-PING Huang
+updated: '2026-11-05'
+why:
+  heading: 兩個人都願意，才叫交換
+  body:
+  - 社會課綱要三、四年級的孩子知道「人們透過儲蓄與消費，來滿足生活需求。」也知道人在各行各業裡「與他人形成分工合作的關係。」交換就是最小的分工合作。
+  - 美國聯邦準備體系的經濟教案引用美國經濟教育標準：人們自願交換，是因為預期交換後會過得比較好。本站的解讀：要先知道對方想要什麼，才找得到兩個人都說好的交換。
+  qa:
+    question: 你想用貼紙換同學的卡片，可是他不想換，怎麼辦？
+    answer: 先問他：「你想要什麼？」也許他想要的是別的東西。如果他還是不想換，就說「好，沒關係」；交換要兩個人都願意。
+    source: fed-yen
+  items_title: 練好以後，孩子可以
+  items:
+  - title: 說出想要
+    text: 用「我想要……」說清楚自己想換什麼。
+  - title: 問對方
+    text: 用「你想要什麼？」聽懂對方的需要。
+  - title: 接受不要
+    text: 對方說不要時，不生氣、不硬換。
+  sources:
+  - shehui
+  - fed-yen
+how:
+  heading: 我想要、你想要、換不換
+  body:
+  - 先用一句話說自己想要什麼；再問對方想要什麼，聽他說完；最後一起決定換不換。不換也可以，下次再說。
+  items:
+  - title: 我想要
+    example: 我想要你的恐龍卡。
+    text: 一句話說清楚。
+  - title: 你想要
+    example: 你想要什麼？貼紙還是彈珠？
+    text: 問完，等對方說。
+  - title: 換不換
+    example: 一張恐龍卡換兩張貼紙，好嗎？
+    text: 兩個人都點頭才換；有人搖頭就不換。
+  activity_figure: how-flow
+  sources:
+  - fed-yen
+what:
+  heading: 交換不是搶
+  figures:
+  - what-compare
+  notes:
+  - 自願交換的意思是：兩個人都願意，而且都覺得換了比較好。一方被逼著換，就不是交換。
+  sources:
+  - fed-yen
+  - shehui
+figures:
+- id: how-flow
+  type: flow
+  alt: 家庭小市集：孩子說我想要，再問大人想要什麼，大人回答，兩人都點頭才交換
+  steps:
+  - actor: 孩子
+    text: 說我想要什麼
+  - actor: 孩子
+    text: 問你想要什麼
+  - actor: 大人
+    text: 說出自己想要的
+  - actor: 兩人
+    text: 都點頭才交換
+- id: what-compare
+  type: compare
+  alt: 自願交換和被逼著換不同：自願交換兩個人都覺得比較好，被逼著換只有一方願意
+  source: fed-yen
+  relation: not_equal
+  items:
+  - term: 自願交換
+    note: 兩個人都願意，都覺得換了比較好
+  - term: 被逼著換
+    note: 只有一方想換，另一方不想
+sources:
+- id: shehui
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-05'
+  kind: curriculum
+  supports: 學習內容 Ad-Ⅱ-1「個人透過參與各行各業的經濟活動，與他人形成分工合作的關係。」、Ad-Ⅱ-2「人們透過儲蓄與消費，來滿足生活需求。」（p.15，第二學習階段）
+- id: fed-yen
+  title: 'A ¥en to Trade Lesson 2: Let''s Make a Deal'
+  publisher: Federal Reserve Education（美國聯邦準備體系經濟教育）
+  url: https://www.federalreserveeducation.org/resources/lessons/lesson--yen-to-trade-lesson-2.pdf
+  accessed: '2026-11-05'
+  kind: reference
+  supports: 引美國經濟教育內容標準 Standard 5「Voluntary exchange occurs only when all participating parties expect to gain.」；四年級基準「People voluntarily exchange goods and services because they expect to be better off after the exchange.」
