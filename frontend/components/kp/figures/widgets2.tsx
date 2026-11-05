@@ -71,7 +71,14 @@ function Vectors({ spec }: { spec: Of<"vector"> }) {
       }
     >
       <Axes x={x} y={y} xTicks={range(lo, hi, 1)} yTicks={range(lo, hi, 1)} fmtX={(t) => (t % 4 === 0 ? sign(t) : "")} fmtY={(t) => (t % 4 === 0 && t !== lo ? sign(t) : "")} />
-      {k !== 1 ? <Arrow from={[0, 0]} to={ks} x={x} y={y} className="text-[#8a8178] stroke-[#8a8178]" dashed /> : null}
+      <clipPath id={`${spec.id}-plot`}>
+        <rect x={x(lo)} y={y(hi)} width={x(hi) - x(lo)} height={y(lo) - y(hi)} />
+      </clipPath>
+      {k !== 1 ? (
+        <g clipPath={`url(#${spec.id}-plot)`}>
+          <Arrow from={[0, 0]} to={ks} x={x} y={y} className="text-[#8a8178] stroke-[#8a8178]" dashed />
+        </g>
+      ) : null}
       <Arrow from={[0, 0]} to={spec.u} x={x} y={y} className="text-ink stroke-ink" />
       <Arrow from={spec.u} to={sum} x={x} y={y} className="text-ink stroke-ink" />
       <Arrow from={[0, 0]} to={sum} x={x} y={y} className="text-accent-deep stroke-accent-deep" />
@@ -180,8 +187,9 @@ function Hole({ spec }: { spec: Of<"hole"> }) {
       <Axes x={x} y={y} xTicks={range(0, 2, 0.5)} yTicks={range(0, 3, 1)} xLabel="x" yLabel="f(x)" />
       <line x1={x(0)} y1={y(1)} x2={x(2)} y2={y(3)} className={DEEP} strokeWidth={3} />
       <line x1={x(xv)} x2={x(xv)} y1={y(0)} y2={y(f)} className="stroke-[#8a8178]" strokeDasharray="4 4" strokeWidth={2} />
+      <circle cx={x(xv)} cy={y(f)} r={5} className="fill-ink" />
+      {/* 洞畫在最上面：x 取 0.999 或 1.001 時，點和洞幾乎重疊，洞仍要看得出是空的。 */}
       <circle cx={x(1)} cy={y(2)} r={7} className="fill-white stroke-accent-deep" strokeWidth={3} />
-      <circle cx={x(xv)} cy={y(f)} r={6} className="fill-ink" />
     </FigureFrame>
   );
 }
@@ -192,12 +200,15 @@ function Can({ spec }: { spec: Of<"can"> }) {
   const best = canBestR(V);
   const x = scale(spec.rMin, spec.rMax, M.l, W - M.r);
   const y = scale(0, spec.sMax, H - M.b, M.t);
-  const S = canS(V, r);
-  const dS = canDS(V, r);
+  // 「最省料」按鈕把 r 四捨五入到 0.01；讀數改用精確的最佳 r，h 才會是 YAML 的 7.64。
+  const atBest = Math.abs(r - best) < 0.005;
+  const rr = atBest ? best : r;
+  const S = canS(V, rr);
+  const dS = canDS(V, rr);
   const pts = range(0, 140, 1).map((i) => spec.rMin + ((spec.rMax - spec.rMin) * i) / 140);
   const path = pts.map((t, i) => `${i ? "L" : "M"}${x(t).toFixed(1)},${y(canS(V, t)).toFixed(1)}`).join("");
   const dr = 0.8;
-  const trend = Math.abs(r - best) < 0.005 ? "導數 ＝ 0，最省料" : dS < 0 ? "導數 ＜ 0，再加大半徑會更省" : "導數 ＞ 0，再加大半徑反而更費";
+  const trend = atBest ? "導數 ＝ 0，最省料" : dS < 0 ? "導數 ＜ 0，再加大半徑會更省" : "導數 ＞ 0，再加大半徑反而更費";
   return (
     <FigureFrame
       {...spec}
@@ -211,7 +222,7 @@ function Can({ spec }: { spec: Of<"can"> }) {
       }
       readout={
         <>
-          <p>高 h ＝ {V} ÷ (πr²) ≈ {fmt(canH(V, r), 2)} 公分</p>
+          <p>高 h ＝ {V} ÷ (πr²) ≈ {fmt(canH(V, rr), 2)} 公分</p>
           <p className="font-bold">表面積 S ≈ {fmt(S, 1)} 平方公分</p>
           <p>S′(r) ≈ {sign(dS, 1)}：{trend}</p>
         </>
@@ -219,7 +230,10 @@ function Can({ spec }: { spec: Of<"can"> }) {
     >
       <Axes x={x} y={y} xTicks={range(spec.rMin, spec.rMax, 1)} yTicks={range(0, spec.sMax, 200)} xLabel="半徑 r（公分）" yLabel="表面積 S" />
       <path d={path} fill="none" className={DEEP} strokeWidth={3} />
-      <line x1={x(r - dr)} y1={y(S - dS * dr)} x2={x(r + dr)} y2={y(S + dS * dr)} className={INK} strokeWidth={2} strokeDasharray="6 4" />
+      <clipPath id={`${spec.id}-plot`}>
+        <rect x={x(spec.rMin)} y={y(spec.sMax)} width={x(spec.rMax) - x(spec.rMin)} height={y(0) - y(spec.sMax)} />
+      </clipPath>
+      <line x1={x(r - dr)} y1={y(S - dS * dr)} x2={x(r + dr)} y2={y(S + dS * dr)} className={INK} strokeWidth={2} strokeDasharray="6 4" clipPath={`url(#${spec.id}-plot)`} />
       <circle cx={x(best)} cy={y(canS(V, best))} r={5} className="fill-white stroke-ink" strokeWidth={2} />
       <circle cx={x(r)} cy={y(S)} r={7} className="fill-ink" />
     </FigureFrame>
@@ -292,8 +306,9 @@ function Pixels({ spec }: { spec: Of<"pixels"> }) {
                   maxLength={n}
                   aria-label={`第 ${i + 1} 行的數字`}
                   onChange={(event) => {
-                    const v = event.target.value.replace(/[^01]/g, "").slice(0, n).padEnd(n, "1");
-                    setRows(rows.map((old, j) => (j === i ? v : old)));
+                    const v = event.target.value.replace(/[^01]/g, "").slice(0, n);
+                    // 還沒打到的格子保留原本的值，不偷偷補 1（會把整行變白）。
+                    setRows(rows.map((old, j) => (j === i ? v + old.slice(v.length) : old)));
                   }}
                   className="h-11 w-full min-w-0 border border-[#c0bab2] px-2 font-mono tabular-nums tracking-widest"
                 />

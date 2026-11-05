@@ -1,6 +1,16 @@
 "use client";
 
-import { useCallback, type ReactNode, type RefObject } from "react";
+import { createContext, useCallback, useContext, type ReactNode, type RefObject } from "react";
+
+/** 圖的 id 前綴（由規格 id 組成），讓滑桿拿到穩定又不重複的 id。 */
+const FigureIdContext = createContext("kpfig");
+
+/** 標籤文字轉成短雜湊，同一張圖裡不同標籤得到不同 id。 */
+const hashLabel = (text: string) => {
+  let h = 0;
+  for (const ch of text) h = (h * 31 + ch.codePointAt(0)!) >>> 0;
+  return h.toString(36);
+};
 
 /** 線性比例尺：資料值 → SVG 座標。 */
 export function scale(d0: number, d1: number, r0: number, r1: number) {
@@ -45,6 +55,7 @@ export function FigureFrame({
 }) {
   const id = `kpfig-${specId}`;
   return (
+    <FigureIdContext.Provider value={id}>
     <figure className="kpfig mt-4 border border-[#c0bab2] bg-white p-4 text-ink sm:p-6" aria-labelledby={`${id}-t`}>
       <h3 id={`${id}-t`} className="text-lg font-bold">{title}</h3>
       <div className="mt-4 grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:items-start">
@@ -69,6 +80,7 @@ export function FigureFrame({
       <p id={`${id}-d`} className="mt-4 max-w-3xl leading-7">{desc}</p>
       <figcaption className="mt-2 text-sm text-[#3d3830]">{caption}</figcaption>
     </figure>
+    </FigureIdContext.Provider>
   );
 }
 
@@ -128,14 +140,17 @@ export function Slider({
   onChange: (value: number) => void;
   display?: string;
 }) {
-  // 用 <label> 包住 input，不需要 id（useId 在 next/dynamic 裡伺服器和瀏覽器會對不上）。
+  // 標籤用 htmlFor 指到 input，<output> 在標籤外，滑桿的名稱就是標籤文字；點標籤會聚焦滑桿。
+  // 不用 useId：圖在 next/dynamic 裡，伺服器和瀏覽器的 useId 會對不上。
+  const id = `${useContext(FigureIdContext)}-s${hashLabel(label)}`;
   return (
-    <label className="flex flex-col gap-1">
-      <span className="flex items-baseline justify-between gap-3 text-sm font-bold">
-        <span>{label}</span>
-        <output className="text-base tabular-nums">{display ?? value}</output>
-      </span>
+    <div className="flex flex-col gap-1">
+      <div className="flex items-baseline justify-between gap-3">
+        <label htmlFor={id} className="text-sm font-bold">{label}</label>
+        <output htmlFor={id} className="text-base font-bold tabular-nums">{display ?? value}</output>
+      </div>
       <input
+        id={id}
         type="range"
         min={min}
         max={max}
@@ -144,7 +159,7 @@ export function Slider({
         onChange={(event) => onChange(Number(event.target.value))}
         className="h-11 w-full cursor-pointer accent-[#a83a0f]"
       />
-    </label>
+    </div>
   );
 }
 
