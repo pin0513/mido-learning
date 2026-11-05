@@ -12,9 +12,9 @@ test("deploy-frontend.yml 的 KP_BUILD_FLAGS、KP_RUNTIME_FLAGS 讀得到，列�
   assert.deepEqual(build.map(([name]) => name).sort(), runtime.map(([name]) => name).sort());
   // 學門旗標都要在清單裡，不然 build 時那個學門一定是關的。
   for (const flag of ["KP_ENABLED", ...Object.values(FOLDER_FLAG)]) assert.ok(build.some(([name]) => name === flag), flag);
-  // 正式站不開 V2（docs/kp-db-restructure.md 第 17.5 節）。
-  assert.equal(flagEnv(readFlags(source, "KP_BUILD_FLAGS")).KP_DETAIL_V2_ENABLED, "false");
-  assert.equal(flagEnv(readFlags(source, "KP_RUNTIME_FLAGS")).KP_DETAIL_V2_ENABLED, "false");
+  // 正式站開 V2（docs/kp-db-restructure.md 第 17.7 節，I-PING 2026-11-05）。
+  assert.equal(flagEnv(readFlags(source, "KP_BUILD_FLAGS")).KP_DETAIL_V2_ENABLED, "true");
+  assert.equal(flagEnv(readFlags(source, "KP_RUNTIME_FLAGS")).KP_DETAIL_V2_ENABLED, "true");
 });
 
 test("讀不到、重複或格式不對就報錯，不回傳空字串", () => {

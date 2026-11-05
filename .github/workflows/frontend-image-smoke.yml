@@ -534,7 +534,9 @@ jobs:
 
       # 正式站的組合：image 用 KP_BUILD_FLAGS build，執行時用 KP_RUNTIME_FLAGS（兩個都從 deploy-frontend.yml 讀）。
       # 靜態詳細頁的跨學門連結看 build 時旗標（docs/kp-db-restructure.md 第 17.1、17.4 節）：
-      # 溝通與解決問題、語文 build 時開，ph.reason@es 連到 sk.point@es、sk.present@sh 連到 zh.explain@sh，而且沒有「另有 N 個知識點尚未發布」的誤報；build 時關則都不連。
+      # 溝通與解決問題、語文 build 時開，ph.reason@es 連到 sk.point@es（先學／後學，V1 與 V2 都畫），
+      # sk.present@sh 連到 zh.explain@sh（links.related，只有 V1 的 LinkedIds 畫 href）。
+      # 已轉換的 V2 三圈不畫 links.related（lib/kp/circle.ts）。V2 開時那兩條改查：頁面是 V2、側欄在、沒有「尚未發布」誤報、對方靜態頁有生成。
       - name: Run image with production runtime flags
         run: |
           set -euo pipefail
@@ -603,16 +605,24 @@ jobs:
             fi
           fi
           fetch "/kp-v2/zh.zhuyin/es" /dev/null 404
-          if [ "$(flag KP_DETAIL_V2_ENABLED "$KP_RUNTIME_FLAGS")" = false ] && curl -sf http://127.0.0.1:3006/kp/pm.breakdown/es | grep -F "kp-detail-v2" >/dev/null; then
-            echo "detail page renders v2 while KP_DETAIL_V2_ENABLED is false"
-            exit 1
+          if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
+            fetch "/kp/pm.breakdown/es" /tmp/prod-breakdown.html
+            if [ "$(flag KP_DETAIL_V2_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
+              grep -F "kp-detail-v2" /tmp/prod-breakdown.html >/dev/null || { echo "detail page should render v2"; exit 1; }
+              grep -F "v2-aside" /tmp/prod-breakdown.html >/dev/null || { echo "v2 detail should show the sidebar"; exit 1; }
+            elif grep -F "kp-detail-v2" /tmp/prod-breakdown.html >/dev/null; then
+              echo "detail page renders v2 while KP_DETAIL_V2_ENABLED is false"
+              exit 1
+            fi
           fi
           # build 時旗標：靜態詳細頁的跨學門連結。只在執行時也放行兩端時查（不然詳細頁本身就 404）。
+          # 第四個引數 seq＝先學／後學（V1 與 V2 都畫 href）；related＝links.related（只有 V1 畫 href）。
           cross() {
-            local from="$1" to="$2" folder_flag="$3"
-            local build_on runtime_on
+            local from="$1" to="$2" folder_flag="$3" kind="${4:-seq}"
+            local build_on runtime_on detail_v2
             build_on="$(flag KP_ENABLED "$KP_BUILD_FLAGS")$(flag "$folder_flag" "$KP_BUILD_FLAGS")"
             runtime_on="$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")"
+            detail_v2="$(flag KP_DETAIL_V2_ENABLED "$KP_RUNTIME_FLAGS")"
             if [ "$runtime_on" != truetruetrue ]; then
               echo "skip: ${from} → ${to} (runtime flags do not serve both ends)"
               return
@@ -620,8 +630,14 @@ jobs:
             fetch "$from" /tmp/prod-detail.html
             sed 's/<!-- -->//g' /tmp/prod-detail.html > /tmp/prod-detail.txt
             if [ "$build_on" = truetrue ]; then
-              grep -F "href=\"${to}\"" /tmp/prod-detail.txt >/dev/null || { echo "${from} should link ${to} (${folder_flag} on at build)"; exit 1; }
-              if grep -E "另有 [0-9]+ 個知識點尚未發布" /tmp/prod-detail.txt >/dev/null; then
+              if [ "$detail_v2" = true ] && [ "$kind" = related ]; then
+                grep -F "kp-detail-v2" /tmp/prod-detail.txt >/dev/null || { echo "${from} should be the v2 detail page"; exit 1; }
+                grep -F "v2-aside" /tmp/prod-detail.txt >/dev/null || { echo "${from} should show the v2 sidebar"; exit 1; }
+                fetch "$to" /dev/null 200
+              else
+                grep -F "href=\"${to}\"" /tmp/prod-detail.txt >/dev/null || { echo "${from} should link ${to} (${folder_flag} on at build)"; exit 1; }
+              fi
+              if grep -E "另有 [0-9]+ 個(知識點)?尚未發布" /tmp/prod-detail.txt >/dev/null; then
                 echo "${from} shows a 尚未發布 notice although every neighbour is published"
                 exit 1
               fi
@@ -632,7 +648,7 @@ jobs:
               fi
             fi
           }
-          cross /kp/ph.reason/es /kp/sk.point/es KP_SOFTSKILLS_ENABLED
-          cross /kp/ma.data/es /kp/sk.rootcause/sh KP_SOFTSKILLS_ENABLED
-          cross /kp/sk.present/sh /kp/zh.explain/sh KP_YUWEN_ENABLED
-          cross /kp/zh.editing/uni /kp/sk.feedback/sh KP_SOFTSKILLS_ENABLED
+          cross /kp/ph.reason/es /kp/sk.point/es KP_SOFTSKILLS_ENABLED seq
+          cross /kp/ma.data/es /kp/sk.rootcause/sh KP_SOFTSKILLS_ENABLED seq
+          cross /kp/sk.present/sh /kp/zh.explain/sh KP_YUWEN_ENABLED related
+          cross /kp/zh.editing/uni /kp/sk.feedback/sh KP_SOFTSKILLS_ENABLED related

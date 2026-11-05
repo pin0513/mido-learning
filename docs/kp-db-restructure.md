@@ -350,7 +350,7 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 5. 取得 I-PING 本人明確同意後才切流量；切完在正式網址再看一次第 4 項。
 6. 回滾：切回前一個 revision（它的 image 與旗標值一致）；不要只改環境變數。
 
-`KP_DETAIL_V2_ENABLED` 本身只是 middleware 改寫，執行時切換就生效；但 V2 頁裡的連結一樣是 build 時的旗標值，所以在旗標關的 build 上打開 V2 時，問題 2 會直接出現在正式站。B 合併之前，打開 V2 也要走上面的清單。B 的 V2 部分合併後（第 17.6 節），V2 不再誤報「尚未發布」，但跨學門連結仍是 build 時的值（問題 1），打開 V2 仍屬旗標切換，要 I-PING 本人明確同意。
+`KP_DETAIL_V2_ENABLED` 本身只是 middleware 改寫，執行時切換就生效；但 V2 頁裡的連結一樣是 build 時的旗標值，所以在旗標關的 build 上打開 V2 時，問題 2 會直接出現在正式站。B 合併之前，打開 V2 也要走上面的清單。B 的 V2 部分合併後（第 17.6 節），V2 不再誤報「尚未發布」，但跨學門連結仍是 build 時的值（問題 1），打開 V2 仍屬旗標切換，要 I-PING 本人明確同意。2026-11-05 I-PING 已同意打開，值見第 17.7 節。
 
 ### 17.4 做法 A：旗標集中到部署 workflow
 
@@ -367,6 +367,8 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
   - 回滾：revert 這個 PR（squash 的那一個 commit）讓 CI 重新部署，或直接把流量切回前一個 revision（合併前是 `00212-vkj`，或當時的前一個）。兩種都會回到全關 build 的詳細頁；執行時的值一樣，不受影響。
 
 ### 17.5 正式站現況（2026-10-30，`f4a394f`／`00203-5fb`；#67 合併後的 `c8866ba`／`00204-8qc`、#76 的 `2c40402`／`00212-vkj` 的旗標相同）
+
+這一節是 2026-10-30 的快照。`KP_DETAIL_V2_ENABLED` 自 2026-11-05 起在 build 與執行時都是 `true`（第 17.7 節）。下面寫「V2 沒設」或「V2 關」的地方，指的是當時，不是第 17.7 節合併之後。
 
 - build 時：`deploy-frontend.yml` 只傳 `NEXT_PUBLIC_*` build arg，Dockerfile 沒有 `KP_*` 的 `ARG`，`.dockerignore` 排除 `.env*`。所以每一張正式 image 都是在 `KP_*` 全關下 build 的。
 - 執行時（Cloud Run 環境變數）：`KP_ENABLED`、`KP_HOME_ENABLED`、`KP_SOFTSKILLS_ENABLED`、`KP_YUWEN_ENABLED` 都是 `true`；`KP_DETAIL_V2_ENABLED` 沒設。
@@ -406,10 +408,10 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 
 - `components/kp/v2/refs.ts` 新增 `hiddenDraftCount(known, shown)`：不連出去的點裡，只算 `status` 不是 `published` 的。`PointLinks` 改用它。已發布、只因學門旗標沒上線而不連的點整筆不出現，也不算數。
 - 清單裡只有這種點（沒有可連的點、也沒有草稿）時，只略過這一個清單，不寫「沒有，這是起點。」這類空清單的話（那句話只在清單本來就空時才對）；「學習順序」區塊與另一個清單照常畫。後續 PR 讓「先學」「後學」標題跟著清單一起畫（`PointLinks` 的 `label`），清單略過時標題也略過，不留孤零零的標題。
-- 舊版詳細頁（`KnowledgePointView` 的 `LinkedIds`）**沒改**。它也會把旗標擋掉的已發布點算成「尚未發布」（第 17.1 節問題 2，正式站 6 個點、12 條路由，見第 17.5 節的表），所以不是「正確」的參考。這個 PR 只改 V2，正式站（`KP_DETAIL_V2_ENABLED` 關）的頁面一條都不變；舊版要另開 PR，那會改變正式內容。
+- 舊版詳細頁（`KnowledgePointView` 的 `LinkedIds`）**沒改**。它也會把旗標擋掉的已發布點算成「尚未發布」（第 17.1 節問題 2，正式站 6 個點、12 條路由，見第 17.5 節的表），所以不是「正確」的參考。這個 PR 只改 V2，當時正式站（`KP_DETAIL_V2_ENABLED` 關；2026-11-05 起改開，見第 17.7 節）的頁面一條都不變；舊版要另開 PR，那會改變正式內容。
 - 旗標的值都沒改（workflow、env、Dockerfile 都不動）。`lib/kp/flags.ts`、`content/README.md`、`docs/specs/rollback.md` 的說明改成：「不用重新 build」只對請求時算的頁面（middleware、首頁、`/api/kp-launch`、`/kp/index.json`、sitemap、`/kp`、`/kp/layer/*`、`/kp/stage/*`、`/kp/competency/*`）成立；靜態詳細頁要重新 build。另外，請求時的清單頁與 `/kp/index.json` 也讀 `KP_INCLUDE_DRAFTS`（`visibleCatalog` 的預設值），不只 build 時。
 - 渲染比對（本機用正式 Dockerfile build `main`（`70d03c0`）與分支兩張 image，build 時 `KP_*` 全關，執行時用正式站的四個 `true`，爬 552 條路由，去掉 build id、雜湊與時間後比對 HTML）：
-  - `KP_DETAIL_V2_ENABLED` 關（正式站現況）：0 條不同。
+  - `KP_DETAIL_V2_ENABLED` 關（2026-10-30 當時的正式站；2026-11-05 起改開，見第 17.7 節）：0 條不同。
   - `KP_DETAIL_V2_ENABLED` 開：22 條不同，是下表 11 個點的 `/kp/概念`（轉址到唯一學段）與 `/kp/概念/學段`。去掉 `<script>` 後的可見 HTML 只差「尚未發布」那一行；其餘差異是 RSC payload 的編號與切段位置。
 
 | 頁面（V2 後學） | 被旗標擋掉的已發布點 | 之前 | 之後 |
@@ -429,3 +431,13 @@ PM 審查的 P2 後續：學門凍結之前，內容 PR 不能悄悄刪掉 YAML 
 - 測試：`components/kp/hidden-notice.test.ts` 加一則（學門旗標關時只算草稿；只有旗標擋掉的點時略過那個清單；旗標開時連出去、草稿照算），在舊的 `PointLinks` 上會失敗。新的 `e2e/kp-detail-v2-flag-hidden.spec.ts` 由 `content/` 算出所有受影響的點，在 CI 的「Published-only pages, V2 with production runtime flags」步驟（不含草稿、`KP_*` 全關的 build，執行時用正式站的旗標加 V2）檢查；對 `main` 的 image 會失敗（1 個多餘的「尚未發布」），對分支通過。`e2e/kp-published-softskills.spec.ts` 的 V2 輪改成只算草稿。
 - eslint：改到的檔案沒有錯誤。`components/kp` 裡有 2 個既有錯誤（`AxisBrowser.tsx:38`、`v2/figures/Compare.tsx:116`），整個 `frontend/` 在 `main` 上有 26 個既有錯誤（`npx eslint .`，65 個警告），都不是這些 PR 加的。
 - 回滾：revert 這個 PR 的 squash commit，或回到 PM 建的 pre-tag。
+
+### 17.7 打開 `KP_DETAIL_V2_ENABLED`（2026-11-05）
+
+I-PING 本人於 2026-11-05（台北時間）回覆，逐字：「開 V2 開關（KP_DETAIL_V2_ENABLED）」。原因：V1 的知識屬性（學科路徑／能力標籤／人機分工／先備／連結）在頁面底部；V2 把它們放進側欄（390px 時是標題下的 chips）。
+
+`.github/workflows/deploy-frontend.yml` 的 `KP_BUILD_FLAGS` 與 `KP_RUNTIME_FLAGS` 改成同一組值。只有 `KP_DETAIL_V2_ENABLED` 從 `false` 改成 `true`；`KP_ENABLED`、`KP_HOME_ENABLED`、`KP_SOFTSKILLS_ENABLED`、`KP_YUWEN_ENABLED` 維持 `true`。`KP_INCLUDE_DRAFTS`、`KP_SLIDES_PREVIEW`、`KP_SLIDES_FIXTURE` 仍不設。
+
+合併並重新部署之後：middleware 把 `/kp/概念/學段` 改寫到 `/kp-v2/概念/學段`，所以 `/kp/...` 顯示 V2（側欄屬性；390px 時標題下 chips）。直連 `/kp-v2` 與 `/kp-v2/*` 仍是 404；rewrite 不會再跑一次 middleware。V2 頁裡的跨學門連結仍是 build 時的學門旗標（第 17.1 節問題 1）；這次 build 與執行時的四個學門旗標都已是 `true`，兩行仍然一致。
+
+回滾：revert 這個 PR 的 squash commit，讓 CI 重新部署；或把流量切回合併前、正在接 100% 流量的 revision `mido-learning-frontend-00235-jxt`（image tag 是當時的 main `85f52ac3ad102bbdb58209c738c14432d18a99f5`，兩行都是 `KP_DETAIL_V2_ENABLED=false`）。不要只在 Cloud Run 主控台或 `gcloud` 改環境變數。squash-merge 之前，PM 先在那個 main 打 tag `pre-kp-detail-v2-on`。
