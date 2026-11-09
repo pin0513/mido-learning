@@ -90,10 +90,10 @@ why:
   - title: 誰造成誰
     text: 要再問，不能只看一起出現。
   - title: 推論因果
-    text: 推論文本隱含的因果訊息或觀點。
+    text: 運用自我提問、推論等策略，推論文本隱含的因果訊息或觀點。
     code: 5-III-8
   - title: 事實和判斷
-    text: 區分客觀事實與主觀判斷。
+    text: 區分文本中的客觀事實與主觀判斷之間的差別。
     code: 5-III-4
   sources:
   - kuoyu

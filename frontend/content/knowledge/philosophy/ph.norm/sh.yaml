@@ -44,7 +44,7 @@ links:
   related: []
   deeper:
   - ph.philsci@uni
-link_notes: 社會：用公民知識提出論證，並分辨事實、證據與解釋。下一階是研究設計裡的相關與因果。大學的法律因果在另一個學門，旗標關掉時不從這裡連出去。
+link_notes: 下一階是研究設計裡的相關與因果。大學的法律因果在另一個學門。
 competency:
   specialist:
   - 論證
@@ -93,10 +93,10 @@ why:
   - title: 規範問題
     text: 誰有義務做某件事。
   - title: 提出論證
-    text: 論述自己的主張並提出論證。
+    text: 整合公民知識，論述自己的主張，並能提出合理的論證。
     code: 公 1c-V-2
   - title: 分開事實和解釋
-    text: 分辨事實、證據與解釋。
+    text: 分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。
     code: 歷 3b-V-3
   sources:
   - sep-hume-moral
@@ -133,7 +133,7 @@ what:
   heading: 篩完只標出規範
   body:
   - 三道篩子的順序不能倒過來。先挑「誰有義務」，再回頭找一起發生的事，就會把結論藏進事實裡（本站整理）。
-  - 歷史課要「分辨歷史事實、史料證據與歷史解釋」。倒塌是事實，少放材料是有人提出的解釋，義務是另一種規範。三者不要寫成同一句（本站整理）。大學接著看 ph.philsci@uni 裡的相關與因果；法律條文上的因果在另一個學門。
+  - 歷史課要「分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。」倒塌是事實，少放材料是有人提出的解釋，義務是另一種規範。三者不要寫成同一句（本站整理）。大學接著看 ph.philsci@uni 裡的相關與因果；法律條文上的因果在另一個學門。
   figures:
   - norm-flow
   notes:
@@ -171,4 +171,4 @@ sources:
   accessed: '2026-11-10'
   kind: reference
   supports: |
-    第 5 節讀到：這種推論在休謨看來「altogether inconceivable」（頁上標 T 3.1.1.27）。同一節的主要二十世紀解釋寫道：「no ought-judgment may be correctly inferred from a set of premises expressed only in terms of」而後用引號標出 is。本點不引用含撇號的句子，也沒有另開《人性論》原書。
+    第 5 節讀到：這種推論在休謨看來「altogether inconceivable」（頁上標 T3.1.1.27）。同一節的主要二十世紀解釋寫道：「no ought-judgment may be correctly inferred from a set of premises expressed only in terms of」而後用引號標出 is。本點不引用含撇號的句子，也沒有另開《人性論》原書。
