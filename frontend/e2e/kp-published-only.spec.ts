@@ -128,6 +128,9 @@ test.describe("正式 build", () => {
     // B19 發布 pm.stakeholder@sh 後，404 頁改用它的下一階草稿 pm.business@uni；B20 發布 pm.business@uni 後，404 頁改用它 links.why 連到的哲學草稿 ph.applied@uni。
     // B24 發布 ph.applied@uni 後，404 頁改用 pm.business@uni links.related 連到的軟實力草稿 sk.a3@uni（這個行程也沒開溝通與解決問題旗標）；ph.applied@uni 改查 200 與標題。
     // B28 發布 sk.a3@uni 後，404 只因這個行程沒開溝通與解決問題旗標（不再是草稿）。
+    const lw = await request.get("/kp/lw.causation/uni");
+    expect(lw.status()).toBe(404);
+    expect(await lw.text()).not.toContain("法律上的因果");
     const a3 = await request.get("/kp/sk.a3/uni");
     expect(a3.status()).toBe(404);
     expect(await a3.text()).not.toContain("一頁問題報告：帶團隊從問題到行動");

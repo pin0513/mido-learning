@@ -55,3 +55,11 @@ paths:
       - ph.aijudge@sh
       - ph.aimind@uni
     colearn: 孩子讀「我怎麼知道的？」，大人讀「AI 時代的思考：人機分工與判斷」，一起問 AI 同一個問題再查證。
+  - id: ph.causation
+    title: 因果與歸責
+    knowledge_points:
+      - ph.cause@es
+      - ph.counterfact@jh
+      - ph.norm@sh
+      - ph.philsci@uni
+    colearn: 孩子做一起發生卡片，大人用三題檢查表重看一次爭吵：事實是什麼、假如沒有還會不會、依據的是哪一種規範。

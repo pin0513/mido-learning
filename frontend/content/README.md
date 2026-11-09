@@ -40,6 +40,7 @@
 | `KP_HOME_ENABLED` | 每次請求（middleware、`/api/kp-launch` 的 `home`） | 關 | 首頁開關，跟上面分開。關的時候 `/` 是原本的靜態首頁，`/city-home` 404。開的時候 middleware 把 `/` 改寫到 `/city-home`（網址仍是 `/`）。同樣不用重新 build，要重啟行程。知識點連結仍要 `KP_ENABLED` 才開得了。 |
 | `KP_SOFTSKILLS_ENABLED` | 每次請求（middleware、首頁、清單頁、sitemap）；靜態詳細頁在 build 時 | 關 | 打開六格學門切換，含「溝通與解決問題」。只有 `KP_ENABLED` 也是 true 才算開。關的時候學門切換維持四格，`/kp/sk.*` 是 404，sitemap 不列 `sk`。middleware、首頁、`/kp`、`/kp/layer`、`/kp/stage`、`/kp/competency`、`/kp/index.json` 與 sitemap 是請求時讀；**詳細頁裡跨學門的連結是 build 時決定的，切換要重新 build**；旗標關的 build 上，舊版詳細頁還會把已發布的軟實力、語文點算成「尚未發布」，V2 只算草稿（見 `docs/kp-db-restructure.md` 第 17 節）。「語文」那一格要上線，還要開 `KP_YUWEN_ENABLED`。 |
 | `KP_YUWEN_ENABLED` | 每次請求（middleware、首頁、清單頁、sitemap）；靜態詳細頁在 build 時 | 關 | 打開語文（國文、外語）。只有 `KP_ENABLED` 也是 true 才算開。關的時候「語文」維持準備中，`/kp/zh.*`、`/kp/en.*`、`/kp/ja.*`、`/kp/lg.*` 是 404，sitemap 不列這些網址。和 `KP_SOFTSKILLS_ENABLED` 一樣，詳細頁的跨學門連結要重新 build（第 17 節）。 |
+| `KP_SOCIETY_ENABLED` | 每次請求（middleware、首頁、清單頁、sitemap）；靜態詳細頁在 build 時 | 關 | 打開社會（法律素養，`lw`）。只有 `KP_ENABLED` 也是 true 才算開。關的時候社會不進學門切換、地圖沒有那塊扇形，`/kp/lw.*` 與 `/kp/discipline/society` 是 404，sitemap 不列這些網址。詳細頁的跨學門連結要重新 build。預設與正式環境都是 false，打開要另外核准。 |
 | `KP_INCLUDE_DRAFTS` | `next build` / `next dev`；請求時的清單頁與 `/kp/index.json` 也讀 | 關（只生成 `published`） | 草稿與 `review` 要不要變成頁面。正式站預設不生成。改值必須重新 build，執行時的值也要和 build 一樣，否則清單會列出沒有頁面的草稿。 |
 
 正式站目前發布的是主線 `pm.estimate`（拆解與估算）的四站，加上哲學的 `ph.reason@es`。溝通與解決問題的口語表達、語文的 108 個知識點都已發布，但要各自的旗標打開才看得到。其餘維持草稿。正式 image 不要設 `KP_INCLUDE_DRAFTS`。CI 的知識地圖測試會打開草稿，徑向圖才會有全部建築。
@@ -98,7 +99,7 @@ content/
 {前綴}.{概念}@{階段}
 ```
 
-- 前綴來自 `taxonomy/disciplines.yaml` 的 `id_prefix`（目前是 `pm`、`ph`、`ma`、`it`）
+- 前綴來自 `taxonomy/disciplines.yaml` 的 `id_prefix`（目前是 `pm`、`ph`、`ma`、`it`、`sk`、`zh`、`en`、`ja`、`lg`、`lw`）。`lw` 在社會學門，`KP_SOCIETY_ENABLED` 關掉時頁面、扇形與連結都不露出。
 - 概念是小寫英文與數字，例如 `breakdown`
 - 階段是 `es` 國小、`jh` 國中、`sh` 高中、`uni` 大學
 - 例子：`pm.breakdown@es`

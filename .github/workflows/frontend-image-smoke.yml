@@ -129,15 +129,19 @@ jobs:
           done
           check "/kp" /tmp/kp.html
           check "/kp/map" /tmp/kp-map.html
-          # 溝通與解決問題、語文旗標都沒設：地圖只有四個學區、100 個節點。
-          if ! grep -F 'data-building-count="100"' /tmp/kp-map.html >/dev/null; then
-            echo "/kp/map should have 100 points while soft-skills and yuwen are unset"
+          # 溝通與解決問題、語文、社會旗標都沒設：地圖只有四個學區、103 個節點（哲學多 3 點）。
+          if ! grep -F 'data-building-count="103"' /tmp/kp-map.html >/dev/null; then
+            echo "/kp/map should have 103 points while soft-skills, yuwen and society are unset"
             exit 1
           fi
-          # 主線下拉選單：四個學門的 29 條主線 + 「不標路線」。
+          if grep -F 'data-district="society"' /tmp/kp-map.html >/dev/null; then
+            echo "/kp/map shows society while KP_SOCIETY_ENABLED is unset"
+            exit 1
+          fi
+          # 主線下拉選單：四個學門的 30 條主線 + 「不標路線」。
           options="$(node frontend/scripts/city-path-count.mjs /tmp/kp-map.html)"
-          if [ "$options" != "30" ]; then
-            echo "/kp/map has ${options} path options, expected 30 while soft-skills and yuwen are unset"
+          if [ "$options" != "31" ]; then
+            echo "/kp/map has ${options} path options, expected 31 while soft-skills and yuwen are unset"
             exit 1
           fi
           if grep -F "溝通與解決問題" /tmp/home.html >/dev/null; then
@@ -160,6 +164,22 @@ jobs:
           fi
           if curl -sf http://127.0.0.1:3000/sitemap.xml | grep -F "/kp/sk." >/dev/null; then
             echo "sitemap lists sk while the flag is unset"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/lw-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/lw.causation/uni)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/lw.causation/uni returned ${code}, expected 404"
+            exit 1
+          fi
+          if grep -F "法律上的因果" /tmp/lw-off.html >/dev/null; then
+            echo "society page body is visible while the flag is unset"
+            exit 1
+          fi
+          check "/kp/ph.cause/es" /tmp/ph-cause.html
+          check "/kp/ph.counterfact/jh" /tmp/ph-counterfact.html
+          check "/kp/ph.norm/sh" /tmp/ph-norm.html
+          if curl -sf http://127.0.0.1:3000/sitemap.xml | grep -F "/kp/lw." >/dev/null; then
+            echo "sitemap lists lw while society is unset"
             exit 1
           fi
 
@@ -227,15 +247,15 @@ jobs:
             echo "GET /kp/zh.punct/es returned ${code}, expected 404 while yuwen is unset"
             exit 1
           fi
-          # 只開溝通與解決問題：地圖五個學區、142 個節點。
+          # 只開溝通與解決問題：地圖五個學區、145 個節點。
           code="$(curl -sS -o /tmp/map-soft.html -w '%{http_code}' http://127.0.0.1:3001/kp/map)"
-          if [ "$code" != "200" ] || ! grep -F 'data-building-count="142"' /tmp/map-soft.html >/dev/null; then
-            echo "/kp/map returned ${code} or does not have 142 points with soft-skills on"
+          if [ "$code" != "200" ] || ! grep -F 'data-building-count="145"' /tmp/map-soft.html >/dev/null; then
+            echo "/kp/map returned ${code} or does not have 145 points with soft-skills on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-soft.html)"
-          if [ "$options" != "38" ]; then
-            echo "/kp/map has ${options} path options, expected 38 with soft-skills on"
+          if [ "$options" != "39" ]; then
+            echo "/kp/map has ${options} path options, expected 39 with soft-skills on"
             exit 1
           fi
 
@@ -295,14 +315,14 @@ jobs:
           fi
           check "/kp"
           check "/kp/map"
-          # 六個學門全開：地圖六個學區、250 個節點。
-          if ! grep -F 'data-building-count="250"' /tmp/yuwen-body.html >/dev/null; then
-            echo "/kp/map should have 250 points with soft-skills and yuwen on"
+          # 溝通與解決問題、語文開，社會仍關：地圖六個學區、253 個節點。
+          if ! grep -F 'data-building-count="253"' /tmp/yuwen-body.html >/dev/null; then
+            echo "/kp/map should have 253 points with soft-skills and yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/yuwen-body.html)"
-          if [ "$options" != "52" ]; then
-            echo "/kp/map has ${options} path options, expected 52 with soft-skills and yuwen on"
+          if [ "$options" != "53" ]; then
+            echo "/kp/map has ${options} path options, expected 53 with soft-skills and yuwen on"
             exit 1
           fi
           check "/kp/zh.punct/es"
@@ -358,7 +378,7 @@ jobs:
             done < /tmp/kp-drafts.tsv
           fi
 
-      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、208 個節點、43 條主線 + 「不標路線」。
+      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、211 個節點、44 條主線 + 「不標路線」。
       - name: Run image with yuwen flag only
         run: |
           set -euo pipefail
@@ -394,13 +414,13 @@ jobs:
             echo "GET /kp/map returned ${code} with only yuwen on"
             exit 1
           fi
-          if ! grep -F 'data-building-count="208"' /tmp/map-yuwen-only.html >/dev/null; then
-            echo "/kp/map should have 208 points with only yuwen on"
+          if ! grep -F 'data-building-count="211"' /tmp/map-yuwen-only.html >/dev/null; then
+            echo "/kp/map should have 211 points with only yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-yuwen-only.html)"
-          if [ "$options" != "44" ]; then
-            echo "/kp/map has ${options} path options, expected 44 with only yuwen on"
+          if [ "$options" != "45" ]; then
+            echo "/kp/map has ${options} path options, expected 45 with only yuwen on"
             exit 1
           fi
           # 溝通與解決問題沒開：地圖上不能有它的學區，語文的點要在。
@@ -587,15 +607,16 @@ jobs:
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
             fetch "/" /tmp/prod-home.html
             fetch "/kp/map" /tmp/prod-map.html
-            points=100
+            points=103
             [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 42))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 108))
+            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 1))
             if ! grep -F "data-building-count=\"${points}\"" /tmp/prod-map.html >/dev/null; then
               echo "/kp/map should have ${points} points with the production runtime flags"
               exit 1
             fi
-            # 主線選項數（#77 的 city-path-count）：四個學區 30，溝通與解決問題 +8，語文 +14。
-            options=30
+            # 主線選項數：四個學區 31（含因果與歸責），溝通與解決問題 +8，語文 +14。社會這一輪沒有主線。
+            options=31
             [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 8))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 14))
             actual="$(node frontend/scripts/city-path-count.mjs /tmp/prod-map.html)"
@@ -605,6 +626,13 @@ jobs:
             fi
           fi
           fetch "/kp-v2/zh.zhuyin/es" /dev/null 404
+          if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" != true ]; then
+            fetch "/kp/lw.causation/uni" /dev/null 404
+            fetch "/kp/discipline/society" /dev/null 404
+            fetch "/kp/ph.cause/es" /tmp/prod-cause.html
+            fetch "/kp/ph.counterfact/jh" /tmp/prod-counterfact.html
+            fetch "/kp/ph.norm/sh" /tmp/prod-norm.html
+          fi
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
             fetch "/kp/pm.breakdown/es" /tmp/prod-breakdown.html
             if [ "$(flag KP_DETAIL_V2_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then

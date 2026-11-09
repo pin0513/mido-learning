@@ -1,0 +1,215 @@
+id: lw.causation@uni
+concept: lw.causation
+title: 法律上的因果：假如沒有，還要看規範
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 社會
+  - 法律素養
+  layer: foundation
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes:
+- 大學不填 curriculum_108、不列 est_time。
+- 法條逐字引自 2026-11-10 讀取的全國法規資料庫單條頁。民法頁首的「尚未生效」是第 166 條之 1 與 115 年 8 月 17 日修正的第 1223 條，不是本點引用的條文。
+- 76 年台上字第 192 號只引用要旨，不敘述該案事實、不寫人名。要旨的換行是網頁每行約 40 字的排版，銜接時不加空格。編註已讀：效力與未經選編為判例之最高法院裁判相同。
+- 史丹佛哲學百科 Causation in the Law 談的是英美侵權與刑法，本點標明這點，不把它寫成臺灣條文。只引用 2026-11-10 讀過、且不含撇號的句子。
+- 教學例子是本站虛構：沒繫繩的狗、路人跌倒挫傷。不對甲、乙、丙誰該賠、誰成立犯罪下結論。
+- 這一輪刪掉、不引用：113 年憲判字第 3 號（未逐字核對，且不屬本點）、Hitchcock 與 Knobe 2009（未打開）、Hume 與 Lewis 的原書（只在前面的哲學點引用百科頁上的句子）、規劃中尚未收進代碼表的公民學習表現。
+prerequisites:
+- ph.norm@sh
+links:
+  why: []
+  how: []
+  related:
+  - ph.philsci@uni
+  - ph.applied@uni
+  deeper: []
+link_notes: 先備是高中的三道篩子。相關是研究設計裡的相關與因果，以及應用倫理。本點不判決。
+competency:
+  specialist:
+  - 法律素養
+  - 批判思考
+  generalist:
+  - 查證
+  - 跨域思考
+ai:
+  delegable:
+  - 由讀者自己核對，請 AI 列出可能相關的條號；條文必須回到全國法規資料庫逐字看，不採用 AI 覆述
+  human_experience:
+  - 決定這次要檢驗的是哪一條規範，並停在不下結論
+idea: 臺灣實務上，過失與結果之間要做相當因果的事後審查；英美教材常寫的 but-for 不是這裡的條文。條文不同，問題就不同。本頁只用虛構例子說明，不下判決。
+guiding_questions:
+- 假如沒有，和相當因果，問的是同一件事嗎？
+- 沒有法律上的防止義務時，不作為可以怎麼被拿來對照？
+- 為什麼本頁不能說甲要賠、或甲成立犯罪？
+scenario: 讀一個虛構例子：甲週末遛狗沒繫繩，狗衝向路人乙，乙閃避時跌倒，手腕挫傷。乙當時低頭看手機。路過的丙沒有飼養這隻狗。只做條文對照，不寫判決。
+formats:
+  slides: []
+  exercise: 目標：能用虛構例子指出至少兩條不同規範各在問什麼，並說明本頁為什麼不下結論。　檢核：不看本頁，說出但書式的「假如沒有」和要旨裡的「一般情形下均可發生」差在哪；引用時要有條號；最後寫明結論取決於法院適用哪一條，本頁不代為判斷。
+authors:
+- I-PING Huang
+updated: '2026-11-10'
+goal: 能用虛構例子指出至少兩條不同規範各在問什麼，並說明本頁為什麼不下結論。
+review: 不看本頁，說出但書式的「假如沒有」和要旨裡的「一般情形下均可發生」差在哪；引用時要有條號；最後寫明結論取決於法院適用哪一條，本頁不代為判斷。
+audience:
+- adult
+- family
+why:
+  heading: 兩套問法不要混用
+  body:
+  - 史丹佛哲學百科的法律因果條目談的是英美侵權與刑法。它寫道：「This minimalist requirement is by far the dominant explicit test for cause in fact in both torts and criminal law.」同一段把這個測驗叫做 sine qua non，也叫做 but-for；頁上這兩個名稱各自有引號。同段也說這測驗「is also sometimes called the necessary condition test」。這不是民法或刑法的條文（說明是本站整理）。
+  - 臺灣最高法院 76 年台上字第 192 號判例的要旨寫：「刑法上之過失，其過失行為與結果間，在客觀上有相當因果關係始得成立。所謂相當因果關係，係指依經驗法則，綜合行為當時所存在之一切事實，為客觀之事後審查，認為在一般情形下，有此環境、有此行為之同一條件，均可發生同一之結果者，則該條件即為發生結果之相當條件，行為與結果即有相當之因果關係。」問的是一般情形下是不是都會發生，不是只問拿掉之後這一次還會不會發生。
+  qa:
+    question: 假如沒有，和相當因果，問的是同一件事嗎？
+    answer: 不是。假如沒有問的是拿掉這個條件，這一次的結果還在不在。要旨裡的相當因果問的是：一般情形下，同樣的條件是不是都可以發生同樣的結果。英美百科裡的 but-for 也不能直接當成臺灣條文。
+    source: precedent-192
+  items_title: 先標出你在用哪一套
+  items:
+  - title: 假如沒有
+    text: 拿掉它，這一次還會不會。
+  - title: 相當因果
+    text: 一般情形下是不是都會發生。
+  - title: 英美 but-for
+    text: 百科說的是英美法，不是這裡的條文。
+  - title: 先不下結論
+    text: 條文不同，問題就不同。
+  sources:
+  - precedent-192
+  - sep-causation-law
+how:
+  heading: 用條文分題，不下判
+  body:
+  - 虛構例子：甲沒把狗繫繩，狗衝向路人乙，乙閃避時跌倒，手腕挫傷，乙當時在看手機，丙只是路過。民法第 190 條第 1 項：「動物加損害於他人者，由其占有人負損害賠償責任。但依動物之種類及性質已為相當注意之管束，或縱為相當注意之管束而仍不免發生損害者，不在此限。」第 217 條第 1 項：「損害之發生或擴大，被害人與有過失者，法院得減輕賠償金額，或免除之。」這兩條各問一件事：占有人的管束，以及法院得不得減輕。本頁不說甲要賠多少，也不說乙看手機就當然免責。
+  - 刑法第 15 條第 1 項：「對於犯罪結果之發生，法律上有防止之義務，能防止而不防止者，與因積極行為發生結果者同。」第 2 項：「因自己行為致有發生犯罪結果之危險者，負防止其發生之義務。」丙若沒有這種義務，不能只因為他路過沒有出手，就把他寫成和第 1 項相同。第 276 條：「因過失致人於死者，處五年以下有期徒刑、拘役或五十萬元以下罰金。」這一條要有死亡結果。本例只有挫傷，不套這條下結論，只用它看見結果不同、條文就不同。
+  - 百科用兩場各自就足夠的火說明 but-for 的困難，並寫下：「So on the but-for test, neither was the cause!」民法第 185 條第 1 項則是另一條規範：「數人共同不法侵害他人之權利者，連帶負損害賠償責任。不能知其中孰為加害人者亦同。」第 184 條第 1 項是一般規定：「因故意或過失，不法侵害他人之權利者，負損害賠償責任。故意以背於善良風俗之方法，加損害於他人者亦同。」若受傷的人是未成年人，要另外看第 187 條，本例沒有把乙寫成未成年人，所以不套用。以上都只是把條文放在例子旁邊，不是判決。
+  items_title: 這個例子可以對上的問題
+  items:
+  - title: 誰在管束
+    example: 狗是誰占有的？
+    text: 對上民法第 190 條，先不下判。
+  - title: 被害人自己
+    example: 乙當時在看手機。
+    text: 對上第 217 條，法院得減輕或免除。
+  - title: 路過的人
+    example: 丙沒有飼養這隻狗。
+    text: 對上刑法第 15 條的義務從哪來。
+  - title: 結果是什麼
+    example: 本例是挫傷，不是死亡。
+    text: 第 276 條要有死亡結果。
+  checklist_title: 引用之前
+  checklist:
+  - 寫出條號
+  - 標明哪一套問法
+  - 最後寫不下結論
+  sources:
+  - civil-190
+  - civil-217
+  - penal-15
+  - penal-276
+  - civil-185
+  - civil-184
+  - civil-187
+  - sep-causation-law
+what:
+  heading: 規範選哪條，問題就不同
+  body:
+  - 要旨後段寫：「反之，若在一般情形下，有此同一條件存在，而依客觀之審查，認為不必皆發生此結果者，則該條件與結果不相當，不過為偶然之事實而已，其行為與結果間即無相當因果關係。」這是「不必皆發生」就不相當，和「拿掉之後這一次還在不在」不是同一題。全國法規資料庫的編註寫，本則判例依法院組織法第 57 條之 1 第 2 項，效力與未經選編為判例之最高法院裁判相同。
+  - 所以檢核時要先寫：我現在用的是假如沒有、相當因果，還是某一條的構成要件。民法第 187 條第 1 項把識別能力寫進法定代理人的責任：「無行為能力人或限制行為能力人，不法侵害他人之權利者，以行為時有識別能力為限，與其法定代理人連帶負損害賠償責任。」條文在，不代表這個虛構例子適用它。結論取決於法院適用哪一條規範。本頁不進入判決。
+  figures:
+  - causation-compare
+  notes:
+  - 圖是本站整理，用來對照兩種問法，不是法院的裁判格式。
+  - 第 187 條全文在來源裡。本例的乙沒有被寫成未成年人，正文不套用該條做結論。
+  sources:
+  - precedent-192
+  - civil-187
+  - sep-causation-law
+figures:
+- id: causation-compare
+  type: compare
+  alt: 對照兩種因果問法。假如沒有：拿掉這個條件，這一次的結果還會不會發生。相當因果：依要旨，一般情形下同樣條件是不是都可以發生同樣結果。
+  source: precedent-192
+  relation: versus
+  items:
+  - term: 假如沒有
+    note: 拿掉它，這一次還會不會發生
+  - term: 相當因果
+    note: 一般情形下，是不是都會發生
+  caption: 左邊對照英美教材的 but-for，不是臺灣條文。右邊的句子見 76 年台上字第 192 號要旨。
+sources:
+- id: precedent-192
+  title: 最高法院 76 年台上字第 192 號判例
+  publisher: 全國法規資料庫（裁判字號 76年台上字第192號，民國 76 年 1 月 16 日）
+  url: https://law.moj.gov.tw/LawClass/ExContent.aspx?JC=B&JCASE=%E5%8F%B0%E4%B8%8A&JNO=192&JNUM=001&JYEAR=76&ty=J
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    要旨：「刑法上之過失，其過失行為與結果間，在客觀上有相當因果關係始得成立。所謂相當因果關係，係指依經驗法則，綜合行為當時所存在之一切事實，為客觀之事後審查，認為在一般情形下，有此環境、有此行為之同一條件，均可發生同一之結果者，則該條件即為發生結果之相當條件，行為與結果即有相當之因果關係。反之，若在一般情形下，有此同一條件存在，而依客觀之審查，認為不必皆發生此結果者，則該條件與結果不相當，不過為偶然之事實而已，其行為與結果間即無相當因果關係。」編註寫明本則判例依據法院組織法第 57 條之 1 第 2 項，其效力與未經選編為判例之最高法院裁判相同。本點不引用該案事實。
+- id: sep-causation-law
+  title: Causation in the Law（Stanford Encyclopedia of Philosophy）
+  publisher: Michael Moore（Stanford Encyclopedia of Philosophy；2019 年 10 月 3 日首次發表，2024 年 2 月 4 日實質修訂）
+  url: https://plato.stanford.edu/entries/causation-law/
+  accessed: '2026-11-10'
+  kind: reference
+  supports: |
+    第 2.2 節讀到：「This minimalist requirement is by far the dominant explicit test for cause in fact in both torts and criminal law.」下一句把這個測驗叫做 sine qua non，也叫做 but-for；頁上這兩個名稱各自有引號，所以不整句放進引號。同段：「This test is also sometimes called the necessary condition test」。過度決定的兩火例子讀到：「So on the but-for test, neither was the cause!」本點把這些句子標成英美法的整理，不當成臺灣條文。含撇號的句子沒有引用。
+- id: civil-184
+  title: 民法第 184 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=184
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    第 1 項：「因故意或過失，不法侵害他人之權利者，負損害賠償責任。故意以背於善良風俗之方法，加損害於他人者亦同。」第 2 項：「違反保護他人之法律，致生損害於他人者，負賠償責任。但能證明其行為無過失者，不在此限。」
+- id: civil-185
+  title: 民法第 185 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=185
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    第 1 項：「數人共同不法侵害他人之權利者，連帶負損害賠償責任。不能知其中孰為加害人者亦同。」第 2 項：「造意人及幫助人，視為共同行為人。」
+- id: civil-187
+  title: 民法第 187 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=187
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    第 1 項：「無行為能力人或限制行為能力人，不法侵害他人之權利者，以行為時有識別能力為限，與其法定代理人連帶負損害賠償責任。行為時無識別能力者，由其法定代理人負損害賠償責任。」第 2 項：「前項情形，法定代理人如其監督並未疏懈，或縱加以相當之監督，而仍不免發生損害者，不負賠償責任。」第 3 項：「如不能依前二項規定受損害賠償時，法院因被害人之聲請，得斟酌行為人及其法定代理人與被害人之經濟狀況，令行為人或其法定代理人為全部或一部之損害賠償。」第 4 項：「前項規定，於其他之人，在無意識或精神錯亂中所為之行為致第三人受損害時，準用之。」
+- id: civil-190
+  title: 民法第 190 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=190
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    第 1 項：「動物加損害於他人者，由其占有人負損害賠償責任。但依動物之種類及性質已為相當注意之管束，或縱為相當注意之管束而仍不免發生損害者，不在此限。」第 2 項：「動物係由第三人或他動物之挑動，致加損害於他人者，其占有人對於該第三人或該他動物之占有人，有求償權。」
+- id: civil-217
+  title: 民法第 217 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=217
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    第 1 項：「損害之發生或擴大，被害人與有過失者，法院得減輕賠償金額，或免除之。」第 2 項：「重大之損害原因，為債務人所不及知，而被害人不預促其注意或怠於避免或減少損害者，為與有過失。」第 3 項：「前二項之規定，於被害人之代理人或使用人與有過失者，準用之。」
+- id: penal-15
+  title: 中華民國刑法第 15 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=C0000001&flno=15
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    第 1 項：「對於犯罪結果之發生，法律上有防止之義務，能防止而不防止者，與因積極行為發生結果者同。」第 2 項：「因自己行為致有發生犯罪結果之危險者，負防止其發生之義務。」
+- id: penal-276
+  title: 中華民國刑法第 276 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=C0000001&flno=276
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    「因過失致人於死者，處五年以下有期徒刑、拘役或五十萬元以下罰金。」

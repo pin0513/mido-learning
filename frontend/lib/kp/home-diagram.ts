@@ -1,6 +1,6 @@
 import { disciplineRoots, disciplineTitle, type ContentCatalog } from "../content/catalog";
 import type { KnowledgePoint, StageInfo } from "../content/types";
-import { isSoftSkillsEnabled, isYuwenEnabled } from "./flags";
+import { isSocietyEnabled, isSoftSkillsEnabled, isYuwenEnabled } from "./flags";
 import { publicDisciplineIds } from "./home-public";
 import { knowledgePointPath } from "./routes";
 
@@ -136,7 +136,7 @@ export interface HomeModel {
   task: HomeTask | null;
 }
 
-const ORDER = ["pm-leadership", "philosophy", "math", "it-ai", "language", "soft-skills"];
+const ORDER = ["pm-leadership", "philosophy", "math", "it-ai", "language", "soft-skills", "society"];
 
 const PROFILE: Record<string, { shortTitle: string; mention: string; glyph: DisciplineGlyph }> = {
   "pm-leadership": { shortTitle: "專案管理", mention: "專案管理", glyph: "square" },
@@ -145,6 +145,7 @@ const PROFILE: Record<string, { shortTitle: string; mention: string; glyph: Disc
   "it-ai": { shortTitle: "資訊與AI", mention: "資訊與 AI", glyph: "diamond" },
   "soft-skills": { shortTitle: "溝通解題", mention: "溝通", glyph: "pentagon" },
   language: { shortTitle: "語文", mention: "語文", glyph: "bubble" },
+  society: { shortTitle: "法律素養", mention: "法律", glyph: "diamond" },
 };
 
 const OPEN_PATH_ID = "pm.estimate";
@@ -332,6 +333,7 @@ function mentionsFor(catalog: ContentCatalog, point: KnowledgePoint): string[] {
   for (const id of [...point.links.why, ...point.links.related]) {
     const target = catalog.indexes.byId.get(id);
     if (!target || target.folder === point.folder) continue;
+    if (target.folder === "society" && !isSocietyEnabled()) continue;
     const mention = profileOf(target.folder, disciplineTitle(catalog, target.folder)).mention;
     if (!names.includes(mention)) names.push(mention);
   }
@@ -406,6 +408,7 @@ function crossesFor(catalog: ContentCatalog, point: KnowledgePoint, stepIndex: n
     ids.forEach((id, index) => {
       const target = catalog.indexes.byId.get(id);
       if (!target || target.folder === point.folder) return;
+      if (target.folder === "society" && !isSocietyEnabled()) return;
       const title = disciplineTitle(catalog, target.folder);
       const profile = profileOf(target.folder, title);
       const shown = onDiagram.has(target.id);
@@ -428,6 +431,9 @@ function priorLabel(catalog: ContentCatalog, source: KnowledgePoint, targetId: s
   const targetBranch = target ? ownBranch(target) : undefined;
   const sourceBranch = ownBranch(source);
   const tag = (branch: BranchSpec) => (branch.disciplineId === "language" ? branch.pathName : branch.short);
+  if (target && target.folder === "society" && !isSocietyEnabled()) {
+    return { id: targetId, label: "準備中", href: null };
+  }
   if (!target || target.status !== "published") {
     let suffix = "";
     if (target && target.folder === source.folder && targetBranch && targetBranch.id !== sourceBranch?.id) {
@@ -548,6 +554,7 @@ export function buildHomeDiagram(
   publicIds: readonly string[] = publicDisciplineIds(),
   softSkills = isSoftSkillsEnabled(),
   yuwen = isYuwenEnabled(),
+  society = isSocietyEnabled(),
 ): HomeModel {
   const languageLive = softSkills && yuwen;
   const stages: HomeStage[] = catalog.taxonomy.stageList.map((stage) => ({
@@ -561,6 +568,7 @@ export function buildHomeDiagram(
   const roots = [...disciplineRoots(catalog)]
     .filter((root) => softSkills || root.contentFolder !== "soft-skills")
     .filter((root) => languageLive || root.contentFolder !== "language")
+    .filter((root) => society || root.contentFolder !== "society")
     .sort((a, b) => {
       const left = ORDER.indexOf(a.contentFolder ?? "");
       const right = ORDER.indexOf(b.contentFolder ?? "");

@@ -52,6 +52,8 @@ disciplines:
             name: 系統思考
           - id: ai-judgment
             name: AI 時代判斷
+          - id: responsibility
+            name: 因果與歸責
 
   - id: psychology
     name: 心理學
@@ -217,7 +219,12 @@ disciplines:
   - id: society
     name: 社會
     layer: foundation
-    summary: 尚未建立知識點。
+    id_prefix: lw
+    content_folder: society
+    summary: 法律素養。歷史、地理、經濟以後可以掛在同一個學門。是否上線看 KP_SOCIETY_ENABLED。
+    children:
+      - id: law
+        name: 法律素養
 
   - id: physics
     name: 物理

@@ -18,6 +18,7 @@ export const DISTRICT_COLORS: Record<string, string> = {
   "soft-skills": "#dca6cc",
   "it-ai": "#a6cf96",
   language: "#b4aae6",
+  society: "#8fb8b0",
 };
 const FALLBACK_COLORS = ["#c9c0a8", "#a9c4b6", "#d8b48f"] as const;
 
@@ -210,20 +211,39 @@ export function boxNearestRadius(box: [number, number, number, number], cx = CX,
   return Math.hypot(Math.max(x - cx, 0, cx - (x + w)), Math.max(y - cy, 0, cy - (y + h)));
 }
 
-/** 標籤沿扇形中線往外推，直到外框離色環外緣至少 LABEL_CLEAR。 */
-function placeLabel(mid: number, name: string, sub: string): CityLabel {
-  let label = placeLabelAt(mid, name, sub, LABEL_R);
-  for (let radius = LABEL_R + 2; boxNearestRadius(label.box) < RIM[1] + LABEL_CLEAR && radius < LABEL_R + 120; radius += 2) {
-    label = placeLabelAt(mid, name, sub, radius);
-  }
-  return label;
+function angleOff(mid: number, x: number, y: number): number {
+  const deg = (Math.atan2(y - CY, x - CX) * 180) / Math.PI;
+  return ((deg - mid + 540) % 360) - 180;
 }
 
-function placeLabelAt(mid: number, name: string, sub: string, radius: number): CityLabel {
+/** 外框四角都在扇形內，並留 2°，跟 city.test 的學門標籤檢查同一把尺。 */
+function labelInsideSector(label: CityLabel, mid: number, span: number): boolean {
+  const [x, y, w, h] = label.box;
+  const limit = span / 2 - 2;
+  for (const [px, py] of [[x, y], [x + w, y], [x, y + h], [x + w, y + h]] as const) {
+    if (Math.abs(angleOff(mid, px, py)) > limit) return false;
+  }
+  return true;
+}
+
+/** 標籤沿扇形中線往外推，直到離色環外緣至少 LABEL_CLEAR，而且外框落在自己的扇形裡。 */
+function placeLabel(mid: number, name: string, sub: string, span: number): CityLabel {
+  let fallback = placeLabelAt(mid, name, sub, LABEL_R);
+  for (const anchor of [undefined, "middle"] as const) {
+    for (let radius = LABEL_R; radius < LABEL_R + 280; radius += 2) {
+      const label = placeLabelAt(mid, name, sub, radius, anchor);
+      fallback = label;
+      if (boxNearestRadius(label.box) >= RIM[1] + LABEL_CLEAR && labelInsideSector(label, mid, span)) return label;
+    }
+  }
+  return fallback;
+}
+
+function placeLabelAt(mid: number, name: string, sub: string, radius: number, anchorOverride?: CityLabel["anchor"]): CityLabel {
   const [x, y] = polar(CX, CY, radius, mid);
   const cos = Math.cos(rad(mid));
   const sin = Math.sin(rad(mid));
-  const anchor: CityLabel["anchor"] = cos > 0.26 ? "start" : cos < -0.26 ? "end" : "middle";
+  const anchor: CityLabel["anchor"] = anchorOverride ?? (cos > 0.26 ? "start" : cos < -0.26 ? "end" : "middle");
   const height = NAME_SIZE + 8 + SUB_SIZE + 4;
   const top = sin < -0.26 ? y - height : sin > 0.26 ? y : y - height / 2;
   const width = Math.max(textWidth(name, NAME_SIZE), textWidth(sub, SUB_SIZE));
@@ -391,7 +411,7 @@ export function buildCityMap(model: ContentModel): CityMapData {
       start: round(start),
       span: round(span),
       count,
-      label: placeLabel(start + span / 2, name, `${district}・${count} 個`),
+      label: placeLabel(start + span / 2, name, `${district}・${count} 個`, span),
     };
   });
   resolveLabels(districts.map((district) => district.label));

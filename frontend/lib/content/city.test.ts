@@ -19,29 +19,30 @@ function content(): ContentModel {
 }
 
 const SIX = ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai", "language"];
+const SEVEN = [...SIX, "society"];
 
-test("六個學門全開：250 棟、346 條先備路、51 個地標、17 塊預定地", () => {
+test("七個學門都有點：254 棟、352 條先備路、52 個地標、16 塊預定地", () => {
   const map = buildCityMap(content());
-  assert.equal(map.buildings.length, 250);
-  assert.equal(map.roads.length, 346);
-  assert.equal(map.landmarks.length, 51);
-  // 語文已經有點，不再是預定地。
-  assert.equal(map.lots.length, 17);
+  assert.equal(map.buildings.length, 254);
+  assert.equal(map.roads.length, 352);
+  assert.equal(map.landmarks.length, 52);
+  // 語文、社會都已經有點，不再是預定地。社會沒有主線，地標只比哲學多一條 ph.causation。
+  assert.equal(map.lots.length, 16);
   assert.equal(map.lots.filter((lot) => lot.featured).length, 4);
-  assert.equal(map.lots.some((lot) => lot.id === "language"), false);
-  assert.equal(map.districts.length, 6);
-  assert.deepEqual(map.districts.map((district) => district.key), SIX);
+  assert.equal(map.lots.some((lot) => lot.id === "language" || lot.id === "society"), false);
+  assert.equal(map.districts.length, 7);
+  assert.deepEqual(map.districts.map((district) => district.key), SEVEN);
   assert.deepEqual(
     Object.fromEntries(map.districts.map((district) => [district.key, district.count])),
-    { philosophy: 25, math: 26, "pm-leadership": 24, "soft-skills": 42, "it-ai": 25, language: 108 },
+    { philosophy: 28, math: 26, "pm-leadership": 24, "soft-skills": 42, "it-ai": 25, language: 108, society: 1 },
   );
   // 每個學門有自己的顏色，而且跟學門綁定、不隨排序改變。
   for (const district of map.districts) assert.equal(district.color, DISTRICT_COLORS[district.key]);
-  assert.equal(new Set(map.districts.map((district) => district.color)).size, 6);
+  assert.equal(new Set(map.districts.map((district) => district.color)).size, 7);
 });
 
 function withFlags(flags: Record<string, string | undefined>, run: () => void) {
-  const keys = ["KP_ENABLED", "KP_SOFTSKILLS_ENABLED", "KP_YUWEN_ENABLED"];
+  const keys = ["KP_ENABLED", "KP_SOFTSKILLS_ENABLED", "KP_YUWEN_ENABLED", "KP_SOCIETY_ENABLED"];
   const saved = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
   try {
     for (const key of keys) {
@@ -59,13 +60,15 @@ function withFlags(flags: Record<string, string | undefined>, run: () => void) {
 
 test("學門旗標關閉時，那個學區整塊不出現（頁面先套 launchedCatalog）", () => {
   const cases: [Record<string, string>, string[], number, number, number][] = [
-    [{}, ["philosophy", "math", "pm-leadership", "it-ai"], 100, 29, 18],
-    [{ KP_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai"], 100, 29, 18],
-    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai"], 142, 37, 18],
-    [{ KP_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai", "language"], 208, 43, 17],
-    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, SIX, 250, 51, 17],
+    [{}, ["philosophy", "math", "pm-leadership", "it-ai"], 103, 30, 17],
+    [{ KP_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai"], 103, 30, 17],
+    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai"], 145, 38, 17],
+    [{ KP_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai", "language"], 211, 44, 16],
+    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, SIX, 253, 52, 16],
+    [{ KP_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai", "society"], 104, 30, 17],
+    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, SEVEN, 254, 52, 16],
     // KP_ENABLED 沒開時，學門旗標單獨打開也不算。
-    [{ KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai"], 100, 29, 18],
+    [{ KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai"], 103, 30, 17],
   ];
   for (const [flags, keys, buildings, landmarks, lots] of cases) {
     withFlags(flags, () => {
@@ -98,7 +101,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
   // B23 發布哲學 sh 7 點後，這 7 棟也各多 8，digest 再變；座標不變。
   // B24 發布哲學 uni 6 點後，這 6 棟也各多 8，digest 再變；座標不變。
   // 地圖加上語文與溝通與解決問題（六個學區、扇形依點數分配角度）後，座標全部重排，digest 重算。
-  assert.equal(digest, "3e84ab9bdf3c7660e1f6c18b6bfbd7a7e449dfcc09af793be84d2e7e49c3df55");
+  assert.equal(digest, "f5d5630eead835fd1e315d8bef873925ab576b660cf703d100282e9c10cb0aa1");
   // 每棟都在自己學區的扇形與自己階段的環裡（離邊至少半個節點）。
   const stageIndex = new Map(first.stages.map((stage, index) => [stage.id, index]));
   for (const building of first.buildings) {
@@ -118,7 +121,7 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
   assert.equal(footprintsOverlap(first.buildings), false);
 });
 
-test("六個扇形不重疊、角度跟點數走，學門標籤在圖外而且互不重疊", () => {
+test("扇形不重疊、角度跟點數走，學門標籤在圖外而且互不重疊", () => {
   const map = buildCityMap(content());
   const total = map.districts.reduce((sum, district) => sum + district.span, 0);
   assert.ok(total < 360 - map.spine + 1e-9);
@@ -230,7 +233,8 @@ test("範例家人的名牌不壓到任何節點、家庭空間、學門標籤�
     }
   }
   // 大多數名牌貼著節點、不用引線（兩個名牌 × 每一棟）。
-  assert.ok(leaders < (map.buildings.length * 2) / 3, `${leaders} leaders`);
+  // 七個學區時扇形變窄，引線變多，仍要少於名牌總數的四成。
+  assert.ok(leaders < map.buildings.length * 0.8, `${leaders} leaders`);
 });
 
 test("主線站序跟內容一致，高度等於被依賴數", () => {
@@ -295,8 +299,8 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   // B22 發布哲學 jh 6 點後，路線數不變，7 條哲學路線各多國中一站；ph.ai 與 ph.epistemology 都經過 ph.evidence@jh。
   // B23 發布哲學 sh 7 點後，路線數不變，7 條哲學路線各多高中一站（大學站仍是草稿，不顯示）。
   // B24 發布哲學 uni 6 點後，路線數不變，7 條哲學路線各多大學一站；ph.critical 與 ph.inquiry 都到 ph.philsci@uni。
-  // 六個學區全開後，加上溝通與解決問題 8 條（sk.humor 主線起）、語文 14 條，共 51 條（旗標關閉時仍是 29 條，見上面的旗標測試）。
-  assert.equal(shown.landmarks.length, 51);
+  // 加上因果與歸責後哲學多 1 條。溝通與解決問題 8 條、語文 14 條，共 52 條（社會這一輪沒有主線；旗標關閉時是 30 條）。
+  assert.equal(shown.landmarks.length, 52);
   const shownStops = (id: string) => {
     const found = shown.landmarks.find((landmark) => landmark.id === id);
     assert.ok(found, id);
@@ -355,7 +359,7 @@ test("新增一筆知識點不用改程式就會排上地圖", () => {
     file: "extra.yaml",
   };
   const map = buildCityMap({ ...source, points: [...source.points, extra] });
-  assert.equal(map.buildings.length, 251);
+  assert.equal(map.buildings.length, 255);
   assert.ok(map.buildings.some((building) => building.id === "ma.extra@es"));
   assert.equal(footprintsOverlap(map.buildings), false);
 });

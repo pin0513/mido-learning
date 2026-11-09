@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { includeDraftKnowledgePoints, isSoftSkillsEnabled, isYuwenEnabled } from "../kp/flags";
+import { includeDraftKnowledgePoints, isSocietyEnabled, isSoftSkillsEnabled, isYuwenEnabled } from "../kp/flags";
 import { loadContent } from "./load";
 import type {
   ContentIndexes,
@@ -156,6 +156,7 @@ export function disciplineRoots(catalog: ContentCatalog) {
 export function isFolderLaunched(folderId: string): boolean {
   if (folderId === "soft-skills") return isSoftSkillsEnabled();
   if (folderId === "language") return isYuwenEnabled();
+  if (folderId === "society") return isSocietyEnabled();
   return true;
 }
 
@@ -163,6 +164,7 @@ export function launchedCatalog(catalog: ContentCatalog): ContentCatalog {
   const hidden = new Set<string>();
   if (!isSoftSkillsEnabled()) hidden.add("soft-skills");
   if (!isYuwenEnabled()) hidden.add("language");
+  if (!isSocietyEnabled()) hidden.add("society");
   if (hidden.size === 0) return catalog;
   const points = catalog.points.filter((point) => !hidden.has(point.folder));
   const visibleIds = new Set(points.map((point) => point.id));
