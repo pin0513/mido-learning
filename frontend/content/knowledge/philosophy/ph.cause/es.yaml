@@ -1,0 +1,159 @@
+id: ph.cause@es
+concept: ph.cause
+title: 一起發生，就是誰造成誰嗎？
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 哲學
+  - 思考方法
+  - 因果與歸責
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+  grades:
+  - 5
+  - 6
+curriculum_108:
+  domains:
+  - 語文
+  core_competencies:
+  - A2
+  - B1
+  issues:
+  - 閱讀素養教育
+  performances:
+  - 5-III-8
+  - 5-III-4
+  contents: []
+to_verify: false
+verify_notes:
+- 5-III-8、5-III-4 的條文取自本庫 curriculum-108-codes.yaml（國語文領綱頁腳第 10 頁）。這一輪沒有重開國家教育研究院 PDF。
+- 公雞與日出、雨傘與下雨、澆水與花活著，都是本站例子。不用冰淇淋，那是 ph.philsci@uni 已經用過的例子。
+- 英文短句取自 2026-11-10 讀過的史丹佛哲學百科 Causal Models 引言。沒有另引未打開的原書。
+- 本點只停在「一起出現不夠」。假如沒有、誰有義務，分別是下一階與高中那一點。
+prerequisites:
+- ph.question@es
+links:
+  why: []
+  how: []
+  related:
+  - ph.fact@es
+  deeper:
+  - ph.counterfact@jh
+link_notes: 國語閱讀：推論文本裡的因果，並把事實和判斷分開。下一階問「假如沒有」。
+competency:
+  specialist:
+  - 批判思考
+  generalist:
+  - 提問
+  - 查證
+ai:
+  delegable:
+  - 由大人陪著，請 AI 再舉兩件常常一起出現、卻不是誰造成誰的事
+  human_experience:
+  - 用自己的話說明，為什麼一起出現還不夠
+idea: 兩件事常常一起出現，不代表其中一件造成另一件。公雞叫了太陽才出來，不是公雞把太陽叫出來。
+guiding_questions:
+- 公雞叫了太陽才出來，是公雞把太陽叫出來嗎？
+- 兩件事常常一起出現，就代表其中一件造成另一件嗎？
+- 怎樣才比較像是其中一件造成另一件？
+scenario: 親子共學：孩子先說一件「先發生、後發生」的事，大人問「假如第一件沒發生，第二件還會不會發生？」這一階只要能停下來，不急著回答法律或科學上的定論。
+formats:
+  slides: []
+  exercise: 目標：能舉出兩件常常一起出現、卻不能說是誰造成誰的事，並說出還要再問什麼。　檢核：孩子用公雞或自己的例子說出「一起出現不夠」；被問到「假如沒有」時，能說這是下一階要練的問題，不把答案說成已經確定。
+authors:
+- I-PING Huang
+updated: '2026-11-10'
+goal: 能舉出兩件常常一起出現、卻不能說是誰造成誰的事，並說出還要再問什麼。
+review: 孩子用公雞或自己的例子說出「一起出現不夠」；被問到「假如沒有」時，能說這是下一階要練的問題，不把答案說成已經確定。
+est_time:
+  school: 國小五、六年級國語課
+  source: kuoyu
+audience:
+- kid
+- family
+why:
+  heading: 一起出現還不夠
+  body:
+  - 天亮前公雞叫，然後太陽出來。兩件事常常接著出現。想一想：如果那天公雞沒叫，太陽還是會出來。所以不能說是公雞把太陽叫出來（例子是本站整理）。
+  - 國語課要孩子「運用自我提問、推論等策略，推論文本隱含的因果訊息或觀點」，也要「區分文本中的客觀事實與主觀判斷之間的差別」。事實是「牠們常常一起出現」；「是牠造成的」是進一步的判斷（本站整理）。
+  qa:
+    question: 公雞叫了太陽才出來，是公雞把太陽叫出來嗎？
+    answer: 不是。牠們常常一起出現，可是公雞不叫，太陽還是會出來。一起出現，還不能說是誰造成誰。
+    source: kuoyu
+  items_title: 先分開這兩句
+  items:
+  - title: 一起出現
+    text: 兩件事常常接著發生。
+  - title: 誰造成誰
+    text: 要再問，不能只看一起出現。
+  - title: 推論因果
+    text: 運用自我提問、推論等策略，推論文本隱含的因果訊息或觀點。
+    code: 5-III-8
+  - title: 事實和判斷
+    text: 區分文本中的客觀事實與主觀判斷之間的差別。
+    code: 5-III-4
+  sources:
+  - kuoyu
+how:
+  heading: 先找第三個原因
+  body:
+  - 下雨的日子，很多人帶傘。帶傘和下雨一起出現，不是傘把雨帶來的。兩件事可以一起出現，因為第三件事（天氣）同時影響它們（例子是本站整理）。
+  - 你澆水，花活著。可是沒澆水，花有時也活著，有時又枯了。只看到兩件事一起出現，還不能說澆水造成花活著。史丹佛哲學百科說，因果模型會「predict the effects of interventions」，也就是預測你動手改變一件事之後，另一件事會怎樣（翻譯是本站整理）。動手改變，是下一階才練的問法。
+  - 怎樣才比較像是其中一件造成另一件？這一階的答案是：先不要用「常常一起」當作原因。下一階才問「假如沒有第一件，第二件還會不會發生」。
+  items_title: 三個本站例子
+  items:
+  - title: 公雞和太陽
+    example: 不叫，太陽還是出來。
+    text: 一起出現，不是誰造成誰。
+  - title: 雨傘和下雨
+    example: 傘沒有把雨帶來。
+    text: 可能有第三個原因。
+  - title: 澆水和花
+    example: 沒澆水，花不一定枯。
+    text: 還要再問假如沒有。
+  checklist_title: 讀到兩件事時
+  checklist:
+  - 先寫下兩件事實
+  - 不急著說誰造成
+  - 問有沒有第三個
+  sources:
+  - kuoyu
+  - sep-causal-models
+what:
+  heading: 造成要比一起出現窄
+  body:
+  - 造成，比「常常一起出現」更窄。窄的意思是：還要能說，拿掉第一件，第二件會怎樣。這一階只把這句問題留著，不把它當成已經證明（本站整理）。
+  - 史丹佛哲學百科的因果模型條目說：「A causal model makes predictions about the behavior of a system.」它也說，如果我們觀察到變項之間的機率相關，或實驗介入的結果，就可以看哪些因果模型和這些觀察一致（說明是本站整理）。國小先記住：相關、一起出現，都還不是造成。
+  items_title: 帶走這三句
+  items:
+  - title: 事實
+    text: 牠們一起出現了。
+  - title: 判斷
+    text: 是誰造成誰，要另外說。
+  - title: 下一階
+    text: 問假如沒有，還會不會。
+  notes:
+  - 本點的三個例子都是本站整理，不是某一篇論文的實驗。
+  sources:
+  - sep-causal-models
+  - kuoyu
+sources:
+- id: kuoyu
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—語文領域（國語文）
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18510_4703638_59125.pdf
+  accessed: '2026-11-10'
+  kind: curriculum
+  supports: |
+    學習表現代碼取自本庫 curriculum-108-codes.yaml 已收錄的條文（這一輪沒有重開 PDF）。5-III-8「運用自我提問、推論等策略，推論文本隱含的因果訊息或觀點。」（代碼表記頁腳第 10 頁）。5-III-4「區分文本中的客觀事實與主觀判斷之間的差別。」（代碼表記頁腳第 10 頁）。
+- id: sep-causal-models
+  title: Causal Models（Stanford Encyclopedia of Philosophy）
+  publisher: Christopher Hitchcock（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/causal-models/
+  accessed: '2026-11-10'
+  kind: reference
+  supports: |
+    引言讀到：「A causal model makes predictions about the behavior of a system.」以及「it predicts the effects of interventions」。同一段也讀到：「if we have observed probabilistic correlations among variables, or the outcomes of experimental interventions, we can determine which causal models are consistent with these observations.」

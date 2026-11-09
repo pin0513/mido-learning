@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 /**
  * 請求時才算（await headers()），跟 /kp 一樣讀執行時的學門旗標：
- * KP_SOFTSKILLS_ENABLED、KP_YUWEN_ENABLED 關著時，launchedCatalog 拿掉那個學門的點與主線，地圖就沒有那塊扇形。
+ * KP_SOFTSKILLS_ENABLED、KP_YUWEN_ENABLED、KP_SOCIETY_ENABLED 關著時，launchedCatalog 拿掉那個學門的點與主線，地圖就沒有那塊扇形。
  * 草稿照舊交給 presentCityMap：正式 build 只畫暗色節點，不帶標題、id 與網址。
  */
 export default async function CityMapPage() {

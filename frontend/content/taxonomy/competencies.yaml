@@ -207,3 +207,6 @@ specialist:
   - id: translation
     name: 翻譯
     disciplines: [language]
+  - id: legal_literacy
+    name: 法律素養
+    disciplines: [society]

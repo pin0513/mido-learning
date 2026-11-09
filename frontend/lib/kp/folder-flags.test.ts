@@ -4,8 +4,8 @@ import { folderLaunched, FOLDER_FLAG } from "../../e2e/folder-flags";
 import { isFolderLaunched } from "../content/catalog";
 
 // B28 第 4 輪（P3）：e2e/folder-flags.ts 抄了 isFolderLaunched 的學門旗標，這裡確認兩邊沒有漂移。
-const KEYS = ["KP_ENABLED", "KP_SOFTSKILLS_ENABLED", "KP_YUWEN_ENABLED"] as const;
-const FOLDERS = ["soft-skills", "language", "math", "it-ai", "philosophy", "pm-leadership", "no-such-folder"];
+const KEYS = ["KP_ENABLED", "KP_SOFTSKILLS_ENABLED", "KP_YUWEN_ENABLED", "KP_SOCIETY_ENABLED"] as const;
+const FOLDERS = ["soft-skills", "language", "society", "math", "it-ai", "philosophy", "pm-leadership", "no-such-folder"];
 
 test("e2e 的學門旗標和 isFolderLaunched 在每種旗標組合都一致", () => {
   const previous = new Map(KEYS.map((key) => [key, process.env[key]]));
@@ -28,5 +28,5 @@ test("e2e 的學門旗標和 isFolderLaunched 在每種旗標組合都一致", (
 });
 
 test("e2e 的旗標表只列有旗標的學門", () => {
-  assert.deepEqual(Object.keys(FOLDER_FLAG).sort(), ["language", "soft-skills"]);
+  assert.deepEqual(Object.keys(FOLDER_FLAG).sort(), ["language", "society", "soft-skills"]);
 });

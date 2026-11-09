@@ -1,0 +1,170 @@
+id: ph.counterfact@jh
+concept: ph.counterfact
+title: 假如沒有它，結果還會發生嗎？
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 哲學
+  - 思考方法
+  - 因果與歸責
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+  grades:
+  - 7
+  - 8
+  - 9
+curriculum_108:
+  domains:
+  - 自然科學
+  core_competencies:
+  - A2
+  - B1
+  issues: []
+  performances:
+  - pa-IV-2
+  - po-IV-2
+  contents: []
+to_verify: false
+verify_notes:
+- pa-IV-2、po-IV-2 的條文取自本庫 curriculum-108-codes.yaml（自然科學領綱頁腳第 21 頁）。這一輪沒有重開 PDF。
+- 下雨與遲到、站在花園旁澆得到水卻沒澆的人、兩把火燒空倉庫，都是本站例子。空倉庫裡沒有人。住在遠方、水到不了的人，這問法不會把他算成原因，所以不放在「抓太廣」。
+- 英文短句取自 2026-11-10 讀過的史丹佛哲學百科 Counterfactual Theories of Causation。Lewis 1973 與 Hume 1748 只引用該頁上讀到的句子，不另列未打開的原書。
+- Hitchcock 與 Knobe 2009 這一輪沒有打開，不引用。
+prerequisites:
+- ph.cause@es
+- ph.hypothesis@jh
+links:
+  why: []
+  how: []
+  related:
+  - ph.feedback@jh
+  deeper:
+  - ph.norm@sh
+link_notes: 先備是「一起出現不夠」和「假設可以檢驗」。這一階把「假如沒有」寫成可以改一個條件的問題。
+competency:
+  specialist:
+  - 科學探究
+  - 批判思考
+  generalist:
+  - 提問
+  - 查證
+ai:
+  delegable:
+  - 由老師或家長操作，請 AI 把一個例子改寫成「假如沒有」的問句，再由人檢查有沒有抓太廣
+  human_experience:
+  - 自己判斷這個「假如沒有」是抓太廣，還是兩件事各自就夠
+idea: 問「假如沒有它，結果還會不會發生」。這比「一起出現」窄。站在花園旁、澆得到水卻沒澆的人，也會被這問法算成原因；兩件事各自就夠時，這問法又會說兩邊都不是原因。
+guiding_questions:
+- 假如沒有第一件事，第二件事還會發生嗎？
+- 站在花園旁、澆得到水卻沒澆的人，為什麼也會被算成原因？
+- 兩把火各自都燒得完，為什麼「假如沒有」會說兩邊都不是原因？
+scenario: 自然課討論：用一個可以改條件的問題，寫出「假如沒有」的句子，並指出這個句子有沒有把範圍抓得太廣。
+formats:
+  slides: []
+  exercise: 目標：能把一個例子改成「假如沒有」的問句，並說出抓太廣和過度決定差在哪。　檢核：不看本頁，用下雨或自己的例子回答「假如沒有還會不會」；再用站在花園旁、澆得到水卻沒澆的人說明抓太廣；用兩把火說明為什麼這問法有時會漏掉原因。
+authors:
+- I-PING Huang
+updated: '2026-11-10'
+goal: 能把一個例子改成「假如沒有」的問句，並說出抓太廣和過度決定差在哪。
+review: 不看本頁，用下雨或自己的例子回答「假如沒有還會不會」；再用站在花園旁、澆得到水卻沒澆的人說明抓太廣；用兩把火說明為什麼這問法有時會漏掉原因。
+est_time:
+  school: 國中七至九年級自然課
+  source: sci108
+audience:
+- kid
+- family
+why:
+  heading: 原因要造成一點差別
+  body:
+  - 史丹佛哲學百科引用 Lewis 的句子：「We think of a cause as something that makes a difference, and the difference it makes must be a difference from what would have happened without it.」原因要造成一點差別，而且是跟「如果沒有它」相比的差別（翻譯是本站整理）。同一頁把實際發生的兩件事寫成：若 c 沒發生，e 就不會發生，e 才因果地依賴 c（說明是本站整理）。
+  - 自然科學要學生「能運用科學原理、思考智能、數學等方法，從（所得的）資訊或數據，形成解釋、發現新知、獲知因果關係、解決問題或是發現新的問題。並能將自己的探究結果和同學的結果或其他相關的資訊比較對照，相互檢核，確認結果。」也要「能辨別適合科學探究或適合以科學方式尋求解決的問題（或假說），並能依據觀察、蒐集資料、閱讀、思考、討論等，提出適宜探究之問題。」這一階的「假如沒有」，問的是澆得到水的條件（本站整理）。
+  qa:
+    question: 假如沒有第一件事，第二件事還會發生嗎？
+    answer: 這就是這一階的問法。如果還是會發生，第一件就不像原因。如果就不會發生，它才比較像原因。這問法仍會抓太廣，也處理不了兩件事各自就夠的情形。
+    source: sep-counterfactual
+  items_title: 這問法在說什麼
+  items:
+  - title: 假如沒有
+    text: 拿掉第一件，第二件還在嗎？
+  - title: 有差別
+    text: 拿掉之後，結果跟著變了。
+  - title: 獲知因果
+    text: 能運用科學原理、思考智能、數學等方法，從（所得的）資訊或數據，形成解釋、發現新知、獲知因果關係、解決問題或是發現新的問題。並能將自己的探究結果和同學的結果或其他相關的資訊比較對照，相互檢核，確認結果。
+    code: pa-IV-2
+  - title: 適宜的問題
+    text: 能辨別適合科學探究或適合以科學方式尋求解決的問題（或假說），並能依據觀察、蒐集資料、閱讀、思考、討論等，提出適宜探究之問題。
+    code: po-IV-2
+  sources:
+  - sep-counterfactual
+  - sci108
+how:
+  heading: 寫下假如沒有
+  body:
+  - 今天下雨，你遲到了。假如沒下雨，你還是會遲到（你本來就晚出門），下雨就不像遲到的原因。假如沒下雨你會準時，下雨才比較像原因（例子是本站整理）。先備的假設課要你一次只改一個條件；這裡改的就是「有沒有下雨」。
+  - 花園的花枯了。園丁沒澆水。站在花園旁、澆得到水的人也沒澆。假如這個人澆了，水到得了，花就不會枯。依這一頁的定義（3），花枯依賴「他沒澆」，這問法把他算成原因。澆得到水的人很多，沒澆的人就都被算進去。這就是抓太廣（例子是本站整理）。百科上 Hume 的那句是：「where, if the first object had not been, the second never had existed」。住在遠方的人不是這個例子：水到不了，花還是會枯，這問法不會把他算成原因（說明是本站整理；這句出現在該百科頁，本點沒有另開 Hume 的書）。
+  - 兩個人各自點燃一把火，兩把火各自都燒得完一間空倉庫，倉庫裡沒有人。拿掉其中一把，倉庫還是燒了。只問「假如沒有」，兩把火都像不是原因。這叫過度決定。下一階才問該用哪一種規範來看，這一階不下結論（例子是本站整理）。
+  items_title: 三題這樣問
+  items:
+  - title: 下雨和遲到
+    example: 沒下雨，你還會遲到嗎？
+    text: 先寫假如沒有。
+  - title: 旁邊的人
+    example: 澆得到，沒澆花就枯。
+    text: 這問法會把他算進去。
+  - title: 兩把火
+    example: 拿掉一把，倉庫還是燒。
+    text: 這問法會說兩邊都不是。
+  - title: 先別下結論
+    example: 空倉庫，沒有人在裡面。
+    text: 規範留到下一階。
+  checklist_title: 問之前檢查
+  checklist:
+  - 只改一個條件
+  - 那個人真的碰得到
+  - 另一個是不是就夠了
+  sources:
+  - sep-counterfactual
+  - sci108
+what:
+  heading: 這問法會漏也會抓太廣
+  body:
+  - 抓太廣，是澆得到水、卻沒澆的人，也被這問法算成原因。過度決定，是兩件事各自就足以產生結果，拿掉任何一件，結果還在，於是「假如沒有」說兩邊都不是原因（本站整理）。
+  - 百科把因果依賴寫成：「Where c and e are two distinct actual events, e causally depends on c if and only if, if c were not to occur e would not occur.」這是哲學上的一種定義，不是臺灣法律的條文。法律要不要用這問法，是高中與大學那兩點的事（說明是本站整理）。
+  figures:
+  - counterfact-compare
+  notes:
+  - 圖上的兩個例子都是本站整理。空倉庫用來避開對人的傷害描述。
+  sources:
+  - sep-counterfactual
+figures:
+- id: counterfact-compare
+  type: compare
+  alt: 對照兩種問法的問題。抓太廣：站在花園旁、澆得到水的人沒澆，也被算成原因。過度決定：兩把火各自都燒得完，拿掉一把結果還在。
+  source: sep-counterfactual
+  relation: versus
+  items:
+  - term: 抓太廣
+    note: 旁邊澆得到，沒澆也算原因
+  - term: 過度決定
+    note: 兩把火各自夠了，拿掉一把還在燒
+  caption: 例子是本站整理。反事實的句子見史丹佛哲學百科。
+sources:
+- id: sci108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18538_240851_60502.pdf
+  accessed: '2026-11-10'
+  kind: curriculum
+  supports: |
+    學習表現代碼取自本庫 curriculum-108-codes.yaml 已收錄的條文（這一輪沒有重開 PDF）。pa-IV-2「能運用科學原理、思考智能、數學等方法，從（所得的）資訊或數據，形成解釋、發現新知、獲知因果關係、解決問題或是發現新的問題。並能將自己的探究結果和同學的結果或其他相關的資訊比較對照，相互檢核，確認結果。」（代碼表記頁腳第 21 頁）。po-IV-2「能辨別適合科學探究或適合以科學方式尋求解決的問題（或假說），並能依據觀察、蒐集資料、閱讀、思考、討論等，提出適宜探究之問題。」（代碼表記頁腳第 21 頁）。
+- id: sep-counterfactual
+  title: Counterfactual Theories of Causation（Stanford Encyclopedia of Philosophy）
+  publisher: Peter Menzies、Helen Beebee（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/causation-counterfactual/
+  accessed: '2026-11-10'
+  kind: reference
+  supports: |
+    第 1 節讀到百科引用 Lewis：「We think of a cause as something that makes a difference, and the difference it makes must be a difference from what would have happened without it.」同一頁引用 Hume 1748 第 VII 節的句子：「where, if the first object had not been, the second never had existed」。定義（3）讀到：「Where c and e are two distinct actual events, e causally depends on c if and only if, if c were not to occur e would not occur.」

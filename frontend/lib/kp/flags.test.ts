@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { isKpDetailV2Enabled, isKpEnabled, isSoftSkillsEnabled, isYuwenEnabled } from "./flags";
+import { isKpDetailV2Enabled, isKpEnabled, isSocietyEnabled, isSoftSkillsEnabled, isYuwenEnabled } from "./flags";
 
-const KEYS = ["KP_ENABLED", "KP_YUWEN_ENABLED", "KP_SOFTSKILLS_ENABLED", "KP_DETAIL_V2_ENABLED"] as const;
+const KEYS = ["KP_ENABLED", "KP_YUWEN_ENABLED", "KP_SOFTSKILLS_ENABLED", "KP_SOCIETY_ENABLED", "KP_DETAIL_V2_ENABLED"] as const;
 
 function withEnv(values: Partial<Record<(typeof KEYS)[number], string | undefined>>, run: () => void) {
   const previous = new Map(KEYS.map((key) => [key, process.env[key]]));
@@ -39,6 +39,22 @@ test("語文旗標只有兩個都是 true 才算開", () => {
   withEnv({ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true" }, () => {
     assert.equal(isSoftSkillsEnabled(), true);
     assert.equal(isYuwenEnabled(), false);
+  });
+});
+
+test("社會旗標只有兩個都是 true 才算開", () => {
+  withEnv({ KP_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, () => {
+    assert.equal(isSocietyEnabled(), true);
+  });
+  withEnv({ KP_ENABLED: "true" }, () => {
+    assert.equal(isSocietyEnabled(), false);
+  });
+  withEnv({ KP_SOCIETY_ENABLED: "true" }, () => {
+    assert.equal(isSocietyEnabled(), false);
+    assert.equal(isKpEnabled(), false);
+  });
+  withEnv({ KP_ENABLED: "true", KP_SOCIETY_ENABLED: "false" }, () => {
+    assert.equal(isSocietyEnabled(), false);
   });
 });
 

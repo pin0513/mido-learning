@@ -107,11 +107,12 @@ test.describe("知識地圖", () => {
     }
   });
 
-  test("index.json 有 100 筆且 sitemap 不收草稿與會員頁", async ({ request }) => {
+  test("index.json 有 103 筆且 sitemap 不收草稿、社會與會員頁", async ({ request }) => {
     const index = await request.get("/kp/index.json");
     expect(index.status()).toBe(200);
     const rows = (await index.json()) as { id: string; title: string; stage: string; url: string }[];
-    expect(rows).toHaveLength(100);
+    expect(rows).toHaveLength(103);
+    expect(rows.some((row) => row.id.startsWith("lw."))).toBe(false);
     expect(rows.some((row) => row.id.startsWith("sk."))).toBe(false);
     expect(rows.some((row) => /^(zh|en|ja|lg)\./.test(row.id))).toBe(false);
     expect(rows[0]).toEqual(expect.objectContaining({ id: expect.any(String), title: expect.any(String), stage: expect.any(String), url: expect.stringContaining("https://learn.paulfun.net/kp/") }));
@@ -134,6 +135,8 @@ test.describe("知識地圖", () => {
     expect(xml).not.toContain("/kp/ja.");
     expect(xml).not.toContain("/kp/lg.");
     expect(xml).not.toContain("/kp/discipline/language");
+    expect(xml).not.toContain("/kp/lw.");
+    expect(xml).not.toContain("/kp/discipline/society");
     expect(xml).not.toContain("/login");
     expect(xml).not.toContain("/dashboard");
   });

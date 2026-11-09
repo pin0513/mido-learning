@@ -32,6 +32,13 @@ test.describe("旗標關閉", () => {
     expect(await response.text()).not.toContain("/kp");
   });
 
+  test("社會知識點是 404", async ({ request }) => {
+    const point = await request.get("/kp/lw.causation/uni");
+    expect(point.status()).toBe(404);
+    expect(point.headers()["x-robots-tag"] ?? "").toContain("noindex");
+    expect(await point.text()).not.toContain("法律上的因果");
+  });
+
   test("語文知識點是 404，sitemap 沒有語文網址", async ({ request }) => {
     const point = await request.get("/kp/zh.punct/es");
     expect(point.status()).toBe(404);

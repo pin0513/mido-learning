@@ -1,0 +1,174 @@
+id: ph.norm@sh
+concept: ph.norm
+title: 問完假如沒有，還要問用哪一種規範
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 哲學
+  - 思考方法
+  - 因果與歸責
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+  grades:
+  - 10
+  - 11
+  - 12
+curriculum_108:
+  domains:
+  - 社會
+  core_competencies:
+  - A2
+  - B1
+  - C1
+  issues:
+  - 法治教育
+  performances:
+  - 公 1c-V-2
+  - 歷 3b-V-3
+  contents: []
+to_verify: false
+verify_notes:
+- 公 1c-V-2、歷 3b-V-3 的條文取自本庫 curriculum-108-codes.yaml（社會領綱頁腳第 10、11 頁）。這一輪沒有重開 PDF，也沒有把規劃裡尚未收進代碼表的公民代碼寫進來。
+- 沒人住的老房子、地震與施工，是本站例子。本點不對誰負責下結論。
+- 英文短句取自 2026-11-10 讀過的史丹佛哲學百科 Hume's Moral Philosophy 第 5 節。只取沒有撇號的片段。
+- 法律條文不在這一點逐字引用，留給受旗標保護的 lw.causation@uni。
+prerequisites:
+- ph.counterfact@jh
+- ph.argument@jh
+links:
+  why: []
+  how: []
+  related: []
+  deeper:
+  - ph.philsci@uni
+link_notes: 下一階是研究設計裡的相關與因果。大學的法律因果在另一個學門。
+competency:
+  specialist:
+  - 論證
+  - 批判思考
+  generalist:
+  - 跨域思考
+  - 查證
+ai:
+  delegable:
+  - 由老師或家長操作，請 AI 把同一個例子各寫成科學問題和規範問題，再由人核對有沒有混在一起
+  human_experience:
+  - 自己決定這次要回答的是「是什麼」，還是「應該怎樣」
+idea: 三道篩子要按順序走：一起發生、假如沒有、誰有義務。從「事情是這樣」推不出「人應該怎樣」。篩完仍不下結論，只說清楚你用的是哪一種規範。
+guiding_questions:
+- 同一件事，為什麼科學問題和規範問題不是同一題？
+- 三道篩子要按什麼順序走？
+- 從「是什麼」可以直接推出「應該怎樣」嗎？
+scenario: 高中討論一間沒有人住的老房子倒塌：同一個星期有地震，也有人說是多年前施工少放了材料。分組只做三道篩子，不表決誰該負責。
+formats:
+  slides: []
+  exercise: 目標：能把一個例子走完三道篩子，並說明自己用的是哪一種規範，而不下誰負責的結論。　檢核：不看本頁，說出三道篩子的順序；用老房子或自己的例子各寫一句科學問題和一句規範問題；最後一句是「本頁不下結論」。
+authors:
+- I-PING Huang
+updated: '2026-11-10'
+goal: 能把一個例子走完三道篩子，並說明自己用的是哪一種規範，而不下誰負責的結論。
+review: 不看本頁，說出三道篩子的順序；用老房子或自己的例子各寫一句科學問題和一句規範問題；最後一句是「本頁不下結論」。
+est_time:
+  school: 高中十至十二年級社會課
+  source: social108
+audience:
+- kid
+- family
+why:
+  heading: 是什麼，推不出應該
+  body:
+  - 一間沒有人住的老房子倒了。同一個星期有地震，也有人說多年前施工少放了材料。兩件事都和倒塌一起出現。先備已經說過，一起出現不夠，還要問假如沒有（例子是本站整理）。
+  - 問完還要再問：我們在用哪一種規範。科學問的是什麼條件會讓房子倒。道德或法律問的是誰有義務。史丹佛哲學百科整理一種主要讀法：「no ought-judgment may be correctly inferred from a set of premises expressed only in terms of」是。頁面上接著用引號標出 is。意思是：只用「是什麼」寫成的前提，推不出「應該怎樣」（翻譯是本站整理）。百科說這種從是到應該的推論，在休謨看來「altogether inconceivable」。
+  qa:
+    question: 從「是什麼」可以直接推出「應該怎樣」嗎？
+    answer: 依這一頁讀到的主要解釋，不行。事實前提還要另外接上一條規範，才談得上應該。本點不決定那條規範的內容。
+    source: sep-hume-moral
+  items_title: 兩種問題
+  items:
+  - title: 科學問題
+    text: 什麼條件會讓房子倒。
+  - title: 規範問題
+    text: 誰有義務做某件事。
+  - title: 提出論證
+    text: 整合公民知識，論述自己的主張，並能提出合理的論證。
+    code: 公 1c-V-2
+  - title: 分開事實和解釋
+    text: 分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。
+    code: 歷 3b-V-3
+  sources:
+  - sep-hume-moral
+  - social108
+how:
+  heading: 三道篩子按順序
+  body:
+  - 第一道：它們有沒有一起發生。老房子倒了，那個星期有地震，這是事實，還不是原因（本站整理）。
+  - 第二道：假如沒有。假如沒有地震，房子還會不會倒？假如施工時材料沒少，房子還會不會倒？兩句都要寫出來，而且不要把沒碰過這房子的人寫進去。這是上一階的問法。
+  - 第三道：誰有義務。這一階只把問題擺出來，不引用法條、也不說施工的人或地震「應該」負責。公民課要「整合公民知識，論述自己的主張，並能提出合理的論證」；合理的第一步是說清楚你用的規範是哪一種（本站整理）。
+  items_title: 三道都要寫
+  items:
+  - title: 第一道
+    example: 房子倒了，同時有地震。
+    text: 只寫一起發生的事實。
+  - title: 第二道
+    example: 假如沒有地震呢？
+    text: 再問假如沒有。
+  - title: 第三道
+    example: 這次問的是義務嗎？
+    text: 標出你用的規範。
+  - title: 先不下結論
+    example: 不表決誰該負責。
+    text: 篩子不是判決。
+  checklist_title: 交出去之前
+  checklist:
+  - 事實是什麼
+  - 反事實成立嗎
+  - 依據哪條規範
+  sources:
+  - social108
+  - sep-hume-moral
+what:
+  heading: 篩完只標出規範
+  body:
+  - 三道篩子的順序不能倒過來。先挑「誰有義務」，再回頭找一起發生的事，就會把結論藏進事實裡（本站整理）。
+  - 歷史課要「分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。」倒塌是事實，少放材料是有人提出的解釋，義務是另一種規範。三者不要寫成同一句（本站整理）。大學接著看 ph.philsci@uni 裡的相關與因果；法律條文上的因果在另一個學門。
+  figures:
+  - norm-flow
+  notes:
+  - 流程圖是本站整理，不是課綱或百科裡的原圖。
+  - 本點的房子沒有人住，不用來討論傷亡。
+  sources:
+  - social108
+  - sep-hume-moral
+figures:
+- id: norm-flow
+  type: flow
+  alt: 三道篩子的順序：第一道問有沒有一起發生，第二道問假如沒有還會不會，第三道問這次用的是誰的義務。三道走完先不下結論。
+  steps:
+  - actor: 第一道
+    text: 一起發生嗎
+  - actor: 第二道
+    text: 假如沒有呢
+  - actor: 第三道
+    text: 誰有義務
+  source: sep-hume-moral
+  caption: 三道篩子是本站整理。第三道對上的是「是」推不出「應該」。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-10'
+  kind: curriculum
+  supports: |
+    學習表現代碼取自本庫 curriculum-108-codes.yaml 已收錄的條文（這一輪沒有重開 PDF）。公 1c-V-2「整合公民知識，論述自己的主張，並能提出合理的論證。」（代碼表記頁腳第 10 頁）。歷 3b-V-3「分辨歷史事實、史料證據與歷史解釋，說明歷史解釋不同的原因，並檢視證據的適切性。」（代碼表記頁腳第 11 頁）。
+- id: sep-hume-moral
+  title: Hume's Moral Philosophy（Stanford Encyclopedia of Philosophy）
+  publisher: Rachel Cohon（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/hume-moral/
+  accessed: '2026-11-10'
+  kind: reference
+  supports: |
+    第 5 節讀到：這種推論在休謨看來「altogether inconceivable」（頁上標 T3.1.1.27）。同一節的主要二十世紀解釋寫道：「no ought-judgment may be correctly inferred from a set of premises expressed only in terms of」而後用引號標出 is。本點不引用含撇號的句子，也沒有另開《人性論》原書。

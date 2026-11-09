@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
-import { isSoftSkillsEnabled } from "./flags";
+import { isSocietyEnabled, isSoftSkillsEnabled } from "./flags";
 
 const FILE = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "content", "home-disciplines.yaml");
 
@@ -12,8 +12,10 @@ export function publicDisciplineIds(): string[] {
   const raw = override
     ? override.split(",").map((item) => item.trim()).filter((item) => item.length > 0)
     : readDisciplineFile();
-  if (isSoftSkillsEnabled()) return raw;
-  return raw.filter((id) => id !== "soft-skills" && id !== "language");
+  let ids = raw;
+  if (!isSoftSkillsEnabled()) ids = ids.filter((id) => id !== "soft-skills" && id !== "language");
+  if (!isSocietyEnabled()) ids = ids.filter((id) => id !== "society");
+  return ids;
 }
 
 function readDisciplineFile(): string[] {

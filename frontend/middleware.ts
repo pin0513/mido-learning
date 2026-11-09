@@ -24,6 +24,7 @@ export function middleware(request: NextRequest) {
   const home = enabled && process.env.KP_HOME_ENABLED === "true";
   const softSkills = enabled && process.env.KP_SOFTSKILLS_ENABLED === "true";
   const yuwen = enabled && process.env.KP_YUWEN_ENABLED === "true";
+  const society = enabled && process.env.KP_SOCIETY_ENABLED === "true";
   if (pathname === "/" || pathname === "/city-home") {
     if (!home) return pathname === "/city-home" ? notFound() : NextResponse.next();
     const branch = request.nextUrl.searchParams.get("b");
@@ -48,6 +49,7 @@ export function middleware(request: NextRequest) {
   if (!enabled) return notFound();
   if (!softSkills && isSoftSkillsPath(pathname)) return notFound();
   if (!yuwen && isLanguagePath(pathname)) return notFound();
+  if (!society && isSocietyPath(pathname)) return notFound();
   const detailV2 = enabled && process.env.KP_DETAIL_V2_ENABLED === "true";
   const detail = /^\/kp\/([a-z]{2,8}\.[a-z0-9]+)\/([a-z]{2,8})\/?$/.exec(pathname);
   if (detailV2 && detail) {
@@ -63,6 +65,13 @@ function isSoftSkillsPath(pathname: string): boolean {
     || pathname.startsWith("/kp/path/sk.")
     || pathname.startsWith("/kp/sk.")
     || pathname.startsWith("/kp/sk/");
+}
+
+function isSocietyPath(pathname: string): boolean {
+  return pathname === "/kp/discipline/society"
+    || pathname.startsWith("/kp/path/lw.")
+    || pathname.startsWith("/kp/lw.")
+    || pathname.startsWith("/kp/lw/");
 }
 
 function isLanguagePath(pathname: string): boolean {

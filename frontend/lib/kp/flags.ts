@@ -10,7 +10,7 @@
  *     跨學門連結（isFolderLaunched）寫死在頁面裡，只重啟行程不會變，要重新 build。
  *     舊版詳細頁的「另有 N 個知識點尚未發布」也會把旗標擋掉的已發布點算進去，同樣是 build 時的值；
  *     V2 的「另有 N 個尚未發布」只算草稿，不看學門旗標。
- *   所以 KP_ENABLED、KP_SOFTSKILLS_ENABLED、KP_YUWEN_ENABLED 切換都要重新 build＋重新部署。
+ *   所以 KP_ENABLED、KP_SOFTSKILLS_ENABLED、KP_YUWEN_ENABLED、KP_SOCIETY_ENABLED 切換都要重新 build＋重新部署。
  *   正式值只放在 .github/workflows/deploy-frontend.yml 的 KP_BUILD_FLAGS（build）與 KP_RUNTIME_FLAGS（Cloud Run）。
  *
  * KP_ENABLED：上線開關。未設定或不是 "true" 就是關。
@@ -47,6 +47,13 @@
  *   關的時候「語文」維持準備中、沒有連結；/kp/zh.*、/kp/en.*、/kp/ja.*、/kp/lg.* 與
  *   /kp/discipline/language 是 404，sitemap 不列這些網址。/?d=language 回到預設學門。
  *
+ * KP_SOCIETY_ENABLED：社會（法律素養，lw）是否上線。
+ *   不加 NEXT_PUBLIC_。未設定或不是 "true" 就是關。
+ *   只有 KP_ENABLED 也是 "true" 時才算打開。和 KP_YUWEN_ENABLED 一樣，請求時的頁面重啟行程就跟著變，
+ *   詳細頁的跨學門連結是 build 時決定的，切換要重新 build。
+ *   關的時候社會不進學門切換、地圖沒有那塊扇形；/kp/lw.*、/kp/path/lw.* 與
+ *   /kp/discipline/society 是 404，sitemap 不列這些網址。
+ *
  * KP_DETAIL_V2_ENABLED：知識點詳細頁是否改用黃金圈版面。
  *   每次請求讀取，不加 NEXT_PUBLIC_。未設定或不是 "true" 就是關。
  *   只有 KP_ENABLED 也是 "true" 時才算打開。這個旗標本身是 middleware 每次請求讀的改寫，重啟行程即可；
@@ -74,6 +81,10 @@ export function isSoftSkillsEnabled(): boolean {
 
 export function isYuwenEnabled(): boolean {
   return isKpEnabled() && process.env.KP_YUWEN_ENABLED === "true";
+}
+
+export function isSocietyEnabled(): boolean {
+  return isKpEnabled() && process.env.KP_SOCIETY_ENABLED === "true";
 }
 
 export function isKpDetailV2Enabled(): boolean {
