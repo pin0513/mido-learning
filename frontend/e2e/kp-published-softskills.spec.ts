@@ -40,13 +40,20 @@ function href(point: KnowledgePoint): string {
   return `/kp/${point.concept}/${point.stage}`;
 }
 
-/** 這個行程裡，從 folder 的頁面看 q 會不會連出去：已發布，而且學門已上線（語文關）或同學門。 */
+/** 這個行程沒開語文、也沒開社會。已發布但學門旗標關閉的點，index.json 與跨學門連結都不算。 */
+function folderOn(folder: string): boolean {
+  if (folder === "language") return false;
+  if (folder === "society") return process.env.KP_SOCIETY_ENABLED === "true";
+  return true;
+}
+
+/** 從 folder 的頁面看 q 會不會連出去：已發布，而且學門已上線或就是同學門。 */
 function shownFrom(q: KnowledgePoint, folder: string): boolean {
-  return q.status === "published" && (q.folder !== "language" || q.folder === folder);
+  return q.status === "published" && (folderOn(q.folder) || q.folder === folder);
 }
 
 const published = all.points.filter((point) => point.status === "published");
-const servedPublished = published.filter((point) => point.folder !== "language");
+const servedPublished = published.filter((point) => folderOn(point.folder));
 const skDrafts = all.points.filter((point) => point.folder === "soft-skills" && point.status === "draft");
 const skPublished = published.filter((point) => point.folder === "soft-skills");
 
@@ -91,7 +98,7 @@ function samples(): Sample[] {
 
 const SAMPLES = samples();
 const PATHS = all.paths
-  .filter((path) => path.disciplineFolder !== "language")
+  .filter((path) => folderOn(path.disciplineFolder))
   .map((path) => ({ path, drafts: path.knowledgePointIds.map((id) => byId.get(id)).filter((q): q is KnowledgePoint => Boolean(q) && q!.status !== "published") }))
   .filter((row) => row.drafts.length > 0);
 
@@ -108,7 +115,7 @@ test.describe("正式 build＋溝通與解決問題旗標打開", () => {
     const launch = await (await request.get("/api/kp-launch")).json();
     expect(launch).toMatchObject({ enabled: true, home: true });
 
-    // index.json 每次請求重算：執行時旗標開，軟實力已發布點都在，語文不在。
+    // index.json 每次請求重算：執行時軟實力開，語文與社會關，這兩門的已發布點不在。
     const index = (await (await request.get("/kp/index.json")).json()) as { id: string }[];
     expect(index.map((row) => row.id).sort()).toEqual(servedPublished.map((point) => point.id).sort());
     expect(skPublished.length).toBeGreaterThan(0);
