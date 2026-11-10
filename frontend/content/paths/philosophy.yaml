@@ -63,3 +63,10 @@ paths:
       - ph.norm@sh
       - ph.philsci@uni
     colearn: 孩子做一起發生卡片，大人用三題檢查表重看一次爭吵：事實是什麼、假如沒有還會不會、依據的是哪一種規範。
+  - id: ph.blame
+    title: 規範與歸責
+    knowledge_points:
+      - ph.duty@es
+      - ph.doallow@jh
+      - ph.moralluck@uni
+    colearn: 家人各說一件「這是誰該做的事」。先分角色或約定，再把一句責怪改成提醒。最後用兩個只差在結果的虛構例子，各自寫責任該不該跟著結果變。不下結論。

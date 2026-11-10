@@ -1,0 +1,9 @@
+id: society
+title: 社會
+paths:
+  - id: lw.liability
+    title: 法律上的責任
+    knowledge_points:
+      - lw.crime@sh
+      - lw.causation@uni
+    colearn: 家人用一個虛構的小事件，依序問有沒有法條、故意還是過失、有沒有防衛或避難、行為人幾歲。再對照因果那一點的「假如沒有」。不下結論。
