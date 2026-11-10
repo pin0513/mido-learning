@@ -249,6 +249,10 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
     "lastModified": "2026-11-10"
   },
   {
+    "path": "/kp/path/ph.blame",
+    "lastModified": "2026-11-10"
+  },
+  {
     "path": "/kp/path/pm.goal",
     "lastModified": "2026-11-10"
   },
@@ -274,6 +278,10 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
   },
   {
     "path": "/kp/path/pm.reflect",
+    "lastModified": "2026-11-10"
+  },
+  {
+    "path": "/kp/path/lw.liability",
     "lastModified": "2026-11-10"
   },
   {
@@ -977,6 +985,14 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
     "lastModified": "2026-11-10"
   },
   {
+    "path": "/kp/ph.doallow/jh",
+    "lastModified": "2026-11-10"
+  },
+  {
+    "path": "/kp/ph.duty/es",
+    "lastModified": "2026-11-10"
+  },
+  {
     "path": "/kp/ph.epistem/uni",
     "lastModified": "2026-10-30"
   },
@@ -1023,6 +1039,10 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
   {
     "path": "/kp/ph.logic/sh",
     "lastModified": "2026-10-30"
+  },
+  {
+    "path": "/kp/ph.moralluck/uni",
+    "lastModified": "2026-11-10"
   },
   {
     "path": "/kp/ph.norm/sh",
@@ -1154,6 +1174,10 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
   },
   {
     "path": "/kp/lw.causation/uni",
+    "lastModified": "2026-11-10"
+  },
+  {
+    "path": "/kp/lw.crime/sh",
     "lastModified": "2026-11-10"
   },
   {

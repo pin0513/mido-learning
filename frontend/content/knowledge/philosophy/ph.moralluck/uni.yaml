@@ -1,0 +1,154 @@
+id: ph.moralluck@uni
+concept: ph.moralluck
+title: 道德運氣：結果不同，責任就不同嗎？
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 哲學
+  - 思考方法
+  - 因果與歸責
+  layer: essence
+  crosscutting: []
+stage:
+  level: uni
+to_verify: false
+verify_notes:
+- 大學不填 curriculum_108、不列 est_time。
+- 兩位駕駛同樣闖紅燈、一位撞到人、一位沒有，是本站虛構例子。不沿用百科裡煞車失靈、路上有小孩的那一對，也不用謀殺未遂的那一對。本頁不說誰有罪。
+- 刑法第 12 條、第 276 條逐字引自 2026-11-10 讀取的全國法規資料庫單條頁。第 12 條第 2 項不稱作但書。
+- 英文句子取自 2026-11-10 打開的 Moral Luck。Williams 期待 oxymoron 的那句、Hart 關於刑罰的提問都讀到了，本頁不引用，以免寫成臺灣法律的結論。
+- 自由意志那一點（ph.freewill@sh）還沒有建立，先備改接國中的做與不做。
+prerequisites:
+- ph.doallow@jh
+links:
+  why: []
+  how: []
+  related:
+  - ph.applied@uni
+  - ph.epistem@uni
+  - lw.causation@uni
+  - lw.crime@sh
+  deeper: []
+link_notes: 自由意志尚未建立，所以先備是國中這一點。相關是應用倫理、知識論，以及法律上的因果和犯罪成立。本頁不判決。
+competency:
+  specialist:
+  - 批判思考
+  - 倫理推理
+  generalist:
+  - 查證
+  - 跨域思考
+ai:
+  delegable:
+  - 請 AI 再寫一對只差在結果的虛構案例，不要用真實新聞，也不要替你選立場
+  human_experience:
+  - 用自己的話寫：結果應不應該改變這兩個人的責任，並標出你用的是道德判斷還是刑法第 276 條
+idea: 兩個人做了一樣的決定，結果卻因運氣不同。道德上怎麼看，和法律為什麼把過失致死寫成要有死亡，是兩題。
+guiding_questions:
+- 兩個人同樣闖紅燈，為什麼一個可能碰上刑法第 276 條、另一個碰不上？
+- 結果不同，道德上的責任就該不同嗎？
+- 什麼叫結果運氣？
+scenario: 同一路口、同樣沒有減速，甲和乙都闖了紅燈。甲這次有行人在，行人死亡。乙這次沒有人在，沒有人被撞到。兩人的決定一樣，結果不一樣。
+formats:
+  slides: []
+  exercise: 目標：用結果運氣分析這兩個只差在運氣的虛構案例，對照過失處罰為什麼要有特別規定、第 276 條為什麼寫成有死亡，並寫下自己的立場。　檢核：立場寫明結果該不該改變責任；法條只放在有死亡的那一次旁邊，沒有把沒撞到的那一次說成適用第 276 條；本頁的結論欄留白。
+authors:
+- I-PING Huang
+updated: '2026-11-10'
+goal: 用結果運氣分析兩個只差在運氣的虛構案例，對照法律為什麼過失的處罰要有特別規定、過失致死要有死亡的結果，並寫下自己的立場。
+review: 立場寫明結果該不該改變責任；法條只放在有死亡的那一次旁邊；沒有替兩人定罪。
+audience:
+- adult
+- family
+why:
+  heading: 同樣的決定，不同的結果
+  body:
+  - 甲、乙在同一個路口、同樣沒有減速就闖紅燈。甲這次有行人，行人死亡。乙這次沒有人，沒有人被撞到。決定一樣，差在當時有沒有人在。百科把這種「結果怎麼發生」的運氣叫做結果運氣（例子是本站整理，不是百科裡的那一對駕駛）。
+  - 結果運氣的問題是：如果我們對兩人做出不同的道德評價，而這個差別取決於他們控制不了的結果，評價裡就有運氣。本頁不先說這樣對或不對。
+  items:
+  - title: 結果運氣
+    text: 兩人的決定相同。要評價的那一塊，有一部分取決於當時有沒有人在。那一塊不是他們當下選的。
+  - title: 先別定罪
+    text: 這一點不說甲有罪，也不說乙無罪。其他交通法規本頁不查。
+  qa:
+    question: 什麼叫結果運氣？
+    answer: 結果運氣是事情後來怎麼發生的運氣。兩人決定相同，一個有人死亡、一個沒有人被撞到，差別在他們控制不了的結果。
+    source: sep-moral
+  sources:
+  - sep-moral
+how:
+  heading: 法條把死亡寫進構成
+  body:
+  - 刑法第 12 條第 1 項：「行為非出於故意或過失者，不罰。」第 2 項：「過失行為之處罰，以有特別規定者，為限。」第 2 項是另一項規定，不另取名字。
+  - 第 276 條：「因過失致人於死者，處五年以下有期徒刑、拘役或五十萬元以下罰金。」條文把「致人於死」寫進去。甲這次有人死亡，才放得進這一條旁邊。乙這次沒有人死亡，對不上這一條。放在旁邊不是判決。本頁不說甲成立這個罪。
+  checklist_title: 對照時寫下來
+  checklist:
+  - 兩人決定相同
+  - 結果差在運氣
+  - 第276條要有死亡
+  - 自己寫立場
+  figures:
+  - luck-compare
+  qa:
+    question: 兩個人同樣闖紅燈，為什麼一個可能碰上刑法第 276 條、另一個碰不上？
+    answer: 第 276 條寫的是因過失致人於死。有人死亡的那一次才放得進這一條旁邊。沒有人死亡的那一次對不上。這不是在判誰有罪。
+    source: penal-276
+  sources:
+  - penal-12
+  - penal-276
+what:
+  heading: 寫下你的立場
+  body:
+  - 道德問題是：結果應不應該改變我們怎麼看這兩個人。法律這兩條則是：過失要處罰，得有特別規定；第 276 條的特別規定裡有死亡。兩題可以答案不同。
+  - 寫的時候標清楚你在回答哪一題。本頁的結論留白。
+  items:
+  - title: 兩題分開
+    text: 一題是道德評價跟不跟著結果走。另一題是第 276 條的文字裡有沒有死亡。不要用其中一題的答案直接填另一題。
+  qa:
+    question: 結果不同，道德上的責任就該不同嗎？
+    answer: 本頁不代答。把兩人的決定、結果的差別、第 12 條第 2 項和第 276 條寫在旁邊，再寫你自己的一句話。
+    source: sep-moral
+  notes:
+  - 對照圖是本站整理，不是法條格式，也不是百科裡的原圖。
+  - 百科把過失也算結果運氣的一種。本頁不重述百科的煞車例子。
+  sources:
+  - sep-moral
+  - penal-12
+figures:
+- id: luck-compare
+  type: compare
+  alt: 對照兩個同樣闖紅燈的虛構案例。一個有人死亡，才放得進刑法第 276 條旁邊。一個沒有人被撞到，對不上這一條。本頁不判誰有罪。
+  title: 只差在結果
+  source: penal-276
+  relation: versus
+  items:
+  - term: 有人死亡
+    note: 同樣闖紅燈。這次有人在，人死亡。
+  - term: 沒有人
+    note: 同樣闖紅燈。這次沒有人在。
+  caption: 左邊才放得進第 276 條旁邊。放在旁邊不是判決。
+sources:
+- id: sep-moral
+  title: Moral Luck（Stanford Encyclopedia of Philosophy）
+  publisher: Dana K. Nelkin（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/moral-luck/
+  accessed: '2026-11-10'
+  kind: reference
+  supports: |
+    2026-11-10 打開條目。開頭：「Moral luck occurs when an agent can be correctly treated as an object of moral judgment despite the fact that a significant aspect of what she is assessed for depends on factors beyond her control.」結果運氣一節：「Resultant luck is luck in the way things turn out.」以及：「Cases of negligence provide another important kind of resultant luck.」同段的煞車與小孩、謀殺未遂兩對例子本頁不引用。Williams 與 Hart 的句子讀到了，不寫進正文。
+- id: penal-12
+  title: 刑法第 12 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=C0000001&flno=12
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    第 1 項：「行為非出於故意或過失者，不罰。」第 2 項：「過失行為之處罰，以有特別規定者，為限。」2026-11-10 單條頁核對。
+- id: penal-276
+  title: 刑法第 276 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=C0000001&flno=276
+  accessed: '2026-11-10'
+  kind: government
+  supports: |
+    「因過失致人於死者，處五年以下有期徒刑、拘役或五十萬元以下罰金。」2026-11-10 單條頁核對。本頁只把這一條放在有人死亡的虛構案例旁邊，不宣告成立。

@@ -45,12 +45,12 @@ test.describe("溝通與解決問題", () => {
     test.skip(!process.env.E2E_SOFTSKILLS, "KP_SOFTSKILLS_ENABLED 沒開");
   });
 
-  test("知識地圖五個學區（語文旗標沒開）：145 個節點、39 個路線選項", async ({ page }) => {
+  test("知識地圖五個學區（語文旗標沒開）：148 個節點、40 個路線選項", async ({ page }) => {
     test.skip(process.env.KP_YUWEN_ENABLED === "true", "語文也開了，六個學區由 yuwen.spec.ts 檢查");
     test.setTimeout(120_000);
     await expectMapSectors(page, {
-      buildings: 145,
-      options: 39,
+      buildings: 148,
+      options: 40,
       districts: ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai"],
     });
   });

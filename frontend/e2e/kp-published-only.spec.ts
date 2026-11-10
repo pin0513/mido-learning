@@ -131,6 +131,9 @@ test.describe("正式 build", () => {
     const lw = await request.get("/kp/lw.causation/uni");
     expect(lw.status()).toBe(404);
     expect(await lw.text()).not.toContain("法律上的因果");
+    const crime = await request.get("/kp/lw.crime/sh");
+    expect(crime.status()).toBe(404);
+    expect(await crime.text()).not.toContain("犯罪怎麼成立");
     const a3 = await request.get("/kp/sk.a3/uni");
     expect(a3.status()).toBe(404);
     expect(await a3.text()).not.toContain("一頁問題報告：帶團隊從問題到行動");
@@ -138,6 +141,15 @@ test.describe("正式 build", () => {
       const applied = await request.get("/kp/ph.applied/uni");
       expect(applied.status()).toBe(200);
       expect(await applied.text()).toContain("應用倫理：科技、商業與專業責任");
+      for (const [path, title] of [
+        ["/kp/ph.duty/es", "該做的沒做，也算嗎？"],
+        ["/kp/ph.doallow/jh", "做和不做、提醒和責怪"],
+        ["/kp/ph.moralluck/uni", "道德運氣：結果不同，責任就不同嗎？"],
+      ] as const) {
+        const page = await request.get(path);
+        expect(page.status(), path).toBe(200);
+        expect(await page.text(), path).toContain(title);
+      }
     }
 
     const breakdown = await request.get("/kp/pm.breakdown/es");

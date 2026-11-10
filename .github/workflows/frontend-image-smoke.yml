@@ -129,19 +129,19 @@ jobs:
           done
           check "/kp" /tmp/kp.html
           check "/kp/map" /tmp/kp-map.html
-          # 溝通與解決問題、語文、社會旗標都沒設：地圖只有四個學區、103 個節點（哲學多 3 點）。
-          if ! grep -F 'data-building-count="103"' /tmp/kp-map.html >/dev/null; then
-            echo "/kp/map should have 103 points while soft-skills, yuwen and society are unset"
+          # 溝通與解決問題、語文、社會旗標都沒設：地圖只有四個學區、106 個節點（哲學再加 ph.duty、ph.doallow、ph.moralluck）。
+          if ! grep -F 'data-building-count="106"' /tmp/kp-map.html >/dev/null; then
+            echo "/kp/map should have 106 points while soft-skills, yuwen and society are unset"
             exit 1
           fi
           if grep -F 'data-district="society"' /tmp/kp-map.html >/dev/null; then
             echo "/kp/map shows society while KP_SOCIETY_ENABLED is unset"
             exit 1
           fi
-          # 主線下拉選單：四個學門的 30 條主線 + 「不標路線」。
+          # 主線下拉選單：四個學門的 31 條主線（含 ph.blame）+ 「不標路線」。
           options="$(node frontend/scripts/city-path-count.mjs /tmp/kp-map.html)"
-          if [ "$options" != "31" ]; then
-            echo "/kp/map has ${options} path options, expected 31 while soft-skills and yuwen are unset"
+          if [ "$options" != "32" ]; then
+            echo "/kp/map has ${options} path options, expected 32 while soft-skills and yuwen are unset"
             exit 1
           fi
           if grep -F "溝通與解決問題" /tmp/home.html >/dev/null; then
@@ -175,9 +175,21 @@ jobs:
             echo "society page body is visible while the flag is unset"
             exit 1
           fi
+          code="$(curl -sS -o /tmp/lw-crime-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/lw.crime/sh)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/lw.crime/sh returned ${code}, expected 404"
+            exit 1
+          fi
+          if grep -F "犯罪怎麼成立" /tmp/lw-crime-off.html >/dev/null; then
+            echo "lw.crime body is visible while the flag is unset"
+            exit 1
+          fi
           check "/kp/ph.cause/es" /tmp/ph-cause.html
           check "/kp/ph.counterfact/jh" /tmp/ph-counterfact.html
           check "/kp/ph.norm/sh" /tmp/ph-norm.html
+          check "/kp/ph.duty/es" /tmp/ph-duty.html
+          check "/kp/ph.doallow/jh" /tmp/ph-doallow.html
+          check "/kp/ph.moralluck/uni" /tmp/ph-moralluck.html
           if curl -sf http://127.0.0.1:3000/sitemap.xml | grep -F "/kp/lw." >/dev/null; then
             echo "sitemap lists lw while society is unset"
             exit 1
@@ -247,15 +259,15 @@ jobs:
             echo "GET /kp/zh.punct/es returned ${code}, expected 404 while yuwen is unset"
             exit 1
           fi
-          # 只開溝通與解決問題：地圖五個學區、145 個節點。
+          # 只開溝通與解決問題：地圖五個學區、148 個節點。
           code="$(curl -sS -o /tmp/map-soft.html -w '%{http_code}' http://127.0.0.1:3001/kp/map)"
-          if [ "$code" != "200" ] || ! grep -F 'data-building-count="145"' /tmp/map-soft.html >/dev/null; then
-            echo "/kp/map returned ${code} or does not have 145 points with soft-skills on"
+          if [ "$code" != "200" ] || ! grep -F 'data-building-count="148"' /tmp/map-soft.html >/dev/null; then
+            echo "/kp/map returned ${code} or does not have 148 points with soft-skills on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-soft.html)"
-          if [ "$options" != "39" ]; then
-            echo "/kp/map has ${options} path options, expected 39 with soft-skills on"
+          if [ "$options" != "40" ]; then
+            echo "/kp/map has ${options} path options, expected 40 with soft-skills on"
             exit 1
           fi
 
@@ -315,14 +327,14 @@ jobs:
           fi
           check "/kp"
           check "/kp/map"
-          # 溝通與解決問題、語文開，社會仍關：地圖六個學區、253 個節點。
-          if ! grep -F 'data-building-count="253"' /tmp/yuwen-body.html >/dev/null; then
-            echo "/kp/map should have 253 points with soft-skills and yuwen on"
+          # 溝通與解決問題、語文開，社會仍關：地圖六個學區、256 個節點。
+          if ! grep -F 'data-building-count="256"' /tmp/yuwen-body.html >/dev/null; then
+            echo "/kp/map should have 256 points with soft-skills and yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/yuwen-body.html)"
-          if [ "$options" != "53" ]; then
-            echo "/kp/map has ${options} path options, expected 53 with soft-skills and yuwen on"
+          if [ "$options" != "54" ]; then
+            echo "/kp/map has ${options} path options, expected 54 with soft-skills and yuwen on"
             exit 1
           fi
           check "/kp/zh.punct/es"
@@ -378,7 +390,7 @@ jobs:
             done < /tmp/kp-drafts.tsv
           fi
 
-      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、211 個節點、44 條主線 + 「不標路線」。
+      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、214 個節點、45 條主線 + 「不標路線」。
       - name: Run image with yuwen flag only
         run: |
           set -euo pipefail
@@ -414,13 +426,13 @@ jobs:
             echo "GET /kp/map returned ${code} with only yuwen on"
             exit 1
           fi
-          if ! grep -F 'data-building-count="211"' /tmp/map-yuwen-only.html >/dev/null; then
-            echo "/kp/map should have 211 points with only yuwen on"
+          if ! grep -F 'data-building-count="214"' /tmp/map-yuwen-only.html >/dev/null; then
+            echo "/kp/map should have 214 points with only yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-yuwen-only.html)"
-          if [ "$options" != "45" ]; then
-            echo "/kp/map has ${options} path options, expected 45 with only yuwen on"
+          if [ "$options" != "46" ]; then
+            echo "/kp/map has ${options} path options, expected 46 with only yuwen on"
             exit 1
           fi
           # 溝通與解決問題沒開：地圖上不能有它的學區，語文的點要在。
@@ -607,18 +619,19 @@ jobs:
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
             fetch "/" /tmp/prod-home.html
             fetch "/kp/map" /tmp/prod-map.html
-            points=103
+            points=106
             [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 42))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 108))
-            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 1))
+            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 2))
             if ! grep -F "data-building-count=\"${points}\"" /tmp/prod-map.html >/dev/null; then
               echo "/kp/map should have ${points} points with the production runtime flags"
               exit 1
             fi
-            # 主線選項數：四個學區 31（含因果與歸責），溝通與解決問題 +8，語文 +14。社會這一輪沒有主線。
-            options=31
+            # 主線選項數：四個學區 32（含因果與歸責、規範與歸責），溝通與解決問題 +8，語文 +14。社會開時再加 lw.liability。
+            options=32
             [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 8))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 14))
+            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 1))
             actual="$(node frontend/scripts/city-path-count.mjs /tmp/prod-map.html)"
             if [ "$actual" != "$options" ]; then
               echo "/kp/map has ${actual} path options, expected ${options} with the production runtime flags"
@@ -628,10 +641,14 @@ jobs:
           fetch "/kp-v2/zh.zhuyin/es" /dev/null 404
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" != true ]; then
             fetch "/kp/lw.causation/uni" /dev/null 404
+            fetch "/kp/lw.crime/sh" /dev/null 404
             fetch "/kp/discipline/society" /dev/null 404
             fetch "/kp/ph.cause/es" /tmp/prod-cause.html
             fetch "/kp/ph.counterfact/jh" /tmp/prod-counterfact.html
             fetch "/kp/ph.norm/sh" /tmp/prod-norm.html
+            fetch "/kp/ph.duty/es" /tmp/prod-duty.html
+            fetch "/kp/ph.doallow/jh" /tmp/prod-doallow.html
+            fetch "/kp/ph.moralluck/uni" /tmp/prod-moralluck.html
           fi
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
             fetch "/kp/pm.breakdown/es" /tmp/prod-breakdown.html

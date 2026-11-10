@@ -1,0 +1,179 @@
+id: ph.doallow@jh
+concept: ph.doallow
+title: 做和不做、提醒和責怪
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 哲學
+  - 思考方法
+  - 因果與歸責
+  layer: essence
+  crosscutting: []
+stage:
+  level: jh
+  grades:
+  - 7
+  - 8
+  - 9
+curriculum_108:
+  domains:
+  - 社會
+  core_competencies:
+  - A2
+  - C1
+  issues:
+  - 法治教育
+  - 品德教育
+  performances:
+  - 社 2b-IV-1
+to_verify: false
+verify_notes:
+- 社 2b-IV-1 的句子取自本庫 curriculum-108-codes.yaml（社會領綱頁腳第 10 頁），並於 2026-11-10 對過 PDF 學習表現表，用字是「了」不是相容字。
+- 耳機被拿走、被朋友取笑，都是本站虛構、低強度的例子。不寫性騷擾、暴力或自殺。
+- 英文句子取自 2026-11-10 打開的 Doing vs. Allowing Harm 與 Blame。Quinn 的句子標成他的看法，本頁不選邊。安樂死、戰爭、營養不良那一段不引用。
+- 自由意志那一點還沒有，所以下一階直接到大學的道德運氣，不連尚未建立的 ph.freewill@sh。
+prerequisites:
+- ph.duty@es
+links:
+  why: []
+  how: []
+  related:
+  - ph.ethics@jh
+  - sk.imsg@jh
+  - sk.nvc@jh
+  deeper:
+  - ph.moralluck@uni
+link_notes: 先修是誰有該做的事。相關是倫理視角、我訊息和非暴力溝通。自由意志尚未建立，下一階接到道德運氣。
+competency:
+  specialist:
+  - 批判思考
+  - 倫理推理
+  generalist:
+  - 溝通
+  - 查證
+ai:
+  delegable:
+  - 由大人陪著，請 AI 把一句責怪改成提醒，例子限於東西被拿、被取笑，不要加重情節
+  human_experience:
+  - 自己改寫一句責怪被影響的人的話，並說出改寫後責任還在誰身上
+idea: 做了、沒阻止、怪被影響的人，是三種不同的話。責怪要改成提醒，不把這次的事說成對方的錯。
+guiding_questions:
+- 「耳機被拿走，是你自己放在桌上。」這句要怎麼改成不責怪的提醒？
+- 做了壞事、沒有阻止、沒有保護好自己，差在哪裡？
+- 看見同學被取笑卻沒說話，和動手取笑是同一種嗎？
+scenario: 乙去裝水，回來發現耳機不見了。甲把它放進自己口袋。丙看見了，說得出來，卻沒說。有人對乙說：「是你自己放在桌上。」另一次，丁被朋友取笑，有人說：「是你自己太小題大作。」
+formats:
+  slides: []
+  exercise: 目標：分辨做了、沒有阻止、沒有保護好自己這三種話，並把一句責怪改成不責怪被影響的人的提醒。　檢核：改寫後仍寫明是誰拿走或誰取笑；提醒可以說以後怎麼收，但不把這次的事說成被影響的人的錯。
+authors:
+- I-PING Huang
+updated: '2026-11-10'
+goal: 分辨「做了壞事」「沒有阻止」「沒有保護好自己」三種責任差別，並把一句責怪被影響的人的話改寫成不責怪的提醒。
+review: 改寫後仍寫明是誰拿走或誰取笑；提醒可以說以後怎麼收，但不把這次的事說成被影響的人的錯。
+est_time:
+  school: 國中七至九年級社會課
+  source: social108
+audience:
+- kid
+- family
+why:
+  heading: 三種話不要併成一句
+  body:
+  - 甲把乙的耳機放進自己口袋，這是做了。丙看見了、說得出來，卻沒說，這是沒有阻止。有人對乙說「是你自己放在桌上」，這是把這次被拿走說成乙的錯。三句話指的人不同，不能併成「都是乙的事」（例子是本站整理）。
+  - 沒有阻止的人，要先回到上一階問他有沒有該做的事。看見了、說得出來，只說明他和「動手拿走」不是同一種。本頁不判丙該不該負責。
+  items_title: 先分開再改寫
+  items:
+  - title: 處境與抉擇
+    text: 感受個人或不同群體在社會處境中的經歷與情緒，並了解其抉擇。
+    code: 社 2b-IV-1
+  - title: 做了
+    text: 動手拿走，或動手取笑。這一次的行為在做的人身上。
+  - title: 沒阻止
+    text: 看見了、說得出來，卻沒說。和動手不是同一種。有沒有該做的事，回到上一階。
+  - title: 怪對方
+    text: 「是你自己放在桌上」「是你自己太小題大作」把這次的事說成被影響的人的錯。這種話要改寫。
+  qa:
+    question: 做了壞事、沒有阻止、沒有保護好自己，差在哪裡？
+    answer: 做了是行為在動手的人身上。沒阻止是看見了卻沒說，先問他有沒有該做的事。沒有保護好自己常被用來責怪被影響的人，要改成提醒，不把這次的事說成他的錯。
+    source: social108
+  sources:
+  - social108
+how:
+  heading: 把責怪改成提醒
+  body:
+  - 「耳機被拿走，是你自己放在桌上。」可以改成：「耳機被拿走了。先問是誰拿走的。如果要提醒，離開座位時放進袋子裡。」提醒是以後可以怎麼做。責怪是把這次被拿走說成他的錯。
+  - 「他們笑你，是你自己太小題大作。」可以改成：「他們取笑你。先問是誰在笑。如果要提醒，可以說：覺得不舒服就直接說停，不用先怪自己反應太大。」被取笑的人能不能自己說停，不是把取笑移到他身上的理由。
+  checklist_title: 改寫時檢查
+  checklist:
+  - 做了是一種
+  - 沒阻止是另一種
+  - 怪對方要改寫
+  - 提醒不是責怪
+  figures:
+  - doallow-three
+  qa:
+    question: 「耳機被拿走，是你自己放在桌上。」這句要怎麼改成不責怪的提醒？
+    answer: 先寫是誰拿走的。提醒可以說離開座位時放進袋子裡。不要把這次被拿走說成放在桌上的人的錯。
+    source: sep-blame
+  sources:
+  - sep-doing
+  - sep-blame
+what:
+  heading: 本頁不排哪一種比較重
+  body:
+  - 百科一開頭問，做了傷害和只是沒有阻止，在道德上有沒有差別。Quinn 的看法是：要為做了傷害辯護，需要比只是沒有阻止更強的理由，其他條件一樣。本頁把這句標成他的看法，不選邊。
+  - 被影響的人有自己的感受。課綱要了解處境裡的經歷、情緒和抉擇。把責任推回去，會蓋掉那個感受。改寫時先留下誰做了什麼。
+  items:
+  - title: 責任留在原處
+    text: 改寫之後，拿走的還是拿走的人，取笑的還是取笑的人。提醒不把這次的行為搬到被影響的人身上。
+  qa:
+    question: 看見同學被取笑卻沒說話，和動手取笑是同一種嗎？
+    answer: 不是。動手取笑是做了。看見了、說得出來卻沒說，是沒有阻止。有沒有該做的事，用上一階的角色或約定來問。本頁不判他該不該負責。
+    source: sep-doing
+  notes:
+  - 三格圖是本站整理。前兩格對上百科的做了和沒有阻止，第三格是責怪被影響的人。
+  - 例子只有東西被拿和被取笑。不寫性騷擾、暴力或自殺。
+  sources:
+  - sep-doing
+  - sep-blame
+figures:
+- id: doallow-three
+  type: compare
+  alt: 三格對照。做了是動手拿走或取笑。沒阻止是看見了、說得出來卻沒說。怪對方是把這次的事說成被影響的人的錯，要改成提醒。
+  title: 三種話
+  source: sep-doing
+  relation: not_equal
+  items:
+  - term: 做了
+    note: 動手拿走，或動手取笑。
+  - term: 沒阻止
+    note: 看見了、說得出來，卻沒說。
+  - term: 怪對方
+    note: 把這次的事說成被影響的人的錯。
+  caption: 三格不相等。第三格要改寫成提醒，不把行為搬過去。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-10'
+  kind: curriculum
+  supports: |
+    學習表現 社 2b-IV-1，頁腳第 10 頁：「感受個人或不同群體在社會處境中的經歷與情緒，並了解其抉擇。」全文與 curriculum-108-codes.yaml 相同，沒有縮短。
+- id: sep-doing
+  title: Doing vs. Allowing Harm（Stanford Encyclopedia of Philosophy）
+  publisher: Fiona Woollard、Frances Howard-Snyder、Charlotte Unruh（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/doing-allowing/
+  accessed: '2026-11-10'
+  kind: reference
+  supports: |
+    2026-11-10 打開條目。開頭：「Is there a moral difference between doing harm and merely allowing harm?」後段讀到：「In both doing and allowing, an agent is responsible for or relevant to a bad upshot」句子在破折號後還有舉例，本頁不引用。Quinn（1989）的句子：「Thus much stronger considerations are needed to justify doing harm than to justify merely allowing harm (other things being equal).」本頁標成他的看法。
+- id: sep-blame
+  title: Blame（Stanford Encyclopedia of Philosophy）
+  publisher: Neal Tognazzini、D. Justin Coates（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/blame/
+  accessed: '2026-11-10'
+  kind: reference
+  supports: |
+    2026-11-10 打開條目。開頭：「Blame is a common reaction to something of negative normative significance about someone or their behavior.」目錄問：「When is it appropriate to respond in these ways?」作者資訊取自該頁 citation 標記。改寫例句是本站的，不是百科裡的案例。

@@ -1,0 +1,163 @@
+id: ph.duty@es
+concept: ph.duty
+title: 該做的沒做，也算嗎？
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 哲學
+  - 思考方法
+  - 因果與歸責
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+  grades:
+  - 3
+  - 4
+curriculum_108:
+  domains:
+  - 社會
+  core_competencies:
+  - A2
+  - C1
+  issues:
+  - 法治教育
+  - 品德教育
+  contents:
+  - 社會:Ac-II-1
+to_verify: false
+verify_notes:
+- 社會 Ac-II-1 的句子取自 2026-11-10 打開的社會領綱 PDF（頁腳第 15 頁），並已寫進 curriculum-108-codes.yaml。國語文也有 Ac-II-1，所以這裡寫成「社會:Ac-II-1」。
+- 值日生沒關窗、路過的同學沒關窗、花枯了怪園丁，都是本站虛構例子。不下誰該賠、誰該罰的結論。
+- 這一點只問誰有該做的事。站在旁邊、做得到卻沒做的人，用「假如沒有」會被算進去，那是 ph.counterfact@jh。這裡不把路過的人說成「不是原因」。
+- 英文短句取自 2026-11-10 讀過的史丹佛哲學百科 Doing vs. Allowing Harm 開頭。安樂死、戰爭、營養不良那一段在同一頁，國小這一點不引用。
+prerequisites:
+- ph.reason@es
+links:
+  why: []
+  how: []
+  related:
+  - pm.roles@es
+  - sk.why5@es
+  deeper:
+  - ph.doallow@jh
+link_notes: 先修是把理由說清楚。相關是角色（分工）和先找原因再談責任。下一階分辨做了、沒阻止、以及責怪被影響的人。
+competency:
+  specialist:
+  - 批判思考
+  - 倫理推理
+  generalist:
+  - 提問
+  - 查證
+ai:
+  delegable:
+  - 由大人陪著，請 AI 再舉一件「有人被派了工作、卻沒做」的虛構小事，不要用真實新聞
+  human_experience:
+  - 用自己的話說出，誰有該做的事，這件事從角色或約定來
+idea: 沒做，也可能要負責。先問這件事是不是他的工作，或大家約定過。不是每個沒做的人都一樣。
+guiding_questions:
+- 花枯死了，為什麼怪園丁，不怪路過的人？
+- 該做的事沒做，為什麼也可能要負責？
+- 責任從哪裡來？
+scenario: 放學後下大雨。今天的值日生沒有關窗，筆記本濕了。路過的同學也沒有關。先問誰被派了關窗，再問花枯了要問誰。
+formats:
+  slides: []
+  exercise: 目標：在值日生和路過的人、園丁和路過的人之間，說出誰有該做的事、這責任從角色或約定來，以及為什麼沒做也可能要負責。　檢核：孩子能指出值日生或園丁有這項工作；被問到路過的人時，能說這一點不判斷他是不是原因，只說他沒有這項角色或約定。
+authors:
+- I-PING Huang
+updated: '2026-11-10'
+goal: 在值日生沒關窗、路過的同學沒關窗，以及花枯了的情境裡，說出誰有該做的事、這責任從哪裡來，以及為什麼沒做也可能要負責。
+review: 孩子能指出值日生或園丁有這項工作；被問到路過的人時，能說這一點不判斷他是不是原因，只說他沒有這項角色或約定。
+est_time:
+  school: 國小三、四年級社會課
+  source: social108
+audience:
+- kid
+- family
+why:
+  heading: 沒做也可能要負責
+  body:
+  - 值日生今天的工作是關窗。他沒關，雨把筆記本打濕了。路過的同學也沒關，可是關窗不是他的工作，班上也沒有跟他約定。兩個人都「沒做」，要負責的理由不一樣（例子是本站整理）。
+  - 該做的事通常從兩個地方來：一個是角色，例如值日生、園丁；一個是約定，例如大家說好輪流關窗。有這項該做的事、卻沒做，才進到「沒做也要問責任」。沒有這項角色、也沒有約定的人，這一點先不把他算進同一種責任。
+  items_title: 責任從哪裡來
+  items:
+  - title: 權利與責任
+    text: 兒童在生活中擁有許多權利（可包括生存權、學習權、表意權、隱私權、身體自主權及不受歧視的權利等）與責任（可包括遵守規範、尊重他人或維護公共利益等）。
+    code: 社會:Ac-II-1
+  - title: 從角色來
+    text: 值日生是班上的角色。關窗是這個角色今天的工作。沒關，是該做的沒做。
+  - title: 從約定來
+    text: 如果大家說好輪流關窗，約定本身就是該做的事。沒有說好的人，不靠這一點被算進去。
+  qa:
+    question: 該做的事沒做，為什麼也可能要負責？
+    answer: 因為那件事本來是他的工作，或大家約定過。沒有動手，不代表不用問。先問他有沒有該做的事。
+    source: social108
+  sources:
+  - social108
+how:
+  heading: 先問誰有這工作
+  body:
+  - 花枯了，是因為沒有澆水。先找原因，是上一類的問題。接著才問誰有澆水的工作。園丁的工作是澆水。路過的人沒有這項角色，也沒有約定要澆。所以這一點怪有工作卻沒做的園丁，不把每個路過的人算成同一種責任。
+  - 站在花園旁、澆得到水卻沒澆的人，用「假如沒有」會被算進去。那一題太寬，是別的知識點。這一點更窄：只問誰被派了這項工作，或誰答應過。路過的人是不是原因，這裡不回答。
+  checklist_title: 問責任之前
+  checklist:
+  - 誰有該做的事
+  - 角色或約定
+  - 沒做先問責任
+  - 不判斷是原因
+  figures:
+  - duty-compare
+  qa:
+    question: 花枯死了，為什麼怪園丁，不怪路過的人？
+    answer: 園丁的工作是澆水，沒澆就是該做的沒做。路過的人沒有這項角色，也沒有約定。這一點不說他是不是原因。
+    source: social108
+  sources:
+  - social108
+  - sep-doing
+what:
+  heading: 責任比原因窄
+  body:
+  - 百科一開頭問：做了傷害，和只是沒有阻止，在道德上有沒有差別。國小這一點先不回答哪一種比較重。先把「有該做的事」圈出來。沒有這圈的人，不跟有工作的人放在同一種責任裡。
+  items:
+  - title: 先圈再問
+    text: 先說這件事是誰的角色或約定。圈裡的人沒做，才問責任。圈外的人，這一點先停住。
+  qa:
+    question: 責任從哪裡來？
+    answer: 從角色來，例如值日生、園丁；或從約定來，例如大家說好輪流做。兩種都要能指出來，才說他有該做的事。
+    source: sep-doing
+  sources:
+  - sep-doing
+  notes:
+  - 對照圖是本站整理，不是課綱或百科裡的原圖。
+  - 這一點不下誰該賠、誰該受罰的結論。
+figures:
+- id: duty-compare
+  type: compare
+  alt: 對照園丁和路過的人。園丁的工作是澆水，沒澆是該做的沒做。路過的人沒有這項角色，也沒有約定。這一點不判斷誰是原因。
+  title: 誰有該做的事
+  source: social108
+  relation: versus
+  items:
+  - term: 園丁
+    note: 工作是澆水。沒澆，該做的沒做。
+  - term: 路過的人
+    note: 沒有這項角色，也沒有約定。
+  caption: 花枯了先問誰有澆水的工作。是不是原因，留給「假如沒有」那一點。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-10'
+  kind: curriculum
+  supports: |
+    學習內容 Ac-II-1，頁腳第 15 頁，2026-11-10 由 PDF 第 19 頁核對：「兒童在生活中擁有許多權利（可包括生存權、學習權、表意權、隱私權、身體自主權及不受歧視的權利等）與責任（可包括遵守規範、尊重他人或維護公共利益等）。」國語文領綱另有同號代碼，本點用科目鍵區分。
+- id: sep-doing
+  title: Doing vs. Allowing Harm（Stanford Encyclopedia of Philosophy）
+  publisher: Fiona Woollard、Frances Howard-Snyder、Charlotte Unruh（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/doing-allowing/
+  accessed: '2026-11-10'
+  kind: reference
+  supports: |
+    2026-11-10 打開條目。開頭讀到：「Is there a moral difference between doing harm and merely allowing harm?」同一段後面的安樂死、戰爭與營養不良例子，國小這一點不引用。作者資訊取自該頁 citation 標記。

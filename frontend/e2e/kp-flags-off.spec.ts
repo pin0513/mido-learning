@@ -37,6 +37,9 @@ test.describe("旗標關閉", () => {
     expect(point.status()).toBe(404);
     expect(point.headers()["x-robots-tag"] ?? "").toContain("noindex");
     expect(await point.text()).not.toContain("法律上的因果");
+    const crime = await request.get("/kp/lw.crime/sh");
+    expect(crime.status()).toBe(404);
+    expect(await crime.text()).not.toContain("犯罪怎麼成立");
   });
 
   test("語文知識點是 404，sitemap 沒有語文網址", async ({ request }) => {

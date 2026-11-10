@@ -23,10 +23,10 @@ const DRAFT_SLUGS = ["ph.epistem", "ph.philsci", "ph.formal", "ma.pattern", "ma.
 
 // 已發布的點才有頁面連結：ph.reason@es，B11 發布的數學 es／jh 12 點，B12 發布的數學 sh 7 點，B13 發布的數學 uni 7 點，B14 發布的資訊與 AI es／jh 12 點，B15 發布的資訊與 AI sh 7 點，B16 發布的資訊與 AI uni 6 點，以及 B17 發布的專案管理 es 5 點（專案管理的點另外在第一個測試逐一檢查），B21 發布的哲學 es 5 點，B22 發布的哲學 jh 6 點，B23 發布的哲學 sh 7 點。
 const PUBLISHED = new Set([
-  "ph.reason@es", "ph.question@es", "ph.fact@es", "ph.know@es", "ph.fair@es", "ph.parts@es", "ph.cause@es",
-  "ph.argument@jh", "ph.fallacy@jh", "ph.evidence@jh", "ph.feedback@jh", "ph.hypothesis@jh", "ph.ethics@jh", "ph.counterfact@jh",
+  "ph.reason@es", "ph.question@es", "ph.fact@es", "ph.know@es", "ph.fair@es", "ph.parts@es", "ph.cause@es", "ph.duty@es",
+  "ph.argument@jh", "ph.fallacy@jh", "ph.evidence@jh", "ph.feedback@jh", "ph.hypothesis@jh", "ph.ethics@jh", "ph.counterfact@jh", "ph.doallow@jh",
   "ph.logic@sh", "ph.science@sh", "ph.tok@sh", "ph.bias@sh", "ph.aijudge@sh", "ph.systems@sh", "ph.ethicstheory@sh", "ph.norm@sh",
-  "ph.epistem@uni", "ph.philsci@uni", "ph.formal@uni", "ph.applied@uni", "ph.complex@uni", "ph.aimind@uni",
+  "ph.epistem@uni", "ph.philsci@uni", "ph.formal@uni", "ph.applied@uni", "ph.complex@uni", "ph.aimind@uni", "ph.moralluck@uni",
   "ma.number@es", "ma.pattern@es", "ma.data@es", "ma.measure@es", "ma.shape@es", "ma.fraction@es",
   "ma.algebra@jh", "ma.coord@jh", "ma.prob@jh", "ma.pythag@jh", "ma.quadratic@jh", "ma.similar@jh",
   "ma.function@sh", "ma.proof@sh", "ma.rate@sh", "ma.sequence@sh", "ma.stats@sh", "ma.trig@sh", "ma.vector@sh",
@@ -212,7 +212,7 @@ test("虛線只拿掉實線已經到得了的，實線保持原樣", () => {
   const pm = model.diagrams.find((item) => item.id === "pm-leadership");
   assert.ok(pm);
   assert.equal(pm.edges.some((edge) => edge.from === "pm.breakdown@es" && edge.to === "pm.triangle@jh"), false);
-  assert.equal(count("philosophy", "pre"), 37);
+  assert.equal(count("philosophy", "pre"), 40);
   assert.equal(count("philosophy", "ext"), 2);
   assert.equal(count("math", "pre"), 38);
   assert.equal(count("math", "ext"), 2);
