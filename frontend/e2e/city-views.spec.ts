@@ -15,7 +15,7 @@ test.describe("學習城市的三種檢視", () => {
     const counts = await page.locator("td[data-count]").evaluateAll((nodes) =>
       nodes.map((node) => Number(node.getAttribute("data-count"))),
     );
-    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(106);
+    expect(counts.reduce((sum, count) => sum + count, 0)).toBe(107);
     await expect(page.locator('td[data-layer="essence"][data-stage="es"]')).toContainText("大事拆成小事");
     await expect(page.locator('td[data-layer="applied"][data-stage="es"]')).toContainText("還沒有知識點");
 

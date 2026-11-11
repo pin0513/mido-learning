@@ -107,11 +107,11 @@ test.describe("知識地圖", () => {
     }
   });
 
-  test("index.json 有 106 筆且 sitemap 不收草稿、社會與會員頁", async ({ request }) => {
+  test("index.json 有 107 筆且 sitemap 不收草稿、社會與會員頁", async ({ request }) => {
     const index = await request.get("/kp/index.json");
     expect(index.status()).toBe(200);
     const rows = (await index.json()) as { id: string; title: string; stage: string; url: string }[];
-    expect(rows).toHaveLength(106);
+    expect(rows).toHaveLength(107);
     expect(rows.some((row) => row.id.startsWith("lw."))).toBe(false);
     expect(rows.some((row) => row.id.startsWith("sk."))).toBe(false);
     expect(rows.some((row) => /^(zh|en|ja|lg)\./.test(row.id))).toBe(false);

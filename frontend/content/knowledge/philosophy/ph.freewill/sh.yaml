@@ -1,0 +1,205 @@
+id: ph.freewill@sh
+concept: ph.freewill
+title: 「是他自己決定的」：自由意志與責任
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 哲學
+  - 思考方法
+  - 因果與歸責
+  layer: essence
+  crosscutting: []
+stage:
+  level: sh
+  grades:
+  - 10
+  - 11
+  - 12
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - A2
+  - C1
+  issues:
+  - 生命教育
+  contents:
+  - 生 Da-V-2
+to_verify: false
+verify_notes:
+- 生 Da-V-2 的卡片文字與 curriculum-108-codes.yaml 全文相同。代碼表記綜合活動領綱頁腳第 96 頁。這一輪沒有重下該 PDF。
+- Moral Responsibility（Matthew Talbert；2019-10-16 首次發表，2024-06-03 實質修訂）與 Compatibilism（Michael McKenna、D. Justin Coates；2004-04-26 首次發表，2024-04-16 實質修訂）於 2026-11-11 打開條目原文。英文句子逐字引自該兩頁。翻譯是本站整理。
+- 知情對上條目的 epistemic condition，自由對上 freedom or control condition，刻意對上 Strawson 被引用的 attitudes and intentions、quality of will。這三個中文名字和「切斷」都是本站整理。條目談的是同一個人，不是把另一個人的責任切掉。
+- 條目 3.7 有一個較重的情節，本頁不引用、不複述。Schlick 的 "Freedom means the opposite of compulsion" 讀到了；下一句有較重的強迫情節，本頁不引用。
+- 傳紙條、亂丟紙屑是本站虛構、低強度的例子。本頁不選邊。
+prerequisites:
+- ph.doallow@jh
+- ph.ethicstheory@sh
+links:
+  why: []
+  how: []
+  related:
+  - ph.bias@sh
+  deeper:
+  - ph.moralluck@uni
+link_notes: 先修是做與不做，以及倫理學的三種視角。相關是認知偏誤。下一階是道德運氣。法律上的故意過失和責任年齡在另一個學門。本頁不選邊。
+competency:
+  specialist:
+  - 批判思考
+  - 倫理推理
+  generalist:
+  - 查證
+  - 跨域思考
+ai:
+  delegable:
+  - 由老師或家長操作，請 AI 把知情、自由、刻意列成空表，不要填誰該負責，也不要另編較重的情節
+  human_experience:
+  - 用傳話和亂丟這兩個例子自己填三條件，各用一句話寫出相容論和不相容論，最後寫本頁不選邊
+idea: 後面的人知情、沒有被逼、自己決定時，不能把整件事只算在前面那個人身上。相容論和不相容論對「前面的原因會不會取消責任」回答不同。本頁不選邊。
+guiding_questions:
+- 被騙去做壞事的人，也算做錯嗎？
+- 什麼時候後面的決定能切斷前面的人的責任？
+- 相容論和不相容論對「有沒有責任」回答有什麼不同？
+scenario: 甲被朋友拜託傳一張紙條，以為是請同學幫忙帶便當，不知道紙條寫著把便當藏起來。乙知道朋友要他亂丟紙屑，沒有人抓著他的手，他自己決定丟。
+formats:
+  slides: []
+  exercise: 目標：判斷一個人的決定什麼時候能切斷前面行為者的責任（知情、自由、刻意），並比較相容論和不相容論對有沒有責任的不同回答。　檢核：傳話的甲三條件沒有齊、不能把整件事只算成他自己決定；亂丟的乙三條件都有，不能只怪前面的人；兩種理論都寫到，最後一句是本頁不選邊。
+authors:
+- I-PING Huang
+updated: '2026-11-11'
+goal: 能判斷一個人的決定什麼時候能切斷前面行為者的責任（知情、自由、刻意三條件），並比較相容論和不相容論對有沒有責任的不同回答。
+review: 傳話的甲三條件沒有齊；亂丟的乙三條件都有，不能只怪前面的人；兩種理論都寫到；最後一句是本頁不選邊。
+est_time:
+  school: 高中生命教育課
+  source: zonghe
+audience:
+- kid
+- family
+why:
+  heading: 先問他知不知道
+  body:
+  - |
+    百科一開頭寫道："Making judgments about whether a person is morally responsible for their behavior, and holding others and ourselves responsible for actions and the consequences of actions, is a fundamental and familiar part of our moral practices and our interpersonal relationships." 判斷一個人負不負道德責任，是跟人相處時很基本的一件事（翻譯是本站整理）。
+  - 甲不知道紙條在說什麼。乙知道朋友要他亂丟，沒有被抓著手，自己決定丟。兩個人都不一樣。差在哪裡，先用三個條件看。三個中文名字是本站整理。
+  items_title: 課綱原句
+  items:
+  - title: 判斷對錯的因素
+    text: 判斷行為者善惡及行為對錯時應考慮的因素。
+    code: 生 Da-V-2
+  qa:
+    question: 被騙去做壞事的人，也算做錯嗎？
+    answer: 要看他知不知道。甲以為是帶便當，不知道紙條要藏便當。百科說，人有時不知道壞的後果，這種不知道有時可以讓他不用被責怪。不是每一次不知道都可以。本頁不把他算成自己決定去做。
+    source: sep-mr
+  sources:
+  - zonghe
+  - sep-mr
+how:
+  heading: 三個條件都要問
+  body:
+  - |
+    百科寫道："There has been a recent surge in interest in the epistemic condition on responsibility (as opposed to the freedom or control condition that is at the center of the free will debate)." 一層是知不知道，一層是有沒有自由或控制（翻譯是本站整理）。又寫道："Sometimes agents act in ignorance of the bad consequences of their actions, and sometimes their ignorance excuses them from blame." 不知道壞的後果，有時可以不用被責怪（翻譯是本站整理）。
+  - |
+    第三層用百科引用的 Strawson。原文是 "the attitudes and intentions towards us of other human beings"，以及 "the quality of others' wills towards us"。我們在意別人對我們的態度與意圖（翻譯是本站整理）。本站把這一層叫「刻意」：他是不是自己要這樣。
+  - 三個條件都有，本站才說後面的決定切斷了「只怪前面那個人」。甲不知道內容，第一個條件沒有，不能這樣切。乙三個都有，不能把亂丟只算在慫恿的人身上。前面的人有沒有另外的責任，本頁不結論。
+  items_title: 三個條件
+  items:
+  - title: 知情
+    text: 他知道這是什麼事、可能有什麼後果嗎？甲不知道紙條要藏便當。乙知道是亂丟。
+  - title: 自由
+    text: 有沒有被逼、被抓住？兩個例子都沒有人抓著他們的手。這一頁只問這個，不把「自由」說成已經證明。
+  - title: 刻意
+    text: 是不是自己要這樣？乙自己決定丟。甲以為自己在傳帶便當的話，不是要藏便當。
+  checklist_title: 先填三格
+  checklist:
+  - 他知道嗎
+  - 有沒有被逼
+  - 自己要這樣
+  - 三格沒齊就停
+  figures:
+  - freewill-flow
+  qa:
+    question: 什麼時候後面的決定能切斷前面的人的責任？
+    answer: 本站整理的說法是：知情、自由、刻意三個都有，就不能把整件事只算在前面那個人身上。乙可以這樣看。甲不知道內容，不能這樣切。這不是百科的原句，前面的人有沒有另外的責任，本頁不結論。
+    source: sep-mr
+  sources:
+  - sep-mr
+what:
+  heading: 兩種回答不選邊
+  body:
+  - |
+    百科寫道："Compatibilists maintain that free will and moral responsibility are compatible with determinism." 相容論認為，自由意志和道德責任跟決定論可以並存（翻譯是本站整理）。另一個條目寫道："Compatibilism is the thesis that free will is compatible with determinism." 因為自由意志通常被當成道德責任的必要條件，這個主張有時也說成：道德責任和決定論可以並存（翻譯是本站整理）。原文是："Because free will is typically taken to be a necessary condition of moral responsibility, compatibilism is sometimes expressed as a thesis about the compatibility between moral responsibility and determinism."
+  - |
+    同一頁寫道："incompatibilists accept (some version of at least one of) these arguments and so insist that our self-conception as free and responsible agents would be seriously misguided if causal determinism turns out to be true." 不相容論接受這些論證的某一種，因此認為：如果因果決定論為真，我們把自己看成自由、要負責的那幅圖像就會嚴重失準（翻譯是本站整理）。
+  - 對乙來說，相容論可以說他仍要負責。不相容論會問：若他的決定早就被排好，這份責任還算不算。本頁不選邊，也不替甲、乙做判決。
+  items_title: 兩種回答
+  items:
+  - title: 相容論
+    text: 前面有原因，人仍可能有責任。對上的是百科對相容論的定義。
+  - title: 不相容論
+    text: 若行為早就被決定，把人看成自由、要負責，這幅圖像就會出問題。
+  - title: 本頁不選邊
+    text: 兩種都寫出來。不說哪一種才對，也不說乙有罪或沒罪。
+  figures:
+  - freewill-compare
+  qa:
+    question: 相容論和不相容論對「有沒有責任」回答有什麼不同？
+    answer: 相容論說，就算前面的原因早就排好，人仍可能有責任。不相容論說，若決定論為真，把自己看成自由、要負責的那幅圖像就會嚴重失準。本頁不選邊。
+    source: sep-compat
+  sources:
+  - sep-mr
+  - sep-compat
+  notes:
+  - 流程、對照，以及「知情、自由、刻意」「切斷」，都是本站整理。
+  - 百科談的是同一個人知不知道、有沒有受控制。本頁不把這寫成法條。
+  - 條目裡有較重的例子，這一頁不引用。本頁不選邊。
+figures:
+- id: freewill-flow
+  type: flow
+  alt: 三個條件的順序。先問他知道這件事嗎，再問有沒有被逼，再問是不是自己要這樣。三個沒有齊，就不能把整件事只算成他自己決定。
+  steps:
+  - actor: 知情
+    text: 知道這件事
+  - actor: 自由
+    text: 沒有被逼
+  - actor: 刻意
+    text: 自己要這樣
+  source: sep-mr
+  caption: 三個條件是本站整理。知情、自由對上百科的兩層條件。刻意對上態度與意圖。
+- id: freewill-compare
+  type: compare
+  alt: 對照相容論和不相容論。相容論說前面有原因，人仍可能有責任。不相容論說若早就被決定，責任這幅圖像就會出問題。本頁不選邊。
+  title: 兩種回答
+  source: sep-compat
+  relation: versus
+  items:
+  - term: 相容論
+    note: 前面有原因，仍可能有責任。
+  - term: 不相容論
+    note: 若早被決定，責任就成問題。
+  caption: 定義對上百科原文。例子是本站整理。本頁不選邊。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-11'
+  kind: curriculum
+  supports: |
+    學習內容 生 Da-V-2，與 curriculum-108-codes.yaml 全文相同（代碼表記頁腳第 96 頁）：「判斷行為者善惡及行為對錯時應考慮的因素。」時間寫高中生命教育課，沿用綜合活動領綱高中部定必修含生命教育的既有標法。
+- id: sep-mr
+  title: Moral Responsibility（Stanford Encyclopedia of Philosophy）
+  publisher: Matthew Talbert；2019 年 10 月 16 日首次發表，2024 年 6 月 3 日實質修訂（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/moral-responsibility/
+  accessed: '2026-11-11'
+  kind: reference
+  supports: |
+    2026-11-11 打開條目。開頭："Making judgments about whether a person is morally responsible for their behavior, and holding others and ourselves responsible for actions and the consequences of actions, is a fundamental and familiar part of our moral practices and our interpersonal relationships." 3.10："There has been a recent surge in interest in the epistemic condition on responsibility (as opposed to the freedom or control condition that is at the center of the free will debate)." 以及 "Sometimes agents act in ignorance of the bad consequences of their actions, and sometimes their ignorance excuses them from blame." 相容論那句："Compatibilists maintain that free will and moral responsibility are compatible with determinism." Strawson 被引用為 "the attitudes and intentions towards us of other human beings" 與 "the quality of others' wills towards us"。3.7 的較重情節不引用。
+- id: sep-compat
+  title: Compatibilism（Stanford Encyclopedia of Philosophy）
+  publisher: Michael McKenna、D. Justin Coates；2004 年 4 月 26 日首次發表，2024 年 4 月 16 日實質修訂（Stanford Encyclopedia of Philosophy）
+  url: https://plato.stanford.edu/entries/compatibilism/
+  accessed: '2026-11-11'
+  kind: reference
+  supports: |
+    2026-11-11 打開條目。開頭："Compatibilism is the thesis that free will is compatible with determinism. Because free will is typically taken to be a necessary condition of moral responsibility, compatibilism is sometimes expressed as a thesis about the compatibility between moral responsibility and determinism." 不相容論那句："incompatibilists accept (some version of at least one of) these arguments and so insist that our self-conception as free and responsible agents would be seriously misguided if causal determinism turns out to be true."

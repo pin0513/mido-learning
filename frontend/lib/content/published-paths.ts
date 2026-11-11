@@ -2,319 +2,319 @@
 export const kpSitemapEntries: { path: string; lastModified: string }[] = [
   {
     "path": "/kp",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/discipline/philosophy",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/discipline/math",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/discipline/pm-leadership",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/discipline/soft-skills",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/discipline/it-ai",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/discipline/language",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/discipline/society",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/stage/es",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/stage/jh",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/stage/sh",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/stage/uni",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/layer/essence",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/layer/foundation",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/layer/advanced",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/layer/applied",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/A1",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/A2",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/A3",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/B1",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/B2",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/B3",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/C1",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/C2",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/competency/C3",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/it.ct",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/it.prog",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/it.data",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/it.net",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/it.ml",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/it.literacy",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/it.collab",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/it.creative",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/zh.basics",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/zh.reading",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/zh.classic",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/zh.compose",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/zh.practical",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/zh.aivoice",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/en.bench",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/en.readus",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/en.speak",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/en.write",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ja.script",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ja.talk",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ja.polite",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/lg.method",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ma.algebra",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ma.geometry",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ma.change",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ma.data",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ma.proof",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ma.model",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ma.beauty",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.inquiry",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.logic",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.critical",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.epistemology",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.ethics",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.systems",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.ai",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.causation",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/ph.blame",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/pm.goal",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/pm.estimate",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/pm.schedule",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/pm.team",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/pm.risk",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/pm.lead",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/pm.reflect",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/lw.liability",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/sk.talk",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/sk.meet",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/sk.empathy",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/sk.conflict",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/sk.solve",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/sk.improve",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/sk.deal",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/path/sk.humor",
-    "lastModified": "2026-11-10"
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/it.aisys/uni",
@@ -1029,6 +1029,10 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
     "lastModified": "2026-10-30"
   },
   {
+    "path": "/kp/ph.freewill/sh",
+    "lastModified": "2026-11-11"
+  },
+  {
     "path": "/kp/ph.hypothesis/jh",
     "lastModified": "2026-10-30"
   },
@@ -1177,8 +1181,16 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
     "lastModified": "2026-11-10"
   },
   {
+    "path": "/kp/lw.contract/jh",
+    "lastModified": "2026-11-11"
+  },
+  {
     "path": "/kp/lw.crime/sh",
     "lastModified": "2026-11-10"
+  },
+  {
+    "path": "/kp/lw.fault/es",
+    "lastModified": "2026-11-11"
   },
   {
     "path": "/kp/sk.a3/uni",
