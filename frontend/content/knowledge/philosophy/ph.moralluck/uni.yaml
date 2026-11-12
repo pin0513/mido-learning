@@ -20,7 +20,7 @@ verify_notes:
 - 英文句子取自 2026-11-10 打開的 Moral Luck。Williams 期待 oxymoron 的那句、Hart 關於刑罰的提問都讀到了，本頁不引用，以免寫成臺灣法律的結論。
 - 自由意志那一點（ph.freewill@sh）還沒有建立，先備改接國中的做與不做。
 prerequisites:
-- ph.doallow@jh
+- ph.freewill@sh
 links:
   why: []
   how: []
@@ -28,7 +28,7 @@ links:
   - ph.applied@uni
   - ph.epistem@uni
   deeper: []
-link_notes: 自由意志尚未建立，所以先備是國中這一點。相關是應用倫理、知識論。法律上的因果和犯罪怎麼成立在另一個學門。本頁不判決。
+link_notes: 先修是自由意志與責任。相關是應用倫理、知識論。法律上的因果和犯罪怎麼成立在另一個學門。本頁不判決。
 competency:
   specialist:
   - 批判思考

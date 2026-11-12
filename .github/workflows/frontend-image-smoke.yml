@@ -129,9 +129,9 @@ jobs:
           done
           check "/kp" /tmp/kp.html
           check "/kp/map" /tmp/kp-map.html
-          # 溝通與解決問題、語文、社會旗標都沒設：地圖只有四個學區、106 個節點（哲學再加 ph.duty、ph.doallow、ph.moralluck）。
-          if ! grep -F 'data-building-count="106"' /tmp/kp-map.html >/dev/null; then
-            echo "/kp/map should have 106 points while soft-skills, yuwen and society are unset"
+          # 溝通與解決問題、語文、社會旗標都沒設：地圖只有四個學區、107 個節點（哲學再加 ph.duty、ph.doallow、ph.freewill、ph.moralluck）。
+          if ! grep -F 'data-building-count="107"' /tmp/kp-map.html >/dev/null; then
+            echo "/kp/map should have 107 points while soft-skills, yuwen and society are unset"
             exit 1
           fi
           if grep -F 'data-district="society"' /tmp/kp-map.html >/dev/null; then
@@ -184,12 +184,31 @@ jobs:
             echo "lw.crime body is visible while the flag is unset"
             exit 1
           fi
+          code="$(curl -sS -o /tmp/lw-fault-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/lw.fault/es)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/lw.fault/es returned ${code}, expected 404"
+            exit 1
+          fi
+          if grep -F "弄壞東西要負責嗎" /tmp/lw-fault-off.html >/dev/null; then
+            echo "lw.fault body is visible while the flag is unset"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/lw-contract-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/lw.contract/jh)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/lw.contract/jh returned ${code}, expected 404"
+            exit 1
+          fi
+          if grep -F "幾歲可以自己買" /tmp/lw-contract-off.html >/dev/null; then
+            echo "lw.contract body is visible while the flag is unset"
+            exit 1
+          fi
           check "/kp/ph.cause/es" /tmp/ph-cause.html
           check "/kp/ph.counterfact/jh" /tmp/ph-counterfact.html
           check "/kp/ph.norm/sh" /tmp/ph-norm.html
           check "/kp/ph.duty/es" /tmp/ph-duty.html
           check "/kp/ph.doallow/jh" /tmp/ph-doallow.html
           check "/kp/ph.moralluck/uni" /tmp/ph-moralluck.html
+          check "/kp/ph.freewill/sh" /tmp/ph-freewill.html
           if curl -sf http://127.0.0.1:3000/sitemap.xml | grep -F "/kp/lw." >/dev/null; then
             echo "sitemap lists lw while society is unset"
             exit 1
@@ -259,10 +278,10 @@ jobs:
             echo "GET /kp/zh.punct/es returned ${code}, expected 404 while yuwen is unset"
             exit 1
           fi
-          # 只開溝通與解決問題：地圖五個學區、148 個節點。
+          # 只開溝通與解決問題：地圖五個學區、149 個節點（哲學再加 ph.freewill）。
           code="$(curl -sS -o /tmp/map-soft.html -w '%{http_code}' http://127.0.0.1:3001/kp/map)"
-          if [ "$code" != "200" ] || ! grep -F 'data-building-count="148"' /tmp/map-soft.html >/dev/null; then
-            echo "/kp/map returned ${code} or does not have 148 points with soft-skills on"
+          if [ "$code" != "200" ] || ! grep -F 'data-building-count="149"' /tmp/map-soft.html >/dev/null; then
+            echo "/kp/map returned ${code} or does not have 149 points with soft-skills on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-soft.html)"
@@ -327,9 +346,9 @@ jobs:
           fi
           check "/kp"
           check "/kp/map"
-          # 溝通與解決問題、語文開，社會仍關：地圖六個學區、256 個節點。
-          if ! grep -F 'data-building-count="256"' /tmp/yuwen-body.html >/dev/null; then
-            echo "/kp/map should have 256 points with soft-skills and yuwen on"
+          # 溝通與解決問題、語文開，社會仍關：地圖六個學區、257 個節點（哲學再加 ph.freewill）。
+          if ! grep -F 'data-building-count="257"' /tmp/yuwen-body.html >/dev/null; then
+            echo "/kp/map should have 257 points with soft-skills and yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/yuwen-body.html)"
@@ -390,7 +409,7 @@ jobs:
             done < /tmp/kp-drafts.tsv
           fi
 
-      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、214 個節點、45 條主線 + 「不標路線」。
+      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、215 個節點、45 條主線 + 「不標路線」。
       - name: Run image with yuwen flag only
         run: |
           set -euo pipefail
@@ -426,8 +445,8 @@ jobs:
             echo "GET /kp/map returned ${code} with only yuwen on"
             exit 1
           fi
-          if ! grep -F 'data-building-count="214"' /tmp/map-yuwen-only.html >/dev/null; then
-            echo "/kp/map should have 214 points with only yuwen on"
+          if ! grep -F 'data-building-count="215"' /tmp/map-yuwen-only.html >/dev/null; then
+            echo "/kp/map should have 215 points with only yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-yuwen-only.html)"
@@ -619,10 +638,10 @@ jobs:
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
             fetch "/" /tmp/prod-home.html
             fetch "/kp/map" /tmp/prod-map.html
-            points=106
+            points=107
             [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 42))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 108))
-            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 2))
+            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 4))
             if ! grep -F "data-building-count=\"${points}\"" /tmp/prod-map.html >/dev/null; then
               echo "/kp/map should have ${points} points with the production runtime flags"
               exit 1
@@ -642,6 +661,8 @@ jobs:
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" != true ]; then
             fetch "/kp/lw.causation/uni" /dev/null 404
             fetch "/kp/lw.crime/sh" /dev/null 404
+            fetch "/kp/lw.fault/es" /dev/null 404
+            fetch "/kp/lw.contract/jh" /dev/null 404
             fetch "/kp/discipline/society" /dev/null 404
             fetch "/kp/ph.cause/es" /tmp/prod-cause.html
             fetch "/kp/ph.counterfact/jh" /tmp/prod-counterfact.html
@@ -649,6 +670,7 @@ jobs:
             fetch "/kp/ph.duty/es" /tmp/prod-duty.html
             fetch "/kp/ph.doallow/jh" /tmp/prod-doallow.html
             fetch "/kp/ph.moralluck/uni" /tmp/prod-moralluck.html
+            fetch "/kp/ph.freewill/sh" /tmp/prod-freewill.html
           fi
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
             fetch "/kp/pm.breakdown/es" /tmp/prod-breakdown.html

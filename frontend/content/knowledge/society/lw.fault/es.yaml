@@ -1,0 +1,175 @@
+id: lw.fault@es
+concept: lw.fault
+title: 故意、不小心、沒辦法：弄壞東西要負責嗎？
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 社會
+  - 法律素養
+  layer: foundation
+  crosscutting: []
+stage:
+  level: es
+  grades:
+  - 3
+  - 4
+curriculum_108:
+  domains:
+  - 社會
+  core_competencies:
+  - A2
+  - C1
+  issues:
+  - 法治教育
+  - 品德教育
+  contents:
+  - 社會:Ac-II-1
+to_verify: false
+verify_notes:
+- 社會 Ac-II-1 的句子取自 curriculum-108-codes.yaml（社會領綱頁腳第 15 頁）。國語文也有 Ac-II-1，所以寫成「社會:Ac-II-1」。卡片文字與代碼表全文相同。
+- 民法第 184 條第 1 項、刑法第 12 條於 2026-11-12 從全國法規資料庫單條頁逐字核對。網址見 sources。民法頁首「尚未生效」是第 166 條之 1 與 115 年 8 月 17 日修正的第 1223 條，不是這兩條。法規整編資料截止日為民國 115 年 11 月 06 日。
+- 第 184 條第 2 項讀過，本頁不引用。孩子看得到的文字不放條號、不放條文。
+- 推杯子、手肘碰到、地震，都是本站虛構例子。不下誰該賠的結論。
+prerequisites: []
+links:
+  why: []
+  how: []
+  related:
+  - sk.feelings@es
+  - sk.why5@es
+  - ph.duty@es
+  deeper:
+  - lw.contract@jh
+link_notes: 沒有先修。相關是說出感覺、先找原因，以及誰有該做的事。下一階是契約與行為能力。本頁不判決。
+competency:
+  specialist:
+  - 法律素養
+  - 批判思考
+  generalist:
+  - 提問
+  - 查證
+ai:
+  delegable:
+  - 由大人陪著，請 AI 再出三張「弄壞東西」的虛構卡，不要用真實新聞，也不要替孩子寫答案
+  human_experience:
+  - 自己把三張卡分成故意、不小心、沒辦法避免，並說出先道歉、能修就修、修不好再談
+idea: 弄壞東西先分成三張卡：故意、不小心、沒辦法避免。先道歉。能修好就修好。不小心有時候也要負責。這一頁不下誰該賠。
+guiding_questions:
+- 不小心打破別人的東西，也要賠嗎？
+- 三張卡要怎麼分？
+- 道歉、修好、賠償，哪一種比較合適？
+scenario: 桌上有一個杯子。甲看著它，伸手推下去，看著它碎。乙轉身拿書包，手肘碰到杯子，杯子掉下去碎了。地震時丙沒有碰杯子，杯子自己掉下去碎了。
+formats:
+  slides: []
+  exercise: 目標：把三張情境卡分成故意、不小心、沒辦法避免，說出道歉、修好、賠償哪一種比較合適，並說出不小心有時候也要負責。　檢核：三張卡都分對；先講道歉，再講修好，修不好才談賠償；被問到不小心時能說有時候也要負責；沒有背條號。
+authors:
+- I-PING Huang
+updated: '2026-11-11'
+goal: 能把三張情境卡分成故意、不小心、沒辦法避免，說出道歉、修好、賠償哪一種比較合適，也知道不小心有時候也要負責。
+review: 三張卡都分對；先講道歉，再講修好，修不好才談賠償；被問到不小心時能說有時候也要負責；沒有背條號。
+est_time:
+  school: 國小三、四年級社會課
+  source: social108
+audience:
+- kid
+- family
+why:
+  heading: 弄壞了先分三種
+  body:
+  - 杯子碎了，三個人看起來都在場。甲是自己推下去。乙是轉身時碰到。丙是地震時人沒有碰。三張卡不一樣（例子是本站整理）。
+  - 兒童在生活裡有權利，也有責任。弄壞別人的東西，先問是哪一種，再問道歉、修好、賠償哪一種比較合適。這一頁不下誰該賠。
+  items_title: 三張卡
+  items:
+  - title: 權利與責任
+    text: 兒童在生活中擁有許多權利（可包括生存權、學習權、表意權、隱私權、身體自主權及不受歧視的權利等）與責任（可包括遵守規範、尊重他人或維護公共利益等）。
+    code: 社會:Ac-II-1
+  - title: 故意
+    text: 甲看著杯子，伸手推下去，看著它碎。他要它掉下去。
+  - title: 不小心
+    text: 乙轉身拿書包，手肘碰到杯子。他不是要把它弄碎。
+  - title: 沒辦法避免
+    text: 地震時丙沒有碰杯子，杯子自己掉下去。這一頁不把他算成弄壞的人。
+  qa:
+    question: 三張卡要怎麼分？
+    answer: 自己推下去、看著它掉，是故意。轉身碰到，是不小心。地震自己掉、人沒碰，是沒辦法避免。
+    source: social108
+  sources:
+  - social108
+how:
+  heading: 先道歉再選做法
+  body:
+  - 分完三張卡，先道歉。東西壞了，能修好就修好。修不好，再談賠償。故意通常三樣都要問。
+  - 不小心不是「都不用管」。乙不是要弄碎杯子，還是可能要道歉，能修就修。是不是這一次要賠，這一頁不替你判。
+  checklist_title: 選做法之前
+  checklist:
+  - 先分成三種
+  - 先道歉
+  - 能修就修好
+  - 修不好再談
+  - 不小心也要問
+  figures:
+  - fault-compare
+  qa:
+    question: 道歉、修好、賠償，哪一種比較合適？
+    answer: 先道歉。能修好就修好。修不好，再談賠償。故意通常三樣都要問。不小心有時候也要問。沒辦法避免的，先問是不是他弄的。
+    source: social108
+  sources:
+  - social108
+what:
+  heading: 不小心有時也要管
+  body:
+  - 不小心和沒辦法避免不要放在同一格。乙碰到了杯子。丙沒有碰，是地震。沒辦法避免的，先問是不是他弄的。
+  - 不小心打破別人的東西，有時候也要負責。先道歉，能修就修。不是每一個不小心都一樣。這一頁不下誰該賠。
+  qa:
+    question: 不小心打破別人的東西，也要賠嗎？
+    answer: 有時候要負責。先道歉。能修好就修好，修不好再談賠。不是每個不小心都一樣。是不是這一次要賠，這一頁不替你判。
+    source: social108
+  sources:
+  - social108
+  - civil-184
+  - penal-12
+  notes:
+  - 對照圖是本站整理，不是課綱或法條裡的原圖。
+  - 給老師和家長的法條收在出處。孩子不用背條號。
+  - 這一頁不下誰該賠的結論。
+figures:
+- id: fault-compare
+  type: compare
+  alt: 對照三張卡。故意是自己把杯子推下去。不小心是轉身碰到。沒辦法避免是地震時人沒有碰。三張卡不一樣。
+  title: 三張卡不一樣
+  source: social108
+  relation: not_equal
+  items:
+  - term: 故意
+    note: 自己推下去，看著它碎。
+  - term: 不小心
+    note: 轉身碰到，不是要弄碎。
+  - term: 沒辦法避免
+    note: 地震，人沒有碰。
+  caption: 三張卡是本站整理。分完先道歉，再問修好或賠償。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-11'
+  kind: curriculum
+  supports: |
+    學習內容取自 curriculum-108-codes.yaml，社會 Ac-II-1，頁腳第 15 頁：「兒童在生活中擁有許多權利（可包括生存權、學習權、表意權、隱私權、身體自主權及不受歧視的權利等）與責任（可包括遵守規範、尊重他人或維護公共利益等）。」國語文領綱另有同號代碼，本點用科目鍵區分。
+- id: civil-184
+  title: 民法第 184 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=B0000001&flno=184
+  accessed: '2026-11-11'
+  kind: government
+  supports: |
+    第 1 項：「因故意或過失，不法侵害他人之權利者，負損害賠償責任。故意以背於善良風俗之方法，加損害於他人者亦同。」2026-11-11 單條頁核對。第 2 項本頁不引用。孩子不用背這一句。
+- id: penal-12
+  title: 刑法第 12 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=C0000001&flno=12
+  accessed: '2026-11-11'
+  kind: government
+  supports: |
+    第 1 項：「行為非出於故意或過失者，不罰。」第 2 項：「過失行為之處罰，以有特別規定者，為限。」2026-11-11 單條頁核對。這兩句只給老師和家長。孩子不用背。
