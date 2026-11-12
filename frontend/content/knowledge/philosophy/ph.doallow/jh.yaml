@@ -32,7 +32,7 @@ verify_notes:
 - 社 2b-IV-1 的句子取自本庫 curriculum-108-codes.yaml（社會領綱頁腳第 10 頁）。2026-11-10 對過 PDF 文字層，「了解」的「了」是相容字 U+F9BA，NFKC 後與 U+4E86 相同。代碼表與卡片用 U+4E86。
 - 耳機被拿走、被朋友取笑，都是本站虛構、低強度的例子。不寫性騷擾、暴力或自殺。
 - 英文句子取自 2026-11-10 打開的 Doing vs. Allowing Harm 與 Blame。Quinn 的句子標成他的看法，本頁不選邊。安樂死、戰爭、營養不良那一段不引用。
-- 下一階是 ph.freewill@sh。道德運氣改由那一點往下接。2026-11-11 補上。
+- 自由意志那一點還沒有，所以下一階直接到大學的道德運氣，不連尚未建立的 ph.freewill@sh。
 prerequisites:
 - ph.duty@es
 links:
