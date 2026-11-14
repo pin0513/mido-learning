@@ -136,6 +136,7 @@ test.describe("知識地圖", () => {
     expect(xml).not.toContain("/kp/lg.");
     expect(xml).not.toContain("/kp/discipline/language");
     expect(xml).not.toContain("/kp/lw.");
+    expect(xml).not.toContain("/kp/path/lw.");
     expect(xml).not.toContain("/kp/discipline/society");
     expect(xml).not.toContain("/login");
     expect(xml).not.toContain("/dashboard");
