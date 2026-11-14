@@ -1,0 +1,210 @@
+id: lw.rights@jh
+concept: lw.rights
+title: 憲法保障什麼：基本權和它的界線
+status: published
+version: '0.1'
+discipline:
+  path:
+  - 社會
+  - 法律素養
+  layer: foundation
+  crosscutting: []
+stage:
+  level: jh
+  grades:
+  - 7
+  - 8
+  - 9
+curriculum_108:
+  domains:
+  - 社會
+  core_competencies:
+  - A2
+  - C1
+  issues:
+  - 法治教育
+  - 人權教育
+  contents:
+  - 公 Bf-IV-1
+  - 公 Bf-IV-2
+  - 公 Bg-IV-1
+to_verify: false
+verify_notes:
+- 公 Bf-IV-1、IV-2、公 Bg-IV-1 於 2026-11-14 由社會領綱 PDF 第 33 頁（頁腳第 29 頁）依文字座標抽出，並寫進 curriculum-108-codes.yaml。卡片文字與代碼表全文相同。Bf-IV-2 下面的延伸探究（原住民族基本法的位階）讀過，不是這三句的正文，沒有收進卡片。
+- 憲法第 7、11、22、23 條於 2026-11-14 從全國法規資料庫單條頁逐字核對。頁首公布日期為民國 36 年 01 月 01 日，沒有修正日期欄。沿革為民國三十六年一月一日公布、十二月二十五日施行。法規整編資料截止日為民國 115 年 11 月 06 日。
+- 父權或家長主義那一點還沒有，不連。班群貼作文是本站虛構。本頁不判決。
+prerequisites:
+- lw.rules@es
+links:
+  why: []
+  how: []
+  related:
+  - ph.ethics@jh
+  - sk.otherside@es
+  deeper:
+  - lw.remedy@sh
+link_notes: 先修是班規、家規和法律。相關是價值衝突，以及換個位置想。下一階是行政救濟。本頁不判決。
+competency:
+  specialist:
+  - 法律素養
+  - 批判思考
+  generalist:
+  - 查證
+  - 跨域思考
+ai:
+  delegable:
+  - 由大人陪著，請 AI 把四條憲法原文再列一次；句子必須回到全國法規資料庫，不要替這個班群寫該不該刪文
+  human_experience:
+  - 自己指出甲、乙各主張哪一條，並把第 23 條的「以法律」和「所必要」留在原句裡
+idea: 一個虛構班群裡，甲主張言論自由，乙主張憲法沒有逐條寫出的其他權利。國家要限制，必須以法律，而且是第 23 條列出的目的所必要。本頁不判決。
+guiding_questions:
+- 有言論自由，就可以想說什麼就說什麼嗎？
+- 這個班群裡，誰的哪項權利碰到一起？
+- 國家限制權利，條文要求哪兩件事？
+scenario: 甲十五歲，把乙沒有公開的一篇作文貼進班群，說這是分享。乙說他沒有答應。班群的約定寫：沒有本人答應，不貼別人的作品。這是虛構。
+formats:
+  slides: []
+  exercise: 目標：用憲法第 7、11、22、23 條說明一個校園或網路情境裡，誰的哪項權利互相衝突，以及國家限制權利必須以法律而且必要。　檢核：點出甲對第 11 條、乙對第 22 條；第 7 條沒有被寫成班規就是法律；第 23 條的「以法律」和「所必要」都留在原句；沒有寫成已經判決。
+authors:
+- I-PING Huang
+updated: '2026-11-14'
+goal: 能用憲法第 7、11、22、23 條說明一個校園或網路情境裡，誰的哪項權利互相衝突，以及國家限制權利必須以法律而且必要。
+review: 點出甲對第 11 條、乙對第 22 條；第 7 條沒有被寫成班規就是法律；第 23 條的「以法律」和「所必要」都留在原句；沒有寫成已經判決。
+est_time:
+  school: 國中七至九年級公民課
+  source: social108
+audience:
+- kid
+- family
+why:
+  heading: 先對上課綱在問什麼
+  body:
+  - 國中公民問法治和人治差在哪、憲法和法律命令為什麼有位階、為什麼憲法被稱為人民權利的保障書。這一點用一個虛構班群把問句打開，不進入判決。
+  - 班規、家規和法律是上一階。這裡不重講誰訂班規，只接「權利有界線」。
+  items_title: 課綱原句
+  items:
+  - title: 法治與人治
+    text: 法治與人治的差異。
+    code: 公 Bf-IV-1
+  - title: 三種位階
+    text: 憲法、法律、命令三者為什麼有位階的關係？
+    code: 公 Bf-IV-2
+  - title: 權利保障書
+    text: 為什麼憲法被稱為「人民權利的保障書」？
+    code: 公 Bg-IV-1
+  qa:
+    question: 有言論自由，就可以想說什麼就說什麼嗎？
+    answer: 第 11 條寫人民有言論、講學、著作及出版之自由。第 23 條寫，限制這些自由權利，除了為了條文列出的目的所必要者外，不得以法律限制之。有這項自由，不是想說什麼就說什麼都沒有界線。本頁不說這一次該不該刪。
+    source: const-23
+  sources:
+  - social108
+  - const-11
+  - const-23
+how:
+  heading: 四條對上一個情境
+  body:
+  - 甲把乙沒有公開的作文貼進班群，主張第 11 條：「人民有言論、講學、著作及出版之自由。」乙沒有答應，主張的是第 22 條：「凡人民之其他自由及權利，不妨害社會秩序公共利益者，均受憲法之保障。」第 22 條沒有把「作文」兩個字寫進去。本頁這樣對，不下判決（例子是本站整理）。
+  - 第 7 條：「中華民國人民，無分男女、宗教、種族、階級、黨派，在法律上一律平等。」用來問這條約定是不是只用在一個人身上。班群約定不是第 7 條說的法律，也不是第 23 條說的法律。
+  - 第 23 條：「以上各條列舉之自由權利，除為防止妨礙他人自由、避免緊急危難、維持社會秩序，或增進公共利益所必要者外，不得以法律限制之。」國家要限制，才走到「以法律」和「所必要」。兩句都留在原句裡。
+  items_title: 四條原文
+  items:
+  - title: 一律平等
+    text: 中華民國人民，無分男女、宗教、種族、階級、黨派，在法律上一律平等。
+  - title: 言論自由
+    text: 人民有言論、講學、著作及出版之自由。
+  - title: 其他權利
+    text: 凡人民之其他自由及權利，不妨害社會秩序公共利益者，均受憲法之保障。
+  - title: 限制的界線
+    text: 以上各條列舉之自由權利，除為防止妨礙他人自由、避免緊急危難、維持社會秩序，或增進公共利益所必要者外，不得以法律限制之。
+  checklist_title: 對條文再寫
+  checklist:
+  - 寫出誰衝突
+  - 對上第11條
+  - 對上第22條
+  - 限制要法律
+  - 而且要必要
+  figures:
+  - rights-compare
+  qa:
+    question: 這個班群裡，誰的哪項權利碰到一起？
+    answer: 甲對第 11 條的言論自由。乙對第 22 條所說、憲法沒有在這一條裡點名的其他權利。第 7 條用來問約定有沒有只針對一個人。本頁不說該不該刪文。
+    source: const-11
+  sources:
+  - const-7
+  - const-11
+  - const-22
+  - const-23
+what:
+  heading: 限制要法律而且必要
+  body:
+  - 有言論自由，不是想說什麼就說什麼都沒有界線。界線要回到第 23 條：不得以法律限制，除非是為了那四項目的所必要。班群自己的刪文約定，不是這條說的法律。
+  - 課綱問憲法為什麼叫人民權利的保障書，也問憲法、法律、命令為什麼有位階。這一頁只把四條放在虛構例子旁邊。位階的全表、命令是什麼，不下結論。
+  figures:
+  - rights-compare
+  qa:
+    question: 國家限制權利，條文要求哪兩件事？
+    answer: 第 23 條寫「不得以法律限制之」，所以限制要由法律來。同句寫，只有為了防止妨礙他人自由、避免緊急危難、維持社會秩序，或增進公共利益所必要，才除得開。兩件都要在，本頁不說這一次過不過。
+    source: const-23
+  sources:
+  - const-23
+  - social108
+  notes:
+  - 對照圖是本站整理，不是憲法裡的原圖。
+  - 班群約定不是第 23 條所說的法律。
+  - 本頁不判決。
+figures:
+- id: rights-compare
+  type: compare
+  alt: 對照三個問題。甲主張第 11 條的言論自由。乙主張第 22 條所說的其他權利。國家若要限制，第 23 條要求以法律而且必要。
+  title: 三個問題
+  source: const-23
+  relation: not_equal
+  items:
+  - term: 甲的主張
+    note: 第 11 條，言論自由。
+  - term: 乙的主張
+    note: 第 22 條，其他權利。
+  - term: 國家限制
+    note: 第 23 條，法律且必要。
+  caption: 三格是本站整理。第 7 條另問約定有沒有只針對一個人。本頁不判決。
+sources:
+- id: social108
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—社會領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/819/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%A4%BE%E6%9C%83%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-14'
+  kind: curriculum
+  supports: |
+    2026-11-14 由 PDF 第 33 頁（頁腳第 29 頁）依文字座標核對，並與 curriculum-108-codes.yaml 全文相同。公 Bf-IV-1「法治與人治的差異。」公 Bf-IV-2「憲法、法律、命令三者為什麼有位階的關係？」公 Bg-IV-1「為什麼憲法被稱為「人民權利的保障書」？」延伸探究的句子沒有收進這三格。
+- id: const-7
+  title: 中華民國憲法第 7 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=A0000001&flno=7
+  accessed: '2026-11-14'
+  kind: government
+  supports: |
+    「中華民國人民，無分男女、宗教、種族、階級、黨派，在法律上一律平等。」2026-11-14 單條頁核對。頁首沒有修正日期欄。
+- id: const-11
+  title: 中華民國憲法第 11 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=A0000001&flno=11
+  accessed: '2026-11-14'
+  kind: government
+  supports: |
+    「人民有言論、講學、著作及出版之自由。」2026-11-14 單條頁核對。
+- id: const-22
+  title: 中華民國憲法第 22 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=A0000001&flno=22
+  accessed: '2026-11-14'
+  kind: government
+  supports: |
+    「凡人民之其他自由及權利，不妨害社會秩序公共利益者，均受憲法之保障。」2026-11-14 單條頁核對。
+- id: const-23
+  title: 中華民國憲法第 23 條
+  publisher: 全國法規資料庫
+  url: https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=A0000001&flno=23
+  accessed: '2026-11-14'
+  kind: government
+  supports: |
+    「以上各條列舉之自由權利，除為防止妨礙他人自由、避免緊急危難、維持社會秩序，或增進公共利益所必要者外，不得以法律限制之。」2026-11-14 單條頁核對。

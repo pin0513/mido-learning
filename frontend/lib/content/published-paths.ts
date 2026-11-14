@@ -285,6 +285,10 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
     "lastModified": "2026-11-14"
   },
   {
+    "path": "/kp/path/lw.rights",
+    "lastModified": "2026-11-14"
+  },
+  {
     "path": "/kp/path/sk.talk",
     "lastModified": "2026-11-14"
   },
@@ -1199,6 +1203,22 @@ export const kpSitemapEntries: { path: string; lastModified: string }[] = [
   {
     "path": "/kp/lw.fault/es",
     "lastModified": "2026-11-11"
+  },
+  {
+    "path": "/kp/lw.remedy/sh",
+    "lastModified": "2026-11-14"
+  },
+  {
+    "path": "/kp/lw.review/uni",
+    "lastModified": "2026-11-14"
+  },
+  {
+    "path": "/kp/lw.rights/jh",
+    "lastModified": "2026-11-14"
+  },
+  {
+    "path": "/kp/lw.rules/es",
+    "lastModified": "2026-11-14"
   },
   {
     "path": "/kp/sk.a3/uni",

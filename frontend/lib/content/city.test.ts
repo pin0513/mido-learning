@@ -21,12 +21,12 @@ function content(): ContentModel {
 const SIX = ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai", "language"];
 const SEVEN = [...SIX, "society"];
 
-test("七個學門都有點：263 棟、363 條先備路、54 個地標、16 塊預定地", () => {
+test("七個學門都有點：267 棟、367 條先備路、55 個地標、16 塊預定地", () => {
   const map = buildCityMap(content());
-  assert.equal(map.buildings.length, 263);
-  assert.equal(map.roads.length, 363);
-  assert.equal(map.landmarks.length, 54);
-  // 語文、社會都已經有點，不再是預定地。社會有 lw.liability，哲學另有 ph.blame。
+  assert.equal(map.buildings.length, 267);
+  assert.equal(map.roads.length, 367);
+  assert.equal(map.landmarks.length, 55);
+  // 語文、社會都已經有點，不再是預定地。社會有 lw.liability、lw.rights，哲學另有 ph.blame。專案管理補了帶頭與隊長。
   assert.equal(map.lots.length, 16);
   assert.equal(map.lots.filter((lot) => lot.featured).length, 4);
   assert.equal(map.lots.some((lot) => lot.id === "language" || lot.id === "society"), false);
@@ -34,7 +34,7 @@ test("七個學門都有點：263 棟、363 條先備路、54 個地標、16 塊
   assert.deepEqual(map.districts.map((district) => district.key), SEVEN);
   assert.deepEqual(
     Object.fromEntries(map.districts.map((district) => [district.key, district.count])),
-    { philosophy: 32, math: 26, "pm-leadership": 26, "soft-skills": 42, "it-ai": 25, language: 108, society: 4 },
+    { philosophy: 32, math: 26, "pm-leadership": 26, "soft-skills": 42, "it-ai": 25, language: 108, society: 8 },
   );
   // 每個學門有自己的顏色，而且跟學門綁定、不隨排序改變。
   for (const district of map.districts) assert.equal(district.color, DISTRICT_COLORS[district.key]);
@@ -65,8 +65,8 @@ test("學門旗標關閉時，那個學區整塊不出現（頁面先套 launche
     [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai"], 151, 39, 17],
     [{ KP_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai", "language"], 217, 45, 16],
     [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true" }, SIX, 259, 53, 16],
-    [{ KP_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai", "society"], 113, 32, 17],
-    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, SEVEN, 263, 54, 16],
+    [{ KP_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai", "society"], 117, 33, 17],
+    [{ KP_ENABLED: "true", KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, SEVEN, 267, 55, 16],
     // KP_ENABLED 沒開時，學門旗標單獨打開也不算。
     [{ KP_SOFTSKILLS_ENABLED: "true", KP_YUWEN_ENABLED: "true", KP_SOCIETY_ENABLED: "true" }, ["philosophy", "math", "pm-leadership", "it-ai"], 109, 31, 17],
   ];
@@ -102,7 +102,9 @@ test("兩次建置座標相同，而且同一格的建築不重疊", () => {
   // B24 發布哲學 uni 6 點後，這 6 棟也各多 8，digest 再變；座標不變。
   // 地圖加上語文與溝通與解決問題（六個學區、扇形依點數分配角度）後，座標全部重排，digest 重算。
   // 責任主線補 lw.fault、lw.contract，哲學補 ph.freewill 後，扇形角度再變，digest 重算。
-  assert.equal(digest, "97e3548cfeb8a734e491abb88966db0a544bcea0f155053f65029c3cc2de3acb");
+  // 國小補帶頭、隊長後，扇形角度再變，digest 重算。
+  // 權利與救濟補四點後，社會扇形再變，digest 重算。
+  assert.equal(digest, "242aefd23dfb2d673c1e89e12381641f88c1ff4afdc4a1b005fd42065cba1e7b");
   // 每棟都在自己學區的扇形與自己階段的環裡（離邊至少半個節點）。
   const stageIndex = new Map(first.stages.map((stage, index) => [stage.id, index]));
   for (const building of first.buildings) {
@@ -300,8 +302,8 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   // B22 發布哲學 jh 6 點後，路線數不變，7 條哲學路線各多國中一站；ph.ai 與 ph.epistemology 都經過 ph.evidence@jh。
   // B23 發布哲學 sh 7 點後，路線數不變，7 條哲學路線各多高中一站（大學站仍是草稿，不顯示）。
   // B24 發布哲學 uni 6 點後，路線數不變，7 條哲學路線各多大學一站；ph.critical 與 ph.inquiry 都到 ph.philsci@uni。
-  // 因果與歸責之外，哲學另有 ph.blame（國小、國中、高中、大學）。社會有 lw.liability。共 54 條（旗標關閉時哲學這條仍在，是 31 條）。
-  assert.equal(shown.landmarks.length, 54);
+  // 因果與歸責之外，哲學另有 ph.blame（國小、國中、高中、大學）。社會有 lw.liability、lw.rights。共 55 條（旗標關閉時這兩條不在公開地圖，公開是 31 條）。
+  assert.equal(shown.landmarks.length, 55);
   const shownStops = (id: string) => {
     const found = shown.landmarks.find((landmark) => landmark.id === id);
     assert.ok(found, id);
@@ -327,6 +329,7 @@ test("主線站序跟內容一致，高度等於被依賴數", () => {
   assert.deepEqual(shownStops("ph.systems"), ["ph.parts@es", "ph.feedback@jh", "ph.systems@sh", "ph.complex@uni"]);
   assert.deepEqual(shownStops("ph.blame"), ["ph.duty@es", "ph.doallow@jh", "ph.freewill@sh", "ph.moralluck@uni"]);
   assert.deepEqual(shownStops("lw.liability"), ["lw.fault@es", "lw.contract@jh", "lw.crime@sh", "lw.causation@uni"]);
+  assert.deepEqual(shownStops("lw.rights"), ["lw.rules@es", "lw.rights@jh", "lw.remedy@sh", "lw.review@uni"]);
   // B18 發布 pm.project@jh 後，有名字的草稿改用 pm.stakeholder@sh；B19 發布它後，改用 pm.business@uni；B20 專案管理全部發布，地圖上的草稿只剩哲學，改用 ph.systems@sh；B23 發布它後，改用它的下一階草稿 ph.complex@uni。
   // B24 發布 ph.complex@uni 後，真地圖沒有草稿；有名字的草稿改在上面的合成內容裡查 ph.complex@uni，真地圖上它帶標題與網址。
   assert.equal(presentCityMap(map, true).buildings.find((building) => building.id === "ph.complex@uni")?.title, "複雜性思維與模型的限度");
@@ -362,7 +365,7 @@ test("新增一筆知識點不用改程式就會排上地圖", () => {
     file: "extra.yaml",
   };
   const map = buildCityMap({ ...source, points: [...source.points, extra] });
-  assert.equal(map.buildings.length, 264);
+  assert.equal(map.buildings.length, 268);
   assert.ok(map.buildings.some((building) => building.id === "ma.extra@es"));
   assert.equal(footprintsOverlap(map.buildings), false);
 });
