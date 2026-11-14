@@ -202,6 +202,42 @@ jobs:
             echo "lw.contract body is visible while the flag is unset"
             exit 1
           fi
+          code="$(curl -sS -o /tmp/lw-rules-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/lw.rules/es)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/lw.rules/es returned ${code}, expected 404"
+            exit 1
+          fi
+          if grep -F "為什麼要有規則" /tmp/lw-rules-off.html >/dev/null; then
+            echo "lw.rules body is visible while the flag is unset"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/lw-rights-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/lw.rights/jh)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/lw.rights/jh returned ${code}, expected 404"
+            exit 1
+          fi
+          if grep -F "基本權和它的界線" /tmp/lw-rights-off.html >/dev/null; then
+            echo "lw.rights body is visible while the flag is unset"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/lw-remedy-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/lw.remedy/sh)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/lw.remedy/sh returned ${code}, expected 404"
+            exit 1
+          fi
+          if grep -F "訴願、行政訴訟" /tmp/lw-remedy-off.html >/dev/null; then
+            echo "lw.remedy body is visible while the flag is unset"
+            exit 1
+          fi
+          code="$(curl -sS -o /tmp/lw-review-off.html -w '%{http_code}' http://127.0.0.1:3000/kp/lw.review/uni)"
+          if [ "$code" != "404" ]; then
+            echo "GET /kp/lw.review/uni returned ${code}, expected 404"
+            exit 1
+          fi
+          if grep -F "法律保留、比例原則" /tmp/lw-review-off.html >/dev/null; then
+            echo "lw.review body is visible while the flag is unset"
+            exit 1
+          fi
           check "/kp/ph.cause/es" /tmp/ph-cause.html
           check "/kp/ph.counterfact/jh" /tmp/ph-counterfact.html
           check "/kp/ph.norm/sh" /tmp/ph-norm.html
@@ -641,16 +677,16 @@ jobs:
             points=109
             [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 42))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 108))
-            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 4))
+            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 8))
             if ! grep -F "data-building-count=\"${points}\"" /tmp/prod-map.html >/dev/null; then
               echo "/kp/map should have ${points} points with the production runtime flags"
               exit 1
             fi
-            # 主線選項數：四個學區 32（含因果與歸責、規範與歸責），溝通與解決問題 +8，語文 +14。社會開時再加 lw.liability。
+            # 主線選項數：四個學區 32（含因果與歸責、規範與歸責），溝通與解決問題 +8，語文 +14。社會開時再加 lw.liability、lw.rights。
             options=32
             [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 8))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 14))
-            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 1))
+            [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && options=$((options + 2))
             actual="$(node frontend/scripts/city-path-count.mjs /tmp/prod-map.html)"
             if [ "$actual" != "$options" ]; then
               echo "/kp/map has ${actual} path options, expected ${options} with the production runtime flags"
@@ -663,6 +699,10 @@ jobs:
             fetch "/kp/lw.crime/sh" /dev/null 404
             fetch "/kp/lw.fault/es" /dev/null 404
             fetch "/kp/lw.contract/jh" /dev/null 404
+            fetch "/kp/lw.rules/es" /dev/null 404
+            fetch "/kp/lw.rights/jh" /dev/null 404
+            fetch "/kp/lw.remedy/sh" /dev/null 404
+            fetch "/kp/lw.review/uni" /dev/null 404
             fetch "/kp/discipline/society" /dev/null 404
             fetch "/kp/ph.cause/es" /tmp/prod-cause.html
             fetch "/kp/ph.counterfact/jh" /tmp/prod-counterfact.html

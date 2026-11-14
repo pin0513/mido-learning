@@ -136,6 +136,16 @@ test.describe("正式 build", () => {
     const crime = await request.get("/kp/lw.crime/sh");
     expect(crime.status()).toBe(404);
     expect(await crime.text()).not.toContain("犯罪怎麼成立");
+    for (const [path, title] of [
+      ["/kp/lw.rules/es", "為什麼要有規則"],
+      ["/kp/lw.rights/jh", "基本權和它的界線"],
+      ["/kp/lw.remedy/sh", "訴願、行政訴訟"],
+      ["/kp/lw.review/uni", "法律保留、比例原則"],
+    ] as const) {
+      const page = await request.get(path);
+      expect(page.status()).toBe(404);
+      expect(await page.text()).not.toContain(title);
+    }
     const a3 = await request.get("/kp/sk.a3/uni");
     expect(a3.status()).toBe(404);
     expect(await a3.text()).not.toContain("一頁問題報告：帶團隊從問題到行動");
