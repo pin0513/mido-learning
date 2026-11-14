@@ -174,7 +174,7 @@ files:
   "paths/soft-skills.yaml": ["091ca99a48f4"]
   "sources-backfill.yaml": ["66a6b5b1afe7"]
   "taxonomy/competencies.yaml": ["0b150368eb09", "31923bf07bab", "cc4e82ec4011"]
-  "taxonomy/curriculum-108-codes.yaml": ["051698834ffc", "1b949d48102c", "1f77f0ffeb3d", "50142c8690bb", "52538c58b329", "52538c58b329", "593154c34dfd", "662978db3abd", "7e08f5ede5cb", "8b8ae046e186", "98daa337e65a", "aa2cec010a04", "ca09d26e852f", "dd15d90549dc", "dd188c4b8bc8", "ede81149c301", "f3a995a516bf"]
+  "taxonomy/curriculum-108-codes.yaml": ["051698834ffc", "1b949d48102c", "1f77f0ffeb3d", "50142c8690bb", "52538c58b329", "52538c58b329", "593154c34dfd", "662978db3abd", "7e08f5ede5cb", "8b8ae046e186", "98daa337e65a", "aa2cec010a04", "ab1104e9932f", "ca09d26e852f", "dd15d90549dc", "dd188c4b8bc8", "ede81149c301", "f3a995a516bf"]
   "taxonomy/curriculum-108.yaml": ["685dcc4a1326", "694816565de6", "a613872e1672", "d385f4189517"]
   "taxonomy/disciplines.yaml": ["5c0daf421ae8", "99d337edec22", "c8f9a5bc79a8", "e6ba9f99e5e3", "e9cabcf6fa9d", "eded1debb321", "fcab357b527d"]
   "taxonomy/formats.yaml": ["5e18da3af244", "81559f1212e8", "dd3419283a57"]

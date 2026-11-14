@@ -38,7 +38,7 @@ const PUBLISHED = new Set([
   "pm.goal@es", "pm.planb@es", "pm.retro@es", "pm.roles@es", "pm.sequence@es",
 ]);
 
-test("四個學門都有學段總圖，專案管理 24 步全部已發布", () => {
+test("四個學門都有學段總圖，專案管理 26 步全部已發布", () => {
   const model = buildHomeDiagram(loadCatalog());
   assert.deepEqual(publicDisciplineIds(), ["pm-leadership", "philosophy", "math", "it-ai"]);
   assert.deepEqual(
@@ -57,7 +57,7 @@ test("四個學門都有學段總圖，專案管理 24 步全部已發布", () =
   assert.deepEqual(
     pm.nodes.map((node) => node.title),
     [
-      "目標：我們想完成什麼？", "大事拆成小事", "分工與說到做到", "回顧：哪裡好、哪裡可以更好", "先做什麼、後做什麼", "如果下雨怎麼辦？",
+      "目標：我們想完成什麼？", "大事拆成小事", "分工與說到做到", "隊長怎麼讓大家一起努力？", "帶頭的人要做什麼？", "回顧：哪裡好、哪裡可以更好", "先做什麼、後做什麼", "如果下雨怎麼辦？",
       "甘特圖與里程碑", "什麼是「專案」？", "風險：可能性 × 影響", "團隊溝通與會議", "領導是行為，不是職位",
       "時間、金錢、品質的取捨",
       "敏捷與迭代", "WBS 與三點估算", "要徑：決定專案長度的那條路", "利害關係人", "衝突與協商", "情境領導",
@@ -84,7 +84,7 @@ test("四個學門都有學段總圖，專案管理 24 步全部已發布", () =
     pmNode("pm.triangle@jh").prerequisites.map((item) => item.title),
     ["什麼是「專案」？", "先做什麼、後做什麼"],
   );
-  assert.deepEqual(pmNode("pm.lead@jh").prerequisites.map((item) => item.title), ["團隊溝通與會議"]);
+  assert.deepEqual(pmNode("pm.lead@jh").prerequisites.map((item) => item.title), ["團隊溝通與會議", "帶頭的人要做什麼？", "隊長怎麼讓大家一起努力？"]);
   assert.equal(pmNode("pm.gantt@jh").next?.title, "要徑：決定專案長度的那條路");
   assert.deepEqual(pmNode("pm.cpm@sh").prerequisites.map((item) => item.title), ["甘特圖與里程碑", "WBS 與三點估算"]);
   assert.deepEqual(pmNode("pm.conflict@sh").prerequisites.map((item) => item.title), ["團隊溝通與會議", "利害關係人"]);
@@ -116,7 +116,11 @@ test("四個學門都有學段總圖，專案管理 24 步全部已發布", () =
       "pre:pm.goal@es->pm.breakdown@es",
       "pre:pm.goal@es->pm.project@jh",
       "pre:pm.lead@jh->pm.style@sh",
+      "pre:pm.captain@es->pm.lead@jh",
+      "pre:pm.leader@es->pm.lead@jh",
       "pre:pm.planb@es->pm.risk@jh",
+      "pre:pm.roles@es->pm.captain@es",
+      "pre:pm.roles@es->pm.leader@es",
       "pre:pm.project@jh->pm.stakeholder@sh",
       "pre:pm.project@jh->pm.triangle@jh",
       "pre:pm.retro@es->pm.agile@sh",
@@ -162,8 +166,8 @@ test("四個學門都有學段總圖，專案管理 24 步全部已發布", () =
   const blob = JSON.stringify(model);
   assert.equal(blob.includes("城市"), false);
   // B19 時這裡檢查專案管理 uni 草稿的標題不進總圖；B20 專案管理 24 點全部發布，改成檢查 24 點都畫出來、每點都有頁面。草稿不進圖的檢查在下一個測試（只開專案管理時，用哲學、數學草稿的標題和代號）。
-  assert.equal(pm.nodes.length, 24);
-  assert.ok(pm.nodes.every((node) => node.pageHref !== null), "pm 24 點都有頁面");
+  assert.equal(pm.nodes.length, 26);
+  assert.ok(pm.nodes.every((node) => node.pageHref !== null), "pm 26 點都有頁面");
 });
 
 test("目前任務連到已畫出來的跨學門，沒畫的不帶標題", () => {
@@ -207,7 +211,7 @@ test("虛線只拿掉實線已經到得了的，實線保持原樣", () => {
   // B18：國中 5 點發布後多 6 條實線；pm.reflect 路線的 pm.retro@es → pm.team@jh 不是先備（pm.team@jh 的先備是 pm.roles@es），實線也到不了，畫成虛線。
   // B19：高中 5 點發布後多 9 條實線；pm.risk 與 pm.reflect 路線接到 pm.agile@sh，但 pm.risk@jh、pm.team@jh 都不是它的先備（先備是 pm.retro@es、pm.gantt@jh），實線到不了，各畫一條虛線。
   // B20：大學 5 點發布後多 11 條實線（每點 2 條先備，加上 pm.schedule@uni → pm.evm@uni），虛線不變。
-  assert.equal(count("pm-leadership", "pre"), 35);
+  assert.equal(count("pm-leadership", "pre"), 39);
   assert.equal(count("pm-leadership", "ext"), 3);
   const pm = model.diagrams.find((item) => item.id === "pm-leadership");
   assert.ok(pm);

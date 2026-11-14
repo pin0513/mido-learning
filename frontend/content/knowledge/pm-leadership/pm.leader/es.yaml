@@ -1,0 +1,232 @@
+id: pm.leader@es
+concept: pm.leader
+title: 帶頭的人要做什麼？
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 管理
+  - 專案管理與領導
+  - 領導
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+  grades:
+  - 5
+  - 6
+curriculum_108:
+  domains:
+  - 綜合活動
+  core_competencies:
+  - A2
+  - A3
+  - C2
+  issues: []
+  performances:
+  - 2b-III-1
+  contents:
+  - Bb-III-1
+  - Bb-III-3
+to_verify: false
+verify_notes:
+- 查核日 2026-11-14。綜合活動領綱、總綱、Kouzes 與 Posner 教師指引、Scrum Guide、教育部生成式人工智慧注意事項（學生版）都在這一天打開核對。
+- 核心素養 A2、A3、C2：總綱 PDF 第 8–10 頁（頁腳 p.4–6）的 E-A2、E-A3、E-C2，綜合活動領綱 PDF 第 7、9 頁（頁腳 p.3、p.5）的綜-E-A2、綜-E-A3、綜-E-C2。表格窄欄字距大，文字已併回。
+- stage.grades 填 5、6：本點的綜合活動代碼都是第三學習階段（III）。總綱頁腳 p.7 把國民小學五、六年級定為第三學習階段。
+- est_time 依綜合活動領綱頁腳 p.2：「第三學習階段實施領域教學，每週 2 節課。」本點建議在綜合活動課上做。
+- 頁碼都是頁腳印的頁碼。綜合活動領綱、總綱比 PDF 頁少 4（綜合活動 PDF 77＝頁腳 73、PDF 78＝頁腳 74）。Kouzes 教師指引也少 4（PDF 第 5 頁頁首印 1，PDF 第 13 頁頁首印 9）。
+- 學習重點原文：2b-III-1、Bb-III-1、Bb-III-3 在頁腳 p.73。Bb-III-1 補充「藉由參與各項活動及生活情境，了解自己在團體中扮演的角色，省思並扮演好自己的角色」。Bb-III-3 補充在頁腳 p.74：「團隊合作技巧包含釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議等。」
+- 例子是虛構的班長打掃教室，沒有真人、真校。先做、幫忙、聽意見、一起看結果是本站整理，對照課綱的角色與團隊合作技巧，以及 Kouzes 與 Posner 的以身作則。
+- 沒有放進 pm.lead 主線：主線的學段必須一路往後，pm.lead 已經從 pm.roles@es 接到 pm.lead@jh，不能再插入另一個國小站。本點用 prerequisites 接 pm.roles@es，deeper 接 pm.lead@jh。
+- Kouzes 與 Posner 的 Instructor’s Guide 只短引印刷頁 1 與印刷頁 9 的句子，中文說明是本站整理。Scrum Guide 2020 是 CC BY-SA 4.0，只短引服務型領導那一句。
+authors:
+- I-PING Huang
+updated: '2026-11-14'
+prerequisites:
+- pm.roles@es
+links:
+  why: []
+  how: []
+  related:
+  - sk.listen@es
+  - pm.retro@es
+  deeper:
+  - pm.lead@jh
+link_notes: 綜合活動（團體生活）、領導（以身作則）；綜合活動 2b-III-1、Bb-III-1、Bb-III-3。
+competency:
+  specialist:
+  - 領導
+  generalist:
+  - 領導
+  - 溝通
+  - 團隊合作
+ai:
+  delegable:
+  - 做一張帶頭紀錄表（由大人操作，本站建議）
+  human_experience:
+  - 自己先做給大家看
+idea: 帶頭不是喊人、指揮，而是自己先做給大家看，注意誰需要幫忙，把大家的意見聽進來，做完一起看結果。
+guiding_questions:
+- 帶頭的人是不是只要喊大家去做？
+- 先做給大家看，可以怎麼做？
+- 做完以後，要一起看什麼？
+scenario: 一位虛構的班長帶大家打掃教室。他沒有站著喊人，自己先拿掃把掃一角，看到同學搬不動桌子就過去一起抬，聽一位同學說先擦黑板，做完全班一起看地板和黑板（例子是本站整理）。
+formats:
+  slides: []
+  exercise: 目標：當一次帶頭的人：自己先做一個動作給大家看，注意到一位需要幫忙的人並幫上忙，聽進一個想法，做完和大家一起看結果。　檢核：紀錄寫了自己先做的動作、幫了誰、聽進的想法、一起看到的結果；不是只寫我叫大家去做。
+goal: 當一次帶頭的人：自己先做一個動作給大家看，注意到一位需要幫忙的人並幫上忙，聽進一個想法，做完和大家一起看結果。
+review: 紀錄寫了自己先做的動作、幫了誰、聽進的想法、一起看到的結果；不是只寫我叫大家去做。
+est_time:
+  school: 國小五、六年級綜合活動課
+  source: zonghe
+why:
+  heading: 帶頭是先做給人看
+  body:
+  - 108 課綱的綜合活動要高年級「參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。」補充說明寫，要了解自己在團體中的角色，也要扮演好。團隊合作的技巧包含「釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議等。」（頁腳 p.74）。
+  - Kouzes 與 Posner 寫「there is no age requirement when it comes to leadership.」以身作則的其中一條是「Set the example by aligning actions with shared values.」國小的班長也可以先做給大家看（英文短句引用，說明是本站整理）。
+  - Scrum 指南說 Scrum Master 是「true leaders who serve the Scrum Team and the larger organization.」帶頭是先做、幫忙、把意見聽進來，不是站在旁邊喊人（說明是本站整理）。
+  qa:
+    question: 帶頭的人是不是只要喊大家去做？
+    answer: 不是。先做一個看得到的動作，注意到誰需要幫忙，再聽一個想法。Kouzes 與 Posner 把以身作則寫成「Set the example by aligning actions with shared values.」喊人而自己不做，大家看不到怎麼做（說明是本站整理）。
+    source: kouzes
+  items_title: 綜合活動領綱的學習重點
+  items:
+  - title: 在團體中合作
+    text: 綜合活動 2b-III-1：參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。
+    code: 2b-III-1
+  - title: 團體中的角色
+    text: 綜合活動 Bb-III-1：團體中的角色探索。
+    code: Bb-III-1
+  - title: 團隊合作的技巧
+    text: 綜合活動 Bb-III-3：團隊合作的技巧。補充說明：「團隊合作技巧包含釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議等。」
+    code: Bb-III-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 知道自己的角色
+  - 準備先做一件事
+  notes:
+  - 綜合活動的代碼：數字開頭的是學習表現，大寫字母開頭的是學習內容；中間的 III 是第三學習階段（國小五、六年級）。
+  - 總綱把國民小學五、六年級定為第三學習階段，所以本頁代碼中間都是 III。
+  sources:
+  - zonghe
+  - kouzes
+  - scrum-guide
+  - zonggang
+how:
+  heading: 先做、幫忙、聽、再看
+  body:
+  - 自己先做：虛構的班長打掃教室，自己先拿起掃把掃一角，讓大家看到怎麼做（例子是本站整理）。這對照以身作則：行動和大家說好的做法一致。
+  - 幫忙，也聽意見：他看到同學搬不動桌子，就過去一起抬。有人說先擦黑板，他把這個想法放進順序裡。課綱的補充說明要表達自己的意見，也尊重別人的意見。
+  - 做完一起看：掃完，全班看地板和黑板，說哪裡乾淨、哪裡還沒好。一起看結果是本站建議的收尾，好接上下一課的回顧。
+  qa:
+    question: 先做給大家看，可以怎麼做？
+    answer: 先做一個小動作，讓旁邊的人看得到。打掃時自己先掃一角，再去幫搬不動桌子的人。不要只站著喊「快掃」（例子是本站整理）。
+    source: zonghe
+  items_title: 四步做
+  items:
+  - title: 自己先做
+    text: 先做一個看得到的動作。
+  - title: 注意誰需要幫忙
+    text: 看到卡住的人就過去。
+  - title: 聽進一個想法
+    text: 把聽到的放進做法裡。
+  - title: 做完一起看
+    text: 看結果，說哪裡還沒好。
+  checklist_title: 做的時候看一下
+  checklist:
+  - 自己先做了
+  - 幫到一個人
+  - 聽進一個想法
+  - 一起看了結果
+  activity_figure: leader-flow
+  sources:
+  - zonghe
+  - kouzes
+what:
+  heading: 做完一起看結果
+  body:
+  - 學完後，孩子能當一次帶頭的人：自己先做一個動作，幫一位需要幫忙的人，聽進一個想法，再和大家一起看結果。紀錄要寫看得到的動作。
+  items_title: 學完能做到
+  items:
+  - title: 自己先做
+    text: 寫得出先做的動作。
+  - title: 幫忙
+    text: 寫得出幫了誰。
+  - title: 聽意見
+    text: 寫得出聽進的想法。
+  - title: 一起看結果
+    text: 寫得出大家看到什麼。
+  checklist_title: 家長檢核
+  checklist:
+  - 寫了先做的動作
+  - 寫了幫了誰
+  - 寫了聽進的想法
+  - 寫了一起看的結果
+  figures:
+  - leader-compare
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: leader-flow
+  type: flow
+  alt: 帶頭的四步：班長自己先掃一角，去幫搬桌子，同學說先擦黑板，全班一起看乾不乾淨。
+  steps:
+  - actor: 班長
+    text: 自己先掃一角
+  - actor: 班長
+    text: 去幫搬桌子
+  - actor: 同學
+    text: 說先擦黑板
+  - actor: 全班
+    text: 一起看乾淨嗎
+  source: zonghe
+  caption: 流程是本站建議。例子是虛構的。
+- id: leader-compare
+  type: compare
+  alt: 比較兩種帶頭：只喊人做，自己站著；自己先做，大家看得到怎麼掃。
+  source: kouzes
+  relation: versus
+  items:
+  - term: 只喊人做
+    note: 自己站著，教室還是沒掃
+  - term: 自己先做
+    note: 先掃一角，大家看得到怎麼做
+  caption: 例子是本站整理。
+sources:
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-14'
+  kind: curriculum
+  supports: 學習重點：2b-III-1「參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。」（p.73）；Bb-III-1「團體中的角色探索。」（p.73）；Bb-III-3「團隊合作的技巧。」（p.73）；補充說明 Bb-III-1「藉由參與各項活動及生活情境，了解自己在團體中扮演的角色，省思並扮演好自己的角色」（p.73）；補充說明 Bb-III-3「團隊合作技巧包含釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議等。」（p.74）；領域核心素養：綜-E-A2「探索學習方法，培養思考能力與自律負責的態度，並透過體驗與實踐解決日常生活問題。」（p.3）；綜-E-A3「規劃、執行學習及生活計畫，運用資源或策略，預防危機、保護自己，並以創新思考方式，因應日常生活情境。」（p.3）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）；時間分配：「第三學習階段實施領域教學，每週 2 節課。」（p.2）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-11-14'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-A3「具備擬定計畫與實作的能力，並以創新思考方式，因應日常生活情境。」（p.5）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: kouzes
+  title: Instructor’s Guide to The Student Leadership Challenge, Fourth Edition
+  publisher: James M. Kouzes、Barry Z. Posner（Jossey-Bass / John Wiley & Sons，Copyright © 2024）
+  url: https://www.leadershipchallenge.com/LeadershipChallenge/media/SiteFiles/resources/Kouzes206087_Instructors_Guide_ePDF.pdf
+  accessed: '2026-11-14'
+  kind: reference
+  supports: 印刷頁 1：「there is no age requirement when it comes to leadership.」印刷頁 9 的 Chapter Summaries，Model the Way：「Clarify values by finding your voice and affirming shared values.」「Set the example by aligning actions with shared values.」只短引這三句，中文說明是本站整理。
+- id: scrum-guide
+  title: The 2020 Scrum Guide
+  publisher: Ken Schwaber、Jeff Sutherland（scrumguides.org，2020 年 11 月，CC BY-SA 4.0）
+  url: https://scrumguides.org/scrum-guide.html
+  accessed: '2026-11-14'
+  kind: reference
+  supports: Scrum Master：「Scrum Masters are true leaders who serve the Scrum Team and the larger organization.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-11-14'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

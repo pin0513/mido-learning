@@ -2443,3 +2443,20 @@
       source:
         url: https://www.naer.edu.tw/upload/1/16/doc/816/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E7%A7%91%E6%8A%80%E9%A0%98%E5%9F%9F.pdf
         page: 11
+
+# 2026-11-14 補兩個與全表不同號的健康與體育國小代碼。同號的健體代碼（含 2c-III-1）仍不收，否則裸代碼會變 ambiguous。頁碼是頁腳；這份 PDF 比頁腳多 4（PDF 21＝頁腳 17、PDF 22＝頁腳 18）。
+健康與體育:
+  performances:
+    2c-III-2:
+      stage: 3
+      text: 表現同理心、正向溝通的團隊精神。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18522_1560772_59945.pdf
+        page: 17
+  contents:
+    Cb-III-1:
+      stage: 3
+      text: 運動安全教育、運動精神與運動營養知識。
+      source:
+        url: https://stv.naer.edu.tw/data/course_outline/pta_18522_1560772_59945.pdf
+        page: 18

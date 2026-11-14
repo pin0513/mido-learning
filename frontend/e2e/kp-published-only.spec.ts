@@ -58,7 +58,9 @@ const PM_PAGES: [string, string[], string[]][] = [
   // B23 發布哲學 sh 7 點後，這三列不露出的改用仍是草稿的哲學 uni 點（ph.philsci、ph.applied、ph.complex，分別是 ph.science、ph.ethicstheory、ph.systems 的下一階）。
   // B24 發布哲學 uni 6 點後，專案管理與哲學頁不露出的全部改用仍是草稿的軟實力點（有直接關係的用直接關係，沒有的用相鄰點的軟實力草稿，註在各列）；6 點出現在頁上的改成正向檢查。
   ["/kp/pm.goal/es", ["目標：我們想完成什麼？", "什麼是「專案」？", "好問題從「為什麼」開始"], ["問題是什麼？現在和想要"]], // sk.problem links.related；B25 起已發布，只因旗標關閉不露出
-  ["/kp/pm.roles/es", ["分工與說到做到", "團隊溝通與會議", "領導是行為，不是職位", "怎樣才公平？"], ["換個位置想"]], // sk.otherside 連到 ph.fair@es；B25 起已發布，只因旗標關閉不露出
+  ["/kp/pm.roles/es", ["分工與說到做到", "團隊溝通與會議", "領導是行為，不是職位", "怎樣才公平？", "帶頭的人要做什麼？", "隊長怎麼讓大家一起努力？"], ["換個位置想"]], // sk.otherside 連到 ph.fair@es；B25 起已發布，只因旗標關閉不露出。pm.leader、pm.captain 把這裡當先備，也在 related
+  ["/kp/pm.leader/es", ["帶頭的人要做什麼？", "分工與說到做到", "回顧：哪裡好、哪裡可以更好", "領導是行為，不是職位"], ["專心聽，再說回來"]], // related sk.listen@es；溝通與解決問題旗標關閉，不露出
+  ["/kp/pm.captain/es", ["隊長怎麼讓大家一起努力？", "分工與說到做到", "帶頭的人要做什麼？", "目標：我們想完成什麼？", "領導是行為，不是職位"], ["專心聽，再說回來"]], // related sk.listen@es；溝通與解決問題旗標關閉，不露出
   ["/kp/pm.sequence/es", ["先做什麼、後做什麼", "甘特圖與里程碑"], ["問題樹：大問題拆成小問題"]], // sk.issuetree 的先備 pm.breakdown@es 也是這頁的先備；B26 起已發布，只因旗標關閉不露出
   ["/kp/pm.planb/es", ["如果下雨怎麼辦？", "風險：可能性 × 影響"], ["選方案：準則、權重、取捨"]], // B27 起 sk.decide 已發布，只因旗標關閉不露出
   // B22 發布 ph.hypothesis@jh 後，pm.retro@es、pm.agile@sh 的 links.related 帶出它的標題，改成正向檢查；不露出的改用它的下一階草稿 ph.science@sh。
@@ -68,7 +70,7 @@ const PM_PAGES: [string, string[], string[]][] = [
   ["/kp/pm.project/jh", ["什麼是「專案」？", "目標：我們想完成什麼？", "利害關係人"], ["選方案：準則、權重、取捨"]], // 下一階 pm.triangle@jh 是 sk.decide 的先備；B27 起 sk.decide 已發布，只因旗標關閉不露出
   ["/kp/pm.gantt/jh", ["甘特圖與里程碑", "先做什麼、後做什麼", "要徑：決定專案長度的那條路"], ["問題樹：大問題拆成小問題"]], // B26 起 sk.issuetree 已發布，只因旗標關閉不露出
   ["/kp/pm.team/jh", ["團隊溝通與會議", "分工與說到做到", "領導是行為，不是職位", "衝突與協商", "利害關係人"], ["當調解人：幫兩方聽懂彼此"]], // 下一階 pm.conflict@sh 是 sk.mediate 的先備
-  ["/kp/pm.lead/jh", ["領導是行為，不是職位", "團隊溝通與會議", "情境領導"], ["教練式對話：用提問陪對方找答案"]], // 下一階 pm.style@sh 由 sk.coach 連過去
+  ["/kp/pm.lead/jh", ["領導是行為，不是職位", "團隊溝通與會議", "情境領導", "帶頭的人要做什麼？", "隊長怎麼讓大家一起努力？"], ["教練式對話：用提問陪對方找答案"]], // 下一階 pm.style@sh 由 sk.coach 連過去；先備加上兩個國小領導點
   ["/kp/pm.risk/jh", ["風險：可能性 × 影響", "如果下雨怎麼辦？"], ["選方案：準則、權重、取捨"]], // B27 起 sk.decide 已發布，只因旗標關閉不露出
   // B23 發布 ph.systems@sh、ph.ethicstheory@sh 後，pm.stakeholder@sh 的 links.related、pm.conflict@sh 的 links.why 帶出它們的標題，改成正向檢查。
   ["/kp/pm.stakeholder/sh", ["利害關係人", "什麼是「專案」？", "團隊溝通與會議", "商業論證與專案治理", "系統思考：槓桿點與非預期後果"], ["同理心地圖：說、想、做、感受", "一頁問題報告：帶團隊從問題到行動"]], // sk.empmap links.related（B26 起已發布，只因旗標關閉不露出）；sk.a3 連到下一階 pm.business@uni
