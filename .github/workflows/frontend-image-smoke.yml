@@ -129,9 +129,9 @@ jobs:
           done
           check "/kp" /tmp/kp.html
           check "/kp/map" /tmp/kp-map.html
-          # 溝通與解決問題、語文、社會旗標都沒設：地圖只有四個學區、107 個節點（哲學再加 ph.duty、ph.doallow、ph.freewill、ph.moralluck）。
-          if ! grep -F 'data-building-count="107"' /tmp/kp-map.html >/dev/null; then
-            echo "/kp/map should have 107 points while soft-skills, yuwen and society are unset"
+          # 溝通與解決問題、語文、社會旗標都沒設：地圖只有四個學區、109 個節點（哲學再加 ph.duty、ph.doallow、ph.freewill、ph.moralluck；專案管理再加 pm.leader@es、pm.captain@es）。
+          if ! grep -F 'data-building-count="109"' /tmp/kp-map.html >/dev/null; then
+            echo "/kp/map should have 109 points while soft-skills, yuwen and society are unset"
             exit 1
           fi
           if grep -F 'data-district="society"' /tmp/kp-map.html >/dev/null; then
@@ -278,10 +278,10 @@ jobs:
             echo "GET /kp/zh.punct/es returned ${code}, expected 404 while yuwen is unset"
             exit 1
           fi
-          # 只開溝通與解決問題：地圖五個學區、149 個節點（哲學再加 ph.freewill）。
+          # 只開溝通與解決問題：地圖五個學區、151 個節點（四學門 109，加上溝通與解決問題 42）。
           code="$(curl -sS -o /tmp/map-soft.html -w '%{http_code}' http://127.0.0.1:3001/kp/map)"
-          if [ "$code" != "200" ] || ! grep -F 'data-building-count="149"' /tmp/map-soft.html >/dev/null; then
-            echo "/kp/map returned ${code} or does not have 149 points with soft-skills on"
+          if [ "$code" != "200" ] || ! grep -F 'data-building-count="151"' /tmp/map-soft.html >/dev/null; then
+            echo "/kp/map returned ${code} or does not have 151 points with soft-skills on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-soft.html)"
@@ -346,9 +346,9 @@ jobs:
           fi
           check "/kp"
           check "/kp/map"
-          # 溝通與解決問題、語文開，社會仍關：地圖六個學區、257 個節點（哲學再加 ph.freewill）。
-          if ! grep -F 'data-building-count="257"' /tmp/yuwen-body.html >/dev/null; then
-            echo "/kp/map should have 257 points with soft-skills and yuwen on"
+          # 溝通與解決問題、語文開，社會仍關：地圖六個學區、259 個節點（151 再加上語文 108）。
+          if ! grep -F 'data-building-count="259"' /tmp/yuwen-body.html >/dev/null; then
+            echo "/kp/map should have 259 points with soft-skills and yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/yuwen-body.html)"
@@ -409,7 +409,7 @@ jobs:
             done < /tmp/kp-drafts.tsv
           fi
 
-      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、215 個節點、45 條主線 + 「不標路線」。
+      # 只開語文、不開溝通與解決問題：地圖五個學區（四個 + 語文）、217 個節點（109＋語文 108）、45 條主線 + 「不標路線」。
       - name: Run image with yuwen flag only
         run: |
           set -euo pipefail
@@ -445,8 +445,8 @@ jobs:
             echo "GET /kp/map returned ${code} with only yuwen on"
             exit 1
           fi
-          if ! grep -F 'data-building-count="215"' /tmp/map-yuwen-only.html >/dev/null; then
-            echo "/kp/map should have 215 points with only yuwen on"
+          if ! grep -F 'data-building-count="217"' /tmp/map-yuwen-only.html >/dev/null; then
+            echo "/kp/map should have 217 points with only yuwen on"
             exit 1
           fi
           options="$(node frontend/scripts/city-path-count.mjs /tmp/map-yuwen-only.html)"
@@ -638,7 +638,7 @@ jobs:
           if [ "$(flag KP_ENABLED "$KP_RUNTIME_FLAGS")" = true ]; then
             fetch "/" /tmp/prod-home.html
             fetch "/kp/map" /tmp/prod-map.html
-            points=107
+            points=109
             [ "$(flag KP_SOFTSKILLS_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 42))
             [ "$(flag KP_YUWEN_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 108))
             [ "$(flag KP_SOCIETY_ENABLED "$KP_RUNTIME_FLAGS")" = true ] && points=$((points + 4))

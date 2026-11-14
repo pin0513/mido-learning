@@ -1,0 +1,248 @@
+id: pm.captain@es
+concept: pm.captain
+title: 隊長怎麼讓大家一起努力？
+status: published
+version: '0.2'
+discipline:
+  path:
+  - 管理
+  - 專案管理與領導
+  - 領導
+  layer: essence
+  crosscutting: []
+stage:
+  level: es
+  grades:
+  - 5
+  - 6
+curriculum_108:
+  domains:
+  - 健康與體育
+  - 綜合活動
+  core_competencies:
+  - A2
+  - A3
+  - C2
+  issues: []
+  performances:
+  - 2c-III-2
+  - 2b-III-1
+  contents:
+  - Cb-III-1
+  - Bb-III-3
+to_verify: false
+verify_notes:
+- 查核日 2026-11-14。健康與體育領綱、綜合活動領綱、總綱、Kouzes 與 Posner 教師指引、Scrum Guide、教育部生成式人工智慧注意事項（學生版）都在這一天打開核對。
+- 新增健康與體育代碼，原文與 curriculum-108-codes.yaml 逐字相同。2c-III-2「表現同理心、正向溝通的團隊精神。」頁腳 p.17（PDF 第 21 頁頁首印 17）。Cb-III-1「運動安全教育、運動精神與運動營養知識。」頁腳 p.18（PDF 第 22 頁頁首印 18）。這份 PDF 比頁腳多 4。
+- 沒有收健體 2c-III-1。它和綜合活動 2c-III-1 同號不同文；收進去會讓既有國小點的裸代碼變成 ambiguous。也沒有把 Hd-III-1「守備/跑分性球類運動基本動作及基礎戰術。」（頁腳 p.19）放進本點：本點練的是帶隊，不教基本動作和戰術。
+- 競爭類型運動的說明在頁腳 p.12：「學生在競爭類型活動中需要運用思考、理解、溝通、技能、戰術和策略，以進行問題解決活動，並養成尊重、負責、參與、領導與關懷他人的個人與社會責任行為。」分類裡有守備/跑分性，正文沒有寫出「棒球」二字。棒球隊是本站虛構的例子，用來對上這段裡的領導與關懷。
+- 核心素養 A2、C2 另核健體-E-A2（頁腳 p.3）、健體-E-C2（頁腳 p.5）。A3 用總綱 E-A3（頁腳 p.5）與綜合活動綜-E-A3（頁腳 p.3）。綜合活動 Bb-III-3 補充在頁腳 p.74。
+- stage.grades 填 5、6：代碼都是第三學習階段（III）。總綱頁腳 p.7 把國民小學五、六年級定為第三學習階段。
+- est_time 依健康與體育領綱頁腳 p.2：國民小學第三學習階段健康與體育「3 節∕週」；備註「健康與體育領域於第一、二、三學習階段，以領域教學為原則。」本點建議在體育課上做。
+- 頁碼都是頁腳印的頁碼。健康與體育領綱、綜合活動領綱、總綱比 PDF 頁少 4。Kouzes 教師指引也少 4（PDF 第 5 頁頁首印 1，PDF 第 13 頁頁首印 9）。
+- 例子是虛構的國小棒球隊，沒有真人、真校。輸了先打氣、聽每個人、說清楚目標、自己守規矩是本站整理。
+- 這點是以後棒球隊 Scrum 主線的國小起點，主線還沒有，所以沒有寫進 paths。學段總圖會因為先備關係畫出這一點。pm.captain 的 related 含 pm.leader@es，所以不再把 pm.leader@es 放進 prerequisites。
+- Kouzes 與 Posner 只短引印刷頁 9 的以身作則。Scrum Guide 2020 是 CC BY-SA 4.0，只短引團隊互相支持那一句。
+authors:
+- I-PING Huang
+updated: '2026-11-14'
+prerequisites:
+- pm.roles@es
+links:
+  why: []
+  how: []
+  related:
+  - pm.leader@es
+  - pm.goal@es
+  - sk.listen@es
+  deeper:
+  - pm.lead@jh
+link_notes: 健康與體育（團隊精神）、綜合活動（團隊合作）；健康與體育 2c-III-2、Cb-III-1，綜合活動 2b-III-1、Bb-III-3。
+competency:
+  specialist:
+  - 領導
+  generalist:
+  - 領導
+  - 溝通
+  - 團隊合作
+ai:
+  delegable:
+  - 做一張隊長紀錄表（由大人操作，本站建議）
+  human_experience:
+  - 輸的時候先替隊友打氣
+idea: 隊長讓大家一起努力：輸球時替隊友打氣，聽每個人的想法，讓大家知道目標，自己也守規矩。
+guiding_questions:
+- 輸球的時候，隊長先做什麼？
+- 隊長怎麼讓每個人知道目標？
+- 隊長自己要守什麼規矩？
+scenario: 一支虛構的國小棒球隊。隊長在落後時先替隊友打氣，請每個人說一個想法，再說這一局要一起守住的目標，自己也遵守同一條不嘲笑對手的規矩（例子是本站整理）。
+formats:
+  slides: []
+  exercise: 目標：當一次隊長：輸的時候替隊友打氣，聽每個人一個想法，說清楚大家的目標，自己也守一條規矩。　檢核：紀錄寫了打氣的話、聽到的想法、說給大家的目標、自己守的那條規矩；不是只寫我叫他們認真打。
+goal: 當一次隊長：輸的時候替隊友打氣，聽每個人一個想法，說清楚大家的目標，自己也守一條規矩。
+review: 紀錄寫了打氣的話、聽到的想法、說給大家的目標、自己守的那條規矩；不是只寫我叫他們認真打。
+est_time:
+  school: 國小五、六年級體育課
+  source: jienti
+why:
+  heading: 輸了也要一起守
+  body:
+  - 健康與體育領綱寫，學生在競爭類型活動中要養成「尊重、負責、參與、領導與關懷他人」的行為（頁腳 p.12）。學習表現 2c-III-2 是「表現同理心、正向溝通的團隊精神。」輸球時先打氣，就是把同理放進隊伍裡（說明是本站整理）。
+  - 綜合活動 Bb-III-3 的補充說明寫，團隊合作技巧包含「釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議等。」（頁腳 p.74）。隊長要讓大家知道目標，也聽每個人的想法。
+  - Scrum 指南寫團隊「commits to achieving its goals and to supporting each other.」打氣是支持隊友，不是怪誰打不好（英文短句引用，說明是本站整理）。棒球隊是虛構的例子；領綱這段沒有寫出棒球二字。
+  qa:
+    question: 輸球的時候，隊長先做什麼？
+    answer: 先替隊友打氣，再聽大家怎麼想。健康與體育 2c-III-2 要的是同理心和正向溝通。先罵人，隊伍就聽不到下一句目標（說明是本站整理）。
+    source: jienti
+  items_title: 領綱的學習重點
+  items:
+  - title: 同理與正向溝通
+    text: 健康與體育 2c-III-2：表現同理心、正向溝通的團隊精神。
+    code: 2c-III-2
+  - title: 運動精神
+    text: 健康與體育 Cb-III-1：運動安全教育、運動精神與運動營養知識。本點用到的是運動精神。
+    code: Cb-III-1
+  - title: 在團體中合作
+    text: 綜合活動 2b-III-1：參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。
+    code: 2b-III-1
+  - title: 團隊合作的技巧
+    text: 綜合活動 Bb-III-3：團隊合作的技巧。補充說明包含釐清目標、尊重別人的意見。
+    code: Bb-III-3
+  checklist_title: 開始前先確認
+  checklist:
+  - 知道這一局的目標
+  - 準備一句打氣的話
+  notes:
+  - 健康與體育和綜合活動的代碼都用拉丁字母 III，表示第三學習階段（國小五、六年級）。
+  - 領綱把棒球這類運動放在守備/跑分性裡，但學習內容那一句沒有寫出棒球。本頁的球隊是虛構的。
+  sources:
+  - jienti
+  - zonghe
+  - scrum-guide
+  - zonggang
+how:
+  heading: 打氣、聽、說目標、守規
+  body:
+  - 先打氣：虛構的隊長在落後時先說這一局還沒結束，再問誰需要喝水或換個位置練（例子是本站整理）。領綱要的是同理和正向溝通。
+  - 聽，再說目標：每個人說一個想法，隊長再說這一局大家一起守的目標，例如先守住一壘。補充說明要釐清團隊目標，也尊重別人的意見。
+  - 自己守規矩：不嘲笑對手、輪到自己就上場。隊長自己先做到。Kouzes 與 Posner 寫「Set the example by aligning actions with shared values.」自己守同一條規矩，就是先做給隊友看（英文短句引用，說明是本站整理）。
+  qa:
+    question: 隊長怎麼讓每個人知道目標？
+    answer: 先聽每個人一個想法，再用一句話說出這一局要一起做的事，例如先守住一壘。目標要短，大家聽得完（例子是本站整理）。
+    source: zonghe
+  items_title: 四步做
+  items:
+  - title: 輸了先打氣
+    text: 先說一句替隊友打氣的話。
+  - title: 聽每個人
+    text: 每人一個想法。
+  - title: 說清楚目標
+    text: 用一句話說這一局。
+  - title: 自己守規矩
+    text: 自己先守同一條規矩。
+  checklist_title: 做的時候看一下
+  checklist:
+  - 說了打氣的話
+  - 每人一個想法
+  - 目標說出來了
+  - 自己守了規矩
+  activity_figure: captain-flow
+  sources:
+  - jienti
+  - zonghe
+  - kouzes
+what:
+  heading: 說出目標再一起守
+  body:
+  - 學完後，孩子能當一次隊長：輸的時候先打氣，聽每個人一個想法，說清楚目標，自己也守一條規矩。紀錄要寫這四件看得到的事。
+  items_title: 學完能做到
+  items:
+  - title: 替人打氣
+    text: 寫得出打氣的話。
+  - title: 聽想法
+    text: 寫得出聽到的想法。
+  - title: 說出目標
+    text: 寫得出說給大家的目標。
+  - title: 自己守規矩
+    text: 寫得出自己守的規矩。
+  checklist_title: 家長檢核
+  checklist:
+  - 寫了打氣的話
+  - 寫了聽到的想法
+  - 寫了說出的目標
+  - 寫了自己的規矩
+  figures:
+  - captain-compare
+  notes:
+  - 使用生成式 AI 的規則依教育部注意事項（學生版）：遵守「各平臺註冊年齡限制」；建議用為教育目的設計的工具，「非在校使用，亦請家長陪伴使用」；不輸入自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料；AI 的回答不宜直接採信。國小學生使用時，由大人操作並陪在旁邊（本站建議）；作業若用了 AI，要說明用了哪個工具，不能把 AI 寫的內容當成自己的作品。
+  sources:
+  - genai-student
+figures:
+- id: captain-flow
+  type: flow
+  alt: 隊長的四步：輸了先打氣，隊友各說一個想法，隊長說出這一局的目標，自己也守規矩。
+  steps:
+  - actor: 隊長
+    text: 輸了先打氣
+  - actor: 隊友
+    text: 各說一個想法
+  - actor: 隊長
+    text: 說出這一局
+  - actor: 隊長
+    text: 自己守規矩
+  source: jienti
+  caption: 流程是本站建議。例子是虛構的。
+- id: captain-compare
+  type: compare
+  alt: 比較兩種隊長：怪打不好，隊友不敢說話；先替人打氣，大家還願意說想法。
+  source: jienti
+  relation: versus
+  items:
+  - term: 怪打不好
+    note: 隊友不敢說話，目標也沒人聽
+  - term: 先替人打氣
+    note: 先打氣，再聽想法、說目標
+  caption: 例子是本站整理。
+sources:
+- id: jienti
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—健康與體育領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://stv.naer.edu.tw/data/course_outline/pta_18522_1560772_59945.pdf
+  accessed: '2026-11-14'
+  kind: curriculum
+  supports: 競爭類型運動說明：「學生在競爭類型活動中需要運用思考、理解、溝通、技能、戰術和策略，以進行問題解決活動，並養成尊重、負責、參與、領導與關懷他人的個人與社會責任行為。」（p.12）；學習表現 2c-III-2「表現同理心、正向溝通的團隊精神。」（p.17）；學習內容 Cb-III-1「運動安全教育、運動精神與運動營養知識。」（p.18）；領域核心素養：健體-E-A2「具備探索身體活動與健康生活問題的思考能力，並透過體驗與實踐，處理日常生活中運動與健康的問題。」（p.3）；健體-E-C2「具備同理他人感受，在體育活動和健康生活中樂於與人互動、公平競爭，並與團隊成員合作，促進身心健康。」（p.5）；時間分配：國民小學第三學習階段健康與體育「3 節∕週」，備註「健康與體育領域於第一、二、三學習階段，以領域教學為原則。」（p.2）
+- id: zonghe
+  title: 十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—綜合活動領域
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/817/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%B0%91%E5%9F%BA%E6%9C%AC%E6%95%99%E8%82%B2%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E6%A0%A1-%E7%B6%9C%E5%90%88%E6%B4%BB%E5%8B%95%E9%A0%98%E5%9F%9F.pdf
+  accessed: '2026-11-14'
+  kind: curriculum
+  supports: 學習重點：2b-III-1「參與各項活動，適切表現自己在團體中的角色，協同合作達成共同目標。」（p.73）；Bb-III-3「團隊合作的技巧。」（p.73）；補充說明 Bb-III-3「團隊合作技巧包含釐清團隊目標、表達自己的意見、尊重別人的意見及形成共識與決議等。」（p.74）；領域核心素養：綜-E-A3「規劃、執行學習及生活計畫，運用資源或策略，預防危機、保護自己，並以創新思考方式，因應日常生活情境。」（p.3）；綜-E-C2「理解他人感受，樂於與人互動，學習尊重他人，增進人際關係，與團隊成員合作達成團體目標。」（p.5）
+- id: zonggang
+  title: 十二年國民基本教育課程綱要總綱
+  publisher: 國家教育研究院（教育部發布）
+  url: https://www.naer.edu.tw/upload/1/16/doc/1325/%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9C%8B%E6%95%99%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81%E7%B8%BD%E7%B6%B1.pdf
+  accessed: '2026-11-14'
+  kind: curriculum
+  supports: 核心素養（國民小學教育）：E-A2「具備探索問題的思考能力，並透過體驗與實踐處理日常生活問題。」（p.4）；E-A3「具備擬定計畫與實作的能力，並以創新思考方式，因應日常生活情境。」（p.5）；E-C2「具備理解他人感受，樂於與人互動，並與團隊成員合作之素養。」（p.6）；學習階段「國民小學三、四年級為第二學習階段，國民小學五、六年級為第三學習階段，國民中學七、八、九年級為第四學習階段」（p.7）
+- id: kouzes
+  title: Instructor’s Guide to The Student Leadership Challenge, Fourth Edition
+  publisher: James M. Kouzes、Barry Z. Posner（Jossey-Bass / John Wiley & Sons，Copyright © 2024）
+  url: https://www.leadershipchallenge.com/LeadershipChallenge/media/SiteFiles/resources/Kouzes206087_Instructors_Guide_ePDF.pdf
+  accessed: '2026-11-14'
+  kind: reference
+  supports: 印刷頁 9 的 Chapter Summaries，Model the Way：「Set the example by aligning actions with shared values.」只短引這一句，中文說明是本站整理。
+- id: scrum-guide
+  title: The 2020 Scrum Guide
+  publisher: Ken Schwaber、Jeff Sutherland（scrumguides.org，2020 年 11 月，CC BY-SA 4.0）
+  url: https://scrumguides.org/scrum-guide.html
+  accessed: '2026-11-14'
+  kind: reference
+  supports: Scrum Values：「The Scrum Team commits to achieving its goals and to supporting each other.」
+- id: genai-student
+  title: 中小學使用「生成式人工智慧」注意事項2.1（學生版）
+  publisher: 教育部（中小學數位學習精進方案網站）
+  url: https://pads.moe.edu.tw/download_file.php?file=_upload_aba798ab3bb88f11d0c43a7e477fb9c5.pdf
+  accessed: '2026-11-14'
+  kind: government
+  supports: 前言「在家長或學校老師的指導與同意下遵守各工具年齡分級與帳號申請規範」；五「中小學學生使用『生成式人工智慧』工具應遵守各平臺註冊年齡限制及相關規範。建議中小學學生使用為教育目的而設計的『生成式人工智慧』工具，如教育部因材網生成式AI學習夥伴e度、酷英網E-BOT、均一教育平臺或CK-12 Flexi等…若為非在校使用，亦請家長陪伴使用。」；六（三）「不可以將自己或他人的姓名、照片、聯絡方式、住址、學號等個人資料…輸入至『生成式人工智慧』工具。」；一「這些工具無法自行判斷結果的正確性和合理性…不宜直接採信」；六（四）「應依規定註明所使用的工具及用途，不得將生成內容直接當作自己原創作品繳交。」；六（五）「遵守學校訂定之資訊倫理與學術誠信規範，不得使用『生成式人工智慧』工具從事抄襲、代寫、作弊或其他違反校規與法令之行為。」

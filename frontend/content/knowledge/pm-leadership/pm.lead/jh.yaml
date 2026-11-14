@@ -45,6 +45,8 @@ verify_notes:
 - Scrum Guide 2020（CC BY-SA 4.0）是軟體團隊的指南，本點只借它對團隊沒有階層、自己決定分工與服務型領導的說法，英文短句引用，中文說明是本站整理。
 prerequisites:
 - pm.team@jh
+- pm.leader@es
+- pm.captain@es
 links:
   why:
   - ph.ethics@jh

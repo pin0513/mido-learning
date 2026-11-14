@@ -25,10 +25,10 @@ test.describe("語文", () => {
     test.skip(!process.env.E2E_YUWEN, "KP_YUWEN_ENABLED 沒開");
   });
 
-  test("知識地圖六個學區：257 個節點、54 個路線選項", async ({ page }) => {
+  test("知識地圖六個學區：259 個節點、54 個路線選項", async ({ page }) => {
     test.setTimeout(120_000);
     await expectMapSectors(page, {
-      buildings: 257,
+      buildings: 259,
       options: 54,
       districts: ["philosophy", "math", "pm-leadership", "soft-skills", "it-ai", "language"],
     });
